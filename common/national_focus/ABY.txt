@@ -5133,6 +5133,21 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_dynamic_modifier = {modifier = ABY_dynamic_modifier_industry}
+			effect_tooltip = {
+				add_idea = ABY_idea_industry_2
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_stability_factor = -0.1
+				}
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = 0.05
+				}
+			}
+			country_event = {
+				id = ABY_new_event.234
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5164,6 +5179,54 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_dynamic_modifier = {modifier = ABY_dynamic_modifier_labor}
+			effect_tooltip = {
+				add_idea = ABY_idea_labor_1
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_production_factory_efficiency_gain_factor = 0.05
+				}
+				add_to_variable = {
+					ABY_var_industry_production_factory_start_efficiency_factor = 0.05
+				}
+				add_to_variable = {
+					ABY_var_industry_production_factory_max_efficiency_factor = 0.05
+				}
+				if = {
+					limit = {
+						has_idea = ABY_industrial_concern_neptis_group
+					}
+					swap_ideas = {
+						remove_idea = ABY_industrial_concern_neptis_group
+						add_idea = ABY_industrial_concern_neptis_group_4
+					}
+				}
+				if = {
+					limit = {
+						has_idea = ABY_industrial_concern_skoda
+					}
+					swap_ideas = {
+						remove_idea = ABY_industrial_concern_skoda
+						add_idea = ABY_industrial_concern_skoda_2
+					}
+				}
+				if = {
+					limit = {
+						has_idea = ABY_industrial_concern_rothschild
+					}
+					swap_ideas = {
+						remove_idea = ABY_industrial_concern_rothschild
+						add_idea = ABY_industrial_concern_rothschild_3
+					}
+				}
+			}
+			custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+			show_ideas_tooltip = ABY_industrial_concern_idea_neptis_group
+			custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+			show_ideas_tooltip = ABY_industrial_concern_idea_skoda
+			custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+			show_ideas_tooltip = ABY_industrial_concern_idea_rothschild
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5192,6 +5255,71 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_industry_1
+					add_idea = ABY_idea_industry_2
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = 0.05
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_skoda_2
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = ABY_industrial_concern_skoda
+						}
+						swap_ideas = {
+							remove_idea = ABY_industrial_concern_skoda
+							add_idea = ABY_industrial_concern_skoda_2
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_neptis_group_2
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = ABY_industrial_concern_neptis_group
+						}
+						swap_ideas = {
+							remove_idea = ABY_industrial_concern_neptis_group
+							add_idea = ABY_industrial_concern_neptis_group_4
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_rothschild_3
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = ABY_industrial_concern_rothschild
+						}
+						swap_ideas = {
+							remove_idea = ABY_industrial_concern_rothschild
+							add_idea = ABY_industrial_concern_rothschild_3
+						}
+					}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5212,7 +5340,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			controls_state = 9
 			#중점 선행조건
 		}
 
@@ -5220,6 +5348,56 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				9 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = arms_factory
+						level = 4
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				9 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = land_facility
+						level = 1
+						instant_build = yes    
+						province = 11542 # North of Rome
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				9 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5248,6 +5426,10 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 3
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5276,6 +5458,20 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_labor_1
+					add_idea = ABY_idea_labor_2
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_production_factory_start_efficiency_factor = 0.1
+				}
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = -0.05
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5307,6 +5503,38 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_industry_1
+					add_idea = ABY_idea_industry_2
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = 0.05
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_skoda_power
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_neptis_group_PMC
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_rothschild_swiss
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5330,7 +5558,10 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			controls_state = 4
+			controls_state = 976
+			controls_state = 152
+			controls_state = 1021
 			#중점 선행조건
 		}
 
@@ -5338,6 +5569,77 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 4
+							state = 976
+							state = 152
+							state = 1021
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				976 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				152 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				4 = {
+					add_building_construction = {
+						type = air_facility
+						level = 1
+						instant_build = yes    
+						province = 11666 # North of Rome
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 4
+							state = 976
+							state = 152
+							state = 1021
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5369,6 +5671,10 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 3
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5400,6 +5706,20 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_labor_1
+					add_idea = ABY_idea_labor_3
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_production_factory_max_efficiency_factor = 0.1
+				}
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = -0.05
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5428,6 +5748,7 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_research_slot = 1
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5448,7 +5769,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			controls_state = 852
 			#중점 선행조건
 		}
 
@@ -5456,6 +5777,51 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				852 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = dockyard
+						level = 4
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				852 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = naval_facility
+						level = 1
+						instant_build = yes    
+						province = 11564 # North of Rome
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				852 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = dockyard
+						level = 4
+						instant_build = yes
+					}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5485,6 +5851,24 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			random_owned_state = {
+				limit = {
+					any_state = {
+						is_core_of = ABY
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+			modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = 1
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5505,7 +5889,10 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			any_state = {
+				is_coastal = yes
+				is_core_of = ABY
+			}
 			#중점 선행조건
 		}
 
@@ -5513,6 +5900,20 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			random_owned_state = {
+				limit = {
+					any_state = {
+						is_coastal = yes
+						is_core_of = ABY
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5541,6 +5942,7 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_research_slot = 1
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5569,6 +5971,38 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_industry_1
+					add_idea = ABY_idea_industry_2
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = 0.05
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_skoda_auto
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_neptis_group_chemical
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_rothschild_america
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5590,7 +6024,10 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			controls_state = 74
+			controls_state = 972
+			controls_state = 153
+			controls_state = 848
 			#중점 선행조건
 		}
 
@@ -5598,6 +6035,81 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 74
+							state = 972
+							state = 153
+							state = 848
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 74
+							state = 972
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 153
+							state = 848
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 74
+							state = 972
+							state = 153
+							state = 848
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5627,6 +6139,11 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = 2
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5655,6 +6172,20 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_labor_1
+					add_idea = ABY_idea_labor_4
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_industry_production_factory_efficiency_gain_factor = 0.1
+				}
+				add_to_variable = {
+					ABY_var_industry_industrial_capacity_factory = -0.05
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5686,6 +6217,69 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			custom_effect_tooltip = ABY_industrial_concern_allow_7
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_skoda_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_skoda_unite
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_nephthys_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_neptis_group_united
+			}
+			if = {
+				limit = {
+					has_country_flag = ABY_flag_rothschild_select
+				}
+				custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
+				show_ideas_tooltip = ABY_industrial_concern_idea_rothschild_unite
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							has_idea = ABY_industrial_concern_neptis_group_4
+							has_idea = ABY_industrial_concern_neptis_group_chemical
+							has_idea = ABY_industrial_concern_neptis_group_PMC
+						}
+					}
+					remove_idea = ABY_industrial_concern_neptis_group_4
+					remove_idea = ABY_industrial_concern_neptis_group_chemical
+					remove_idea = ABY_industrial_concern_neptis_group_PMC
+					add_idea = ABY_industrial_concern_neptis_group_united
+				}
+				if = {
+					limit = {
+						OR = {
+							has_idea = ABY_industrial_concern_skoda_2
+							has_idea = ABY_industrial_concern_skoda_auto
+							has_idea = ABY_industrial_concern_skoda_power
+						}
+					}
+					remove_idea = ABY_industrial_concern_skoda_2
+					remove_idea = ABY_industrial_concern_skoda_auto
+					remove_idea = ABY_industrial_concern_skoda_power
+					add_idea = ABY_industrial_concern_skoda_unite
+				}
+				if = {
+					limit = {
+						OR = {
+							has_idea = ABY_industrial_concern_rothschild_3
+							has_idea = ABY_industrial_concern_rothschild_america
+							has_idea = ABY_industrial_concern_rothschild_swiss
+						}
+					}
+					remove_idea = ABY_industrial_concern_rothschild_3
+					remove_idea = ABY_industrial_concern_rothschild_america
+					remove_idea = ABY_industrial_concern_rothschild_swiss
+					add_idea = ABY_industrial_concern_rothschild_unite
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -5717,6 +6311,7 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
+			add_research_slot = 1
 			#중점 완료시 얻는 보상
 		}
 	}
