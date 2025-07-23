@@ -10526,10 +10526,10 @@ country_event = { # 문제 - 노조 파업
 	option = { # 탄압한다
 		name = trnsocial.2.a
 		ai_chance = { base = 1 }
-		add_manpower = -500
+		add_manpower = -100
 		add_equipment_to_stockpile = {
 			type = infantry_equipment
-			amount = -500
+			amount = -100
 		}
 		add_days_mission_timeout = {
 			mission = TRN_Mika_social_problem
@@ -10537,22 +10537,60 @@ country_event = { # 문제 - 노조 파업
 		}
 		add_timed_idea = {
 			idea = TRN_strike_season_ns
-			days = 30
+			days = 21
 		}
 		add_popularity = { ideology = communism popularity = 0.025 }
+		custom_effect_tooltip = tooltip_white_line
+		if = {
+			limit = {
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > -0.50 }
+			}
+			add_to_variable = { TRM_pro_german_propaganda_conscription_factor = TRM_monthly_conscription_factor_increase }
+			clamp_variable = {
+				var = TRM.TRM_pro_german_propaganda_conscription_factor
+				min = -0.50
+			}
+			if = { #Apply penalties if CG is 100% or more
+				limit = {
+					NOT = { has_country_flag = TRM_pro_german_propaganda_penalty_flag }
+					check_variable = { var = TRM_pro_german_propaganda_conscription_factor value = -0.50 compare = less_than_or_equals }
+				}
+				set_country_flag = TRM_pro_german_propaganda_penalty_flag
+				add_to_variable = { TRM_pro_german_propaganda_consumer_goods_expected_value = TRM_propaganda_expected_consumer_goods_penalty }
+				subtract_from_variable = { TRM_pro_german_propaganda_industrial_capacity_factory = TRM_propaganda_factory_output_penalty }
+				subtract_from_variable = { TRM_pro_german_propaganda_industrial_capacity_dockyard = TRM_propaganda_dockyard_output_penalty }
+			}
+		}
+
+		if = {
+			limit = {
+				has_country_flag = TRM_pro_german_propaganda_penalty_flag
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > -0.50 }
+			}
+			clr_country_flag = TRM_pro_german_propaganda_penalty_flag
+			subtract_from_variable = { TRM_pro_german_propaganda_consumer_goods_expected_value = TRM_propaganda_expected_consumer_goods_penalty }
+			add_to_variable = { TRM_pro_german_propaganda_industrial_capacity_factory = TRM_propaganda_factory_output_penalty }
+			add_to_variable = { TRM_pro_german_propaganda_industrial_capacity_dockyard = TRM_propaganda_dockyard_output_penalty }
+		}
+
+		custom_effect_tooltip = TRN_Mika_social_problem_tt
 	}
 	option = { # 타협한다
 		name = trnsocial.2.b
 		ai_chance = { base = 99 }
 
 		add_political_power = -40
-		add_popularity = { ideology = ROOT popularity = 0.025 }
-		country_event = { id = monrus.9 days = 5 } #Negotiations with the Labour Unions
+		add_popularity = { ideology = ROOT popularity = 0.015 }
 	}
 	option = { # 무시
 		name = trnsocial.2.c
 		ai_chance = { base = 0 }
-
+		
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 30
+		}
+		add_popularity = { ideology = communism popularity = 0.05 }
 	}
 }
 
