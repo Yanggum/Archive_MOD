@@ -28,9 +28,56 @@ BA_highlander = { #하이랜더 철도학원
 		}
 		ai_will_do = {
 			base = 40
+
+			### 이런 상황에서 하이랜더 투자를 더 열심히 한다! ###
 			modifier = {
-				is_major = yes
-				factor = 10
+				is_major = yes 
+				# 메이저 국가일 때 투자 확률 증가
+				add = 20
+			}
+
+			### 이런 상황일 때엔 투자를 줄인다 ###
+			modifier = {
+				has_war = yes
+				# 전쟁 중에 소비재 10%~20% 쓰지 말자
+				factor = 0.5 
+			}
+			modifier = {
+				has_defensive_war = yes
+				# 특히 침략받고 있을 때에는 더더욱 쓰지 말자
+				factor = 0.5 
+			}
+			modifier = {
+				surrender_progress > 0.1
+				# 자기 나라가 박살나고 있을 때 소비재 수십 퍼센트 바치지 말자
+				factor = 0
+			}
+			modifier = {
+				OR = {
+					tag = GEH
+					tag = GEM
+				}
+				NOT = { has_country_flag = GEH_unified_gehenna_flag }
+				# 게헨나는 나라 토막나서 민공도 없는데 어디에 낭비하니
+				factor = 0 
+			}
+			modifier = {
+				tag = HEU
+				NOT = { has_country_flag = GEH_unified_gehenna_flag }
+				NOT = { has_completed_focus = HEU_GSC_president_rikuhachima }
+				
+				# 룩셈부르크는 게헨나 정복 or 저지대 통합 이전에는 하이랜더 투자하지 않음
+				factor = 0 
+			}
+			modifier = {
+				num_of_civilian_factories < 10
+				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
+				factor = 0 
+			}
+			modifier = {
+				num_of_civilian_factories < 25
+				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
+				factor = 0.1
 			}
 		}
 		priority = 100
