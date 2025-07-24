@@ -9906,7 +9906,7 @@ country_event = { # 젋은 길잡이
 	id = trinity.32
 	title = trinity.32.t
 	desc = trinity.32.desc
-	picture = GFX_report_event_BRA_departamento_femininio
+	picture = GFX_report_event_TRN_mika_lay_down
 	
 	is_triggered_only = yes
     fire_only_once = no
@@ -10384,7 +10384,6 @@ country_event = { # 중앙구에서 대규모 시위
 				character = TRN_Misono_Mika
 			}
 		}
-		activate_mission = TRN_Mika_social_problem
 	}
 
 	option = {
@@ -10400,6 +10399,10 @@ country_event = { # 중앙구에서 대규모 시위
 		add_war_support = -0.05
 		custom_effect_tooltip = TRM_increase_decreasing_conscription_factor_tt
 		add_to_variable = { TRM_monthly_conscription_factor_increase = -0.005 }
+		add_to_variable = {
+			TRN_Mika_social_problem_days = -35
+			tooltip = TRN_Mika_social_problem_days_tt
+		}
 		hidden_effect = {
 			news_event = { id = trinitynews.6 hours = 04 }
 			country_event = { id = trnsocial.1 days = 15 }
@@ -10498,16 +10501,6 @@ country_event = { # 문제 - 1
 
 	option = {
 		name = trnsocial.1.a
-		add_to_variable = { 
-			TRN_Mika_social_problem_var = 1
-			tooltip = TRN_Mika_social_problem_var_plus
-		}
-		clamp_variable = {
-			var = TRN_Mika_social_problem_var
-			min = 0
-			max = 10
-		}
-		custom_effect_tooltip = tooltip_white_line
 		add_stability = -0.03
 
 	}
@@ -10577,24 +10570,36 @@ country_event = { # 문제 - 노조 파업
 	}
 	option = { # 타협한다
 		name = trnsocial.2.b
-		ai_chance = { base = 99 }
+		ai_chance = { 
+			base = 99
+			modifier = {
+				has_political_power > 99
+				factor = 0.1
+			}
+		}
 
 		add_political_power = -40
 		add_popularity = { ideology = ROOT popularity = 0.015 }
 	}
 	option = { # 무시
 		name = trnsocial.2.c
-		ai_chance = { base = 0 }
+		ai_chance = { 
+			base = 3
+			modifier = {
+				has_political_power < 99
+				factor = 3
+			}
+		}
 		
 		add_timed_idea = {
 			idea = TRN_strike_season_ns
 			days = 30
 		}
-		add_popularity = { ideology = communism popularity = 0.05 }
+		add_popularity = { ideology = communism popularity = 0.02 }
 	}
 }
 
-country_event = { # 문제 - 민병대
+country_event = { # 관공서 폭탄 테러
 	id = trnsocial.3
 	title = trnsocial.3.t
 	desc = trnsocial.3.desc
@@ -10604,16 +10609,25 @@ country_event = { # 문제 - 민병대
 	fire_only_once = no
 
 
-	option = { # 빨갱이를 주력으로 조진다
+	option = { # 
 		name = trnsocial.3.a
-
+		add_popularity = { ideology = ROOT popularity = -0.015 }
+		add_stability = -0.03
 	}
-	option = { # 파쇼를 주력으로
-		name = trnsocial.3.b
+}
 
-	}
-	option = { # 둘 다
-		name = trnsocial.3.b
+country_event = { # 문제 - 민병대
+	id = trnsocial.4
+	title = trnsocial.4.t
+	desc = trnsocial.4.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 빨갱이를 주력으로 조진다
+		name = trnsocial.4.a
 
 	}
 }
