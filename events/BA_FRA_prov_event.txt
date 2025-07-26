@@ -235,54 +235,6 @@ country_event = {
 			}
 			if = {
 				limit = {
-					VIN = {
-						exists = yes
-						has_capitulated = no
-						OR = {
-							has_idea = FRA_government_general
-							has_idea = FRA_government_general_1
-							has_idea = FRA_government_general_2
-						}
-					}
-					JAP = {
-						exists = yes
-						has_capitulated = no
-						is_subject = no
-					}
-				}
-				JAP = {
-					annex_country = {
-						target = VIN
-						transfer_troops = no
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					VIN = {
-						exists = yes
-						has_capitulated = no
-						OR = {
-							has_idea = FRA_government_general
-							has_idea = FRA_government_general_1
-							has_idea = FRA_government_general_2
-						}
-					}
-					CHI = {
-						exists = yes
-						has_capitulated = no
-						is_subject = no
-					}
-				}
-				CHI = {
-					annex_country = {
-						target = VIN
-						transfer_troops = no
-					}
-				}
-			}
-			if = {
-				limit = {
 					728 = { is_controlled_by = FRA }
 					JAP = {
 						exists = yes
@@ -1938,14 +1890,16 @@ country_event = {
 	desc = FRA_prov_event.34.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
 	option = {
 		name = FRA_prov_event.34.a
+		activate_mission = FRA_end_war_timer
 		VIN = {
 			add_ideas = VIN_indochina_war_idea
 			start_civil_war = {
 				ideology = communism
-				size = 0.5
+				size = 0.7
 				set_cosmetic_tag = VIN_indochina_civilwar
 				states = {
 					671
@@ -1963,11 +1917,6 @@ country_event = {
 				popularity = -0.5
 			}
 		}
-		clr_country_flag = FRA_has_indochina_issue
-		clr_country_flag = VIN_has_crisis
-		set_country_flag = FRA_has_indochina_war
-		remove_decision = FRA_indochina_going_bad
-		activate_mission = FRA_near_japan_intervention_indochina
 		hidden_effect = {
 			news_event = {
 				id =  FRA_prov_event.46
@@ -1978,7 +1927,7 @@ country_event = {
 }
 
 country_event = {
-	#인도차이나 내전 끝
+	#인도차이나 안 씀 
 	id = FRA_prov_event.35
 	title = FRA_prov_event.35.t
 	desc = FRA_prov_event.35.d
@@ -2098,7 +2047,7 @@ country_event = {
 }
 
 country_event = {
-	#인도차이나 - 일본한테 사이공 주기
+	#안 씀
 	id = FRA_prov_event.37
 	title = FRA_prov_event.37.t
 	desc = FRA_prov_event.37.d
@@ -2107,24 +2056,26 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.37.a
-		JAP = {
-			set_autonomy = {
-				target = LAO
-				autonomy_state = autonomy_wtt_imperial_subject
-			}
-		}
-		LAO = {
-			every_country = {
-				limit = {
-					original_tag = VIN
+			custom_effect_tooltip = FRA_end_war_timer_tt
+			hidden_effect={
+				every_country = {
+					limit = {
+						original_tag = VIN
+					}
+					remove_civil_war_target	= VIN
 				}
-				declare_war_on = {
-					target = prev
-					type = annex_everything
+				every_country = {
+					limit = {
+						original_tag = VIN
+					}
+					every_country = {
+						limit = {
+							has_war_with = PREV
+						}
+						white_peace = prev
+					}
 				}
 			}
-			add_ideas = VIN_indochina_war_idea
-		}
 	}
 }
 
@@ -2473,7 +2424,7 @@ news_event = {
 }
 
 country_event = {
-	#인도차이나 - 베트남 국민당의 반제 투쟁 참여
+	#인도차이나 안 씀 
 	id = FRA_prov_event.42
 	title = FRA_prov_event.42.t
 	desc = FRA_prov_event.42.d
@@ -2489,7 +2440,6 @@ country_event = {
 				}
 			}
 			VIN = {
-				VIN_upgrade_resist = yes
 				add_popularity = {
 					ideology = democratic
 					popularity = 0.1
@@ -2509,7 +2459,7 @@ country_event = {
 }
 
 country_event = {
-	#인도차이나 - 베트남 복국동맹회
+	#인도차이나 안 씀
 	id = FRA_prov_event.43
 	title = FRA_prov_event.43.t
 	desc = FRA_prov_event.43.d
@@ -2524,7 +2474,6 @@ country_event = {
 				has_country_flag = FRA_has_indochina_war
 			}}
 			VIN = {
-				VIN_upgrade_resist = yes
 				add_popularity = {
 					ideology = fascism
 					popularity = 0.1
@@ -2765,48 +2714,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.54.a
 		VIN = {
-			if = {
-				limit = {
-					has_idea = VIN_colonists_resist_0
-				}
-				remove_ideas = VIN_colonists_resist_0
-			}
-			if = {
-				limit = {
-					has_idea = VIN_colonists_resist_1
-				}
-				remove_ideas = VIN_colonists_resist_1
-			}
-			if = {
-				limit = {
-					has_idea = VIN_colonists_resist_2
-				}
-				remove_ideas = VIN_colonists_resist_2
-			}
-			if = {
-				limit = {
-					has_idea = VIN_colonists_resist_3
-				}
-				remove_ideas = VIN_colonists_resist_3
-			}
-			if = {
-				limit = {
-					has_idea = FRA_government_general_1
-				}
-				remove_ideas = FRA_government_general_1
-			}
-			if = {
-				limit = {
-					has_idea = FRA_government_general_2
-				}
-				remove_ideas = FRA_government_general_2
-			}
-			if = {
-				limit = {
-					has_idea = FRA_government_general
-				}
-				remove_ideas = FRA_government_general
-			}
 		}
 		add_political_power = 5
 	}
@@ -2870,7 +2777,6 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = FRA_prov_event.57.a
-		add_ideas = FRA_pierre
 	}
 	option = {
 		name = FRA_prov_event.57.b
@@ -3049,9 +2955,6 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = FRA_prov_event.64.a
-		remove_ideas = {
-			FRA_pierre
-		}
 		FRA_pierre_laval = {
 			set_can_be_fired_in_advisor_role = {
 				value = yes
@@ -3104,9 +3007,6 @@ country_event = {
 		set_politics = {
 			ruling_party = democratic
 			elections_allowed = no
-		}
-		remove_ideas = {
-			FRA_pierre
 		}
 		FRA_pierre_laval = {
 			set_can_be_fired_in_advisor_role = {
@@ -3273,13 +3173,6 @@ country_event = {
 						communism = 100
 					}
 				}
-				remove_ideas = FRA_government_general_2
-				remove_ideas = FRA_government_general_1
-				remove_ideas = FRA_government_general
-				remove_ideas = VIN_colonists_resist_0
-				remove_ideas = VIN_colonists_resist_1
-				remove_ideas = VIN_colonists_resist_2
-				remove_ideas = VIN_colonists_resist_3
 				clr_country_flag = FRA_has_indochina_issue
 				set_country_flag = FRA_finished_vin_cirisis
 			}
@@ -4266,36 +4159,65 @@ country_event = {
 }
 
 country_event = {
-	#호치민과의 협상
+	#사이공 협정
 	id = FRA_prov_event.99
 	title = FRA_prov_event.99.t
 	desc = FRA_prov_event.99.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_dutch_soldiers_indonesia
 	option = {
 		name = FRA_prov_event.99.a
-		add_timed_idea = {
-			idea = FRA_good_retreat
-			years = 2
+		end_puppet = VIN
+		1038 = {
+			remove_dynamic_modifier = {
+				modifier = FRA_Viet_Nam_Colony
+			}
+			set_demilitarized_zone = no
+			transfer_state_to = VIN
+		}
+		CAM = {
+			drop_cosmetic_tag = yes
+		}
+		LAO = {
+			drop_cosmetic_tag = yes
+		}
+		VIN = {
+			modify_timed_idea = {
+				idea = VIN_upcoming_riot
+				years = 4
+			}
+			give_resource_rights = {
+				receiver = FRA
+				state = 671
+			}
+			give_resource_rights = {
+				receiver = FRA
+				state = 286
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = VIN_neutrality_party_new
+				name = VIN_neutrality_party_new
+			}
 		}
 		hidden_effect = {
-			set_country_flag = FRA_has_indochina_war
 			VIN = {
-				set_cosmetic_tag = VIN_com
-				set_politics = {
-					ruling_party = communism
+				drop_cosmetic_tag = yes
+				create_country_leader = {
+					name = "Bao Đai"
+					desc = ""
+					picture = "gfx/leaders/VIN/Portrait_VIN_bao_dai.tga"
+					expire = "1953.3.1"
+					ideology = despotism
+					traits = {
+						
+					}
 				}
 				add_popularity = {
-					ideology = communism
+					ideology = neutrality
 					popularity = 0.5
 				}
-				remove_ideas = FRA_government_general_2
-				remove_ideas = FRA_government_general_1
-				remove_ideas = FRA_government_general
-				remove_ideas = VIN_colonists_resist_0
-				remove_ideas = VIN_colonists_resist_1
-				remove_ideas = VIN_colonists_resist_2
-				remove_ideas = VIN_colonists_resist_3
 			}
 			news_event = {
 				id = BA_news.119
@@ -5016,18 +4938,15 @@ country_event = {
 	desc = FRA_prov_event.117.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_japan_army_mountainside
 	option = {
 		name = FRA_prov_event.117.a
 		VIN = {
-			swap_ideas = {
-				remove_idea = FRA_government_general
-				add_idea = FRA_government_general_1
-			}
+			add_timed_idea = {
+				idea = VIN_upcoming_riot
+				years = 2
+			} 
 		}
-		set_country_flag = FRA_has_indochina_issue
-		add_ideas = FRA_indochina_resources
-		custom_effect_tooltip = CHL_skip_one_line_tt
-		unlock_decision_category_tooltip = FRA_indochina_issue
 	}
 }
 
@@ -5132,7 +5051,6 @@ country_event = {
 			ruling_party = neutrality
 			elections_allowed = no
 		}
-		activate_advisor = FRA_pierre
 		set_party_name = {
 			ideology = neutrality
 			long_name = FRA_neutrality_party_mil_gov_long
@@ -5208,7 +5126,7 @@ country_event = {
 }
 
 country_event = {
-	#인도차이나 공산당
+	#안 씀
 	id = FRA_prov_event.124
 	title = FRA_prov_event.124.t
 	desc = FRA_prov_event.124.d
