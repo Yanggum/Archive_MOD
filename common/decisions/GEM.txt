@@ -928,9 +928,656 @@ GEH_nego_wehrmacht_decisions = {
 
 GEM_ibuki_system_decision = {
 	debugeffect = {
+		visible = {
+			is_debug = yes
+		}
 		complete_effect = {
-			set_country_flag = GEM_ibuki_system_action_wing_one_3_flag
-			set_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+			#이부키 성장시스템 기본값
+			#
+			# 각 값은 1단계 0-19, 2단계 20-39, 3단계 40-59, 4단계 60-79, 5단계 80-99, 완성(6) 단계 (100) 의 값을 가짐.
+			# 각 분기당 4개의 스텟을 키우고, 스텟의 총 단계는 10단계임. 하나를 '완성' 까지 만들면 다른 부분은 하나도 키울 수 없음.
+			# 분기 종료시 1단계인 값에는 약한 디버프를 받음. 2단계부터 소소한 버프.
+			# 2 4 2 2 = 10 식으로 성장시키는걸 추천, 각 성장 단계마다 1-2개의 조건을 가지는 중점. 특히 완성 단계일 시 해금되는 중점이 몇 개 있을 것.
+			#
+			set_variable = { GEM_ibuki_system_one_array_lv^0 = 1 }
+			set_variable = { GEM_ibuki_system_one_array_lv^1 = 1 }
+			set_variable = { GEM_ibuki_system_one_array_lv^2 = 1 }
+			set_variable = { GEM_ibuki_system_one_array_lv^3 = 1 }
+			set_variable = { GEM_ibuki_system_one_array_value^0 = 14 }
+			set_variable = { GEM_ibuki_system_one_array_value^1 = 13 }
+			set_variable = { GEM_ibuki_system_one_array_value^2 = 12 }
+			set_variable = { GEM_ibuki_system_one_array_value^3 = 14 }
+			set_variable = { GEM_ibuki_system_two_array_lv^0 = 1 }
+			set_variable = { GEM_ibuki_system_two_array_lv^1 = 1 }
+			set_variable = { GEM_ibuki_system_two_array_lv^2 = 1 }
+			set_variable = { GEM_ibuki_system_two_array_lv^3 = 1 }
+			set_variable = { GEM_ibuki_system_two_array_value^0 = 0 }
+			set_variable = { GEM_ibuki_system_two_array_value^1 = 0 }
+			set_variable = { GEM_ibuki_system_two_array_value^2 = 0 }
+			set_variable = { GEM_ibuki_system_two_array_value^3 = 0 }
+
+			#
+			# 이건 이부키 시스템 속성값. 외부 노출 X
+			#
+			set_variable = { GEM_ibuki_system_branch_var = 0 } #현재 분기 0 -> 1(1분기 완료) -> 2(2분기 완료)
+			set_variable = { GEM_ibuki_system_one_1_var = 1 } #0 1 2 3 4의 값을 가지는 단계도
+			set_variable = { GEM_ibuki_system_one_2_var = 1 }
+			set_variable = { GEM_ibuki_system_one_3_var = 1 }
+			set_variable = { GEM_ibuki_system_one_4_var = 1 }
+
+			set_variable = { GEM_ibuki_system_two_1_var = 0 }
+			set_variable = { GEM_ibuki_system_two_2_var = 0 }
+			set_variable = { GEM_ibuki_system_two_3_var = 0 }
+			set_variable = { GEM_ibuki_system_two_4_var = 0 }
+		}
+	}
+	GEM_ibuki_system_time_of_growth = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			
+		}
+
+		days_mission_timeout = 550
+   		activation = {
+    	}
+    	available = {
+			custom_trigger_tooltip = {
+				tooltip = GEM_ibuki_system_time_of_growth_available_tt
+				always = no
+			}
+    	}
+		is_good = yes
+    	cancel_trigger = {
+    	}
+		visible = {
+		}
+		
+		timeout_effect = {
+			add_stability = 0.05
+			activate_mission = GEM_ibuki_system_flowers_blooming
+			hidden_effect = {			
+				set_temp_variable = {
+					GEM_ibuki_system_one_array_for_temp = 0 #가장 높은 값
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_one_array_forreturnindex_temp = 0 #가장 높은 인덱스
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^0
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^0
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 0
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^1
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^1
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 1
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^2
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^2
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 2
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^3
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^3
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 3
+					}
+				}
+					#중복 검사
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^0
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 0
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 0
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^1
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 1
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 1
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^2
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 2
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 2
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^3
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 3
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 3
+								}
+							}
+						}
+					}
+			}
+
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_same = 1
+					}
+				}
+				custom_effect_tooltip = GEM_ibuki_system_time_of_growth_same_tt
+			}
+			else = {
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 0
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_1_tt
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 1
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_2_tt
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 2
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_3_tt
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 3
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_4_tt
+				}
+			}
+
+			#########################################################
+			# 여기가 이제 결정부분
+			#########################################################
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 0
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_1_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 1
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_2_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 2
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_3_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 3
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_4_flag
+			}
+			custom_effect_tooltip = GEM_ibuki_system_time_of_growth_tt
+
+			custom_effect_tooltip = enter_tt
+
+			#########################################################
+			# 여기가 이제 세부 스텟 조정 부분
+			#########################################################
+
+			## 디버프 부분 / 1렙짜리 보유시 디버프 가중.
+			custom_effect_tooltip = GEM_ibuki_system_modifier_tt
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^0 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_1
+				add_to_variable = {
+					GEM_IBUKI_conscription_factor = -0.05
+					tooltip = conscription_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_war_support_factor = -0.10
+					tooltip = war_support_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^1 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_2
+				add_to_variable = {
+					GEM_IBUKI_political_power_factor = -0.10
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_political_advisor_cost_factor = 0.10
+					tooltip = political_advisor_cost_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^2 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_3
+				add_to_variable = {
+					GEM_IBUKI_production_factory_max_efficiency_factor = -0.05
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_trade_laws_cost_factor = 0.10
+					tooltip = trade_laws_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_economy_cost_factor = 0.10
+					tooltip = economy_cost_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^3 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_4
+				add_to_variable = {
+					GEM_IBUKI_production_factory_efficiency_gain_factor = -0.05
+					tooltip = production_factory_efficiency_gain_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_stability_factor = -0.10
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_research_speed_factor = -0.05
+					tooltip = research_speed_factor_tt
+				}
+			}
+		}
+	}
+	GEM_ibuki_system_flowers_blooming = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+
+		}
+
+		days_mission_timeout = 550
+   		activation = {
+			always = no
+    	}
+    	available = {
+			custom_trigger_tooltip = {
+				tooltip = GEM_ibuki_system_time_of_growth_available_tt
+				always = no
+			}
+    	}
+		is_good = yes
+    	cancel_trigger = {
+    	}
+		visible = {
+		}
+		
+		timeout_effect = {
+			add_stability = 0.05
+			activate_mission = GEM_ibuki_system_flowers_blooming			
+			set_temp_variable = {
+				GEM_ibuki_system_two_array_for_temp = 0 #가장 높은 값
+			}
+			set_temp_variable = {
+				GEM_ibuki_system_two_array_forreturnindex_temp = 0 #가장 높은 인덱스
+			}
+
+			if = {
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^0
+					}
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 0
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^1
+					}
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 1
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^2
+					}
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 2
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^3
+					}
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 3
+				}
+			}
+			hidden_effect = {
+				#중복 검사
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 0
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 0
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 1
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 1
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 2
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 2
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 3
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 3
+							}
+						}
+					}
+				}
+			}
+
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+				}
+				custom_effect_tooltip = GEM_ibuki_system_time_of_growth_same_tt
+				set_country_flag = GEM_ibuki_system_action_wing_two_1_flag
+			}
+			else = {
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 0
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_1_tt
+				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 1
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_2_tt
+				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 2
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_3_tt
+				set_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 3
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_4_tt
+				set_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+				}
+			}
+			custom_effect_tooltip = GEM_ibuki_system_time_of_growth_tt
 		}
 	}
 }
