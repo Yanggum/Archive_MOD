@@ -6620,7 +6620,7 @@ focus_tree = {
 		factor = 0
 		modifier = {
 			add = 11
-			tag = TRM
+			tag = TGH
 		}
 	}
 	continuous_focus_position = { x = 0 y = 2500 }
@@ -8336,6 +8336,7 @@ focus_tree = {
 			unlock_decision_category_tooltip = TRN_trinity_world_cat
 			activate_targeted_decision = { target = TRM decision = TRN_lend_our_support }
 			activate_targeted_decision = { target = TRM decision = TRN_international_propaganda }
+			activate_targeted_decision = { target = POL decision = TRN_border_fortifications }
 			hidden_effect = {
 				#country_event = { id = trinity.44 days = 14 random_days = 35 }
 			}
@@ -8395,46 +8396,6 @@ focus_tree = {
 				news_event = { id = BA_news.87  hours = 12 }
 			}
 
-		}
-	}
-	focus = { # 폴란드 문제
-		id = TRN_poland_problem
-		icon = GFX_focus_POL_common_organization_of_society
-		x = 2
-		y = 1
-		relative_position_id = TRN_kivotos_dip
-		cost = 3
-
-		available = { }
-		prerequisite = { focus = TRN_kivotos_dip }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			activate_targeted_decision = { target = POL decision = TRN_border_fortifications }
-		}
-	}
-
-	focus = { # 발트에 영향력 행사
-		id = TRN_influence_the_baltics
-		icon = GFX_focus_SOV_baltic_security
-		x = 0
-		y = 2
-		relative_position_id = TRN_poland_problem
-		cost = 8
-
-		available = { }
-		prerequisite = { focus = TRN_poland_problem }
-
-		mutually_exclusive = { focus = TRN_invasion_baltics }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			custom_effect_tooltip = TRN_influence_the_baltics_unlock_tt
-			#unlock_decision_tooltip = TRN_influence_baltics_decision
 		}
 	}
 
@@ -8551,6 +8512,10 @@ focus_tree = {
 			ARI = {
 				atsuko = { set_nationality = ROOT }
 			}
+			85 = {
+				remove_dynamic_modifier = { modifier = GEK_ari_religion }
+				add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
+			}
 		}
 	}
 
@@ -8620,10 +8585,33 @@ focus_tree = {
 					}
 				}
 			}
-
 		}
 	}
 
+	focus = { # 발트에 영향력 행사
+		id = TRN_influence_the_baltics
+		icon = GFX_focus_SOV_baltic_security
+		x = -2
+		y = 0
+		relative_position_id = TRN_invasion_baltics
+		cost = 8
+
+		available = { }
+		prerequisite = {
+			focus = TRN_religious_conversion 
+			focus = TRN_annex_the_bandit_states
+		}
+
+		mutually_exclusive = { focus = TRN_invasion_baltics }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			custom_effect_tooltip = TRN_influence_the_baltics_unlock_tt
+			#unlock_decision_tooltip = TRN_influence_baltics_decision
+		}
+	}
 	focus = { #
 		id = TRN_northern_kivotos_diplomacy
 		icon = GFX_focus_TRN_northern_kivotos_dip
