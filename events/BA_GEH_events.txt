@@ -29,8 +29,10 @@ add_namespace = GEH.hina.gov_event
 add_namespace = GEH.ako.gov_event
 #선도부 뉴스 이벤트
 add_namespace = GEH_news
-#선도부 뉴스 이벤트
+#선도부-판데모니움 소사이어티 유사 얄타 회담 이벤트
 add_namespace = TRM_auto_conference
+#선도부-판데모니움 소사이어티 두 나라에 동시에 발생하는 공동 이벤트
+add_namespace = GEH.GEM.shared_event
 
 
 #The Yalta Conference
@@ -4947,6 +4949,189 @@ country_event = { #내면화
 	option = { 
 		name = GEH.hina.gov_event.2.a 
 
+	}
+}
+
+# 선도부/판데모니움 소사이어티 공동 이벤트
+
+country_event = { # 새해의 아페테리프
+	id = GEH.GEM.shared_event.1
+	title = GEH.GEM.shared_event.1.t
+	desc = GEH.GEM.shared_event.1.desc
+	picture = GFX_report_event_generic_deutsche_arbeitsfront
+
+    is_triggered_only = yes
+
+	trigger = {
+		# 선도부와 판데모니움 소사이어티가 모두 살아있어야 함
+		AND = {
+			country_exists = GEH
+			country_exists = GEM
+		}
+		# 선도부와 판데모니움 소사이어티가 전쟁중이지 않아야 함
+		GEH = { NOT = { has_war_with = GEM } }
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.1.a # 하루나에 동조해 참새정을 지지한다.
+	    ai_chance = {
+		    base = 10
+	    }
+		set_temp_variable = {
+			gem_club_problem_progress_bar_temp = 7
+		}
+		GEH_gourmet_research_society_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.1.b # 애초에 미식연구회의 말을 믿을 가치가 있나?
+	    ai_chance = {
+		    base = 10
+	    }
+		add_to_variable = {
+			GEH_HSD_var_GEH_resistance_strength_gourmet_research_society = -1
+			tooltip = GEH_resistance_strength_gourmet_research_society_var_tt
+		}
+		GEH_gourmet_research_society_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+}
+
+country_event = { # Trip-Trap-Train
+	id = GEH.GEM.shared_event.2
+	title = GEH.GEM.shared_event.2.t
+	desc = GEH.GEM.shared_event.2.desc
+	picture = GFX_event_Trinity_Campus
+
+    is_triggered_only = yes
+
+	trigger = {
+		# 선도부와 판데모니움 소사이어티가 모두 살아있어야 함
+		AND = {
+			country_exists = GEH
+			country_exists = GEM
+		}
+		# 선도부와 판데모니움 소사이어티가 전쟁중이지 않아야 함
+		GEH = { NOT = { has_war_with = GEM } }
+		# 선도부와 트리니티가 전쟁중이지 않아야 함
+		GEH = { NOT = { has_war_with = TRM } }
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.2.a 
+	    ai_chance = {
+		    base = 10
+	    }
+		set_temp_variable = {
+			gem_club_problem_progress_bar_temp = 7
+		}
+		GEH_hot_spring_department_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.2.b
+	    ai_chance = {
+		    base = 10
+	    }
+		# 저항도 -1
+		add_to_variable = {
+			GEH_HSD_var_GEH_resistance_strength_hot_spring_department = -1
+			tooltip = GEH_resistance_strength_hot_spring_department_var_tt
+		}
+		GEH_hot_spring_department_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+}
+
+country_event = { # 군옥수수 팝니다
+	id = GEH.GEM.shared_event.3
+	title = GEH.GEM.shared_event.3.t
+	desc = GEH.GEM.shared_event.3.desc
+	picture = GFX_report_event_generic_reloading
+
+    is_triggered_only = yes
+
+	trigger = {
+		# 선도부와 판데모니움 소사이어티가 모두 살아있어야 함
+		AND = {
+			country_exists = GEH
+			country_exists = GEM
+		}
+		# 선도부와 판데모니움 소사이어티가 전쟁중이지 않아야 함
+		GEH = { NOT = { has_war_with = GEM } }
+	}
+
+
+	option = { 
+		name = GEH.GEM.shared_event.3.a # 군옥수수 좀 팔 수도 있지...
+	    ai_chance = {
+		    base = 10
+	    }
+		set_temp_variable = {
+			gem_club_problem_progress_bar_temp = 7
+		}
+		GEH_gourmet_research_society_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.3.b # 모두 체포해. 쿠로다테 하루나도.
+	    ai_chance = {
+		    base = 10
+	    }
+		add_to_variable = {
+			GEH_HSD_var_GEH_resistance_strength_gourmet_research_society = -1
+			tooltip = GEH_resistance_strength_gourmet_research_society_var_tt
+		}
+		GEH_gourmet_research_society_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+}
+
+country_event = { # 의사당 밑에 온천이 있다고?
+	id = GEH.GEM.shared_event.4
+	title = GEH.GEM.shared_event.4.t
+	desc = GEH.GEM.shared_event.4.desc
+	picture = GFX_event_mega_cities_GEH
+
+    is_triggered_only = yes
+
+	trigger = {
+		# 선도부와 판데모니움 소사이어티가 모두 살아있어야 함
+		AND = {
+			country_exists = GEH
+			country_exists = GEM
+		}
+		# 선도부와 판데모니움 소사이어티가 전쟁중이지 않아야 함
+		GEH = { NOT = { has_war_with = GEM } }
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.4.a 
+	    ai_chance = {
+		    base = 10
+	    }
+		set_temp_variable = {
+			gem_club_problem_progress_bar_temp = 7
+		}
+		GEH_hot_spring_department_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
+	}
+
+	option = { 
+		name = GEH.GEM.shared_event.4.b
+	    ai_chance = {
+		    base = 10
+	    }
+		# 저항도 -1
+		add_to_variable = {
+			GEH_HSD_var_GEH_resistance_strength_hot_spring_department = -1
+			tooltip = GEH_resistance_strength_hot_spring_department_var_tt
+		}
+		GEH_hot_spring_department_effect = yes
+		GEM_club_problem_decision_modifier_reload = yes
 	}
 }
 
