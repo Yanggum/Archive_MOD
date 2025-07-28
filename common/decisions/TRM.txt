@@ -6826,7 +6826,10 @@ TRM_diplomacy_balkan_decision_category = {
 		}
 
 		target_root_trigger = {
-			has_completed_focus = TRM_balkan_seeking_collaborators
+			OR = {
+				has_completed_focus = TRM_balkan_seeking_collaborators
+				has_completed_focus = TRN_balkan_dip
+			}
 			is_subject = no
 		}
 
@@ -6896,7 +6899,10 @@ TRM_diplomacy_balkan_decision_category = {
 		}
 
 		target_root_trigger = {
-			has_completed_focus = TRM_balkan_seeking_collaborators
+			OR = {
+				has_completed_focus = TRM_balkan_seeking_collaborators
+				has_completed_focus = TRN_balkan_dip
+			}
 		}
 
 		allowed = {
@@ -8150,6 +8156,54 @@ TRN_economic_plan_cat = {
 			}
 		}
 	}
+	TRN_stettin_oil_mining = {
+		icon = GFX_decision_oil
+
+		allowed = { always = no } #activated by effect
+
+		available = {
+			FROM = { is_owned_and_controlled_by = ROOT }
+			NOT = {
+				has_country_flag = TRN_industry_deicision_active
+			}
+		}
+
+		cost = 35
+		days_remove = 70
+		fire_only_once = yes
+		state_target = yes
+
+		modifier = {
+			#civilian_factory_use = 1
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+		
+		complete_effect = {
+			set_country_flag = {
+				flag = TRN_industry_deicision_active
+				value = 1
+				days = 70
+			}
+		}
+
+		remove_effect = {
+			FROM = {
+				add_resource = {
+					type = oil
+					amount = 70
+				}	
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
 
 }
 TRN_trinity_world_cat = {
@@ -8340,6 +8394,7 @@ TRN_trinity_world_cat = {
 
 		available = {
 			NOT = { has_country_flag = TRN_no_longer_TRN_support_HYA_decision }
+			is_faction_leader = yes
 			hidden_trigger = {
 				FROM = { 
 					check_variable = { TRN_support_HYA_var < 3 } 
@@ -8404,7 +8459,7 @@ TRN_trinity_world_cat = {
 		}
 	}
 
-	TRN_sha_attack_use_austrian = {
+	TRN_aby_attack_use_free_radio = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = { always = no }
 		available = {
@@ -8417,7 +8472,7 @@ TRN_trinity_world_cat = {
 
 		ai_will_do = { base = 40 }
 		complete_effect = {
-			SHA = {
+			ABY = {
 				country_event = TRMDIP.63
 				custom_effect_tooltip = tooltip_white_line
 				effect_tooltip = {
@@ -8528,7 +8583,15 @@ TRN_trinity_world_cat = {
 		ai_will_do = { base = 100 }
 
 		complete_effect = {
-			set_country_flag = TRN_create_pro_trinity_group_flag
+
+			hidden_effect = {
+				GEM = {
+					country_event = {
+						id = TRMDIP.24 
+						days = 01
+					}
+				}
+			}
 		}
 	}
 
@@ -8547,7 +8610,7 @@ TRN_trinity_world_cat = {
 		ai_will_do = { base = 100 }
 
 		complete_effect = {
-			set_country_flag = TRN_anti_pandemonium_society_flag
+
 		}
 	}
 
@@ -8605,15 +8668,6 @@ TRN_trinity_world_cat = {
 
 		complete_effect = {
 			set_country_flag = TRN_create_pro_trinity_group_flag
-
-			hidden_effect = {
-				GEM = {
-					country_event = {
-						id = TRMDIP.24 
-						days = 01
-					}
-				}
-			}
 		}
 	}
 

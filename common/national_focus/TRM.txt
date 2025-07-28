@@ -6978,6 +6978,7 @@ focus_tree = {
 			activate_targeted_decision = { target = 763 decision = TRN_Kimigayama_shipbuilding_plant } # 쾨니히스베르크
 			activate_targeted_decision = { target = 63 decision = TRN_Stettin_heavy_industry } # 힌터포메른
 			activate_targeted_decision = { target = 762 decision = TRN_katowice_mining } # 카토비체
+			activate_targeted_decision = { target = 63 decision = TRN_stettin_oil_mining } # 힌터포메른
 			
 		}
 	}
@@ -8315,7 +8316,7 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = 9
+		x = 11
 		y = 1
 		relative_position_id = TRN_necessary_revenge
 		prerequisite = { focus = TRN_sect_control }
@@ -8399,6 +8400,36 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 관세 동맹은 몰랐지
+		id = TRN_establish_a_customs_union
+		icon = GFX_focus_TRN_establish_a_customs_union
+		x = -1
+		y = 1
+		relative_position_id = TRN_eden_accord
+		cost = 4
+
+		available = {
+			is_subject = no
+			is_faction_leader = yes
+			any_country = {
+				is_in_faction_with = TRM
+			}
+		}
+
+		prerequisite = { 
+			focus = TRN_eden_accord
+		}
+
+		ai_will_do = {
+
+		}
+
+
+		completion_reward = {
+
+		}
+	}
+
 	###
 	### 아리우스 분기
 	###
@@ -8406,7 +8437,7 @@ focus_tree = {
 	focus = { # 꼬리잡기
 		id = TRN_catch_tail
 		icon = GFX_focus_GER_strafbataillon
-		x = 4
+		x = 8
 		y = 1
 		relative_position_id = TRN_kivotos_dip
 		cost = 3
@@ -8615,7 +8646,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_northern_kivotos_diplomacy
 		icon = GFX_focus_TRN_northern_kivotos_dip
-		x = 7
+		x = 3
 		y = 1
 		relative_position_id = TRN_kivotos_dip
 		cost = 5
@@ -8825,56 +8856,21 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 남부 외교
-		id = TRN_southern_kivotos_dip
-		icon = GFX_goal_SHA_Southern_Kivotos
-		x = -2
-		y = 1
-		relative_position_id = TRN_kivotos_dip
-		cost = 5
-
-		available = {
-
-		}
-		prerequisite = { focus = TRN_kivotos_dip }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			add_political_power  = 35
-			add_opinion_modifier = {
-				target = SHA
-				modifier = small_increase
-			}
-			add_opinion_modifier = {
-				target = HYA
-				modifier = small_increase
-			}
-			add_opinion_modifier = {
-				target = ABY
-				modifier = BUL_threatening_neighbor
-			}
-
-			add_war_support = 0.05
-		}
-	}
-
 	focus = { # 남부 외교 - 백귀야행 지지
 		id = TRN_support_HYA
 		icon = GFX_focus_chi_mission_to_the_HYA
-		x = -1
+		x = -4
 		y = 1
-		relative_position_id = TRN_southern_kivotos_dip
+		relative_position_id = TRN_kivotos_dip
 		cost = 5
 
 		available = {
 			HYA = {
 				NOT = { has_completed_focus = HYA_focus_70 }
 			}
-			NOT = { has_completed_focus = TRN_spiritual_warfare }
 		}
-		prerequisite = { focus = TRN_southern_kivotos_dip }
+		prerequisite = { focus = TRN_kivotos_dip }
+		mutually_exclusive = { focus = TRN_find_new_allies }
 
 		ai_will_do = {
 
@@ -8886,18 +8882,40 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 아비도스의 운명
-		id = TRN_fate_of_abydos
-		icon = GFX_focus_attack_ABY
-		x = 1
+	focus = { # 새로운 동맹 찾기
+		id = TRN_find_new_allies
+		icon = GFX_focus_chi_mission_to_the_SHA
+		x = -2
 		y = 1
-		relative_position_id = TRN_southern_kivotos_dip
+		relative_position_id = TRN_kivotos_dip
 		cost = 5
 
 		available = {
 
 		}
-		prerequisite = { focus = TRN_southern_kivotos_dip }
+		prerequisite = { focus = TRN_kivotos_dip }
+		mutually_exclusive = { focus = TRN_support_HYA }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 새로운 동맹 찾기
+		id = TRN_shanhaijing_tea_leaf_export
+		icon = GFX_focus_RAJ_tea_exports
+		x = 0
+		y = 2
+		relative_position_id = TRN_find_new_allies
+		cost = 5
+
+		available = {
+			has_idea = SHA_tea_leaf_export_ns
+		}
+		prerequisite = { focus = TRN_find_new_allies }
 
 		ai_will_do = {
 
@@ -8910,8 +8928,8 @@ focus_tree = {
 	focus = { # 헝가리 확보
 		id = TRN_secure_hungary
 		icon = GFX_focus_generic_attack_hungary
-		x = -0
-		y = 2
+		x = -1
+		y = 1
 		relative_position_id = TRN_support_HYA
 		cost = 4
 
@@ -8923,7 +8941,7 @@ focus_tree = {
 			}
 		}
 		prerequisite = { 
-			focus = TRN_fate_of_abydos 
+			focus = TRN_find_new_allies 
 			focus = TRN_support_HYA
 		}
 		#mutually_exclusive = { focus = TRN_support_SHA }
@@ -8938,28 +8956,27 @@ focus_tree = {
 				target = HUN
 				type = puppet_wargoal_focus
 			}
-			activate_targeted_decision = { decision = TRN_romania_give_the_oil target = ROM }
 		}
 	}
 
-	focus = { # 산하이징 조약 파쇄
-		id = TRN_Breaking_Sanhaijing_treaty
-		icon = GFX_focus_attack_SHA
+	focus = { # 아비도스 위협 분새
+		id = TRN_braeking_abydos
+		icon = GFX_focus_attack_ABY
 		x = -1
 		y = 1
-		relative_position_id = TRN_fate_of_abydos
+		relative_position_id = TRN_find_new_allies
 		cost = 4
 
 		available = {
 			is_subject = no
-			SHA = {
+			ABY = {
 				is_subject = no
 				NOT = { is_in_faction_with = ROOT }
 			}
 		}
 
 		prerequisite = { 
-			focus = TRN_fate_of_abydos 
+			focus = TRN_find_new_allies 
 			focus = TRN_support_HYA
 		}
 
@@ -8967,13 +8984,69 @@ focus_tree = {
 
 		}
 
-		will_lead_to_war_with = SHA
+		will_lead_to_war_with = ABY
 		completion_reward = {
 			create_wargoal = {
-				target = SHA
+				target = ABY
 				type = puppet_wargoal_focus
 			}
-			activate_targeted_decision = { decision = TRN_sha_attack_use_austrian target = TRM }
+			activate_targeted_decision = { decision = TRN_aby_attack_use_free_radio target = TRM }
+		}
+	}
+
+	focus = { # 발칸 외교
+		id = TRN_balkan_dip
+		icon = GFX_focus_TRN_balkan_dip
+		x = -1
+		y = 1
+		relative_position_id = TRN_braeking_abydos
+		cost = 4
+
+		available = {
+			is_subject = no
+		}
+
+		prerequisite = { 
+			focus = TRN_braeking_abydos 
+			focus = TRN_secure_hungary
+		}
+
+		ai_will_do = {
+
+		}
+
+
+		completion_reward = {
+			every_other_country = {
+				limit = { 
+					OR = {
+						BUL_is_balkan_nation = yes 
+						tag = HUN
+					}
+					NOT = { tag = TUR }
+				}
+				add_timed_idea = {
+					idea = fascist_influence_weak
+					days = 365
+				}
+				hidden_effect = { country_event = { id = generic.1 } }
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = SOV_seek_balkan_cooperation_decisions_tt
+			hidden_effect = {
+				activate_targeted_decision = { target = ROM decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = BUL decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = GRE decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = YUG decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = HUN decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = ROM decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = BUL decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = GRE decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = YUG decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = HUN decision = TRM_promote_ideology_rallies_balkan }
+			}
+			activate_targeted_decision = { target = ROM decision = TRN_romania_give_the_oil }
+
 		}
 	}
 
