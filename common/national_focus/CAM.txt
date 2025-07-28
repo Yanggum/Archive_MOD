@@ -8,35 +8,27 @@
 			tag = CAM
 		}
 	}
-
-	focus = {
-		id = under_fra
-		icon = no
-		
-        x = 15
-		y = 0
-
-		cost = 10
-
-		available = {
-			always = yes
-		}
-		completion_reward = {
-			add_political_power = 150
-		}
-	}
 	
 	focus = {
 		id = keep_under_fra
 		icon = no
 		
         x = 1
-		y = 2
+		y = 0
 
 		cost = 10
 
-		prerequisite = {
-			focus = under_fra
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = return_khmer_empire }
+				NOT = { has_completed_focus = rise_facism }
+			}
 		}
 
 		mutually_exclusive = {
@@ -52,78 +44,36 @@
 	}
 
 	focus = {
-		id = streamline_colonial_admin
-		icon = no
-		
-        x = -3
-		y = 4 
-
-		cost = 10
-
-		prerequisite = {
-			focus = keep_under_fra
-		}
-		
-		completion_reward = {
-			add_stability = 0.05 # 안정도 5% 증가
-			add_political_power = 75 # 정치력 획득
-		}
-	}
-
-	focus = {
-		id = strengthen_royal_authority
-		icon = GFX_focus_CAM_royal_authority
-		
-        x = 1
-		y = 4
-
-		cost = 10
-
-		prerequisite = {
-			focus = keep_under_fra
-		}
-		
-		completion_reward = {
-			add_political_power = 75
-		}
-	}
-
-	focus = {
-		id = cultural_heritage_committee
-		icon = GFX_focus_CAM_cultural_heritage
-		
-        x = 5
-		y = 4
-
-		cost = 10
-
-		prerequisite = {
-			focus = keep_under_fra
-		}
-		
-		completion_reward = {
-			add_stability = 0.03 # 안정도 3% 증가
-			add_political_power = 60
-			# add_war_support = 0.02 # 전쟁 지지도 2% 증가 (단결된 국민 표현)
-		}
-	}
-
-	focus = {
 		id = return_khmer_empire
 		icon = no
 		
         x = 15
-		y = 2
+		y = 0
 
 		cost = 10
 
-		prerequisite = {
-			focus = under_fra
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = keep_under_fra }
+				NOT = { has_completed_focus = rise_facism }
+			}
 		}
 
 		mutually_exclusive = {
         focus = keep_under_fra
         focus = rise_facism
+		}
+		completion_reward = {
+			add_timed_idea = { 
+				idea = return_khmer_empire_idea
+				days = 365
+			}
 		}
 	}
 
@@ -132,12 +82,21 @@
 		icon = no
 		
         x = 30
-		y = 2
+		y = 0
 
 		cost = 10
 
-		prerequisite = {
-			focus = under_fra
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = return_khmer_empire }
+				NOT = { has_completed_focus = keep_under_fra }
+			}
 		}
 
 		mutually_exclusive = {
