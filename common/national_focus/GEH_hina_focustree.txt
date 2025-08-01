@@ -9592,12 +9592,12 @@ focus_tree = {
 				}
 				add_opinion_modifier = { target = ROOT modifier = existential_threat }
 			}
-			activate_targeted_decision = { target = GEM decision = GEH_anti_pandemonium_society }
-			activate_targeted_decision = { target = GEM decision = GEH_create_pro_trinity_group }
-			activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Gourmet_Research_Society }
-			activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Hot_Springs_Department }
+		#	activate_targeted_decision = { target = GEM decision = GEH_anti_pandemonium_society }
+		#	activate_targeted_decision = { target = GEM decision = GEH_create_pro_trinity_group }
+		#	activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Gourmet_Research_Society }
+		#	activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Hot_Springs_Department }
 
-			activate_targeted_decision = { target = GEH decision = GEH_prefect_team_discipline_decline }
+		#	activate_targeted_decision = { target = GEH decision = GEH_prefect_team_discipline_decline }
 
 		}
 	}
@@ -12375,6 +12375,8 @@ focus_tree = {
 			}
 
 			add_ideas = GEH_kriegsrecht
+
+			country_event = GEH_iori_despotic_story_event.1
 		}
 	}
 
@@ -12422,7 +12424,7 @@ focus_tree = {
 				effect_tooltip = {
 					swap_ruler_traits = {
 						remove = GEH_blame_director
-						add = GEH_blame_director_2
+						add = GEH_blame_director_3
 					}
 				}
 			}
@@ -12430,7 +12432,7 @@ focus_tree = {
 				limit = { has_trait = GEH_blame_director }
 				swap_country_leader_traits = {
 					remove = GEH_blame_director
-					add = GEH_blame_director_2
+					add = GEH_blame_director_3
 				}
 			}
 		}
@@ -12467,10 +12469,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.10
-			}
 			custom_effect_tooltip = GEH_RU
 			add_to_variable = {
 				GEH_RU_army_sub_unit_halo_infantry_defence_factor = 0.05
@@ -12479,6 +12477,11 @@ focus_tree = {
 			add_to_variable = {
 				GEH_RU_industrial_capacity_factory = 0.05
 				tooltip = industrial_capacity_factory_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.10
 			}
 		}
 	}
@@ -12559,14 +12562,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			remove_ideas = GEH_kriegsrecht
+			swap_ruler_traits = {
+				remove = dictator_1
+				add = GEH_iori_trait_c_l
+			}
 			set_party_name = {
 				ideology = fascism
 				long_name = GEH_free_fatherland_defense_alliance_long
 				name = GEH_free_fatherland_defense_alliance
 			}
-			custom_effect_tooltip = GEH_BTBOTS_END_NEXT_flag
-			set_global_flag = GEH_BTBOTS_END_NEXT_flag
+			country_event = GEH_iori_despotic_story_event.4
 		}
 	}
 
@@ -12606,14 +12611,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			remove_ideas = GEH_kriegsrecht
+			swap_ruler_traits = {
+				remove = dictator_1
+				add = GEH_iori_trait_c_r
+			}
 			set_party_name = {
 				ideology = fascism
 				long_name = GEH_united_nation_reconstruction_committee_long
 				name = GEH_united_nation_reconstruction_committee
 			}
-			custom_effect_tooltip = GEH_BTBOTS_END_NEXT_flag
-			set_global_flag = GEH_BTBOTS_END_NEXT_flag
+			country_event = GEH_iori_despotic_story_event.5
 		}
 	}
 
@@ -12647,7 +12654,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_RU
+			add_to_variable = {
+				GEH_RU_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			remove_ideas = GEH_kriegsrecht
 			add_ideas = GEH_regensburg_riot_decree
+			custom_effect_tooltip = GEH_BTBOTS_END_NEXT_flag
+			set_global_flag = GEH_BTBOTS_END_NEXT_flag
+			country_event = GEH_iori_despotic_story_event.3
 		}
 	}
 
@@ -12684,12 +12701,97 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = GEH_HSDD_idea
+				}
+				add_dynamic_modifier = {
+					modifier = GEH_NW_idea
+				}
+			}
+			custom_effect_tooltip = GEH_NW_swap
+			custom_effect_tooltip = GEH_NW
+			add_to_variable = {
+				GEH_NW_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GEH_NW_political_advisor_cost_factor = -0.15
+				tooltip = political_advisor_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_NW_economy_cost_factor = -0.15
+				tooltip = economy_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_NW_mobilization_laws_cost_factor = -0.15
+				tooltip = mobilization_laws_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_NW_trade_laws_cost_factor = -0.15
+				tooltip = trade_laws_cost_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+			}
 		}
 	}
 
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion
-		icon = GFX_goal_PrefectTeam_muster_Ako 
+		icon = GFX_goal_PrefectTeam_muster_kick_Ako
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_regensburg_riot_decree
@@ -12719,7 +12821,75 @@ focus_tree = {
 			}
 		}
 
+		complete_tooltip = {
+			every_state = {
+				limit = {
+					has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
 		completion_reward = {
+			custom_effect_tooltip = GEH_PL
+			add_to_variable = {
+				GEH_PL_idea_production_speed_industrial_complex_factor = 0.05
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_line_change_production_efficiency_factor = 0.05
+				tooltip = line_change_production_efficiency_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					NOT = { has_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_planning_ministry_role_expansion_1IC
+			}
 		}
 	}
 
@@ -12734,6 +12904,9 @@ focus_tree = {
 
 		available = {
 			has_stability > 0.49
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_weak_attack
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_national_kivotosism
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_our_identity
 		}
 		
         prerequisite = {
@@ -12754,7 +12927,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_RU
+			add_to_variable = {
+				GEH_RU_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
             GEH_popular_support_up_effect = yes
+			add_political_power = 40
+			add_stability = 0.05
 		}
 	}
 
@@ -12768,6 +12949,7 @@ focus_tree = {
 		y = 1
 
 		available = {
+			has_completed_focus = GEH_military_leadership_committee
 		}
 		
         prerequisite = {
@@ -12791,12 +12973,27 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_surrender_limit = 0.05
+				tooltip = surrender_limit_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_army_morale_factor = 0.10
+				tooltip = army_morale_factor_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_mobilization_speed = 0.10
+				tooltip = mobilization_speed_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_stability = -0.05
 		}
 	}
 
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_gehenna_priority
-		icon = GFX_focus_RAJ_a_tiger_unchained 
+		icon = GFX_focus_GEM_group_leadership_system 
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_free_fatherland_defense_alliance
@@ -12804,6 +13001,7 @@ focus_tree = {
 		y = 1
 
 		available = {
+			has_completed_focus = GEH_military_leadership_committee
 		}
 		
         prerequisite = {
@@ -12827,6 +13025,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_consumer_goods_factor = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_mobilization_speed = 0.10
+				tooltip = mobilization_speed_tt
+			}
+			custom_effect_tooltip = enter_tt
             GEH_popular_support_up_effect = yes
 		}
 	}
@@ -12841,6 +13053,7 @@ focus_tree = {
 		y = 1
 
 		available = {
+			has_completed_focus = GEH_military_leadership_committee
 		}
 		
         prerequisite = {
@@ -12864,6 +13077,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_stability = -0.05
 		}
 	}
 
@@ -12877,6 +13101,7 @@ focus_tree = {
 		y = 1
 
 		available = {
+			has_completed_focus = GEH_military_leadership_committee
 		}
 		
         prerequisite = {
@@ -12900,7 +13125,243 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
             GEH_popular_support_up_effect = yes
+		}
+	}
+
+    focus = {
+		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_pure_kivotos_cultural_leap
+		icon = GFX_focus_TRN_kivotos_dip 
+		cost = 5
+
+		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_free_fatherland_defense_alliance
+		x = -2
+		y = 3
+
+		available = {
+		}
+		
+        prerequisite = {
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_pan_kivotos
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_gehenna_priority
+		}
+
+		mutually_exclusive = {
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_production_speed_arms_factory_factor = 0.03
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_RU
+			add_to_variable = {
+				GEH_RU_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+
+    focus = {
+		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_forward_step_of_jeminj
+		icon = GFX_goal_GEH_Pax_Gehennia 
+		cost = 5
+
+		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_united_nation_reconstruction_committee
+		x = 2
+		y = 3
+
+		available = {
+		}
+		
+        prerequisite = {
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_german_forced_assimilation
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_german_gehennan
+		}
+
+		mutually_exclusive = {
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_war_department_idea_tt
+			add_to_variable = {
+				GEH_gehenna_war_department_idea_production_speed_industrial_complex_factor = 0.05
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_RU
+			add_to_variable = {
+				GEH_RU_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+
+    focus = {
+		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_leader_of_nation_and_fatherland
+		icon = GFX_focus_AUS_lawmaking_leniency 
+		cost = 5
+
+		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_pure_kivotos_cultural_leap
+		x = 2
+		y = 1
+
+		available = {
+			has_completed_focus = GEH_factory_focus_1
+			has_completed_focus = GEH_Trinity_war
+			custom_trigger_tooltip = {
+				tooltip = GEH_three_congress_focus_trigger
+				count_triggers = {
+					amount = 3
+					has_completed_focus = GEH_look_to_the_west
+					has_completed_focus = GEH_west_army_focus_1
+					has_completed_focus = GEH_west_army_focus_2
+					has_completed_focus = GEH_west_army_focus_3
+					has_completed_focus = GEH_Leverage_Perfect_team_strengths
+					has_completed_focus = GEH_prefect_army_focus_1
+					has_completed_focus = GEH_prefect_army_focus_2
+					has_completed_focus = GEH_prefect_army_focus_3
+					has_completed_focus = GEH_Army_focus_1
+					has_completed_focus = GEH_Army_focus_2
+					has_completed_focus = GEH_Army_focus_3
+				}
+			}
+		}
+		
+        prerequisite = {
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_gehenna_order_restoration
+		}
+		
+        prerequisite = {
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_pure_kivotos_cultural_leap
+		}
+
+		mutually_exclusive = {
+			focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_conscription_equality
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			swap_ruler_traits = {
+				remove = GEH_purist
+				add = GEH_purist_l
+			}
+		}
+	}
+
+    focus = {
+		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_conscription_equality
+		icon = GFX_focus_AUS_raid_military_storages 
+		cost = 5
+
+		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_forward_step_of_jeminj
+		x = -2
+		y = 1
+
+		available = {
+			has_completed_focus = GEH_factory_focus_1
+			has_completed_focus = GEH_Trinity_war
+			custom_trigger_tooltip = {
+				tooltip = GEH_three_congress_focus_trigger
+				count_triggers = {
+					amount = 3
+					has_completed_focus = GEH_look_to_the_west
+					has_completed_focus = GEH_west_army_focus_1
+					has_completed_focus = GEH_west_army_focus_2
+					has_completed_focus = GEH_west_army_focus_3
+					has_completed_focus = GEH_Leverage_Perfect_team_strengths
+					has_completed_focus = GEH_prefect_army_focus_1
+					has_completed_focus = GEH_prefect_army_focus_2
+					has_completed_focus = GEH_prefect_army_focus_3
+					has_completed_focus = GEH_Army_focus_1
+					has_completed_focus = GEH_Army_focus_2
+					has_completed_focus = GEH_Army_focus_3
+				}
+			}
+		}
+		
+        prerequisite = {
+			focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_gehenna_order_restoration
+		}
+		
+        prerequisite = {
+            focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_forward_step_of_jeminj
+		}
+
+		mutually_exclusive = {
+			focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c_leader_of_nation_and_fatherland
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			swap_ruler_traits = {
+				remove = GEH_purist
+				add = GEH_purist_r
+			}
 		}
 	}
 # 히나 탈주: 이오리 중점 최종장 끝/
