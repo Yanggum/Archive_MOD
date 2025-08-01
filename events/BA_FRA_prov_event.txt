@@ -2,6 +2,7 @@ add_namespace = FRA_prov_event
 add_namespace = FRA_recover
 add_namespace = FRA_free_france_event
 add_namespace = FRM_event
+add_namespace = FRA_hidden
 country_event = {
 	id = FRM_event.1
 	title = FRM_event.1.t
@@ -6210,6 +6211,18 @@ unit_leader_event = {
 		custom_effect_tooltip =  FRA_pet.4_tt
 	}
 }
+unit_leader_event = {
+	#국가 혁명 (Révolution nationale)
+	id = FRA_pet.6
+	title = FRA_pet.6.t
+	desc = FRA_pet.6.d
+	is_triggered_only = yes
+	hidden = no
+	option = {
+		name = FRA_pet.6.a
+		add_ideas = FRA_revolution_nationale
+	}
+}
 
 country_event = {
 	#recover : 수복 이후; 훈장 수여
@@ -7370,6 +7383,92 @@ country_event = { # 수락
 			limit = {
 				has_country_flag = FRA_MIL_fra_demanded_navy
 			}
+		}
+	}
+}
+country_event = { #페텡 중점 자동시작
+	id = FRA_hidden.1
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_completed_focus = FRA_petain_focus_0
+				NOT = { has_completed_focus = FRA_petain_focus_1 }
+				NOT = { has_shine_effect_on_focus = FRA_petain_focus_1 }
+			}
+			activate_shine_on_focus = FRA_petain_focus_1
+			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 70 value = 1 }
+			country_event = { id = FRA_hidden.2 days = 70 }
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_petain_focus_2 }
+				NOT = { has_shine_effect_on_focus = FRA_petain_focus_2 }
+			}
+			activate_shine_on_focus = FRA_petain_focus_2
+			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 140 value = 1 }
+			country_event = { id = FRA_hidden.2 days = 140 }
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_petain_focus_3 }
+				NOT = { has_shine_effect_on_focus = FRA_petain_focus_3 }
+			}
+			activate_shine_on_focus = FRA_petain_focus_3
+			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 140 value = 1 }
+			country_event = { id = FRA_hidden.2 days = 140 }
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_petain_focus_4 }
+				NOT = { has_shine_effect_on_focus = FRA_petain_focus_4 }
+			}
+			activate_shine_on_focus = FRA_petain_focus_4
+			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 140 value = 1 }
+			country_event = { id = FRA_hidden.2 days = 140 }
+		}
+		else = { #Debug logs
+			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot start new focus"
+		}
+	}
+}
+
+# GOEBBELS - Complete Focus
+country_event = {
+	id = FRA_hidden.2
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_1
+				NOT = {
+					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
+				}
+			}
+			complete_national_focus = {
+				focus = FRA_petain_focus_1
+				use_side_message = yes
+				originator_name = FRA_military_conference
+			}
+			clr_country_flag = GEH_Prefect_Team_muster_in_progress_flag
+			country_event = { id = GEH_hidden.1 days = 5 }
+		}
+		else_if = {
+		}
+		else_if = {
+		}
+		else_if = {
+		}
+		else = { #Debug logs
+			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot complete focus"
 		}
 	}
 }
