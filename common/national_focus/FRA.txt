@@ -5145,6 +5145,7 @@ focus_tree = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
 					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
+					has_completed_focus = FRA_petain_focus_1
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -5189,6 +5190,7 @@ focus_tree = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
 					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
+					has_completed_focus = FRA_petain_focus_2
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -5233,6 +5235,7 @@ focus_tree = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
 					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
+					has_completed_focus = FRA_petain_focus_3
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -5312,6 +5315,164 @@ focus_tree = {
 		completion_reward = {
 		}
 	}
+
+	#프랑수아 다를랑
+	focus = { #행정가 제독
+		id = FRA_darlan_focus_0
+		cost = 1
+		x = 1
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		icon = GFX_focus_generic_naval_discipline
+		allow_branch = {
+			check_variable = {
+			#	FRA_ascended_advisor_1 = 2
+			}
+		}
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
+		}
+		completion_reward = {
+		}
+	}
+	focus = { #본토 산업 이전 지원
+		id = FRA_darlan_focus_1
+		cost = 20
+		x = 0
+		y = 1
+		relative_position_id = FRA_darlan_focus_0
+		text_icon = GER_inner_circle_focus_style
+		icon = GFX_focus_generic_naval_invasion_tank
+		prerequisite = {
+			focus = FRA_darlan_focus_0
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
+					has_completed_focus = FRA_darlan_focus_0
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = FRA_francois_darlan 
+						FLAG_DAYS = [?FRA_employ_francois_darlan_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = FRA_francois_darlan
+						FOCUS = FRA_darlan_focus_0
+					}
+					always = no
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = FRA_new_propaganda
+			unlock_decision_tooltip = FRA_propaganda_1
+		}
+	}
+	focus = { #해상 패권 전략
+		id = FRA_darlan_focus_2
+		cost = 20
+		x = 1
+		y = 1
+		relative_position_id = FRA_darlan_focus_1
+		text_icon = GER_inner_circle_focus_style
+		icon = GFX_focus_generic_africa_naval
+		prerequisite = {
+			focus = FRA_darlan_focus_1
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
+					has_completed_focus = FRA_darlan_focus_1
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = FRA_francois_darlan 
+						FLAG_DAYS = [?FRA_employ_francois_darlan_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = FRA_francois_darlan
+						FOCUS = FRA_darlan_focus_0
+					}
+					always = no
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = FRA_new_propaganda
+			unlock_decision_tooltip = FRA_propaganda_1
+		}
+	}
+	focus = { #이탈리아에 지원 요청
+		id = FRA_darlan_focus_3
+		cost = 20
+		x = -1
+		y = 1
+		relative_position_id = FRA_darlan_focus_2
+		text_icon = GER_inner_circle_focus_style
+		icon = GFX_focus_befriend_italy
+		prerequisite = {
+			focus = FRA_darlan_focus_2
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
+					has_completed_focus = FRA_darlan_focus_2
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = FRA_francois_darlan 
+						FLAG_DAYS = [?FRA_employ_francois_darlan_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = FRA_francois_darlan
+						FOCUS = FRA_darlan_focus_0
+					}
+					always = no
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = FRA_new_propaganda
+			unlock_decision_tooltip = FRA_propaganda_1
+		}
+	}
 	focus = {	
 		#지중해를 바라보며
 		id = FRA_focus_12
@@ -5324,6 +5485,9 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = FRA_petain_focus_4
+		}
+		prerequisite = {
+			focus = FRA_darlan_focus_3
 		}
 		prerequisite = {
 			focus = FRA_laval_focus_1
