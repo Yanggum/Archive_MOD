@@ -19,7 +19,7 @@ dependencies={
 	"Korean Language"
 }
 user_dir="BlueArchive"
-version="0.7.2"
+version="0.7.3"
 picture="thumbnail.png"
 supported_version="1.16.*"
 path="mod/Archive_MOD"
