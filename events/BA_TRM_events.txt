@@ -6876,7 +6876,7 @@ country_event = { # 구호기사단 탈주
 			every_character = {
 				limit = { 
 					OR = {
-						is_character = TRN_dkdhahfl_alsp #미네
+						is_character = TRN_Aomori_Mine #미네
 						
 						is_character = TRN_tmaltpflsk #세리나
 						is_character = TRN_dktkrkdhgkskdp #하나에
@@ -6888,7 +6888,7 @@ country_event = { # 구호기사단 탈주
 		}	
 		TRC = {
 			add_country_leader_role = {
-				character = TRN_dkdhahfl_alsp
+				character = TRN_Aomori_Mine
 				promote_leader = yes
 				country_leader = {
 					ideology = centrism
@@ -6898,11 +6898,11 @@ country_event = { # 구호기사단 탈주
 			}
 			
 			add_advisor_role = {
-				character = TRN_dkdhahfl_alsp
+				character = TRN_Aomori_Mine
 				
 				advisor={
 					slot = army_chief
-					idea_token = TRN_dkdhahfl_alsp_army_chief
+					idea_token = TRN_Aomori_Mine_army_chief
 					ledger = army
 					traits = {
 						army_chief_offensive_2
@@ -6915,11 +6915,11 @@ country_event = { # 구호기사단 탈주
 			}
 			
 			add_advisor_role = {
-				character = TRN_dkdhahfl_alsp
+				character = TRN_Aomori_Mine
 				
 				advisor={
 					slot = high_command
-					idea_token = TRN_dkdhahfl_alsp_high_command
+					idea_token = TRN_Aomori_Mine_high_command
 					ledger = army
 					traits = {
 						TRN_aomori_mine
@@ -9501,7 +9501,7 @@ country_event = { # 충성조항
 		set_power_balance = {
 			id = TRM_power_balance
 			left_side = TRM_tirinty_socialism
-			right_side = TRM_tirinty_nazism
+			right_side = TRN_trinity_militarism
 			set_value = -0.15
 		}
     }
@@ -9518,7 +9518,7 @@ country_event = { # 충성조항
 		set_power_balance = {
 			id = TRM_power_balance
 			left_side = TRM_tirinty_socialism
-			right_side = TRM_tirinty_nazism
+			right_side = TRN_trinity_militarism
 			set_value = 0.15
 		}
 
@@ -9995,10 +9995,13 @@ country_event = { # 학원경제개발부 부장은 누구로 할까요
 			slot = political_advisor
 			trait = TRN_AED_club_manager
 		}
-		effect_tooltip = { country_event = trnfla.18 }
-		hidden_effect = {
-			TRN_Kozeki_Ui = {
-				unit_leader_event = { id = trnfla.18 }
+		IF = {
+			limit = { has_government = fascism }
+			effect_tooltip = { country_event = trnfla.18 }
+			hidden_effect = {
+				TRN_Kozeki_Ui = {
+					unit_leader_event = { id = trnfla.18 }
+				}
 			}
 		}
 
@@ -10537,21 +10540,33 @@ country_event = { # 타협의 끝
 		}
 
 		custom_effect_tooltip = TRN_trinity_50_tt
+		custom_effect_tooltip = tooltip_white_line
+		remove_trait = {
+			character = TRN_Utazumi_Sakurako
+			trait = politically_connected
+		}
+		remove_trait = {
+			character = TRN_Aomori_Mine
+			trait = politically_connected
+		}
     }
 }
 
-country_event = { # 타협의 끝
+country_event = { # 탈나치화 운동
 	id = trinity.51
 	title = trinity.51.t
 	desc = trinity.51.desc
-	picture = GFX_report_event_generic_library
+	picture = GFX_report_event_generic_denazification
 	
 	is_triggered_only = yes
      fire_only_once = no
 
 	option = { 
 		name = trinity.51.a
-
+		add_timed_idea = {
+			idea = TRN_denazification_ns
+			days = 730
+		}
     }
 }
 
@@ -11753,6 +11768,20 @@ country_event = { #
 	option = {
 		name = trnfla.34.a
 		add_stability = -0.01
+	}
+}
+
+country_event = { # 
+	id = trnfla.35
+	title = trnfla.35.t
+	desc = trnfla.35.desc
+	picture = GFX_report_event_generic_beachside_sunset
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = {
+		name = trnfla.35.a
 	}
 }
 
