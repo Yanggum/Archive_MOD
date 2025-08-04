@@ -106,7 +106,7 @@ focus_tree = {
 		}
 
 		available = {
-
+			NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 		}
 
 		ai_will_do = {
@@ -154,6 +154,7 @@ focus_tree = {
 
 		available = {
 			has_idea_with_trait = GEH_bauhaus
+			NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 		}
 
 		ai_will_do = {
@@ -205,6 +206,7 @@ focus_tree = {
 
 		available = {
 			has_idea_with_trait = GEH_degenerate_art
+			NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 		}
 
 		ai_will_do = {
@@ -256,6 +258,7 @@ focus_tree = {
 
 		available = {
 			has_idea_with_trait = GEH_composer
+			NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 		}
 
 		ai_will_do = {
@@ -301,7 +304,7 @@ focus_tree = {
 		}
 
 		available = {
-
+			NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 		}
 
 		ai_will_do = {
@@ -11023,6 +11026,28 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			if = {
+				limit = { 
+					has_country_leader = {
+						ruling_only = yes # default = yes
+						character = GEH_prefect_team_emergency_committee
+					}
+				}
+				GEH_prefect_team_emergency_committee = {
+					retire = yes
+				}
+			}
+			set_cosmetic_tag = GEH_revolutionary_government
+			add_country_leader_role = {
+				character = GEH_celestial_revolution_leader
+				country_leader = {
+					ideology = oligarchism
+					traits = {
+						GEH_celestial_revolution_trait
+					}
+				}
+				promote_leader = yes
+			}
 		}
 	}
 	
@@ -11183,6 +11208,50 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_ideas = GEH_cultural_revolution_idea
+			custom_effect_tooltip = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution_tt
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_idea
+				}
+				remove_ideas = GEH_centre_of_culture_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_bauhaus_idea
+				}
+				remove_ideas = GEH_centre_of_culture_bauhaus_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_bauhaus_end_idea
+				}
+				remove_ideas = GEH_centre_of_culture_bauhaus_end_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_degenerate_art_idea
+				}
+				remove_ideas = GEH_centre_of_culture_degenerate_art_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_degenerate_art_end_idea
+				}
+				remove_ideas = GEH_centre_of_culture_degenerate_art_end_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_composer_idea
+				}
+				remove_ideas = GEH_centre_of_culture_composer_idea
+			}			
+			if = {
+				limit = {
+					has_idea = GEH_centre_of_culture_composer_end_idea
+				}
+				remove_ideas = GEH_centre_of_culture_composer_end_idea
+			}		
 		}
 	}
     focus = {
@@ -11215,6 +11284,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = GEH_cultural_revolution_idea
+				add_idea = GEH_artistic_ultraconservatism
+			}
 		}
 	}
     focus = {
@@ -11247,6 +11320,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = GEH_cultural_revolution_idea
+				add_idea = GEH_avant_garde_prelude
+			}
 		}
 	}
     focus = {
@@ -11276,25 +11353,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			set_cosmetic_tag = GEH_revolutionary_government
 			custom_effect_tooltip = GEH_BTBOTS_END_NEXT_flag
 			set_global_flag = GEH_BTBOTS_END_NEXT_flag
-			add_country_leader_role = {
-				character = GEH_celestial_revolution_leader
-				country_leader = {
-					ideology = oligarchism
-					traits = {
-						GEH_celestial_revolution_trait
-					}
-				}
-				promote_leader = yes
-			}
 		}
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
 		icon = GFX_goal_HEU_hina
-		cost = 3
+		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
 		x = 2
@@ -11318,6 +11384,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			remove_ideas = GEH_denazification
+			if = {
+				limit = { has_idea = GEH_avant_garde_prelude }
+				swap_ideas = {
+					remove_idea = GEH_avant_garde_prelude
+					add_idea = GEH_avant_garde_prelude_end
+				}
+			}
+			else_if = {
+				limit = { has_idea = GEH_artistic_ultraconservatism }
+				swap_ideas = {
+					remove_idea = GEH_artistic_ultraconservatism
+					add_idea = GEH_artistic_ultraconservatism_end
+				}
+			}
+			else = {
+				custom_effect_tooltip = GEH_cultural_revolution_idea_tt
+			}
+            GEH_popular_support_up_effect = yes
 		}
 	}
     focus = {
