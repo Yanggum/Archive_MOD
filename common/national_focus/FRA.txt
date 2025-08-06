@@ -12,8 +12,8 @@ focus_tree = {
 		position = { x = 2000 y = 1180 }
 	}
 	continuous_focus_position = {
-		x = 3200
-		y = 200
+		x = 1500
+		y = 2000
 	}
 	initial_show_position = {
         x = 10
@@ -200,6 +200,12 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_ind
 		}
+		available = {
+			has_completed_focus = FRA_focus_10.7
+			NOT = {
+				has_idea = FRA_building_sahara_rail
+			}
+		}
 		completion_reward = {
 			unlock_decision_tooltip = FRA_waf_infra
 		}
@@ -223,6 +229,47 @@ focus_tree = {
 			add_timed_idea = {
 				idea = FRA_franc
 				days = 600
+			}
+		}
+	}
+	focus = {
+		#사하라를 가로지르는 철길
+		id = FRA_focus_10.7
+		icon = GFX_focus_generic_africa_infrastructure
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_2
+		ai_will_do = {
+			factor = 100
+		}
+		prerequisite = {
+			focus = FRA_focus_2
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = FRA_building_sahara_rail
+				days = 360
+			}
+			781 = {
+				add_resistance = -5
+				add_compliance = 5
+			}
+			898 = {
+				add_resistance = -5
+				add_compliance = 5
+			}
+			899 = {
+				add_resistance = -5
+				add_compliance = 5
+			}
+			788 = {
+				add_resistance = -5
+				add_compliance = 5
+			}
+			556 = {
+				add_resistance = -5
+				add_compliance = 5
 			}
 		}
 	}
@@ -366,9 +413,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#사하라를 가로지르는 철길
-		id = FRA_focus_10.7
-		icon = GFX_focus_generic_africa_infrastructure
+		#적도 고무
+		id = FRA_focus_13
+		icon = GFX_focus_generic_rubber_plantations
 		cost = 5
 		x = -1
 		y = 2
@@ -380,29 +427,22 @@ focus_tree = {
 			focus = FRA_focus_11
 		}
 		completion_reward = {
-			add_timed_idea = {
-				idea = FRA_building_sahara_rail
-				days = 360
+			660 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_resource = {
+					type = rubber
+					amount = 2
+				}
 			}
-			781 = {
-				add_resistance = -5
-				add_compliance = 5
-			}
-			898 = {
-				add_resistance = -5
-				add_compliance = 5
-			}
-			899 = {
-				add_resistance = -5
-				add_compliance = 5
-			}
-			788 = {
-				add_resistance = -5
-				add_compliance = 5
-			}
-			556 = {
-				add_resistance = -5
-				add_compliance = 5
+			772 = {
+				add_resource = {
+					type = rubber
+					amount = 2
+				}
 			}
 		}
 	}
@@ -523,7 +563,7 @@ focus_tree = {
 		id = FRA_focus_arm_1
 		icon = GFX_goal_fra_endex
 		cost = 2
-		x = 18
+		x = 32
 		y = 1
 		ai_will_do = {
 			modifier = {
@@ -957,7 +997,7 @@ focus_tree = {
 		#보병 장비 연구
 		id = FRA_focus_arm_4
 		cost = 4
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_2
 		prerequisite = {
@@ -974,31 +1014,31 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#주둔지 관리
+		#소화기 공장
 		id = FRA_focus_arm_6
 		cost = 4
-		x = 1
-		y = 1
-		relative_position_id = FRA_focus_arm_2
-		icon = GFX_goal_generic_constitutional_guarantees
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_arm_4
+		icon = GFX_focus_focus_fra_maquis
 		prerequisite = {
-			focus = FRA_focus_arm_3
-			focus = FRA_focus_arm_2
-			focus = FRA_focus_arm_3.5
+			focus = FRA_focus_arm_4
+		}
+		prerequisite = {
+			focus = FRA_focus_new_arm_3
+			focus = FRA_focus_new_arm_2
 		}
 		completion_reward = {
-			army_experience = 10
-			set_technology = {
-				tech_military_police = 1
-			}
-			every_state = {
+			random_owned_controlled_state = {
 				limit = {
-					NOT = {
-						is_core_of = FRA
-					}
-					is_owned_by = FRA
+					infrastructure > 2
+					is_on_continent = africa
 				}
-				add_resistance = -5
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
 			}
 		}
 	}
@@ -1197,8 +1237,8 @@ focus_tree = {
 		icon = GFX_goal_generic_allies_build_infantry
 		id = FRA_focus_new_arm_1
 		cost = 4
-		x = 0
-		y = 2
+		x = -1
+		y = 1
 		relative_position_id = FRA_focus_arm_2
 		prerequisite = {
 			focus = FRA_focus_arm_2
@@ -1230,7 +1270,7 @@ focus_tree = {
 	}
 	focus = {
 		#탄막 전개
-		icon = GFX_focus_generic_advanced_military_studies
+		icon = GFX_focus_AUS_frontmiliz_focus
 		id = FRA_focus_new_arm_3
 		cost = 4
 		x = 1
@@ -1250,13 +1290,13 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#'엘랑 비탈'
-		icon = GFX_focus_focus_fra_revolution_utmost
-		id = FRA_focus_new_arm_8
+		#진지전
+		icon = GFX_focus_BEL_better_than_maginot
+		id = FRA_focus_new_arm_12
 		cost = 4
-		x = 0
-		y = 2
-		relative_position_id = FRA_focus_new_arm_1
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_new_arm_2
 		prerequisite = {
 			focus = FRA_focus_new_arm_2
 			focus = FRA_focus_new_arm_3
@@ -1268,15 +1308,33 @@ focus_tree = {
 				}
 				swap_ideas = {
 					remove_idea = FRA_infantry_tactics_1
-					add_idea = FRA_elan_vital
+					add_idea = FRA_infantry_tactics_1_def
 				}
 			}
 			else = {
 				swap_ideas = {
 					remove_idea = FRA_infantry_tactics_2
-					add_idea = FRA_elan_vital_1
+					add_idea = FRA_infantry_tactics_2_def
 				}
 			}
+		}
+	}
+	focus = {
+		#'엘랑 비탈'
+		icon = GFX_focus_focus_fra_revolution_utmost
+		id = FRA_focus_new_arm_8
+		cost = 4
+		x = 1
+		y = 3
+		relative_position_id = FRA_focus_new_arm_1
+		prerequisite = {
+			focus = FRA_focus_arm_6
+		}
+		prerequisite = {
+			focus = FRA_focus_new_arm_12
+		}
+		completion_reward = {
+			add_ideas = FRA_elan_vital
 		}
 	}
 	focus = {
@@ -4487,110 +4545,32 @@ focus_tree = {
 		id = FRA_focus_resistance_1
 		cost = 1
 		icon = GFX_goal_FRA_watch
-		x = 10
+		x = 0
 		y = 1
+		relative_position_id = FRA_focus.1
 		prerequisite = {
 			focus = FRA_focus.1
 		}
 		available = {
-			always = no
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
 		}
 		completion_reward = {
 			add_political_power = 50
-			set_variable = {
-				FRA_resistance = 1
-			}
-		}
-	}
-	focus = {
-		#망명 기술자 지원
-		id = FRA_focus_8
-		icon = GFX_goal_FRA_extra_research
-		cost = 5
-		x = -2
-		y = 1
-		relative_position_id = FRA_focus_resistance_1
-		ai_will_do = {
-			factor = 100
-		}
-		prerequisite = {
-			focus = FRA_focus_resistance_1
-		}
-		completion_reward = {
-			country_event = {
-				id = FRA_prov_event.7
-				days = 3
-			}
-		}
-	}
-	focus = {
-		#지하 경제 
-		id = FRA_focus_6.8
-		icon = GFX_focus_DEN_heavy_regulations
-		cost = 5
-		x = -0
-		y = 1
-		relative_position_id = FRA_focus_resistance_1
-		prerequisite = {
-			focus = FRA_focus_resistance_1
-		}
-		completion_reward = {
-			MIL = {
-				country_event = {
-					id =  FRA_prov_event.140
-					days = 3
-				}
-				add_ideas = FRA_MIL_basement_economy
-			}
-		}
-	}
-	focus = {
-		#자본가 영입
-		id = FRA_focus_6.5
-		cost = 5
-		icon = GFX_goal_FRA_Restore_the_Suspended_Constitution
-		x = 2
-		y = 1
-		relative_position_id = FRA_focus_resistance_1
-		prerequisite = {
-			focus = FRA_focus_resistance_1
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			MIL = {
-				random_owned_state = {
-					limit = {
-						industrial_complex > 1
-					}
-					remove_building = {
-						type = industrial_complex
-						level = 2
-					}
-				}
-				hidden_effect = {
-					country_event = {
-						id = FRA_prov_event.141
-						days = 3
-					}
-				}
-			}
-			add_political_power = 50
-			unlock_decision_tooltip = FRA_support_bour
 		}
 	}
 	focus = {
 		#해방군 조직
-		icon = GFX_goal_FRA_Riot
+		icon = GFX_focus_focus_fra_national_resistance_council
 		id = FRA_focus_resistance_9
 		cost = 4
-		x = 10
-		y = 3
+		x = -2
+		y = 1
+		relative_position_id = FRA_focus_resistance_1
 		prerequisite = {
-			focus = FRA_focus_6.5
-			focus = FRA_focus_6.8
-			focus = FRA_focus_8
+			focus = FRA_focus_resistance_1
 		}
 		completion_reward = {
 			swap_ideas = {
@@ -4600,15 +4580,69 @@ focus_tree = {
 		}
 	}
 	focus = {
+		#좌익 유격대
+		icon = GFX_focus_GER_liberate_exploited_colonial_workers
+		id = FRA_focus_resistance_6
+		cost = 4
+		x = -1
+		y = 1
+		relative_position_id = FRA_focus_resistance_9
+		prerequisite = {
+			focus = FRA_focus_resistance_9
+		}
+		completion_reward = {
+			MIL = {
+				country_event = {
+					id = FRA_prov_event.119
+					days = 3
+				}
+				effect_tooltip = {
+					MIL_Resistance_idea_up = yes
+				}
+			}
+		}
+	}
+	focus = {
+		#농촌 저항군
+		icon = GFX_focus_mex_restore_the_army_of_christ
+		id = FRA_focus_resistance_4
+		cost = 4
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_resistance_9
+		prerequisite = {
+			focus = FRA_focus_resistance_9
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		#우익 민병대
+		id = FRA_focus_6.5
+		cost = 5
+		icon = GFX_focus_CHL_a_french_alliance
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_resistance_9
+		prerequisite = {
+			focus = FRA_focus_resistance_9
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
 		#적극적인 접근
 		id = FRA_focus_resistance_2
-		icon = GFX_focus_focus_fra_national_resistance_council
+		icon = GFX_goal_generic_major_war
 		cost = 5
 		x = 2
 		y = 1
-		relative_position_id = FRA_focus_resistance_9
+		relative_position_id = FRA_focus_resistance_1
 		available = {
-			has_completed_focus = FRA_focus_12
+			has_completed_focus = FRA_focus_resistance_6
 		}
 		ai_will_do = {
 			modifier = {
@@ -4631,17 +4665,17 @@ focus_tree = {
 	}
 	focus = {
 		#신중한 접근
-		icon = GFX_focus_SWI_embrace_rote_drei
+		icon = GFX_goal_generic_more_territorial_claims
 		id = FRA_focus_resistance_3
 		cost = 5
-		x = -2
+		x = 6
 		y = 1
-		relative_position_id = FRA_focus_resistance_9
+		relative_position_id = FRA_focus_resistance_1
 		available = {
 			has_completed_focus = FRA_focus_12
 		}
 		prerequisite = {
-			focus = FRA_focus_resistance_9
+			focus = FRA_focus_resistance_1
 		}
 		mutually_exclusive = {
 			focus = FRA_focus_resistance_2
@@ -4654,61 +4688,104 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#재정 지원
-		icon = GFX_goal_FRA_jaijungjiwon
-		id = FRA_focus_resistance_4
-		cost = 4
-		x = -3
-		y = 2
-		relative_position_id = FRA_focus_resistance_9
-		prerequisite = {
-			focus = FRA_focus_resistance_3
-		}
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_lib_army_2
-				add_idea = FRA_lib_army_2_5
-			}
-		}
-	}
-	focus = {
-		#레지스탕스 강화
-		icon = GFX_goal_FRA_sabotage
-		id = FRA_focus_resistance_6
-		cost = 4
-		x = -1
-		y = 2
-		relative_position_id = FRA_focus_resistance_9
+		#지하 경제 
+		id = FRA_focus_6.8
+		icon = GFX_focus_DEN_heavy_regulations
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_resistance_2
 		prerequisite = {
 			focus = FRA_focus_resistance_2
 			focus = FRA_focus_resistance_3
+		}
+		prerequisite = {
 		}
 		completion_reward = {
 			MIL = {
 				country_event = {
-					id = FRA_prov_event.119
+					id =  FRA_prov_event.140
 					days = 3
 				}
-				effect_tooltip = {
-					MIL_Resistance_idea_up = yes
-				}
+				add_ideas = FRA_MIL_basement_economy
 			}
 		}
 	}
 	focus = {
-		#재침투
-		icon = GFX_focus_generic_naval_invasion
-		id = FRA_focus_resistance_13
-		cost = 2
-		x = 1
+		#봉기!
+		icon = GFX_goal_FRA_revolution_to_the_utmost
+		id = FRA_focus_resistance_14
+		cost = 4
+		x = 2
 		y = 2
-		relative_position_id = FRA_focus_resistance_9
+		relative_position_id = FRA_focus_resistance_2
 		prerequisite = {
 			focus = FRA_focus_resistance_2
 			focus = FRA_focus_resistance_3
 		}
 		completion_reward = {
-			custom_effect_tooltip = FRA_focus_resistance_13_tt
+		}
+	}
+	focus = {
+		#해안 정찰
+		icon = GFX_SOV_an_oceangoing_navy_ccp_2d_sov_compatibility
+		id = FRA_focus_resistance_13
+		cost = 2
+		x = -1
+		y = 1
+		relative_position_id = FRA_focus_resistance_3
+		prerequisite = {
+			focus = FRA_focus_resistance_3
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		#연락사무소
+		icon = GFX_focus_generic_radio_communication
+		id = FRA_focus_resistance_10
+		cost = 4
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_resistance_3
+		prerequisite = {
+			focus = FRA_focus_resistance_3
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		#광범위한 선전
+		icon = GFX_goal_FRA_propaganda
+		id = FRA_focus_resistance_7
+		cost = 4
+		x = -1
+		y = 1
+		relative_position_id = FRA_focus_resistance_2
+		prerequisite = {
+			focus = FRA_focus_resistance_2
+		}
+		completion_reward = {
+			MIL = {
+				country_event = FRA_prov_event.31
+				effect_tooltip = {
+					add_ideas = FRA_MIL_propagation
+				}
+			}
+		}
+	}
+	focus = {
+		#민병대 훈련
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		id = FRA_focus_resistance_11
+		cost = 4
+		x = -1
+		y = 1
+		relative_position_id = FRA_focus_resistance_7
+		prerequisite = {
+			focus = FRA_focus_resistance_7
+		}
+		completion_reward = {
 		}
 	}
 	focus = {
@@ -4717,11 +4794,10 @@ focus_tree = {
 		id = FRA_focus_resistance_8
 		cost = 4
 		x = 0
-		y = 3
-		relative_position_id = FRA_focus_resistance_9
+		y = 2
+		relative_position_id = FRA_focus_resistance_7
 		prerequisite = {
-			focus = FRA_focus_resistance_6
-			focus = FRA_focus_resistance_13
+			focus = FRA_focus_resistance_7
 		}
 		completion_reward = {
 			MIL = {
@@ -4739,112 +4815,34 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#광범위한 선전
-		icon = GFX_goal_FRA_propaganda
-		id = FRA_focus_resistance_7
-		cost = 4
-		x = 3
+		#전방위적 첩보망
+		id = FRA_focus_8
+		icon = GFX_focus_generic_secret_service_agency
+		cost = 5
+		x = 0
 		y = 2
-		relative_position_id = FRA_focus_resistance_9
+		relative_position_id = FRA_focus_resistance_2
 		prerequisite = {
 			focus = FRA_focus_resistance_2
 		}
+		ai_will_do = {
+			factor = 100
+		}
 		completion_reward = {
-			MIL = {
-				country_event = FRA_prov_event.31
-				effect_tooltip = {
-					add_ideas = FRA_MIL_propagation
-				}
-			}
 		}
 	}
 	focus = {
-		#테러리즘 촉구
-		icon = GFX_focus_GER_liberate_exploited_colonial_workers
-		id = FRA_focus_resistance_14
-		cost = 4
-		x = 2
-		y = 3
-		relative_position_id = FRA_focus_resistance_9
-		prerequisite = {
-			focus = FRA_focus_resistance_2
-		}
-		completion_reward = {
-			MIL = {
-				country_event = FRA_prov_event.132
-				effect_tooltip = {
-					every_owned_state = {
-						random_list = {
-							1 = {
-								damage_building = {
-									type = industrial_complex
-									damage = 1.7
-								}
-							}
-							1 = {
-								damage_building = {
-									type = arms_factory
-									damage = 1.7
-								}
-							}
-							1 = {
-								damage_building = {
-									type = infrastructure
-									damage = 1.7
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		#전방위적 첩보망 구축
-		icon = GFX_goal_generic_intelligence_exchange
-		id = FRA_focus_resistance_10
-		cost = 4
-		x = -2
-		y = 3
-		relative_position_id = FRA_focus_resistance_9
-		prerequisite = {
-			focus = FRA_focus_resistance_4
-		}
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_lib_army_2_5
-				add_idea = FRA_lib_army_3
-			}
-			custom_effect_tooltip = FRA_focus_resistance_10_tt
-		}
-	}
-	focus = {
-		#무역 차단
-		icon = GFX_goal_generic_navy_submarine
+		#항만 침투
+		icon = GFX_focus_generic_naval_invasion
 		id = FRA_focus_resistance_12
 		cost = 4
-		x = 10
-		y = 7
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_8
 		prerequisite = {
-			focus = FRA_focus_resistance_10
-			focus = FRA_focus_resistance_8
-		}
-		prerequisite = {
-			focus = FRA_focus_resistance_14
-			focus = FRA_focus_resistance_8
-		}
-		prerequisite = {
-			focus = FRA_focus_resistance_14
-			focus = FRA_focus_resistance_10
+			focus = FRA_focus_8
 		}
 		completion_reward = {
-			add_threat = 1
-			MIL = {
-				country_event = {
-					id = FRA_prov_event.102
-					days = 3
-				}
-			}
 		}
 	}
 	focus = {
@@ -4863,9 +4861,6 @@ focus_tree = {
 			    has_country_flag = FRA_strong_resist
             }
 			NOT = { has_country_flag = FRA_is_ally_MIL_flag }
-		}
-		prerequisite = {
-			focus = FRA_focus_resistance_12
 		}
 		prerequisite = {
 			focus = FRA_focus_new_arm_11
@@ -4896,7 +4891,7 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					has_completed_focus = FRA_focus_resistance_10
+					has_completed_focus = asdf #나중에 채울 거
 				}
 				hidden_effect = {
 					if = {
