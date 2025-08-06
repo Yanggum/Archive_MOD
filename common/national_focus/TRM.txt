@@ -7297,7 +7297,7 @@ focus_tree = {
 
 	focus = { # 교회 장악
 		id = TRN_take_over_the_church
-		icon = GFX_focus_mex_triumph_over_the_cristeros
+		icon = GFX_focus_TRN_take_over_the_church
 		prerequisite = { focus = TRN_Denazification }
 		prerequisite = { focus = TRN_second_trintiy }
 		x = 0
@@ -7478,7 +7478,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_popularity = { ideology = fascism popularity = 0.06 }
-			country_event = trinity.14 #정의실현부 정치의원
+			country_event = trinity.15 #정의실현부 정치의원
 			effect_tooltip = {
 				swap_ideas = {
 					add_idea = TRN_JTF_political_commissar_ns
@@ -7729,17 +7729,35 @@ focus_tree = {
 					remove_idea = TRN_new_culture_culture_technology_ns
 				}
 			}
-			add_trait = {
-				character = TRN_Utazumi_Sakurako
-				slot = political_advisor
-				trait = TRM_defender_of_faith
-			}
-			custom_effect_tooltip = tooltip_white_line
 			IF = {
 				limit = { 
 					has_power_balance = { id = TRM_power_balance }
 				}
 				activate_targeted_decision = { target = TRM decision = TRN_honor_utilize_the_church_authority }
+			}
+			if = {
+				limit = {
+					TRN_Utazumi_Sakurako = { has_advisor_role = political_advisor }
+				}
+				add_trait = {
+					character = TRN_Utazumi_Sakurako
+					slot = political_advisor
+					trait = TRM_defender_of_faith
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = { TRN_Utazumi_Sakurako = { has_advisor_role = political_advisor } }
+				}
+				add_advisor_role = {
+					character = TRN_Wakaba_Hinata
+					advisor = {
+						slot = political_advisor
+						idea_token = TRN_Wakaba_Hinata_political_advisor
+						traits = { TRM_defender_of_faith }
+						cost = 75
+					}
+				}
 			}
 		}
 	}
@@ -7885,7 +7903,7 @@ focus_tree = {
 	focus = { # 게헨나 학원과 연합
 		id = TRN_union_with_gehenna
 		icon = GFX_focus_TRM_united_law
-		x = 4
+		x = 0
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 5
@@ -7928,7 +7946,7 @@ focus_tree = {
 			focus = TRN_supreme_leader
 		}
 		x = 2
-		y = 1
+		y = 2
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
 
@@ -7963,7 +7981,7 @@ focus_tree = {
 			focus = TRN_codification_of_regime
 		}
 		x = -2
-		y = 1
+		y = 2
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
 
@@ -8214,7 +8232,7 @@ focus_tree = {
 		prerequisite = { focus = TRN_project_trinity }
 		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 0
-		y = 3
+		y = 4
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 6
 
@@ -8373,7 +8391,7 @@ focus_tree = {
 		prerequisite = { focus = TRN_project_trinity }
 		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 0
-		y = 3
+		y = 4
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 6
 
@@ -8853,11 +8871,22 @@ focus_tree = {
 
 		}
 
-		will_lead_to_war_with = HUN
-		completion_reward = {
-			create_wargoal = {
-				target = HUN
-				type = puppet_wargoal_focus
+
+		completion_reward = { 
+			send_embargo = HUN
+			HUN = {
+				country_event = { id = TRMDIP.72 days = 01 }
+				effect_tooltip = {
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = sanctions
+					}
+				}
+			}
+			effect_tooltip = {
+				add_opinion_modifier = {
+
+				}
 			}
 		}
 	}
@@ -9309,7 +9338,7 @@ focus_tree = {
 	focus = { # 
 		id = TRN_extinguish_the_flame
 		icon = GFX_focus_attack_MIL
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TRN_defiance_of_COU
 		cost = 5
@@ -9344,7 +9373,7 @@ focus_tree = {
 	focus = { # 
 		id = TRN_curtain_across_kivotos
 		icon = GFX_focus_SWE_refuge_from_war
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = TRN_defiance_of_COU
 		cost = 5
@@ -9369,7 +9398,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_invasion_kaiser
 		icon = GFX_focus_attack_KAI
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TRN_curtain_across_kivotos
 		cost = 5
