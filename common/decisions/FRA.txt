@@ -17,18 +17,28 @@ FRA_industrialize = {
 	FRA_input_military = { #군대 투입
 		icon = GFX_decision_generic_military
 		cost = 10
-		days_remove = 120
+		days_remove = 150
 		modifier = {
 			political_power_factor = -0.1
-			master_ideology_drift = -0.02
+			neutrality_drift = -0.02
 		}
 		visible = {
-			NOT = {
-				has_idea = FRA_resistance_of_locals_1
+			check_variable = { FRA_rol_anger > 0 }
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_input_military_tt
+				check_variable = { FRA_rol_anger > 1 }
 			}
 		}
 		complete_effect = {
-			FRA_local_resistance_good = yes
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
 		}
 	}
 }
