@@ -1300,43 +1300,51 @@ focus_tree = {
 		completion_reward = {
 			HEU_bop_high_decrease_effect = yes
 				
-			if = {
-				limit = {
-					HEU_aru = {
-						has_character_flag = HEU_aru_good_artificial_eye
+			effect_tooltip = {
+				# 함정이다
+				if = {
+					limit = {
+						HEU_aru = {
+							has_character_flag = HEU_aru_good_artificial_eye
+						}
+					}
+					set_portraits = {
+						character = HEU_aru
+						army = { large ="GFX_HEU_aru_rikuhachima_fascist_Portrait" }
+						civilian = { large ="GFX_HEU_aru_rikuhachima_fascist_Portrait" }
 					}
 				}
-				set_portraits = {
-					character = HEU_aru
-					army = { large ="GFX_HEU_aru_rikuhachima_fascist_Portrait" }
-					civilian = { large ="GFX_HEU_aru_rikuhachima_fascist_Portrait" }
+				else = {
+					set_portraits = {
+						character = HEU_aru
+						army = { large ="GFX_HEU_aru_rikuhachima_artificial_eyes_fascist_Portrait" }
+						civilian = { large ="GFX_HEU_aru_rikuhachima_artificial_eyes_fascist_Portrait" }
+					}
 				}
-			}
-			else = {
-				set_portraits = {
+
+				add_popularity = {
+					ideology = fascism
+					popularity = 0.4
+				}
+
+				add_country_leader_role = {
 					character = HEU_aru
-					army = { large ="GFX_HEU_aru_rikuhachima_artificial_eyes_fascist_Portrait" }
-					civilian = { large ="GFX_HEU_aru_rikuhachima_artificial_eyes_fascist_Portrait" }
+					promote_leader = yes
+					country_leader = {
+						ideology = hardboiled_noir
+						desc = "HEU_aru_fascist_leader_desc"
+						traits = { 
+							HEU_ARU_T1
+							HEU_regent_of_luxembourg
+						}
+					}
+				}
+			
+				add_dynamic_modifier = {
+					modifier = HEU_rikuhachimaism_idea
 				}
 			}
 
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.4
-			}
-
-			add_country_leader_role = {
-				character = HEU_aru
-				promote_leader = yes
-				country_leader = {
-					ideology = hardboiled_noir
-					desc = "HEU_aru_fascist_leader_desc"
-					traits = { 
-						HEU_ARU_T1
-						HEU_regent_of_luxembourg
-					}
-				}
-			}
 
 			add_ideas = HEU_civil_rights_idea
 
@@ -1344,18 +1352,25 @@ focus_tree = {
 				ruling_party = fascism
 				elections_allowed = no
 			}
-			
-			add_dynamic_modifier = {
-				modifier = HEU_rikuhachimaism_idea
-			}
 
 			hidden_effect = {
 				BA_ban_democratic_effect = yes
-				
+
+				add_popularity = {
+					ideology = fascism
+					popularity = 0.4
+				}
+
+				set_portraits = {
+					character = HEU_ancmzl
+					army = { large ="gfx/leaders/HEU/HEU_mutsuki_asagi_fascist.dds" }
+					civilian = { large ="gfx/leaders/HEU/HEU_mutsuki_asagi_fascist.dds" }
+				}
+
 				set_party_name = {
 					ideology = neutrality
-					long_name = HEU_benriya_party
-					name = HEU_benriya_party
+					long_name = HEU_pro_kayoko_party
+					name = HEU_pro_kayoko_party
 				}
 
 				swap_ideas = {
@@ -1364,12 +1379,27 @@ focus_tree = {
 				}
 
 				remove_ideas = HEU_grand_duchy_of_luxembourg_alt
+				add_ideas = HEU_aru_idea
 
 				set_party_name = {
 					ideology = fascism
-					long_name = HEU_neutrality_party_long
-					name = HEU_neutrality_party
+					long_name = HEU_pro_mutsuki_party_long
+					name = HEU_pro_mutsuki_party
 				}
+
+
+				add_country_leader_role = {
+					character = HEU_ancmzl
+					promote_leader = yes
+					country_leader = {
+						ideology = pure_socialism
+						desc = "HEU_mutsuki_asagi_fascist_leader_desc"
+						traits = { 
+							HEU_evil_mutsuki
+						}
+					}
+				}
+
 			}
 		}
 	}
@@ -4851,6 +4881,20 @@ focus_tree = {
 						is_core_of = GEM
 					}
 					remove_core_of = GEM
+				}
+			}
+			if = {
+				limit = { country_exists = TRK }
+				TRK = {
+					TRK_Kirifuji_Nagisa = {
+						set_nationality = FROM
+						remove_country_leader_role = {
+							ideology = technocracy
+						}
+					}
+				}
+				annex_country = {
+					target = TRK
 				}
 			}
 		}
