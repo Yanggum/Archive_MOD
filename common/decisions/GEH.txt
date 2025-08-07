@@ -1306,14 +1306,14 @@ GEH_discipline_system_category = {
 			#	var = halo_militia_cap
 			#	value = 12
 			#}
-#
+			#
 			#division_template = { #헬멧단 용병
 			#	name = "Helmet Gang Söldner" 
 			#	division_names_group = KIV_SEC_01
 			#	is_locked = yes
 			#	force_allow_recruiting = yes
 			#	division_cap = 0
-#
+			#
 			#	regiments = { 
 			#		halo_militia = { x = 0 y = 0 }
 			#		halo_militia = { x = 0 y = 1 }
@@ -2092,6 +2092,514 @@ GEH_military_power_category = {
     }
 }
 
+GEH_gehenna_cultural_revolution_category = {
+
+	# 아방가르드
+
+	GEH_gehenna_art_avant_garde_deconstruction = {
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+			any_owned_state = {
+				is_core_of = ROOT
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+				}
+			}
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 60
+		days_re_enable = 365
+
+		remove_effect = {
+			random_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = -1
+			}
+		}
+	}
+
+	GEH_gehenna_art_avant_garde_noise_music = {
+		icon = GFX_decision_generic_welfare
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 30
+		days_re_enable = 90
+
+		modifier = {
+			army_speed_factor = 0.10
+			war_support_weekly = 0.001
+			consumer_goods_factor = 0.05
+		}
+	}
+
+	GEH_gehenna_art_avant_garde_theater_of_cruelty = {
+		icon = GFX_decision_generic_welfare
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 30
+		days_re_enable = 90
+
+		modifier = {
+			industrial_capacity_dockyard = 0.08
+			industrial_capacity_factory = 0.08
+			weekly_manpower = 1000
+			stability_weekly = -0.001
+		}
+	}
+
+	GEH_gehenna_art_avant_garde_anti_art = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 100
+
+		days_remove = 180
+
+		remove_effect = {
+			GEH_CH_tooltip = yes
+			add_to_variable = {
+				GEH_CH_mobilization_speed = 0.1
+				tooltip = mobilization_speed_tt
+			}
+		}
+	}
+
+	GEH_gehenna_art_avant_garde_automatic_writing = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 100
+
+		days_remove = 180
+
+		remove_effect = {
+			GEH_PL_tooltip = yes
+			add_to_variable = {
+				GEH_PL_production_lack_of_resource_penalty_factor = -0.02
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			GEH_RU_tooltip = yes
+			add_to_variable = {
+				GEH_CH_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_war_support = 0.10
+		}
+	}
+
+	GEH_gehenna_art_avant_garde_happening = {
+		icon = GFX_decision_Prefect_team
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 75
+
+		days_remove = 21
+
+		remove_effect = {
+			GEH_PL_tooltip = yes
+			add_to_variable = {
+				GEH_PL_production_speed_arms_factory_factor = 0.05
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_stability = -0.1
+			add_political_power = 60
+			add_manpower = 12000
+		}
+	}
+
+	# 초보수주의
+
+	GEH_gehenna_art_ultracon_monumentalism = {
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 60
+		days_re_enable = 365
+
+		remove_effect = {
+			random_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = -1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+		}
+	}
+
+	GEH_gehenna_art_ultracon_marches = {
+		icon = GFX_decision_generic_welfare
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 30
+		days_re_enable = 90
+
+		modifier = {
+			stability_factor = -0.10
+			war_support_weekly = 0.001
+			industrial_capacity_dockyard = 0.05
+			industrial_capacity_factory = 0.05
+		}
+	}
+
+	GEH_gehenna_art_ultracon_realism = {
+		icon = GFX_decision_generic_welfare
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = no
+
+		available = {
+
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 30
+
+		days_remove = 30
+		days_re_enable = 90
+
+		modifier = {
+			production_factory_efficiency_gain_factor = 0.05
+			production_factory_max_efficiency_factor = 0.05
+			production_lack_of_resource_penalty_factor = -0.05
+		}
+	}
+
+	GEH_gehenna_art_ultracon_epic_poem = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 100
+
+		days_remove = 180
+
+		remove_effect = {
+			GEH_CH_tooltip = yes
+			add_to_variable = {
+				GEH_CH_war_support_factor = 0.1
+				tooltip = war_support_factor_tt
+			}
+			add_to_variable = {
+				GEH_CH_conscription_factor = 0.1
+				tooltip = conscription_factor_tt
+			}
+		}
+	}
+
+	GEH_gehenna_art_ultracon_uniform = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 100
+
+		days_remove = 180
+
+		remove_effect = {
+			GEH_RU_tooltip = yes
+			add_to_variable = {
+				GEH_RU_army_org_factor = 0.10
+				tooltip = army_org_factor_tt
+			}
+			add_war_support = 0.10
+		}
+	}
+
+	GEH_gehenna_art_ultracon_mass_games = {
+		icon = GFX_decision_Prefect_team
+
+		allowed = {
+			tag = GEH
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
+		}
+
+		visible = {
+			has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		cost = 75
+
+		days_remove = 21
+
+		remove_effect = {
+			GEH_CH_tooltip = yes
+			add_to_variable = {
+				GEH_CH_stability_factor = 0.10
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				GEH_CH_war_support_factor = 0.10
+				tooltip = war_support_factor_tt
+			}
+		}
+	}
+}
+
 GEH_gehenna_art_category = {
 
 	# 작곡가 (리하르트 슈트라우스)
@@ -2244,7 +2752,7 @@ GEH_gehenna_art_category = {
 		days_remove = 180
 
 		remove_effect = {
-			custom_effect_tooltip = GEH_PL
+			GEH_PL_tooltip = yes
 			add_to_variable = {
 				GEH_PL_production_lack_of_resource_penalty_factor = -0.1
 				tooltip = production_lack_of_resource_penalty_factor_tt
