@@ -375,6 +375,165 @@ GEH_basking_in_the_brilliance_of_their_serenade = {
 			}
 		}
     }
+    GEH_basking_in_the_brilliance_of_their_serenade_effect_cleanup_frequent_purge = {
+		icon = GFX_decision_generic_assassination
+		allowed = {
+			original_tag = GEH
+		}
+        fire_only_once = yes
+
+		visible = {
+			NOT = { has_country_flag = GEH_end_discipline }
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GEH_discipline_no_max_tt
+				check_variable = { geh_discipline_var < 100 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = GEH_serenade_mission_no_lim_tt
+				check_variable = {
+					days_mission_timeout@GEH_basking_in_the_brilliance_of_their_serenade_mission > 79
+				}
+			}
+		}
+		
+		custom_cost_text = decision_cost_10_cp
+
+		custom_cost_trigger = {
+			command_power > 4.9
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -5
+			}
+			add_to_variable = {
+				geh_discipline_var = 10
+				tooltip = geh_discipline_system_tt
+			}
+			geh_discipline_system_setting_effect = yes
+
+			add_days_mission_timeout = {
+				mission = GEH_basking_in_the_brilliance_of_their_serenade_mission
+				days = -80
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+    }
+    GEH_basking_in_the_brilliance_of_their_serenade_effect_negotiate_directly_with_clubs = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = GEH
+		}
+        fire_only_once = yes
+
+		visible = {
+			NOT = {
+				has_global_flag = club_problem_gourmet_research_society_escape_flag
+			}
+			NOT = {
+				has_global_flag = club_problem_hot_spring_department_escape_flag
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GEH_serenade_mission_no_lim_tt
+				check_variable = {
+					days_mission_timeout@GEH_basking_in_the_brilliance_of_their_serenade_mission > 59
+				}
+			}
+		}
+		
+		cost = 15
+		days_mission_timeout = 35
+
+		complete_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_global_flag = club_problem_gourmet_research_society_escape_flag
+					}
+				}
+				set_temp_variable = {
+					gem_club_problem_progress_bar_temp = 5
+				}
+				GEH_gourmet_research_society_effect = yes
+				GEM_club_problem_decision_modifier_reload = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_global_flag = club_problem_hot_spring_department_escape_flag
+					}
+				}
+				set_temp_variable = {
+					gem_club_problem_progress_bar_temp = 5
+				}
+				GEH_hot_spring_department_effect = yes
+				GEM_club_problem_decision_modifier_reload = yes
+			}
+
+			add_days_mission_timeout = {
+				mission = GEH_basking_in_the_brilliance_of_their_serenade_mission
+				days = -60
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+    }
+    GEH_basking_in_the_brilliance_of_their_serenade_effect_appeal_to_the_public = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		allowed = {
+			original_tag = GEH
+		}
+        fire_only_once = yes
+
+		visible = {
+			NOT = {
+				has_global_flag = club_problem_gourmet_research_society_escape_flag
+			}
+			NOT = {
+				has_global_flag = club_problem_hot_spring_department_escape_flag
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GEH_serenade_mission_no_lim_tt
+				check_variable = {
+					days_mission_timeout@GEH_basking_in_the_brilliance_of_their_serenade_mission > 119
+				}
+			}
+		}
+		
+		cost = 15
+
+		days_remove = 120
+
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = GEH_basking_in_the_brilliance_of_their_serenade_mission
+				days = -120
+			}
+		}
+
+		modifier = {
+			stability_factor = -0.05
+			stability_weekly = 0.005
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+    }
 
 	
     GEH_debug_tongje_minjujui = {
