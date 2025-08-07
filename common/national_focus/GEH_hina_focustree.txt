@@ -11178,6 +11178,11 @@ focus_tree = {
 					retire = yes
 				}
 			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = GEH_pro_hina_celestial_revolution_party_long
+				name = GEH_pro_hina_celestial_revolution_party
+			}
 			set_cosmetic_tag = GEH_revolutionary_government
 			add_country_leader_role = {
 				character = GEH_celestial_revolution_leader
@@ -11219,6 +11224,29 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_country_leader_with_trait = GEH_celestial_revolution_trait
+				}
+				swap_ruler_traits = {
+					remove = GEH_celestial_revolution_trait
+					add = GEH_celestial_revolution_trait_1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_leader_with_trait = GEH_celestial_revolution_trait_1
+				}
+				swap_ruler_traits = {
+					remove = GEH_celestial_revolution_trait_1
+					add = GEH_celestial_revolution_trait_2
+				}
+			}
+			add_timed_idea = {
+				idea = GEH_administrative_paralysis
+				days = 190
+			}
+			country_event = GEH_celestial_revolution_event.3
 		}
 	}
 	
@@ -11254,6 +11282,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_country_leader_trait = GEH_celestial_revolution_trait_B
 		}
 	}
 	
@@ -11289,6 +11318,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_country_leader_trait = GEH_celestial_revolution_trait_C
 		}
 	}
 	
@@ -11319,6 +11349,26 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_stability = 0.05
+			if = {
+				limit = {
+					has_country_leader_with_trait = GEH_celestial_revolution_trait
+				}
+				swap_ruler_traits = {
+					remove = GEH_celestial_revolution_trait
+					add = GEH_celestial_revolution_trait_1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_leader_with_trait = GEH_celestial_revolution_trait_1
+				}
+				swap_ruler_traits = {
+					remove = GEH_celestial_revolution_trait_1
+					add = GEH_celestial_revolution_trait_2
+				}
+			}
+			country_event = GEH_celestial_revolution_event.2
 		}
 	}
 	
@@ -11392,7 +11442,8 @@ focus_tree = {
 					has_idea = GEH_centre_of_culture_composer_end_idea
 				}
 				remove_ideas = GEH_centre_of_culture_composer_end_idea
-			}		
+			}	
+			country_event = GEH_celestial_revolution_event.1	
 		}
 	}
     focus = {
@@ -11521,6 +11572,41 @@ focus_tree = {
 					modifier = GEH_NEO_SEO_idea
 				}
 			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_NEO_IPO
+			add_to_variable = {
+				GEH_PL_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_production_factory_efficiency_gain_factor = -0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_local_building_slots_factor = 0.05
+				tooltip = MODIFIER_LOCAL_BUILDING_SLOTS_FACTOR_tt
+			}
+
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_NEO_OEO
+			add_to_variable = {
+				GEH_CH_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GEH_CH_mobilization_speed = 0.05
+				tooltip = mobilization_speed_tt
+			}
+
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_NEO_SEO
+			add_to_variable = {
+				GEH_RU_army_morale_factor = 0.10
+				tooltip = army_morale_factor_tt
+			}
+
+			custom_effect_tooltip = enter_tt
+			add_stability = 0.05
 		}
 	}
     focus = {
@@ -11610,7 +11696,66 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			set_cosmetic_tag = GEH_revolutionary_government_com
+			add_ideas = GEH_academy_of_chaos_and_freedom
+			set_character_name = {
+				character = GEH_celestial_revolution_leader
+				name = GEH_celestial_revolution_leader_com
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = GEH_pro_hina_celestial_revolution_com_n_party_long
+				name = GEH_pro_hina_celestial_revolution_com_n_party
+			}
+			set_party_name = {
+				ideology = communism
+				long_name = GEH_pro_hina_celestial_revolution_com_party_long
+				name = GEH_pro_hina_celestial_revolution_com_party
+			}
+			add_country_leader_role = {
+				character = GEH_celestial_revolution_leader
+				country_leader = {
+					ideology = anarchist_communism
+					traits = {
+						GEH_celestial_revolution_trait_2
+						GEH_celestial_revolution_trait_B
+					}
+				}
+				promote_leader = yes
+			}
+			custom_effect_tooltip = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_gehenna_commune_tt
+			hidden_effect = {
+				set_temp_variable = {
+					var = communism_var
+					value = party_popularity@neutrality
+				}
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@neutrality
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -1
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = ban_ideology_var
+				}
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = communism_var
+			}
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+			effect_tooltip = {
+				set_cosmetic_tag = GEH_revolutionary_government_com_communism
+			}
+			hidden_effect = {
+				set_cosmetic_tag = GEH_revolutionary_government_com
+			}
+			country_event = GEH_celestial_revolution_event.4
 		}
 	}
     focus = {
@@ -11635,6 +11780,7 @@ focus_tree = {
 		}
 
 		available = {
+			has_country_flag = GEH_unified_gehenna_flag
 			OR = {
 				AND = {
 					has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_gehennas_liberalism
@@ -11661,6 +11807,7 @@ focus_tree = {
 
 		completion_reward = {
 			set_cosmetic_tag = GEH_revolutionary_government_cen
+			country_event = GEH_celestial_revolution_event.5
 		}
 	}
     focus = {
