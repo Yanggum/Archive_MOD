@@ -3995,7 +3995,7 @@ focus_tree = {
 	focus = {
     	id = ENG_focus_fire_at_the_britain
     	icon = GFX_goal_eng_focus_1
-    	x = 10
+    	x = 7
     	y = 1
 		available = {
 			NOT = {
@@ -6225,21 +6225,10 @@ focus_tree = {
 	
 		}
 	}
-}
 
-focus_tree = {
-	id = ENG_independent
-	country = {
-		factor = 0
-		modifier = {
-			add = 20
-			tag = ENG
-		}
-	}
-
-	default = no
-	continuous_focus_position = { x = 50 y = 3500 }
-
+	#####################################################################
+	#WALL OF SEPERATION 벽벽벽벽벽
+	#####################################################################
     focus = {
 		id = ENG_Victory_Mainland #영국 수호
 		icon = GFX_focus_generic_improve_the_administration
@@ -6250,23 +6239,46 @@ focus_tree = {
 			}
 		}
 
-		x = 20
+		x = 24
 		y = 0
+
+		allow_branch = { 
+			has_global_flag = ENG_win_global_flag
+		}
+
 
 		completion_reward = {
 			add_political_power = 50
 		}
 	}
 	focus = {
-		id = ENG_Government_Return #망명정부의 귀환
+		id = ENG_adress_the_situation #상황 파악
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 5
+		cost = 1
 		
 		relative_position_id = ENG_Victory_Mainland
+
 		x = 0
 		y = 1
 	
 		prerequisite = { focus = ENG_Victory_Mainland }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+		completion_reward = {
+			add_political_power = 10
+		}
+	}
+	focus = {
+		id = ENG_assemble_assembly #내각 재소집
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+		
+		relative_position_id = ENG_adress_the_situation
+		x = 0
+		y = 1
+	
+		prerequisite = { focus = ENG_adress_the_situation }
 		ai_will_do = { factor = 100 }
 		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
@@ -6287,479 +6299,175 @@ focus_tree = {
 			ENG = { country_event = ENG_ba.102 }
 		}
 	}
+	#######################
+	#행정
+	#######################
 	focus = {
-		id = ENG_assemble_cabinet #내각 소집
+		id = ENG_administration #행정
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 1
+		cost = 2
 		
-		relative_position_id = ENG_Government_Return
+		relative_position_id = ENG_assemble_assembly
 		x = 0
 		y = 1
 	
-		prerequisite = { focus = ENG_Government_Return }
+		prerequisite = { focus = ENG_assemble_assembly }
 		ai_will_do = { factor = 100 }
 		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
 		completion_reward = {
-			add_political_power = 150
-			add_popularity = {
-    			ideology = democratic
-    			popularity = 0.45
-			}
-			unlock_decision_category_tooltip = britian_post_war_devastation
-			#activate_decision = reconstrct_britian
-		}
-	}
-	#재건회의
-	focus = {
-		id = ENG_Reconstruction_committee #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 1
-		
-		relative_position_id = ENG_assemble_cabinet
-		x = 7
-		y = 1
-	
-		prerequisite = { focus = ENG_assemble_cabinet }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_dynamic_modifier = { modifier = ENG_Reconstruction_committee_idea }
+			add_political_power = 100
 		}
 	}
 	focus = {
-		id = ENG_rations #배급제
+		id = ENG_london_area_investigation #행정
 		icon = GFX_goal_generic_construct_mil_factory
 		cost = 2
 		
-		relative_position_id = ENG_Reconstruction_committee
-		x = 3
+		relative_position_id = ENG_administration
+		x = 1
 		y = 1
 	
-		prerequisite = { focus = ENG_Reconstruction_committee }
+		prerequisite = { focus = ENG_administration }
 		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY }	
+		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
 		completion_reward = {
-			add_to_variable = {
-    			var = ENG_hnh_weeklymp
-    			value = 250
-    			tooltip = ENG_rations
-			}
-			add_to_variable = {
-    			var = ENG_hnh_popgrowth
-    			value = 0.3
-    			tooltip = ENG_rations
-			}
+			add_political_power = 100
+		}
+	}
 
-		}
-	}
-	focus = {
-		id = ENG_mass_reconstruction #대규모 건설 동원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_Reconstruction_committee
-		x = 1
-		y = 1
-	
-		prerequisite = { focus = ENG_Reconstruction_committee }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_to_variable = {
-    			var = industry_free_repair_factor
-    			value = 0.5
-    			tooltip = ENG_rations
-			}
-			subtract_from_variable = {
-    			var = ENG_pwd_civ_use
-    			value = 3
-    			tooltip = ENG_rations
-			}
-		}
-	}
-	focus = {
-		id = ENG_temporary_hospitals #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 3
-		
-		relative_position_id = ENG_Reconstruction_committee
-		x = -3
-		y = 1
-	
-		prerequisite = { focus = ENG_Reconstruction_committee }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_to_variable = {
-    			var = ENG_hnh_popgrowth
-    			value = 0.7
-    			tooltip = ENG_rations
-			}
-		}
-	}
-	focus = {
-		id = ENG_temporary_shelters #비상 대피소
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 1
-		
-		relative_position_id = ENG_Reconstruction_committee
-		x = -1
-		y = 1
-	
-		prerequisite = { focus = ENG_Reconstruction_committee }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_to_variable = {
-    			var = ENG_hnh_popgrowth
-    			value = 0.6
-    			tooltip = ENG_rations
 
-			}
-		}
-	}
-	focus = {
-		id = ENG_rebuild_roads #도로 복구
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_temporary_shelters
-		x = 1
-		y = 1
-	
-		prerequisite = { focus = ENG_temporary_shelters }
-		prerequisite = { focus = ENG_mass_reconstruction }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_basic_hygine #질병과의 전쟁
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 3
-		
-		relative_position_id = ENG_temporary_hospitals
-		x = 1
-		y = 1
-	
-		prerequisite = { focus = ENG_temporary_hospitals }
-		prerequisite = { focus = ENG_temporary_shelters }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_address_inflation #인플레이션 잡기
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_Reconstruction_committee
-		x = 2
-		y = 2
-	
-		prerequisite = { focus = ENG_Reconstruction_committee }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_handle_unemployment #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_address_inflation
-		x = 0
-		y = 1
-	
-		prerequisite = { focus = ENG_address_inflation }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_public_construction #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_rebuild_roads
-		x = 1
-		y = 2
-	
-		prerequisite = { focus = ENG_rebuild_roads }
-		prerequisite = { focus = ENG_handle_unemployment }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}	
-	focus = {
-		id = ENG_public_health #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_basic_hygine
-		x = 1
-		y = 1
-	
-		prerequisite = { focus = ENG_basic_hygine }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_to_variable = {
-    			var = ENG_hnh_popgrowth
-    			value = 0.6
-    			tooltip = ENG_rations
-
-			}
-		}
-	}
-	focus = {
-		id = ENG_worker_saftey #노동자 안전 보장
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_public_health
-		x = 0
-		y = 1
-	
-		prerequisite = { focus = ENG_public_health }
-		prerequisite = { focus = ENG_handle_unemployment }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			add_to_variable = {
-    			var = ENG_hnh_popgrowth
-    			value = 0.3
-    			tooltip = ENG_rations
-			}
-		}
-	}
-	focus = {
-		id = ENG_raise_farmhands #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_rations
-		x = 1
-		y = 1
-	
-		prerequisite = { focus = ENG_rations }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_import_foods #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_rations
-		x = 3
-		y = 1
-	
-		prerequisite = { focus = ENG_rations }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_british_new_deal #영국판 뉴딜
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_worker_saftey
-		x = 2
-		y = 2
-	
-		prerequisite = { focus = ENG_worker_saftey }
-		prerequisite = { focus = ENG_public_construction }
-		prerequisite = { focus = ENG_nationalization_industries }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_price_control #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_address_inflation
-		x = 2
-		y = 1
-	
-		prerequisite = { focus = ENG_address_inflation }
-		prerequisite = { focus = ENG_raise_farmhands }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ENG_nationalization_industries #임시 병원
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_price_control
-		x = 0
-		y = 1
-	
-		prerequisite = { focus = ENG_price_control }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-		}
-	}
-	#####################################
-	#내정관리
-	#####################################
-	focus = {
-		id = ENG_state_of_britain #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_assemble_cabinet
-		x = 0
-		y = 3
-	
-		prerequisite = { focus = ENG_assemble_cabinet }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = ENG_kaiser_problem #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_state_of_britain
-		x = 3
-		y = 1
-	
-		prerequisite = { focus = ENG_state_of_britain }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			
-		}
-	}
-	#####################################
-	#외교
-	#####################################
-	focus = {
-		id = ENG_look_outwards #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_assemble_cabinet
-		x = 15
-		y = 2
-	
-		prerequisite = { focus = ENG_assemble_cabinet }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = ENG_look_kivotos #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_look_outwards
-		x = 5
-		y = 1
-	
-		prerequisite = { focus = ENG_look_outwards }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = ENG_old_world #재건 회의
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
-		
-		relative_position_id = ENG_look_outwards
-		x = 2
-		y = 1
-	
-		prerequisite = { focus = ENG_look_outwards }
-		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_INDUSTRY}	
-			
-		completion_reward = {
-			
-		}
-	}
-	#####################################
+	#######################
 	#안보
-	#####################################
+	#######################
+
 	focus = {
-		id = ENG_national_security #재건 회의
+		id = ENG_National_Security #안보
 		icon = GFX_goal_generic_construct_mil_factory
 		cost = 2
 		
-		relative_position_id = ENG_assemble_cabinet
-		x = -7
+		relative_position_id = ENG_assemble_assembly
+		x = -5
 		y = 1
 	
-		prerequisite = { focus = ENG_assemble_cabinet }
+		prerequisite = { focus = ENG_assemble_assembly }
 		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_ARMY_XP }	
+		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
 		completion_reward = {
-			
+			add_political_power = 100
 		}
 	}
 	focus = {
-		id = ENG_colony_problem #재건 회의
+		id = ENG_the_commonwealth #안보
 		icon = GFX_goal_generic_construct_mil_factory
 		cost = 2
 		
-		relative_position_id = ENG_national_security
+		relative_position_id = ENG_National_Security
 		x = -2
 		y = 1
 	
-		prerequisite = { focus = ENG_national_security }
+		prerequisite = { focus = ENG_National_Security }
 		ai_will_do = { factor = 100 }
-		search_filters = { FOCUS_FILTER_ARMY_XP }	
+		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
 		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = ENG_redeploy_garrisons #안보
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+		
+		relative_position_id = ENG_National_Security
+		x = 1
+		y = 1
+	
+		prerequisite = { focus = ENG_National_Security }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
 			
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = ENG_contact_collaborators #안보
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+		
+		relative_position_id = ENG_redeploy_garrisons
+		x = -1
+		y = 1
+	
+		prerequisite = { focus = ENG_redeploy_garrisons }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+
+	#######################
+	#경제
+	#######################
+
+	focus = {
+		id = ENG_fallen_economy  #무너진 경제
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+		
+		relative_position_id = ENG_assemble_assembly
+		x = 4
+		y = 1
+	
+		prerequisite = { focus = ENG_assemble_assembly }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = ENG_Baldwin_plan  #재건 회의
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+
+		mutually_exclusive = {
+			focus = ENG_Macdonald_plan
+		}
+		
+		relative_position_id = ENG_fallen_economy
+		x = -1
+		y = 1
+	
+		prerequisite = { focus = ENG_fallen_economy }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = ENG_Macdonald_plan  #재건 회의
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 2
+		
+		relative_position_id = ENG_fallen_economy
+		x = 1
+		y = 1
+	
+		prerequisite = { focus = ENG_fallen_economy }
+		ai_will_do = { factor = 100 }
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+		completion_reward = {
+			add_political_power = 100
 		}
 	}
 }
