@@ -654,9 +654,8 @@ country_event = { #샬레랑 경쟁시키기
 	option = { 
 		name = COU_event.2.a
 		set_global_flag = COU_division_of_military_flag
-
-		set_variable = { global.COU_division_of_military_value = 90 }
-		set_variable = { global.SHE_division_of_military_value = 10 }
+		
+		KSP = { country_event = { id = KSP_event.18 hours = 8 } }
 		unlock_decision_category_tooltip = COU_division_of_military
 		unlock_decision_tooltip = COU_strengthening_influence_pp
 		unlock_decision_tooltip = COU_strengthening_influence_cp
@@ -776,6 +775,22 @@ country_event = { #경쟁의 결과
 	option = { 
 		name = COU_event.4.a
 		clr_global_flag = COU_division_of_military_flag
+		clr_global_flag = KSP_division_of_military_flag
+
+		set_temp_variable = {
+			TEMP_KSP_division_of_military_value = global.KSP_division_of_military_value
+		}
+		multiply_temp_variable = { TEMP_KSP_division_of_military_value = 0.01 }
+		transfer_units_fraction= {
+			target = KSP
+			size = var:TEMP_KSP_division_of_military_value
+			navy_ratio = 0
+			air_ratio = 0
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+
 		set_temp_variable = {
 			TEMP_SHE_division_of_military_value = global.SHE_division_of_military_value
 		}
