@@ -2,6 +2,8 @@ add_namespace = HEU_event
 add_namespace = HEU_news
 add_namespace = HEU.flavor_event
 add_namespace = HEU.persona_event
+add_namespace = HEU.mutsuki_event
+add_namespace = HEU.diplomacy_event
 
 country_event = { #1936년 신년사, 국회 본회의장 속기록
 	id = HEU_event.0
@@ -8124,6 +8126,99 @@ country_event = { #리쿠하치마 아루의 우울장애
 	}
 }
 
+country_event = { #경제동맹 제안
+	id = HEU.diplomacy_event.1
+	title = HEU.diplomacy_event.1.t
+	desc = HEU.diplomacy_event.1.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.1.a
+		ai_chance = {
+			base = 10
+		}
+		#var:global.highlander_best_invester = ROOT
+		add_political_power = 100
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}	
+		}
+
+		HEU = {
+			country_event = { id = HEU.diplomacy_event.2 }
+		}
+	}
+
+	option = { 
+		name = HEU.diplomacy_event.1.b
+		ai_chance = {
+			base = 0
+		}
+		HEU = {
+			country_event = { id = HEU.diplomacy_event.3 }
+		}
+	}
+}
+
+country_event = { #[FROM.GetNameDef]의 경제동맹 승인
+	id = HEU.diplomacy_event.2
+	title = HEU.diplomacy_event.2.t
+	desc = HEU.diplomacy_event.2.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.2.a
+		if = {
+			limit = {
+				has_idea = BA_isolation
+			}
+			add_ideas = free_trade
+		}
+		add_ideas = HEU_new_BLEU
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}	
+		}
+
+		hidden_effect = {
+			news_event = { id = HEU_news.29 hours = 3 }
+		}
+	}
+}
+
+country_event = { #[FROM.GetNameDef]의 경제동맹 거절
+	id = HEU.diplomacy_event.3
+	title = HEU.diplomacy_event.3.t
+	desc = HEU.diplomacy_event.3.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.3.a
+		add_political_power = -50
+
+		hidden_effect = {
+			news_event = { id = HEU_news.8 hours = 3 }
+		}
+	}
+}
+
 country_event = { #리쿠하치마 아루의 우울장애
 	id = HEU.persona_event.1009
 	title = HEU.persona_event.1009.t
@@ -9163,6 +9258,31 @@ news_event = {
 		name = HEU_news.28.c
 		trigger = {
 			Kivotos_tag = no
+		}
+	}
+}
+
+# 룩셈부르크-[KSP.GetNameDef] 경제동맹
+news_event = {
+	id = HEU_news.29
+	title = HEU_news.29.t
+	desc = HEU_news.29.desc
+	picture = GFX_news_event_generic_sign_treaty1
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = HEU_news.29.a
+		trigger = {
+			tag = HEU
+		}
+	}
+
+	option = {
+		name = HEU_news.29.b
+		trigger = {
+			NOT = { tag = HEU }
 		}
 	}
 }
