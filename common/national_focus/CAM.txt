@@ -157,11 +157,21 @@
 			focus = angkor_power_up
 		}
 		completion_reward = {
-			set_politics = {
-				ruling_party = neutrality
+			drop_cosmetic_tag = yes
+			set_politics = { ruling_party = neutrality }
+			FRA = {
+				country_event = {
+				id = CAM_event.2
+				hours = 6
+				random_hours = 24
+			}
+			set_autonomy = {
+				target = CAM
+				autonomy_state = autonomy_free
 			}
 		}
 	}
+}
 
 	focus = {
 		id = khmer_krom_integration_requirements
@@ -174,6 +184,50 @@
 
 		prerequisite = {
 			focus = to_the_glory_of_khmer_empire
+		}
+		
+		available = {
+
+			1038 = {
+				controller = {
+					tag = FRA
+				}
+			}
+		}
+
+		bypass = {
+			OR = {
+				has_full_control_of_state = 1038
+			}
+		}
+
+		completion_reward = {
+			1038 = { add_core_of = CAM }
+			add_state_claim = 1038
+
+			if = {
+				limit = {
+					1038 = {
+						controller = {
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+				}
+
+				1038 = {
+					controller = {
+						set_country_flag = CAM_want_cochin
+						
+						country_event = {
+							id = CAM_event.1
+							hours = 6
+							random_hours = 24
+						}
+					}
+				}
+			}
 		}
 	}
 

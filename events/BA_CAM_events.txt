@@ -1,1 +1,61 @@
-﻿
+﻿add_namespace = CAM_event
+
+country_event = {
+    id = CAM_event.1
+    title = CAM_event.t
+    desc = CAM_event.d
+    picture = no
+    is_triggered_only = yes
+
+    trigger = {
+        FROM = { has_country_flag = CAM_want_cochin }
+    }
+
+    option = {
+        name = khmer_krom_integration_requirements_yes
+        
+        FROM = { 
+            transfer_state = 1038
+            clr_country_flag = CAM_want_cochin
+        }
+    }
+
+    option = {
+        name = khmer_krom_integration_requirements_events_no
+
+        FROM = {
+            create_wargoal = {
+                target = FROM
+                type = take_state
+            }
+            clr_country_flag = CAM_want_cochin
+        }
+    }
+}
+
+country_event = {
+	id = CAM_event.2
+	title = CAM_event.2.t
+	desc = CAM_event.2.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_spr_anarchist_uprising2
+	hidden = no
+	option = {
+		name = CAM_event.2.a
+        activate_mission = FRA_end_war_timer_CAM
+        CAM = {
+            add_timed_idea = {
+		    idea = VIN_indochina_war_idea
+		    days = 180
+	        }
+            declare_war_on = {
+                target = FRA
+                type = liberate_wargoal
+            }
+        }
+	}
+    option = {
+        name = CAM_event.2.b
+    }
+}
