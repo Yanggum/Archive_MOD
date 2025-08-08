@@ -13,12 +13,12 @@ characters={
 		}
 		gender = female
 		corps_commander={
-			traits={ infantry_officer war_hero trait_cautious front_line_general urban_assault_specialist legendary_sublime }
+			traits={ brilliant_strategist infantry_officer war_hero trait_cautious front_line_general urban_assault_specialist legendary_sublime }
 			skill=5
-			attack_skill=5
+			attack_skill=5 #+1
 			defense_skill=3
-			planning_skill=4
-			logistics_skill=4
+			planning_skill=4 #+1
+			logistics_skill= 4
 			legacy_id=250
 			visible = {
 				OR = {
@@ -208,6 +208,10 @@ characters={
 					limit = { tag = GEM }
 					has_completed_focus = GEH_top_and_bottom_clothes
 				}
+				if = {
+					limit = { tag = GEH }
+					NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_indiscriminate_prosecution }
+				}
 			}
 			traits = { princess_of_terror }
 		}
@@ -297,12 +301,12 @@ characters={
 		gender = female
 
 		field_marshal = {
-			traits = { trait_cautious media_personality brilliant_strategist }
+			traits = { brilliant_strategist trait_cautious media_personality }
 			skill = 3
 			attack_skill = 2
 			defense_skill = 2
-			planning_skill = 3
-			logistics_skill = 3
+			planning_skill=3
+			logistics_skill=3
 		}
 
 		advisor={	
@@ -343,6 +347,10 @@ characters={
 					has_completed_focus = GEH_top_and_bottom_clothes
 				}
 				NOT = { has_country_flag = GEH_ako_route_bad_ending_flag }
+				if = {
+					limit = { tag = GEH }
+					NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_indiscriminate_prosecution }
+				}
 			}
 			traits = {
 				GEH_paranoia_ako
@@ -436,7 +444,7 @@ characters={
 		}
 	}
 
-	GEH_piet_mondrian = {  # 몬드리안 (바우하우스)
+	GEH_piet_mondrian = {  # 몬드리안 (바우하우스) /예술가
 		name=GEH_piet_mondrian
 		portraits={
 			army={
@@ -453,12 +461,13 @@ characters={
 					NOT = { has_idea_with_trait = GEH_degenerate_art }
 					NOT = { has_idea_with_trait = GEH_composer }
 				}
+				NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 			}
 			traits = { GEH_artist GEH_bauhaus }
 		}
 	}
 
-	GEH_karl_schmidt_rottluff = {  # 카를 슈미트-로틀루프
+	GEH_karl_schmidt_rottluff = {  # 카를 슈미트-로틀루프 /예술가
 		name=GEH_karl_schmidt_rottluff
 		portraits={
 			army={
@@ -475,12 +484,13 @@ characters={
 					NOT = { has_idea_with_trait = GEH_bauhaus }
 					NOT = { has_idea_with_trait = GEH_composer }
 				}
+				NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 			}
 			traits = { GEH_artist GEH_degenerate_art }
 		}
 	}
 
-	GEH_richard_strauss= {  # 리하르트 슈트라우스
+	GEH_richard_strauss= {  # 리하르트 슈트라우스 /예술가
 		name=GEH_richard_strauss
 		portraits={
 			army={
@@ -498,6 +508,7 @@ characters={
 					NOT = { has_idea_with_trait = GEH_bauhaus }
 					NOT = { has_idea_with_trait = GEH_degenerate_art }
 				}
+				NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution }
 			}
 			traits = { GEH_artist GEH_composer }
 		}
@@ -769,6 +780,19 @@ characters={
 			}
 		}
 
+		corps_commander={
+			traits={ panzer_leader } # 새해의 아페테리프 이벤트 퀘스트에서 헬멧단 경전차 지휘
+			skill=1
+			attack_skill=1
+			defense_skill=1
+			planning_skill=1
+			logistics_skill=1
+			legacy_id=-1
+			visible = {
+				owner = { has_idea = GEH_nyaomoto_kan }
+			}
+		}
+
 		advisor={
 			slot = political_advisor
 			idea_token = GEH_nyaomoto_kan
@@ -860,19 +884,19 @@ characters={
 		#	slot = theorist
 		#	idea_token = GEH_therese_junkers
 		#	ledger = air
-#
+		#
 		#	allowed = { 
 		#		original_tag = GEH 
 		#	}
-#
+		#
 		#	available = {
 		#		has_completed_focus = GEH_prefect_team_luftwaffe_therese_junkers
 		#	}
-#
+		#
 		#	traits = {
 		#		air_warfare_theorist
 		#	}
-#
+		#
 		#	cost = 100
 		#}	
 		
@@ -885,6 +909,17 @@ characters={
 				owner = {
 					has_completed_focus = GEH_prefect_team_luftwaffe_therese_junkers
 				}
+			}
+		}
+
+		gender = female
+	}
+
+	GEH_celestial_revolution_leader ={ #게헨나 혁명평의회
+		name=GEH_celestial_revolution_leader 
+		portraits={
+			civilian = {
+				large="GFX_GEH_celestial_revolution_1_Portrait"
 			}
 		}
 
@@ -903,9 +938,9 @@ characters={
 		gender = female
 		corps_commander={
 			traits={ GEM_trait_gourmet_research_society trickster militias_officer }
-			skill=3
+			skill=2
 			attack_skill=3
-			defense_skill=2
+			defense_skill=3
 			planning_skill=3
 			logistics_skill=3
 			visible = {
@@ -946,9 +981,9 @@ characters={
 			traits={ GEM_trait_gourmet_research_society urban_assault_specialist }
 			skill=2
 			attack_skill=3
-			defense_skill=1
-			planning_skill=1
-			logistics_skill=3
+			defense_skill=2
+			planning_skill=2
+			logistics_skill=2
 			visible = {
 				has_country_flag = gem_club_problem_gourmet_research_society_progress_point_3_visible
 			}
@@ -966,10 +1001,10 @@ characters={
 		corps_commander={
 			traits={ GEM_trait_gourmet_research_society }
 			skill=2
-			attack_skill=2
-			defense_skill=2
-			planning_skill=2
-			logistics_skill=2
+			attack_skill=1
+			defense_skill=3
+			planning_skill=3
+			logistics_skill=3
 			visible = {
 				has_country_flag = gem_club_problem_gourmet_research_society_progress_point_3_visible
 			}
@@ -989,7 +1024,7 @@ characters={
 			skill=1
 			attack_skill=1
 			defense_skill=2
-			planning_skill=1
+			planning_skill=3
 			logistics_skill=1
 			legacy_id=-1
 			visible = {
@@ -1009,11 +1044,11 @@ characters={
 		gender = female
 		corps_commander={
 			traits={ GEM_trait_hot_spring_department }
-			skill=3
-			attack_skill=4
-			defense_skill=2
-			planning_skill=4
-			logistics_skill=1
+			skill=2
+			attack_skill=3
+			defense_skill=3
+			planning_skill=2
+			logistics_skill=3
 			legacy_id=-1
 			visible = {
 				has_country_flag = gem_club_problem_hot_spring_department_progress_point_3_visible
@@ -1051,9 +1086,9 @@ characters={
 		gender = female
 		corps_commander={
 			traits={ GEM_trait_hot_spring_department }
-			skill=2
+			skill=1
 			attack_skill=3
-			defense_skill=3
+			defense_skill=2
 			planning_skill=1
 			logistics_skill=1
 			legacy_id=-1
