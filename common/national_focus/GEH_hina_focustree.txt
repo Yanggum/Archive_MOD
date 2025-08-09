@@ -9727,7 +9727,7 @@ focus_tree = {
 # /노말 중점 최종장 시작
     focus = {
 		id = GEH_last_focus_effect_normal_rout
-		icon = GFX_focus_GEH_last_focus_effect
+		icon = GFX_goal_GEH_shorasaki_hina
 		cost = 2
 
 		relative_position_id = GEH_last_focus_3
@@ -9742,7 +9742,7 @@ focus_tree = {
 		}
 		
 		offset = {
-			x = 40
+			x = 45
 			trigger = {
 				is_debug = yes
 			}
@@ -9756,6 +9756,769 @@ focus_tree = {
         prerequisite = {
             focus = GEH_last_focus_3
         }
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_hina = {
+				remove_country_leader_role = {
+					ideology = despotism
+				}
+			}
+			add_country_leader_role = {
+				character = GEH_dkzh
+				promote_leader = yes
+				country_leader = {
+					ideology = oligarchism
+					
+					expire = "1980.1.1"
+					traits = {
+						GEH_ako_trait_Z
+					}
+				}
+			}
+			set_portraits = {
+				character = GEH_hina
+				civilian = { 
+					large = GFX_GEH_Hina_Blouse_Portrait 
+					small = GFX_GEH_Hina_advisor
+				}
+				army = { large = GFX_GEH_Hina_Blouse_Portrait }
+			}
+			news_event = GEH_news.13
+		}
+	}
+	#게헨나 학생회장 (아코)
+    focus = {
+		id = GEH_gehenna_student_council_president_election
+		icon = GFX_focus_GEH_gehenna_student_council_president_election
+		cost = 5
+
+		relative_position_id = GEH_last_focus_effect_normal_rout
+		x = 3
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_last_focus_effect_normal_rout
+        }
+		mutually_exclusive = {
+			focus = GEH_new_disciplinary_head_election
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			add_dynamic_modifier = {
+				modifier = GEH_gehenna_student_council_idea
+			}
+		}
+	}
+    focus = {
+		id = GEH_amau_ako_s_worry
+		icon = GFX_focus_GEH_amau_ako_s_worry
+		cost = 5
+
+		relative_position_id = GEH_gehenna_student_council_president_election
+		x = 0
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_gehenna_student_council_president_election
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_PL_tooltip = yes
+            add_to_variable = {
+				GEH_PL_line_change_production_efficiency_factor = 0.05
+				tooltip = line_change_production_efficiency_factor_tt
+			}
+			country_event = GEH_normal_story_event.8
+		}
+	}
+    focus = {
+		id = GEH_gehenna_morning_star_club
+		icon = GFX_goal_GEH_last_focus_effect_a_rout
+		cost = 5
+
+		relative_position_id = GEH_amau_ako_s_worry
+		x = -1
+		y = 1
+
+		available = {
+			is_subject = no
+		}
+        prerequisite = {
+            focus = GEH_amau_ako_s_worry
+        }
+		mutually_exclusive = {
+			focus = GEH_student_council_president_ako
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_student_council
+			add_to_variable = {
+				GEH_NO_idea_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_production_speed_industrial_complex_factor = 0.05
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			country_event = GEH_normal_story_event.9
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_gehenna_morning_star_club_tt
+			effect_tooltip = {
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.6
+				}
+				set_politics = {
+					ruling_party = democratic
+					elections_allowed = no
+				}       
+				set_rule = { CAN_DECLARE_WAR_ON_SAME_IDEOLOGY = yes }
+				set_rule = { can_only_justify_war_on_threat_country = no }
+				set_rule = { can_join_opposite_factions = yes }
+			}
+		}
+	}
+    focus = {
+		id = GEH_student_council_president_ako
+		icon = GFX_goal_GEH_gehenna_reunification_ako
+		cost = 5
+
+		relative_position_id = GEH_amau_ako_s_worry
+		x = 1
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_amau_ako_s_worry
+        }
+		mutually_exclusive = {
+			focus = GEH_gehenna_morning_star_club
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_student_council
+			add_to_variable = {
+				GEH_NO_idea_production_factory_start_efficiency_factor = 0.05
+				tooltip = production_factory_start_efficiency_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			swap_ruler_traits = {
+				remove = GEH_ako_trait_Z
+				add = GEH_ako_trait_Y
+			}
+			country_event = GEH_normal_story_event.11
+		}
+	}
+    focus = {
+		id = GEH_planning_department_independence
+		icon = GFX_goal_GEH_amau_seminar
+		cost = 5
+
+		relative_position_id = GEH_amau_ako_s_worry
+		x = 0
+		y = 2
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_gehenna_morning_star_club
+			focus = GEH_student_council_president_ako
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_student_council
+			add_to_variable = {
+				GEH_NO_idea_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			GEH_PL_tooltip = yes
+			add_to_variable = {
+				GEH_PL_consumer_goods_factor = 0.02
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				GEH_PL_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+	#새 선도부장 (이오리)
+    focus = {
+		id = GEH_new_disciplinary_head_election
+		icon = GFX_goal_Prefect_Team_muster
+		cost = 5
+
+		relative_position_id = GEH_last_focus_effect_normal_rout
+		x = -3
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_last_focus_effect_normal_rout
+        }
+		mutually_exclusive = {
+			focus = GEH_gehenna_student_council_president_election
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			add_dynamic_modifier = {
+				modifier = GEH_gehenna_leadership_committee_idea
+			}
+		}
+	}
+    focus = {
+		id = GEH_shiromi_iori_s_ordeal
+		icon = GFX_focus_GEH_shiromi_iori_s_ordeal
+		cost = 5
+
+		relative_position_id = GEH_new_disciplinary_head_election
+		x = 0
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_new_disciplinary_head_election
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_RU_tooltip = yes
+            add_to_variable = {
+				GEH_RU_army_org_factor = 0.07
+				tooltip = army_org_factor_tt
+			}
+			country_event = GEH_normal_story_event.1
+		}
+	}
+    focus = {
+		id = GEH_not_you_plz
+		icon = GFX_focus_GEH_not_you_plz
+		cost = 5
+
+		relative_position_id = GEH_shiromi_iori_s_ordeal
+		x = -1
+		y = 1
+
+		available = {
+			is_subject = no
+		}
+		select_effect = {
+			country_event = GEH_normal_story_event.2
+		}
+        prerequisite = {
+            focus = GEH_shiromi_iori_s_ordeal
+        }
+		mutually_exclusive = {
+			focus = GEH_crushed_reconciliation
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_leadership_committee
+			add_to_variable = {
+				GEH_gehenna_council_idea_drift_defence_factor = 0.05
+				tooltip = drift_defence_factor_tt
+			}
+			country_event = GEH_normal_story_event.4
+		}
+	}
+    focus = {
+		id = GEH_crushed_reconciliation
+		icon = GFX_focus_GEH_crushed_reconciliation
+		cost = 5
+
+		relative_position_id = GEH_shiromi_iori_s_ordeal
+		x = 1
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_shiromi_iori_s_ordeal
+        }
+		mutually_exclusive = {
+			focus = GEH_not_you_plz
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_gehenna_leadership_committee
+			add_to_variable = {
+				GEH_gehenna_council_idea_political_advisor_cost_factor = -0.1
+				tooltip = political_advisor_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_gehenna_council_idea_drift_defence_factor = 0.20
+				tooltip = drift_defence_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			swap_ruler_traits = {
+				remove = GEH_ako_trait_Z
+				add = GEH_ako_trait_X
+			}
+			country_event = GEH_normal_story_event.7
+		}
+	}
+    focus = {
+		id = GEH_execution_department_guard
+		icon = GFX_goal_GEH_fortification_focus
+		cost = 5
+
+		relative_position_id = GEH_shiromi_iori_s_ordeal
+		x = 0
+		y = 2
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_not_you_plz
+			focus = GEH_crushed_reconciliation
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_RU_tooltip = yes
+            add_to_variable = {
+				GEH_RU_army_org_regain = 0.10
+				tooltip = army_org_regain_tt
+			}
+            add_to_variable = {
+				GEH_RU_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+            add_to_variable = {
+				GEH_RU_minimum_training_level = -0.05
+				tooltip = minimum_training_level_tt
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEH_gehenna_leadership_committee
+			add_to_variable = {
+				GEH_NO_idea_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_mobilization_laws_cost_factor = 0.05
+				tooltip = mobilization_laws_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_surrender_limit = 0.05
+				tooltip = surrender_limit_tt
+			}
+		}
+	}
+	#공용 (히나)
+    focus = {
+		id = GEH_art_academy_enhancement
+		icon = GFX_focus_GEH_art_academy_enhancement
+		cost = 5
+
+		relative_position_id = GEH_last_focus_effect_normal_rout
+		x = -1
+		y = 2
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_gehenna_student_council_president_election
+            focus = GEH_new_disciplinary_head_election
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_NO_tooltip = yes
+			add_to_variable = {
+				GEH_NO_idea_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_consumer_goods_factor = -0.15
+				tooltip = consumer_goods_factor_tt
+			}
+		}
+	}
+    focus = {
+		id = GEH_organic_academy
+		icon = GFX_focus_GEH_organic_academy
+		cost = 5
+
+		relative_position_id = GEH_last_focus_effect_normal_rout
+		x = 1
+		y = 2
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_gehenna_student_council_president_election
+            focus = GEH_new_disciplinary_head_election
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_NO_tooltip = yes
+			add_to_variable = {
+				GEH_NO_idea_research_speed_factor = 0.05
+				tooltip = research_speed_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_industrial_capacity_factory = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 2.0
+				uses = 1
+				category = electronics
+				category = nuclear
+				category = rocketry
+			}
+		}
+	}
+    focus = {
+		id = GEH_gehenna_literature_academy
+		icon = GFX_focus_GEH_gehenna_literature_academy
+		cost = 5
+
+		relative_position_id = GEH_last_focus_effect_normal_rout
+		x = 0
+		y = 3
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_art_academy_enhancement
+		}
+        prerequisite = {
+            focus = GEH_organic_academy
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			GEH_NO_tooltip = yes
+			add_to_variable = {
+				GEH_NO_idea_trade_laws_cost_factor = -0.15
+				tooltip = trade_laws_cost_factor_tt
+			}
+			add_to_variable = {
+				GEH_NO_idea_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			
+			random_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+    focus = {
+		id = GEH_play_woman_of_iron_skin
+		icon = GFX_goal_GEH_play_woman_of_iron_skin
+		cost = 5
+
+		relative_position_id = GEH_gehenna_literature_academy
+		x = 0
+		y = 2
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_gehenna_literature_academy
+        }
+        prerequisite = {
+            focus = GEH_planning_department_independence
+            focus = GEH_execution_department_guard
+        }
+		mutually_exclusive = {
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			country_event = GEH_normal_story_event.12
+		}
+	}
+	#끝
+	
+    focus = {
+		id = GEH_principle_of_order
+		icon = GFX_focus_GEH_principle_of_order
+		cost = 5
+
+		relative_position_id = GEH_play_woman_of_iron_skin
+		x = -2
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_play_woman_of_iron_skin
+        }
+		mutually_exclusive = {
+			focus = GEH_principle_of_mediation
+			focus = GEH_principle_of_reconciliation
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+		}
+	}
+    focus = {
+		id = GEH_principle_of_mediation
+		icon = GFX_focus_GEH_principle_of_mediation
+		cost = 5
+
+		relative_position_id = GEH_play_woman_of_iron_skin
+		x = 0
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_play_woman_of_iron_skin
+        }
+		mutually_exclusive = {
+			focus = GEH_principle_of_order
+			focus = GEH_principle_of_reconciliation
+		}
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+		}
+	}
+    focus = {
+		id = GEH_principle_of_reconciliation
+		icon = GFX_focus_GEH_principle_of_reconciliation
+		cost = 5
+
+		relative_position_id = GEH_play_woman_of_iron_skin
+		x = 2
+		y = 1
+
+		available = {
+		}
+        prerequisite = {
+            focus = GEH_play_woman_of_iron_skin
+        }
+		mutually_exclusive = {
+			focus = GEH_principle_of_order
+			focus = GEH_principle_of_mediation
+		}
 		ai_will_do = {
 			base = 100
 			modifier = {
@@ -9788,7 +10551,7 @@ focus_tree = {
 		cost = 5
 		
 		offset = {
-			x = 32
+			x = 42
 			trigger = {
 				is_debug = yes
 			}
