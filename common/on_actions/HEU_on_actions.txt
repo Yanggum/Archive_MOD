@@ -2,64 +2,51 @@ on_actions = {
 
 	on_startup = {
 		effect = {
-			every_country = {
-				if = {
-					limit = { tag = HEU }
+			HEU = {
+				#룩셈부르크 의회
+				set_variable = { HEU_abgeordnetenkammer^0 = 0 } #연방생도당
+				set_variable = { HEU_abgeordnetenkammer^1 = 0.6 } #우파당
+				set_variable = { HEU_abgeordnetenkammer^2 = 0.3 } #급진자유당
+				set_variable = { HEU_abgeordnetenkammer^3 = 0.1 } #공산당
+				add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^0 }
+				add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^1 }
+				add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^2 }
+				add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^3 }
+				HEU_parties_modifier_effect = yes
 
-					#룩셈부르크 의회
-					set_variable = { HEU_abgeordnetenkammer^0 = 0 } #연방생도당
-					set_variable = { HEU_abgeordnetenkammer^1 = 0.6 } #우파당
-					set_variable = { HEU_abgeordnetenkammer^2 = 0.3 } #급진자유당
-					set_variable = { HEU_abgeordnetenkammer^3 = 0.1 } #공산당
-					add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^0 }
-					add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^1 }
-					add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^2 }
-					add_to_array = { HEU_council_factions = HEU_abgeordnetenkammer^3 }
-					HEU_parties_modifier_effect = yes
-
-					#룩셈부르크 외교관계
-					add_opinion_modifier = {
-						target = BEL
-						modifier = LUX_BEL_historical_friendship
-					}
-					add_opinion_modifier = {
-						target = ABY
-						modifier = LUX_ABY_friendship
-					}
-					
-					every_other_country = {
-						limit = {
-							exists = yes
-							capital_scope = {is_on_continent = europe}
-							NOT = { tag = ABY }
-							Kivotos_tag = yes
-						}
-						add_opinion_modifier = {
-							target = PREV
-							modifier = LUX_quasi_earth_nation_negative
-						}
-					}
-					
+				#룩셈부르크 외교관계
+				add_opinion_modifier = {
+					target = BEL
+					modifier = LUX_BEL_historical_friendship
 				}
-			}
-			every_country = {
-				if = {
-					limit = { tag = ABY }
-					#룩셈부르크 외교관계
+				add_opinion_modifier = {
+					target = ABY
+					modifier = LUX_ABY_friendship
+				}
+				
+				every_other_country = {
+					limit = {
+						exists = yes
+						capital_scope = {is_on_continent = europe}
+						NOT = { tag = ABY }
+						Kivotos_tag = yes
+					}
 					add_opinion_modifier = {
-						target = HEU
-						modifier = LUX_ABY_friendship
+						target = PREV
+						modifier = LUX_quasi_earth_nation_negative
 					}
 				}
 			}
-			every_country = {
-				if = {
-					limit = { tag = BEL }
-					#룩셈부르크 외교관계
-					add_opinion_modifier = {
-						target = HEU
-						modifier = LUX_BEL_historical_friendship
-					}
+			ABY = {
+				add_opinion_modifier = {
+					target = HEU
+					modifier = LUX_ABY_friendship
+				}
+			}
+			BEL = {
+				add_opinion_modifier = {
+					target = HEU
+					modifier = LUX_BEL_historical_friendship
 				}
 			}
 		}
