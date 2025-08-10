@@ -1,3 +1,4 @@
+#!gfx:interface\BA_goals.gfx
 #	joint_focus = {
 #		id = Eden_
 #		icon = GFX_
@@ -125,11 +126,12 @@ shared_focus = { #에덴 조약기구 수립
 	#search_filters = { FOCUS_FILTER_POLITICAL }
 
 	completion_reward = {
-		set_variable = { global.Eden_alliance_leader = ROOT }
 		if = {
 			limit = {	
 				Eden_alliance_created_already = no
 			}
+			set_variable = { global.Eden_alliance_leader = ROOT }
+
 			set_global_flag = Eden_alliance_formed
 			set_country_flag = Eden_league_leader 
 			set_faction_name = TRM_Treaty_of_Eden_faction
@@ -243,10 +245,6 @@ joint_focus = { #에덴 합중국
 	text_icon = NORDIC_focus_style
 
 	available = {
-		custom_trigger_tooltip = {
-			tooltip = THIS_IS_WIP_TT
-			has_country_flag = GAEBALJUNG
-		}
 		Eden_basic_available_trigger = yes
 		is_faction_leader = yes
 	}
@@ -266,7 +264,6 @@ joint_focus = { #에덴 합중국
 	}
 
 	completion_reward_joint_member = {
-		country_event = { id = Eden_event.1 hours = 8 }
 	}
 
 }
@@ -289,6 +286,10 @@ joint_focus = { #현상 유지
 	available = {
 		Eden_basic_available_trigger = yes
 		is_faction_leader = yes
+		custom_trigger_tooltip = {
+			tooltip = THIS_IS_WIP_TT
+			has_country_flag = GAEBALJUNG
+		}
 	}
 
 	#search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_NAVY_XP FOCUS_FILTER_AIR_XP }
@@ -403,7 +404,6 @@ joint_focus = { #산업 부문 통합
 			}
 			set_state_flag = Eden_integration_of_industrial_sectors_flag
 		}
-
 	}
 
 	completion_reward_joint_member = {
@@ -420,8 +420,7 @@ joint_focus = { #산업 부문 통합
 
 }
 
-
-shared_focus = { #에덴 합중국
+joint_focus = { #에덴 합중국
 	id = Eden_united_state_Eden
 	icon = GFX_goal_TRN_eden_states
 	
@@ -442,12 +441,268 @@ shared_focus = { #에덴 합중국
 		is_faction_leader = yes
 	}
 
+	#search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_NAVY_XP FOCUS_FILTER_AIR_XP }
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
 
 
 	completion_reward = {
-		set_cosmetic_tag = TRM_United_State
 	}
 
+	completion_reward_joint_originator = {
+		set_cosmetic_tag = TRM_United_State
+		set_faction_name = eden_negotiation_bureau
+		add_political_power = 100
+		set_country_flag = Eden_united_state_Eden_flag
+		every_state = {
+			limit = {
+				owner = {
+					Eden_is_eden_country = yes
+				}
+				NOT = {
+					is_core_of = ROOT
+					is_claimed_by = ROOT
+				}
+			}
+			add_claim_by = ROOT
+		}
+	}
+
+	completion_reward_joint_member = {
+		country_event = { id = Eden_event.1 hours = 8 }
+	}
+
+}
+
+shared_focus = {
+	id = Eden_eden_unification_war
+	icon = GFX_goal_TRN_sun_rises_see_west
+	
+	prerequisite = { focus = Eden_united_state_Eden }
+	mutually_exclusive = {
+	}
+	
+	x = 0
+	y = 2
+	relative_position_id = Eden_united_state_Eden
+	cost = 10
+
+	text_icon = NORDIC_focus_style
+
+	available = {
+		is_subject = no
+		has_country_flag = {
+			flag = Eden_united_state_Eden_flag
+			days > 180
+		}
+	}
+
+	completion_reward = {
+		add_country_leader_trait = Eden_eden_unification_war_trait
+		every_country = {
+			limit = {
+				NOT = { tag = ROOT }
+				Eden_is_eden_country = yes
+				has_capitulated = no
+				NOT = {
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
+			}
+			ROOT = {
+				custom_effect_tooltip = war_aim_against_the_country_annex_tt
+				hidden_effect = {
+					create_wargoal = {
+						target = PREV
+						type = annex_everything
+					}
+				}
+			}
+		}
+	}
+}
+
+shared_focus = {
+	id = Eden_national_integration_start
+	icon = GFX_focus_TRN_eden_accord
+	
+	prerequisite = { focus = Eden_eden_unification_war }
+	mutually_exclusive = {
+	}
+
+	available = {
+		count_triggers = {
+			amount = 2
+			country_exists = ED1
+			country_exists = ED2
+			country_exists = ED3
+			country_exists = ED4
+			country_exists = ED5
+		}
+	}
+	
+	x = 0
+	y = 2
+	relative_position_id = Eden_eden_unification_war
+	cost = 10
+
+	text_icon = NORDIC_focus_style
+
+	available = {
+		is_subject = no
+		has_country_flag = {
+			flag = Eden_united_state_Eden_flag
+			days > 240
+		}
+	}
+
+	completion_reward = {
+		if = {
+			limit = {
+				ED1 = {
+					exists = yes
+					has_capitulated = no
+					is_subject_of = ROOT
+				}
+			}
+			ED1 = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 60
+							state = 61
+							state = 62
+							state = 63
+							state = 64
+							state = 65
+							state = 66
+							state = 67
+							state = 68
+							state = 86
+							state = 762
+						}
+					}
+					add_core_of = ROOT
+				}
+			}
+			annex_country = {
+				target = ED1
+				transfer_troops = yes
+			}
+		}
+		if = {
+			limit = {
+				ED2 = {
+					exists = yes
+					has_capitulated = no
+					is_subject_of = ROOT
+				}
+			}
+			ED2 = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 5
+							state = 85
+							state = 807
+							state = 188
+							state = 763
+						}
+					}
+					add_core_of = ROOT
+				}
+			}
+			annex_country = {
+				target = ED2
+				transfer_troops = yes
+			}
+		}
+		if = {
+			limit = {
+				ED3 = {
+					exists = yes
+					has_capitulated = no
+					is_subject_of = ROOT
+				}
+			}
+			ED3 = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 51
+							state = 55
+							state = 56
+							state = 57
+							state = 58
+							state = 59
+							state = 909
+							state = 1022
+						}
+					}
+					add_core_of = ROOT
+				}
+			}
+			annex_country = {
+				target = ED3
+				transfer_troops = yes
+			}
+		}
+		if = {
+			limit = {
+				ED4 = {
+					exists = yes
+					has_capitulated = no
+					is_subject_of = ROOT
+				}
+			}
+			ED4 = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 50
+							state = 52
+							state = 53
+							state = 54
+							state = 978
+							state = 1023
+						}
+					}
+					add_core_of = ROOT
+				}
+			}
+			annex_country = {
+				target = ED4
+				transfer_troops = yes
+			}
+		}
+		if = {
+			limit = {
+				ED5 = {
+					exists = yes
+					has_capitulated = no
+					is_subject_of = ROOT
+				}
+			}
+			ED5 = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 1025
+							state = 42
+							state = 8
+						}
+					}
+					add_core_of = ROOT
+				}
+			}
+			annex_country = {
+				target = ED5
+				transfer_troops = yes
+			}
+		}
+	}
 }
 
 joint_focus = { #에덴 연방
@@ -491,6 +746,69 @@ joint_focus = { #에덴 연방
 
 	completion_reward_joint_member = {
 		country_event = { id = Eden_event.1 hours = 8 }
+	}
+
+}
+
+joint_focus = { #에덴 연방
+	id = Eden_no_tariff_measure
+	icon = GFX_goal_TRN_eden_union
+	
+	prerequisite = {
+		focus = Eden_eden_federation
+		focus = Eden_united_state_Eden
+	}
+	mutually_exclusive = {
+	}
+	
+	x = -2
+	y = 2
+	relative_position_id = Eden_eden_annex
+	cost = 10
+
+	text_icon = NORDIC_focus_style
+
+	available = {
+		Eden_basic_available_trigger = yes
+		is_faction_leader = yes
+	}
+
+	#search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_NAVY_XP FOCUS_FILTER_AIR_XP }
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+	complete_tooltip = {
+		add_ideas = Eden_no_tariff_measure
+		every_state = {
+			limit = { has_state_flag = Eden_no_tariff_measure_1IC }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+
+	completion_reward = {
+		add_ideas = Eden_no_tariff_measure
+		capital_scope = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			set_state_flag = Eden_no_tariff_measure_1IC
+		}
+	}
+
+	completion_reward_joint_originator = {
+	}
+
+	completion_reward_joint_member = {
 	}
 
 }

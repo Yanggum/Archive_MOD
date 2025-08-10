@@ -35,25 +35,47 @@ Eden_alliance_created_already = { # Checks if any of the Nordic Alliances has be
 	}
 }
 Eden_basic_joint_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = Eden_is_joint_focus_member_TT
-		is_in_faction = yes  
-		OR = {
-			has_country_flag = Eden_faction_leader
-			AND = {
-				has_variable = global.Eden_alliance_leader
-				Eden_is_eden_country = yes
-				is_subject = no  
-				is_in_faction_with = var:global.Eden_alliance_leader 
-			}	
+	if = {
+		limit = {
+			has_country_flag = Eden_united_state_Eden_flag
+		}
+		custom_trigger_tooltip = {
+			tooltip = Eden_united_state_Eden_trigger
+			always = yes
+		}
+	}
+	else = {
+		custom_trigger_tooltip = {
+			tooltip = Eden_is_joint_focus_member_TT
+			is_in_faction = yes
+			OR = {
+				has_country_flag = Eden_faction_leader
+				AND = {
+					has_variable = global.Eden_alliance_leader
+					Eden_is_eden_country = yes
+					is_subject = no  
+					is_in_faction_with = var:global.Eden_alliance_leader 
+				}	
+			}
 		}
 	}
 	
 }
 Eden_basic_available_trigger = {
 	is_subject = no 
-	Eden_basic_joint_trigger = yes	
-	any_allied_country = {
-		Eden_basic_joint_trigger = yes
+	if = {
+		limit = {
+			has_country_flag = Eden_united_state_Eden_flag
+		}
+		custom_trigger_tooltip = {
+			tooltip = Eden_united_state_Eden_trigger
+			always = yes
+		}
+	}
+	else = {
+		Eden_basic_joint_trigger = yes	
+		any_allied_country = {
+			Eden_basic_joint_trigger = yes
+		}
 	}
 }
