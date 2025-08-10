@@ -175,7 +175,7 @@ shared_focus = { #에덴 조약기구 수립
 					PREV = {
 						remove_from_faction = PREV
 						add_opinion_modifier = {
-							target = PREV.PREV
+							target = PREV
 							modifier = large_decrease
 						}
 					}
@@ -228,8 +228,8 @@ joint_focus = { #연합의 행보
 }
 
 joint_focus = { #에덴 합중국
-	id = Eden_united_state_Eden
-	icon = GFX_goal_TRN_eden_states
+	id = Eden_eden_annex
+	icon = GFX_focus_TRM_united_law
 	
 	prerequisite = { focus = Eden_alliance_actions }
 	
@@ -277,7 +277,7 @@ joint_focus = { #현상 유지
 	
 	prerequisite = { focus = Eden_alliance_actions }
 
-	mutually_exclusive = { focus = Eden_united_state_Eden }
+	mutually_exclusive = { focus = Eden_eden_annex }
 	
 	x = 1
 	y = 1
@@ -316,7 +316,7 @@ joint_focus = { #경제적 협력
 	id = Eden_economic_cooperation
 	icon = GFX_goal_generic_positive_trade_relations
 	
-	prerequisite = { focus = Eden_status_quo focus = Eden_united_state_Eden }
+	prerequisite = { focus = Eden_status_quo focus = Eden_eden_annex }
 
 	mutually_exclusive = {  }
 	
@@ -416,6 +416,81 @@ joint_focus = { #산업 부문 통합
 			}
 			set_state_flag = Eden_integration_of_industrial_sectors_flag
 		}
+	}
+
+}
+
+
+shared_focus = { #에덴 합중국
+	id = Eden_united_state_Eden
+	icon = GFX_goal_TRN_eden_states
+	
+	prerequisite = { focus = Eden_eden_annex }
+	mutually_exclusive = {
+		focus = Eden_eden_federation
+	}
+	
+	x = -1
+	y = 1
+	relative_position_id = Eden_eden_annex
+	cost = 10
+
+	text_icon = NORDIC_focus_style
+
+	available = {
+		Eden_basic_available_trigger = yes
+		is_faction_leader = yes
+	}
+
+
+
+	completion_reward = {
+		set_cosmetic_tag = TRM_United_State
+	}
+
+}
+
+joint_focus = { #에덴 연방
+	id = Eden_eden_federation
+	icon = GFX_goal_TRN_eden_union
+	
+	prerequisite = { focus = Eden_eden_annex }
+	mutually_exclusive = {
+		focus = Eden_united_state_Eden
+	}
+	
+	x = -3
+	y = 1
+	relative_position_id = Eden_eden_annex
+	cost = 10
+
+	text_icon = NORDIC_focus_style
+
+	available = {
+		custom_trigger_tooltip = {
+			tooltip = THIS_IS_WIP_TT
+			has_country_flag = GAEBALJUNG
+		}
+		Eden_basic_available_trigger = yes
+		is_faction_leader = yes
+	}
+
+	#search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_NAVY_XP FOCUS_FILTER_AIR_XP }
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+
+	completion_reward = {
+	}
+
+	completion_reward_joint_originator = {
+		add_political_power = 100
+	}
+
+	completion_reward_joint_member = {
+		country_event = { id = Eden_event.1 hours = 8 }
 	}
 
 }
