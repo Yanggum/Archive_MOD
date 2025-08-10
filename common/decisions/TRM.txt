@@ -7077,7 +7077,7 @@ TRN_Mika_honor_decision_cat = {
 		is_good = no
 		fixed_random_seed = no
 		selectable_mission = no
-		days_mission_timeout = 100
+		days_mission_timeout = 70
 
 		timeout_effect = {
 			activate_mission = TRN_Mika_honor_loop_decision
@@ -7085,26 +7085,22 @@ TRN_Mika_honor_decision_cat = {
 			hidden_effect = {
 				random_list = {
 					1 = {
-						modifier = {
-							add = -999
-							has_country_flag = TRN_trnfla_33_triggered
-						}
-						country_event = {
-							id = trnfla.33
-						}
+						country_event = { id = trnhonor.1 }
 					}
 					1 = {
-						country_event = {
-							id = trnhonor.1
-						}
+						country_event = { id = trnhonor.2 }
 					}
 					1 = {
-						country_event = {
-							id = trnhonor.2
-						}
+						country_event = { id = trnhonor.3 }
+					}
+					1 = {
+						country_event = { id = trnhonor.4 }
 					}
 				}
 			}
+		}
+		complete_effect = {
+
 		}
 	}
 
@@ -7145,7 +7141,7 @@ TRN_Mika_honor_decision_cat = {
 		modifier = {
 			political_power_factor = -0.05
 			consumer_goods_factor = 0.1
-			stability_factor = -0.1
+			stability_factor = -0.05
 			stability_weekly = 0.001
 		}
 
@@ -7175,7 +7171,7 @@ TRN_Mika_honor_decision_cat = {
 		cost = 10
 		days_remove = 90
 		modifier = {
-			political_power_factor = -0.15
+			political_power_factor = -0.05
 			war_support_weekly = 0.001
 			army_org_factor = 0.03
 			stability_factor = -0.05
@@ -7402,6 +7398,7 @@ TRN_Mika_honor_decision_cat = {
 }
 TRN_economic_evelopment_department = {
 	TRN_Industrial_Regions= {
+		priority = 999
 		icon = GFX_decision_generic_merge_plant_materiel
 
 		allowed = { always = no } #activated by effect
@@ -7623,6 +7620,9 @@ TRN_economic_evelopment_department = {
 			mio:TRM_vickers_armstrong_eng_organization = {
 				add_mio_size = 1
 			}
+			mio:TRM_motorized_mechanized_organization = {
+				add_mio_size = 1
+			}
 
 			army_experience = 25
 			
@@ -7651,8 +7651,6 @@ TRN_economic_evelopment_department = {
 
 		}
 	}
-}
-TRN_economic_plan_cat = {
 	TRN_Infrastructure_Development = {
 		icon = GFX_decision_generic_trucks
 
@@ -7703,8 +7701,11 @@ TRN_economic_plan_cat = {
 			}
 		}
 	}
+}
+TRN_economic_plan_cat = {
 
 	TRN_Abydos_clearing_sand = {
+		priority = 999
 		icon = GFX_decision_Abydos_Emblem
 
 		allowed = { always = no } #activated by effect
@@ -8246,6 +8247,60 @@ TRN_economic_plan_cat = {
 			}
 		}
 	}
+	
+	TRN_rebuilding_Landwehrkanal  = {
+		priority = 100
+		icon = GFX_decision_hol_drain_water_lines
+
+		ai_will_do = { 
+			base = 3
+		}
+		allowed = { always = no }
+
+		visible = {
+			
+		}
+
+		available = {
+			FROM = { is_owned_and_controlled_by = ROOT }
+			64 = { is_owned_and_controlled_by = ROOT }
+			NOT = { has_country_flag = TRN_industry_deicision_active }
+
+		}
+
+		cost = 35
+		days_remove = 70
+
+		fire_only_once = yes
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			set_country_flag = TRN_industry_deicision_active
+		}
+
+		remove_effect = {
+			clr_country_flag = TRN_industry_deicision_active
+			FROM = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
 
 }
 TRN_trinity_world_cat = {
@@ -8759,6 +8814,9 @@ TRN_trinity_world_cat = {
 				factor = 0
 				surrender_progress > 0.05
 			}
+		}
+		complete_effect = {
+
 		}
 	}
 
