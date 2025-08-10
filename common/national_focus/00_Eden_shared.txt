@@ -75,6 +75,14 @@ shared_focus = { #에덴 조약기구 수립
 	}
 
 	offset = {
+		x = 12
+		y = -15
+		trigger = {
+			tag = TRK
+		}
+	}
+
+	offset = {
 		x = 24
 		y = -2
 		trigger = {
@@ -156,6 +164,25 @@ shared_focus = { #에덴 조약기구 수립
 					set_variable = { Eden_modifier_alliance_leader_production_factory_max_efficiency_factor = 0 }
 			
 					add_dynamic_modifier = { modifier = Eden_modifier_alliance_member }
+				}
+				every_other_country = {
+					limit = {
+						Eden_is_eden_country = yes
+						
+						NOT = { is_in_faction_with = ROOT }
+						is_subject = no
+					}
+					PREV = {
+						remove_from_faction = PREV
+						add_opinion_modifier = {
+							target = PREV.PREV
+							modifier = large_decrease
+						}
+					}
+					add_opinion_modifier = {
+						target = PREV
+						modifier = large_decrease
+					}
 				}
 			}
 		}
