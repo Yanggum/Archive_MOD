@@ -1022,16 +1022,20 @@ focus_tree = {
 		}
 		completion_reward = {
 
-			declare_war_on = {
-				target = BLM
-				type = annex_everything
-			}
-
-			news_event = { id = BA_news.147 days = 14}
-			news_event = { id = BA_news.149}
-		}
-
-		bypass = {
+            every_country = {
+                limit = {
+                    NOT = {
+                        kivotos_tag = no
+                        tag = GEI
+                    }
+                }
+                country_event = {id = GEI_DEC_event.10}
+				country_event = {id = GEI_DEC_event.13 hours = 24}
+                add_opinion_modifier = {
+                    target = GEI
+                    modifier = GEI_DEC_hostile_ai
+                }
+            }
 		}
 	}
 
@@ -1134,32 +1138,19 @@ focus_tree = {
                 country_event = {id = GEI_DEC_event.15}
             }
 			GEM = {
-				retire_character = GEH_satsuki
-				retire_character = GEH_gndnzk
-				retire_character = GEH_dlqnzl
-				retire_character = GEH_motomiya_chiaki
 				country_event = {id = GEI_DEC_event.17}
-				country_event = {id = GEI_DEC_event.21 hours = 48}
-				country_event = {id = GEI_DEC_event.22 hours = 72}
 			}
 
 			GEH = {
-				retire_character = GEH_ann_fudou
 				country_event = {id = GEI_DEC_event.19}
 			}
 
 			MIL = {
-				retire_character = MIL_dbdnzk
-				retire_character = MIL_dktmsk
+				country_event = {id = GEI_DEC_event.18}
 			}
 
 			TRM = {
-				retire_character = TRN_akfl
-				retire_character = TRN_dlclzk
-				retire_character = TRN_Utazumi_Sakurako
-				retire_character = TRN_Aomori_Mine
 				country_event = {id = GEI_DEC_event.18}
-				country_event = {id = GEI_DEC_event.23 days = 7}
 			}
 		}
 	}
@@ -1500,6 +1491,313 @@ focus_tree = {
 			country_event = {id = GEI_DEC_event.26}
 			add_ideas = GEI_DEC_crime_ideas
 		}
+	}
+
+	focus = { # 자정이 다가온다
+		id = GEI_DEC_zero_clock
+		icon = GFX_GEI_DEC_zero_clock
+
+		x = -1
+		y = 1
+        relative_position_id = GEI_DEC_requiem
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_requiem}
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 잘있거라 최후의 밤이여
+		id = GEI_DEC_good_bye_night
+		icon = GFX_GEI_DEC_good_bye_night
+
+		x = 2
+		y = 0
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_requiem}
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 베네룩스통제
+		id = GEI_DEC_control
+		icon = GFX_GEI_DEC_control
+
+		x = -1
+		y = 1
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { 
+			focus = GEI_DEC_good_bye_night
+			focus = GEI_DEC_zero_clock 
+		}
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 인력보충
+		id = GEI_DEC_replenishment
+		icon = GFX_GEI_DEC_replenishment
+
+		x = 1
+		y = 1
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { 
+			focus = GEI_DEC_good_bye_night
+			focus = GEI_DEC_zero_clock 
+		}
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 해방전선 규합
+		id = GEI_DEC_gathering
+		icon = GFX_GEI_DEC_gathering
+
+		x = 3
+		y = 1
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { 
+			focus = GEI_DEC_good_bye_night
+			focus = GEI_DEC_zero_clock 
+		}
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = {
+			annex_country = {
+				tag = DE1
+			}
+		}
+	}
+
+	focus = { # 최후통첩
+		id = GEI_DEC_last_messeage
+		icon = GFX_GEI_DEC_last_messeage
+
+		x = 1
+		y = 2
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_control }
+		prerequisite = { focus = GEI_DEC_gathering }
+		prerequisite = { focus = GEI_DEC_replenishment }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 정화
+		id = GEI_DEC_cleanse
+		icon = GFX_GEI_DEC_cleanse
+
+		x = -1
+		y = 3
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_last_messeage }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = {
+			GEH = {
+				country_event = GEI_DEC_event.31
+			}
+			GEM = {
+				country_event = GEI_DEC_event.31
+			}
+		}
+	}
+
+	focus = { # 에덴
+		id = GEI_DEC_eden
+		icon = GFX_GEI_DEC_eden
+
+		x = 1
+		y = 3
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_last_messeage }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = {
+			TRM = {
+				country_event = GEI_DEC_event.31
+			}
+		}
+	}
+
+	focus = { # 에덴
+		id = GEI_DEC_red_star
+		icon = GFX_GEI_DEC_red_star
+
+		x = 3
+		y = 3
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_last_messeage }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = {
+			RED = {
+				country_event = GEI_DEC_event.31
+			}
+		}
+	}
+
+	focus = { # 최후통첩
+		id = GEI_DEC_last_attack
+		icon = GFX_GEI_DEC_good_bye_night
+
+		x = 1
+		y = 4
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_eden }
+		prerequisite = { focus = GEI_DEC_red_star}
+		prerequisite = { focus = GEI_DEC_cleanse }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
+	}
+
+	focus = { # 최후공격
+		id = GEI_DEC_last_attack
+		icon = GFX_GEI_DEC_last_attack
+
+		x = 1
+		y = 4
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_eden }
+		prerequisite = { focus = GEI_DEC_red_star}
+		prerequisite = { focus = GEI_DEC_cleanse }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = {
+			declare_war_on = {
+                target = RED
+                type = annex_everything
+            }
+			declare_war_on = {
+                target = TRM
+                type = annex_everything
+            }
+			declare_war_on = {
+                target = GEM
+                type = annex_everything
+            }
+			declare_war_on = {
+                target = GEH
+                type = annex_everything
+            }
+			declare_war_on = {
+                target = HEU
+                type = annex_everything
+            }
+		}
+	}
+
+	focus = { # 불리일체의하늘
+		id = GEI_DEC_sky_unity
+		icon = GFX_GEI_DEC_sky_unity
+
+		x = 1
+		y = 5
+        relative_position_id = GEI_DEC_zero_clock
+
+		cost = 1
+        prerequisite = { focus = GEI_DEC_last_attack }
+		text_icon = The_New_Order_focus_style
+		
+
+		available = { }
+		search_filters = {
+			
+						FOCUS_FILTER_ANNEXATION		
+		}
+		completion_reward = { }
 	}
 }
 

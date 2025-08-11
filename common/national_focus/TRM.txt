@@ -1628,7 +1628,7 @@ focus_tree = {
 		cost = 2
 		available = {
 			is_subject = no
-
+			Eden_country_defend_trigger = no
 		}
 
 		completion_reward = {
@@ -2127,6 +2127,7 @@ focus_tree = {
 				tooltip = TRN_gehenna_eq_trigger_tt
 				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
 			}
+			Eden_country_defend_trigger = no
 		}
         prerequisite = {
 			focus = TRM_Anti_Gehenna_Pro_Geramny
@@ -2168,6 +2169,29 @@ focus_tree = {
 				type = conquer
 				id = GEH
 				value = 100
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					OR = {
+						GEM = {
+							OR = {
+								is_ai = no
+								any_allied_country = { is_ai = no }
+							}
+						}
+						GEH = {
+							OR = {
+								is_ai = no
+								any_allied_country = { is_ai = no }
+							}
+						}
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 100000
+				}
 			}
 		}
 
@@ -5688,7 +5712,10 @@ focus_tree = {
 			focus = TRN_Gehenna_Trinity_Conference
 		}
 		available = {
-			has_country_flag = TRM_Treaty_of_Eden_lose
+			OR = {
+				has_country_flag = TRM_Treaty_of_Eden_lose
+				Eden_country_defend_trigger = no
+			}
 		}
 		bypass = {
 			OR = {
@@ -5914,6 +5941,7 @@ focus_tree = {
 		cost = 5
 		relative_position_id = TRN_war_with_Gehenna
 		prerequisite = { focus = TRN_war_with_Gehenna }
+
 		completion_reward = {
 			add_political_power = 120
 			add_popularity = {
@@ -6039,6 +6067,10 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = TRN_gehenna_eq_trigger_tt
 				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+			OR = {
+				has_country_flag = TRM_Treaty_of_Eden_lose
+				Eden_country_defend_trigger = no
 			}
 		}
 		cost = 5
@@ -6719,15 +6751,10 @@ focus_tree = {
 			activate_targeted_decision = { target = 65 decision = TRN_Lehnmuhle_Dam } # 작센
 			activate_targeted_decision = { target = 64 decision = TRN_dessert_shop_expansion } # 브란덴부르크 
 			activate_targeted_decision = { target = 61 decision = TRN_agricultural_support } # 메클렌부르크
+			activate_targeted_decision = { target = 68 decision = TRN_rebuilding_Landwehrkanal } # 오스트마르크
 
 			activate_targeted_decision = { target = 65 decision = TRN_Abydos_clearing_sand } # 작센
 			activate_targeted_decision = { target = 66 decision = TRN_Abydos_clearing_sand } # 니더슐레지엔
-
-			activate_targeted_decision = { target = 65 decision = TRN_Infrastructure_Development } # 작센
-			activate_targeted_decision = { target = 60 decision = TRN_Infrastructure_Development } # 튀링겐
-			activate_targeted_decision = { target = 64 decision = TRN_Infrastructure_Development } # 브란덴부르크
-			activate_targeted_decision = { target = 68 decision = TRN_Infrastructure_Development } # 오스트마르크
-			activate_targeted_decision = { target = 86 decision = TRN_Infrastructure_Development } # 포즈난
 
 			add_stability = 0.03
 			add_tech_bonus = {
@@ -6850,6 +6877,14 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			IF = {
+				limit = { has_idea = TRN_political_instability_ns }
+				NOT = { has_idea = TRN_political_instability_ns }
+			}
+			IF = {
+				limit = { has_idea = TRN_broken_balance_ns }
+				NOT = { has_idea = TRN_broken_balance_ns}
+			}
 		}
 
 		ai_will_do = {
@@ -6868,6 +6903,12 @@ focus_tree = {
 				activate_targeted_decision = { target = 63 decision = TRN_Industrial_Regions }
 				activate_targeted_decision = { target = 68 decision = TRN_Industrial_Regions }
 				activate_targeted_decision = { target = 66 decision = TRN_Industrial_Regions }
+
+				activate_targeted_decision = { target = 65 decision = TRN_Infrastructure_Development } # 작센
+				activate_targeted_decision = { target = 60 decision = TRN_Infrastructure_Development } # 튀링겐
+				activate_targeted_decision = { target = 64 decision = TRN_Infrastructure_Development } # 브란덴부르크
+				activate_targeted_decision = { target = 68 decision = TRN_Infrastructure_Development } # 오스트마르크
+				activate_targeted_decision = { target = 86 decision = TRN_Infrastructure_Development } # 포즈난
 			}
 			country_event = trinity.34 
 			hidden_effect = {
@@ -7267,7 +7308,7 @@ focus_tree = {
 			custom_effect_tooltip = TRN_necessary_revenge_tt
 			
 			hidden_effect = {
-				country_event = { id = trinity.22 days = 15 random_days = 15 } # 충성조항
+				country_event = { id = trinity.22 days = 25 random_days = 25 } # 충성조항
 			}
 		}
 	}
@@ -7284,6 +7325,7 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 		}
 
 		ai_will_do = {
@@ -7322,10 +7364,11 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 못정함 
+	focus = { # 못정함
 		id = TRN_support_pro_trinity_groups
 		icon = GFX_focus_TRN_alliance_with_the_germany
 		prerequisite = { focus = TRN_Denazification }
+		prerequisite = { focus = TRN_second_trintiy }
 		x = -2
 		y = 1
 		relative_position_id = TRN_Denazification
@@ -7408,6 +7451,7 @@ focus_tree = {
 		ai_will_do = {
 
 		}
+		cancelable = no 
 		completion_reward = {
 			set_cosmetic_tag = TRINITY_REICH
 			custom_effect_tooltip = TRM_reduce_decreasing_conscription_factor_tt
@@ -7453,6 +7497,7 @@ focus_tree = {
 				country_event = { id = trinity.45 days = 35 random_days = 14 }
 				country_event = { id = trinity.36 days = 210 } # 안보 상황
 				country_event = { id = trnfla.12 days = 365 } # 세이아 음모론
+				country_event = { id = trnfla.33 days = 125 random_days = 125 } # 미소노 미카 드디어 다깟네요;;
 			}
 			set_country_flag = TRN_mika_honor_activate
 			activate_mission = TRN_Mika_honor_loop_decision
@@ -7588,6 +7633,7 @@ focus_tree = {
 		id = TRN_cult_of_Mika
 		icon = GFX_focus_TRN_cult_of_Mika
 		prerequisite = { focus = TRN_The_nature_of_the_united_front }
+		prerequisite = { focus = TRN_second_trintiy }
 		x = 2
 		y = 1
 		relative_position_id = TRN_The_nature_of_the_united_front
@@ -7899,7 +7945,8 @@ focus_tree = {
 				add_idea = TRN_trinity_cause_2_ns
 				remove_idea = TRN_trinity_cause_ns
 			}
-				remove_decision = TRN_Mika_honor_loop_decision
+			remove_decision = TRN_Mika_honor_loop_decision
+			clr_country_flag = TRN_mika_honor_activate
 		}
 	}
 
@@ -7959,8 +8006,8 @@ focus_tree = {
 				ruling_only = yes
 			}
 			OR = {
-				TRN_very_high_honor = yes
 				TRN_high_honor = yes
+				TRN_very_high_honor = yes
 			}
 		}
 
@@ -7994,9 +8041,9 @@ focus_tree = {
 				ruling_only = yes
 			}
 			OR = {
+				TRN_middle_honor = yes
 				TRN_low_honor = yes
 				TRN_very_low_honor = yes
-				TRN_middle_honor = yes
 			}
 		}
 
@@ -8890,7 +8937,7 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 아비도스 위협 분새
+	focus = { # 아비도스 위협 분쇄
 		id = TRN_braeking_abydos
 		icon = GFX_focus_attack_ABY
 		x = -1
@@ -8993,7 +9040,9 @@ focus_tree = {
 		relative_position_id = TRN_eden_accord
 		cost = 5
 
-		available = { }
+		available = {
+			Eden_country_defend_trigger = no
+		}
 		prerequisite = { focus = TRN_eden_accord }
 
 		ai_will_do = {
@@ -9036,8 +9085,9 @@ focus_tree = {
 		cost = 2
 
 		available = {
-			NOT = { has_global_flag = HEU_TRM_alliance }
 			NOT = { has_completed_focus = TRN_spiritual_warfare }
+			Eden_country_defend_trigger = no
+			NOT = { has_global_flag = HEU_TRM_alliance }
 			country_exists = HEU
 			HEU = { NOT = { has_completed_focus = HEU_watch_right_wing_party } }
 		}
@@ -9084,6 +9134,7 @@ focus_tree = {
 		cost = 5
 
 		available = {
+			Eden_country_defend_trigger = no
 			is_faction_leader = yes
 			has_army_manpower = { size > 249999 }
 			has_war_support > 0.4
@@ -9102,8 +9153,6 @@ focus_tree = {
 		will_lead_to_war_with = GEH
 		will_lead_to_war_with = GEM
 		completion_reward = {
-			set_temp_variable = { TRN_Honor_change = -5 }
-			TRN_add_Honor = yes
 			hidden_effect = {
 				if = {
 					limit = { has_government = fascism }
@@ -9120,6 +9169,29 @@ focus_tree = {
 			}
 			hidden_effect = { 
 				news_event = { id = trinitynews.5 hours = 01 } 
+				if = {
+					limit = {
+						is_ai = yes
+						OR = {
+							GEM = {
+								OR = {
+									is_ai = no
+									any_allied_country = { is_ai = no }
+								}
+							}
+							GEH = {
+								OR = {
+									is_ai = no
+									any_allied_country = { is_ai = no }
+								}
+							}
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = infantry_equipment
+						amount = 100000
+					}
+				}
 			}
 		}
 	}

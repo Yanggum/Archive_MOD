@@ -1,3 +1,6 @@
+Eden_country_defend_trigger = { # 게헨나 / 트리니티가 상호 적대가 가능한지 여부
+	has_completed_focus = Eden_formation_of_alliance_treaty_organization
+}
 
 Eden_is_eden_country = {
 	OR = {
@@ -5,7 +8,7 @@ Eden_is_eden_country = {
 		original_tag = GEH
 		original_tag = TRM
 		original_tag = HEU
-		original_tag = TRC
+		original_tag = TRK
 		original_tag = ARI
 	}
 }
@@ -19,7 +22,7 @@ Eden_is_eden_country_gehenna_classification = {
 Eden_is_eden_country_trinity_classification = {
 	OR = {
 		original_tag = TRM
-		original_tag = TRC
+		original_tag = TRK
 		original_tag = ARI
 	}
 }
@@ -32,25 +35,47 @@ Eden_alliance_created_already = { # Checks if any of the Nordic Alliances has be
 	}
 }
 Eden_basic_joint_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = Eden_is_joint_focus_member_TT
-		is_in_faction = yes  
-		OR = {
-			has_country_flag = Eden_faction_leader
-			AND = {
-				has_variable = global.Eden_alliance_leader
-				Eden_is_eden_country = yes
-				is_subject = no  
-				is_in_faction_with = var:global.Eden_alliance_leader 
-			}	
+	if = {
+		limit = {
+			has_country_flag = Eden_united_state_Eden_flag
+		}
+		custom_trigger_tooltip = {
+			tooltip = Eden_united_state_Eden_trigger
+			always = yes
+		}
+	}
+	else = {
+		custom_trigger_tooltip = {
+			tooltip = Eden_is_joint_focus_member_TT
+			is_in_faction = yes
+			OR = {
+				has_country_flag = Eden_faction_leader
+				AND = {
+					has_variable = global.Eden_alliance_leader
+					Eden_is_eden_country = yes
+					is_subject = no  
+					is_in_faction_with = var:global.Eden_alliance_leader 
+				}	
+			}
 		}
 	}
 	
 }
 Eden_basic_available_trigger = {
 	is_subject = no 
-	Eden_basic_joint_trigger = yes	
-	any_allied_country = {
-		Eden_basic_joint_trigger = yes
+	if = {
+		limit = {
+			has_country_flag = Eden_united_state_Eden_flag
+		}
+		custom_trigger_tooltip = {
+			tooltip = Eden_united_state_Eden_trigger
+			always = yes
+		}
+	}
+	else = {
+		Eden_basic_joint_trigger = yes	
+		any_allied_country = {
+			Eden_basic_joint_trigger = yes
+		}
 	}
 }

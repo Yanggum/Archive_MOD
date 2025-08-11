@@ -1,3 +1,4 @@
+#!gfx:interface\BA_goals.gfx
 shared_focus = {
 	id = GEH_unified_gehenna
 
@@ -77,6 +78,33 @@ shared_focus = {
 	x = 8
 	y = 0
 	completion_reward = {
+		set_variable = { global.TRK_owner = ROOT }
+		random_country = {
+			limit = { has_idea = TRK_gehenna_puppet }
+			swap_ideas = {
+				remove_idea = TRK_gehenna_puppet
+				add_idea = TRK_gehenna_puppet_next
+			}
+		}
+		set_variable = {
+			BA_halo_infantry_cap_edit_var = 3
+			tooltip = kivotos_halo_add_tt
+		}
+		BA_halo_infantry_cap_edit_effect = yes
+		capital_scope = {
+			create_unit = {
+				division = "name = \"1. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
+				owner = ROOT
+			}
+			create_unit = {
+				division = "name = \"2. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
+				owner = ROOT
+			}
+			create_unit = {
+				division = "name = \"3. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
+				owner = ROOT
+			}
+		}
 		if = {
 			limit = { has_idea = GEH_Emergency }
 			remove_ideas = GEH_Emergency
@@ -115,185 +143,6 @@ shared_focus = {
 				remove_core_of = GEM
 			}
 		}
-		if = {
-			limit = { country_exists = TRK }
-			TRK = {
-				TRK_Kirifuji_Nagisa = {
-					set_nationality = FROM
-					remove_country_leader_role = {
-						ideology = technocracy
-					}
-				}
-			}
-			annex_country = {
-				target = TRK
-			}
-		}
-	}
-}
-shared_focus = {
-	id = GEH_club_processing
-	icon = GFX_focus_focus_fra_fascist_threat
-	cost = 5
-	prerequisite = {
-		focus = GEH_unified_gehenna
-	}
-	mutually_exclusive = {
-		focus = GEH_club_integration
-	}
-	available = {
-		custom_trigger_tooltip = {
-			tooltip = GEH_club_processing_tt
-			NOT = {
-				has_idea = GEH_hot_spring_department_3
-				has_idea = GEH_hot_spring_department_4
-				has_idea = GEH_gourmet_research_society_3
-				has_idea = GEH_gourmet_research_society_4
-			}
-		}
-	}
-	x = -1
-	y = 1
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		add_political_power = 30
-		add_timed_idea = {
-			idea = GEH_club_processing_idea
-			days = 280
-		}
-	}
-}
-shared_focus = {
-	id = GEH_club_integration
-	icon = GFX_focus_RAJ_union_busting
-	cost = 5
-	prerequisite = {
-		focus = GEH_unified_gehenna
-	}
-	mutually_exclusive = {
-		focus = GEH_club_processing
-	}
-	available = {
-		custom_trigger_tooltip = {
-			tooltip = GEH_club_processing_tt
-			NOT = {
-				has_idea = GEH_hot_spring_department_3
-				has_idea = GEH_hot_spring_department_4
-				has_idea = GEH_gourmet_research_society_3
-				has_idea = GEH_gourmet_research_society_4
-			}
-		}
-		#NOT = {
-		#	AND = {
-		#		original_tag = GEH
-		#		has_country_leader = {
-		#			character = GEH_hina
-		#			ruling_only = yes
-		#		}
-		#	}
-		#}
-	}
-	x = 1
-	y = 1
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		add_political_power = 30
-		add_timed_idea = {
-			idea = GEH_club_integration_idea
-			days = 280
-		}
-	}
-}
-shared_focus = {
-	id = GEH_gastronomy_research_group_arrested
-	icon = GFX_goal_GEH_gastronomy_research_group_arrested
-	cost = 5
-	prerequisite = {
-		focus = GEH_club_processing
-		focus = GEH_club_integration
-	}
-	bypass = {
-		NOT = {
-			has_character = GEH_gkfnsk
-		}
-	}
-	x = 0
-	y = 2
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		custom_effect_tooltip = GEH_gastronomy_research_group_arrested_tt
-	}
-}
-shared_focus = {
-	id = GEH_total_destruction_operation
-	icon = GFX_focus_RAJ_military_into_the_workforce
-	cost = 5
-	prerequisite = {
-		focus = GEH_club_processing
-	}
-	x = -3
-	y = 2
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		add_stability = 0.10
-		GEH_hot_spring_department_remove_effect = yes
-		GEH_gourmet_research_society_remove_effect = yes
-	}
-}
-shared_focus = {
-	id = GEH_club_control
-	icon = GFX_focus_generic_total_war
-	cost = 5
-	prerequisite = {
-		focus = GEH_total_destruction_operation
-	}
-	x = -4
-	y = 3
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		custom_effect_tooltip = kivotos_halo_add3_tt
-		hidden_effect = {
-			set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-			BA_halo_infantry_cap_edit_effect = yes
-		}
-		capital_scope = {
-			create_unit = {
-				division = "name = \"1. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
-				owner = ROOT
-			}
-			create_unit = {
-				division = "name = \"2. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
-				owner = ROOT
-			}
-			create_unit = {
-				division = "name = \"3. Ordnungstruppe\" division_template = \"Halo Infantry Division\" start_experience_factor = 1"
-				owner = ROOT
-			}
-		}
-	}
-}
-shared_focus = {
-	id = GEH_representation
-	icon = GFX_focus_generic_advanced_military_studies
-	cost = 5
-	prerequisite = {
-		focus = GEH_total_destruction_operation
-	}
-	x = -2
-	y = 3
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		if = {
-			limit = { has_dynamic_modifier = { modifier = GEM_pandemonium_modifier } }
-			custom_effect_tooltip = GEH_representation_GEM
-			add_to_variable = { GEM_pandemonium_modifier_defensive_war_stability_factor = 0.25 }
-			add_to_variable = { GEM_pandemonium_modifier_mobilization_speed = 0.05 }
-			add_to_variable = { GEM_pandemonium_modifier_max_surrender_limit_offset = 0.05 }
-		}
-		else = {
-			add_war_support = 0.10
-			add_stability = 0.10
-		}
 	}
 }
 shared_focus = {
@@ -301,10 +150,13 @@ shared_focus = {
 	icon = GFX_goal_GEH_oncheongaebalbu
 	cost = 5
 	prerequisite = {
-		focus = GEH_club_integration
+		focus = GEH_unified_gehenna
 	}
-	x = 3
-	y = 2
+	available = {
+		is_subject = no 
+	}
+	x = 1
+	y = 1
 	relative_position_id = GEH_unified_gehenna
 	completion_reward = {
 		add_stability = -0.10
@@ -362,86 +214,6 @@ shared_focus = {
 				}
 			}
 		}
-		if = {
-			limit = {
-				has_character = GEH_kinugawa_kasumi
-			}
-			custom_effect_tooltip = GEH_hot_spring_cooperation_tt
-		}
-	}
-}
-shared_focus = {
-	id = GEH_large_scale_civil_engineering_work
-	icon = GFX_focus_generic_mass_production
-	cost = 5
-	prerequisite = {
-		focus = GEH_hot_spring_cooperation
-	}
-	x = 2
-	y = 3
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		random_owned_controlled_state = {
-			BA_increase_state_category_by_one_level = yes
-		}
-		random_owned_controlled_state = {
-			BA_increase_state_category_by_one_level = yes
-		}
-		random_owned_controlled_state = {
-			BA_increase_state_category_by_one_level = yes
-		}
-	}
-}
-shared_focus = {
-	id = GEH_large_hot_spring
-	icon = GFX_goal_generic_construct_civ_factory
-	cost = 5
-	prerequisite = {
-		focus = GEH_hot_spring_cooperation
-	}
-	x = 4
-	y = 3
-	relative_position_id = GEH_unified_gehenna
-	completion_reward = {
-		54 = {
-			add_building_construction = {
-				type = BA_onsen
-				level = 1
-				province = 11544
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-		}
-		50 = {
-			add_building_construction = {
-				type = BA_onsen
-				level = 1
-				province = 9517
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-		}
-		52 = {
-			add_building_construction = {
-				type = BA_onsen
-				level = 1
-				province = 692
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-		}
 	}
 }
 shared_focus = {
@@ -449,10 +221,13 @@ shared_focus = {
 	icon = GFX_goal_GEH_Emergency_Medicine_Club
 	cost = 5
 	prerequisite = {
-		focus = GEH_gastronomy_research_group_arrested
+		focus = GEH_unified_gehenna
 	}
-	x = 0
-	y = 3
+	available = {
+		is_subject = no 
+	}
+	x = -1
+	y = 1
 	relative_position_id = GEH_unified_gehenna
 	completion_reward = {
 		every_possible_country = {
@@ -466,29 +241,288 @@ shared_focus = {
 		}
 	}
 }
-
 shared_focus = {
-	id = GEH_gehenna_academy
-	icon = GFX_focus_CHL_union_of_hispanic_republics
+	id = GEH_repudiation_of_the_eden_treaty
+	icon = GFX_focus_TRM_united_law
 	cost = 5
 	prerequisite = {
-		focus = GEH_emergency_medicine_department_support
+		focus = GEH_unified_gehenna
 	}
-	prerequisite = {
-		focus = GEH_large_scale_civil_engineering_work
-		focus = GEH_club_control
+	mutually_exclusive = {
+		focus = GEH_forced_integration
 	}
-	prerequisite = {
-		focus = GEH_representation
-		focus = GEH_large_hot_spring
+	available = {
+		is_subject = no 
+		OR = {
+			any_country = {
+				OR = {
+					original_tag = TRM
+					original_tag = ARI
+				}
+				is_subject_of = ROOT
+				has_capitulated = no
+			}
+			any_country = {
+				original_tag = TRK
+				is_subject = no
+				has_capitulated = no
+				is_in_faction = no
+			}
+		}
 	}
-	x = 0
-	y = 4
+	x = -2
+	y = 2
 	relative_position_id = GEH_unified_gehenna
 	completion_reward = {
-		add_ideas = GEH_gehenna_academy_idea
+			if = {
+				limit = { TRM = { has_government = fascism } }
+				reverse_add_opinion_modifier = {
+					target = TRM
+					modifier = eden_treaty_promotion_bad
+				}
+			}
+			else = {
+				reverse_add_opinion_modifier = {
+					target = TRM
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = COU }
+				reverse_add_opinion_modifier = {
+					target = COU
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = SHE }
+				reverse_add_opinion_modifier = {
+					target = SHE
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = KSP }
+				reverse_add_opinion_modifier = {
+					target = KSP
+					modifier = eden_treaty_promotion_good
+				}
+			}
 	}
 }
+shared_focus = {
+	id = GEH_centralized_eden_treaty
+	icon = GFX_goal_TRN_hwahawe_with_gehhena
+	cost = 5
+	prerequisite = {
+		focus = GEH_repudiation_of_the_eden_treaty
+	}
+	mutually_exclusive = {
+		focus = GEH_decentralized_eden_treaty
+	}
+	available = {
+		custom_trigger_tooltip = {
+			tooltip = THIS_IS_WIP_TT
+			is_debug = yes
+		}
+		is_subject = no 
+		OR = {
+			any_country = {
+				OR = {
+					original_tag = TRM
+					original_tag = ARI
+				}
+				is_subject_of = ROOT
+				has_capitulated = no
+			}
+			any_country = {
+				original_tag = TRK
+				is_subject = no
+				has_capitulated = no
+				is_in_faction = no
+			}
+		}
+	}
+	x = -2
+	y = 1
+	relative_position_id = GEH_repudiation_of_the_eden_treaty
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = GEH_decentralized_eden_treaty
+	icon = GFX_goal_TRN_eden_pacts_letsgo
+	cost = 5
+	prerequisite = {
+		focus = GEH_repudiation_of_the_eden_treaty
+	}
+	mutually_exclusive = {
+		focus = GEH_centralized_eden_treaty
+	}
+	available = {
+		is_subject = no 
+		Eden_alliance_created_already = no 
+		OR = {
+			any_country = {
+				OR = {
+					original_tag = TRM
+					original_tag = ARI
+				}
+				is_subject_of = ROOT
+				has_capitulated = no
+			}
+			any_country = {
+				original_tag = TRK
+				is_subject = no
+				has_capitulated = no
+				is_in_faction = no
+			}
+		}
+	}
+	x = 2
+	y = 1
+	relative_position_id = GEH_repudiation_of_the_eden_treaty
+	completion_reward = {
+		create_faction = TRM_Treaty_of_Eden_faction
+		if = {
+			limit = { country_exists = TRK }
+			add_to_faction = TRK
+			TRK = {
+				remove_ideas = TRK_economic_collapse
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					OR = {
+						original_tag = TRM
+						original_tag = ARI
+					}
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = TRM
+						original_tag = ARI
+					}
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+				ROOT = { end_puppet = PREV }
+				add_to_faction = ROOT
+			}
+		}
+		complete_national_focus = Eden_formation_of_alliance_treaty_organization
+	}
+}
+shared_focus = {
+	id = GEH_forced_integration
+	icon = GFX_goal_TRM_invasion_of_devils
+	cost = 5
+	prerequisite = {
+		focus = GEH_unified_gehenna
+	}
+	mutually_exclusive = {
+		focus = GEH_repudiation_of_the_eden_treaty
+	}
+	available = {
+		is_subject = no 
+		OR = {
+			count_triggers = {
+				amount = 12
+				controls_state = 42
+				controls_state = 50
+				controls_state = 51
+				controls_state = 52
+				controls_state = 53
+				controls_state = 54
+				controls_state = 55
+				controls_state = 56
+				controls_state = 57
+				controls_state = 58
+				controls_state = 59
+				controls_state = 909
+				controls_state = 1022
+				controls_state = 978
+				controls_state = 1025
+			}
+			any_country = {
+				OR = {
+					original_tag = TRM
+					original_tag = ARI
+				}
+				is_subject_of = ROOT
+				has_capitulated = no
+			}
+			any_country = {
+				original_tag = TRK
+				is_subject = no
+				has_capitulated = no
+				is_in_faction = no
+			}
+		}
+	}
+	x = 2
+	y = 2
+	relative_position_id = GEH_unified_gehenna
+	completion_reward = {
+		set_country_flag = GEH_trinity_integration_flag
+		unlock_decision_category_tooltip = GEH_trinity_integration
+		if = {
+			limit = { country_exists = TRK }
+			TRK = {
+				TRK_Kirifuji_Nagisa = {
+					set_nationality = FROM
+					remove_country_leader_role = {
+						ideology = technocracy
+					}
+				}
+			}
+			annex_country = {
+				target = TRK
+				transfer_troops = no
+			}
+		}
+		every_country = {
+			limit = {
+				OR = {
+					original_tag = TRM
+					original_tag = ARI
+				}
+				is_subject_of = ROOT
+				has_capitulated = no
+			}
+			ROOT = {
+				annex_country = {
+					target = PREV
+					transfer_troops = no
+				}
+			}
+		}
+	}
+}
+shared_focus = {
+	id = GEH_trinity_war_crime_trial
+	icon = GFX_goal_TRM_Operation_Description
+	cost = 5
+	prerequisite = {
+		focus = GEH_forced_integration
+	}
+	available = {
+		is_subject = no 
+	}
+	x = 0
+	y = 2
+	relative_position_id = GEH_forced_integration
+	completion_reward = {
+		country_event = GEHENNA_event.1
+	}
+}
+
+###################################### 국가별 통합 중점
 
 shared_focus = {
 	id = GEH_the_end_of_pandemonium
@@ -664,9 +698,22 @@ shared_focus = {
 				every_character = {
 					limit = {
 						NOT = {
-							OR = {
-								is_character = GEH_akzhxh # 마코토는 선도부 가입을 거부함
-							}
+							is_character = GEH_akzhxh # 마코토는 선도부 가입을 거부함
+
+							## // 얘네가 가입하면 이상해짐
+							is_character = GEH_kurodate_haruna
+							is_character = GEH_wanibuchi_akari
+							is_character = GEH_shishido_izumi
+							is_character = GEH_akashi_junko
+							is_character = GEH_kinugawa_kasumi
+							is_character = GEH_shimokura_megu
+							
+							is_character = GEM_kurodate_haruna
+							is_character = GEM_wanibuchi_akari
+							is_character = GEM_shishido_izumi
+							is_character = GEM_akashi_junko
+							is_character = GEM_kinugawa_kasumi
+							is_character = GEM_shimokura_megu
 						}
 					}
 					set_nationality = ROOT
@@ -866,6 +913,21 @@ shared_focus = {
 							is_character = GEH_robot_hina
 							is_character = GEH_dkzh
 							is_character = GEH_prefect_team_spy
+							
+							## // 얘네가 가입하면 이상해짐
+							is_character = GEH_kurodate_haruna
+							is_character = GEH_wanibuchi_akari
+							is_character = GEH_shishido_izumi
+							is_character = GEH_akashi_junko
+							is_character = GEH_kinugawa_kasumi
+							is_character = GEH_shimokura_megu
+							
+							is_character = GEM_kurodate_haruna
+							is_character = GEM_wanibuchi_akari
+							is_character = GEM_shishido_izumi
+							is_character = GEM_akashi_junko
+							is_character = GEM_kinugawa_kasumi
+							is_character = GEM_shimokura_megu
 						}
 					}
 					set_nationality = ROOT
