@@ -938,15 +938,31 @@ GEM_ibuki_system_decision = {
 			# 각 분기당 4개의 스텟을 키우고, 스텟의 총 단계는 10단계임. 하나를 '완성' 까지 만들면 다른 부분은 하나도 키울 수 없음.
 			# 분기 종료시 1단계인 값에는 약한 디버프를 받음. 2단계부터 소소한 버프.
 			# 2 4 2 2 = 10 식으로 성장시키는걸 추천, 각 성장 단계마다 1-2개의 조건을 가지는 중점. 특히 완성 단계일 시 해금되는 중점이 몇 개 있을 것.
+			# array 0 = 야망, 1 = 위엄, 2 = 효율, 3 = 이상
 			#
+
+			# GEM_ibuki_system_action_wing_one_1_flag 1분기 야망 성장 플래그
+			# GEM_ibuki_system_action_wing_one_2_flag 1분기 위엄 성장 플래그
+			# GEM_ibuki_system_action_wing_one_3_flag 1분기 효율 성장 플래그
+			# GEM_ibuki_system_action_wing_one_4_flag 1분기 이상 성장 플래그
+			# 
+			# GEM_ibuki_system_action_wing_two_1_flag 2분기 야망 성장 플래그
+			# GEM_ibuki_system_action_wing_two_2_flag 2분기 위엄 성장 플래그
+			# GEM_ibuki_system_action_wing_two_3_flag 2분기 효율 성장 플래그
+			# GEM_ibuki_system_action_wing_two_4_flag 2분기 이상 성장 플래그
+
+			#1분기 one
+			set_variable = { GEM_ibuki_system_one_stage = 10 }
 			set_variable = { GEM_ibuki_system_one_array_lv^0 = 1 }
 			set_variable = { GEM_ibuki_system_one_array_lv^1 = 1 }
 			set_variable = { GEM_ibuki_system_one_array_lv^2 = 1 }
 			set_variable = { GEM_ibuki_system_one_array_lv^3 = 1 }
-			set_variable = { GEM_ibuki_system_one_array_value^0 = 14 }
-			set_variable = { GEM_ibuki_system_one_array_value^1 = 13 }
-			set_variable = { GEM_ibuki_system_one_array_value^2 = 12 }
-			set_variable = { GEM_ibuki_system_one_array_value^3 = 16 }
+			set_variable = { GEM_ibuki_system_one_array_value^0 = 0 }
+			set_variable = { GEM_ibuki_system_one_array_value^1 = 0 }
+			set_variable = { GEM_ibuki_system_one_array_value^2 = 0 }
+			set_variable = { GEM_ibuki_system_one_array_value^3 = 0 }
+			#2분기 two
+			set_variable = { GEM_ibuki_system_two_stage = 10 }
 			set_variable = { GEM_ibuki_system_two_array_lv^0 = 1 }
 			set_variable = { GEM_ibuki_system_two_array_lv^1 = 1 }
 			set_variable = { GEM_ibuki_system_two_array_lv^2 = 1 }
@@ -959,7 +975,8 @@ GEM_ibuki_system_decision = {
 			#
 			# 이건 이부키 시스템 속성값. 외부 노출 X
 			#
-			set_variable = { GEM_ibuki_system_branch_var = 0 } #현재 분기 0 -> 1(1분기 완료) -> 2(2분기 완료)
+			set_variable = { GEM_ibuki_system_one_stage = 10 } #보여지는 현재 성장의 발판
+			set_variable = { GEM_ibuki_system_branch_var = 1 } #현재 분기 1 -> 2(1분기 완료) -> 3(2분기 완료)
 			set_variable = { GEM_ibuki_system_one_1_var = 1 } #0 1 2 3 4의 값을 가지는 단계도
 			set_variable = { GEM_ibuki_system_one_2_var = 1 }
 			set_variable = { GEM_ibuki_system_one_3_var = 1 }
@@ -989,6 +1006,18 @@ GEM_ibuki_system_decision = {
 			is_debug = yes
 		}
 		complete_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_one_array_lv^1 = 1
+				tooltip = GEM_ibuki_system_array_lv_2_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
 			###################################### /이부키의 스텟 변경
 			set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
 				GEM_ibuki_system_array_temp_target = 2
@@ -1000,6 +1029,793 @@ GEM_ibuki_system_decision = {
 			###################################### 이부키의 스텟 변경/
 		}
 	}
+	GEM_debug_eff_one_next = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_stability = 0.05
+			activate_mission = GEM_ibuki_system_flowers_blooming
+			hidden_effect = {			
+				set_temp_variable = {
+					GEM_ibuki_system_one_array_for_temp = 0 #가장 높은 값
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_one_array_forreturnindex_temp = 0 #가장 높은 인덱스
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^0
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^0
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 0
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^1
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^1
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 1
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^2
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^2
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 2
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_for_temp < GEM_ibuki_system_one_array_value^3
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^3
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 3
+					}
+				}
+					#중복 검사
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^0
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 0
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 0
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^1
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 1
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 1
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^2
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 2
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 2
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								GEM_ibuki_system_one_array_for_temp = GEM_ibuki_system_one_array_value^3
+							}
+							NOT = {
+								check_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 3
+								}
+							}
+						}
+						set_temp_variable = {
+							GEM_ibuki_system_one_same = 1
+						}
+						random_list = {
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = GEM_ibuki_system_one_array_forreturnindex_temp
+								}
+							}
+							50 = {
+								set_temp_variable = {
+									GEM_ibuki_system_one_array_forreturnindex_temp = 3
+								}
+							}
+						}
+					}
+			}
+
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_same = 1
+					}
+				}
+				custom_effect_tooltip = GEM_ibuki_system_time_of_growth_same_tt
+			}
+			else = {
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 0
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_1_tt
+					effect_tooltip = {
+						GEH_dlqnzl = {
+							add_country_leader_trait = GEM_ibuki_system_action_wing_one_1_trait
+						}
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 1
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_2_tt
+					effect_tooltip = {
+						GEH_dlqnzl = {
+							add_country_leader_trait = GEM_ibuki_system_action_wing_one_2_trait
+						}
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 2
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_3_tt
+					effect_tooltip = {
+						GEH_dlqnzl = {
+							add_country_leader_trait = GEM_ibuki_system_action_wing_one_3_trait
+						}
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_one_array_forreturnindex_temp = 3
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_4_tt
+					effect_tooltip = {
+						GEH_dlqnzl = {
+							add_country_leader_trait = GEM_ibuki_system_action_wing_one_4_trait
+						}
+					}
+				}
+			}
+
+			#########################################################
+			# 여기가 이제 결정부분
+			#########################################################
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 0
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_1_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 1
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_2_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 2
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_3_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_forreturnindex_temp = 3
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_one_4_flag
+			}
+			custom_effect_tooltip = enter_tt
+
+			#########################################################
+			# 여기가 이제 세부 스텟 조정 부분
+			#########################################################
+
+			## 디버프 부분 / 1렙짜리 보유시 디버프 가중.
+			custom_effect_tooltip = GEM_ibuki_system_modifier_tt
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^0 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_1
+				add_to_variable = {
+					GEM_IBUKI_conscription_factor = -0.05
+					tooltip = conscription_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_war_support_factor = -0.10
+					tooltip = war_support_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^1 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_2
+				add_to_variable = {
+					GEM_IBUKI_political_power_factor = -0.10
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_political_advisor_cost_factor = 0.10
+					tooltip = political_advisor_cost_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^2 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_3
+				add_to_variable = {
+					GEM_IBUKI_production_factory_max_efficiency_factor = -0.05
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_trade_laws_cost_factor = 0.10
+					tooltip = trade_laws_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_economy_cost_factor = 0.10
+					tooltip = economy_cost_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_one_array_lv^3 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_4
+				add_to_variable = {
+					GEM_IBUKI_production_factory_efficiency_gain_factor = -0.05
+					tooltip = production_factory_efficiency_gain_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_stability_factor = -0.10
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_research_speed_factor = -0.05
+					tooltip = research_speed_factor_tt
+				}
+			}
+
+			#########################################################
+			# 히든 이펙트 - 이부키의 성장 단계에 따라 트레잇 부여.
+			#########################################################
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_one_1_flag
+					}
+					GEH_dlqnzl = {
+						add_country_leader_trait = GEM_ibuki_system_action_wing_one_1_trait
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_one_2_flag
+					}
+					GEH_dlqnzl = {
+						add_country_leader_trait = GEM_ibuki_system_action_wing_one_2_trait
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_one_3_flag
+					}
+					GEH_dlqnzl = {
+						add_country_leader_trait = GEM_ibuki_system_action_wing_one_3_trait
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_one_4_flag
+					}
+					GEH_dlqnzl = {
+						add_country_leader_trait = GEM_ibuki_system_action_wing_one_4_trait
+					}
+				}
+			}
+
+			set_variable = {
+				GEM_ibuki_system_branch_var = 2
+			}
+			set_variable = {
+				GEM_ibuki_system_one_stage = 10
+			}
+		}
+	}
+	GEM_debug_eff_two_next = {
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_stability = 0.05
+			activate_mission = GEM_ibuki_system_flowers_blooming
+			
+			hidden_effect = {
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = 0 #가장 높은 값
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 0 #가장 높은 인덱스
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^0
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 0
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^1
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 1
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^2
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 2
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^3
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 3
+					}
+				}
+				#중복 검사
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 0
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 0
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 1
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 1
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 2
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 2
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
+						}
+						NOT = {
+							check_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 3
+							}
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+					random_list = {
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = GEM_ibuki_system_two_array_forreturnindex_temp
+							}
+						}
+						50 = {
+							set_temp_variable = {
+								GEM_ibuki_system_two_array_forreturnindex_temp = 3
+							}
+						}
+					}
+				}
+			}
+
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_same = 1
+					}
+				}
+				custom_effect_tooltip = GEM_ibuki_system_time_of_growth_same_tt
+			}
+			else = {
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 0
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_1_tt
+					effect_tooltip = {
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 1
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_2_tt
+					effect_tooltip = {
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 2
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_3_tt
+					effect_tooltip = {
+					}
+				}
+
+				if = { 
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_forreturnindex_temp = 3
+						}
+					}
+					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_4_tt
+					effect_tooltip = {
+					}
+				}
+			}
+
+			#########################################################
+			# 여기가 이제 결정부분
+			#########################################################
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 0
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_1_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 1
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 2
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 3
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+			}
+			custom_effect_tooltip = enter_tt
+
+			#########################################################
+			# 여기가 이제 세부 스텟 조정 부분
+			#########################################################
+
+			## 디버프 부분 / 1렙짜리 보유시 디버프 가중.
+			custom_effect_tooltip = GEM_ibuki_system_modifier_tt
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^0 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_1
+				add_to_variable = {
+					GEM_IBUKI_army_attack_factor = -0.05
+					tooltip = army_attack_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_max_command_power = -10
+					tooltip = max_command_power_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^1 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_2
+				add_to_variable = {
+					GEM_IBUKI_production_speed_arms_factory_factor = -0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_production_speed_industrial_complex_factor = -0.05
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^2 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_3
+				add_to_variable = {
+					GEM_IBUKI_consumer_goods_factor = 0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_production_speed_buildings_factor = -0.05
+					tooltip = production_speed_buildings_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^3 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_4
+				add_to_variable = {
+					GEM_IBUKI_army_defence_factor = -0.05
+					tooltip = army_defence_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_mobilization_speed = -0.10
+					tooltip = mobilization_speed_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_experience_gain_army_factor = -0.05
+					tooltip = experience_gain_army_factor_tt
+				}
+			}
+
+			#########################################################
+			# 히든 이펙트 - 이부키의 성장 단계에 따라 트레잇 부여.
+			#########################################################
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_1_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+					}
+				}
+			}
+
+			set_variable = {
+				GEM_ibuki_system_branch_var = 3
+			}
+			set_variable = {
+				GEM_ibuki_system_one_stage = 0
+			}
+		}
+	}
 	GEM_ibuki_system_time_of_growth = {
 		icon = GFX_decision_hol_war_on_pacifism
 		allowed = {
@@ -1008,6 +1824,7 @@ GEM_ibuki_system_decision = {
 
 		days_mission_timeout = 550
    		activation = {
+			always = no
     	}
     	available = {
 			custom_trigger_tooltip = {
@@ -1417,7 +2234,10 @@ GEM_ibuki_system_decision = {
 			}
 
 			set_variable = {
-				GEM_ibuki_system_branch_var = 1
+				GEM_ibuki_system_branch_var = 2
+			}
+			set_variable = {
+				GEM_ibuki_system_one_stage = 10
 			}
 		}
 	}
@@ -1442,70 +2262,70 @@ GEM_ibuki_system_decision = {
     	}
 		visible = {
 		}
-		
 		timeout_effect = {
 			add_stability = 0.05
-			activate_mission = GEM_ibuki_system_flowers_blooming			
-			set_temp_variable = {
-				GEM_ibuki_system_two_array_for_temp = 0 #가장 높은 값
-			}
-			set_temp_variable = {
-				GEM_ibuki_system_two_array_forreturnindex_temp = 0 #가장 높은 인덱스
-			}
-
-			if = {
-				limit = {
-					check_variable = {
-						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^0
-					}
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_forreturnindex_temp = 0
-				}
-			}
-			if = {
-				limit = {
-					check_variable = {
-						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^1
-					}
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_forreturnindex_temp = 1
-				}
-			}
-			if = {
-				limit = {
-					check_variable = {
-						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^2
-					}
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_forreturnindex_temp = 2
-				}
-			}
-			if = {
-				limit = {
-					check_variable = {
-						GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^3
-					}
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
-				}
-				set_temp_variable = {
-					GEM_ibuki_system_two_array_forreturnindex_temp = 3
-				}
-			}
+			activate_mission = GEM_ibuki_system_flowers_blooming
+			
 			hidden_effect = {
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_for_temp = 0 #가장 높은 값
+				}
+				set_temp_variable = {
+					GEM_ibuki_system_two_array_forreturnindex_temp = 0 #가장 높은 인덱스
+				}
+
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^0
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^0
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 0
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^1
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^1
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 1
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^2
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^2
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 2
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							GEM_ibuki_system_two_array_for_temp < GEM_ibuki_system_two_array_value^3
+						}
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_for_temp = GEM_ibuki_system_two_array_value^3
+					}
+					set_temp_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 3
+					}
+				}
 				#중복 검사
 				if = {
 					limit = {
@@ -1624,7 +2444,6 @@ GEM_ibuki_system_decision = {
 					}
 				}
 				custom_effect_tooltip = GEM_ibuki_system_time_of_growth_same_tt
-				set_country_flag = GEM_ibuki_system_action_wing_two_1_flag
 			}
 			else = {
 				if = { 
@@ -1634,7 +2453,8 @@ GEM_ibuki_system_decision = {
 						}
 					}
 					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_1_tt
-				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+					effect_tooltip = {
+					}
 				}
 
 				if = { 
@@ -1644,7 +2464,8 @@ GEM_ibuki_system_decision = {
 						}
 					}
 					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_2_tt
-				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+					effect_tooltip = {
+					}
 				}
 
 				if = { 
@@ -1654,7 +2475,8 @@ GEM_ibuki_system_decision = {
 						}
 					}
 					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_3_tt
-				set_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+					effect_tooltip = {
+					}
 				}
 
 				if = { 
@@ -1664,10 +2486,1192 @@ GEM_ibuki_system_decision = {
 						}
 					}
 					custom_effect_tooltip = GEM_ibuki_system_time_of_growth_4_tt
-				set_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+					effect_tooltip = {
+					}
 				}
 			}
-			custom_effect_tooltip = GEM_ibuki_system_time_of_growth_tt
+
+			#########################################################
+			# 여기가 이제 결정부분
+			#########################################################
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 0
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_1_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 1
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 2
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_forreturnindex_temp = 3
+					}
+				}
+				set_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+			}
+			custom_effect_tooltip = enter_tt
+
+			#########################################################
+			# 여기가 이제 세부 스텟 조정 부분
+			#########################################################
+
+			## 디버프 부분 / 1렙짜리 보유시 디버프 가중.
+			custom_effect_tooltip = GEM_ibuki_system_modifier_tt
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^0 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_1
+				add_to_variable = {
+					GEM_IBUKI_army_attack_factor = -0.05
+					tooltip = army_attack_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_max_command_power = -10
+					tooltip = max_command_power_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^1 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_2
+				add_to_variable = {
+					GEM_IBUKI_production_speed_arms_factory_factor = -0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_production_speed_industrial_complex_factor = -0.05
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^2 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_3
+				add_to_variable = {
+					GEM_IBUKI_consumer_goods_factor = 0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_production_speed_buildings_factor = -0.05
+					tooltip = production_speed_buildings_factor_tt
+				}
+			}
+			if = { 
+				limit = {
+					check_variable = {
+						GEM_ibuki_system_two_array_lv^3 < 2
+					}
+				}
+				custom_effect_tooltip = GEM_IBUKI_deff_4
+				add_to_variable = {
+					GEM_IBUKI_army_defence_factor = -0.05
+					tooltip = army_defence_factor_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_mobilization_speed = -0.10
+					tooltip = mobilization_speed_tt
+				}
+				add_to_variable = {
+					GEM_IBUKI_experience_gain_army_factor = -0.05
+					tooltip = experience_gain_army_factor_tt
+				}
+			}
+
+			#########################################################
+			# 히든 이펙트 - 이부키의 성장 단계에 따라 트레잇 부여.
+			#########################################################
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_1_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_2_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_3_flag
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = GEM_ibuki_system_action_wing_two_4_flag
+					}
+				}
+			}
+
+			set_variable = {
+				GEM_ibuki_system_branch_var = 3
+			}
+			set_variable = {
+				GEM_ibuki_system_one_stage = 0
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_1_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^0
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_one_array_value^0
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+			NOT = {
+				has_decision = GEM_ibuki_system_first_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			war_support_factor = 0.02
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_2_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^1
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_one_array_value^1
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+			NOT = {
+				has_decision = GEM_ibuki_system_first_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_gain = 0.01
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_3_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^2
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_one_array_value^2
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+			NOT = {
+				has_decision = GEM_ibuki_system_first_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			production_speed_buildings_factor = 0.01
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_4_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^3
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_one_array_value^3
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+			NOT = {
+				has_decision = GEM_ibuki_system_first_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_first_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			stability_factor = 0.02
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_1st_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^0
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_one_array_value^0
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_one_array_lv^0 = 1
+				tooltip = GEM_ibuki_system_array_lv_1_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_2nd_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^1
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_one_array_value^1
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_one_array_lv^1 = 1
+				tooltip = GEM_ibuki_system_array_lv_2_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_3rd_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^2
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_one_array_value^2
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_one_array_lv^2 = 1
+				tooltip = GEM_ibuki_system_array_lv_3_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_first_quarter_4th_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_one_array_lv^3
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_one_array_value^3
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_time_of_growth
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_time_of_growth }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_one_array_lv^3 = 1
+				tooltip = GEM_ibuki_system_array_lv_4_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_1_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^0
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_two_array_value^0
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+
+			NOT = {
+				has_decision = GEM_ibuki_system_second_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			war_support_factor = 0.02
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 1
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_2_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^1
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_two_array_value^1
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+
+			NOT = {
+				has_decision = GEM_ibuki_system_second_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_gain = 0.01
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 2
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_3_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^2
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_two_array_value^2
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+
+			NOT = {
+				has_decision = GEM_ibuki_system_second_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			production_speed_buildings_factor = 0.01
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 3
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_4_stat_enhancement = {
+		icon = GFX_decision_generic_research
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^3
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return > GEM_ibuki_system_two_array_value^3
+				tooltip = GEM_ibuki_system_lv_limit_trigger_tt
+			}
+
+			NOT = {
+				has_decision = GEM_ibuki_system_second_quarter_1_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_2_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_3_stat_enhancement
+				has_decision = GEM_ibuki_system_second_quarter_4_stat_enhancement
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 10
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			stability_factor = 0.02
+		}
+		remove_effect = {
+			random_list = {
+				50 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 3
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				35 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 6
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+				15 = {
+					###################################### /이부키의 스텟 변경
+					set_temp_variable = { # 수정할 스텟 (1=야망, 2=위엄, 3=효율, 4=이상)
+						GEM_ibuki_system_array_temp_target = 4
+					}
+					set_temp_variable = { # 수정할 값
+						GEM_ibuki_system_array_temp_value = 10
+					}
+					GEM_ibuki_system_array_value_modify = yes
+					###################################### 이부키의 스텟 변경/
+				}
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_1st_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^0
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_two_array_value^0
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_two_array_lv^0 = 1
+				tooltip = GEM_ibuki_system_array_lv_1_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_2nd_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^1
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_two_array_value^1
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_two_array_lv^1 = 1
+				tooltip = GEM_ibuki_system_array_lv_2_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_3rd_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^2
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_two_array_value^2
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_two_array_lv^2 = 1
+				tooltip = GEM_ibuki_system_array_lv_3_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
+		}
+	}
+
+	GEM_ibuki_system_second_quarter_4th_stage_enhancement = {
+		icon = GFX_decision_generic_coastal_fortification
+		priority = 2
+		allowed = {
+			original_tag = GEM
+		}
+		available = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+			set_temp_variable = {
+				GEM_ibuki_system_lv_value_temp = GEM_ibuki_system_two_array_lv^3
+			}
+			trigger_GEM_ibuki_system_lv_value_get = yes
+			check_variable = {
+				GEM_ibuki_system_lv_value_return = GEM_ibuki_system_two_array_value^3
+				tooltip = GEM_ibuki_system_lv_has_limit_trigger_tt
+			}
+			check_variable = {
+				GEM_ibuki_system_one_stage > 0
+				tooltip = GEM_ibuki_system_stage_limit_trigger_tt
+			}
+		}
+		visible = {
+			has_active_mission = GEM_ibuki_system_flowers_blooming
+		}
+		cancel_trigger = {
+			NOT = { has_active_mission = GEM_ibuki_system_flowers_blooming }
+		}
+		cost = 0
+		fire_only_once = no
+		days_remove = 35
+		ai_will_do = {
+			factor = 4000
+		}
+		modifier = {
+			political_power_cost = 0.50
+		}
+		remove_effect = {
+			custom_effect_tooltip = GEM_ibuki_system_array_value_tt
+			add_to_variable = {
+				GEM_ibuki_system_two_array_lv^3 = 1
+				tooltip = GEM_ibuki_system_array_lv_4_tt
+			}
+			add_to_variable = {
+				GEM_ibuki_system_one_stage = -1
+				tooltip = GEM_ibuki_system_stage_enhancement_tt
+			}
+			set_variable = {
+				GEM_ibuki_system_stage_gui = GEM_ibuki_system_one_stage
+			}
 		}
 	}
 }
