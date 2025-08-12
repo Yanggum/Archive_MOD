@@ -131,12 +131,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			upgrade_economy_law = yes
-			hidden_effect = {
-				news_event = {
-					id = FRA_prov_event.44
-					days = 435
-				}
-			}
 		}
 	}
 	focus = {
@@ -569,7 +563,7 @@ focus_tree = {
 		id = FRA_focus_arm_1
 		icon = GFX_goal_fra_endex
 		cost = 2
-		x = 32
+		x = 33
 		y = 1
 		ai_will_do = {
 			modifier = {
@@ -2208,6 +2202,9 @@ focus_tree = {
 			focus = FRA_focus_resistance_2
 			focus = FRA_focus_resistance_3
 		}
+		available = {
+			has_war_with = MIL
+		}
 		ai_will_do = {
 			base = 0
 			modifier = {
@@ -2280,6 +2277,7 @@ focus_tree = {
 						division = "name = \"French Resistance\" division_template = \"French Resistance\" start_experience_factor = 0.2 start_equipment_factor = 1"
 						owner = FRA
 						count = 5
+						allow_spawning_on_enemy_provs = yes
 					}
 				}
 				22 = {
@@ -2287,6 +2285,7 @@ focus_tree = {
 						division = "name = \"French Resistance\" division_template = \"French Resistance\" start_experience_factor = 0.2 start_equipment_factor = 1"
 						owner = FRA
 						count = 5
+						allow_spawning_on_enemy_provs = yes
 					}
 				}
 			}
@@ -2612,6 +2611,14 @@ focus_tree = {
 			focus = FRA_focus.1
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
 			army_experience = 10
 			add_tech_bonus = {
 				category = military_police_tech
@@ -2627,6 +2634,9 @@ focus_tree = {
                 }
                 add_resistance = -5
             }
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			custom_effect_tooltip = FRA_new_propaganda
+			unlock_decision_tooltip = FRA_propaganda_4
 		}
 	}
 	focus = {
@@ -2651,7 +2661,7 @@ focus_tree = {
 		id = FRA_focus_garrison_2
 		icon = GFX_focus_BRA_reach_out_to_military_dem
 		cost = 4
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = FRA_focus_garrison_0
 		prerequisite = {
@@ -2759,7 +2769,7 @@ focus_tree = {
 		id = FRA_focus_garrison_9
 		icon = GFX_focus_AFG_promote_the_counter_elite
 		cost = 4
-		x = 3
+		x = 4
 		y = 1
 		relative_position_id = FRA_focus_garrison_1
 		prerequisite = {
@@ -2885,7 +2895,7 @@ focus_tree = {
 		icon = GFX_goal_fra_cozy
 		id = FRA_focus_resistance_5
 		cost = 6
-		x = 14
+		x = 32
 		y = 8
 		allow_branch = {
             OR = {

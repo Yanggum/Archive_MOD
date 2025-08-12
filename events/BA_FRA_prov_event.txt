@@ -1872,44 +1872,25 @@ country_event = {
 }
 
 country_event = {
-	#인도차이나 혁명
+	#땅
 	id = FRA_prov_event.34
 	title = FRA_prov_event.34.t
 	desc = FRA_prov_event.34.d
 	fire_only_once = yes
 	is_triggered_only = yes
-	picture = GFX_report_event_spr_anarchist_uprising2
+	picture = GFX_report_event_COG_force_publique_capturing_area
 	hidden = no
 	option = {
 		name = FRA_prov_event.34.a
-		activate_mission = FRA_end_war_timer
-		VIN = {
-			start_civil_war = {
-				ideology = communism
-				size = 0.7
-				set_cosmetic_tag = VIN_indochina_civilwar
-				states = {
-					671
-				}
-				SOV = {
-					add_ai_strategy = {
-						type = send_volunteers_desire
-						id = prev
-						value = 200
-					}
-				}
-				add_ideas = VIN_indochina_war_idea
+		if = {
+			limit = {
+				check_variable = { FRA_rol_anger > 0 }
 			}
-			add_popularity = {
-				ideology = communism
-				popularity = -0.5
-			}
+			set_temp_variable = { FRA_anger_change = 1 }
+			FRA_change_rol_anger = yes
 		}
 		hidden_effect = {
-			news_event = {
-				id =  FRA_prov_event.46
-				days = 5
-			}
+			country_event = FRA_prov_event.53
 		}
 	}
 }
@@ -2358,36 +2339,23 @@ news_event = {
 }
 
 country_event = {
-	#인도차이나 안 씀 
+	#북아프리카 인민당
 	id = FRA_prov_event.42
 	title = FRA_prov_event.42.t
 	desc = FRA_prov_event.42.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_bul_muraviev_protest
 	option = {
 		name = FRA_prov_event.42.a
-		add_political_power = -5
-		if = {
-			limit = {
-				NOT = {
-					has_country_flag = FRA_has_indochina_war
-				}
-			}
-			VIN = {
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.1
-				}
-			}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
 		}
-		else = {
-			VIN = {
-				add_stability = -0.1
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.1
-				}
-			}
+		set_party_name = {
+			ideology = communism
+			long_name = FRA_PPNA_long
+			name = FRA_PPNA
 		}
 	}
 }
@@ -2427,19 +2395,18 @@ country_event = {
 }
 
 news_event = {
-	#프랑스에서의 끔찍한 동원
+	#북아프리카 총파업
 	id = FRA_prov_event.44
 	title = FRA_prov_event.44.t
 	desc = FRA_prov_event.44.d
 	major = yes
-	picture = GFX_event_BA_fra_news_dic
+	picture = GFX_news_event_gathering_protest
 	is_triggered_only = yes
 	option = {
 		trigger = {
 			tag = FRA
 		}
 		name = FRA_prov_event.44.a
-		add_stability = -0.02
 	}
 	option = {
 		trigger = {
@@ -2593,17 +2560,16 @@ country_event = {
 	}
 }
 
-news_event = {
-	#안 씀
-	#영국 - 프랑스 분쟁
+country_event = {
+	#미티자 평야에서 울려 퍼진 정의의 외침
 	id = FRA_prov_event.53
-	picture = GFX_event_BA_fra_news_midaf
+	picture = GFX_report_event_tur_ataturk_writing_desk
 	title = FRA_prov_event.53.t
 	desc = FRA_prov_event.53.d
 	is_triggered_only = yes
-	major = yes
 	option = {
 		name = FRA_prov_event.53.a
+		country_event = FRA_prov_event.42
 	}
 }
 
@@ -3666,7 +3632,7 @@ country_event = {
 			limit = {
 				has_country_flag = FRA_sahara_rail_flag
 			}
-			898 = {
+			779 = {
 				BA_increase_state_category_by_one_level = yes
 				add_building_construction = {
 					type = industrial_complex
@@ -3677,7 +3643,7 @@ country_event = {
 					level = 1
 				}
 			}
-			899 = {
+			780 = {
 				BA_increase_state_category_by_one_level = yes
 				add_building_construction = {
 					type = industrial_complex
@@ -3691,7 +3657,7 @@ country_event = {
 			custom_effect_tooltip = FRA_prov_event.92_tt_1
 		}
 		else = {
-			899 = {
+			779 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -4603,38 +4569,35 @@ country_event = {
 }
 
 country_event = {
-	#항만노동조합
+	#작은 공 - 1
 	id = FRA_prov_event.118
 	title = FRA_prov_event.118.t
 	desc = FRA_prov_event.118.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	option = {
-		#철저히 짓밟아라
 		name = FRA_prov_event.118.a
-		add_stability = 0.02
-		add_popularity = {
-			ideology = communism
-			popularity = 0.05
-		}
-	}
-	option = {
-		name = FRA_prov_event.118.b
-		add_political_power = -80
+		country_event =  FRA_prov_event.119
 	}
 }
 
 country_event = {
-	#레지스탕스 강화
+	#작은 공 - 2
 	id = FRA_prov_event.119
 	title = FRA_prov_event.119.t
 	desc = FRA_prov_event.119.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_spr_nationalists_capture_tank
 	option = {
-		#철저히 짓밟아라
 		name = FRA_prov_event.119.a
-		MIL_Resistance_idea_up = yes
+		460 = {
+			add_manpower = -21
+		}
+		hidden_effect = {
+			news_event = FRA_prov_event.44
+		}
 	}
 }
 
@@ -4675,6 +4638,14 @@ country_event = {
 			country_event = { #저항도 이벤트 - 실업
 				id = FRA_prov_event.37
 				days = 540
+			}
+			country_event = { #저항도 이벤트 - 땅
+				id = FRA_prov_event.34
+				days = 785
+			}
+			country_event = { #작은 공
+				id = FRA_prov_event.118
+				days = 800
 			}
             if = {
                 limit = {
