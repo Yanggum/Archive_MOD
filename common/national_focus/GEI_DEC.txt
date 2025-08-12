@@ -43,7 +43,7 @@ focus_tree = {
 		icon = GFX_GEI_DEC_duty
 
 		x = 0
-		y = 2
+		y = 1
         relative_position_id = GEI_DEC_fail 
 
 		cost = 1
@@ -736,6 +736,7 @@ focus_tree = {
 		x = -0
 		y = 2
         relative_position_id = GEI_DEC_world_message
+		custom_effect_tooltip =  GEI_DEC_our_help_tt
 
 		cost = 1
         prerequisite = { focus = GEI_DEC_kivtos_help}
@@ -1044,7 +1045,7 @@ focus_tree = {
 		icon = GFX_GEI_DEC_liberation_front
 
 		x = 0
-		y = 2
+		y = 1
         relative_position_id = GEI_DEC_my_war
 
 		cost = 1
@@ -1371,7 +1372,7 @@ focus_tree = {
 						FOCUS_FILTER_ANNEXATION		
 		}
 		completion_reward = {
-
+			country_event = GEI_DEC_event.34
 		}
 	}
 
@@ -1510,7 +1511,10 @@ focus_tree = {
 			
 						FOCUS_FILTER_ANNEXATION		
 		}
-		completion_reward = { }
+		completion_reward = {
+			add_ideas = GEI_DEC_zero_clock_ideas
+			country_event =  GEI_DEC_event.33
+		}
 	}
 
 	focus = { # 잘있거라 최후의 밤이여
@@ -1555,7 +1559,48 @@ focus_tree = {
 			
 						FOCUS_FILTER_ANNEXATION		
 		}
-		completion_reward = { }
+		completion_reward = {
+        29 = {
+            add_manpower = -240000       # 인구를 1명으로 설정
+            set_resistance = 0             # 저항도를 0%로 강제 설정
+            set_compliance = 100           # 순응도를 100%로 강제 설정
+        }
+        # 왈로니아 (STATE_ID: 6)
+        36 = {
+            add_manpower = -230000
+            set_resistance = 0
+            set_compliance = 100
+        }
+        # 하루바라 (STATE_ID: 35)
+        35 = {
+            add_manpower = -140000
+            set_resistance = 0
+            set_compliance = 100
+        }
+		7 = {
+            add_manpower = -410000
+            set_resistance = 0
+            set_compliance = 100
+        }
+		977 = {
+            add_manpower = -190000
+            set_resistance = 0
+            set_compliance = 100
+        }
+		6 = {
+            add_manpower = -290000
+            set_resistance = 0
+            set_compliance = 100
+			}
+		}
+		hidden_effect = {
+			HEU = {
+				country_event = GEI_DEC_event.35
+			}
+			GEM = {
+				country_event = GEI_DEC_event.36
+			}
+		}
 	}
 
 	focus = { # 인력보충
@@ -1579,7 +1624,25 @@ focus_tree = {
 			
 						FOCUS_FILTER_ANNEXATION		
 		}
-		completion_reward = { }
+		completion_reward = {
+			16 = {
+            add_manpower = -440000       # 인구를 1명으로 설정
+            set_resistance = 0             # 저항도를 0%로 강제 설정
+            set_compliance = 100           # 순응도를 100%로 강제 설정
+			}
+			create_unit = {
+					division = "name = \"1. 헤일로 오토마톤 1부대\" division_template = \"OTOMATON\" start_experience_factor = 0.8 start_equipment_factor = 0.8" 
+					owner = GEI
+				}
+				create_unit = {
+					division = "name = \"2.헤일로 오토마톤 2부대\" division_template = \"OTOMATON\" start_experience_factor = 0.8 start_equipment_factor = 0.8" 
+					owner = GEI
+				}
+				create_unit = {
+					division = "name = \"3. 헤일로 오토마톤 3부대\" division_template = \"OTOMATON\" start_experience_factor = 0.8 start_equipment_factor = 0.8" 
+					owner = GEI
+				}
+		}
 	}
 
 	focus = { # 해방전선 규합
@@ -1737,32 +1800,13 @@ focus_tree = {
 			
 						FOCUS_FILTER_ANNEXATION		
 		}
-		completion_reward = { }
-	}
-
-	focus = { # 최후공격
-		id = GEI_DEC_last_attack
-		icon = GFX_GEI_DEC_last_attack
-
-		x = 1
-		y = 4
-        relative_position_id = GEI_DEC_zero_clock
-
-		cost = 6
-        prerequisite = { focus = GEI_DEC_eden }
-		prerequisite = { focus = GEI_DEC_red_star}
-		prerequisite = { focus = GEI_DEC_cleanse }
-		text_icon = The_New_Order_focus_style
-		
-
-		available = { }
-		search_filters = {
-			
-						FOCUS_FILTER_ANNEXATION		
-		}
 		completion_reward = {
 			declare_war_on = {
-                target = RED
+                target = GEM
+                type = annex_everything
+            }
+			declare_war_on = {
+                target = GEH
                 type = annex_everything
             }
 			declare_war_on = {
@@ -1770,11 +1814,7 @@ focus_tree = {
                 type = annex_everything
             }
 			declare_war_on = {
-                target = GEM
-                type = annex_everything
-            }
-			declare_war_on = {
-                target = GEH
+                target = RED
                 type = annex_everything
             }
 			declare_war_on = {
