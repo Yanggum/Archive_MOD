@@ -3481,4 +3481,372 @@ focus_tree = {
 			FRA = { country_event = { id = generic.2 hours = 8 } }
 		}
 	}
+	
+## 독일 방위 전략
+	
+	focus = { #
+		id = post_war_focus_4_soviet_supremacy_recognition
+		icon = GFX_focus_generic_soviet_politics
+		relative_position_id = post_war_focus_4
+		prerequisite = {
+			focus = post_war_focus_4
+		}
+
+		mutually_exclusive = {
+		}
+
+		available = {
+			is_subject = no
+			SOV = {
+				has_capitulated = no
+				NOT = { has_war_with = ROOT }
+				OR = {
+					has_government = neutrality
+					has_government = ROOT
+					ROOT = { has_government = neutrality }
+				}
+			}
+		}
+		
+		x = -3
+		y = 1
+		cost = 5
+		completion_reward = {
+			SOV = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = huge_increase
+				}
+			}
+			country_event = GEK_news.1
+		}
+	}
+	
+	focus = { #
+		id = post_war_focus_4_baltic_partition_proposal
+		icon = GFX_focus_FIN_keepers_of_the_baltic_countries
+		relative_position_id = post_war_focus_4_soviet_supremacy_recognition
+		prerequisite = {
+			focus = post_war_focus_4_soviet_supremacy_recognition
+		}
+
+		mutually_exclusive = {
+		}
+
+		available = {
+			is_subject = no
+			SOV = {
+				has_capitulated = no
+				NOT = { has_war_with = ROOT }
+				OR = {
+					has_government = neutrality
+					has_government = ROOT
+					ROOT = { has_government = neutrality }
+				}
+			}
+			189 = {
+				OR = {
+					owner = {
+						has_war_with = SOV
+					}
+					owner = {
+						NOT = { original_tag = SOV }
+						has_war = no
+					}
+					owner = {
+						original_tag = SOV
+					}
+				}
+			}
+			190 = {
+				OR = {
+					owner = {
+						has_war_with = SOV
+					}
+					owner = {
+						NOT = { original_tag = SOV }
+						has_war = no
+					}
+					owner = {
+						original_tag = SOV
+					}
+				}
+			}
+			811 = {
+				OR = {
+					owner = {
+						has_war_with = SOV
+					}
+					owner = {
+						NOT = { original_tag = SOV }
+						has_war = no
+					}
+					owner = {
+						original_tag = SOV
+					}
+				}
+			}
+		}
+
+		bypass = {
+			controls_state = 189
+			controls_state = 190
+			controls_state = 811
+		}
+		
+		x = 0
+		y = 2
+		cost = 5
+		completion_reward = {
+			SOV = {
+				country_event = { id = GEK_event_post_war_focus_4.1 hours = 4 }
+			}
+			custom_effect_tooltip = if_they_accept_tt
+			effect_tooltip = {
+				189 = {
+					if = {
+						limit = {
+							is_owned_by = SOV
+						}
+						transfer_state_to = FROM
+					}
+					else = {
+						SOV = {
+							add_ideas = GEK_event_post_war_focus_4_1_idea_189
+						}
+					}
+				}
+				190 = {
+					if = {
+						limit = {
+							is_owned_by = SOV
+						}
+						transfer_state_to = FROM
+					}
+					else = {
+						SOV = {
+							add_ideas = GEK_event_post_war_focus_4_1_idea_190
+						}
+					}
+				}
+				811 = {
+					if = {
+						limit = {
+							is_owned_by = SOV
+						}
+						transfer_state_to = FROM
+					}
+					else = {
+						SOV = {
+							add_ideas = GEK_event_post_war_focus_4_1_idea_811
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	focus = { #
+		id = post_war_focus_4_ostland
+		icon = GFX_focus_LAT_ostland
+		relative_position_id = post_war_focus_4_baltic_partition_proposal
+		prerequisite = {
+			focus = post_war_focus_4_baltic_partition_proposal
+		}
+
+		mutually_exclusive = {
+		}
+
+		available = {
+		}
+		
+		x = -2
+		y = 2
+		cost = 5
+		completion_reward = {
+			set_cosmetic_tag = OSTLAND
+				hidden_effect = {
+					## Coring ## 
+					# Estonia
+					13 = { add_core_of = ROOT }
+					191 = { add_core_of = ROOT }
+					811 = { add_core_of = ROOT }
+					812 = { add_core_of = ROOT }
+					813 = { add_core_of = ROOT }
+					# Lithuania
+					11 = { add_core_of = ROOT }
+					189 = { add_core_of = ROOT }
+					188 = { add_core_of = ROOT }
+					784 = { add_core_of = ROOT }
+					814 = { add_core_of = ROOT }
+					815 = { add_core_of = ROOT }
+					# LAT
+					190 = { add_core_of = ROOT }
+					809 = { add_core_of = ROOT }
+					808 = { add_core_of = ROOT }
+					12 = { add_core_of = ROOT }
+					810 = { add_core_of = ROOT }
+				}
+			#Custom Tooltips to avoid listing every core in Estonia and Lithuania. 
+			custom_effect_tooltip = form_country_estonia_coring_states_tt
+			custom_effect_tooltip = form_country_lithuania_coring_states_tt
+			#Poland cores since we can't summarise them as adding all polish states as cores. 
+			784 = { add_core_of = ROOT }
+			96 = { add_core_of = ROOT }
+			95 = { add_core_of = ROOT }
+			94 = { add_core_of = ROOT }
+
+			if = { #Annexes any fascist Baltic states
+				limit = {
+					any_other_country = {
+						OR = {
+							original_tag = LIT
+							original_tag = EST
+						}
+						is_in_faction_with = ROOT
+					}
+				}
+				every_other_country = {
+					limit = {
+						OR = {
+							original_tag = LIT
+							original_tag = EST
+						}
+						is_in_faction_with = ROOT
+					}
+					leave_faction = yes
+					ROOT = {
+						custom_effect_tooltip = war_aim_against_the_country_annex_tt
+						hidden_effect = {
+							create_wargoal = {
+								target = PREV
+								type = annex_everything
+							}
+						}
+					}
+				}
+			}
+			if = { #Asks Germany for control of Ostland
+				limit = {
+					any_other_country = {
+						NOT = { original_tag = ROOT }
+						is_in_faction_with = ROOT
+						OR = {
+							#Lithuania States
+							controls_state = 814
+							controls_state = 11
+							controls_state = 815
+							controls_state = 189
+							controls_state = 188
+							#Estonia States
+							controls_state = 811
+							controls_state = 812
+							controls_state = 13
+							controls_state = 813
+							controls_state = 191
+							#Belarus States
+							controls_state = 784
+							controls_state = 96
+							controls_state = 95
+							controls_state = 94
+							#Lat
+							controls_state = 190
+							controls_state = 809
+							controls_state = 808
+							controls_state = 12
+							controls_state = 810
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						NOT = { original_tag = ROOT }
+						is_in_faction_with = ROOT
+						OR = {
+							#Lithuania States
+							controls_state = 814
+							controls_state = 11
+							controls_state = 815
+							controls_state = 189
+							controls_state = 188
+							#Estonia States
+							controls_state = 811
+							controls_state = 812
+							controls_state = 13
+							controls_state = 813
+							controls_state = 191
+							#Belarus States
+							controls_state = 784
+							#controls_state = 96
+							#controls_state = 95
+							#controls_state = 94
+							#Lat
+							controls_state = 190
+							controls_state = 809
+							controls_state = 808
+							controls_state = 12
+							controls_state = 810
+						}
+					}
+					country_event = { id = GEK_event_post_war_focus_4.6 hours = 6 }
+				}
+				custom_effect_tooltip = if_they_accept_tt
+				effect_tooltip = {
+					every_other_country = {
+						limit = {
+							is_baltic_country = yes
+							is_in_faction_with = ROOT
+						}
+					}
+					custom_effect_tooltip = annex_countries_tt 
+					set_state_controller =  784
+					set_state_controller = 96
+					set_state_controller = 95
+					set_state_controller = 94
+				}
+			}
+
+		}
+	}
+	
+	focus = { #
+		id = post_war_focus_4_aland_islands_seizure
+		icon = GFX_focus_SWE_the_aland_question
+		relative_position_id = post_war_focus_4_baltic_partition_proposal
+		prerequisite = {
+			focus = post_war_focus_4_baltic_partition_proposal
+		}
+
+		mutually_exclusive = {
+		}
+
+		available = {
+			is_subject = no
+			145 = {
+				owner = {
+					NOT = {
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+		}
+		
+		x = 2
+		y = 2
+		cost = 5
+		completion_reward = {
+			145 = {
+				transfer_state_to = ROOT
+				owner = {
+					if = {
+						limit = { original_tag = FIN }
+						custom_effect_tooltip = germany.126.warning
+					}
+					country_event = { id = GEK_event_post_war_focus_4.2 hours = 12 }
+				}
+			}
+			
+			news_event = { id = GEK_news.5 hours = 4 }
+		}
+	}
 }
