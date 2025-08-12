@@ -2136,3 +2136,39 @@ TRN_add_Honor = {
 	add_to_variable = { TRN_Mika_Honor_var = TRN_Honor_change }
 	clamp_variable = { var = TRN_Mika_Honor_var min = 0 max = 100 }
 }
+
+TRN_Social_Problem_effect = {
+	if = {
+		limit = {
+			check_variable = { TRM_pro_german_propaganda_conscription_factor > -0.50 }
+		}
+		add_to_variable = { TRM_pro_german_propaganda_conscription_factor = TRM_monthly_conscription_factor_increase }
+		clamp_variable = {
+			var = TRM.TRM_pro_german_propaganda_conscription_factor
+			min = -0.50
+		}
+		if = { #Apply penalties if CG is 100% or more
+			limit = {
+				NOT = { has_country_flag = TRM_pro_german_propaganda_penalty_flag }
+				check_variable = { var = TRM_pro_german_propaganda_conscription_factor value = -0.50 compare = less_than_or_equals }
+			}
+			set_country_flag = TRM_pro_german_propaganda_penalty_flag
+			add_to_variable = { TRM_pro_german_propaganda_consumer_goods_expected_value = TRM_propaganda_expected_consumer_goods_penalty }
+			subtract_from_variable = { TRM_pro_german_propaganda_industrial_capacity_factory = TRM_propaganda_factory_output_penalty }
+			subtract_from_variable = { TRM_pro_german_propaganda_industrial_capacity_dockyard = TRM_propaganda_dockyard_output_penalty }
+		}
+	}
+
+	if = {
+		limit = {
+			has_country_flag = TRM_pro_german_propaganda_penalty_flag
+			check_variable = { TRM_pro_german_propaganda_conscription_factor > -0.50 }
+		}
+		clr_country_flag = TRM_pro_german_propaganda_penalty_flag
+		subtract_from_variable = { TRM_pro_german_propaganda_consumer_goods_expected_value = TRM_propaganda_expected_consumer_goods_penalty }
+		add_to_variable = { TRM_pro_german_propaganda_industrial_capacity_factory = TRM_propaganda_factory_output_penalty }
+		add_to_variable = { TRM_pro_german_propaganda_industrial_capacity_dockyard = TRM_propaganda_dockyard_output_penalty }
+	}
+	custom_effect_tooltip = TRN_Mika_social_problem_tt
+}
+

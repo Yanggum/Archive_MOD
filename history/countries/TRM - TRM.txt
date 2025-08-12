@@ -32,7 +32,8 @@ set_variable = { TRM_propaganda_factory_output_penalty = 0.2 } #100% CFFF 도달
 set_variable = { TRM_propaganda_dockyard_output_penalty = 0.2 } #100% CFFF 도달 시 받는 조선소 패널티
 
 
-#친독일 프로파간다
+#### 친독일 프로파간다
+set_variable = { TRN_Mika_social_problem_days = 70 } # 결정 주기!
 set_variable = { TRM_monthly_conscription_factor_increase = TRM_propaganda_monthly_conscription_factor_start } #매주 감소하는 양
 set_variable = { TRM_pro_german_propaganda_conscription_factor = -0.02 } #
 set_variable = { TRM_pro_german_propaganda_civilian_intel_to_others = -5 }
@@ -60,17 +61,10 @@ set_variable = { TRM_pro_german_propaganda_line_change_production_efficiency_fac
 set_variable = { TRM_pro_german_propaganda_equipment_conversion_speed = 0 }
 set_variable = { TRM_pro_german_propaganda_consumer_goods_expected_value = 0 }
 set_variable = { conscription_factor = -0.60 } #취소 시
+#### 친독일 프로파간다
 
-IF = {
-	limit = { has_focus_tree = Trinity_focus }
-	add_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
-}
-
-set_variable = { country_intro_page_count = 4 } #Intro screen
-
-set_variable = { TRN_opp_auto_var = 2 }
-activate_mission = TRN_opp_auto
-
+#### 붕괴 변수
+set_variable = { TRM_calm_storm_days = 35 }
 set_variable = { TRN_collapse_idea_political_power_cost = 0.05 }
 set_variable = { TRN_collapse_idea_stability_factor = -0.05 }
 set_variable = { TRN_collapse_idea_war_support_factor = -0.05 }
@@ -78,6 +72,11 @@ set_variable = { TRN_collapse_idea_army_attack_factor = -0.05 }
 set_variable = { TRN_collapse_idea_army_defence_factor = -0.05 }
 set_variable = { TRN_collapse_idea_army_morale_factor = -0.05 }
 set_variable = { TRN_collapse_idea_army_org_factor = -0.05 }
+#### 붕괴 변수
+
+
+#### 티파티 디시전 기본 세팅
+set_variable = { TRN_opp_auto_var = 2 }
 
 set_variable = { TRM_internal_factions_slot_one_var = 1 }
 set_variable = { TRM_internal_factions_slot_two_var = 2 }
@@ -100,9 +99,15 @@ set_variable = { TRM_three_popularity = 0 }
 
 TRM_internal_factions_loyalty_change = yes
 TRM_internal_factions_popularity_change = yes
+activate_mission = TRN_opp_auto
+#### 티파티 디시전 기본 세팅
 
-set_variable = { TRM_calm_storm_days = 35 }
-
+#### 산업 및 군사 변수
+# 산업 
+# 육군
+# 공군
+# 해군
+####
 set_variable = { TRM_industries_dynamic_consumer_goods_factor = 0.05 }
 set_variable = { TRM_industries_dynamic_production_speed_arms_factory_factor = 0 }
 set_variable = { TRM_industries_dynamic_production_speed_industrial_complex_factor = 0.05 }
@@ -169,7 +174,10 @@ set_variable = { TRM_VVS_air_night_penalty = 0 }
 set_variable = { TRM_VVS_air_strategic_bomber_night_penalty = 0 }
 
 set_variable = { TRM_NAVY_naval_has_potf_in_combat_attack = 0.1 }
+#### 산업 및 군사 변수
 
+
+#### 발칸 외교 변수
 set_variable = { TRM_send_ultimatum_to_country_cost = 75 }
 set_variable = { TRM_ultimatum_days = 14 }
 set_variable = { TRM_pressure_government_days = 30 }
@@ -178,8 +186,12 @@ set_variable = { TRM_pressure_country_government_cost = 50 }
 set_variable = { TRM_ideological_rallies_days = 90 }
 set_variable = { TRM_promote_ideology_rallies_cost = 50 }
 set_variable = { TRM_unification_propaganda_re_enable = 90 }
+#### 발칸 외교 변수
 
-set_variable = { TRN_Mika_social_problem_days = 70 }
+#### 스토리 아카이브 및 인트로 페이지 변수
+set_variable = { country_intro_page_count = 4 } #Intro screen
+set_variable = { story_archive = 0 }
+set_variable = { story_event_var = 1 }
 
 # DIPLOMACY
 recruit_character = TRN_tea_party # 티파티
@@ -237,14 +249,10 @@ set_research_slots = 3
 set_stability = 0.3 
 set_war_support = 0.25
 starting_train_buffer = 2
-add_command_power = 15
-
-add_ideas = BA_three_major_academies
+add_command_power = 15 
 
 set_variable = { ROOT.halo_infantry_cap = 18 } # 사단 제한, 헤일로 보병의 사단 제한과 같아야 함
-
 set_country_flag = kivotos_research_on
-
 add_to_array = { #키보토스 국가
 	array = global.kivotos_alliance
 }
@@ -254,19 +262,46 @@ add_timed_idea = {
     days = 210
 }
 
-country_event = { id = trnfla.29 days = 7 }
-
-# 스토리 아카이브 사용 시 정의
-set_variable = { story_archive = 0 }
-set_variable = { story_event_var = 1 }
-
-# 
 if = {
 	limit = { has_dlc = "La Resistance"}
 	create_intelligence_agency = yes
 }
 
-add_ideas = BA_student_conscription_idea
+set_convoys = 500
+
+set_politics = {
+	ruling_party = democratic
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	democratic = 52
+	neutrality = 16
+	communism = 16
+	fascism = 16
+}
+
+add_ideas = {
+	BA_three_major_academies
+	TRN_political_instability_ns
+	TRM_justice_task_force
+	TRM_anti_gehenna_idea
+
+	TRN_Misono_Mika_political_advisor
+	TRN_Seia_political_advisor
+	TRN_nagisa_political_advisor
+
+	disarmed_nation
+	BA_isolation
+	civilian_economy
+	BA_student_conscription_idea
+}
+
+#activate_mission = TRM_mefo_bills_mission
+set_country_flag = communism_preemptive_uprising_flag
+
 set_technology = {
 	kivotos_infantry_weapons = 1
 	kivotos_halo_max_upgrade = 1
@@ -379,40 +414,6 @@ if = {
 		}
 	}
 }
-
-
-
-set_convoys = 500
-
-set_politics = {
-	ruling_party = democratic
-	last_election = "1936.1.1"
-	election_frequency = 48
-	elections_allowed = no
-}
-set_popularities = {
-	democratic = 52
-	neutrality = 16
-	communism = 16
-	fascism = 16
-}
-
-add_ideas = {
-	TRM_safe_trinity
-	TRM_justice_task_force
-	TRM_anti_gehenna_idea
-
-	TRN_Misono_Mika_political_advisor
-	TRN_Seia_political_advisor
-	TRN_nagisa_political_advisor
-
-	disarmed_nation
-	BA_isolation
-	civilian_economy
-}
-
-#activate_mission = TRM_mefo_bills_mission
-set_country_flag = communism_preemptive_uprising_flag
 
 if = {
 	limit = { not = { has_dlc = "Man the Guns" } }

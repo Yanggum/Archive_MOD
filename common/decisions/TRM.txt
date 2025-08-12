@@ -7259,13 +7259,30 @@ TRN_Mika_honor_decision_cat = {
 
 		complete_effect = {
 			add_political_power = 15
-			
 
-       		add_power_balance_value = {
-       		    id = TRM_power_balance
-       		    value = -0.06
-       		    tooltip_side = TRM_tirinty_socialism
-       		}
+			IF = {
+				limit = {
+					OR = {
+						has_idea = TRN_new_culture_militarism_ns
+						has_idea = TRN_new_culture_militarism_aliance_of_faith_ns
+						has_idea = TRN_new_culture_militarism_aliance_of_faith_uprade_ns
+						has_idea = TRN_new_culture_militarism_german_thinkers_ns
+						has_idea = TRN_new_culture_militarism_german_thinkers_upgrade_ns
+					}
+				}
+       			add_power_balance_value = {
+       			    id = TRM_power_balance
+       			    value = 0.06
+       			    tooltip_side = TRN_trinity_militarism
+       			}
+			}
+			else = {
+       			add_power_balance_value = {
+       			    id = TRM_power_balance
+       			    value = -0.06
+       			    tooltip_side = TRM_tirinty_socialism
+       			}
+			}
 		}
 	}
 
@@ -8851,14 +8868,13 @@ TRN_Mika_social_problem_cat = {
 		available = {
 			has_country_flag = TRN_Mika_social_trinity_language_flag
 			OR = {
-				OR = {
+				AND = {
 					has_completed_focus = TRN_reconstruction_of_collapsed_industry
 					has_completed_focus = TRN_revitalization_of_heavy_industry
 				}
 				num_of_factories > 79
 			}
-			IF = {
-				limit = { has_completed_focus = TRN_control_tea_party }
+			OR = {
 				has_completed_focus = TRN_fate_of_german_culture
 			}
 		}
@@ -8947,6 +8963,12 @@ TRN_Mika_social_problem_cat = {
 					}
 					1 = {
 						country_event = { id = trnsocial.4 }
+					}
+					1 = {
+						country_event = { id = trnsocial.5 }
+					}
+					1 = {
+						country_event = { id = trnsocial.6 }
 					}
 				}
 			}
