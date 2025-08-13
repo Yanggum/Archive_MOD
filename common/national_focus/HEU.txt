@@ -1,3 +1,5 @@
+#!gfx:interface\BA_goals.gfx
+
 focus_tree = {
 	id = HEU
 	continuous_focus_position = { x = 5200 y = 1300 } 
@@ -94,39 +96,39 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = HEU_event.101 }
 
-			HEU_emile_speller = {
-				add_corps_commander_role = {
-					traits = { infantry_officer }
-					skill = 2
-					attack_skill = 1
-					defense_skill = 2
-					planning_skill = 2
-					logistics_skill = 2
-					legacy_id=-1
-				}				
-			}
-			
-			HEU_guillaume_konsbruck = {
-				add_corps_commander_role = {
-					traits = { cavalry_officer }
-					skill = 2
-					attack_skill = 2
-					defense_skill = 1
-					planning_skill = 2
-					logistics_skill = 2
-					legacy_id=-1
-				}				
-			}
-
-			hidden_effect = {
-				HEU_emile_speller = {
-					add_timed_unit_leader_trait = {
-						trait = wounded
-						days = 600
-					}
-					# 로어상 에밀 슈펠러는 대전이 당시 팔 하나가 절단당했다.
-				}
-			}
+			#HEU_emile_speller = {
+			#	add_corps_commander_role = {
+			#		traits = { infantry_officer }
+			#		skill = 2
+			#		attack_skill = 1
+			#		defense_skill = 2
+			#		planning_skill = 2
+			#		logistics_skill = 2
+			#		legacy_id=-1
+			#	}				
+			#}
+			#
+			#HEU_guillaume_konsbruck = {
+			#	add_corps_commander_role = {
+			#		traits = { cavalry_officer }
+			#		skill = 2
+			#		attack_skill = 2
+			#		defense_skill = 1
+			#		planning_skill = 2
+			#		logistics_skill = 2
+			#		legacy_id=-1
+			#	}				
+			#}
+			#
+			#hidden_effect = {
+			#	HEU_emile_speller = {
+			#		add_timed_unit_leader_trait = {
+			#			trait = wounded
+			#			days = 600
+			#		}
+			#		# 로어상 에밀 슈펠러는 대전이 당시 팔 하나가 절단당했다.
+			#	}
+			#}
 		}
 	}
 
@@ -1404,6 +1406,19 @@ focus_tree = {
 						traits = { 
 							HEU_evil_mutsuki
 						}
+					}
+				}
+
+				add_country_leader_role = {
+					character = HEU_zkdyzh
+					promote_leader = yes
+					country_leader = {
+						ideology = centrism
+						#desc = "HEU_aru_fascist_leader_desc"
+						#traits = { 
+						#	HEU_ARU_T1
+						#	HEU_regent_of_luxembourg
+						#}
 					}
 				}
 
@@ -5725,6 +5740,226 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+		}
+	}
+
+	focus = {
+		id = HEU_repudiation_of_the_eden_treaty
+		
+		relative_position_id = HEU_unified_gehenna
+
+		icon = GFX_focus_TRM_united_law	
+
+		prerequisite = { focus = HEU_unified_gehenna }
+
+		cost = 5.00
+
+		x = -10
+		y = 1
+
+		available = {
+			is_subject = no 
+			OR = {
+				any_country = {
+					OR = {
+						original_tag = TRM
+						original_tag = ARI
+					}
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+				any_country = {
+					original_tag = TRK
+					is_subject = no
+					has_capitulated = no
+					is_in_faction = no
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_watch_gehenna_tt
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+			}
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = { TRM = { has_government = fascism } }
+				reverse_add_opinion_modifier = {
+					target = TRM
+					modifier = eden_treaty_promotion_bad
+				}
+			}
+			else = {
+				reverse_add_opinion_modifier = {
+					target = TRM
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = COU }
+				reverse_add_opinion_modifier = {
+					target = COU
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = SHE }
+				reverse_add_opinion_modifier = {
+					target = SHE
+					modifier = eden_treaty_promotion_good
+				}
+			}
+			if = {
+				limit = { country_exists = KSP }
+				reverse_add_opinion_modifier = {
+					target = KSP
+					modifier = eden_treaty_promotion_good
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_centralized_eden_treaty
+		
+		relative_position_id = HEU_repudiation_of_the_eden_treaty
+
+		icon = GFX_goal_TRN_hwahawe_with_gehhena	
+
+		prerequisite = { focus = HEU_repudiation_of_the_eden_treaty }
+
+		mutually_exclusive = {
+			focus = HEU_decentralized_eden_treaty
+		}
+
+		cost = 5.00
+
+		x = -2
+		y = 2
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = THIS_IS_WIP_TT
+				is_debug = yes
+			}
+			is_subject = no 
+			OR = {
+				any_country = {
+					OR = {
+						original_tag = TRM
+						original_tag = ARI
+					}
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+				any_country = {
+					original_tag = TRK
+					is_subject = no
+					has_capitulated = no
+					is_in_faction = no
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_watch_gehenna_tt
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+			}
+			
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = HEU_decentralized_eden_treaty
+		
+		relative_position_id = HEU_repudiation_of_the_eden_treaty
+
+		icon = GFX_goal_TRN_eden_pacts_letsgo	
+
+		prerequisite = { focus = HEU_repudiation_of_the_eden_treaty }
+
+		mutually_exclusive = {
+			focus = HEU_centralized_eden_treaty
+		}
+
+		cost = 5.00
+
+		x = 0
+		y = 2
+
+		available = {
+			is_subject = no 
+			Eden_alliance_created_already = no 
+			OR = {
+				any_country = {
+					OR = {
+						original_tag = TRM
+						original_tag = ARI
+					}
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+				any_country = {
+					original_tag = TRK
+					is_subject = no
+					has_capitulated = no
+					is_in_faction = no
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_watch_gehenna_tt
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+			}
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			create_faction = TRM_Treaty_of_Eden_faction
+			if = {
+				limit = { country_exists = TRK }
+				add_to_faction = TRK
+				TRK = {
+					remove_ideas = TRK_economic_collapse
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							original_tag = TRM
+							original_tag = ARI
+						}
+						is_subject_of = ROOT
+						has_capitulated = no
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							original_tag = TRM
+							original_tag = ARI
+						}
+						is_subject_of = ROOT
+						has_capitulated = no
+					}
+					ROOT = { end_puppet = PREV }
+					add_to_faction = ROOT
+				}
+			}
+			complete_national_focus = Eden_formation_of_alliance_treaty_organization
 		}
 	}
 	
