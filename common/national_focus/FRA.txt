@@ -9,7 +9,7 @@ focus_tree = {
 	} 
 	inlay_window = {
 		id = fra_inner_circle_inlay_window
-		position = { x = 2000 y = 1180 }
+		position = { x = 2000 y = 680 }
 	}
 	continuous_focus_position = {
 		x = 1500
@@ -20,18 +20,23 @@ focus_tree = {
         y = 0
     }
 	shortcut = {
-		name = FRA_focus_shortcut_resistance
-		target = FRA_focus_resistance_1
+		name = FRA_focus_shortcut_diplomacy
+		target = FRA_focus_london_5
 		scroll_wheel_factor = 1
 	}
 	shortcut = {
 		name = FRA_focus_shortcut_military
 		target = FRA_focus_arm_1
 		scroll_wheel_factor = 1
+	} 
+	shortcut = {
+		name = FRA_focus_shortcut_garrison
+		target = FRA_focus_garrison_0
+		scroll_wheel_factor = 1
 	}
 	shortcut = {
-		name = FRA_focus_shortcut_diplomacy
-		target = FRA_focus_london_5
+		name = FRA_focus_shortcut_resistance
+		target = FRA_focus_resistance_1
 		scroll_wheel_factor = 1
 	}
 	shortcut = {
@@ -45,7 +50,7 @@ focus_tree = {
 		id = FRA_focus.1
 		cost = 4
 		icon = GFX_goal_FRA_focus_resistance
-		x = 10
+		x = 15
 		y = 0
 		allow_branch = {
 			has_country_flag = FRA_exile_is_over
@@ -101,8 +106,9 @@ focus_tree = {
 		id = FRA_focus_ind
 		icon = "GFX_goal_fra_ready"
 		cost = 5
-		x = 0
+		x = -10
 		y = 1
+		relative_position_id = FRA_focus.1
 		prerequisite = {
 			focus = FRA_focus.1
 		}
@@ -124,8 +130,9 @@ focus_tree = {
 		id = FRA_focus_2
 		icon = GFX_goal_fra_total
 		cost = 5
+		relative_position_id = FRA_focus_ind
 		x = 4
-		y = 1
+		y = 0
 		prerequisite = {
 			focus = FRA_focus.1
 		}
@@ -139,7 +146,8 @@ focus_tree = {
 		icon = "GFX_goal_fra_alg"
 		cost = 5
 		x = 1
-		y = 2
+		y = 1
+		relative_position_id = FRA_focus_ind
 		prerequisite = {
 			focus = FRA_focus_ind
 		}
@@ -160,7 +168,8 @@ focus_tree = {
 		icon = GFX_focus_FRA_tun
 		cost = 5
 		x = 2
-		y = 3
+		y = 2
+		relative_position_id = FRA_focus_ind
 		prerequisite = {
 			focus = FRA_focus_ind
 		}
@@ -174,7 +183,8 @@ focus_tree = {
 		icon = "GFX_goal_fra_mor"
 		cost = 5
 		x = -1
-		y = 2
+		y = 1
+		relative_position_id = FRA_focus_ind
 		prerequisite = {
 			focus = FRA_focus_ind
 		}
@@ -188,7 +198,8 @@ focus_tree = {
 		icon = GFX_goal_fra_waf
 		cost = 5
 		x = 0
-		y = 3
+		y = 2
+		relative_position_id = FRA_focus_ind
 		prerequisite = {
 			focus = FRA_focus_ind
 		}
@@ -335,6 +346,29 @@ focus_tree = {
 		}
 	}
 	focus = {
+		#기술관료주의 경제
+		id = FRA_focus_technocratic_economy
+		icon = GFX_goal_TRM_class_collaboration
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = FRA_industry_focus_0
+		ai_will_do = {
+			factor = 100
+		} 
+		text_icon = GER_inner_circle_focus_style
+		prerequisite = {
+			focus = FRA_focus_10.6
+			focus = FRA_focus_6
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_free_market_economy
+			focus = FRA_focus_state_corporatism
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
 		#댐 건설
 		id = FRA_focus_10.6
 		icon = GFX_focus_generic_hydroelectric_energy
@@ -447,6 +481,28 @@ focus_tree = {
 		}
 	}
 	focus = {
+		#국가협동조합주의
+		id = FRA_focus_state_corporatism
+		icon = GFX_focus_ICE_state_corporatism
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_9.5
+		ai_will_do = {
+			factor = 100
+		}
+		text_icon = GER_inner_circle_focus_style
+		prerequisite = {
+			focus = FRA_focus_9.5
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_technocratic_economy
+			focus = FRA_focus_free_market_economy
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
 		#조선소 건설
 		id = FRA_focus_10
 		icon = GFX_goal_generic_construct_naval_dockyard
@@ -478,7 +534,7 @@ focus_tree = {
 		id = FRA_focus_9
 		icon = GFX_focus_PER_national_bank
 		cost = 5
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = FRA_focus_7
 		ai_will_do = {
@@ -492,6 +548,29 @@ focus_tree = {
 			show_ideas_tooltip = FRA_compagnie_algerienne
 			custom_effect_tooltip = CHL_skip_one_line_tt
 			add_political_power = 100
+		}
+	}
+	focus = {
+		#자유 무역
+		id = FRA_market_ideology
+		icon = GFX_goal_generic_positive_trade_relations
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_7
+		ai_will_do = {
+			factor = 100
+		}
+		available = {
+			NOT = {
+				has_idea = free_trade
+			}
+		}
+		prerequisite = {
+			focus = FRA_focus_7
+		}
+		completion_reward = {
+			add_ideas = free_trade
 		}
 	}
 	focus = {
@@ -526,11 +605,11 @@ focus_tree = {
 		id = FRA_industry_focus_1
 		icon = GFX_focus_generic_coal_mining
 		cost = 5
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = FRA_focus_9
 		prerequisite = {
-			focus = FRA_focus_9
+			focus = FRA_focus_7
 		}
 		completion_reward = {
 			swap_ideas = {
@@ -557,14 +636,37 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		#자유 시장 경제
+		id = FRA_focus_free_market_economy
+		icon = GFX_focus_GER_wirtschaftswunder
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_9
+		prerequisite = {
+			focus = FRA_focus_9
+		}
+		text_icon = GER_inner_circle_focus_style
+		prerequisite = {
+			focus = FRA_industry_focus_1
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_technocratic_economy
+			focus = FRA_focus_state_corporatism
+		}
+		completion_reward = {
+		}
+	}
 	#군사중점
 	focus = {
 		#전쟁 대비
 		id = FRA_focus_arm_1
 		icon = GFX_goal_fra_endex
 		cost = 2
-		x = 33
+		x = 22
 		y = 1
+		relative_position_id = FRA_focus.1
 		ai_will_do = {
 			modifier = {
 				has_completed_focus = FRA_focus_12
@@ -1756,7 +1858,7 @@ focus_tree = {
 		#스페인에서의 격변
 		id = FRA_focus_spain_civilwar
 		cost = 2
-		x = 35
+		x = 40
 		y = 8
 		allow_branch = {
 			has_country_flag = FRA_exile_is_over
@@ -1773,7 +1875,7 @@ focus_tree = {
 		#아프리카 내 패권 강화
 		id = FRA_focus_spain_1
 		cost = 2
-		x = -1
+		x = 11
 		y = 1
 		relative_position_id = FRA_focus_spain_civilwar
 		icon = GFX_goal_FRA_spain_attack
@@ -2661,7 +2763,7 @@ focus_tree = {
 		id = FRA_focus_garrison_2
 		icon = GFX_focus_BRA_reach_out_to_military_dem
 		cost = 4
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = FRA_focus_garrison_0
 		prerequisite = {
@@ -2769,7 +2871,7 @@ focus_tree = {
 		id = FRA_focus_garrison_9
 		icon = GFX_focus_AFG_promote_the_counter_elite
 		cost = 4
-		x = 4
+		x = 3
 		y = 1
 		relative_position_id = FRA_focus_garrison_1
 		prerequisite = {
@@ -2895,7 +2997,7 @@ focus_tree = {
 		icon = GFX_goal_fra_cozy
 		id = FRA_focus_resistance_5
 		cost = 6
-		x = 32
+		x = 40
 		y = 8
 		allow_branch = {
             OR = {
@@ -2940,8 +3042,8 @@ focus_tree = {
 	focus = { #조국의 영도
 		id = FRA_leading_of_fatherland
 		cost = 1
-		x = 29
-		y = 9
+		x = 30
+		y = 6
 		icon = GFX_focus_generic_industrialists
 		completion_reward = {
 			add_political_power = 5
@@ -3470,7 +3572,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#인도차이나로부터의 철수
+		#인도차이나에서의 철수
 		id = FRA_focus_15
 		cost = 4
 		x = -2
