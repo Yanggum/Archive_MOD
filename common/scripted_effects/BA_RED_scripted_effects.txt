@@ -3,6 +3,456 @@
 @snakebox_sovtry = 3
 @snakebox_black = 4
 
+RED_start_RE1_civwar = {
+	
+			hidden_effect = { #핀란드와 붉은겨울의 나머지 값 계산
+				#RE1
+				set_temp_variable = { #핀란드 시점의 최대 확보 가능한 값 (최대값 - 붉은겨울 현재값)
+					re1_second_great_northern_war_max_finside = 100
+				}
+				subtract_from_temp_variable = {
+					re1_second_great_northern_war_max_finside = global.red_re1_second_great_northern_war_red_var
+				}
+				set_temp_variable = { #붉은겨울 시점의 최대 확보 가능한 값 (최대값 - 핀란드 현재값)
+					re1_second_great_northern_war_max_redside = 100
+				}
+				subtract_from_temp_variable = {
+					re1_second_great_northern_war_max_redside = global.red_re1_second_great_northern_war_fin_var
+				}
+				#RE2
+				set_temp_variable = { #핀란드 시점의 최대 확보 가능한 값 (최대값 - 붉은겨울 현재값)
+					re2_second_great_northern_war_max_finside = 100
+				}
+				subtract_from_temp_variable = {
+					re2_second_great_northern_war_max_finside = global.red_re2_second_great_northern_war_red_var
+				}
+				set_temp_variable = { #붉은겨울 시점의 최대 확보 가능한 값 (최대값 - 핀란드 현재값)
+					re2_second_great_northern_war_max_redside = 100
+				}
+				subtract_from_temp_variable = {
+					re2_second_great_northern_war_max_redside = global.red_re2_second_great_northern_war_fin_var
+				}
+				#RE3
+				set_temp_variable = { #핀란드 시점의 최대 확보 가능한 값 (최대값 - 붉은겨울 현재값)
+					re3_second_great_northern_war_max_finside = 100
+				}
+				subtract_from_temp_variable = {
+					re3_second_great_northern_war_max_finside = global.red_re3_second_great_northern_war_red_var
+				}
+				set_temp_variable = { #붉은겨울 시점의 최대 확보 가능한 값 (최대값 - 핀란드 현재값)
+					re3_second_great_northern_war_max_redside = 100
+				}
+				subtract_from_temp_variable = {
+					re3_second_great_northern_war_max_redside = global.red_re3_second_great_northern_war_fin_var
+				}
+			}
+			###################################################################
+			#  /  여기가 실질 값 연산부 시작
+			###################################################################
+
+			RE1 = {
+				add_to_variable = {
+					global.red_re1_second_great_northern_war_fin_var = 100
+					tooltip = red_second_great_northern_war_RED_tt
+				}
+			}
+			RE2 = {
+				add_to_variable = {
+					global.red_re2_second_great_northern_war_fin_var = 100
+					tooltip = red_second_great_northern_war_RED_tt
+				}
+			}
+			RE3 = {
+				add_to_variable = {
+					global.red_re3_second_great_northern_war_fin_var = 100
+					tooltip = red_second_great_northern_war_RED_tt
+				}
+			}
+			###################################################################
+			#     여기가 실질 값 연산부 끝   /
+			###################################################################
+			hidden_effect = { #합이 100 이상이 되는걸 방지 (상대 값 침범 금지)
+				#RE1
+				clamp_variable = { #핀란드 값이 핀란드 최대값을 넘지 않게
+					var = global.red_re1_second_great_northern_war_fin_var
+					min = 0
+					max = re1_second_great_northern_war_max_finside
+				}
+				clamp_variable = { #붉은겨울 값이 붉은겨울 최대값을 넘지 않게 
+					var = global.red_re1_second_great_northern_war_red_var
+					min = 0
+					max = re1_second_great_northern_war_max_redside
+				}
+				#RE2
+				clamp_variable = { #핀란드 값이 핀란드 최대값을 넘지 않게
+					var = global.red_re2_second_great_northern_war_fin_var
+					min = 0
+					max = re2_second_great_northern_war_max_finside
+				}
+				clamp_variable = { #붉은겨울 값이 붉은겨울 최대값을 넘지 않게 
+					var = global.red_re2_second_great_northern_war_red_var
+					min = 0
+					max = re2_second_great_northern_war_max_redside
+				}
+				#RE3
+				clamp_variable = { #핀란드 값이 핀란드 최대값을 넘지 않게
+					var = global.red_re3_second_great_northern_war_fin_var
+					min = 0
+					max = re3_second_great_northern_war_max_finside
+				}
+				clamp_variable = { #붉은겨울 값이 붉은겨울 최대값을 넘지 않게 
+					var = global.red_re3_second_great_northern_war_red_var
+					min = 0
+					max = re3_second_great_northern_war_max_redside
+				}
+			}
+
+			hidden_effect = {
+
+				if = { # RE1 내전 발발 !
+					limit = {
+						set_temp_variable = {
+							re1_to_100_where = global.red_re1_second_great_northern_war_fin_var
+						}
+						add_to_temp_variable = {
+							re1_to_100_where = global.red_re1_second_great_northern_war_red_var
+						}
+						OR = {
+							check_variable = {
+								re1_to_100_where = 100
+							}
+							check_variable = {
+								re1_to_100_where > 100
+							}
+						}
+					}
+					RE1 = {
+						RED_civil_war_division_add = yes
+						set_country_flag = second_great_northern_war_civilwar_flag
+						set_temp_variable = {
+							RED_start_civil_war_size_temp = global.red_re1_second_great_northern_war_fin_var
+						}
+						multiply_temp_variable = {
+							RED_start_civil_war_size_temp = 0.01
+						}
+						start_civil_war = {
+							ideology = neutrality
+							size = var:RED_start_civil_war_size_temp
+							FN1 = {
+								add_to_war = {
+									targeted_alliance = PREV
+									enemy = RE1
+									hostility_reason = asked_to_join
+									single_target_only = yes
+								}
+								annex_country = {
+									target = PREV
+									transfer_troops = yes
+								}
+								add_civil_war_target = RE1
+								add_ideas = RED_nordic_civil_war 
+								set_country_flag = RED_civil_war_division_add_flag 
+							}
+						} 
+						add_ideas = RED_nordic_civil_war
+					}
+				}
+
+				if = { # RE2 내전 발발 !
+					limit = {
+						set_temp_variable = {
+							re2_to_100_where = global.red_re2_second_great_northern_war_fin_var
+						}
+						add_to_temp_variable = {
+							re2_to_100_where = global.red_re2_second_great_northern_war_red_var
+						}
+						OR = {
+							check_variable = {
+								re2_to_100_where = 100
+							}
+							check_variable = {
+								re2_to_100_where > 100
+							}
+						}
+					}
+					RE2 = {
+						RED_civil_war_division_add = yes
+						set_country_flag = second_great_northern_war_civilwar_flag
+						set_temp_variable = {
+							RED_start_civil_war_size_temp = global.red_re2_second_great_northern_war_fin_var
+						}
+						multiply_temp_variable = {
+							RED_start_civil_war_size_temp = 0.01
+						}
+						start_civil_war = {
+							ideology = neutrality
+							size = var:RED_start_civil_war_size_temp
+							FN2 = {
+								add_to_war = {
+									targeted_alliance = PREV
+									enemy = RE2
+									hostility_reason = asked_to_join
+									single_target_only = yes
+								}
+								annex_country = {
+									target = PREV
+									transfer_troops = yes
+								}
+								add_civil_war_target = RE2
+								add_ideas = RED_nordic_civil_war 
+								set_country_flag = RED_civil_war_division_add_flag 
+							}
+						} 
+						add_ideas = RED_nordic_civil_war
+					}
+				}
+
+				if = { # RE3 내전 발발 !
+					limit = {
+						set_temp_variable = {
+							re3_to_100_where = global.red_re3_second_great_northern_war_fin_var
+						}
+						add_to_temp_variable = {
+							re3_to_100_where = global.red_re3_second_great_northern_war_red_var
+						}
+						OR = {
+							check_variable = {
+								re3_to_100_where = 100
+							}
+							check_variable = {
+								re3_to_100_where > 100
+							}
+						}
+					}
+					RE3 = {
+						RED_civil_war_division_add = yes
+						set_country_flag = second_great_northern_war_civilwar_flag
+						set_temp_variable = {
+							RED_start_civil_war_size_temp = global.red_re3_second_great_northern_war_fin_var
+						}
+						multiply_temp_variable = {
+							RED_start_civil_war_size_temp = 0.01
+						}
+						start_civil_war = {
+							ideology = neutrality
+							size = var:RED_start_civil_war_size_temp
+							FN3 = {
+								add_to_war = {
+									targeted_alliance = PREV
+									enemy = RE3
+									hostility_reason = asked_to_join
+									single_target_only = yes
+								}
+								annex_country = {
+									target = PREV
+									transfer_troops = yes
+								}
+								add_civil_war_target = RE3
+								add_ideas = RED_nordic_civil_war 
+								set_country_flag = RED_civil_war_division_add_flag 
+							}
+						} 
+						add_ideas = RED_nordic_civil_war
+					}
+				}
+			}
+}
+RED_debug_fin = {
+	RE4 = {
+				remove_civil_war_target = FIN
+				clr_global_flag = RE4_finland_war_flag
+				set_global_flag = RE4_finland_war_flag_FINWIN
+				RED = {
+					country_event = {
+						id = RED_generic.13
+						days = 1
+					}
+				}
+				RE4 = {
+					white_peace = FIN
+					every_owned_state = {
+						limit = {
+							is_core_of = FIN
+						}
+						transfer_state_to = FIN
+					}
+					if = { 
+						limit = {
+							is_subject = yes
+						}
+						OVERLORD = {
+							if = {
+								limit = {
+									RE3 = {
+										is_subject_of = PREV
+									}
+								}
+								RE3 = {
+									annex_country = {
+										target = RE4
+										transfer_troops = yes
+									}
+								}
+							}
+							else = {
+								annex_country = {
+									target = RE4
+									transfer_troops = yes
+								}
+							}
+						}
+					}
+				}
+			}
+}
+RED_debug_re4 = {
+	FIN = {
+		annex_country = {
+			target = FIN
+		}
+				clr_global_flag = RE4_finland_war_flag
+				set_global_flag = RE4_finland_war_flag_RE4WIN
+				RE4 = {
+					every_other_country = {
+						limit = {
+							OR = {
+								original_tag = RED
+								original_tag = RE1
+								original_tag = RE2
+								original_tag = RE3
+							}
+						}
+						country_event = redpuppet.19
+					}
+					every_other_country = {
+						limit = {
+							original_tag = SOV
+						}
+						country_event = redpuppet.20
+					}
+				}
+			}
+}
+RED_civil_war_division_add = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = RED_civil_war_division_add_flag }
+		}
+		set_country_flag = RED_civil_war_division_add_flag
+		if = {
+			limit = {
+				has_template = "Civilian Militia"
+			}
+			delete_unit_template_and_units = {
+				division_template = "Civilian Militia"
+				disband = yes
+			}
+		}
+		division_template = {
+			name = "Civilian Militia"
+			division_names_group = GEH_PEN_01
+			is_locked = yes
+			force_allow_recruiting = yes
+			#template_counter = 67
+			regiments = {
+				militia = { x = 0 y = 0 }
+				militia = { x = 0 y = 1 }
+				militia = { x = 0 y = 2 }
+				militia = { x = 1 y = 0 }
+				militia = { x = 1 y = 1 }
+				militia = { x = 1 y = 2 }
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				NOT = { has_template = "Civilian Militia" }
+			}
+			division_template = {
+				name = "Civilian Militia"
+				division_names_group = GEH_PEN_01
+				is_locked = yes
+				force_allow_recruiting = yes
+				#template_counter = 67
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+					militia = { x = 1 y = 2 }
+				}
+			}
+		}
+		random_controlled_state = {
+			create_unit = {
+				division = "name = \"Civilian Militia\" division_template = \"Civilian Militia\" start_experience_factor = 0.05 start_equipment_factor = 1"
+				owner = PREV
+			}
+		}
+	}
+}
 RED_debug_eff = {
 	add_dynamic_modifier = { modifier = RED_zenkyoutou_cat_dynamic_modifier }
 	clr_country_flag = RED_zenkyoutou_LEFT_lock_flag
