@@ -202,14 +202,14 @@ focus_tree = {
 						has_state_flag = GEH_basic_industrial_industrial_region_1
 						free_building_slots = {
 							building = arms_factory
-							size > 0
+							size > 1
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
-						level = 1
+						level = 2
 						instant_build = yes
 					}
 				}
@@ -219,14 +219,14 @@ focus_tree = {
 					limit = {
 						free_building_slots = {
 							building = arms_factory
-							size > 0
+							size > 1
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
-						level = 1
+						level = 2
 						instant_build = yes
 					}
 				}
@@ -418,6 +418,51 @@ focus_tree = {
 				modifier = GEM_industries_dynamic
 			}
 			custom_effect_tooltip = GEH_german_company_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -437,6 +482,32 @@ focus_tree = {
 			custom_effect_tooltip = GEH_nazi_industry_acquisition_tt
 			add_to_variable = { GEM_industries_dynamic_production_factory_efficiency_gain_factor = 0.05 }
 			add_to_variable = { GEM_industries_dynamic_production_factory_max_efficiency_factor = 0.10 }
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -529,6 +600,36 @@ focus_tree = {
 			add_to_variable = { GEM_industries_dynamic_consumer_goods_factor = 0.05 }
 			add_to_variable = { GEM_industries_dynamic_production_factory_max_efficiency_factor = 0.05 }
 			add_to_variable = { GEM_industries_dynamic_production_lack_of_resource_penalty_factor = -0.10 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -902,7 +1003,108 @@ focus_tree = {
 			country_event = { id = GEH_event.1 }
 		}
 	}
-# /선도부와 동행 or 축출
+# /외교
+	focus = {
+		id = GEM_self_reliance_pursuit
+		icon = GFX_focus_generic_support_the_left_right
+		cost = 5
+		prerequisite = {
+			focus = GEH_warning_wuiongwuiong
+		}
+		mutually_exclusive = {
+			focus = GEM_working_with_the_perfect_team
+		}
+		available = {
+		}
+		bypass = {
+			NOT = { has_idea = GEM_geh_leadership }
+		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_MANMAJUN_BUPAE
+		}
+		x = 18
+		y = 1
+		relative_position_id = GEH_warning_wuiongwuiong
+		completion_reward = {
+			GEH_Manmajun_Bupae_down_effect = yes
+			add_political_power = 60
+			add_stability = 0.10
+			remove_ideas = GEM_geh_leadership
+			GEH = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = medium_decrease
+				}
+			}
+		}
+	}
+	focus = {
+		id = GEM_working_with_the_perfect_team
+		icon = GFX_goal_HEU_geh_c
+		cost = 10
+		prerequisite = {
+			focus = GEH_warning_wuiongwuiong
+		}
+		mutually_exclusive = {
+			focus = GEM_self_reliance_pursuit
+		}
+		available = {
+			NOT = {
+				has_country_leader = {
+					character = GEH_akzhxh
+					ruling_only = yes
+				}
+			}
+			is_subject = no
+		}
+		search_filters = {
+			FOCUS_FILTER_MANMAJUN_BUPAE
+		}
+		x = 3
+		y = 1
+		relative_position_id = GEH_warning_wuiongwuiong
+		completion_reward = {
+			GEH_Manmajun_Bupae_down_effect = yes
+			GEM = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+	}
+	focus = {
+		id = GEM_help_perfect_team
+		icon = GFX_goal_HEU_geh_c
+		cost = 5
+		prerequisite = {
+			focus = GEM_working_with_the_perfect_team
+		}
+		available = {
+			has_defensive_war = yes
+			is_subject = no
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+		}
+		x = 2
+		y = 1
+		relative_position_id = GEM_working_with_the_perfect_team
+		completion_reward = {
+			if = {
+				limit = {
+					is_in_faction = no
+				}
+				GEM = {
+					set_rule = { can_create_factions = yes }
+					create_faction = GEH_Federation
+				}
+			}
+			GEH = {
+				country_event = generic.5
+			}
+		}
+	}
 	focus = {
 		id = GEH_hyungzipa_ak
 		icon = GFX_goal_GEH_Local_research
@@ -922,14 +1124,26 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = GEM_working_with_the_perfect_team
-		icon = GFX_goal_HEU_geh_c
-		cost = 10
+		id = GEH_gukbanggun_problem
+		icon = GFX_goal_GEH_heer_problem
+		cost = 5
 		prerequisite = {
-			focus = GEH_hyungzipa_ak
+			focus = GEH_warning_wuiongwuiong
 		}
-		mutually_exclusive = {
-			focus = GEM_self_reliance_pursuit
+		x = 20
+		y = 1
+		relative_position_id = GEH_warning_wuiongwuiong
+		completion_reward = {
+			country_event = { id = GEH_event.3 }
+		}
+
+	}
+	focus = {
+		id = GEH_subjugation
+		icon = GFX_focus_GER_subdue_the_wehrmacht
+		cost = 5
+		prerequisite = {
+			focus = GEH_gukbanggun_problem
 		}
 		available = {
 			NOT = {
@@ -938,66 +1152,1000 @@ focus_tree = {
 					ruling_only = yes
 				}
 			}
-			is_subject = no
 		}
-		search_filters = {
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = -2
-		y = 1
-		relative_position_id = GEH_hyungzipa_ak
+		mutually_exclusive = { focus = GEH_nego_whit_wehrmacht_new }
+		x = 6
+		y = 2
+		relative_position_id = GEH_gukbanggun_problem
 		completion_reward = {
-			GEH_Manmajun_Bupae_down_effect = yes
-			GEM = {
-				set_rule = { can_create_factions = yes }
+			custom_effect_tooltip = GEH_subjugation_tt
+			every_owned_state = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GEH_ucantusefactory
+					}
+				}
 				if = {
-					limit = { is_faction_leader = no }
-					create_faction = GEH_Federation
+					limit = {
+						NOT = { is_core_of = GEM }
+					}
+					add_resistance = 100
+				}
+				remove_dynamic_modifier = {
+					modifier = GEH_ucantusefactory
+				}
+				add_dynamic_modifier = {
+					modifier = GEH_ucantusefactory_2
+				}
+				set_state_flag = GEK_state_flag
+			}
+			every_owned_state = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GEH_ucantusefactory_2
+					}
+				}
+				remove_dynamic_modifier = {
+					modifier = GEH_ucantusefactory_2
+				}
+				set_state_flag = GEK_state_flag
+			}
+			58 = {
+				set_demilitarized_zone = no
+			}
+			909 = {
+				set_demilitarized_zone = no
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_antinazi_pact
+		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
+		cost = 5
+		prerequisite = {
+			focus = GEH_gukbanggun_problem
+		}
+		available = {
+		}
+		mutually_exclusive = {
+
+		}
+		x = -1
+		y = 1
+		relative_position_id = GEH_gukbanggun_problem
+		completion_reward = {
+			ARI = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = medium_decrease
 				}
 			}
+			SHA = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = medium_increase
+				}
+			}
+			ABY = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_shanhaijing_support
+		icon = GFX_focus_chi_mission_to_the_SHA
+		cost = 5
+		prerequisite = {
+			focus = GEH_antinazi_pact
+		}
+		available = {
+		}
+		mutually_exclusive = {  }
+		x = 0
+		y = 1
+		relative_position_id = GEH_antinazi_pact
+		completion_reward = {
+			SHA = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_red_winter_alliance
+		icon = GFX_focus_chi_mission_to_the_RED
+		cost = 5
+		prerequisite = {
+			focus = GEH_antinazi_pact
+		}
+		available = {
+			is_subject = no
+			is_faction_leader = yes
+		}
+		bypass = {
+			RED = {
+				OR = {
+					is_puppet_of = GEM
+					has_war_with = GEM
+					has_capitulated = yes
+					exists = no
+					is_in_faction = yes
+				}
+			}
+		}
+		mutually_exclusive = {  }
+		x = 2
+		y = 1
+		relative_position_id = GEH_antinazi_pact
+		completion_reward = {
+			RED = {
+				country_event = generic.5
+				add_ai_strategy = {
+					type = alliance
+					id = GEM
+					value = 50
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_triple_alliance
+		icon = GFX_goal_SHA_Engine_of_conservative_revolution
+		cost = 5
+		prerequisite = {
+			focus = GEH_shanhaijing_support
+		}
+		prerequisite = {
+			focus = GEH_red_winter_alliance
+		}
+		mutually_exclusive = {
+			focus = GEH_national_socialism_gehenna_pact
+			focus = GEM_accept_local_ideology
+		}
+		available = {
+			is_subject = no
+			is_faction_leader = yes
+			SHA = {
+				exists = yes
+				has_capitulated = no
+				NOT = {
+					has_war_with = ROOT
+					is_in_faction = no
+				}
+			}
+		}
+		mutually_exclusive = {  }
+		x = 1
+		y = 2
+		relative_position_id = GEH_shanhaijing_support
+		completion_reward = {
+			SHA = {
+				country_event = generic.5
+				add_ai_strategy = {
+					type = alliance
+					id = GEM
+					value = 50
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_extensive_concessions_to_the_nazi_party
+		icon = GFX_goal_TRN_info_nazi
+		cost = 5
+		prerequisite = {
+			focus = GEM_self_reliance_pursuit
+		}
+		available = {
+		}
+		mutually_exclusive = {
+			
+		}
+		x = -1
+		y = 1
+		relative_position_id = GEM_self_reliance_pursuit
+		completion_reward = {
+			add_political_power = 120
+			add_stability = 0.10
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEH_national_socialism_gehenna_pact
+		icon = GFX_focus_chi_mission_to_germany
+		cost = 5
+		prerequisite = {
+			focus = GEH_extensive_concessions_to_the_nazi_party
+		}
+		mutually_exclusive = {
+			focus = GEM_german_segregation_act
+			focus = GEH_triple_alliance
+		}
+		available = {
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 3
+		relative_position_id = GEH_extensive_concessions_to_the_nazi_party
+		completion_reward = {
+			GEH_german_nationalism_issue_down_effect = yes
 			GEH = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_decrease
+				}
+			}
+		}
+
+	}
+	focus = {
+		id = GEM_perfect_team_disbanded
+		icon = GFX_goal_generic_major_war
+		cost = 5
+		prerequisite = {
+			focus = GEH_national_socialism_gehenna_pact
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_ANNEXATION
+		}
+		available = {
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = GEH
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEH_national_socialism_gehenna_pact
+		will_lead_to_war_with = GEH
+		completion_reward = {
+			create_wargoal = {
+				target = GEH
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = GEM_support_for_sudetenland_germans
+		icon = GFX_goal_tripartite_pact
+		cost = 5.00
+		prerequisite = { focus = GEM_victory_from_trinity }
+		prerequisite = { focus = GEM_perfect_team_disbanded }
+		available = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_perfect_team_disbanded
+		completion_reward = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 69
+						state = 972
+						state = 74
+					}
+				}
+				add_claim_by = GEM
+			}
+			every_country = {
+				limit = {
+					OR = {
+						owns_state = 69
+						owns_state = 972
+						owns_state = 74
+					}
+				}
+				country_event = { id = GEH_event.69 hours = 8 }
+				effect_tooltip = {
+					add_opinion_modifier = {
+						target = GEM
+						modifier = GEH_german_nationalism_hard
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = GEM_gehenna_unification_promotion
+		icon = GFX_focus_GEH_sword_defending_gehenna
+		cost = 5
+		prerequisite = {
+			focus = GEH_triple_alliance
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_ANNEXATION
+		}
+		available = {
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = GEH
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEH_triple_alliance
+		will_lead_to_war_with = GEH
+		completion_reward = {
+			if = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = ROOT
+				}
+				remove_from_faction = HEU
+			}
+			create_wargoal = {
+				target = HEU
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = GEH
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = GEM_italy_expulsion
+		icon = GFX_focus_attack_italy
+		cost = 5
+		prerequisite = {
+			focus = GEM_victory_from_trinity
+		}
+		prerequisite = {
+			focus = GEM_gehenna_unification_promotion
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_ANNEXATION
+		}
+		available = {
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = ITA
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = GEM_gehenna_unification_promotion
+		will_lead_to_war_with = ITA
+		completion_reward = {
+			create_wargoal = {
+				target = ITA
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = GEM_switzerland_partition
+		icon = GFX_focus_GER_fate_of_czechoslovakia
+		cost = 5
+		prerequisite = {
+			focus = GEM_victory_from_trinity
+		}
+		prerequisite = {
+			focus = GEM_gehenna_unification_promotion
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_ANNEXATION
+		}
+		available = {
+		}
+		x = 1
+		y = 1
+		relative_position_id = GEM_gehenna_unification_promotion
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = GEM_first_vienna_award
+		icon = GFX_goal_generic_military_deal
+		cost = 5.00
+		prerequisite = { focus = GEM_support_for_sudetenland_germans }
+		bypass = {
+			HUN = {
+				OR = {
+					is_puppet_of = GEM
+					has_war_with = GEM
+					has_capitulated = yes
+					exists = no
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			is_faction_leader = yes
+			NOT = { has_war_with = HUN }
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_support_for_sudetenland_germans
+		completion_reward = {
+			HUN = {
 				country_event = generic.5
 			}
 		}
 	}
-# 선도부와 동행 or 축출/
-# /군사개혁 - 민병대
 	focus = {
-		id = GEM_self_reliance_pursuit
-		icon = GFX_focus_generic_support_the_left_right
+		id = GEH_improving_relations_with_italy
+		icon = GFX_focus_befriend_italy
 		cost = 5
 		prerequisite = {
-			focus = GEH_hyungzipa_ak
-		}
-		mutually_exclusive = {
-			focus = GEM_working_with_the_perfect_team
+			focus = GEH_national_socialism_gehenna_pact
 		}
 		available = {
-			has_stability > 0.60
+		}
+		mutually_exclusive = {
+		}
+		x = -2
+		y = 1
+		relative_position_id = GEH_national_socialism_gehenna_pact
+		completion_reward = {
+		}
+
+	}
+	focus = {
+		id = GEM_shan_hai_jing_invasion
+		icon = GFX_focus_attack_SHA
+		cost = 5.00
+		prerequisite = { focus = GEM_victory_from_trinity }
+		prerequisite = { focus = GEM_perfect_team_disbanded }
+		available = {
+			is_subject = no
+			country_exists = SHA
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = SHA
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
 		}
 		bypass = {
-			NOT = { has_idea = GEM_geh_leadership }
+			SHA = {
+				OR = {
+					is_subject_of = GEM
+					is_in_faction_with = GEM
+				}
+			}
 		}
-		search_filters = {
-			FOCUS_FILTER_STABILITY
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 		x = -4
 		y = 1
-		relative_position_id = GEH_hyungzipa_ak
+		relative_position_id = GEM_perfect_team_disbanded
 		completion_reward = {
-			GEH_Manmajun_Bupae_down_effect = yes
-			add_political_power = 60
-			add_stability = 0.10
-			remove_ideas = GEM_geh_leadership
+			create_wargoal = {
+				target = SHA
+				type = annex_everything
+			}
 		}
 	}
+	focus = {
+		id = GEM_abydos_invasion
+		icon = GFX_focus_attack_ABY
+		cost = 5.00
+		prerequisite = { focus = GEM_victory_from_trinity }
+		prerequisite = { focus = GEM_perfect_team_disbanded }
+		available = {
+			is_subject = no
+			country_exists = ABY
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = ABY
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
+		}
+		bypass = {
+			ABY = {
+				OR = {
+					is_subject_of = GEM
+					is_in_faction_with = GEM
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+		x = -2
+		y = 1
+		relative_position_id = GEM_perfect_team_disbanded
+		completion_reward = {
+			create_wargoal = {
+				target = ABY
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = GEM_friendship_with_japan
+		icon = GFX_focus_chi_collaboration_with_the_japanese
+		cost = 5.00
+		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion }
+		mutually_exclusive = {
+			focus = GEM_friendship_with_china
+		}
+		available_if_capitulated = no
+		x = -6
+		y = 2
+		relative_position_id = GEM_perfect_team_disbanded
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = GEM_friendship_with_china
+		icon = GFX_focus_chi_cooperation_with_the_nationalists
+		cost = 5.00
+		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion }
+		mutually_exclusive = {
+			focus = GEM_friendship_with_japan
+		}
+		available_if_capitulated = no
+		x = -2
+		y = 2
+		relative_position_id = GEM_perfect_team_disbanded
+		completion_reward = {
+		}
+	}
+# /치안력 유지 쪽
+	focus = {
+		id = GEM_suppression_of_german
+		icon = GFX_focus_spr_crush_the_revolution
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_self_reliance_pursuit
+			focus = GEM_working_with_the_perfect_team
+		}
+		x = 5
+		y = 1
+		available = {
+			has_completed_focus = GEH_warning_sunjun
+			NOT = {
+				has_idea = GEH_Emergency
+			}
+		}
+		x = 11
+		y = 1
+		relative_position_id = GEM_working_with_the_perfect_team
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+		}
+		completion_reward = {
+			add_political_power = 30
+			add_stability = 0.05
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = GEM }
+				}
+				add_resistance = -10
+			}
+		}
+	}
+	focus = {
+		id = GEM_policing
+		icon = GFX_focus_generic_treaty
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_suppression_of_german
+		}
+		available = {
+			has_hot_spring_department = yes
+			has_gourmet_research_society = yes
+		}
+		bypass = {
+			NOT = {
+				has_hot_spring_department = yes
+				has_gourmet_research_society = yes
+			}
+		}
+		bypass_effect = {
+			GEH_Manmajun_Bupae_down_effect = yes
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_MANMAJUN_BUPAE
+		}
+		x = -1
+		y = 1
+		relative_position_id = GEM_suppression_of_german
+		completion_reward = {
+			add_timed_idea = {
+				idea = GEM_policing_activities
+				days = 120
+			}
+			GEH_Manmajun_Bupae_down_effect = yes
+		}
+	}
+	focus = {
+		id = GEM_dissolution_of_state_government
+		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_policing
+		}
+		available = {
+		}
+		bypass = {
+			OR = {
+				has_completed_focus = GEM_union_state
+				has_completed_focus = GEM_local_government_takeover
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_MANPOWER
+			FOCUS_FILTER_POLITICAL
+		}
+		x = -1
+		y = 3
+		relative_position_id = GEM_suppression_of_german
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GEH_state_government
+					}
+				}
+				remove_dynamic_modifier = {
+					modifier = GEH_state_government
+				}
+			}
+			add_timed_idea = {
+				idea = GEH_state_government_remove_idea
+				days = 280
+			}
+		}
+	}
+	focus = {
+		id = GEM_german_segregation_act
+		icon = GFX_goal_generic_forceful_treaty
+		cost = 10.00
+		prerequisite = {
+			focus = GEM_suppression_of_german
+		}
+		mutually_exclusive = {
+			focus = GEH_national_socialism_gehenna_pact
+			focus = GEM_accept_local_ideology
+		}
+		available = {
+		}
+		cancel = {
+			has_country_flag = GEH_federal_unification_flag
+		}
+		search_filters = {
+			FOCUS_FILTER_ETHNIC_CONFLICT
+			FOCUS_FILTER_WAR_SUPPORT
+			FOCUS_FILTER_STABILITY
+		}
+		x = 1
+		y = 3
+		relative_position_id = GEM_suppression_of_german
+		completion_reward = {
+			add_political_power = 60
+			effect_tooltip = {
+				if = { limit = { has_idea = GEH_german_nationalism_issue_1 }
+					swap_ideas = {
+						remove_idea = GEH_german_nationalism_issue_1
+						add_idea = GEH_separation_law_1
+					}
+				}
+				else = {
+					swap_ideas = {
+						remove_idea = GEH_german_nationalism_issue_2
+						add_idea = GEH_separation_law_1
+					}
+				}
+			}
+			hidden_effect = {
+				if = { limit = { has_idea = GEH_german_nationalism_issue_2 }
+					remove_ideas = GEH_german_nationalism_issue_2
+				}
+				if = { limit = { has_idea = GEH_german_nationalism_issue_1 }
+					remove_ideas = GEH_german_nationalism_issue_1
+				}
+				add_ideas = GEH_separation_law_1
+			}
+		}
+	}
+# 선도부와 동행 or 축출/
+
+# 트리니티 전쟁
+
+	focus = {
+		id = GEM_war_with_trinity
+		icon = GFX_focus_attack_TRN
+		cost = 10
+		prerequisite = {
+			focus = GEM_self_reliance_pursuit
+			focus = GEM_working_with_the_perfect_team
+		}
+
+		available = {
+			is_puppet = no
+			NOT = { is_in_faction_with = TRM }
+			has_army_manpower = { size > 399999 }
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+		}
+
+		bypass = {
+			has_war_with = TRM
+		}
+		x = 5
+		y = 1
+		relative_position_id = GEM_working_with_the_perfect_team
+		will_lead_to_war_with = TRM
+		completion_reward = {
+			create_wargoal = {
+				target = TRM
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+	focus = {
+		id = GEM_defend_gehenna
+		icon = GFX_goal_generic_military_sphere
+		cost = 5
+		prerequisite = {
+			focus = GEM_war_with_trinity
+		}
+		available = {
+			has_war_with = TRM
+		}
+		bypass = {
+			NOT = { has_war_with = TRM }
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_war_with_trinity
+		completion_reward = {
+			add_ideas = GEM_ethnic_hatred_idea
+		}
+	}
+	focus = {
+		id = GEM_ethnic_hatred
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		cost = 5
+		prerequisite = {
+			focus = GEM_defend_gehenna
+		}
+		available = {
+			has_war_with = TRM
+		}
+		bypass = {
+			NOT = { has_war_with = TRM }
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		x = 0
+		y = 2
+		relative_position_id = GEM_war_with_trinity
+		completion_reward = {
+            add_ideas = GEH_Greater_War
+			if = {
+				limit = {
+					has_country_leader = {
+						character = GEH_akzhxh
+						ruling_only = yes
+					}
+				}
+				add_ideas = GEM_attack_order_idea
+			}
+			if = {
+				limit = {
+					has_idea = GEM_ethnic_hatred_idea
+				}
+				swap_ideas = {
+					remove_idea = GEM_ethnic_hatred_idea
+					add_idea = GEM_ethnic_hatred_idea_2
+				}
+			}
+			else = {
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = GEM_ethnic_hatred_idea
+						}
+						remove_ideas = GEM_ethnic_hatred_idea
+					}
+					if = {
+						limit = {
+							has_idea = GEM_ethnic_hatred_idea_3
+						}
+						remove_ideas = GEM_ethnic_hatred_idea_3
+					}
+				}
+				add_ideas = GEM_ethnic_hatred_idea_2
+			}
+		}
+	}
+	focus = {
+		id = GEM_march_of_the_demons
+		icon = GFX_goal_generic_territory_or_war
+		cost = 10
+		prerequisite = {
+			focus = GEM_ethnic_hatred
+		}
+		available = {
+			surrender_progress < 0.01
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_ethnic_hatred
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = GEM_ethnic_hatred_idea_2
+				}
+				swap_ideas = {
+					remove_idea = GEM_ethnic_hatred_idea_2
+					add_idea = GEM_ethnic_hatred_idea_3
+				}
+			}
+			else = {
+				hidden_effect = {
+					if = {
+						limit = {
+							has_idea = GEM_ethnic_hatred_idea
+						}
+						remove_ideas = GEM_ethnic_hatred_idea
+					}
+					if = {
+						limit = {
+							has_idea = GEM_ethnic_hatred_idea_2
+						}
+						remove_ideas = GEM_ethnic_hatred_idea_2
+					}
+				}
+				add_ideas = GEM_ethnic_hatred_idea_3
+			}
+		}
+	}
+
+	focus = {
+		id = GEM_victory_from_trinity
+		icon = GFX_focus_TRN_necessary_revenge
+		cost = 2
+		prerequisite = {
+			focus = GEM_march_of_the_demons
+		}
+
+		available = {
+			is_puppet = no
+			OR = {
+				TRM = {
+					exists = no
+				}
+				TRM = {
+					is_subject_of = ROOT
+				}
+				TRM = {
+					is_in_faction_with = ROOT
+				}
+				TRK = {
+					exists = yes
+					is_subject = no
+					is_in_faction = no
+				}
+				owns_state = 64
+			}
+		}
+
+		bypass = {
+			has_war_with = TRM
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_march_of_the_demons
+		completion_reward = {
+			add_war_support = -0.05
+			if = {
+				limit = { has_stability < 0.40 }
+				set_stability = 0.40
+			}
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.10
+			}
+		}
+	}
+	focus = {
+		id = GEM_unlimited_conscription
+		icon = GFX_focus_generic_support_the_left_right
+		cost = 10
+		prerequisite = {
+			focus = GEM_war_with_trinity
+		}
+		available = {
+			has_war = yes
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+		x = 2
+		y = 1
+		relative_position_id = GEM_war_with_trinity
+		completion_reward = {
+			add_ideas = GEM_unlimited_conscription
+		}
+	}
+# 트리니티 전쟁 /
+# /군사개혁 - 민병대
 	focus = {
 		id = GEM_security_militia
 		icon = GFX_goal_generic_military_sphere
 		cost = 5
 		prerequisite = {
-			focus = GEM_self_reliance_pursuit
+			focus = GEH_hyungzipa_ak
 		}
 		mutually_exclusive = {
 			focus = GEM_reorganization_of_the_private_army
@@ -1005,9 +2153,9 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_MANPOWER
 		}
-		x = 0
+		x = -2
 		y = 1
-		relative_position_id = GEM_self_reliance_pursuit
+		relative_position_id = GEH_hyungzipa_ak
 		completion_reward = {
 			add_ideas = GEH_pandemonium_militia
 			hidden_effect = {
@@ -1255,8 +2403,8 @@ focus_tree = {
 			FOCUS_FILTER_MANPOWER
 			FOCUS_FILTER_ARMY_XP
 		}
-		x = 0
-		y = 2
+		x = 2
+		y = 1
 		relative_position_id = GEH_hyungzipa_ak
 		completion_reward = {
 			army_experience = 25
@@ -1382,119 +2530,6 @@ focus_tree = {
 		}
 	}
 # 군사개혁 - 만마전 중앙군/
-# /치안력 유지 쪽
-	focus = {
-		id = GEM_suppression_of_german
-		icon = GFX_focus_spr_crush_the_revolution
-		cost = 5.00
-		prerequisite = {
-			focus = GEH_hyungzipa_ak
-		}
-		available = {
-			has_completed_focus = GEH_warning_sunjun
-			NOT = {
-				has_idea = GEH_Emergency
-			}
-		}
-		x = 4
-		y = 2
-		search_filters = {
-			FOCUS_FILTER_STABILITY
-		}
-		relative_position_id = GEH_hyungzipa_ak
-		completion_reward = {
-			add_political_power = 30
-			add_stability = 0.10
-			every_controlled_state = {
-				limit = {
-					NOT = { is_core_of = GEM }
-				}
-				add_resistance = -10
-			}
-		}
-	}
-	focus = {
-		id = GEM_policing
-		icon = GFX_focus_generic_treaty
-		cost = 5.00
-		prerequisite = {
-			focus = GEM_suppression_of_german
-		}
-		available = {
-			has_hot_spring_department = yes
-			has_gourmet_research_society = yes
-		}
-		bypass = {
-			NOT = {
-				has_hot_spring_department = yes
-				has_gourmet_research_society = yes
-			}
-		}
-		bypass_effect = {
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = 1
-		y = 1
-		relative_position_id = GEM_suppression_of_german
-		completion_reward = {
-			add_timed_idea = {
-				idea = GEM_policing_activities
-				days = 120
-			}
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_german_segregation_act
-		icon = GFX_goal_generic_forceful_treaty
-		cost = 10.00
-		prerequisite = {
-			focus = GEM_suppression_of_german
-		}
-		available = {
-		}
-		cancel = {
-			has_country_flag = GEH_federal_unification_flag
-		}
-		search_filters = {
-			FOCUS_FILTER_ETHNIC_CONFLICT
-			FOCUS_FILTER_WAR_SUPPORT
-			FOCUS_FILTER_STABILITY
-		}
-		x = -1
-		y = 2
-		relative_position_id = GEM_suppression_of_german
-		completion_reward = {
-			add_political_power = 60
-			effect_tooltip = {
-				if = { limit = { has_idea = GEH_german_nationalism_issue_1 }
-					swap_ideas = {
-						remove_idea = GEH_german_nationalism_issue_1
-						add_idea = GEH_separation_law_1
-					}
-				}
-				else = {
-					swap_ideas = {
-						remove_idea = GEH_german_nationalism_issue_2
-						add_idea = GEH_separation_law_1
-					}
-				}
-			}
-			hidden_effect = {
-				if = { limit = { has_idea = GEH_german_nationalism_issue_2 }
-					remove_ideas = GEH_german_nationalism_issue_2
-				}
-				if = { limit = { has_idea = GEH_german_nationalism_issue_1 }
-					remove_ideas = GEH_german_nationalism_issue_1
-				}
-				add_ideas = GEH_separation_law_1
-			}
-		}
-	}
 	focus = {
 		id = GEM_gehenna_identity
 		icon = GFX_goal_demand_sudetenland
@@ -1504,12 +2539,6 @@ focus_tree = {
 			focus = GEM_superiority_of_will
 			focus = GEM_great_duty
 		}
-		prerequisite = {
-			focus = GEM_german_segregation_act
-		}
-		prerequisite = {
-			focus = GEM_dissolution_of_state_government
-		}
 		available = {
 			NOT = {
 				has_idea = GEH_state_government_remove_idea
@@ -1518,9 +2547,9 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = -4
-		y = 3
-		relative_position_id = GEM_suppression_of_german
+		x = 0
+		y = 4
+		relative_position_id = GEH_hyungzipa_ak
 		completion_reward = {
 			if = {
 				limit = { has_idea = GEH_Emergency }
@@ -1923,58 +2952,7 @@ focus_tree = {
 		}
 	}
 # 국가 운영/
-	focus = {
-		id = GEM_dissolution_of_state_government
-		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
-		cost = 5.00
-		prerequisite = {
-			focus = GEM_policing
-		}
-		available = {
-		}
-		bypass = {
-			has_completed_focus = GEM_union_state
-		}
-		search_filters = {
-			FOCUS_FILTER_MANPOWER
-			FOCUS_FILTER_POLITICAL
-		}
-		x = 1
-		y = 2
-		relative_position_id = GEM_suppression_of_german
-		completion_reward = {
-			every_owned_state = {
-				limit = {
-					has_dynamic_modifier = {
-						modifier = GEH_state_government
-					}
-				}
-				remove_dynamic_modifier = {
-					modifier = GEH_state_government
-				}
-			}
-			add_timed_idea = {
-				idea = GEH_state_government_remove_idea
-				days = 280
-			}
-		}
-	}
 # 치안력 유지 쪽/
-	focus = {
-		id = GEH_gukbanggun_problem
-		icon = GFX_goal_GEH_heer_problem
-		cost = 5
-		prerequisite = {
-			focus = GEH_warning_wuiongwuiong
-		}
-		x = 4
-		y = 2
-		relative_position_id = GEH_warning_wuiongwuiong
-		completion_reward = {
-			country_event = { id = GEH_event.3 }
-		}
-
-	}
 	focus = {
 		id = GEH_warning_sunjun
 		icon = GFX_goal_GEH_warning_Emergency
@@ -1991,172 +2969,6 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = GEH_event.4 }
 			add_ideas = GEH_Emergency
-		}
-	}
-	focus = {
-		id = GEM_war_with_trinity
-		icon = GFX_focus_attack_TRN
-		cost = 10
-		prerequisite = {
-			focus = GEH_warning_sunjun
-		}
-
-		available = {
-			is_puppet = no
-			NOT = { is_in_faction_with = TRM }
-			has_army_manpower = { size > 399999 }
-			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			custom_trigger_tooltip = {
-				tooltip = TRN_gehenna_eq_trigger_tt
-				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			}
-		}
-
-		bypass = {
-			has_war_with = TRM
-		}
-		x = 0
-		y = 1
-		relative_position_id = GEH_warning_sunjun
-		will_lead_to_war_with = TRM
-		completion_reward = {
-			create_wargoal = {
-				target = TRM
-				type = puppet_wargoal_focus
-			}
-		}
-	}
-	focus = {
-		id = GEM_defend_gehenna
-		icon = GFX_goal_generic_military_sphere
-		cost = 5
-		prerequisite = {
-			focus = GEM_war_with_trinity
-		}
-		x = 0
-		y = 1
-		relative_position_id = GEM_war_with_trinity
-		completion_reward = {
-			add_ideas = GEM_ethnic_hatred_idea
-		}
-	}
-	focus = {
-		id = GEM_ethnic_hatred
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		cost = 5
-		prerequisite = {
-			focus = GEM_defend_gehenna
-		}
-		available = {
-			has_war_with = TRM
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-		x = 0
-		y = 2
-		relative_position_id = GEM_war_with_trinity
-		completion_reward = {
-            add_ideas = GEH_Greater_War
-			if = {
-				limit = {
-					has_country_leader = {
-						character = GEH_akzhxh
-						ruling_only = yes
-					}
-				}
-				add_ideas = GEM_attack_order_idea
-			}
-			if = {
-				limit = {
-					has_idea = GEM_ethnic_hatred_idea
-				}
-				swap_ideas = {
-					remove_idea = GEM_ethnic_hatred_idea
-					add_idea = GEM_ethnic_hatred_idea_2
-				}
-				else = {
-					add_ideas = GEM_ethnic_hatred_idea_2
-				}
-			}
-		}
-	}
-	focus = {
-		id = GEM_march_of_the_demons
-		icon = GFX_goal_generic_territory_or_war
-		cost = 10
-		prerequisite = {
-			focus = GEM_ethnic_hatred
-		}
-		available = {
-			has_war_with = TRM
-			NOT = {
-				has_idea = GEH_individualism
-			}
-		}
-		x = 0
-		y = 1
-		relative_position_id = GEM_ethnic_hatred
-		completion_reward = {
-			if = {
-				limit = {
-					has_idea = GEM_ethnic_hatred_idea_2
-				}
-				swap_ideas = {
-					remove_idea = GEM_ethnic_hatred_idea_2
-					add_idea = GEM_ethnic_hatred_idea_3
-				}
-				else = {
-					add_ideas = GEM_ethnic_hatred_idea_3
-				}
-			}
-		}
-	}
-	focus = {
-		id = GEM_help_perfect_team
-		icon = GFX_goal_HEU_geh_c
-		cost = 5
-		prerequisite = {
-			focus = GEM_war_with_trinity
-		}
-		available = {
-			has_defensive_war = yes
-			is_subject = no
-			country_exists = GEH
-			NOT = { has_war_with = GEH }
-		}
-		x = -2
-		y = 1
-		relative_position_id = GEM_war_with_trinity
-		completion_reward = {
-			if = {
-				limit = {
-					is_in_faction = no
-				}
-				GEM = {
-					set_rule = { can_create_factions = yes }
-					create_faction = GEH_Federation
-				}
-			}
-			GEH = {
-				country_event = generic.5
-			}
-		}
-	}
-	focus = {
-		id = GEM_unlimited_conscription
-		icon = GFX_focus_generic_support_the_left_right
-		cost = 10
-		prerequisite = {
-			focus = GEM_war_with_trinity
-		}
-		available = {
-			has_war = yes
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-		x = 2
-		y = 1
-		relative_position_id = GEM_war_with_trinity
-		completion_reward = {
-			add_ideas = GEM_unlimited_conscription
 		}
 	}
 # /마코토 루트
@@ -2183,7 +2995,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = 10
+		x = 30
 		y = 1
 		relative_position_id = GEH_warning_wuiongwuiong
 		completion_reward = {
@@ -2209,34 +3021,11 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
-		x = -3
+		x = -2
 		y = 1
 		relative_position_id = GEM_maintaining_dictatorship
 		completion_reward = {
 			add_ideas = GEH_Manmajun_bodyguard
-		}
-	}
-	focus = {
-		id = GEM_perfect_team_disbanded
-		icon = GFX_goal_generic_major_war
-		cost = 10
-		prerequisite = {
-			focus = GEM_maintaining_dictatorship
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_ANNEXATION
-		}
-		x = -1
-		y = 1
-		relative_position_id = GEM_maintaining_dictatorship
-		will_lead_to_war_with = GEH
-		completion_reward = {
-			remove_ideas = GEM_geh_leadership
-			create_wargoal = {
-				target = GEH
-				type = annex_everything
-			}
 		}
 	}
 	focus = {
@@ -2378,67 +3167,6 @@ focus_tree = {
 
 	}
 	focus = {
-		id = GEH_subjugation
-		icon = GFX_focus_attack_germany
-		cost = 5
-		prerequisite = {
-			focus = GEH_gukbanggun_problem
-		}
-		available = {
-			NOT = {
-				has_country_leader = {
-					character = GEH_akzhxh
-					ruling_only = yes
-				}
-			}
-		}
-		mutually_exclusive = { focus = GEH_nego_whit_wehrmacht_new }
-		x = 0
-		y = 1
-		relative_position_id = GEH_gukbanggun_problem
-		completion_reward = {
-			custom_effect_tooltip = GEH_subjugation_tt
-			every_owned_state = {
-				limit = {
-					has_dynamic_modifier = {
-						modifier = GEH_ucantusefactory
-					}
-				}
-				if = {
-					limit = {
-						NOT = { is_core_of = GEM }
-					}
-					add_resistance = 100
-				}
-				remove_dynamic_modifier = {
-					modifier = GEH_ucantusefactory
-				}
-				add_dynamic_modifier = {
-					modifier = GEH_ucantusefactory_2
-				}
-				set_state_flag = GEK_state_flag
-			}
-			every_owned_state = {
-				limit = {
-					has_dynamic_modifier = {
-						modifier = GEH_ucantusefactory_2
-					}
-				}
-				remove_dynamic_modifier = {
-					modifier = GEH_ucantusefactory_2
-				}
-				set_state_flag = GEK_state_flag
-			}
-			58 = {
-				set_demilitarized_zone = no
-			}
-			909 = {
-				set_demilitarized_zone = no
-			}
-		}
-
-	}
-	focus = {
 		id = GEM_Neutralize_Makoto
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = {
@@ -2458,7 +3186,7 @@ focus_tree = {
 			}
 		}
 		offset = {
-			x = -13
+			x = -11
 			y = 0
 			trigger = {
 				if = {
@@ -2709,6 +3437,10 @@ focus_tree = {
 		cost = 5.00
 		prerequisite = { focus = GEM_social_reorganization }
 		available = {
+
+		}
+		bypass = {
+			has_completed_focus = GEM_dissolution_of_state_government
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -3056,7 +3788,7 @@ focus_tree = {
 	}
 	focus = {
 		id = GEM_german_wehrmacht
-		icon = GFX_focus_chi_mission_to_germany
+		icon = GFX_focus_ger_oppose_hitler
 		cost = 5.00
 		prerequisite = { focus = GEH_nego_whit_wehrmacht_new }
 		mutually_exclusive = {
@@ -3127,6 +3859,8 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = GEM_german_officer_corps
+			focus = GEH_triple_alliance
+			focus = GEM_german_segregation_act
 		}
 		x = -3
 		y = 1
@@ -3662,36 +4396,6 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = GEM_friendship_with_japan
-		icon = GFX_focus_chi_collaboration_with_the_japanese
-		cost = 5.00
-		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion }
-		mutually_exclusive = {
-			focus = GEM_friendship_with_china
-		}
-		available_if_capitulated = no
-		x = -6
-		y = 2
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_friendship_with_china
-		icon = GFX_focus_chi_cooperation_with_the_nationalists
-		cost = 5.00
-		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion }
-		mutually_exclusive = {
-			focus = GEM_friendship_with_japan
-		}
-		available_if_capitulated = no
-		x = -4
-		y = 2
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-		}
-	}
-	focus = {
 		id = GEM_a_republic_of_two_peoples
 		icon = GFX_goal_generic_improve_relations
 		cost = 10.00
@@ -3788,150 +4492,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = GEM_support_for_sudetenland_germans
-		icon = GFX_goal_tripartite_pact
-		cost = 5.00
-		prerequisite = { focus = GEM_establishment_of_a_new_government }
-		available = {
-		}
-		x = 0
-		y = 1
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 69
-						state = 972
-						state = 74
-					}
-				}
-				add_claim_by = GEM
-			}
-			every_country = {
-				limit = {
-					OR = {
-						owns_state = 69
-						owns_state = 972
-						owns_state = 74
-					}
-				}
-				country_event = { id = GEH_event.69 hours = 8 }
-				effect_tooltip = {
-					add_opinion_modifier = {
-						target = GEM
-						modifier = GEH_german_nationalism_hard
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = GEM_shan_hai_jing_invasion
-		icon = GFX_focus_attack_SHA
-		cost = 5.00
-		prerequisite = { focus = GEM_establishment_of_a_new_government }
-		available = {
-			is_subject = no
-			country_exists = SHA
-		}
-		bypass = {
-			SHA = {
-				OR = {
-					is_subject_of = GEM
-					is_in_faction_with = GEM
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-		x = -4
-		y = 1
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-			create_wargoal = {
-				target = SHA
-				type = annex_everything
-			}
-		}
-	}
-	focus = {
-		id = GEM_abydos_invasion
-		icon = GFX_focus_attack_ABY
-		cost = 5.00
-		prerequisite = { focus = GEM_establishment_of_a_new_government }
-		available = {
-			is_subject = no
-			country_exists = ABY
-		}
-		bypass = {
-			ABY = {
-				OR = {
-					is_subject_of = GEM
-					is_in_faction_with = GEM
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-		x = -2
-		y = 1
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-			create_wargoal = {
-				target = ABY
-				type = annex_everything
-			}
-		}
-	}
-	focus = {
-		id = GEM_first_vienna_award
-		icon = GFX_goal_generic_military_deal
-		cost = 5.00
-		prerequisite = { focus = GEM_support_for_sudetenland_germans }
-		bypass = {
-			HUN = {
-				OR = {
-					is_puppet_of = GEM
-					has_war_with = GEM
-					has_capitulated = yes
-					exists = no
-				}
-			}
-		}
-		available = {
-			is_subject = no
-		}
-		x = -1
-		y = 1
-		relative_position_id = GEM_support_for_sudetenland_germans
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_treaty_with_the_soviet_union
-		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 5.00
-		prerequisite = { focus = GEM_support_for_sudetenland_germans }
-		available = {
-			is_subject = no
-			SOV = {
-				NOT = { has_war_with = GEM }
-				country_exists = SOV
-				has_civil_war = no
-			}
-		}
-		cancel = {
-			OR = {
-				has_war_with = SOV
-				NOT = { country_exists = SOV }
-			}
-		}
-		x = 1
-		y = 1
-		relative_position_id = GEM_support_for_sudetenland_germans
-		completion_reward = {
-		}
-	}
 #	focus = {
 #		id = GEM_angel_hunting
 #		icon = GFX_focus_attack_TRN
@@ -4013,18 +4573,6 @@ focus_tree = {
 #			}
 #		}
 #	}
-	focus = {
-		id = GEM_invitation_to_italy
-		icon = GFX_focus_befriend_italy
-		cost = 5.00
-		prerequisite = { focus = GEM_establishment_of_a_new_government }
-		available_if_capitulated = no
-		x = 2
-		y = 1
-		relative_position_id = GEM_establishment_of_a_new_government
-		completion_reward = {
-		}
-	}
 	focus = { #온천수를 찾아서
 		id = GEM_hot_spring
 		icon = GFX_goal_GEH_hot_spring 
@@ -4033,7 +4581,7 @@ focus_tree = {
 			focus = GEH_warning_wuiongwuiong
 		}
 		relative_position_id = GEH_warning_wuiongwuiong
-		x = 36
+		x = 66
 		y = 0 
 		allow_branch = {
 			is_debug = yes
