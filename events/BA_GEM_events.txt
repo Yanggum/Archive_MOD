@@ -1,3 +1,4 @@
+add_namespace = GEM_event
 add_namespace = GEH_event
 add_namespace = GEH_hidden_event
 add_namespace = GEHENNA_event
@@ -14,6 +15,104 @@ country_event = { # 전범 재판
 	option = { 
 		name = GEHENNA_event.1.a
 		add_stability = 0.10
+	}
+}
+country_event = { # 방공협정
+	id = GEM_event.1
+	title = GEM_event.1.t
+	desc = GEM_event.1.desc
+	picture = GFX_report_event_japan_europe_pact
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = germany.5.a
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = SOU
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = USA
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = ITA
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = ENG
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = FRA
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = JAP
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 4
+				has_opinion = {
+					target = CHI
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = {
+					target = GEM
+					value < -10
+				}
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+				NOT = { original_tag = SHA }
+			}
+			modifier = {
+				factor = 40
+				original_tag = SHA
+			}
+		}
+		set_country_flag = iron_and_blood_pact_member
+		GEM = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_opinion } }
+		add_opinion_modifier = { target = GEM modifier = iron_and_blood_pact_against_opinion }
+		SOU = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		USA = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		ITA = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		ENG = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		FRA = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		JAP = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+		CHI = { add_opinion_modifier = { target = ROOT modifier = iron_and_blood_pact_against_us } }
+	}
+	option = { 
+		name = germany.5.b
+		trigger = { NOT = { is_puppet_of = GEM } }
+		ai_chance = {
+			factor = 25
+		}
+		GEM = { add_opinion_modifier = { target = ROOT modifier = refused_iron_and_blood_pact_against_opinion } }
 	}
 }
 
