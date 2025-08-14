@@ -3326,3 +3326,418 @@ FRA_vichy_france = {
 		}
 	}
 }
+FRA_manage_strike_cat = {
+	FRA_strike_going_bad_mission = { #확산하는 파업
+		days_mission_timeout = 20
+		available = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		icon = GFX_decision_POL_organize_strike_two
+		timeout_effect = {
+			custom_effect_tooltip = FRA_strike_going_bad_mission_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						has_idea = FRA_general_strike_4
+					}
+					country_event = FRA_prov_event.43
+					activate_mission = FRA_strike_going_bad_mission
+				}
+				else_if = {
+					limit = {
+						has_idea = FRA_general_strike_3
+					}
+					country_event = FRA_prov_event.45
+					activate_mission = FRA_strike_going_bad_mission
+				}
+				else_if = {
+					limit = {
+						has_idea = FRA_general_strike_2
+					}
+					country_event = FRA_prov_event.49
+					activate_mission = FRA_strike_going_bad_mission
+				}
+				else_if = {
+					limit = {
+						has_idea = FRA_general_strike_1
+					}
+					country_event = FRA_prov_event.132
+					activate_mission = FRA_strike_going_bad_mission
+				}
+			}
+		}
+	}
+	FRA_PPNA_activation = { #인민당의 활동
+		icon = GFX_decision_SWI_consolidate_council_power
+		days_mission_timeout = 60
+		available = {
+			OR = {
+				NOT = {	has_country_flag = FRA_in_general_strike }
+				has_country_flag = FRA_sweep_away_ppna_flag
+			}
+		}
+		activation = {
+			always = no
+		}
+		timeout_effect = {
+			country_event = FRA_prov_event.50
+			activate_mission = FRA_PPNA_activation
+		}
+	}
+	FRA_press_social-economicly = { #사회경제적 압박
+		icon = GFX_decision_hol_attract_foreign_investors
+		state_target = yes
+		on_map_mode = map_only
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 459
+					state = 460
+					state = 461
+					state = 458
+				}
+				NOT = {
+					has_state_flag = FRA_strike_break_down
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			NOT = {
+				FROM = {
+					has_state_flag = FRA_made_move_for_strike
+				}
+			}
+		}
+		visible = {
+			has_country_flag = FRA_in_general_strike
+		}
+		remove_effect = {
+			FROM = {
+				clr_state_flag = FRA_made_move_for_strike
+				random_list = {
+					3 = {
+						add_to_variable = {
+							var = FRA_CGT_org
+							value = -5
+							tooltip = FRA_FRA_CGT_org_tt
+						}
+					}
+					1 = {
+						add_to_variable = {
+							var = FRA_CGT_org
+							value = -10
+							tooltip = FRA_FRA_CGT_org_tt
+						}
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						check_variable = {
+							var = FRA_CGT_org
+							compare = less_than_or_equals
+							value = 0
+						}
+					}
+					set_state_flag = FRA_strike_break_down
+					FRA = {
+						country_event = FRA_prov_event.94
+					}
+				}
+			}
+		}
+		complete_effect = {
+			FROM = {
+				set_state_flag = FRA_made_move_for_strike
+			}
+		}
+		days_remove = 15
+		days_re_enable = 5
+		cost = 5
+	}
+	FRA_make_them_fight = { #분열 책동
+		icon = GFX_decision_generic_political_discourse
+		state_target = yes
+		on_map_mode = map_only
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 459
+					state = 460
+					state = 461
+					state = 458
+				}
+				NOT = {
+					has_state_flag = FRA_strike_break_down
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			NOT = {
+				FROM = {
+					has_state_flag = FRA_made_move_for_strike
+				}
+			}
+		}
+		visible = {
+			has_country_flag = FRA_in_general_strike
+		}
+		remove_effect = {
+			FROM = {
+				clr_state_flag = FRA_made_move_for_strike
+				random_list = {
+					3 = {
+						add_to_variable = {
+							var = FRA_CGT_org
+							value = -10
+							tooltip = FRA_FRA_CGT_org_tt
+						}
+					}
+					1 = {
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						check_variable = {
+							var = FRA_CGT_org
+							compare = less_than_or_equals
+							value = 0
+						}
+					}
+					set_state_flag = FRA_strike_break_down
+					FRA = {
+						country_event = FRA_prov_event.94
+					}
+				}
+			}
+		}
+		complete_effect = {
+			FROM = {
+				set_state_flag = FRA_made_move_for_strike
+			}
+		}
+		days_remove = 30
+		days_re_enable = 5
+		cost = 15
+	}
+	FRA_use_violence = { #폭력적 진압
+		icon = GFX_decision_generic_reorganize_irregulars
+		state_target = yes
+		on_map_mode = map_only
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 459
+					state = 460
+					state = 461
+					state = 458
+				}
+				NOT = {
+					has_state_flag = FRA_strike_break_down
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			NOT = {
+				FROM = {
+					has_state_flag = FRA_made_move_for_strike
+				}
+			}
+		}
+		visible = {
+			has_country_flag = FRA_in_general_strike
+		}
+		remove_effect = {
+			FROM = {
+				clr_state_flag = FRA_made_move_for_strike
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -20
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			random_list = {
+				3 = {
+					if = {
+						limit = {
+							check_variable = { FRA_rol_anger > 0 }
+						}
+						set_temp_variable = { FRA_anger_change = 1 }
+						FRA_change_rol_anger = yes
+					}
+				}
+				1 = {
+
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						check_variable = {
+							var = FRA_CGT_org
+							compare = less_than_or_equals
+							value = 0
+						}
+					}
+					set_state_flag = FRA_strike_break_down
+					FRA = {
+						country_event = FRA_prov_event.94
+					}
+				}
+			}
+		}
+		complete_effect = {
+			FROM = {
+				set_state_flag = FRA_made_move_for_strike
+			}
+		}
+		days_remove = 20
+		days_re_enable = 5
+		cost = 15
+	}
+	FRA_find_PPNA = { #접점 조사
+		icon = GFX_decision_SWI_expand_covert_operations
+		state_target = yes
+		target_array = controlled_states
+		on_map_mode = decision_view_only
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 459
+					state = 460
+					state = 461
+					state = 458
+				}
+				NOT = {
+					has_state_flag = FRA_found_PPNA
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		visible = {
+			has_country_flag = FRA_in_general_strike
+		}
+		remove_effect = {
+			FROM = {
+				random_list = {
+					2 = {
+						add_to_variable = {
+							var = FRA_ppna_search
+							value = 5
+							tooltip = FRA_FRA_ppna_search_tt
+						}
+					}
+					1 = {
+						add_to_variable = {
+							var = FRA_ppna_search
+							value = 10
+							tooltip = FRA_FRA_ppna_search_tt
+						}
+					}
+					1 = {
+						add_to_variable = {
+							var = FRA_ppna_search
+							value = 15
+							tooltip = FRA_FRA_ppna_search_tt
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = FRA_ppna_search
+							compare = greater_than_or_equals
+							value = 100
+						}
+					}
+					set_state_flag = FRA_found_PPNA
+					FRA = {
+						country_event = FRA_prov_event.29
+					}
+				}
+			}
+		}
+		days_remove = 15
+		days_re_enable = 5
+		cost = 5
+	}
+	FRA_sweep_away_ppna = { #일망타진
+		icon = GFX_decision_generic_assassination
+		fire_only_once = yes
+		days_remove = 10
+		cost = 30
+		visible = {
+			has_completed_focus = FRA_focus_garrison_11_real
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			458 = {
+				has_state_flag = FRA_found_PPNA
+			}
+			459 = {
+				has_state_flag = FRA_found_PPNA
+			}
+			460 = {
+				has_state_flag = FRA_found_PPNA
+			}
+			461 = {
+				has_state_flag = FRA_found_PPNA
+			}
+		}
+		remove_effect = {
+			remove_mission = FRA_PPNA_activation
+			set_country_flag = FRA_sweep_away_ppna_flag
+		}
+	}
+	FRA_final_promise = { #마지막 약속
+		icon = GFX_decision_hol_exchange_intelligence_data
+		fire_only_once = yes
+		cost = 30
+		visible = {
+			458 = {
+				has_state_flag = FRA_strike_break_down
+			}
+			459 = {
+				has_state_flag = FRA_strike_break_down
+			}
+			460 = {
+				has_state_flag = FRA_strike_break_down
+			}
+			461 = {
+				has_state_flag = FRA_strike_break_down
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		complete_effect = {
+			remove_ideas = FRA_general_strike_4
+			hidden_effect = {
+				complete_national_focus = FRA_focus_12
+				mark_focus_tree_layout_dirty = yes
+			}
+		}
+	}
+}

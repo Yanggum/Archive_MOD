@@ -356,6 +356,9 @@ focus_tree = {
 		ai_will_do = {
 			factor = 100
 		} 
+		available = {
+			has_country_flag = GAEBALJUNG
+		}
 		text_icon = GER_inner_circle_focus_style
 		prerequisite = {
 			focus = FRA_focus_10.6
@@ -391,6 +394,12 @@ focus_tree = {
 			}
 			513 = {
 				BA_increase_state_category_by_one_level = yes
+				add_building_construction = {
+					type = dam
+					level = 1
+					instant_build = yes
+					province = {id = 9960}
+				}
 			}
 			665 = {
 				BA_increase_state_category_by_one_level = yes
@@ -495,38 +504,14 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_9.5
 		}
+		available = {
+			has_country_flag = GAEBALJUNG
+		}
 		mutually_exclusive = {
 			focus = FRA_focus_technocratic_economy
 			focus = FRA_focus_free_market_economy
 		}
 		completion_reward = {
-		}
-	}
-	focus = {
-		#조선소 건설
-		id = FRA_focus_10
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 5
-		x = 5
-		y = 12
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			460 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-				}
-			}
-			hidden_effect = {
-				country_event = {
-					id = FRA_prov_event.118
-					days = 140
-					random_days = 20
-				}
-			}
 		}
 	}
 	focus = {
@@ -597,6 +582,9 @@ focus_tree = {
 					type = industrial_complex
 					level = 1
 				}
+				add_dynamic_modifier = {
+					modifier = FRA_alge_large_flour_mill
+				}
 			}
 		}
 	}
@@ -650,6 +638,9 @@ focus_tree = {
 		text_icon = GER_inner_circle_focus_style
 		prerequisite = {
 			focus = FRA_industry_focus_1
+		}
+		available = {
+			has_country_flag = GAEBALJUNG
 		}
 		mutually_exclusive = {
 			focus = FRA_focus_technocratic_economy
@@ -1859,9 +1850,9 @@ focus_tree = {
 		id = FRA_focus_spain_civilwar
 		cost = 2
 		x = 40
-		y = 8
+		y = 18
 		allow_branch = {
-			has_country_flag = FRA_exile_is_over
+			is_debug = yes
 		}
 		icon = GFX_goal_FRA_revolution_to_the_utmost
 		available = {
@@ -1875,7 +1866,7 @@ focus_tree = {
 		#아프리카 내 패권 강화
 		id = FRA_focus_spain_1
 		cost = 2
-		x = 11
+		x = -1
 		y = 1
 		relative_position_id = FRA_focus_spain_civilwar
 		icon = GFX_goal_FRA_spain_attack
@@ -2092,6 +2083,7 @@ focus_tree = {
 			focus = FRA_focus_resistance_9
 		}
 		available = {
+			has_country_flag = GAEBALJUNG
 			NOT = { has_completed_focus = FRA_focus_resistance_14 }
 		} 
 		completion_reward = {
@@ -2255,9 +2247,6 @@ focus_tree = {
 		x = 6
 		y = 1
 		relative_position_id = FRA_focus_resistance_1
-		available = {
-			has_completed_focus = FRA_focus_12
-		}
 		prerequisite = {
 			focus = FRA_focus_resistance_1
 		}
@@ -2748,6 +2737,9 @@ focus_tree = {
 		cost = 4
 		x = -2
 		y = 1
+		available = {
+			has_country_flag = GAEBALJUNG
+		}
 		relative_position_id = FRA_focus_garrison_0
 		prerequisite = {
 			focus = FRA_focus_garrison_0
@@ -2756,6 +2748,14 @@ focus_tree = {
 			focus = FRA_focus_garrison_2
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
 		}
 	}
 	focus = {
@@ -2773,6 +2773,15 @@ focus_tree = {
 			focus = FRA_focus_garrison_1
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			add_ideas = FRA_soothing
 		}
 	}
 	focus = {
@@ -2879,7 +2888,16 @@ focus_tree = {
 			focus = FRA_focus_garrison_2
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
 			mark_focus_tree_layout_dirty = yes
+			add_ideas = FRA_colonial_elite
 		}
 	}
 	focus = {
@@ -2894,6 +2912,7 @@ focus_tree = {
 			focus = FRA_focus_garrison_9
 		}
 		completion_reward = {
+			add_research_slot = 1
 		}
 	}
 	focus = {
@@ -2941,6 +2960,13 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			if = {
+				limit = {
 					NOT = {
 						has_intelligence_agency = yes
 					}
@@ -2961,6 +2987,7 @@ focus_tree = {
 					}
 				}
 			}
+			unlock_decision_tooltip = FRA_sweep_away_ppna
 		}
 	}
 	focus = {
@@ -2975,6 +3002,28 @@ focus_tree = {
 			focus = FRA_focus_garrison_2
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
+			}
+			if = {
+				limit = {
+					has_idea = FRA_soothing_poorhouse
+				}
+				swap_ideas = {
+					remove_idea = FRA_soothing_poorhouse
+					add_idea = FRA_soothing_all
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_soothing
+					add_idea = FRA_soothing_labor 
+				}
+			}
 		}
 	}
 	focus = {
@@ -2989,52 +3038,31 @@ focus_tree = {
 			focus = FRA_focus_garrison_2
 		}
 		completion_reward = {
-		}
-	}
-
-	focus = {
-		#아늑한 곳으로
-		icon = GFX_goal_fra_cozy
-		id = FRA_focus_resistance_5
-		cost = 6
-		x = 40
-		y = 8
-		allow_branch = {
-            OR = {
-			    has_country_flag = FRA_exile_is_over
-			    has_country_flag = FRA_strong_resist
-            }
-			NOT = { has_country_flag = FRA_is_ally_MIL_flag }
-		}
-		prerequisite = {
-			focus = FRA_focus_new_arm_11
-		}
-		completion_reward = {
-			declare_war_on = {
-				target = MIL
-				type = annex_everything
+			if = {
+				limit = {
+					check_variable = { FRA_rol_anger > 0 }
+				}
+				set_temp_variable = { FRA_anger_change = -1 }
+				FRA_change_rol_anger = yes
 			}
 			if = {
 				limit = {
-					BLM = {
-						exists = yes
-					}
+					has_idea = FRA_soothing_labor
 				}
-				declare_war_on = {
-					target = BLM
-					type = annex_everything
+				swap_ideas = {
+					remove_idea = FRA_soothing_labor
+					add_idea = FRA_soothing_all
 				}
 			}
-			unlock_decision_category_tooltip = FRA_war_dec
-			hidden_effect = {
-				complete_national_focus = FRA_focus_war_1
-				news_event = {
-					id = BA_news.21
-					days = 3
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_soothing
+					add_idea = FRA_soothing_poorhouse
 				}
 			}
 		}
 	}
+
 
 
 	#인물 중점
@@ -3500,21 +3528,14 @@ focus_tree = {
 		icon = GFX_goal_generic_mediterranean
 		cost = 4
 		x = 0
-		y = 5
+		y = 6
+		relative_position_id = FRA_focus.1
 		ai_will_do = {
 			factor = 100
 		}
-		prerequisite = {
-			focus = FRA_petain_focus_4
-		}
-		prerequisite = {
-			focus = FRA_darlan_focus_3
-			focus = FRA_laval_focus_1
-		}
 		allow_branch = {
-			always = yes
+			has_completed_focus = FRA_focus_12
 		}
-		relative_position_id = FRA_leading_of_fatherland
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = FRA_focus_12_tt_tri
@@ -3525,22 +3546,24 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			every_state = {
-				limit = {
-					is_owned_by = FRA
-					is_on_continent = africa
-					NOT = {
-						state = 514
-						state = 515
-						state = 775
-						state = 782
-						state = 786
-						state = 543
-						state = 708
-						state = 706
+			hidden_effect = {
+				every_state = {
+					limit = {
+						is_owned_by = FRA
+						is_on_continent = africa
+						NOT = {
+							state = 514
+							state = 515
+							state = 775
+							state = 782
+							state = 786
+							state = 543
+							state = 708
+							state = 706
+						}
 					}
+					add_core_of = FRA
 				}
-				add_core_of = FRA
 			}
 			every_state = {
 				limit = {
@@ -3552,7 +3575,7 @@ focus_tree = {
 			hidden_effect = {
 				country_event = {
 					id = FRA_prov_event.114
-					days = 3
+					days = 1
 				}
 			}
 			add_popularity = {
@@ -3560,14 +3583,42 @@ focus_tree = {
 				popularity = 0.2
 			}
 			add_stability = 0.2
+		}
+	}
+	focus = {
+		#아늑한 곳으로
+		icon = GFX_goal_fra_cozy
+		id = FRA_focus_resistance_5
+		cost = 6
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = FRA_focus_12
+		}
+		relative_position_id = FRA_focus_12
+		completion_reward = {
+			declare_war_on = {
+				target = MIL
+				type = annex_everything
+			}
 			if = {
 				limit = {
-					has_country_leader = {
-						character = FRA_military_conference
-						ruling_only = yes
+					BLM = {
+						exists = yes
 					}
 				}
-				custom_effect_tooltip = BA_FRA_no_change_tt
+				declare_war_on = {
+					target = BLM
+					type = annex_everything
+				}
+			}
+			unlock_decision_category_tooltip = FRA_war_dec
+			hidden_effect = {
+				complete_national_focus = FRA_focus_war_1
+				news_event = {
+					id = BA_news.21
+					days = 3
+				}
 			}
 		}
 	}
