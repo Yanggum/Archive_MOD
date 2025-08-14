@@ -5045,9 +5045,12 @@ TRN_Seia_problem_decisions = {
 				has_country_flag = TRN_who_is_criminal_flag_3
 				has_country_flag = TRN_who_is_criminal_flag_4
 			}
-			OR = {
+			IF = {
+				limit = { has_completed_focus = TRN_nagisa_gyehek }
+				has_completed_focus = TRN_Non_trinity_getout
+			}
+			else = {
 				has_completed_focus = TRM_JoJo_mika
-				#has_completed_focus = TRN_nazi_oppression // 에러 수정
 			}
     	} 
 
@@ -6504,18 +6507,18 @@ TRM_Iron_Sword_Operations_Categorie = {
 		priority = 2
    		activation = {
 			always = no
-    	}
-    	available = {
-			always = no
-    	}
-    	cancel_trigger = {
-            has_country_flag = TRM_tail_chasing_flag
-    	}
-		visible = {
-		}
-    	complete_effect = {
-			custom_effect_tooltip = TRM_Secure_Royal_Blood_decision_search_run_desc_tt
-    	}
+    		}
+    		available = {
+				always = no
+    		}
+    		cancel_trigger = {
+     	       has_country_flag = TRM_tail_chasing_flag
+    		}
+			visible = {
+			}
+    		complete_effect = {
+				custom_effect_tooltip = TRM_Secure_Royal_Blood_decision_search_run_desc_tt
+    		}
 		timeout_effect = {
 			activate_mission = TRM_iron_sword_decision_find
 			random_list = {
@@ -6940,6 +6943,158 @@ TRM_diplomacy_balkan_decision_category = {
 			custom_effect_tooltip = SOV_promote_ideological_rallies_cd_tt
 		}
 	}
+}
+TRM_Nagisa_Iron_sword_op_cat = {
+	TRM_Nagi_IronSword_Danzig_Search = {
+		icon = GFX_decision_generic_operation
+
+		visible = { 
+			country_exists = ARI
+			has_country_flag = TRM_Nagi_IronSword_flag
+          	NOT = { has_country_flag = TRM_tail_chasing_flag }
+		}
+
+		days_remove = 20
+
+		cost = 10
+
+		fire_only_once = no
+
+		ai_will_do = {
+			base = 80
+		}
+
+		complete_effect = {
+			add_to_variable = { 
+				TRM_Nagi_IronSword_Var = 10 
+				tooltip = TRM_Nagi_IronSword_Var_plus
+			}
+			 
+		}
+	}
+	TRM_Nagi_IronSword_justice_task_force = {
+		icon = GFX_decision_TRN_justice
+
+		visible = { 
+			country_exists = ARI
+			has_country_flag = TRM_Nagi_IronSword_flag
+          	NOT = { has_country_flag = TRM_tail_chasing_flag }
+		}
+
+		days_remove = 20
+
+		cost = 10
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 160
+		}
+
+		complete_effect = {
+			add_to_variable = { 
+				TRM_Nagi_IronSword_Var = 10
+				tooltip = TRM_Nagi_IronSword_Var_plus
+			}
+			clamp_variable = {
+				var = TRM_Nagi_IronSword_Var
+				min = 0
+				max = 100
+			}
+		}
+	}
+	TRM_Nagi_IronSword_local_cooperation = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+
+		visible = { 
+			country_exists = ARI
+			has_country_flag = TRM_Nagi_IronSword_flag
+          	NOT = { has_country_flag = TRM_tail_chasing_flag }
+		}
+
+		days_remove = 20
+
+		cost = 10
+
+		fire_only_once = no
+
+		ai_will_do = {
+			base = 160
+		}
+
+		complete_effect = {
+			add_to_variable = { 
+				TRM_Nagi_IronSword_Var = 10
+				tooltip = TRM_Nagi_IronSword_Var_plus
+			}
+			clamp_variable = {
+				var = TRM_Nagi_IronSword_Var
+				min = 0
+				max = 100
+			}
+		}
+	}
+	TRM_Nagi_IronSword_intelligence_agency = {
+		icon = GFX_decision_SOV_place_hq
+
+		visible = { 
+			country_exists = ARI
+			has_country_flag = TRM_Nagi_IronSword_flag
+          	NOT = { has_country_flag = TRM_tail_chasing_flag }
+		}
+
+		days_remove = 20
+
+		cost = 10
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 160
+		}
+
+		complete_effect = {
+			add_to_variable = { 
+				TRM_Nagi_IronSword_Var = 15
+				tooltip = TRM_Nagi_IronSword_Var_plus
+			}
+			clamp_variable = {
+				var = TRM_Nagi_IronSword_Var
+				min = 0
+				max = 100
+			}
+		}
+	}
+	TRM_Nagi_IronSword_We_Find_You = {
+		icon = GFX_decision_generic_ignite_civil_war
+
+		visible = { 
+			country_exists = ARI
+			has_country_flag = TRM_Nagi_IronSword_flag
+          	NOT = { has_country_flag = TRM_tail_chasing_flag }
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_Nagi_IronSword_We_Find_You_trigger 
+				check_variable = { TRM_Nagi_IronSword_Var > 89}
+			}
+		}
+
+		cost = 0
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 160
+		}
+
+		complete_effect = {
+			set_country_flag = TRM_tail_chasing_flag
+			clr_country_flag = TRM_Nagi_IronSword_flag
+		}
+	}
+
 }
 
 political_actions = {
