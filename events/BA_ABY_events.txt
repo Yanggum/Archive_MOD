@@ -5146,15 +5146,10 @@ country_event = {
 	option = {
 		name = ABY_new_event.149.a
 		ai_chance = { factor = 100 }
-		9 = {
-			create_unit = {
-				division = "name = \"Czech milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
-			create_unit = {
-				division = "name = \"Czech milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_manpower = 2000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 500
 		}
 	}
 }
@@ -5176,11 +5171,10 @@ country_event = {
 	option = {
 		name = ABY_new_event.150.a
 		ai_chance = { factor = 100 }
-		72 = {
-			create_unit = {
-				division = "name = \"Czech milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_manpower = 1000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 250
 		}
 	}
 }
@@ -5202,11 +5196,10 @@ country_event = {
 	option = {
 		name = ABY_new_event.151.a
 		ai_chance = { factor = 100 }
-		75 = {
-			create_unit = {
-				division = "name = \"Czech milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_manpower = 1000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 250
 		}
 	}
 }
@@ -5223,11 +5216,10 @@ country_event = {
 	option = {
 		name = ABY_new_event.152.a
 		ai_chance = { factor = 100 }
-		74 = {
-			create_unit = {
-				division = "name = \"German milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_manpower = 1000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 250
 		}
 	}
 }
@@ -5244,11 +5236,10 @@ country_event = {
 	option = {
 		name = ABY_new_event.153.a
 		ai_chance = { factor = 100 }
-		972 = {
-			create_unit = {
-				division = "name = \"German milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_manpower = 1000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 250
 		}
 	}
 }
@@ -10891,19 +10882,32 @@ country_event = {
 	option = {
 		name = ABY_new_event.234.a
 		ai_chance = { factor = 100 }
+		set_country_flag = ABY_flag_nephthys_PMC_1
+		custom_effect_tooltip = ABY_tt_nephthys_PMC_1
 		set_country_flag = ABY_flag_rothschild_select
 	}
 
 	option = {
 		name = ABY_new_event.234.b
 		ai_chance = { factor = 100 }
+		set_country_flag = ABY_flag_nephthys_PMC_1
+		custom_effect_tooltip = ABY_tt_nephthys_PMC_1
 		set_country_flag = ABY_flag_skoda_select
 	}
 
 	option = {
 		name = ABY_new_event.234.c
 		ai_chance = { factor = 100 }
+		set_country_flag = ABY_flag_nephthys_PMC_1
+		set_country_flag = ABY_flag_nephthys_PMC_2
+		set_country_flag = ABY_flag_nephthys_PMC_3
+		custom_effect_tooltip = ABY_tt_nephthys_PMC_3
 		set_country_flag = ABY_flag_nephthys_select
+		custom_effect_tooltip = ABY_militia_div_cap_4_tt
+		hidden_effect = {
+			add_to_variable = { ABY_halo_milita_cap = 4 }
+			set_division_template_cap = {  division_template = "Nephthys PMC division" division_cap = ABY_halo_milita_cap }
+		}
 	}
 }
 
@@ -15930,16 +15934,14 @@ country_event = {
 	option = {
 		name = ABY_descision_focus_event.4.b
 		ai_chance = { factor = 100 }
-		custom_effect_tooltip = ABY_militia_div_cap_1_tt
-		hidden_effect = {
-			add_to_variable = { ABY_halo_milita_cap = 1 }
-			set_division_template_cap = {  division_template = "Nephthys PMC division" division_cap = ABY_halo_milita_cap }
+		add_manpower = 5000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 500
 		}
-		random_owned_state = {
-			create_unit = {
-				division = "name = \"Nephthys PMC division\" division_template = \"Nephthys PMC division\" start_experience_factor = 0 start_equipment_factor = 1"
-				owner = ABY
-			}
+		add_equipment_to_stockpile = {
+			type = kivotos_infantry_equipment
+			amount = 500
 		}
 	}
 }
@@ -15989,8 +15991,43 @@ country_event = {
 	option = {
 		name = ABY_descision_focus_event.7.a
 		ai_chance = { factor = 100 }
-		set_country_flag = ABY_flag_gehenna_support
-		custom_effect_tooltip = ABY_tt_gehenna_support
+		hidden_effect = {
+			ABY = {
+				if = {
+					limit = {
+						NOT = { has_template = "prefect volunteers" }
+					}
+					division_template = {
+						name = "prefect volunteers"
+						priority = 0
+						division_names_group = ABY_INF_04
+						is_locked = no
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+						}
+					}
+				}
+			}
+		}
+		random_owned_controlled_state = {
+			create_unit = {
+				division = "name = \"prefect volunteers\" division_template = \"prefect volunteers\" start_experience_factor = 0 start_equipment_factor = 1"
+				owner = ABY
+			}
+			create_unit = {
+				division = "name = \"prefect volunteers\" division_template = \"prefect volunteers\" start_experience_factor = 0 start_equipment_factor = 1"
+				owner = ABY
+			}
+			create_unit = {
+				division = "name = \"prefect volunteers\" division_template = \"prefect volunteers\" start_experience_factor = 0 start_equipment_factor = 1"
+				owner = ABY
+			}
+		}
 	}
 
 	option = {
