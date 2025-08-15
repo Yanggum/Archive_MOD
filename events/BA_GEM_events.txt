@@ -1,4 +1,5 @@
 add_namespace = GEM_event
+add_namespace = GEM_news
 add_namespace = GEH_event
 add_namespace = GEH_hidden_event
 add_namespace = GEHENNA_event
@@ -17,6 +18,40 @@ country_event = { # 전범 재판
 		add_stability = 0.10
 	}
 }
+
+news_event = {
+	id = GEM_news.1
+	title = GEM_news.1.t
+	desc = GEM_news.1.desc
+	picture = GFX_news_event_hitler_speech
+
+	major = yes
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = GEM_news.1.a
+		trigger = {
+			original_tag = HYA
+		}
+	}
+	option = { 
+		name = GEM_news.1.b
+		trigger = {
+			original_tag = GEM
+		}
+	}
+	option = { 
+		name = GEM_news.1.c
+		trigger = {
+			NOT = {
+				original_tag = HYA
+				original_tag = GEM
+			}
+		}
+	}
+}
+
 country_event = { # 방공협정
 	id = GEM_event.1
 	title = GEM_event.1.t
@@ -116,6 +151,198 @@ country_event = { # 방공협정
 	}
 }
 
+country_event = { # 폴란드를 위한 단치히
+	id = GEM_event.2
+	title = GEM_event.2.t
+	desc = GEM_event.2.desc
+	picture = GFX_report_event_japan_europe_pact
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = GEM_event.2.a
+		ai_chance = {
+			factor = 75
+		}
+		86 = {
+			if = {
+				limit = {
+					is_owned_by = FROM
+				}
+				transfer_state_to = ROOT
+			}
+		}
+		807 = {
+			if = {
+				limit = {
+					is_owned_by = FROM
+				}
+				transfer_state_to = ROOT
+			}
+		}
+		85 = {
+			if = {
+				limit = {
+					is_owned_by = FROM
+				}
+				transfer_state_to = ROOT
+			}
+		}
+		762 = {
+			if = {
+				limit = {
+					is_owned_by = FROM
+				}
+				transfer_state_to = ROOT
+			}
+		}
+		FROM = {
+			set_autonomy = {
+				target = ROOT
+				autonomy_state = autonomy_puppet
+				end_wars = no
+			}
+		}
+	}
+	option = { 
+		name = GEM_event.2.b
+		trigger = { NOT = { is_puppet_of = GEM } }
+		ai_chance = {
+			factor = 25
+		}
+	}
+}
+
+# 게헨나 영향력 - 백귀야행
+country_event = {
+	id = GEM_event.3
+	title = generic.1.t #Intentional
+	desc = { #Intentional
+		text = generic.1.d_neutral_good
+		trigger = {
+			has_government = FROM
+		}
+	}
+	desc = { #Intentional
+		text = generic.1.d_bad
+		trigger = {
+			NOT = { has_government = FROM }
+		}
+	}
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #Very well....
+		name = wuw_GER_diplomacy.10.a
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 1.5
+				has_opinion = {
+					target = FROM
+					value > 24
+				}
+			}
+			modifier = {
+				factor = 1.5
+				strength_ratio = {
+				    tag = FROM
+				    ratio < 0.75
+				}
+			}
+			modifier = {
+				factor = 2
+				strength_ratio = {
+				    tag = FROM
+				    ratio < 0.5
+				}
+			}
+			modifier = {
+				factor = 2
+				strength_ratio = {
+				    tag = FROM
+				    ratio < 1
+				}
+			}
+			modifier = {
+				factor = 0.001
+				is_major = yes
+			}
+		}
+
+		if = {
+			limit = { FROM = { is_faction_leader = yes } }
+			FROM = { add_to_faction = ROOT }
+		}
+
+		add_ai_strategy = {
+			type = befriend
+			id = FROM
+			value = 200
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = FROM
+			value = 200
+		}
+
+		add_opinion_modifier = { 
+			target = GEM
+			modifier = huge_increase
+		}
+
+	}
+
+	option = { #How dare they?!
+		name = wuw_GER_diplomacy.10.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				add = 15
+				has_opinion = {
+					target = FROM
+					value < -29
+				}
+			}
+			modifier = {
+				add = 15
+				has_opinion = {
+					target = FROM
+					value < -49
+				}
+			}
+		}
+
+		add_political_power = -25
+		
+		FROM = {
+			country_event = { id = GEM_event.4 hours = 5 random_hours = 5 }
+		}
+	}
+}
+country_event = { #FROM has foiled our influencing efforts
+	id = GEM_event.4
+	title = wuw_GER_diplomacy.11.t
+	desc = wuw_GER_diplomacy.11.desc 
+	picture = GFX_report_event_tank_factory
+
+	is_triggered_only = yes
+
+	option = { #How dare they?!
+		name = wuw_GER_diplomacy.11.a 
+
+		effect_tooltip = {
+			FROM = {
+				remove_opinion_modifier = { 
+					target = GEM
+					modifier = huge_increase
+				}
+			}
+		}
+
+	}
+}
 country_event = { # 우리의 상황
 	id = GEH_event.1
 	title = GEH_event.1.t
