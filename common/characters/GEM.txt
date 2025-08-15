@@ -26,6 +26,42 @@ characters={
 			logistics_skill=1
 			legacy_id=-1
 		}
+
+		advisor={
+			slot = political_advisor
+			idea_token = GEH_makoto_hanuma
+
+			allowed = {
+				original_tag = GEM
+			}
+
+			available = {
+				OR = {
+					has_country_leader = {
+						character = GEH_dlfhgk
+						ruling_only = yes
+					}
+					has_country_leader = {
+						character = GEH_satsuki
+						ruling_only = yes
+					}
+				}
+			}
+
+			traits = {
+				GEM_gehenna_largest_journalist_trait
+			}
+
+			visible = {
+				has_character = GEH_akzhxh
+			}
+
+			cost = 75
+
+			ai_will_do = {
+				factor = 18.000
+			}
+		}
 	}
 
 	GEH_dlfhgk={ #이로하
@@ -620,6 +656,95 @@ characters={
 			ideology=pandemonium
 			traits={ GEH_pandemonium_society_trait }
 			expire="1965.1.1.1"
+		}
+	}
+
+	GEM_perfect_team ={ # 게헨나 선도부
+		name=GEM_perfect_team
+		portraits={
+			army={
+				small="gfx/interface/advisors/GEH/GEH_theorist_idea.tga"
+			}
+		}
+
+		gender = female
+
+		advisor={
+			slot = political_advisor
+			idea_token = GEM_perfect_team
+			allowed = {
+				original_tag = GEM
+			}
+
+			available = {
+				AND = {
+					country_exists = GEH # 선도부 국가가 존재
+					GEH = { 
+						NOT = { has_war_with = GEM } # 선도부가 판데모니움 소사이어티와 전쟁 중이지 않아야 함
+						NOT = { is_in_faction_with = TRM } # 트리니티와 협력중이지 않아야 함
+					}
+				}
+			}
+
+			traits = {
+				princess_of_terror
+			}
+
+			on_add = {
+				GEH = {
+					add_offsite_building = {
+						type = arms_factory
+						level = 3
+					}
+				}
+			}
+
+			on_remove = {
+				GEH = {
+					add_offsite_building = {
+						type = arms_factory
+						level = -3
+					}
+				}
+			}
+
+			cost = 75 # 절반 가격
+
+			ai_will_do = {
+				factor = 24.000
+			}
+		}
+
+	}
+
+	GEM_albert_speer = {
+		name=GER_albert_speer
+
+		portraits = {
+			army = {
+				large = GFX_portrait_GER_albert_speer
+				small = GFX_portrait_GER_albert_speer_small
+			}
+		}
+		
+		advisor = {
+			slot = political_advisor
+			idea_token = GEM_albert_speer
+			allowed = {
+				original_tag = GEM
+			}
+
+			available = {
+				has_completed_focus = GEM_accept_local_ideology
+			}
+
+			visible = {
+				
+			}
+
+			traits = {
+				GER_reich_architect
+			}
 		}
 	}
 
