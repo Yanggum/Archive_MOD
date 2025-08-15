@@ -1921,9 +1921,23 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
+			OR = {
+				has_country_leader = {
+					character = GEH_akzhxh
+					ruling_only = yes
+				}
+				has_country_leader = {
+					character = GEH_motomiya_chiaki
+					ruling_only = yes
+				}
+				has_country_leader = {
+					character = GEH_satsuki
+					ruling_only = yes
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
-		x = 0
+		x = 4
 		y = 1
 		relative_position_id = GEM_ori_unified_gehenna
 		completion_reward = {
@@ -1959,7 +1973,7 @@ focus_tree = {
 			is_subject = no
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
-		x = 4
+		x = 0
 		y = 1
 		relative_position_id = GEM_ori_unified_gehenna
 		completion_reward = {
@@ -2036,7 +2050,7 @@ focus_tree = {
 
 		relative_position_id = GEM_gehenna_realpolitik
 		x = 1
-		y = 1
+		y = 3
 
 		available = {
 			country_exists = SOV
@@ -2047,6 +2061,10 @@ focus_tree = {
 		
         prerequisite = {
             focus = GEM_gehenna_realpolitik
+		}
+
+		mutually_exclusive = {
+			focus = GEM_gehenna_hegemony_attack_soviet
 		}
 
 		ai_will_do = {
@@ -2197,6 +2215,7 @@ focus_tree = {
 		
         prerequisite = {
             focus = GEM_gehenna_hegemony
+            focus = GEM_german_hegemony
 		}
 
 		ai_will_do = {
@@ -2238,7 +2257,7 @@ focus_tree = {
 		cost = 3
 
 		relative_position_id = GEM_gehenna_hegemony_anti_bolshevism_declaration
-		x = -1
+		x = 1
 		y = 1
 
 		available = {
@@ -2252,7 +2271,7 @@ focus_tree = {
 			OR = {
 				has_war_with = SOV
 				NOT = { country_exists = SOV }
-				SOV = { is_in_faction_with = ROOT }
+				is_in_faction_with = SOV
 			}
 		}
 		
@@ -2261,14 +2280,44 @@ focus_tree = {
 		}
 		
         prerequisite = {
+            focus = GEM_ostdeutsches_kolonialreich
+            focus = GEM_danzig_for_poland
             focus = GEM_gehenna_hegemony_claim_intermarium
+		}
+
+		mutually_exclusive = {
+			focus = GEM_gehenna_realpolitik_soviet_peace
 		}
 
 		ai_will_do = {
 			base = 100
 			modifier = {
 				factor = 0
-				has_war_with_major = yes # 대규모 전선을 두 개로 만들지 않는다
+				OR = {
+					has_army_manpower = { size < 1199999 }
+					any_home_area_neighbor_country = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				factor = 0 #AI should not pick this focus if it does not share a border with the Soviets
+				NOT = { 
+					any_home_area_neighbor_country = {
+						tag = SOV
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				date < 1939.1.1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
 			}
 		}
 
@@ -2283,11 +2332,11 @@ focus_tree = {
     focus = {
 		id = GEM_gehenna_hegemony_attack_south_kivotos
 		icon = GFX_focus_GER_all_for_the_front
-		cost = 5
+		cost = 10
 
 		relative_position_id = GEM_gehenna_hegemony
-		x = 3
-		y = 2
+		x = -2
+		y = 1
 
 		available = {
 			is_puppet = no
@@ -2418,7 +2467,7 @@ focus_tree = {
 			is_faction_leader = yes
 			NOT = { has_war_with = HUN }
 		}
-		x = 0
+		x = 2
 		y = 1
 		relative_position_id = GEM_support_for_sudetenland_germans
 		completion_reward = {
@@ -2459,7 +2508,7 @@ focus_tree = {
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
-		x = -2
+		x = 0
 		y = 1
 		relative_position_id = GEM_german_hegemony
 		completion_reward = {
@@ -2470,10 +2519,216 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = GEM_danzig_for_poland
+
+		icon = GFX_focus_generic_polish_deal
+
+		prerequisite = { focus = GEM_shan_hai_jing_invasion }
+
+		mutually_exclusive = { focus = GEM_ostdeutsches_kolonialreich }
+
+		x = 0
+		y = 1
+		relative_position_id = GEM_shan_hai_jing_invasion
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+		
+		available = {
+			owns_state = 807
+			owns_state = 85
+			POL = {
+				OR = {
+					is_in_faction = no
+					is_in_faction_with = ROOT
+					AND = {
+						is_in_faction = yes
+						NOT = {
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				NOT = {
+					any_allied_country = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+
+		bypass = {
+			OR = {
+				POL = {
+					exists = no
+				}
+				has_war_with = POL
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			POL = {
+				add_opinion_modifier = { target = GEM modifier = large_increase }
+				if = {
+					limit = {
+						GEM = {
+							has_government = fascism
+						}
+					}
+					add_timed_idea = { idea = fascist_influence days = 1095 }
+				}
+				if = {
+					limit = {
+						GEM = {
+							has_government = communism
+						}
+					}
+					add_timed_idea = { idea = communist_influence days = 1095 }
+				}
+				if = {
+					limit = {
+						GEM = {
+							has_government = democratic
+						}
+					}
+					add_timed_idea = { idea = democratic_influence days = 1095 }
+				}
+				country_event = { id = generic.1 }
+				country_event = { id = GEM_event.2 hours = 12 }
+
+				custom_effect_tooltip = if_they_accept_tt
+				custom_effect_tooltip = enter_tt
+				effect_tooltip = {
+					86 = {
+						if = {
+							limit = {
+								is_owned_by = ROOT
+							}
+							transfer_state_to = POL
+						}
+					}
+					807 = {
+						if = {
+							limit = {
+								is_owned_by = ROOT
+							}
+							transfer_state_to = POL
+						}
+					}
+					85 = {
+						if = {
+							limit = {
+								is_owned_by = ROOT
+							}
+							transfer_state_to = POL
+						}
+					}
+					762 = {
+						if = {
+							limit = {
+								is_owned_by = ROOT
+							}
+							transfer_state_to = POL
+						}
+					}
+					ROOT = {
+						set_autonomy = {
+							target = POL
+							autonomy_state = autonomy_puppet
+							end_wars = no
+						}
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = GEM_ostdeutsches_kolonialreich
+
+		icon = GFX_focus_GER_danzig_or_war
+
+		prerequisite = { focus = GEM_shan_hai_jing_invasion }
+
+		mutually_exclusive = { focus = GEM_danzig_for_poland }
+
+		x = -2
+		y = 1
+		relative_position_id = GEM_shan_hai_jing_invasion
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+		
+		available = {
+			is_subject = no
+			has_army_manpower = { size > 449999 } #100 div
+			OR = {
+				POL = {
+					has_civil_war = no
+				}
+				#custom_trigger_tooltip = {
+					#tooltip = GER_danzig_trigger_polish_civil_war
+					AND = {
+						any_other_country = {
+							original_tag = POL
+							has_civil_war = yes
+							OR = {
+								is_in_faction_with = ROOT
+								has_volunteers_amount_from = {
+									tag = GER
+									count > 0
+								}
+							}
+						}
+					}
+				#}
+			}
+		}
+
+		will_lead_to_war_with = POL
+
+		bypass = {
+			OR = {
+				has_war_with = POL
+				is_in_faction_with = POL
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			add_named_threat = { threat = 5 name = GEM_ostdeutsches_kolonialreich }
+			create_wargoal = {
+				target = POL
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+	focus = {
 		id = GEM_abydos_invasion
 		icon = GFX_focus_attack_ABY
 		cost = 5.00
-		prerequisite = { focus = GEM_german_hegemony }
+		prerequisite = { focus = GEM_support_for_sudetenland_germans }
 		available = {
 			is_subject = no
 			country_exists = ABY
@@ -2495,6 +2750,7 @@ focus_tree = {
 		bypass = {
 			ABY = {
 				OR = {
+					exists = no
 					is_subject_of = GEM
 					is_in_faction_with = GEM
 				}
@@ -2503,7 +2759,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		x = 0
 		y = 1
-		relative_position_id = GEM_german_hegemony
+		relative_position_id = GEM_support_for_sudetenland_germans
 		completion_reward = {
 			create_wargoal = {
 				target = ABY
@@ -2512,10 +2768,126 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = GEM_hyakkiyagyo_invasion
+		icon = GFX_focus_attack_HYA
+		cost = 5.00
+		prerequisite = { focus = GEM_abydos_invasion focus = GEM_first_vienna_award }
+		mutually_exclusive = {
+			focus = GEM_influence_the_hyakkiyagyo
+		}
+		available = {
+			is_subject = no
+			country_exists = HYA
+			if = {
+				limit = { has_dlc = "Gotterdammerung" }
+				fighting_army_strength_ratio = {
+					tag = HYA
+					ratio > 1
+				}
+			}
+			else = {
+				has_army_manpower = { size > 249999 }
+				custom_trigger_tooltip = {
+					tooltip = HYA_focus_second_shock_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 15 }
+				}
+			}
+		}
+		bypass = {
+			HYA = {
+				OR = {
+					exists = no
+					is_subject_of = GEM
+					is_in_faction_with = GEM
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+		x = 0
+		y = 2
+		relative_position_id = GEM_support_for_sudetenland_germans
+		completion_reward = {
+			create_wargoal = {
+				target = HYA
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = GEM_influence_the_hyakkiyagyo
+		icon = GFX_focus_chi_mission_to_the_HYA
+		cost = 5.00
+		prerequisite = { focus = GEM_abydos_invasion focus = GEM_first_vienna_award }
+		mutually_exclusive = {
+			focus = GEM_hyakkiyagyo_invasion
+		}
+		available = {
+			NOT = { has_war_with = HYA }
+			HYA = {
+				OR = {
+					is_in_faction = no
+					is_in_faction_with = ROOT
+					AND = {
+						is_in_faction = yes
+						NOT = {
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+				NOT = {
+					any_allied_country = {
+						has_war_with = ROOT
+					}
+				}
+				exists = yes
+			}
+		}
+		
+		cancel = {
+			OR = {
+				NOT = { country_exists = HYA }
+				has_war_with = HYA
+			}
+		}
+
+		bypass = {
+			HYA = { is_ally_with = ROOT }
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+		x = 2
+		y = 2
+		relative_position_id = GEM_support_for_sudetenland_germans
+		completion_reward = {
+			HYA = {
+				country_event = { id = GEM_event.3 hours = 6 }
+			}
+
+			custom_effect_tooltip = if_they_accept_tt
+
+			HYA = {
+				effect_tooltip = {
+					add_opinion_modifier = { 
+						target = GEM
+						modifier = huge_increase
+					}
+
+					if = {
+						limit = { GEM = { is_faction_leader = yes } }
+						GEM = { add_to_faction = HYA }
+					}
+				}
+			}
+			hidden_effect = {
+				news_event = { hours = 6 id = GEM_news.1 }
+			}
+		}
+	}
+	focus = {
 		id = GEM_friendship_with_japan
 		icon = GFX_focus_chi_collaboration_with_the_japanese
 		cost = 5.00
-		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion focus = GEM_gehenna_realpolitik_soviet_peace }
+		prerequisite = { focus = GEM_german_hegemony focus = GEM_gehenna_realpolitik }
 		mutually_exclusive = {
 			focus = GEM_friendship_with_china
 		}
@@ -2546,7 +2918,7 @@ focus_tree = {
 		}
 		available_if_capitulated = no
 		x = -4
-		y = 2
+		y = 1
 		relative_position_id = GEM_german_hegemony
 		completion_reward = {
 			JAP = {
@@ -2566,7 +2938,7 @@ focus_tree = {
 		id = GEM_friendship_with_china
 		icon = GFX_focus_chi_cooperation_with_the_nationalists
 		cost = 5.00
-		prerequisite = { focus = GEM_shan_hai_jing_invasion focus = GEM_abydos_invasion focus = GEM_gehenna_realpolitik_soviet_peace }
+		prerequisite = { focus = GEM_german_hegemony focus = GEM_gehenna_realpolitik }
 		mutually_exclusive = {
 			focus = GEM_friendship_with_japan
 		}
@@ -2597,7 +2969,7 @@ focus_tree = {
 		}
 		available_if_capitulated = no
 		x = -2
-		y = 2
+		y = 1
 		relative_position_id = GEM_german_hegemony
 		completion_reward = {
 			event_target:WTT_current_china_leader = {
