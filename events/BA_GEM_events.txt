@@ -3,6 +3,128 @@ add_namespace = GEM_news
 add_namespace = GEH_event
 add_namespace = GEH_hidden_event
 add_namespace = GEHENNA_event
+add_namespace = GEAC_event
+
+country_event = { # 조약 붕괴 위험
+	id = GEAC_event.1
+	title = GEAC_event.1.t
+	desc = GEAC_event.1.desc
+	picture = GFX_report_event_generic_sign_treaty3
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEAC_event.1.a
+		add_war_support = 0.05
+	}
+}
+
+country_event = { # 조약 설립
+	id = GEAC_event.2
+	title = GEAC_event.2.t
+	desc = GEAC_event.2.desc
+	picture = GFX_report_event_tur_the_saadabad_pact
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEAC_event.2.a
+		ai_chance = {
+			base = 0
+			modifier = {
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+				add = 15
+			}
+		}
+		add_political_power = 120
+		custom_effect_tooltip = GEAC_if_join_tt
+		hidden_effect = {
+			add_ai_strategy = {
+				type = befriend
+				id = event_target:GEAC_leader
+				value = 100
+			}
+			set_country_flag = GEAC_unified_but_divided_gehenna_academy_flag
+		
+			event_target:GEAC_leader = { 
+				country_event = { id = GEAC_event.3 hours = 6 random = 8 }
+				add_ai_strategy = {
+					type = befriend
+					id = ROOT
+					value = 100
+				}
+			}
+
+			every_country = {
+				limit = {
+					has_country_flag = GEAC_unified_but_divided_gehenna_academy_flag
+					NOT = { tag = ROOT }
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = ROOT
+					value = 100
+				}
+				diplomatic_relation = {
+					country = ROOT
+					relation = non_aggression_pact
+					active = yes
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = GEAC_pact_member
+				}
+				reverse_add_opinion_modifier = {
+				    target = ROOT
+				    modifier = GEAC_pact_member
+				}
+			}
+		}
+	}
+	
+	option = { 
+		name = GEAC_event.2.b
+		ai_chance = {
+			factor = 0.001
+		}
+		add_war_support = 0.05
+		hidden_effect = {
+			event_target:GEAC_leader = { country_event = { id = GEAC_event.4 hours = 6 random = 8 } }
+		}
+	}
+}
+
+country_event = { # 승인받음
+	id = GEAC_event.3
+	title = GEAC_event.3.t
+	desc = GEAC_event.3.desc
+	picture = GFX_report_event_tur_the_saadabad_pact
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEAC_event.3.a
+		add_stability = 0.01
+	}
+}
+
+country_event = { # 거절당함
+	id = GEAC_event.4
+	title = GEAC_event.4.t
+	desc = GEAC_event.4.desc
+	picture = GFX_report_event_tur_politician_march
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEAC_event.4.a
+		add_war_support = 0.05
+	}
+}
 
 country_event = { # 전범 재판
 	id = GEHENNA_event.1
