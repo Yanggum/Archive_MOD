@@ -5151,6 +5151,9 @@ country_event = {
 			type = infantry_equipment
 			amount = 500
 		}
+		9 = {
+			add_core_of = ABY
+		}
 	}
 }
 
@@ -5175,6 +5178,9 @@ country_event = {
 		add_equipment_to_stockpile = {
 			type = infantry_equipment
 			amount = 250
+		}
+		72 = {
+			add_core_of = ABY
 		}
 	}
 }
@@ -5201,6 +5207,9 @@ country_event = {
 			type = infantry_equipment
 			amount = 250
 		}
+		75 = {
+			add_core_of = ABY
+		}
 	}
 }
 
@@ -5211,7 +5220,12 @@ country_event = {
 
 	fire_only_once = yes
 
-	is_triggered_only = yes
+	trigger = {
+		TAG = ABY
+		ABY = {
+			controls_state = 74
+		}
+	}
 
 	option = {
 		name = ABY_new_event.152.a
@@ -5220,6 +5234,9 @@ country_event = {
 		add_equipment_to_stockpile = {
 			type = infantry_equipment
 			amount = 250
+		}
+		74 = {
+			add_core_of = ABY
 		}
 	}
 }
@@ -5231,15 +5248,31 @@ country_event = {
 
 	fire_only_once = yes
 
-	is_triggered_only = yes
+	trigger = {
+		TAG = ABY
+		ABY = {
+			controls_state = 1021
+		}
+	}
 
 	option = {
 		name = ABY_new_event.153.a
 		ai_chance = { factor = 100 }
-		add_manpower = 1000
-		add_equipment_to_stockpile = {
-			type = infantry_equipment
-			amount = 250
+		ABY_Sou = {
+			add_trait = { trait = war_hero }
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.15
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = AUS
+					state = 39
+				}
+			}
+			add_core_of = ABY
 		}
 	}
 }
@@ -16091,16 +16124,7 @@ country_event = {
 		country_event = {
 			id = ABY_descision_focus_event.10
 		}
-		every_state = {
-			limit = {
-				is_controlled_by = ABY
-				OR = {
-					is_core_of = SHA
-					is_core_of = HYA
-				}
-			}
-			add_resistance = 5
-		}
+		add_stability = -0.1
 	}
 }
 
@@ -16145,7 +16169,10 @@ country_event = {
 					is_core_of = HYA
 				}
 			}
-			add_resistance = 25
+			add_core_of = ABY
+			add_dynamic_modifier = {
+				modifier = ABY_modifier_rebuild_2
+			}
 		}
 	}
 }
@@ -16173,7 +16200,13 @@ country_event = {
 					is_core_of = HYA
 				}
 			}
-			add_resistance = 25
+			add_core_of = ABY
+			remove_dynamic_modifier = {
+				modifier = ABY_modifier_rebuild_2
+			}
+			add_dynamic_modifier = {
+				modifier = ABY_modifier_rebuild_1
+			}
 		}
 	}
 }
@@ -16192,16 +16225,6 @@ country_event = {
 		country_event = {
 			id = ABY_descision_focus_event.14
 			days = 10
-		}
-		every_state = {
-			limit = {
-				is_controlled_by = ABY
-				OR = {
-					is_core_of = SHA
-					is_core_of = HYA
-				}
-			}
-			add_resistance = 15
 		}
 	}
 }
@@ -16902,7 +16925,6 @@ country_event = {
 			id = ABY_descision_focus_event.9
 			days = 20
 		}
-		set_cosmetic_tag = ABY_federal_government
 		set_popularities = {
 			democratic = 50
 			neutrality = 0
@@ -16943,6 +16965,10 @@ country_event = {
 		name = ABY_descision_focus_event.38.a
 		ai_chance = { factor = 100 }
 		remove_ideas = {ABY_idea_great_germanist_3}
+		custom_effect_tooltip = ABY_retire_german_tt
+		hidden_effect = {
+			retire_character = ABYDOS_KHF
+		}
 		set_party_name = {
 			ideology = fascism
     		long_name = ABY_fascism_party_2
