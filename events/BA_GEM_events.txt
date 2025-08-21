@@ -289,51 +289,144 @@ country_event = { # 폴란드를 위한 단치히
 		ai_chance = {
 			factor = 75
 		}
-		86 = {
-			if = {
-				limit = {
-					is_owned_by = FROM
+		
+		effect_tooltip = {
+			86 = {
+				if = {
+					limit = {
+						is_owned_by = FROM
+					}
+					transfer_state_to = ROOT
 				}
-				transfer_state_to = ROOT
 			}
-		}
-		807 = {
-			if = {
-				limit = {
-					is_owned_by = FROM
+			807 = {
+				if = {
+					limit = {
+						is_owned_by = FROM
+					}
+					transfer_state_to = ROOT
 				}
-				transfer_state_to = ROOT
 			}
-		}
-		85 = {
-			if = {
-				limit = {
-					is_owned_by = FROM
+			85 = {
+				if = {
+					limit = {
+						is_owned_by = FROM
+					}
+					transfer_state_to = ROOT
 				}
-				transfer_state_to = ROOT
 			}
-		}
-		762 = {
-			if = {
-				limit = {
-					is_owned_by = FROM
+			762 = {
+				if = {
+					limit = {
+						is_owned_by = FROM
+					}
+					transfer_state_to = ROOT
 				}
-				transfer_state_to = ROOT
+			}
+			FROM = {
+				set_autonomy = {
+					target = ROOT
+					autonomy_state = autonomy_integrated_puppet
+					end_wars = no
+				}
 			}
 		}
-		FROM = {
-			set_autonomy = {
-				target = ROOT
-				autonomy_state = autonomy_puppet
-				end_wars = no
-			}
-		}
+		FROM = { country_event = { id = GEM_event.201 days = 1 } }
 	}
 	option = { 
 		name = GEM_event.2.b
 		trigger = { NOT = { is_puppet_of = GEM } }
 		ai_chance = {
 			factor = 25
+		}
+		effect_tooltip = {
+			FROM = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_decrease
+				}
+			}
+		}
+		FROM = { country_event = { id = GEM_event.202 days = 1 } }
+	}
+}
+
+country_event = {
+	id = GEM_event.201
+	title = GEM_event.201.t
+	desc = GEM_event.201.desc
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.201.a
+		add_political_power = 100
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_integrated_puppet
+			end_wars = no
+		}
+		86 = {
+			if = {
+				limit = {
+					is_owned_by = ROOT
+				}
+				transfer_state_to = FROM
+			}
+		}
+		807 = {
+			if = {
+				limit = {
+					is_owned_by = ROOT
+				}
+				transfer_state_to = FROM
+			}
+		}
+		85 = {
+			if = {
+				limit = {
+					is_owned_by = ROOT
+				}
+				transfer_state_to = FROM
+			}
+		}
+		762 = {
+			if = {
+				limit = {
+					is_owned_by = ROOT
+				}
+				transfer_state_to = FROM
+			}
+		}
+	}
+}
+
+country_event = {
+	id = GEM_event.202
+	title = GEM_event.202.t
+	desc = GEM_event.202.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.202.a
+		add_opinion_modifier = {
+			target = FROM
+			modifier = large_decrease
+		}
+
+		create_wargoal = {
+			target = FROM
+			type = puppet_wargoal_focus
+		}
+	}
+	option = {
+		name = GEM_event.202.b
+		add_opinion_modifier = {
+			target = FROM
+			modifier = large_decrease
 		}
 	}
 }
@@ -466,6 +559,333 @@ country_event = { #FROM has foiled our influencing efforts
 			}
 		}
 
+	}
+}
+
+# Germany Demands Further Concessions - event for POL
+country_event = {
+	id = GEM_event.5
+	title = wuw_GER_realpolitik.20.t
+	desc = wuw_GER_realpolitik.20.desc
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	# We give up
+	option = {
+		name = wuw_GER_realpolitik.20.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0.5
+				FROM = {
+					has_war_with_major = yes
+				}
+			}
+			modifier = {
+				factor = 1.5
+				has_war_with_major = yes
+			}
+			modifier = {
+				factor = 0.001
+				any_allied_country = {
+					is_major = yes
+				}
+			}
+		}
+		FROM = { 
+			country_event = { 
+				id = GEM_event.501
+				days = 1 
+			} 
+		}
+		effect_tooltip = {
+			ROOT = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 87 #Lodz
+							state = 98 #Plock
+							state = 97 #Byalistock
+						}
+					}
+					display_individual_scopes = yes
+					FROM = {
+						transfer_state = PREV
+						add_state_core = PREV
+					}
+				}
+			}
+		}
+	}
+
+	# We must fight!
+	option = {
+		name = wuw_GER_realpolitik.20.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 3
+				strength_ratio = {
+					tag = FROM
+					ratio > 0.7
+				}
+			}
+			modifier = {
+				factor = 2
+				any_other_country = {
+					is_major = yes
+					has_guaranteed = ROOT
+				}
+			}
+			modifier = {
+				factor = 2
+				is_in_faction = yes
+			}
+			modifier = {
+				factor = 0
+				has_war_with_major = yes
+			}
+		}
+
+		FROM = {
+			country_event = { 
+				id = GEM_event.502
+				days = 1 
+			}
+			IF = {
+				limit = {
+					is_in_faction_with = ROOT
+					is_faction_leader = yes
+				}
+				remove_from_faction = ROOT
+			}
+			IF = {
+				limit = {
+					is_in_faction_with = ROOT
+					is_faction_leader = no
+				}
+				random_other_country = {
+					limit = {
+						is_in_faction_with = FROM
+						is_faction_leader = yes
+					}
+					remove_from_faction = FROM
+				}
+			}
+		}
+
+		IF = {
+			limit = {
+				has_guaranteed = LIT
+				is_guaranteed_by = LIT
+			}
+			diplomatic_relation = {
+				country = LIT
+				relation = guarantee
+				active = no
+			}
+			LIT = {
+				diplomatic_relation = {
+					country = POL
+					relation = guarantee
+					active = no
+				}
+			}
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 87 #Lodz
+						state = 98 #Plock
+						state = 97 #Byalistock
+					}
+					is_fully_controlled_by = ROOT
+				}
+				display_individual_scopes = yes
+				FROM = {
+					add_state_core = PREV
+				}
+			}
+		}
+		custom_effect_tooltip = generic_skip_one_line_tt
+		custom_effect_tooltip = probably_lead_to_war_with_GEM_tt
+	}
+}
+
+# Poland Cedes More Territory - event for GER
+country_event = {
+	id = GEM_event.501
+	title = wuw_GER_realpolitik.21.t
+	desc = wuw_GER_realpolitik.21.desc
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.501.a
+		
+		FROM = {
+			every_controlled_state = {
+				limit = {
+					OR = {
+						state = 87 #Lodz
+						state = 98 #Plock
+						state = 97 #Byalistock
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					transfer_state = PREV
+					add_state_core = PREV
+				}
+			}
+		
+			every_state = {
+				limit = {
+					NOT = { is_controlled_by = FROM }
+					OR = {
+						state = 87 #Lodz
+						state = 98 #Plock
+						state = 97 #Byalistock
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					add_state_core = PREV
+				}
+			}
+		}
+
+		IF = {
+			limit = {
+				SOV = {
+					NOT = {
+						is_in_faction_with = GEM
+					}
+					has_guaranteed = POL
+				}
+			}
+			SOV = {
+				add_war_support = 0.02
+			}
+		}
+
+		if = {
+			limit = {
+				POL = { is_faction_leader = yes }
+			}
+			every_country = {
+				limit = {
+					NOT = { original_tag = POL }
+					is_in_faction_with = POL
+				}
+				display_individual_scopes = yes
+				add_war_support = -0.02 
+			}
+		}
+	}
+}
+
+# Poland Refuses to Cede More Territory - event for GER
+country_event = {
+	id = GEM_event.502
+	title = wuw_GER_realpolitik.22.t
+	desc = wuw_GER_realpolitik.22.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = wuw_GER_realpolitik.22.a
+
+		IF = {
+			limit = {
+				FROM = {
+					is_subject = yes
+					OVERLORD = {
+						has_non_aggression_pact_with = ROOT
+					}
+				}
+			}
+			FROM = {
+				OVERLORD = {
+					diplomatic_relation = {
+						country = ROOT
+						relation = non_aggression_pact
+						active = no
+					}
+				}
+			}
+		}
+
+		IF = {
+			limit = {
+				FROM = {
+					has_non_aggression_pact_with = ROOT
+				}
+			}
+			FROM = {
+				diplomatic_relation = {
+					country = ROOT
+					relation = non_aggression_pact
+					active = no
+				}
+			}
+			every_other_country = {
+				limit = {
+					has_non_aggression_pact_with = ROOT
+				}
+				add_opinion_modifier = {
+					target = ROOT
+   					modifier = protest_action_strong
+				}
+			}
+		}
+
+		FROM = {
+			every_controlled_state = {
+				limit = {
+					OR = {
+						state = 87 #Lodz
+						state = 98 #Plock
+						state = 97 #Byalistock
+					}
+				}
+				display_individual_scopes = yes
+				add_to_array = {
+					array = PREV.GER_demand_further_polish_concessions_array
+					value = THIS
+				}
+				ROOT = {
+					add_state_core = PREV
+				}
+			}
+		
+			every_state = {
+				limit = {
+					NOT = { is_controlled_by = FROM }
+					OR = {
+						state = 87 #Lodz
+						state = 98 #Plock
+						state = 97 #Byalistock
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					add_state_core = PREV
+				}
+			}
+
+			ROOT = {
+				create_wargoal = {
+					type = take_state_focus
+					target = PREV
+					generator = PREV.GER_demand_further_polish_concessions_array
+				}
+			}
+		}
 	}
 }
 country_event = { # 우리의 상황
