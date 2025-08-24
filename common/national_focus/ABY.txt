@@ -1,3 +1,5 @@
+#!gfx:interface\BA_goals.gfx
+
 focus_tree = {
 	id = ABY_focus_tree
 	initial_show_position = {
@@ -61,7 +63,7 @@ focus_tree = {
 	
 	shortcut = {
 		name = ABY_shortcut_politic
-		target = ABY_focus_politic_base
+		target = ABY_focus_first
 		scroll_wheel_factor = 0.8
 		trigger = {
 
@@ -72,7 +74,7 @@ focus_tree = {
 		id = ABY_focus_first  #중점명
 		icon = GFX_focus_ABY_foreclosure 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 1.50          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
@@ -82,14 +84,14 @@ focus_tree = {
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 0
+		x = 17      #좌표
+		y = 6
 		# relative_position_id = ABY_focus_
 		bypass = {
 			#중점 통과 조건
 		}
+		cancelable = no
 		available = {
-			always = no
 			#중점 선행조건
 		}
 
@@ -103,6 +105,7 @@ focus_tree = {
 			clr_country_flag = ABY_descision_focus_first_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_first_completed_flag
+			custom_effect_tooltip = ABY_tt_getsokku_plus_15
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -126,25 +129,48 @@ focus_tree = {
 		id = ABY_focus_abydos_1  #중점명
 		icon = GFX_focus_ABY_abydos_1
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
+		x = -2      #좌표
 		y = 1
-		# relative_position_id = ABY_focus_
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_1_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_1_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -159,6 +185,9 @@ focus_tree = {
 					days = -240
 				}
 			}
+			country_event = {
+				id = ABY_descision_focus_event.72
+			}
 			clr_country_flag = ABY_descision_focus_abydos_1_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_abydos_1_completed_flag
@@ -169,25 +198,48 @@ focus_tree = {
 		id = ABY_focus_abydos_2  #중점명
 		icon = GFX_focus_generic_mass_production 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 2
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_2_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_2_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -201,11 +253,6 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.15
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 			clr_country_flag = ABY_descision_focus_abydos_2_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_abydos_2_completed_flag
@@ -217,25 +264,48 @@ focus_tree = {
 		id = ABY_focus_abydos_3  #중점명
 		icon = GFX_focus_generic_welfare 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 3
-		# relative_position_id = ABY_focus_
+		x = 2      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_3_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_3_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -263,25 +333,51 @@ focus_tree = {
 		id = ABY_focus_abydos_4  #중점명
 		icon = GFX_focus_ABY_abydos_4 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_1   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_1   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 4
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_1
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_4_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_4_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -308,25 +404,51 @@ focus_tree = {
 		id = ABY_focus_abydos_5  #중점명
 		icon = GFX_focus_helmet 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_1   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_2   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 5
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_2
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_5_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_5_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -339,11 +461,6 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.4
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 			clr_country_flag = ABY_descision_focus_abydos_5_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_abydos_5_completed_flag
@@ -355,25 +472,48 @@ focus_tree = {
 		id = ABY_focus_abydos_6  #중점명
 		icon = GFX_focus_ABY_abydos_6 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_3   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 6
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_3
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_6_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_6_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -386,8 +526,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.25
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
+			custom_effect_tooltip = ABY_tt_getsokku_plus_3
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -399,25 +538,48 @@ focus_tree = {
 		id = ABY_focus_abydos_7  #중점명
 		icon = GFX_focus_ABY_abydos_7 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_4   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 7
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_4
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_7_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_7_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -436,11 +598,6 @@ focus_tree = {
 				type = kivotos_infantry_equipment
 				amount = 500
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -449,9 +606,12 @@ focus_tree = {
 		id = ABY_focus_abydos_8  #중점명
 		icon = GFX_focus_ABY_abydos_2 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_5   #이전 중점
 		}
 		prerequisite = {
 			   #이전 중점
@@ -459,15 +619,38 @@ focus_tree = {
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 8
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_5
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_8_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_8_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -488,25 +671,51 @@ focus_tree = {
 		id = ABY_focus_abydos_9  #중점명
 		icon = GFX_focus_ABY_abydos_9 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_5   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_6   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 9
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_6
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_9_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_9_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -519,8 +728,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.26
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
+			custom_effect_tooltip = ABY_tt_getsokku_plus_3
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -532,25 +740,48 @@ focus_tree = {
 		id = ABY_focus_abydos_10  #중점명
 		icon = GFX_focus_ABY_abydos_10 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_8   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 10
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_8
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_abydos_10_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_HYA
+						FLAG_DAYS = [?ABY_focus_abydos_10_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_HYA
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -582,27 +813,650 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = ABY_focus_abydos_11  #중점명
-		icon = GFX_focus_HYA_attck 
-		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+		id = ABY_focus_czecho_1  #중점명
+		icon = GFX_focus_gather_around 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 11
-		# relative_position_id = ABY_focus_
+		x = 5      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_1_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_1_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_1_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_1_completed_flag
+			country_event = {
+				id = ABY_descision_focus_event.33
+			}
+			custom_effect_tooltip = ABY_new_tt_4
+			set_country_flag = ABY_flag_recuit_czech
+			#중점 완료시 얻는 보상
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_2  #중점명
+		icon = GFX_focus_ABY_czecho_2 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_first   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 8      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_2_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_2_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_2_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_2_completed_flag
+			custom_effect_tooltip = ABY_industrial_concern_allow_skoda
+			69 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			country_event = {
+				id = ABY_descision_focus_event.73
+			}
+			#중점 완료시 얻는 보상
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_3  #중점명
+		icon = GFX_focus_ABY_czecho_3 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_3   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_1   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_1
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_3_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_3_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_3_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_3_completed_flag
+			#중점 완료시 얻는 보상
+			country_event = {
+				id = ABY_descision_focus_event.27
+			}
+			custom_effect_tooltip = ABY_tt_getsokku_plus_3
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_4  #중점명
+		icon = GFX_focus_CZE_czechoslovak_legion_export 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_1   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_2   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 2      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_1
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_4_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_4_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_4_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_4_completed_flag
+			#중점 완료시 얻는 보상
+			69 = {
+				create_unit = {
+					division = "name = \"Czechoslovakia Border Guards\" division_template = \"Czechoslovakia Border Guards\" start_experience_factor = 0.1 start_equipment_factor = 1"
+					owner = ABY
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_5  #중점명
+		icon = GFX_focus_ABY_czecho_5 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_3   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_3
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_5_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_5_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_5_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_5_completed_flag
+			#중점 완료시 얻는 보상
+			country_event = {
+				id = ABY_descision_focus_event.28
+			}
+			custom_effect_tooltip = ABY_tt_getsokku_plus_3
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_6  #중점명
+		icon = GFX_focus_ABY_czecho_6 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_2   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 0      #좌표
+		y = 2
+		relative_position_id = ABY_focus_czecho_2
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_6_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_6_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_6_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_6_completed_flag
+			#중점 완료시 얻는 보상
+			add_timed_idea = {
+				idea = ABY_idea_jew_comming
+				days = 720
+			}
+			country_event = {
+				id = ABY_new_event.63
+			}
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_7  #중점명
+		icon = GFX_focus_ABY_czecho_7 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_6   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_6
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_7_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_7_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_7_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_7_completed_flag
+			69 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			country_event = {
+				id = ABY_descision_focus_event.71
+			}
+			custom_effect_tooltip = BA_factoriesof_new_world_tt
+			set_country_flag = BA_can_remove_isolation_flag
+			custom_effect_tooltip = ABY_industrial_concern_allow_2
+			#중점 완료시 얻는 보상
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_8  #중점명
+		icon = GFX_focus_ABY_czecho_8 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_5   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_7   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_9   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = -2      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_7
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_8_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_TM
+						FLAG_DAYS = [?ABY_focus_czecho_8_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_TM
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_8_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_8_completed_flag
+			#중점 완료시 얻는 보상
+			country_event = {
+				id = ABY_descision_focus_event.29
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = SHA
+						is_core_of = HYA
+					}
+				}
+				add_claim_by = ABY
+			}
+			custom_effect_tooltip = ABY_tt_getsokku_plus_3
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+			ABY_scripted_effect_getsokku_plus_effect = yes
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_czecho_9  #중점명
+		icon = GFX_focus_generic_befriend_czechoslovakia 
+		text_icon = ABY_czecho_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_8   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_8
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_9_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_EV
+						FLAG_DAYS = [?ABY_focus_czecho_9_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_EV
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
+			clr_country_flag = ABY_descision_focus_czecho_9_ongoing_flag
+			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
+			set_country_flag = ABY_descision_focus_czecho_9_completed_flag
+			#중점 완료시 얻는 보상
+			country_event = {
+				id = ABY_descision_focus_event.34
+			}
+		}
+	}
+	
+	focus = {
+		id = ABY_focus_abydos_11  #중점명
+		icon = GFX_focus_HYA_attck 
+		text_icon = ABY_abydos_focus_style
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_german_9   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_8   #이전 중점
+		}
+		mutually_exclusive = {
+			   #반대되는 중점
+		}
+		x = -5     #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_8
+		bypass = {
+			#중점 통과 조건
+		}
+		cancelable = no
+		available = {
 			#중점 선행조건
 		}
 
@@ -627,16 +1481,17 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.31
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
+			hidden_effect = {
+				news_event = {
+					id = ABY_news_event.1
+					hours = 8
+				}
+				country_event = {
+					id = ABY_hidden_event.4
+					days = 1
+				}
+			}
+			custom_effect_tooltip = ABY_tt_getsokku_plus_5
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -650,9 +1505,12 @@ focus_tree = {
 		id = ABY_focus_abydos_12  #중점명
 		icon = GFX_focus_ABY_distributing_flyers 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_abydos_11   #이전 중점
 		}
 		prerequisite = {
 			   #이전 중점
@@ -660,14 +1518,25 @@ focus_tree = {
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 12
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_11
 		bypass = {
 			#중점 통과 조건
 		}
+		cancelable = no
 		available = {
-			always = no
+			HYA = {
+				exists = no
+			}
+			any_state = {
+				OR = {
+					state = 9
+					state = 72
+					state = 74
+				}
+				is_controlled_by = SHA
+			}
 			#중점 선행조건
 		}
 
@@ -697,24 +1566,24 @@ focus_tree = {
 		id = ABY_focus_abydos_13  #중점명
 		icon = GFX_focus_ABY_abydos_13 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_12   #이전 중점
 		}
 		mutually_exclusive = {
-			   #반대되는 중점
+			focus = ABY_focus_abydos_14   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 13
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_12
 		bypass = {
 			#중점 통과 조건
 		}
+		cancelable = no
 		available = {
-			always = no
 			#중점 선행조건
 		}
 
@@ -740,19 +1609,20 @@ focus_tree = {
                     }
                 }
             }
+			hidden_effect = {
+				news_event = {
+					id = ABY_news_event.2
+					hours = 8
+				}
+				country_event = {
+					id = ABY_hidden_event.4
+					days = 1
+				}
+			}
 			country_event = {
 				id = ABY_descision_focus_event.32
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
+			custom_effect_tooltip = ABY_tt_getsokku_plus_5
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -766,24 +1636,30 @@ focus_tree = {
 		id = ABY_focus_abydos_14  #중점명
 		icon = GFX_focus_ABY_abydos_14 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_11   #이전 중점
 		}
 		mutually_exclusive = {
-			   #반대되는 중점
+			focus = ABY_focus_abydos_13   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 14
-		# relative_position_id = ABY_focus_
+		x = 1      #좌표
+		y = 2
+		relative_position_id = ABY_focus_abydos_11
 		bypass = {
 			#중점 통과 조건
 		}
+		cancelable = no
 		available = {
-			always = no
+			NOT = {
+				has_completed_focus = ABY_focus_abydos_12
+			}
+			HYA = {
+				exists = no
+			}
 			#중점 선행조건
 		}
 
@@ -808,19 +1684,20 @@ focus_tree = {
                     }
                 }
             }
+			hidden_effect = {
+				news_event = {
+					id = ABY_news_event.2
+					hours = 8
+				}
+				country_event = {
+					id = ABY_hidden_event.4
+					days = 1
+				}
+			}
 			country_event = {
 				id = ABY_descision_focus_event.32
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
+			custom_effect_tooltip = ABY_tt_getsokku_plus_5
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -834,19 +1711,23 @@ focus_tree = {
 		id = ABY_focus_abydos_15  #중점명
 		icon = GFX_focus_ABY_abydos_15 
 		text_icon = ABY_abydos_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_13
+			focus = ABY_focus_abydos_14   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_12   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 15
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_14
 		bypass = {
 			#중점 통과 조건
 		}
@@ -862,7 +1743,6 @@ focus_tree = {
 			clr_country_flag = ABY_descision_focus_abydos_15_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_abydos_15_completed_flag
-			add_political_power = 1500
 			add_stability = 0.5
 			custom_effect_tooltip = ABY_tt_EV_arrest
 			hidden_effect = {
@@ -872,415 +1752,36 @@ focus_tree = {
 			promote_character = ABYDO_Ayane
 			set_country_flag = ABY_flag_union_descision
 			set_country_flag = ABY_tt_union_descision
-			#중점 완료시 얻는 보상
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_1  #중점명
-		icon = GFX_focus_gather_around 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 16
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_1_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_1_completed_flag
-			country_event = {
-				id = ABY_descision_focus_event.33
-			}
-			custom_effect_tooltip = ABY_new_tt_4
-			set_country_flag = ABY_flag_recuit_czech
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			#중점 완료시 얻는 보상
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_2  #중점명
-		icon = GFX_focus_ABY_czecho_2 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 17
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_2_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_2_completed_flag
-			custom_effect_tooltip = ABY_industrial_concern_allow_skoda
-			69 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			#중점 완료시 얻는 보상
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_3  #중점명
-		icon = GFX_focus_ABY_czecho_3 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 18
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_3_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_3_completed_flag
-			#중점 완료시 얻는 보상
-			country_event = {
-				id = ABY_descision_focus_event.27
-			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_4  #중점명
-		icon = GFX_focus_CZE_czechoslovak_legion_export 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 19
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_4_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_4_completed_flag
-			#중점 완료시 얻는 보상
-			69 = {
-				create_unit = {
-					division = "name = \"Czechoslovakia Border Guards\" division_template = \"Czechoslovakia Border Guards\" start_experience_factor = 0.1 start_equipment_factor = 1"
-					owner = ABY
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_5  #중점명
-		icon = GFX_focus_ABY_czecho_5 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 20
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_5_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_5_completed_flag
-			#중점 완료시 얻는 보상
-			country_event = {
-				id = ABY_descision_focus_event.28
-			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_6  #중점명
-		icon = GFX_focus_ABY_czecho_6 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 21
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_6_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_6_completed_flag
-			#중점 완료시 얻는 보상
-			add_timed_idea = {
-				idea = ABY_idea_jew_comming
-				days = 720
-			}
-			country_event = {
-				id = ABY_new_event.63
-			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_7  #중점명
-		icon = GFX_focus_ABY_czecho_7 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 22
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_7_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_7_completed_flag
-			69 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			custom_effect_tooltip = BA_factoriesof_new_world_tt
-			set_country_flag = BA_can_remove_isolation_flag
-			custom_effect_tooltip = ABY_industrial_concern_allow_2
-			#중점 완료시 얻는 보상
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_8  #중점명
-		icon = GFX_focus_ABY_czecho_8 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 23
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_8_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_8_completed_flag
-			#중점 완료시 얻는 보상
-			country_event = {
-				id = ABY_descision_focus_event.29
-			}
-			every_state = {
-				limit = {
-					OR = {
-						is_core_of = SHA
-						is_core_of = HYA
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = ABY_flag_stop_national_front
+					}
+					country_event = {
+						id = ABY_descision_focus_event.64
+						days = 10
 					}
 				}
-				add_claim_by = ABY
+				if = {
+					limit = {
+						has_country_flag = ABY_flag_independent_nation
+					}
+					country_event = {
+						id = ABY_descision_focus_event.66
+						days = 10
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = ABY_flag_federal_nation
+					}
+					country_event = {
+						id = ABY_descision_focus_event.68
+						days = 10
+					}
+				}
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-		}
-	}
-	
-	focus = {
-		id = ABY_focus_czecho_9  #중점명
-		icon = GFX_focus_generic_befriend_czechoslovakia 
-		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			   #반대되는 중점
-		}
-		x = 100      #좌표
-		y = 24
-		# relative_position_id = ABY_focus_
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			always = no
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			clr_country_flag = ABY_descision_focus_czecho_9_ongoing_flag
-			clr_country_flag = ABY_descision_focus_czecho_line_doing_flag
-			set_country_flag = ABY_descision_focus_czecho_9_completed_flag
 			#중점 완료시 얻는 보상
-			country_event = {
-				id = ABY_descision_focus_event.34
-			}
 		}
 	}
 	
@@ -1288,25 +1789,48 @@ focus_tree = {
 		id = ABY_focus_czecho_10  #중점명
 		icon = GFX_focus_generic_election 
 		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_czecho_9   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 25
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_9
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_10_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_EV
+						FLAG_DAYS = [?ABY_focus_czecho_10_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_EV
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1327,25 +1851,48 @@ focus_tree = {
 		id = ABY_focus_czecho_11  #중점명
 		icon = GFX_focus_generic_diplomatic_treaty 
 		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_czecho_9   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 26
-		# relative_position_id = ABY_focus_
+		x = 1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_9
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_11_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_EV
+						FLAG_DAYS = [?ABY_focus_czecho_11_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_EV
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1366,25 +1913,51 @@ focus_tree = {
 		id = ABY_focus_czecho_12  #중점명
 		icon = GFX_focus_ABY_czecho_12 
 		text_icon = ABY_czecho_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_czecho_10   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_czecho_11   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 27
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_czecho_11
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_czecho_12_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_czech_EV
+						FLAG_DAYS = [?ABY_focus_czecho_12_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_czech_EV
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1405,25 +1978,48 @@ focus_tree = {
 		id = ABY_focus_german_1  #중점명
 		icon = GFX_focus_ABY_german_1 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 28
-		# relative_position_id = ABY_focus_
+		x = -8      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_1_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german
+						FLAG_DAYS = [?ABY_focus_german_1_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1452,25 +2048,48 @@ focus_tree = {
 		id = ABY_focus_german_2  #중점명
 		icon = GFX_focus_SWE_undermine_fascism 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_first   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 29
-		# relative_position_id = ABY_focus_
+		x = -6      #좌표
+		y = 1
+		relative_position_id = ABY_focus_first
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_2_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_2_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1484,11 +2103,6 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.22
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 		}
 	}
 	
@@ -1496,25 +2110,48 @@ focus_tree = {
 		id = ABY_focus_german_3  #중점명
 		icon = GFX_focus_GER_gebirgsjager 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_1   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 30
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_1
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_3_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german
+						FLAG_DAYS = [?ABY_focus_german_3_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1543,25 +2180,51 @@ focus_tree = {
 		id = ABY_focus_german_4  #중점명
 		icon = GFX_focus_ABY_german_4 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_1   #이전 중점
+		}
+		prerequisite = {
+			focus = ABY_focus_german_2   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 31
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_2
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_4_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_4_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1575,11 +2238,6 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.23
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 		}
 	}
 	
@@ -1587,25 +2245,48 @@ focus_tree = {
 		id = ABY_focus_german_5  #중점명
 		icon = GFX_focus_ABY_german_5 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_4   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 32
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_4
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_5_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_5_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1619,6 +2300,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_descision_focus_event.38
 			}
+			custom_effect_tooltip = ABY_tt_getsokku_plus_5
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
 			ABY_scripted_effect_getsokku_plus_effect = yes
@@ -1631,25 +2313,48 @@ focus_tree = {
 		id = ABY_focus_german_6  #중점명
 		icon = GFX_amry_abydos_1 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_5   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 33
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_5
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_6_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_6_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1665,11 +2370,6 @@ focus_tree = {
 			74 = {
 				set_demilitarized_zone = yes
 			}
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 		}
 	}
 	
@@ -1677,25 +2377,48 @@ focus_tree = {
 		id = ABY_focus_german_7  #중점명
 		icon = GFX_focus_ABY_german_7 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_5   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 34
-		# relative_position_id = ABY_focus_
+		x = 2      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_5
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_7_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_7_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1724,25 +2447,48 @@ focus_tree = {
 		id = ABY_focus_german_8  #중점명
 		icon = GFX_amry_abydos_2 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_6   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 35
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_6
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_8_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_8_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1756,11 +2502,6 @@ focus_tree = {
 			custom_effect_tooltip = ABY_new_tt_19
 			clr_country_flag = ABY_flag_german_resistance_1
 			set_country_flag = ABY_flag_german_resistance_2
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
-			ABY_scripted_effect_getsokku_plus_effect = yes
 		}
 	}
 	
@@ -1768,25 +2509,48 @@ focus_tree = {
 		id = ABY_focus_german_9  #중점명
 		icon = GFX_goal_generic_position_armies 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_7   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 36
-		# relative_position_id = ABY_focus_
+		x = 0      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_7
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_9_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_9_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1808,25 +2572,48 @@ focus_tree = {
 		id = ABY_focus_german_10  #중점명
 		icon = GFX_focus_generic_spur_communist_revolutions 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_abydos_11   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 37
-		# relative_position_id = ABY_focus_
+		x = -5      #좌표
+		y = 1
+		relative_position_id = ABY_focus_abydos_11
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_10_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_10_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1847,25 +2634,48 @@ focus_tree = {
 		id = ABY_focus_german_11  #중점명
 		icon = GFX_focus_generic_workers 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_10   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 38
-		# relative_position_id = ABY_focus_
+		x = -1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_10
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_11_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_11_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -1895,25 +2705,48 @@ focus_tree = {
 		id = ABY_focus_german_12  #중점명
 		icon = GFX_focus_generic_full_social_mobilization 
 		text_icon = ABY_german_focus_style
- 		cost = 0.00          #중점 일수(주)
+ 		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
-			   #이전 중점
+			focus = ABY_focus_german_10   #이전 중점
 		}
 		mutually_exclusive = {
 			   #반대되는 중점
 		}
-		x = 100      #좌표
-		y = 39
-		# relative_position_id = ABY_focus_
+		x = 1      #좌표
+		y = 1
+		relative_position_id = ABY_focus_german_10
 		bypass = {
 			#중점 통과 조건
 		}
 		available = {
-			always = no
-			#중점 선행조건
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = ABY_focus_german_12_in_progress_flag
+				}
+				set_temp_variable = { temp_focus_days = 7 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ABY_german_CH
+						FLAG_DAYS = [?ABY_focus_german_12_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = ABY_german_CH
+						FOCUS = GEH_zero_congress_focus
+					}
+					always = no
+				}
+			}
 		}
 
 		select_effect = {
@@ -6381,34 +7214,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_research_slot = 1
-			#중점 완료시 얻는 보상
-		}
-	}
-	focus = {
-		id = ABY_focus_politic_base    #중점명
-		icon = GFX_focus_unknown_2
- 		cost = 0.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			   #이전 중점
-		}
-		mutually_exclusive = {
-			    #반대되는 중점
-		}
-		x = 17      #좌표
-		y = 6
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-			has_country_flag = ABY_flag_political_unstable
-			#중점 선행조건
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = ABY_tt_political_unstable
 			#중점 완료시 얻는 보상
 		}
 	}
