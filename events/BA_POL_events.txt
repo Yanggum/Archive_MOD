@@ -8,10 +8,11 @@ country_event = {
 		date > 1938.3.1
 		is_in_faction = no
 	}
+	picture = GFX_report_event_gre_political_march
 	fire_only_once = yes
 	option = {
 		set_variable = {
-			POL_solidarity_var = 80
+			POL_solidarity_var = 60
 		}
 		set_variable = {
 			POL_solidarity_unit_var = 0
@@ -29,7 +30,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { #전쟁의 유산
 	id = BA_pol_event.2
 	title = BA_pol_event.2.t
 	desc = BA_pol_event.2.d
@@ -38,6 +39,7 @@ country_event = {
 		date > 1936.1.1
 	}
 	fire_only_once = yes
+	picture = GFX_report_event_polish_tanks_02
 	option = {
 		name = BA_pol_event.2.a
 		custom_effect_tooltip = BA_pol_event.2_tt
@@ -330,53 +332,61 @@ country_event = {
 	}
 }
 country_event = {
-	#이계의 침략자들
+	#안 씀
 	id = BA_pol_event.11
 	title = BA_pol_event.11.t
 	desc = BA_pol_event.11.d
 	fire_only_once = yes
-	trigger = {
-		tag = POL
-		has_war_with = TRM
-		has_global_flag = sov_pol_war_superevent_trigger_flag
-		NOT = {
-			has_war_with = SOV
-		}
-		is_puppet = no
-	}
-	immediate = {
-		hidden_effect = {
-			set_variable = {
-				POL_trm_war_var_attack = -0.3
-			}
-			set_variable = {
-				POL_trm_war_var_defense = -0.3
-			}
-			set_variable = {
-				POL_trm_war_var_dig_in = -0.3
-			}
-			set_variable = {
-				POL_trm_war_var_break = -0.3
-			}
-			set_variable = {
-				POL_trm_war_var_speed = -0.3
-			}
-		}
-	}
+	is_triggered_only = yes
 	option = {
 		name = BA_pol_event.11.a
-		add_dynamic_modifier = {
-			modifier = POL_attacker_from_other_demention
-		}
-		if = {
-			limit = {
-				NOT={has_completed_focus = POL_inter_24}
-			}
-			hidden_effect = {
-				complete_national_focus = POL_inter_23
+		effect_tooltip = {
+			add_to_variable = {
+				POL_solidarity_var = 2
+				tooltip = POL_solidarity_tt
 			}
 		}
-		custom_effect_tooltip = BA_pol_event.11_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = POL_solidarity_var
+						value = 98
+						compare = less_than_or_equals
+					}
+				}POL = {
+					add_to_variable = {
+						POL_solidarity_var = 2
+						tooltip = POL_solidarity_tt
+					}
+				}
+			}
+		}
+		POL = {
+			add_to_variable = {
+				POL_solidarity_trump_var = 1
+				tooltip = POL_solidarity_trump_tt
+			}
+		}
+		set_temp_variable = {
+			POL_trump_portion = POL_solidarity_trump_var
+		}
+		set_temp_variable = {
+			POL_trump_portion_modulo = POL_solidarity_trump_var
+		}
+		divide_temp_variable = {
+			POL_trump_portion = 3
+		}
+		modulo_temp_variable = {
+			POL_trump_portion_modulo = 3
+		}
+		divide_temp_variable = {
+			POL_trump_portion_modulo = 3
+		}
+		subtract_from_temp_variable = {
+			POL_trump_portion = POL_trump_portion_modulo
+		}
+		custom_effect_tooltip = POL_together_trump_tt
 	}
 }
 country_event = {
@@ -2006,11 +2016,12 @@ country_event = {#신규 동맹국 가입해서 결속도 떨어짐
 	title = BA_intermarium_solidarity_event.1.t
 	desc = BA_intermarium_solidarity_event.1.d
 	is_triggered_only = yes
+	picture = GFX_report_event_romania_poland_visit
 	option = { 
 		name = BA_intermarium_solidarity_event.1.a
 		effect_tooltip = {
 			add_to_variable = {
-				POL_solidarity_var = -5
+				POL_solidarity_var = -6
 				tooltip = POL_solidarity_tt
 			}
 		}
@@ -2020,13 +2031,13 @@ country_event = {#신규 동맹국 가입해서 결속도 떨어짐
 					original_tag = POL
 					check_variable = {
 						var = POL_solidarity_var
-						value = 5
+						value = 6
 						compare = greater_than_or_equals
 					}
 				}
 				POL = {
 					add_to_variable = {
-						POL_solidarity_var = -5
+						POL_solidarity_var = -6
 						tooltip = POL_solidarity_tt
 					}
 				}
@@ -2039,7 +2050,38 @@ country_event = {#공동 군사 기금
 	id = BA_intermarium_solidarity_event.2
 	title = BA_intermarium_solidarity_event.2.t
 	desc = BA_intermarium_solidarity_event.2.d
+	picture = GFX_report_event_generic_factory
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					tag = POL
+				}
+				set_temp_variable = {
+					POL_trump_portion = POL_solidarity_trump_var
+				}
+				set_temp_variable = {
+					POL_trump_portion_modulo = POL_solidarity_trump_var
+				}
+				divide_temp_variable = {
+					POL_trump_portion = 3
+				}
+				modulo_temp_variable = {
+					POL_trump_portion_modulo = 3
+				}
+				divide_temp_variable = {
+					POL_trump_portion_modulo = 3
+				}
+				subtract_from_temp_variable = {
+					POL_trump_portion = POL_trump_portion_modulo
+				}
+				set_variable = {
+					POL_solidarity_trump_var = POL_trump_portion
+				}
+			}
+		}
+	}
 	option = { 
 		name = BA_intermarium_solidarity_event.2.a
 		add_dynamic_modifier = {
