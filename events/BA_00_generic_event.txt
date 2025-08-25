@@ -310,108 +310,41 @@ country_event = {
     } 
 }
 country_event = {
-	id = BA_generic_event.14 #우크라이나 내 소요
+	id = BA_generic_event.14 #우크라이나 국민군
 	title = BA_generic_event.14.t
 	desc = BA_generic_event.14.d
-	picture = GFX_report_event_spr_spanish_civil_war2
+	picture = GFX_report_event_manchukuo_army
 	
 	fire_only_once = yes	
     is_triggered_only = yes	
-	option = { 
+	option = { #폴란드 반응
 		name = BA_generic_event.14.a
-		add_stability = -0.20
-		set_country_flag = SOV_UKR_dokrib_yes
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 834
+		trigger = {
+			original_tag = POL
+		}
+	}
+	option = { #소련 반응
+		name = BA_generic_event.14.b
+		trigger = {
+			original_tag = SOV
+		}
+		SOV = {
+			every_owned_state = {
+				limit = {
+					NOT = {
+						is_core_of = POL
+					}
+					is_core_of = UKR
+				}
+				add_compliance = -10
+				add_resistance = 10
+				add_dynamic_modifier = {
+					modifier = POL_UNA_modifier
+					scope = POL
 				}
 			}
-			834 = {
-				set_demilitarized_zone = yes
-			}
 		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 766
-				}
-			}
-			766 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 199
-				}
-			}
-			199 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 198
-				}
-			}
-			198 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 192
-				}
-			}
-			192 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 93
-				}
-			}
-			93 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 91
-				}
-			}
-			91 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 89
-				}
-			}
-			89 = {
-				set_demilitarized_zone = yes
-			}
-		}
-		if = { #
-			limit = { 
-				SOV = {
-					controls_state = 80
-				}
-			}
-			80 = {
-				set_demilitarized_zone = yes
-			}
-		}
-    } 
+}
 }
 country_event = {
 	id = BA_generic_event.15 #동아프리카 통합
