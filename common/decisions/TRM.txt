@@ -2211,6 +2211,7 @@ TRN_country_collapse_decisions = {
 					controls_state = 62
 					controls_state = 63
 					controls_state = 64
+					controls_state = 1039
 					controls_state = 65
 					controls_state = 66
 					controls_state = 67
@@ -2228,6 +2229,7 @@ TRN_country_collapse_decisions = {
 					controls_state = 62
 					controls_state = 63
 					controls_state = 64
+					controls_state = 1039
 					controls_state = 65
 					controls_state = 66
 					controls_state = 67
@@ -5998,7 +6000,6 @@ TRM_kivotos_core_states_categories = {
                 1027 = { is_owned_or_subject_trigger = yes }
                 851 = { is_owned_or_subject_trigger = yes }
                 31 = { is_owned_or_subject_trigger = yes }
-                806 = { is_owned_or_subject_trigger = yes }
                 19 = { is_owned_or_subject_trigger = yes }
                 1020 = { is_owned_or_subject_trigger = yes }
                 1019 = { is_owned_or_subject_trigger = yes }
@@ -6028,7 +6029,6 @@ TRM_kivotos_core_states_categories = {
 			state = 1027
 			state = 851
 			state = 31
-			state = 806
 			state = 19
 			state = 1020
 			state = 1019
@@ -7337,7 +7337,7 @@ TRN_Mika_honor_decision_cat = {
 		complete_effect = {
 
 			IF = {
-				limit = { has_idea = TRN_new_culture_militarism_ns }
+				limit = { has_country_flag = TRN_new_culture_select_militarism }
 				add_war_support = 0.04
 				add_stability  = -0.02
 
@@ -7417,13 +7417,7 @@ TRN_Mika_honor_decision_cat = {
 
 			IF = {
 				limit = {
-					OR = {
-						has_idea = TRN_new_culture_militarism_ns
-						has_idea = TRN_new_culture_militarism_aliance_of_faith_ns
-						has_idea = TRN_new_culture_militarism_aliance_of_faith_uprade_ns
-						has_idea = TRN_new_culture_militarism_german_thinkers_ns
-						has_idea = TRN_new_culture_militarism_german_thinkers_upgrade_ns
-					}
+					has_country_flag = TRN_new_culture_select_militarism
 				}
        			add_power_balance_value = {
        			    id = TRM_power_balance
@@ -9022,15 +9016,10 @@ TRN_Mika_social_problem_cat = {
 
 		available = {
 			has_country_flag = TRN_Mika_social_trinity_language_flag
-			OR = {
-				AND = {
-					has_completed_focus = TRN_reconstruction_of_collapsed_industry
-					has_completed_focus = TRN_revitalization_of_heavy_industry
-				}
-				num_of_factories > 79
-			}
-			OR = {
-				has_completed_focus = TRN_fate_of_german_culture
+			has_completed_focus = TRN_fate_of_german_culture # 오직 미카 루트에서면 완료할 수 있는 중점입니다. 추후에 OR을 달아 수정해야 합니다.
+			NOT = {
+				country_exists = GEM
+				country_exists = GEH
 			}
 		}
 		complete_effect = {

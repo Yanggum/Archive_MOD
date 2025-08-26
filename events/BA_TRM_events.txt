@@ -3213,7 +3213,7 @@ country_event = { # 미카의 트리니티가 전쟁 하면 이 이벤트가 보
 	picture = GFX_report_event_chamberlain
 
 	is_triggered_only = yes
-    fire_only_once = no
+    	fire_only_once = no
 
 	option = { # 중점 잠구기
 		name = TRMDIP.16.a
@@ -5624,7 +5624,7 @@ country_event = { # 디버그 이벤트
 			transfer_state = 7
 			transfer_state = 980
 			create_country_leader = {
-				name = "TRN_gkskzh"
+				name = "TRN_Urawa_Hanako"
 				desc = ""
 				picture = "gfx/leaders/TRN/TRN_Urawa_Hanako_Stewardess_Portrait.tga"
 				expire = "1965.1.1"
@@ -6816,8 +6816,8 @@ country_event = { # 구호기사단 탈주
 					OR = {
 						is_character = TRN_Aomori_Mine #미네
 						
-						is_character = TRN_tmaltpflsk #세리나
-						is_character = TRN_dktkrkdhgkskdp #하나에
+						is_character = TRN_Sumi_Serina #세리나
+						is_character = TRN_Asagao_Hanae #하나에
 
 					}
 				}
@@ -6870,11 +6870,11 @@ country_event = { # 구호기사단 탈주
 			}
 			
 			add_advisor_role = {
-				character = TRN_tmaltpflsk
+				character = TRN_Sumi_Serina
 				
 				advisor={
 					slot = political_advisor
-					idea_token = TRN_tmaltpflsk_political_advisor
+					idea_token = TRN_Sumi_Serina_political_advisor
 					ledger = army
 					traits = {
 						head_of_intelligence
@@ -6887,11 +6887,11 @@ country_event = { # 구호기사단 탈주
 			}
 			
 			add_advisor_role = {
-				character = TRN_dktkrkdhgkskdp
+				character = TRN_Asagao_Hanae
 				
 				advisor={
 					slot = theorist
-					idea_token = TRN_tmaltpflsk_theorist
+					idea_token = TRN_Sumi_Serina_theorist
 					ledger = army
 					traits = {
 						military_theorist
@@ -9284,6 +9284,7 @@ country_event = { # 상투스 분파의 운명
 		custom_effect_tooltip = TRM_sanctus_del_tt
 		set_variable = { TRM_internal_factions_remove_var = 1 } #지울 세력 코드
 		TRM_internal_factions_slot_remove = yes #지우는 스크립티드이펙트
+		BA_ban_communism_effect = yes
     }
 }
 country_event = { # 필리우스 분파의 운명
@@ -9330,6 +9331,7 @@ country_event = { # 필리우스 분파의 운명
 		hidden_effect = {
 			TRN_Kirifuji_Nagisa = { set_character_flag = TRN_nagisa_in_jail }
 		}
+		BA_ban_neutrality_effect = yes
     }
 }
 country_event = { # 대법관 임명
@@ -9360,6 +9362,7 @@ country_event = { # 파테르 분파 내부의 불충
 		custom_effect_tooltip = TRM_pater_union_tt
 		set_variable = { TRM_internal_factions_remove_var = 0 } #지울 세력 코드
 		TRM_internal_factions_slot_remove = yes #지우는 스크립티드이펙트
+		BA_ban_democratic_effect = yes
 		
 		set_politics = { ruling_party = fascism elections_allowed = no }
 		effect_tooltip = {
@@ -9379,7 +9382,7 @@ country_event = { # 파테르 분파 내부의 불충
 			remove_country_leader_trait = TRM_pater_faction
 			promote_character = {
 				character = TRN_empty
-				ideology = tea_party_ideology
+				ideology = democratic
 			}
 		}
     }
@@ -9725,11 +9728,26 @@ country_event = { # 트리니티 교육과정
 		ai_chance = { 
 			base = 0
 		}
+		set_country_flag = TRN_new_culture_select_militarism
 		add_power_balance_value = {
 			id = TRM_power_balance
 			value = 0.05
 		}
-		add_ideas = TRN_new_culture_militarism_ns
+		#add_ideas = TRN_new_culture_militarism_ns
+		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = -0.06
+			tooltip = stability_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_experience_gain_army_factor = 0.1
+			tooltip = experience_gain_army_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_experience_loss_factor = -0.1
+			tooltip = experience_loss_factor_tt
+		}
+		custom_effect_tooltip = tooltip_white_line
 		custom_effect_tooltip = TRN_honor_spread_of_militarism_upgrade_tt
     }
 
@@ -9738,11 +9756,22 @@ country_event = { # 트리니티 교육과정
 		ai_chance = { 
 			base = 10 
 		}
+		set_country_flag = TRN_new_culture_select_technologia
 		add_power_balance_value = {
 			id = TRM_power_balance
 			value = -0.05
 		}
-		add_ideas = TRN_new_culture_culture_technology_ns
+		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = 0.03
+			tooltip = stability_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_research_speed_factor = 0.03
+			tooltip = research_speed_factor_tt
+		}
+		custom_effect_tooltip = tooltip_white_line
+		#add_ideas = TRN_new_culture_culture_technology_ns
 		activate_targeted_decision = { target = TRM decision = TRN_honor_new_curriculum_support }
     }
 }
@@ -9758,15 +9787,48 @@ country_event = {
 
 	option = {
 		name = trinityculture.1.a
+		add_dynamic_modifier = {
+			modifier = TRN_Trinity_New_Culture_modifier
+		}
+	}
+}
+
+country_event = {
+	id = trinityculture.2
+	title = trinityculture.2.t
+	desc = trinityculture.2.desc
+	picture = GFX_report_event_generic_modernism
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinityculture.2.a
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.05
+		}
+
+		add_to_variable = {
+			TRN_TNC_modifier_production_speed_buildings_factor = 0.1
+			tooltip = production_speed_buildings_factor_tt
+		}
 	}
 
 	option = {
-		name = trinityculture.1.b
-	}
+		name = trinityculture.2.b
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
 
-	after = {
-		add_dynamic_modifier = {
-			modifier = TRN_Trinity_New_Culture_modifier
+		add_to_variable = {
+			TRN_TNC_modifier_production_speed_buildings_factor = 0.05
+			tooltip = production_speed_buildings_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_global_building_slots_factor = 0.1
+			tooltip = global_building_slots_factor_tt
 		}
 	}
 }
@@ -10249,7 +10311,6 @@ country_event = { #게헨나 항복 이벤트
 	immediate = { set_global_flag = TRINITY_WON_THE_GEHENNA }
 	trigger = {
 		original_tag = TRM
-		has_global_flag = BA_Trinity_Gehenna_War
 		has_government = fascism
 		NOT = { has_global_flag = TRINITY_WON_THE_GEHENNA }
         TRM = {
@@ -10555,6 +10616,43 @@ country_event = { # 탈나치화 운동
     }
 }
 
+country_event = { # 사민당과 접촉
+	id = trinity.52
+	title = trinity.52.t
+	desc = trinity.52.desc
+	picture = GFX_report_event_generic_SPD
+	
+	is_triggered_only = yes
+     fire_only_once = no
+
+	option = { 
+		name = trinity.52.a
+		custom_effect_tooltip = TRN_trinity_contact_SPD_tooltip
+    }
+}
+
+country_event = { # 사민당과 접촉
+	id = trinity.53
+	title = trinity.53.t
+	desc = trinity.53.desc
+	picture = GFX_report_event_generic_SPD
+	
+	is_triggered_only = yes
+     fire_only_once = no
+
+	option = { 
+		name = trinity.53.a
+		65 = {
+			add_dynamic_modifier = { modifier = TRN_SPD_parteitag_state }
+		}
+		set_country_flag = TRN_trinity_available_SPD_flag
+		custom_effect_tooltip = available_political_advisor
+		show_ideas_tooltip = TRN_julius_leber_political_advisor
+		show_ideas_tooltip = TRN_kurt_schumacher_political_advisor
+    }
+}
+
+
 unit_leader_event = { # 나기나기의 호스트 취임 - 이벤트 아이디는 임시이며 추후 수정해야 합니다.
 	id = trinity.1000
 	title = trinity.1000.t
@@ -10752,6 +10850,57 @@ country_event = { # 문제 -  파괴된 트리니티 상징물
 	}
 }
 
+country_event = { # 사민당과 협력을 완료 했을때 일정 효과를 받는거 나옴
+	id = trnsocial.7
+	title = trnsocial.7.t
+	desc = trnsocial.7.desc
+	picture = GFX_report_event_generic_SPD
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trnsocial.7.a 
+		custom_effect_tooltip = TRM_CF_modifier_tt
+		add_to_variable = {
+			TRM_pro_german_propaganda_conscription_factor = 0.01
+			tooltip = conscription_factor_tt
+		}
+	}
+}
+
+country_event = { # 사민당과 협력을 완료 했을때 일정 효과를 받는거 나옴
+	id = trnsocial.8
+	title = trnsocial.8.t
+	desc = trnsocial.8.desc
+	picture = GFX_report_event_generic_SPD
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trnsocial.8.a 
+		TRN_Social_Problem_effect = yes
+	}
+
+	option = { #  
+		name = trnsocial.8.a 
+		TRN_Social_Problem_effect = yes
+	}
+
+	option = { #  
+		name = trnsocial.8.a 
+		TRN_Social_Problem_effect = yes
+	}
+
+	option = { #  
+		name = trnsocial.8.a 
+		TRN_Social_Problem_effect = yes
+	}
+}
+
 country_event = { # 명예 - 구호기사단 무인 병동에서의 강도 사건
 	id = trnhonor.1
 	title = trnhonor.1.t
@@ -10766,6 +10915,8 @@ country_event = { # 명예 - 구호기사단 무인 병동에서의 강도 사�
 		name = trnhonor.1.a
 		set_temp_variable = { TRN_Honor_change = 3 }
 		TRN_add_Honor = yes
+
+		add_political_power = -30
 	}
 
 	option = { # 안 도와준다.
@@ -10787,7 +10938,7 @@ country_event = { # 명예 - 츠루기의 과잉 진압
 
 	option = { # 도와준다
 		name = trnhonor.2.a
-		add_political_power = -40
+		add_political_power = -30
 		set_temp_variable = { TRN_Honor_change = 3 }
 		TRN_add_Honor = yes
 	}
@@ -10827,6 +10978,8 @@ country_event = { # 명예 - 혼자 티파티
 
 	option = { # 추억을 떠올리며 사색에 잠겼다.
 		name = trnhonor.4.a
+		add_political_power = -15
+		add_stability = -0.03
 		set_temp_variable = { TRN_Honor_change = -3 }
 		TRN_add_Honor = yes
 	}
@@ -10961,7 +11114,7 @@ news_event = { # 아이돌 마리
 		name = trinitynews.3.a
 		trigger = { original_tag = TRM }
 		TRM = {
-			TRN_akfl = {
+			TRN_Iochi_Mari = {
 				unit_leader_event = { id = trnfla.1000 }
 			}
 		}
@@ -11164,7 +11317,7 @@ unit_leader_event = { # 아이돌 마리 - 1
 			base = 10
 		}
 		custom_effect_tooltip = trn_idol_portrait_tt
-		TRN_akfl = {
+		TRN_Iochi_Mari = {
 			set_portraits = {
 				army = { 
 					large = GFX_TRN_Iochi_Mari_Idol_Portrait 
@@ -11181,7 +11334,7 @@ unit_leader_event = { # 아이돌 마리 - 1
 		ai_chance = {
 			base = 90
 		}
-		TRN_akfl = {
+		TRN_Iochi_Mari = {
 			set_portraits = {
 				army = { 
 					large = GFX_TRN_Iochi_Mari_Portrait 
@@ -11206,7 +11359,7 @@ unit_leader_event = { # 아이돌 마리 - 2
 	option = { # 좋아해 줘! 좀 더! 나를 바라봐 줘! 좀 더!
 		name = trnfla.1001.a
 		add_trait = { 
-			character = TRN_akfl
+			character = TRN_Iochi_Mari
 			trait = media_personality 
 		}
 		custom_effect_tooltip = trnfla_1001_tt
@@ -11582,7 +11735,12 @@ unit_leader_event = { # 우이 당황
 
 	option = {
 		name = trnfla.18.a 
-		effect_tooltip = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		if = {
+			limit = { 
+				has_focus_tree = Trinity_focus
+			}
+			effect_tooltip = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		}
 	}
 }
 unit_leader_event = { # 얄마르 샤흐트
@@ -11909,6 +12067,108 @@ country_event = { #
 	}
 }
 
+unit_leader_event = { # 
+	id = trnfla.38
+	title = {
+		text = trnfla.38.t.Yoshimi
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Ibaragi_Yoshimi has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	title = {
+		text = trnfla.38.t.Airi
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Kurimura_Airi has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	title = {
+		text = trnfla.38.t.Natsu
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Yutori_Natsu has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	desc = {
+		text = trnfla.38.d.Yoshimi
+		trigger = { 
+			THIS = { is_character = TRN_Ibaragi_Yoshimi has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	desc = {
+		text = trnfla.38.d.Airi
+		trigger = { 
+			THIS = { is_character = TRN_Kurimura_Airi has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	desc = {
+		text = trnfla.38.d.Natsu
+		trigger = { 
+			THIS = { is_character = TRN_Yutori_Natsu has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	
+	is_triggered_only = yes
+	trigger = {
+		THIS = {
+			has_trait = trait_TRN_lack_of_experience
+			OR = {
+				is_character = TRN_Ibaragi_Yoshimi
+				is_character = TRN_Kurimura_Airi
+				is_character = TRN_Yutori_Natsu
+			}
+		}
+
+	}
+	option = {
+		name = trnfla.38.Yoshimi
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Ibaragi_Yoshimi }
+		}
+	}
+	option = {
+		name = trnfla.38.Airi
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Kurimura_Airi }
+		}
+	}
+	option = {
+		name = trnfla.38.Natsu
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Yutori_Natsu }
+		}
+	}
+    after = {
+		THIS = {
+			remove_unit_leader_trait =  trait_TRN_lack_of_experience
+			random_list = {
+				1 = { add_attack = 1}
+				1 = { add_planning = 1 }
+				1 = { add_logistics = 1 }
+			}
+		}
+    }
+}
+
+country_event = { # 
+	id = trnfla.39
+	title = trnfla.39.t
+	desc = trnfla.39.desc
+	picture = GFX_report_event_gehenna_haruna
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trnfla.39.a
+
+	}
+}
+
 country_event = { # 
 	id = trnfla.9999
 	title = trnfla.9999.t
@@ -11925,11 +12185,11 @@ country_event = { #
 			set_portraits = {
 				civilian = { 
 					large = GFX_Portrait_TRN_swim_Nagisa 
-					small = GFX_TRN_Kirifuji_Nagisa_idea_swimsuit
+					small = GFX_idea_TRN_Kirifuji_Nagisa_idea_swimsuit
 				}
 				army = { 
 					large = GFX_Portrait_TRN_swim_Nagisa 
-					small = GFX_TRN_Kirifuji_Nagisa_idea_swimsuit
+					small = GFX_idea_TRN_Kirifuji_Nagisa_idea_swimsuit
 				}
 			}
 		}
@@ -11937,11 +12197,11 @@ country_event = { #
 			set_portraits = {
 				civilian = { 
 					large = GFX_Portrait_TRN_swim_Mika 
-					small = GFX_TRN_Misono_Mika_swimsuit
+					small = GFX_idea_TRN_Misono_Mika_swimsuit
 				}
 				army = { 
 					large = GFX_Portrait_TRN_swim_Mika 
-					small = GFX_TRN_Misono_Mika_swimsuit
+					small = GFX_idea_TRN_Misono_Mika_swimsuit
 				}
 			}
 		}
@@ -11949,11 +12209,11 @@ country_event = { #
 			set_portraits = {
 				civilian = { 
 					large = GFX_Portrait_TRN_swim_Seia 
-					small = GFX_TRN_Yurizono_Seia_swimsuit
+					small = GFX_idea_TRN_Yurizono_Seia_swimsuit
 				}
 				army = { 
 					large = GFX_Portrait_TRN_swim_Seia 
-					small = GFX_TRN_Yurizono_Seia_swimsuit
+					small = GFX_idea_TRN_Yurizono_Seia_swimsuit
 				}
 			}
 		}
@@ -11962,6 +12222,70 @@ country_event = { #
 	option = {
 		name = trnfla.9999.a
 		custom_effect_tooltip = "https://discord.gg/kddrRNS6dt"
+	}
+}
+
+country_event = { # 
+	id = trnfla.10000
+	title = trnfla.9999.t
+	desc = trnfla.9999.desc
+	picture = GFX_report_event_picture_pius_XI
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	hidden = yes
+
+	immediate = {
+		TRN_Kyoyama_Kazusa = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_band_Kazusa 
+					small = GFX_idea_TRN_Band_Kyoyama_Kazusa
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Kazusa 
+					small = GFX_idea_TRN_Band_Kyoyama_Kazusa
+				}
+			}
+		}
+		TRN_Yutori_Natsu = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_band_Natsu 
+					small = GFX_idea_TRN_Band_Yutori_Natsu
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Natsu 
+					small = GFX_idea_TRN_Band_Yutori_Natsu
+				}
+			}
+		}
+		TRN_Ibaragi_Yoshimi = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_BlueArchive_TRM_Ibaragi_Yoshimi 
+					small = GFX_idea_TRN_Band_Ibaraki_Yoshimi
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Yoshimi 
+					small = GFX_idea_TRN_Band_Ibaraki_Yoshimi
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trnfla.9999.a
+		TRN_Yutori_Natsu = {
+			add_skill_level = 2
+		}
+		TRN_Kurimura_Airi = {
+			add_skill_level = 2
+		}
+		TRN_Ibaragi_Yoshimi = {
+			add_skill_level = 2
+		}
 	}
 }
 

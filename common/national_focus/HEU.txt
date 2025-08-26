@@ -4,6 +4,7 @@ focus_tree = {
 	id = HEU
 	continuous_focus_position = { x = 5200 y = 1300 } 
 	shared_focus = BA_new_world_technology
+	shared_focus = GEAC_unified_but_divided_gehenna_academy
 	shared_focus = Eden_formation_of_alliance_treaty_organization
 	country = {
 		factor = 0
@@ -1289,10 +1290,7 @@ focus_tree = {
 		y = 2
 
 		available = {
-            custom_trigger_tooltip = {
-                tooltip = THIS_IS_WIP_TT
-			    has_country_flag = GAEBALJUNG
-            }
+
 		}
 
 		bypass = {
@@ -1341,14 +1339,7 @@ focus_tree = {
 						}
 					}
 				}
-			
-				add_dynamic_modifier = {
-					modifier = HEU_rikuhachimaism_idea
-				}
 			}
-
-
-			add_ideas = HEU_civil_rights_idea
 
 			set_country_flag = HEU_the_end_of_benriya_flag
 
@@ -1358,7 +1349,19 @@ focus_tree = {
 			}
 
 			hidden_effect = {
-				BA_ban_democratic_effect = yes
+				HEU_pierre_dupong = {
+					remove_country_leader_role = {
+						ideology = conservatism
+					}
+				}
+				
+				add_country_leader_role = {
+					character = HEU_etienne_schmit
+					promote_leader = yes
+					country_leader = {
+						ideology = Social_Liberalism
+					}
+				}
 
 				add_popularity = {
 					ideology = fascism
@@ -1373,8 +1376,13 @@ focus_tree = {
 
 				set_party_name = {
 					ideology = neutrality
-					long_name = HEU_pro_kayoko_party
+					long_name = HEU_pro_kayoko_party_long
 					name = HEU_pro_kayoko_party
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = HEU_PRL_party_long
+					name = HEU_PRL_party
 				}
 
 				swap_ideas = {
@@ -1396,12 +1404,11 @@ focus_tree = {
 					name = HEU_pro_mutsuki_party
 				}
 
-
 				add_country_leader_role = {
 					character = HEU_ancmzl
 					promote_leader = yes
 					country_leader = {
-						ideology = pure_socialism
+						ideology = artnocracy_fascism
 						desc = "HEU_mutsuki_asagi_fascist_leader_desc"
 						traits = { 
 							HEU_evil_mutsuki
@@ -1414,17 +1421,19 @@ focus_tree = {
 					promote_leader = yes
 					country_leader = {
 						ideology = centrism
-						#desc = "HEU_aru_fascist_leader_desc"
-						#traits = { 
-						#	HEU_ARU_T1
-						#	HEU_regent_of_luxembourg
-						#}
 					}
+				}
+			
+				add_dynamic_modifier = {
+					modifier = HEU_luxembourg_administration_idea
 				}
 
 			}
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
+
+# **가짜** 아루 중점 트리 시작
 
 	focus = {
 		id = HEU_neutralization_rietspartei
@@ -1454,6 +1463,10 @@ focus_tree = {
 
 		bypass = {
 
+		}
+
+		allow_branch = {
+			NOT = { has_completed_focus = HEU_no_more_hope }
 		}
 
 		completion_reward = {
@@ -1983,6 +1996,497 @@ focus_tree = {
 		}
 	}
 
+# 가짜 아루 중점 트리 끝
+
+	focus = {
+		id = HEU_our_mutsuki_government
+		
+		relative_position_id = HEU_no_more_hope
+
+		icon = GFX_goal_HEU_our_mutsuki_government
+
+		prerequisite = { 
+			focus = HEU_no_more_hope
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -2
+		y = 1
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		allow_branch = {
+			has_completed_focus = HEU_no_more_hope
+		}
+
+		completion_reward = {
+			HEU_bop_medium_decrease_effect = yes
+
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.2
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_focus_on_french_language
+		
+		relative_position_id = HEU_our_mutsuki_government
+
+		icon = GFX_goal_FRA_focus_resistance
+
+		prerequisite = { 
+			focus = HEU_our_mutsuki_government
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -1
+		y = 1
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_research_speed_factor = 0.03
+				tooltip = research_speed_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_divide_and_rule_1
+		
+		relative_position_id = HEU_focus_on_french_language
+
+		icon = GFX_goal_HEU_gehenna 
+
+		prerequisite = { 
+			focus = HEU_focus_on_french_language
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -1
+		y = 1
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			add_ideas = HEU_civil_rights_idea
+
+		}
+	}
+
+	focus = {
+		id = HEU_divide_and_rule_2
+		
+		relative_position_id = HEU_focus_on_french_language
+
+		icon = GFX_focus_ARG_defense_and_democracy
+
+		prerequisite = { 
+			focus = HEU_divide_and_rule_1
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 0
+		y = 2
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			add_ideas = HEU_liberty_equality_and_fraternity
+		}
+	}
+
+	focus = {
+		id = HEU_divide_and_rule_3
+		
+		relative_position_id = HEU_focus_on_french_language
+
+		icon = GFX_goal_HEU_luxembourg_soldier_focus
+
+		prerequisite = { 
+			focus = HEU_divide_and_rule_2
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -1
+		y = 3
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = HEU_doing_nothing_is_the_best_policy
+		
+		relative_position_id = HEU_our_mutsuki_government
+
+		icon = GFX_focus_TRN_kivotos_dip
+
+		prerequisite = { 
+			focus = HEU_our_mutsuki_government
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 1
+		y = 1
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_modifier_army_sub_unit_category_halo_org_recovery_cap_factor = 0.03
+				tooltip = HEU_rikuhachimaism_infrastructure_for_disabled_1_tt
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_mutsuki_shogunate_1
+		
+		relative_position_id = HEU_doing_nothing_is_the_best_policy
+
+		icon = GFX_goal_HEU_mutsuki_shogunate_1
+
+		prerequisite = { 
+			focus = HEU_doing_nothing_is_the_best_policy
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 1
+		y = 1
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_stability_factor = -0.05
+				tooltip = stability_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_conscription_factor = 0.1
+				tooltip = conscription_factor_tt
+			}
+
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = HEU_mutsuki_shogunate_2
+		
+		relative_position_id = HEU_doing_nothing_is_the_best_policy
+
+		icon = GFX_goal_Perfect_team_zero_congress
+
+		prerequisite = { 
+			focus = HEU_mutsuki_shogunate_1
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 0
+		y = 2
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			mio:generic_kivotos_infantry_equipment_organization = {
+				add_mio_size = 1
+			}
+
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_stability_factor = -0.05
+				tooltip = stability_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_mutsuki_shogunate_3
+		
+		relative_position_id = HEU_doing_nothing_is_the_best_policy
+
+		icon = GFX_goal_GEH_flag
+
+		prerequisite = { 
+			focus = HEU_mutsuki_shogunate_2
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 1
+		y = 3
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_non_core_manpower = 0.02
+				tooltip = non_core_manpower_tt
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_mutsuki_path_1
+		
+		relative_position_id = HEU_our_mutsuki_government
+
+		icon = GFX_goal_HEU_mutsuki_path_1
+
+		prerequisite = { 
+			focus = HEU_our_mutsuki_government
+		}
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 0
+		y = 2
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			division_template = { #흥신소 돌격대
+				name = "Benriya Sturmabteilung" 
+				division_names_group = KIV_SEC_01
+				#template_counter = 68
+				is_locked = yes
+				force_allow_recruiting = yes
+				division_cap = 0
+
+				regiments = { 
+					halo_militia = { x = 0 y = 0 }
+					halo_militia = { x = 0 y = 1 }
+					halo_militia = { x = 0 y = 2 }
+					halo_militia = { x = 1 y = 0 }
+					halo_militia = { x = 1 y = 1 }
+					halo_militia = { x = 1 y = 2 }
+				}
+				support = { 
+					halo_recon = { x = 0 y = 0 }
+				}
+			}
+
+			set_division_template_cap = {
+				division_template = "Benriya Sturmabteilung"
+				division_cap = halo_militia_cap
+			}
+
+			capital_scope = {
+				create_unit = {
+					division = "division_template = \"Benriya Sturmabteilung\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = ROOT
+					count = 5
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_mutsuki_path_2
+		
+		relative_position_id = HEU_our_mutsuki_government
+
+		icon = GFX_goal_HEU_mutsuki_path_2
+
+		prerequisite = { 
+			focus = HEU_mutsuki_path_1
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = 0
+		y = 4
+
+		available = {
+			has_completed_focus = HEU_divide_and_rule_3
+			has_completed_focus = HEU_mutsuki_shogunate_3
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = kivotos_halo_add6_tt
+			hidden_effect = {
+				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
+				BA_halo_infantry_cap_edit_effect = yes
+			}
+
+			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			add_to_variable = {
+				HEU_aru_var_war_support_factor = 0.1
+				tooltip = war_support_factor_tt
+			}
+
+			add_political_power = -100
+			add_stability = -0.1
+		}
+	}
+
 	### 외교 중점 (자립) ###
 
 	focus = {
@@ -1999,7 +2503,7 @@ focus_tree = {
 
 		available = {
 			OR = {
-				has_completed_focus = HEU_neutralization_rietspartei
+				has_completed_focus = HEU_mutsuki_path_2
 				has_completed_focus = HEU_luxembourgism_focus_1
 			}
 		}
@@ -2548,7 +3052,26 @@ focus_tree = {
 			add_stability = -0.05
 			HEU_bop_medium_decrease_effect = yes
 			hidden_effect = {
-				BA_ban_democratic_effect = yes
+				
+				HEU_pierre_dupong = {
+					remove_country_leader_role = {
+						ideology = conservatism
+					}
+				}
+				
+				add_country_leader_role = {
+					character = HEU_victor_bodson
+					promote_leader = yes
+					country_leader = {
+						ideology = socialism
+					}
+				}
+				
+				set_party_name = {
+					ideology = democratic
+					long_name = HEU_LSAP_party_long
+					name = HEU_LSAP_party
+				}
 				
 				set_party_name = {
 					ideology = neutrality
@@ -2575,7 +3098,7 @@ focus_tree = {
 		
 		relative_position_id = HEU_watch_right_wing_party
 
-		icon = GFX_focus_attack_germany
+		icon = GFX_focus_ger_revive_kaiserreich
 
 		prerequisite = { 
 			focus = HEU_watch_right_wing_party 
@@ -2611,11 +3134,11 @@ focus_tree = {
 				popularity = 0.1
 			}
 
-			effect_tooltip = {
-				HEU_pierre_prum = { retire = yes }
-			}
+			#effect_tooltip = {
+			#	HEU_pierre_prum = { retire = yes }
+			#}
 
-			set_country_flag = HEU_remove_pro_nazi
+			#set_country_flag = HEU_remove_pro_nazi
 			
 			add_country_leader_role = {
 				character = HEU_aru
@@ -4389,8 +4912,13 @@ focus_tree = {
 		y = 1
 
 		available = {
-			has_dynamic_modifier = {
-				modifier = HEU_rikuhachimaism_idea
+			OR = {
+				has_dynamic_modifier = {
+					modifier = HEU_rikuhachimaism_idea
+				}
+				has_dynamic_modifier = {
+					modifier = HEU_luxembourg_administration_idea
+				}
 			}
 		}
 
@@ -4480,8 +5008,19 @@ focus_tree = {
 				BA_halo_infantry_cap_edit_effect = yes
 			}
 			add_manpower = 15000
-			
-			custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
 			add_to_variable = {
 				HEU_aru_var_modifier_army_sub_unit_halo_infantry_attack_factor = 0.05
 				tooltip = HEU_rikuhachimaism_focus_3_1_tt
@@ -4558,7 +5097,19 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			
-			custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
 			add_to_variable = {
 				HEU_aru_var_stability_factor = 0.05
 				tooltip = stability_factor_tt
@@ -4593,6 +5144,12 @@ focus_tree = {
 				AND = {
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_1 }
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_2 }
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_no_imprison_tt
+				AND = {
+					NOT = { has_country_flag = HEU_the_end_of_benriya_flag }
 				}
 			}
 		}
@@ -4654,6 +5211,12 @@ focus_tree = {
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_2 }
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_no_imprison_tt
+				AND = {
+					NOT = { has_country_flag = HEU_the_end_of_benriya_flag }
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -4706,6 +5269,12 @@ focus_tree = {
 				AND = {
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_1 }
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_2 }
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_no_imprison_tt
+				AND = {
+					NOT = { has_country_flag = HEU_the_end_of_benriya_flag }
 				}
 			}
 		}
@@ -4774,6 +5343,12 @@ focus_tree = {
 					NOT = { has_country_leader_with_trait = HEU_aru_depression_2 }
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = HEU_no_imprison_tt
+				AND = {
+					NOT = { has_country_flag = HEU_the_end_of_benriya_flag }
+				}
+			}
 		}
 		
 		search_filters = {  }
@@ -4833,7 +5408,19 @@ focus_tree = {
 				category = special_forces_doctrine
 			}
 			
-			custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
 			add_to_variable = {
 				HEU_aru_var_war_support_factor = 0.05
 				tooltip = war_support_factor_tt
@@ -7127,8 +7714,13 @@ focus_tree = {
 		y = 3
 
 		available = { 
-			has_dynamic_modifier = {
-				modifier = HEU_rikuhachimaism_idea
+			OR = {
+				has_dynamic_modifier = {
+					modifier = HEU_rikuhachimaism_idea
+				}
+				has_dynamic_modifier = {
+					modifier = HEU_luxembourg_administration_idea
+				}
 			}
 		}
 
@@ -7586,6 +8178,14 @@ focus_tree = {
 
 		prerequisite = { 
 			focus = HEU_gehenna_labour_council_3 
+		}
+
+		available = {
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = HEU_luxembourg_administration_idea
+				}
+			}
 		}
 
 		cost = 10.00
