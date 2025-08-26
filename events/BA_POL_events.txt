@@ -1667,6 +1667,11 @@ country_event = {
 	option = { 
 		name = BA_pol_event.34.a
 		add_ideas = POL_no_flood
+		hidden_effect = {
+			POL = {
+				country_event = BA_pol_event.45
+			} 
+		}
 	}
 }
 country_event = { # 인터마리움 형성 이벤트
@@ -2079,6 +2084,10 @@ country_event = { #밸라루스 의용대
 		trigger = {
 			original_tag = POL
 		}
+		set_autonomy = {
+			target = BLR
+			autonomy_state = autonomy_supervised_state
+		}
 	}
 	option = { #소련 반응
 		name = BA_pol_event.43.b
@@ -2123,6 +2132,179 @@ country_event = { #밸라루스 의용대
 			add_dynamic_modifier = {
 				modifier = POL_BVA_modifier
 				scope = POL
+			}
+		}
+	}
+}
+country_event = { #반소련 민족주의 민병대 봉기
+	id = BA_pol_event.44
+	title = BA_pol_event.44.t
+	desc = BA_pol_event.44.d
+	picture = GFX_report_event_fascist_militia
+	is_triggered_only = yes
+	option = { #아이조아요
+		name = BA_pol_event.44.a
+		every_controlled_state = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = POL_UNA_modifier
+					scope = POL
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = POL_UNA_modifier
+			}
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							has_template = "Ukraine National Army" 
+						}
+					}
+				}
+				ROOT = {
+					division_template = {
+						name = "Ukraine National Army"
+						is_locked = yes
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							cavalry = { x = 0 y = 2 }
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+						}
+					}
+				}
+				create_unit = {
+					division = "name = \"Ukraine National Army\" division_template = \"Ukraine National Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+					owner = ROOT
+					count = 2
+				}
+				transfer_state_to = UKR
+			}
+		}
+		every_controlled_state = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = POL_BVA_modifier
+					scope = POL
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = POL_BVA_modifier
+			}
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							has_template = "Belarus Volunteer Army" 
+						}
+					}
+				}
+				ROOT = {
+					division_template = {
+						name = "Belarus Volunteer Army"
+						is_locked = yes
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+						}
+					}
+				}
+				create_unit = {
+					division = "name = \"Belarus Volunteer Army\" division_template = \"Belarus Volunteer Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+					owner = ROOT
+					count = 2
+				}
+				transfer_state_to = BLR
+			}
+		}
+		every_controlled_state = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = POL_FPV_modifier
+					scope = POL
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = POL_FPV_modifier
+			}
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							has_template = "Free Poland Volunteer" 
+						}
+					}
+				}
+				ROOT = {
+					division_template = {
+						name = "Free Poland Volunteer"
+						is_locked = yes
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+							militia = { x = 2 y = 0 }
+							militia = { x = 2 y = 1 }
+						}
+					}
+				}
+				create_unit = {
+					division = "name = \"Free Poland Volunteer\" division_template = \"Free Poland Volunteer\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+					owner = ROOT
+					count = 2
+				}
+				transfer_state_to = POL
+			}
+		}
+	}
+}
+country_event = { #위 이벤트 한무반복
+	id = BA_pol_event.45
+	title = BA_pol_event.44.t
+	desc = BA_pol_event.44.d
+	hidden = yes
+	picture = GFX_report_event_fascist_militia
+	is_triggered_only = yes
+	option = { #아이조아요
+		every_country = {
+			limit = {
+				is_ally_with = POL
+				has_war_with = SOV
+				any_state = {
+					OR = {
+						has_dynamic_modifier = {
+							modifier = POL_UNA_modifier
+							scope = POL
+						}
+						has_dynamic_modifier = {
+							modifier = POL_FPV_modifier
+							scope = POL
+						}
+						has_dynamic_modifier = {
+							modifier = POL_BVA_modifier
+							scope = POL
+						}
+					}
+					is_owned_by = PREV
+				}
+			}
+			country_event = BA_pol_event.44
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_ally_with = POL
+					has_war_with = SOV
+				}
+			}
+			country_event = {
+				id = BA_pol_event.45
+				days = 30
 			}
 		}
 	}

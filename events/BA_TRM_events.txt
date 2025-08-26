@@ -1669,7 +1669,7 @@ country_event = {  # 국판부 세울꺼임?
 	option = { # ㅇㅇ
 		name = TRM_event.69.a
 		custom_effect_tooltip = TRM_event_69_tt
-		unlock_decision_category_tooltip = TRM_kivotos_core_states_categories
+		unlock_decision_category_tooltip = TRN_Trinity_divine_mandate_cat
 		hidden_effect = {
 			TRM_NEW_ORDER_SOV_LOSE = yes
 			TRC = { set_cosmetic_tag = MIL_TRN }
@@ -8824,6 +8824,7 @@ add_namespace = trinitypartyconvention # 전당대회용
 add_namespace = trinityculture # 트리니티 문화 개조
 add_namespace = trnsocial # 사회문제발생!!
 add_namespace = trnhonor # 미카용 명예
+add_namespace = trndivine # 신성통치령 총독부
 ##
 # trinity 1-14, 33 = 인트로 및 시스템 이벤트
 # trinity 15-? = 미카용 이벤트
@@ -12165,6 +12166,42 @@ country_event = { #
 
 	option = {
 		name = trnfla.39.a
+
+	}
+}
+
+country_event = { # 폴린드 총독
+	id = trndivine.1
+	title = trndivine.1.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trndivine.1.a
+		event_target:Trinity_Puppet_POL = { 
+			add_ideas = TRN_trinity_controlled_divine_ns 
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		event_target:system = {
+			POL_wladyslaw_studnicki = { set_nationality =  event_target:Trinity_Puppet_POL}
+		}
+		event_target:Trinity_Puppet_POL = { 
+			add_country_leader_role = {
+				character = POL_wladyslaw_studnicki
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait conservative_nationalist_lar }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+		}
 
 	}
 }
