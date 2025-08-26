@@ -17,12 +17,45 @@ if = {
 	}
 }
 
+set_global_flag = scw_over
+
+if = {
+	limit = {
+		has_dlc = "Battle for the Bosporus"
+	}
+	set_technology = { camelry = 1 }
+}
+
+IF = {
+	limit = {
+		has_dlc = "Gotterdammerung"
+	}
+	complete_special_project = {
+		project = sp:sp_air_helicopter
+	}
+}
+
+set_popularities = {
+	democratic = 41
+	fascism = 37
+	communism = 7
+	neutrality = 15
+}
+for_each_scope_loop = {
+    array = core_states
+    
+    set_state_flag = SPR_original_core
+}
+
 if = {
 	limit = {
 		NOT = {
 			has_dlc = "La Resistance"
 		}
 	}
+	set_country_flag = scw_no_lar_nationalists
+	set_country_flag = scw_no_lar_republicans
+	
 	recruit_character = SPR_niceto_alcala_zamora
 	recruit_character = SPR_jose_diaz
 	recruit_character = SPR_alejandro_lerroux
@@ -60,53 +93,17 @@ if = {
 	recruit_character = SPR_francisco_largo_caballero
 	recruit_character = SPA_karl_pius_von_habsburg
 	recruit_character = SPR_manuel_azana
-
-	set_popularities = {
-		democratic = 47
-		fascism = 46
-		communism = 7
-	}
 }
-
-if = {
-	limit = {
-		has_dlc = "Battle for the Bosporus"
-	}
-	set_technology = { camelry = 1 }
-}
-
-IF = {
-	limit = {
-		has_dlc = "Gotterdammerung"
-	}
-	complete_special_project = {
-		project = sp:sp_air_helicopter
-	}
-}
-
-set_country_flag = SPR_nationalist_spain_flag
 
 if = {
 	limit = {
 		has_dlc = "La Resistance"
 	}
-	set_popularities = {
-		democratic = 41
-		fascism = 37
-		communism = 7
-		neutrality = 15
-	}
-	create_dynamic_country = {
-	    original_tag = SPR
-	    
-		set_politics = {
-			ruling_party = neutrality
-		}
-		set_cosmetic_tag = SPR_republican_spain_flag
-		set_research_slots = 3
-	    reserve_dynamic_country = yes
-	}
-	create_dynamic_country = {
+
+	set_country_flag = SPR_nationalist_spain_flag #SPA
+	set_country_flag = SPR_republican_spain_flag #SPD
+
+	create_dynamic_country = { #SPB
 	    original_tag = SPR
 	    set_country_flag = SPR_carlist_spain_flag
 	    set_politics = {
@@ -116,7 +113,7 @@ if = {
 		set_research_slots = 3
 	    reserve_dynamic_country = yes
 	}
-	create_dynamic_country = {
+	create_dynamic_country = { #SPC
 	    original_tag = SPR
 	    set_country_flag = SPR_anarchist_spain_flag
 	    set_politics = {
