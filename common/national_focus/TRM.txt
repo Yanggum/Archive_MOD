@@ -6709,7 +6709,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 11
 			tag = TRM
 		}
 	}
@@ -6734,18 +6734,9 @@ focus_tree = {
 	}
 
 	shortcut = {
-		name = TRN_trinity_diplomacy
-		target = TRN_impossible_to_coexist
-		scroll_wheel_factor = 1
-		trigger = {
-			always = yes
-		}
-	}
-
-	shortcut = {
-		name = TRN_trinity_policy
-		target = TRN_cause_of_trinity
-		scroll_wheel_factor = 1
+		name = TRN_trinity_Mika_policy
+		target = TRN_Integrity_of_Trinity
+		scroll_wheel_factor = 0.654
 		trigger = {
 			always = yes
 		}
@@ -7579,9 +7570,6 @@ focus_tree = {
 			hidden_effect = {
 				activate_targeted_decision = { decision = TRN_destroy_TVC target = ROOT }
 				news_event = { id = trinitynews.2 days = 2 }
-				BA_ban_democratic_effect = yes
-				BA_ban_communism_effect = yes
-				BA_ban_neutrality_effect = yes
 
 				TRM_hans_zehrer = { unit_leader_event = { id = trinity.39 days = 25 random_days = 25 } } # 한스 프리체
 				country_event = { id = trinity.37 days = 35 random_days = 125 } # 소규모 동아리들의 운명
@@ -7776,8 +7764,9 @@ focus_tree = {
 
 		}
 		select_effect = {
+			country_event = { id = trinityculture.1 days = 04 } # 트리니티 신 문화
 			country_event = { id = trinity.28 days = 08 } # 트리니티 교육과정
-			country_event = { id = trinityculture.1 days = 12 } # 건축 양식
+			country_event = { id = trinityculture.2 days = 12 } # 건축 양식
 		}
 		completion_reward = {
 			custom_effect_tooltip = TRN_new_trinity_culture_tt
@@ -7809,20 +7798,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = TRN_new_culture_militarism_ns }
-				swap_ideas = {
-					add_idea = 	TRN_new_culture_militarism_german_thinkers_ns
-					remove_idea = TRN_new_culture_militarism_ns
-				}
+			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+			add_to_variable = {
+				TRN_TNC_modifier_weekly_casualties_war_support = 0.003
+				tooltip =weekly_casualties_war_support_tt
 			}
-			if = {
-				limit = { has_idea = TRN_new_culture_culture_technology_ns }
-				swap_ideas = {
-					add_idea = TRN_new_culture_culture_technology_german_thinkers_ns
-					remove_idea = TRN_new_culture_culture_technology_ns
-				}
+			add_to_variable = {
+				TRN_TNC_modifier_conscription_factor = 0.06
+				tooltip = conscription_factor_tt
 			}
+			custom_effect_tooltip = tooltip_white_line
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = TRN_Carl_Schmitt_idea
 
@@ -7856,20 +7841,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = TRN_new_culture_militarism_ns }
-				swap_ideas = {
-					add_idea = TRN_new_culture_militarism_aliance_of_faith_ns
-					remove_idea = TRN_new_culture_militarism_ns
-				}
+			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+			add_to_variable = {
+				TRN_TNC_modifier_monthly_population = 0.2
+				tooltip = monthly_population_tt
 			}
-			if = {
-				limit = { has_idea = TRN_new_culture_culture_technology_ns }
-				swap_ideas = {
-					add_idea = TRN_new_culture_culture_technology_aliance_of_faith_ns
-					remove_idea = TRN_new_culture_culture_technology_ns
-				}
+			add_to_variable = {
+				TRN_TNC_modifier_stability_factor = 0.03
+				tooltip = stability_factor_tt
 			}
+			custom_effect_tooltip = tooltip_white_line
 			IF = {
 				limit = { 
 					has_power_balance = { id = TRM_power_balance }
@@ -7906,7 +7887,10 @@ focus_tree = {
 	focus = { # 기사단국 선언
 		id = TRN_Fourth_Reich
 		icon = GFX_goal_TRN_towards_national_revolution
-		prerequisite = { focus = TRN_hiring_german_thinkers }
+		prerequisite = { 
+			focus = TRN_hiring_german_thinkers 
+			focus = TRN_alliance_of_faith
+		}
 		x = 1
 		y = 1
 		relative_position_id = TRN_hiring_german_thinkers
@@ -7925,20 +7909,24 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRN_Fourth_Reich_tt
-			if = {
-				limit = { has_idea = TRN_new_culture_militarism_german_thinkers_ns }
-				swap_ideas = {
-					remove_idea = TRN_new_culture_militarism_german_thinkers_ns
-					add_idea = TRN_new_culture_militarism_german_thinkers_upgrade_ns
+
+			IF = {
+				limit = { has_country_flag = TRN_new_culture_select_militarism }
+				custom_effect_tooltip = TRN_Fourth_Reich_tt
+				custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+				add_to_variable = {
+					TRN_TNC_modifier_experience_gain_army_factor = 0.1
+					tooltip = experience_gain_army_factor_tt
 				}
-			}
-			if = {
-				limit = { has_idea = TRN_new_culture_militarism_aliance_of_faith_ns }
-				swap_ideas = {
-					remove_idea = TRN_new_culture_militarism_aliance_of_faith_ns
-					add_idea = TRN_new_culture_militarism_aliance_of_faith_uprade_ns
+				add_to_variable = {
+					TRN_TNC_modifier_experience_loss_factor = -0.1
+					tooltip = experience_loss_factor_tt
 				}
+				add_to_variable = {
+					TRN_TNC_modifier_stability_factor = -0.06
+					tooltip = stability_factor_tt
+				}
+				custom_effect_tooltip = tooltip_white_line
 			}
 			set_cosmetic_tag = TRN_the_fourth_reich
 			add_stability = -0.05
@@ -7978,20 +7966,23 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRN_student_solidarity_tt
 			if = {
-				limit = { has_idea = TRN_new_culture_culture_technology_aliance_of_faith_ns }
-				swap_ideas = {
-					remove_idea = TRN_new_culture_culture_technology_aliance_of_faith_ns
-					add_idea = TRN_new_culture_culture_technology_aliance_of_faith_upgrade_ns
+				limit = { has_country_flag = TRN_new_culture_select_technologia }
+				custom_effect_tooltip = TRN_student_solidarity_tt
+				custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+				add_to_variable = {
+					TRN_TNC_modifier_monthly_population = 0.2
+					tooltip = monthly_population_tt
 				}
-			}
-			if = {
-				limit = { has_idea = TRN_new_culture_culture_technology_german_thinkers_ns }
-				swap_ideas = {
-					remove_idea = TRN_new_culture_culture_technology_german_thinkers_ns
-					add_idea = TRN_new_culture_culture_technology_german_thinkers_upgrade_ns
+				add_to_variable = {
+					TRN_TNC_modifier_stability_factor = 0.06
+					tooltip = stability_factor_tt
 				}
+				add_to_variable = {
+					TRN_TNC_modifier_research_speed_factor = 0.03
+					tooltip = research_speed_factor_tt
+				}
+				custom_effect_tooltip = tooltip_white_line
 			}
 			add_stability = 0.05
 			add_political_power = 50
@@ -8042,7 +8033,7 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 게헨나 학원과 연합
+	focus = { # 우리만의 '에덴 조약'
 		id = TRN_union_with_gehenna
 		icon = GFX_focus_TRM_united_law
 		x = 0
@@ -8060,20 +8051,28 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_political_power = 50
-			add_command_power = 75
-			#unlock_decision_category_tooltip = TRN_after_war_decisions
-			set_country_flag = TRM_after_war_flag_decision_active
-     		activate_targeted_decision = { target = TRM decision = TRM_Gehenna_Military_Civil_Administration}
-			activate_targeted_decision = { target = TRM decision = TRM_raid_gehenna_resistance }
-			activate_targeted_decision = { decision = TRM_eradicate_club_resistance target = TRM }
-			activate_targeted_decision = { target = TRM decision = TRM_unification_propaganda }
-			activate_targeted_decision = { target = TRM decision = TRM_Decline_of_the_anti_gehenna_sentiment }
-			activate_targeted_decision = { target = TRM decision = TRM_tighten_control }
-			activate_targeted_decision = { target = TRM decision = TRM_United_Law }
-			activate_targeted_decision = { target = TRM decision = TRN_destroy_FRM }
-			hidden_effect = { 
-				country_event = { id = TRN_after_war_event.24 days = 7 }
+			if = {
+				limit = { has_global_flag = TRINITY_WON_THE_GEHENNA }
+				every_controlled_state = {
+					limit = {
+						has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+					}
+					remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+					add_dynamic_modifier = {
+						modifier = TRN_gehenna_resistance_movement
+						days = 1095
+					}
+				}
+				every_controlled_state = {
+					limit = { is_core_of = GEM }
+					add_core_of = TRM
+				}
+				hidden_effect = {
+					country_event = { id = trnfla.39 days = 05 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = TRN_union_with_gehenna_tt
 			}
 		}
 	}
