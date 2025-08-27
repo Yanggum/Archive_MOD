@@ -270,6 +270,28 @@ EGY_Binah_problem = {
 			set_country_flag = EGY_flag_nasser
 		}
 	}
+
+	EGY_debug_kill_binah = {
+		priority = 8
+		ai_will_do = {
+			factor = 0
+		}
+
+		visible = {
+			is_debug = yes	
+		}
+
+		available = {
+			is_debug = yes	
+			is_ai = no	
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				EGY_Binah_health = -500
+			}
+		}
+	}
 }
 EGY_descision_category_sudan = {
 	EGY_descision_sudan_rabel = {
@@ -2307,22 +2329,24 @@ EGY_descision_category_core_state = {
 }
 EGY_descision_category_pan_arab = {
 
-	EGY_descision_arab_invite = {
+	EGY_demend_peace_arab = {
 		priority = 10000
 
 		target_trigger = {
 			FROM = {
-				capital_scope = {
-					OR = { 
-						is_on_continent = africa
-						is_on_continent = middle_east
-					}
-				}
-				NOT = {
-					original_tag = FRA
-					original_tag = BEL
-				}
-				any_controlled_state = {
+				has_war_with = EGY
+				is_puppet = no
+			}
+		}
+
+		available = {
+			tag = EGY
+			has_completed_focus = EGY_unite_arab_speakers
+			FROM = {
+				has_war_with = EGY
+			}
+			NOT = {
+				any_state = {
 					OR = {
 						is_core_of = SAU
 						is_core_of = YEM
@@ -2357,13 +2381,164 @@ EGY_descision_category_pan_arab = {
 						state = 344
 						state = 835
 						state = 836
+						state = 1014
+						state = 1015
+						state = 903
 					}
+					is_controlled_by = FROM
+				}
+			}
+			any_state = {
+				OR = {
+					is_core_of = SAU
+					is_core_of = YEM
+					is_core_of = OMA
+					is_core_of = SYR
+					is_core_of = IRQ
+					is_core_of = LBA
+					is_core_of = ALG
+					is_core_of = KUR
+					state = 844
+					state = 559
+					state = 269
+					state = 446
+					state = 455
+					state = 454
+					state = 656
+					state = 658
+					state = 765
+					state = 665
+					state = 458
+					state = 290
+					state = 462
+					state = 461
+					state = 783
+					state = 699
+					state = 786
+					state = 557
+					state = 553
+					state = 268
+					state = 413
+					state = 421
+					state = 344
+					state = 835
+					state = 836
+					state = 1014
+					state = 1015
+					state = 903
+				}
+				is_owned_by = FROM
+			}
+			NOT = {
+				any_other_country = {
+					is_puppet_of = FROM
+					any_state = {
+						OR = {
+							is_core_of = SAU
+							is_core_of = YEM
+							is_core_of = OMA
+							is_core_of = SYR
+							is_core_of = IRQ
+							is_core_of = LBA
+							is_core_of = ALG
+							is_core_of = KUR
+							state = 844
+							state = 559
+							state = 269
+							state = 446
+							state = 455
+							state = 454
+							state = 656
+							state = 658
+							state = 765
+							state = 665
+							state = 458
+							state = 290
+							state = 462
+							state = 461
+							state = 783
+							state = 699
+							state = 786
+							state = 557
+							state = 553
+							state = 268
+							state = 413
+							state = 421
+							state = 344
+							state = 835
+							state = 836
+							state = 1014
+							state = 1015
+							state = 903
+						}
+						is_controlled_by = PREV
+					}
+				}
+			}
+		}
+
+		cost = 0
+		days_remove = 0
+		ai_will_do = {
+			factor = 1000
+		}
+		
+		visible = {
+			has_completed_focus = EGY_unite_arab_speakers
+		}
+		remove_effect = {
+			FROM = {
+				country_event = { id = EGY_event.35 }
+			}
+		}
+		
+	}
+
+	EGY_descision_arab_invite = {
+		priority = 10000
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					#아라비아
+					original_tag = OMA
+					original_tag = SYR
+					original_tag = IRQ
+					original_tag = SAU
+					original_tag = KUR
+					original_tag = YEM
+					original_tag = OMA
+					original_tag = BHR
+					original_tag = QAT
+					original_tag = IMO
+					original_tag = UAE
+					original_tag = FSA
+					original_tag = LEB
+					original_tag = JOR
+					original_tag = PAL
+					original_tag = KUW
+					#아프리카
+					original_tag = LBA
+					original_tag = ALG
+					original_tag = SOM
+					original_tag = MRT
+					original_tag = WES
+					original_tag = RIF
+					original_tag = MOR
+					original_tag = TUN
 				}
 			}
 		}
 
 		available = {
 			tag = EGY
+			NOT = {
+				has_war_with = FROM
+			}
+			FROM = {
+				is_in_faction = no
+				is_puppet = no
+			}
 		}
 
 		cost = 0
@@ -2378,6 +2553,18 @@ EGY_descision_category_pan_arab = {
 		remove_effect = {
 			FROM = {
 				country_event = { id = EGY_event.7 }
+				add_ai_strategy = {
+					type = alliance
+					id = EGY
+					value = 1000
+				}
+			}
+			EGY = {
+				add_ai_strategy = {
+					type = alliance
+					id = FROM
+					value = 1000
+				}
 			}
 		}
 	}
@@ -2387,58 +2574,41 @@ EGY_descision_category_pan_arab = {
 
 		target_trigger = {
 			FROM = {
-				capital_scope = {
-					OR = { 
-						is_on_continent = africa
-						is_on_continent = middle_east
-					}
-				}
-				NOT = {
-					original_tag = FRA
-					original_tag = BEL
-				}
-				is_in_faction_with = EGY
-				any_controlled_state = {
-					OR = {
-						is_core_of = SAU
-						is_core_of = YEM
-						is_core_of = OMA
-						is_core_of = SYR
-						is_core_of = IRQ
-						is_core_of = LBA
-						is_core_of = ALG
-						is_core_of = KUR
-						state = 844
-						state = 559
-						state = 269
-						state = 446
-						state = 455
-						state = 454
-						state = 656
-						state = 658
-						state = 765
-						state = 665
-						state = 458
-						state = 290
-						state = 462
-						state = 461
-						state = 783
-						state = 699
-						state = 786
-						state = 557
-						state = 553
-						state = 268
-						state = 413
-						state = 421
-						state = 344
-						state = 835
-						state = 836
-					}
+				OR = {
+					#아라비아
+					original_tag = OMA
+					original_tag = SYR
+					original_tag = IRQ
+					original_tag = SAU
+					original_tag = KUR
+					original_tag = YEM
+					original_tag = OMA
+					original_tag = BHR
+					original_tag = QAT
+					original_tag = IMO
+					original_tag = UAE
+					original_tag = FSA
+					original_tag = LEB
+					original_tag = JOR
+					original_tag = PAL
+					original_tag = KUW
+					#아프리카
+					original_tag = LBA
+					original_tag = ALG
+					original_tag = SOM
+					original_tag = MRT
+					original_tag = WES
+					original_tag = RIF
+					original_tag = MOR
+					original_tag = TUN
 				}
 			}
 		}
 
 		available = {
+			FROM = {
+				is_in_faction_with = EGY
+			}
 			tag = EGY
 		}
 
