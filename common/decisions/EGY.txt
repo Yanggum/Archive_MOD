@@ -93,6 +93,27 @@ EGY_Binah_problem = {
 		}
 	}
 
+	EGY_binah_attack_people = {
+		priority = 8
+
+		visible = {
+			has_idea = EGY_Binah			
+		}
+
+		available = {
+			has_idea = EGY_Binah
+			has_manpower > 500
+		}
+
+		complete_effect = {
+			add_manpower = -500
+			add_to_variable = {
+				EGY_Binah_health = -5
+				tooltip = EGY_binah_attack_people_tt
+			}
+		}
+	}
+
 	EGY_binah_attack = {
 		priority = 8
 
@@ -103,19 +124,19 @@ EGY_Binah_problem = {
 		available = {
 			has_idea = EGY_Binah
 			has_equipment = {
-				infantry_equipment > 99
+				infantry_equipment > 49
 			}
-			has_manpower > 1000
+			has_manpower > 320
 		}
 
 		complete_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = -100
+				amount = -50
 			}
-			add_manpower = -1000
+			add_manpower = -320
 			add_to_variable = {
-				EGY_Binah_health = -1
+				EGY_Binah_health = -10
 				tooltip = EGY_binah_attack_tt
 			}
 		}
@@ -131,23 +152,23 @@ EGY_Binah_problem = {
 		available = {
 			has_idea = EGY_Binah
 			has_equipment = {
-				artillery_equipment > 99
+				artillery_equipment > 11
 			}
 		}
 
 		complete_effect = {
 			add_equipment_to_stockpile = {
 				type = artillery_equipment
-				amount = -100
+				amount = -12
 			}
 			add_to_variable = {
-				EGY_Binah_health = -2
+				EGY_Binah_health = -30
 				tooltip = EGY_binah_artillery_bombardment_tt
 			}
 		}
 	}
 
-	EGY_binah_cas_bombardment = {
+	EGY_binah_anti_tank_bombardment = {
 		priority = 8
 
 		visible = {
@@ -157,18 +178,18 @@ EGY_Binah_problem = {
 		available = {
 			has_idea = EGY_Binah
 			has_equipment = {
-				small_plane_cas_airframe > 99
+				anti_tank_equipment > 11
 			}
 		}
 
 		complete_effect = {
 			add_equipment_to_stockpile = {
-				type = small_plane_cas_airframe
-				amount = -100
+				type = anti_tank_equipment
+				amount = -12
 			}
 			add_to_variable = {
-				EGY_Binah_health = -25
-				tooltip = EGY_binah_cas_bombardment_tt
+				EGY_Binah_health = -30
+				tooltip = EGY_binah_artillery_bombardment_tt
 			}
 		}
 	}
@@ -186,20 +207,28 @@ EGY_Binah_problem = {
 
 		available = {
 			has_idea = EGY_Binah
+			has_equipment = {
+				kivotos_infantry_equipment > 14
+			}
+			has_manpower > 150
 			has_country_flag = EGY_flag_ABYDOS_come	
 		}
 
 		days_remove = 35
 
 		complete_effect = {
-			add_political_power = -50
+			add_equipment_to_stockpile = {
+				type = anti_tank_equipment
+				amount = -15
+			}
+			add_manpower = -150
 			add_popularity = {
 				ideology = communism
 				popularity = 0.05
 			}
 			add_to_variable = {
-				EGY_Binah_health = -100
-				tooltip = EGY_binah_attack_ABYDOS_tt
+				EGY_Binah_health = -50
+				tooltip = EGY_binah_attack_myth_tt
 			}
 		}
 	}
@@ -2436,6 +2465,86 @@ EGY_descision_category_pan_arab = {
 		remove_effect = {
 			FROM = {
 				add_core_of = EGY
+			}
+		}
+	}
+}
+EGY_descision_category_abydos = {
+
+	EGY_descision_abydos_1 = {
+		priority = 8
+		ai_will_do = {
+			factor = 0
+		}
+
+		visible = {
+			has_idea = EGY_idea_abydos_influence		
+		}
+
+		available = {
+		}
+
+		days_remove = 35
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = EGY_idea_abydos_influence
+				add_idea = EGY_idea_abydos_influence_2
+			}
+			country_event = {
+				id = EGY_event.32
+			}
+		}
+	}
+
+	EGY_descision_abydos_2 = {
+		priority = 8
+		ai_will_do = {
+			factor = 0
+		}
+
+		visible = {
+			has_idea = EGY_idea_abydos_influence_2		
+		}
+
+		available = {
+		}
+
+		days_remove = 35
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = EGY_idea_abydos_influence_2
+				add_idea = EGY_idea_abydos_influence_3
+			}
+			country_event = {
+				id = EGY_event.33
+			}
+		}
+	}
+
+	EGY_descision_abydos_3 = {
+		priority = 8
+		ai_will_do = {
+			factor = 0
+		}
+
+		visible = {
+			has_idea = EGY_idea_abydos_influence_3		
+		}
+
+		available = {
+		}
+
+		days_remove = 35
+
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = EGY_idea_abydos_influence_3
+				add_idea = EGY_idea_abydos_influence_4
+			}
+			country_event = {
+				id = EGY_event.34
 			}
 		}
 	}
