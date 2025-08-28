@@ -1,0 +1,280 @@
+﻿add_namespace = lar_spain
+
+# 바닐라의 다른 파일에서 호출되는 이벤트는 여기 작성되어야 합니다.
+# LIST:
+#(1) 선거 온액션, 히든으로 변경 후 우리 모드 이벤트로 조정
+#(11, 12, 13, 14, 15, 16, 17 ) 내전 승리 온액션*사용되지 않지만, 예상치 못한 오류 유발을 방지*
+#(28, 29) 포르투갈
+#(81, 82) 소련 괴뢰국 연관
+
+# Election of 1936 - La Resistance Edition
+country_event = {
+	id = lar_spain.1
+	title = spain.9.t
+	desc = lar_spain.1.desc
+	picture = GFX_report_event_election_vote
+	hidden = yes
+	
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = SPR
+		has_dlc = "La Resistance"
+	}
+
+	immediate = {
+		country_event = SPBA_event.1
+	}
+
+	# Popular Front
+	option = {
+		name = lar_spain.1.a
+	}
+}
+
+# Spanish Civil War - Carlists Defeated
+country_event = {
+	id = lar_spain.11
+	title = lar_spain.11.t
+	desc = lar_spain.11.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Fascists Defeated
+country_event = {
+	id = lar_spain.12
+	title = lar_spain.12.t
+	desc = lar_spain.12.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Franco Defeated
+country_event = {
+	id = lar_spain.13
+	title = lar_spain.13.t
+	desc = lar_spain.13.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Anarchists Defeated
+country_event = {
+	id = lar_spain.14
+	title = lar_spain.14.t
+	desc = lar_spain.14.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Independent Communists Defeated
+country_event = {
+	id = lar_spain.15
+	title = lar_spain.15.t
+	desc = lar_spain.15.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Republicans Defeated
+country_event = {
+	id = lar_spain.16
+	title = lar_spain.16.t
+	desc = lar_spain.16.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Spanish Civil War - Stalinist Communists Defeated
+country_event = {
+	id = lar_spain.17
+	title = lar_spain.17.t
+	desc = lar_spain.17.desc
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = lar_spain.11.a
+	}
+}
+
+# Iberian Pact - Other party has joined a faction, we must uphold our end of the bargain!
+country_event = {
+	id = lar_spain.28
+	title = lar_spain.28.t
+	desc = lar_spain.28.desc
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_other_country = {
+				limit = {
+					has_country_flag = SPA_iberian_pact_invitee
+				}
+				save_event_target_as = iberian_pact_invitee
+			}
+			random_other_country = {
+				limit = {
+					has_country_flag = SPA_iberian_pact_faction_leader
+				}
+				add_to_faction = ROOT
+			}
+		}
+	}
+	
+	option = { # OK
+		name = lar_spain.28.a
+		effect_tooltip = {
+			random_other_country = {
+				limit = {
+					is_in_faction_with = event_target:iberian_pact_invitee
+					is_faction_leader = yes
+				}
+				add_to_faction = ROOT
+			}
+		}
+	}
+}
+
+# Iberian Pact - Other party has joined the war, we must uphold our end of the bargain!
+country_event = {
+	id = lar_spain.29
+	title = lar_spain.28.t
+	desc = lar_spain.29.desc
+	picture = GFX_report_event_generic_parliament
+
+	is_triggered_only = yes
+	
+	option = { # OK
+		name = lar_spain.28.a
+		random_other_country = {
+			limit = {
+				has_war_with = event_target:iberian_pact_war_target
+				if = {
+					limit = {
+						any_country = {
+							has_country_flag = SPA_iberian_pact_enemy_flag
+						}
+					}
+					has_country_flag = SPA_iberian_pact_enemy_flag
+				}
+			}
+			random_other_country = {
+				limit = {
+					has_country_flag = SPA_iberian_pact
+					has_war_with = PREV
+				}
+				ROOT = {
+					add_to_war = { 
+					    targeted_alliance = PREV
+					    enemy = PREV.PREV
+					    hostility_reason = asked_to_join
+					}
+				}
+			}
+		}
+	}
+}
+
+# End of SCW, Republicans expanded Soviet aid - event for SOV
+country_event = {
+	id = lar_spain.81
+	title = lar_spain.81.t
+	desc = lar_spain.81.desc
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	option = { # Ok
+		name = lar_spain.81.a
+		effect_tooltip = {
+			puppet = SPD
+		}
+	}
+}
+
+# End of SCW, Republicans expanded Soviet aid - event for SPD
+country_event = {
+	id = lar_spain.82
+	title = lar_spain.82.t
+	desc = lar_spain.82.desc
+	picture = GFX_report_event_generic_parliament
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_government = democratic
+				}
+				set_country_flag = SPR_democratic_government_flag
+			}
+			set_temp_variable = {
+				var = soviet_puppet_democratic_var
+				value = party_popularity@democratic
+			}
+			SOV = { puppet = SPD }
+			if = {
+				limit = {
+					has_country_flag = SPR_democratic_government_flag
+				}
+				set_politics = {
+					ruling_party = democratic
+				}
+				clr_country_flag = SPR_democratic_government_flag
+			}
+			set_political_party = {
+			    ideology = communism
+			    popularity = 100
+			}
+			add_popularity = {
+			    ideology = democratic
+			    popularity = soviet_puppet_democratic_var
+			}
+		}
+	}
+	
+	option = { # Ok
+		name = lar_spain.82.a
+		effect_tooltip = {
+			SOV = { puppet = SPD }
+		}
+	}
+}
