@@ -232,6 +232,64 @@ focus_tree = {
 			add_stability = 0.1
 		}
 	}
+	
+	focus = {
+		id = SPA_adopt_the_26_points
+		text = SPBA_weakening_of_autonomy
+		bypass = {
+		}
+		# prerequisite = { focus = SPA_fuse_the_parties }
+		
+		prerequisite = {
+			focus = SPA_unify_the_nationalist_front
+		}
+		relative_position_id = SPA_unify_the_nationalist_front
+		icon = GFX_focus_generic_treaty
+		x = -2
+		y = 1
+		# relative_position_id = SPA_fuse_the_parties
+		cost = 10
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_POLITICAL}
+		completion_reward = {
+			add_popularity = {
+			    ideology = fascism
+			    popularity = 0.1
+			}
+			if = {
+				limit = {
+					NOT = {
+						# has_idea = war_economy
+						# has_idea = tot_economic_mobilisation
+					}
+				}
+				# add_ideas = war_economy
+			}
+			if = {
+				limit = {
+					# has_idea = limited_conscription
+				}
+				# add_ideas = extensive_conscription
+			}
+			if = {
+				limit = {
+					# has_idea = volunteer_only
+				}
+				# add_ideas = limited_conscription
+			}
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 165
+						state = 171
+						state = 792
+					}
+				}
+				remove_dynamic_modifier = { modifier = autonomous_state }
+			}
+		}
+	}
 
 	focus = {
 		id = SPBA_union_dissolution
@@ -332,10 +390,10 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SPA_fuse_the_parties
-		text = SPBA_fuse_the_parties
+		id = SPR_maintain_the_second_republic
+		text = SPBA_preservation_of_second_republic
 		relative_position_id = SPA_the_phalanx_ascendant
-		icon = GFX_focus_spa_fuse_the_parties
+		icon = GFX_focus_spr_maintain_the_republic
 		available = {
 		}
 		bypass = {
@@ -349,7 +407,7 @@ focus_tree = {
 			focus = SPA_defenders_of_catholicism
 		}
 		mutually_exclusive = {
-			focus = SPA_fuse_the_parties
+			focus = SPBA_restore_the_monarchy
 		}
 		
 		x = -1
@@ -358,17 +416,20 @@ focus_tree = {
 		cost = 5
 
 		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_MANPOWER}
+		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT}
 		completion_reward = {
-			set_party_name = { ideology = fascism long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
-			set_party_name = { ideology = neutrality long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
+			add_political_power = 60
+			add_war_support = 0.05
+			# activate_mission = SPR_anarchist_uprising_mission
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = SPR_antonio_escobar_huerta
 		}
 	}
 
 	focus = {
-		id = SPBA_rejection_of_falangism
+		id = SPBA_restore_the_monarchy
 		relative_position_id = SPA_the_phalanx_ascendant
-		icon = GFX_goal_generic_parliament
+		icon = GFX_goal_tfv_strengthen_commonwealth_ties
 		available = {
 		}
 		bypass = {
@@ -376,7 +437,7 @@ focus_tree = {
 		# prerequisite = { focus = SPA_banish_the_party_leaders }
 		# prerequisite = { focus = SPA_safeguard_the_freedom_of_worship }
 		mutually_exclusive = {
-			focus = SPA_fuse_the_parties
+			focus = SPR_maintain_the_second_republic
 		}
 		
 		prerequisite = {
@@ -404,7 +465,7 @@ focus_tree = {
 		prerequisite = { focus = SPA_unify_the_nationalist_front }
 		# mutually_exclusive = { focus = SPA_the_phalanx_ascendant focus = SPA_supremacy_of_the_communion }
 		
-		x = -1
+		x = -4
 		y = 1
 		# relative_position_id = SPA_con_paquito
 		cost = 5
@@ -425,7 +486,7 @@ focus_tree = {
 		prerequisite = { focus = SPA_unify_the_nationalist_front }
 		# mutually_exclusive = { focus = SPA_the_phalanx_ascendant focus = SPA_supremacy_of_the_communion }
 		
-		x = -3
+		x = -6
 		y = 1
 		# relative_position_id = SPA_con_paquito
 		cost = 5
@@ -440,11 +501,11 @@ focus_tree = {
 	focus = {
 		id = SPA_strengthen_the_supreme_reality_of_spain
 		text = SPBA_law_of_security_and_national_unity
-		relative_position_id = SPBA_rejection_of_falangism
+		relative_position_id = SPBA_restore_the_monarchy
 		icon = GFX_focus_spa_strengthen_the_supreme_reality_of_spain
 		bypass = {
 		}
-		prerequisite = { focus = SPBA_rejection_of_falangism focus = SPA_fuse_the_parties }
+		prerequisite = { focus = SPBA_restore_the_monarchy focus = SPR_maintain_the_second_republic }
 		prerequisite = { focus = SPBA_special_court_establishment }
 		# mutually_exclusive = { focus = SPA_the_phalanx_ascendant focus = SPA_supremacy_of_the_communion }
 		
@@ -503,66 +564,6 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-		}
-	}
-	
-	focus = {
-		id = SPA_adopt_the_26_points
-		available = {
-			has_global_flag = scw_over
-		}
-		bypass = {
-		}
-		# prerequisite = { focus = SPA_fuse_the_parties }
-		
-		prerequisite = {
-			focus = SPR_debug_focus
-		}
-		relative_position_id = SPR_debug_focus
-		icon = GFX_focus_generic_treaty
-		x = 2
-		y = 1
-		# relative_position_id = SPA_fuse_the_parties
-		cost = 10
-
-		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_POLITICAL}
-		completion_reward = {
-			add_popularity = {
-			    ideology = fascism
-			    popularity = 0.1
-			}
-			if = {
-				limit = {
-					NOT = {
-						# has_idea = war_economy
-						# has_idea = tot_economic_mobilisation
-					}
-				}
-				# add_ideas = war_economy
-			}
-			if = {
-				limit = {
-					# has_idea = limited_conscription
-				}
-				# add_ideas = extensive_conscription
-			}
-			if = {
-				limit = {
-					# has_idea = volunteer_only
-				}
-				# add_ideas = limited_conscription
-			}
-			every_owned_state = {
-				limit = {
-					OR = {
-						state = 165
-						state = 171
-						state = 792
-					}
-				}
-				remove_dynamic_modifier = { modifier = autonomous_state }
-			}
 		}
 	}
 
@@ -637,6 +638,31 @@ focus_tree = {
 				}
 				custom_effect_tooltip = cost_reduced_last_stand 
 			}
+		}
+	}
+
+	focus = {
+		id = SPA_fuse_the_parties
+		relative_position_id = SPA_the_phalanx_ascendant
+		icon = GFX_focus_spa_eliminate_the_carlists
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = {
+			focus = SPR_debug_focus
+		}
+		relative_position_id = SPR_debug_focus
+		icon = GFX_goal_generic_secret_weapon
+		x = 8
+		y = 1
+		# relative_position_id = SPA_militarize_the_masses
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_MANPOWER}
+		completion_reward = {
+			#set_party_name = { ideology = fascism long_name = SPR_fascism_falange_party_long name = SPR_fascism_falange_party }
 		}
 	}
 
@@ -1501,38 +1527,6 @@ focus_tree = {
 				# remove_mission = SPR_anarchist_uprising_mission
 				# activate_mission = SPR_government_crackdown_mission
 			}
-		}
-	}
-
-	focus = {
-		id = SPR_maintain_the_second_republic
-		available = {
-			has_global_flag = spanish_civil_war
-			hidden_trigger = { always = no }
-		}
-		bypass = {
-		}
-		# prerequisite = { focus = SPR_disband_the_army }
-		# mutually_exclusive = { focus = SPR_regional_defense_council_of_aragon focus = SPR_the_anti_fascist_workers_revolution }
-		
-		prerequisite = {
-			focus = SPR_debug_focus
-		}
-		relative_position_id = SPR_debug_focus
-		icon = GFX_focus_spr_maintain_the_republic
-		x = 52
-		y = 1
-		# relative_position_id = SPR_disband_the_army
-		cost = 5
-
-		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT}
-		completion_reward = {
-			add_political_power = 60
-			add_war_support = 0.05
-			# activate_mission = SPR_anarchist_uprising_mission
-			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = SPR_antonio_escobar_huerta
 		}
 	}
 
