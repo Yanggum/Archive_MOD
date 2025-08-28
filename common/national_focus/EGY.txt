@@ -3593,7 +3593,10 @@ focus_tree = {
 		y = 1
 
 		available = {
-			neutrality > 0.3
+			NOT = {
+				has_idea = EGY_Binah
+			}
+			neutrality > 0.45
 		}
 
 		prerequisite = {
@@ -3857,6 +3860,9 @@ focus_tree = {
 		y = 1
 
 		available = {
+			NOT = {
+				has_idea = EGY_Binah
+			}
 			democratic > 0.6
 		}
 
@@ -4090,7 +4096,10 @@ focus_tree = {
 		y = 1
 
 		available = {
-			fascism > 0.4
+			NOT = {
+				has_idea = EGY_Binah
+			}
+			fascism > 0.45
 		}
 
 		bypass = {
@@ -4125,7 +4134,7 @@ focus_tree = {
 	}
 
 	# --- Central Political Branch ---
-	focus = {
+	focus = { 
 		id = EGY_restore_1930_constitution
 		icon = GFX_goal_generic_political_pressure # Better icon for restoring constitution
 		cost = 7
@@ -4136,7 +4145,7 @@ focus_tree = {
 		y = 1
 
 		available = {
-			neutrality > 0.5
+			neutrality > 0.75
 		}
 
 		prerequisite = {
@@ -4167,6 +4176,12 @@ focus_tree = {
 
 		bypass = {
 			is_in_faction_with = ITA
+		}
+
+		available = {
+			ITA = {
+				is_faction_leader = yes
+			}
 		}
 
 		prerequisite = { focus = EGY_march_on_cairo }
@@ -4684,6 +4699,13 @@ focus_tree = {
 
 		
 		completion_reward = {
+			add_victory_points = {
+				province = 1151
+				value = 24
+			}
+			set_capital = {
+				state = 456
+			}
 			add_popularity = {
 				ideology = communism
 				popularity = 0.5
@@ -4691,6 +4713,7 @@ focus_tree = {
 			set_politics = {
 				ruling_party = communism
 			}
+			set_cosmetic_tag = EGY_cosmetic_kingdom_2 
 			add_country_leader_role = {
 				character = EGY_Hoshino
 				promote_leader = yes
@@ -4921,7 +4944,7 @@ focus_tree = {
 		x = 1 # Right of EGY_propose_ethiopian_condominium
 		y = 1
 
-		prerequisite = { focus = EGY_propose_ethiopian_condominium focus = EGY_suez_mediation }
+		prerequisite = { focus = EGY_propose_ethiopian_condominium focus = EGY_suez_mediation focus = EGY_army_loyal_to_king }
 
 		
 		completion_reward = {
@@ -4954,26 +4977,6 @@ focus_tree = {
 
 		
 		completion_reward = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 550
-						state = 908
-						state = 268
-						state = 835
-						state = 836
-						state = 837
-						state = 838
-						state = 839
-						state = 840
-						state = 841
-						state = 842
-						state = 843
-						state = 271
-					}
-				}
-				add_claim_by = EGY
-			}
 			ITA = {
 				country_event = {
 					id = EGY_event.29
@@ -4992,10 +4995,6 @@ focus_tree = {
 		relative_position_id = EGY_revive_egyptian_empire
 		x = 0
 		y = 1
-
-		available = {
-			NOT = {is_in_faction_with = ITA}
-		}
 
 		prerequisite = { focus = EGY_revive_egyptian_empire }
 		mutually_exclusive = { focus = EGY_ethiopian_governorate }
@@ -5018,6 +5017,7 @@ focus_tree = {
 						state = 842
 						state = 843
 						state = 271
+						state = 269
 					}
 				}
 				add_claim_by = EGY
@@ -5047,6 +5047,7 @@ focus_tree = {
 						state = 553
 						state = 554
 						state = 677
+						state = 799
 					}
 				}
 				add_claim_by = EGY
@@ -5102,6 +5103,12 @@ focus_tree = {
 						state = 855
 						state = 679
 						state = 856
+						state = 292
+						state = 854
+						state = 857
+						state = 858
+						state = 293
+						state = 992
 					}
 				}
 				add_claim_by = EGY
@@ -5125,10 +5132,7 @@ focus_tree = {
 		completion_reward = {
 			every_state = {
 				limit = {
-					OR = {
-						state = 182
-						state = 186
-					}
+					is_core_of = GRE
 				}
 				add_claim_by = EGY
 			}
@@ -5149,6 +5153,29 @@ focus_tree = {
 
 		
 		completion_reward = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 344
+						state = 348
+						state = 349
+						state = 342
+						state = 345
+						state = 346
+						state = 341
+						state = 340
+						state = 339
+						state = 347
+						state = 797
+						state = 343
+						state = 49
+						state = 355
+						state = 356
+						state = 798
+					}
+				}
+				add_claim_by = EGY
+			}
 			EGY = {
 				create_wargoal = {
 					target = TUR
@@ -5209,7 +5236,8 @@ focus_tree = {
 			hidden_effect = {
 				if = {
 					limit = {
-						communism > 0.35
+						has_idea = EGY_idea_abydos_influence_4
+						has_country_flag = EGY_flag_nasser
 					}
 					country_event = {
 						id = EGY_event.22
@@ -5218,7 +5246,7 @@ focus_tree = {
 				}
 			}
 			start_civil_war = {
-				ideology = neutrality
+				ideology = fascism
 				size = 0.2
 				keep_all_characters = yes
 				PREV = {  # Original country
@@ -5275,6 +5303,10 @@ focus_tree = {
 		relative_position_id = EGY_exile_king
 		x = 0
 		y = 1
+
+		available = {
+			is_faction_leader = yes
+		}
 
 		prerequisite = { focus = EGY_exile_king }
 
@@ -5634,7 +5666,7 @@ focus_tree = {
 		x = -1 # Middle below
 		y = 1
 
-		prerequisite = { focus = EGY_reformist_monarch_farouk_i focus = EGY_suez_negotiation }
+		prerequisite = { focus = EGY_reformist_monarch_farouk_i focus = EGY_suez_negotiation focus = EGY_revolution_for_freedom }
 
 		
 		completion_reward = {
@@ -5775,7 +5807,11 @@ focus_tree = {
 
 		prerequisite = { focus = EGY_end_colonial_rule }
 		mutually_exclusive = { focus = EGY_minorities_first }
-
+		available = {
+			NOT = {
+				has_completed_focus = EGY_revolution_for_freedom
+			}
+		}
 		
 		completion_reward = {
 			custom_effect_tooltip = EGY_ethiopia_unite_tt
@@ -6030,6 +6066,7 @@ focus_tree = {
 		prerequisite = {
 			focus = EGY_propose_ethiopian_condominium
 			focus = EGY_suez_mediation
+			focus = EGY_army_loyal_to_king 
 		}
 
 		relative_position_id = EGY_revive_egyptian_empire
@@ -6075,6 +6112,7 @@ focus_tree = {
 		prerequisite = {
 			focus = EGY_propose_ethiopian_condominium
 			focus = EGY_suez_mediation
+			focus = EGY_army_loyal_to_king 
 		}
 
 		
