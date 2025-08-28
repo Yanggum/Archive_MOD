@@ -6709,7 +6709,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 11
 			tag = TRM
 		}
 	}
@@ -6759,7 +6759,7 @@ focus_tree = {
 	focus = { # 자경단 투입
 		id = TRN_bring_in_vigilantes
 		icon = GFX_focus_TRN_Suzumi
-		x = 17
+		x = 25
 		y = 0
 		cost = 4
 
@@ -7001,10 +7001,14 @@ focus_tree = {
 	focus = { # 트리니티 재산업화
 		id = TRN_improving_academy_industry
 		icon = GFX_focus_generic_low_cost_housing
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = TRN_ministry_of_industrial_development
 		prerequisite = { focus = TRN_ministry_of_industrial_development }
+		prerequisite = {
+			focus = TRN_confiscation_distribution_collectivization
+			focus = TRN_cooperation_with_junker
+		}
 		cost = 5
 
 		available = {
@@ -7268,10 +7272,48 @@ focus_tree = {
 	##### 정치 중점
 	#####
 	focus = {
-		id = TRN_control_tea_party
-		icon = GFX_focus_TRN_control_tea_party
+		id = TRN_challenge_the_host
+		icon = GFX_focus_TRN_challenge_the_host
 		x = 6
 		y = 0
+		cost = 3
+		available = {
+			NOT = {
+				has_country_leader = { character = TRN_Misono_Mika }
+			}
+		}
+		ai_will_do = {
+
+		}
+		mutually_exclusive = {
+			focus = TRN_unprovable_problem
+		}
+		allow_branch = {
+			NOT = { has_completed_focus = TRN_unprovable_problem }
+		}
+		bypass = {
+			has_country_leader = {
+				character = TRN_Misono_Mika
+				ruling_only = yes
+			}
+		}
+		bypass_effect = {
+			mark_focus_tree_layout_dirty = yes
+		}
+		completion_reward = {
+			add_political_power = 150
+			custom_effect_tooltip = TRN_challenge_the_host_tt
+
+			mark_focus_tree_layout_dirty = yes
+		}
+	}
+	focus = {
+		id = TRN_control_tea_party
+		icon = GFX_focus_TRN_control_tea_party
+		prerequisite = { focus = TRN_challenge_the_host }
+		x = 0
+		y = 1
+		relative_position_id = TRN_challenge_the_host
 		cost = 5
 		available = {
 			NOT = { has_idea = TRN_political_instability_ns }
@@ -7287,7 +7329,6 @@ focus_tree = {
 			country_event = { id = trinity.18 days = 02 }
 		}
 		completion_reward = {
-			set_variable = { TRN_Mika_Honor_var = 50 }
 			country_event = trinity.1
 		}
 	}
@@ -8398,6 +8439,7 @@ focus_tree = {
 
 		allow_branch = {
 			NOT = { has_completed_focus = TRN_codification_of_regime }
+			NOT = { has_completed_focus = TRN_unprovable_problem }
 		}
 
 		ai_will_do = {
@@ -8549,6 +8591,7 @@ focus_tree = {
 
 		allow_branch = {
 			has_completed_focus = TRN_codification_of_regime
+			NOT = { has_completed_focus = TRN_unprovable_problem }
 		}
 
 		ai_will_do = {
@@ -8590,11 +8633,10 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = 11
+		x = 12
 		y = 1
-		relative_position_id = TRN_necessary_revenge
-		prerequisite = { focus = TRN_sect_control }
-		prerequisite = { focus = TRN_necessary_revenge }
+		relative_position_id = TRN_Mika_basic_law
+		prerequisite = { focus = TRN_Mika_basic_law }
 		cost = 5
 
 		available = {
@@ -10094,6 +10136,51 @@ focus_tree = {
 			}
 		}
 	}
+
+	##########
+	### 나기사 ###
+	##########
+	
+	focus = {
+		id = TRN_unprovable_problem
+		icon = GFX_focus_TRN_unprovable_problem
+		x = 6
+		y = 0
+		relative_position_id = TRN_challenge_the_host
+		cost = 3
+		available = {
+			NOT = {
+				has_country_leader = { character = TRN_Kirifuji_Nagisa }
+			}
+		}
+		ai_will_do = {
+
+		}
+		allow_branch = {
+			NOT = { has_completed_focus = TRN_challenge_the_host }
+		}
+		mutually_exclusive = {
+			focus = TRN_challenge_the_host
+		}
+		bypass = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+		bypass_effect = {
+			mark_focus_tree_layout_dirty = yes
+		}
+		select_effect = {
+
+		}
+		completion_reward = {
+			add_political_power = 150
+			custom_effect_tooltip = TRN_unprovable_problem_tt
+
+			mark_focus_tree_layout_dirty = yes
+		}
+	}
 }
 
 	shared_focus = {
@@ -10838,8 +10925,8 @@ focus_tree = {
 	}
 	offset = {
 		trigger = { has_focus_tree = Trinity_focus }
-		x = 35
-		y = -1
+		x = 10
+		y = 11
 	}
     ai_will_do = {
 	    factor = 2
@@ -12153,8 +12240,8 @@ shared_focus = {
 	}
 	offset = {
 		trigger = { has_focus_tree = Trinity_focus }
-		x = 35
-		y = -1
+		x = 10
+		y = 11
 	}
 	#relative_position_id = TRN_kickstart_the_civilian_industry
 	cost = 5.00
