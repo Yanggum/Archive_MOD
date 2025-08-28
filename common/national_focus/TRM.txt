@@ -6713,7 +6713,7 @@ focus_tree = {
 			tag = TRM
 		}
 	}
-	continuous_focus_position = { x = 100 y = 2500 }
+	continuous_focus_position = { x = 100 y = 1600 }
 
 	
 	shared_focus = TRN_Luftwaffe
@@ -6756,204 +6756,11 @@ focus_tree = {
 	##공용중점##
 	#########
 
-	focus = { # 자경단 투입
-		id = TRN_bring_in_vigilantes
-		icon = GFX_focus_TRN_Suzumi
-		x = 25
-		y = 0
-		cost = 4
-
-		available = {
-			OR = {
-				AND = {
-					country_exists = NSD
-					NOT = { owns_state = 66 }
-				}
-				AND = {
-					country_exists = KPD
-					NOT = { owns_state = 61 }
-				}
-			}
-		}
-		bypass = {
-			owns_state = 66
-			NOT = { country_exists = NSD }
-			owns_state = 61
-			NOT = { country_exists = KPD }
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			hidden_effect = {
-				set_variable = { TRN_completed_industrial_decisions = 0 }
-			}
-			add_to_variable = {
-				global.NSD_country_collapse_decisions_value = -15
-				tooltip = NSD_country_collapse_value_tt
-			}
-			add_to_variable = {
-				global.KPD_country_collapse_decisions_value = -5
-				tooltip = KPD_country_collapse_value_tt
-			}
-			hidden_effect = {
-				TRN_tmwmal = { 
-					unit_leader_event = { id = trnfla.17 days = 50 random_days = 50 } 
-				}
-				country_event = { id = trnfla.6 days = 365 }
-			}
-		}
-	}
-
-	focus = { # 무너진 산업 복구
-		id = TRN_reconstruction_of_collapsed_industry
-		icon = GFX_focus_generic_modernize_industry
-		prerequisite = { 
-			focus = TRN_bring_in_vigilantes 
-			focus = TRN_ministry_of_industrial_development
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_bring_in_vigilantes
-		cost = 5
-
-		available = {
-			owns_state = 61
-			owns_state = 66
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			activate_targeted_decision = { target = 64 decision = TRN_Opelwerk_Brandenburg } # 브란덴부르크
-			activate_targeted_decision = { target = 65 decision = TRN_Lehnmuhle_Dam } # 작센
-			activate_targeted_decision = { target = 64 decision = TRN_dessert_shop_expansion } # 브란덴부르크 
-			activate_targeted_decision = { target = 61 decision = TRN_agricultural_support } # 메클렌부르크
-			activate_targeted_decision = { target = 68 decision = TRN_rebuilding_Landwehrkanal } # 오스트마르크
-
-			activate_targeted_decision = { target = 65 decision = TRN_Abydos_clearing_sand } # 작센
-			activate_targeted_decision = { target = 66 decision = TRN_Abydos_clearing_sand } # 니더슐레지엔
-
-			add_stability = 0.03
-			add_tech_bonus = {
-				name = TRN_reconstruction_of_collapsed_industry
-				bonus = 1.0
-				uses = 2
-				category = construction_tech
-			}
-			
-		}
-	}
-
-	focus = { # 카이저 빌헬름 협회
-		id = TRN_KWG_open
-		icon = GFX_focus_generic_university_3
-		prerequisite = { 
-			focus = TRN_bring_in_vigilantes 
-		}
-		x = -1
-		y = 1
-		relative_position_id = TRN_bring_in_vigilantes
-		cost = 6
-
-		available = {
-			
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			add_research_slot_until_five = yes
-			custom_effect_tooltip = tooltip_white_line
-			add_breakthrough_progress = {
-				specialization = specialization_land
-				value = 0.5
-			}
-			add_tech_bonus = {
-				name = TRN_KWG_open
-				bonus = 1.5
-				uses = 1
-				category = electronics
-			}
-		}
-	}
-
-	focus = { # 통신망 확대
-		id = TRN_Reconnect_network_and_power
-		icon = GFX_focus_generic_energy
-		prerequisite = { 
-			focus = TRN_bring_in_vigilantes 
-		}
-		x = -2
-		y = 2
-		relative_position_id = TRN_bring_in_vigilantes
-		cost = 5
-
-		available = {
-			
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			if = {
-				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
-				complete_special_project = sp:sp_air_radar
-			}
-			add_tech_bonus = {
-				name = TRN_Reconnect_network_and_power
-				bonus = 0.5
-				uses = 2
-				category = electronics
-			}
-			hidden_effect = {
-				country_event = trnfla.22
-			}
-
-		}
-	}
-
-	focus = { # 철도망 개선
-		id = TRN_railway_improvement
-		icon = GFX_focus_generic_railroad
-		prerequisite = { 
-			focus = TRN_bring_in_vigilantes 
-		}
-		x = -3
-		y = 1
-		relative_position_id = TRN_bring_in_vigilantes
-		cost = 5
-
-		ai_will_do = {
-
-		}
-
-
-		available = {
-			has_idea = BA_railway_gauge_issue
-		}
-		bypass = {
-			NOT = { has_idea = BA_railway_gauge_issue }
-		}
-
-		completion_reward = {
-			modify_timed_idea = {
-				idea = BA_railway_gauge_issue
-				days = -1085
-			}
-		}
-	}
-
 	focus = { # 학원경제개발부 설립
 		id = TRN_ministry_of_industrial_development
 		icon = GFX_focus_TRN_improving_academy_industry
-		x = 4
+		x = 25
 		y = 0
-		relative_position_id = TRN_bring_in_vigilantes
 		cost = 4
 
 		available = {
@@ -6994,117 +6801,6 @@ focus_tree = {
 			country_event = trinity.34 
 			hidden_effect = {
 				country_event = { id = trinity.38 days = 25 }
-			}
-		}
-	}
-
-	focus = { # 트리니티 재산업화
-		id = TRN_improving_academy_industry
-		icon = GFX_focus_generic_low_cost_housing
-		x = 0
-		y = 2
-		relative_position_id = TRN_ministry_of_industrial_development
-		prerequisite = { focus = TRN_ministry_of_industrial_development }
-		prerequisite = {
-			focus = TRN_confiscation_distribution_collectivization
-			focus = TRN_cooperation_with_junker
-		}
-		cost = 5
-
-		available = {
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			hidden_effect = {
-				country_event = { id = trnfla.5 days = 14 }
-				country_event = { id = trinity.40 days = 01 }
-				country_event = { id = trnfla.16 days = 30 }
-			}
-			IF = {
-				limit = { has_completed_focus = TRN_confiscation_distribution_collectivization }
-				add_timed_idea = {
-					idea = TRN_rebuild_ns
-					days = 400
-				}
-			}
-			else = {
-				add_timed_idea = {
-					idea = TRN_rebuild_ns
-					days = 365
-				}
-			}
-			add_political_power = 50
-		}
-	}
-
-	focus = { # 협동조합주의적 대표성을 향햐여
-		id = TRN_expanded_corporatism
-		icon = GFX_focus_BEL_christian_corporatism
-		prerequisite = { focus = TRN_improving_academy_industry }
-		x = 1
-		y = 1
-		relative_position_id = TRN_improving_academy_industry
-		cost = 7
-
-		available = {
-			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
-		}
-
-		ai_will_do = {
-
-		}
-		mutually_exclusive = { focus = TRN_planned_economy }
-		completion_reward = {
-			custom_effect_tooltip = TRM_industry_change
-			add_to_variable = {
-				TRM_industries_dynamic_consumer_goods_factor = -0.15
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_speed_buildings_factor = 0.15
-				tooltip = production_speed_buildings_factor_tt
-			}
-		}
-	}
-
-	focus = { # 학원경제개발부 권한 강화
-		id = TRN_planned_economy
-		icon = GFX_focus_SOV_merge_plants
-		prerequisite = { focus = TRN_improving_academy_industry }
-		x = -1
-		y = 1
-		relative_position_id = TRN_improving_academy_industry
-		cost = 7
-
-		available = {
-			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
-		}
-
-		ai_will_do = {
-
-		}
-		mutually_exclusive = { focus = TRN_expanded_corporatism }
-		completion_reward = {
-			#add_ideas = TRN_Sie_merger
-			custom_effect_tooltip = TRM_industry_change
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.1
-				tooltip = production_factory_max_efficiency_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_consumer_goods_factor = 0.05
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_efficiency_gain_factor = -0.1
-				tooltip = production_factory_efficiency_gain_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_start_efficiency_factor = 0.1
-				tooltip = production_factory_start_efficiency_factor_tt
 			}
 		}
 	}
@@ -7229,6 +6925,47 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 무너진 산업 복구
+		id = TRN_reconstruction_of_collapsed_industry
+		icon = GFX_focus_generic_modernize_industry
+		prerequisite = { 
+			focus = TRN_confiscation_distribution_collectivization 
+			focus = TRN_cooperation_with_junker
+		}
+		x = -1
+		y = 1
+		relative_position_id = TRN_confiscation_distribution_collectivization
+		cost = 5
+
+		available = {
+			owns_state = 61
+			owns_state = 66
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			activate_targeted_decision = { target = 64 decision = TRN_Opelwerk_Brandenburg } # 브란덴부르크
+			activate_targeted_decision = { target = 65 decision = TRN_Lehnmuhle_Dam } # 작센
+			activate_targeted_decision = { target = 64 decision = TRN_dessert_shop_expansion } # 브란덴부르크 
+			activate_targeted_decision = { target = 61 decision = TRN_agricultural_support } # 메클렌부르크
+			activate_targeted_decision = { target = 68 decision = TRN_rebuilding_Landwehrkanal } # 오스트마르크
+
+			activate_targeted_decision = { target = 65 decision = TRN_Abydos_clearing_sand } # 작센
+			activate_targeted_decision = { target = 66 decision = TRN_Abydos_clearing_sand } # 니더슐레지엔
+
+			add_stability = 0.03
+			add_tech_bonus = {
+				name = TRN_reconstruction_of_collapsed_industry
+				bonus = 1.0
+				uses = 2
+				category = construction_tech
+			}
+			
+		}
+	}
+
 	focus = { # 서부 공업화
 		id = TRN_revitalization_of_heavy_industry
 		icon = GFX_focus_GE2_start_focus
@@ -7264,6 +7001,218 @@ focus_tree = {
 			activate_targeted_decision = { target = 762 decision = TRN_katowice_mining } # 카토비체
 			activate_targeted_decision = { target = 63 decision = TRN_stettin_oil_mining } # 힌터포메른
 			
+		}
+	}
+
+	focus = { # 트리니티 재산업화
+		id = TRN_improving_academy_industry
+		icon = GFX_focus_generic_low_cost_housing
+		x = 0
+		y = 2
+		relative_position_id = TRN_ministry_of_industrial_development
+		prerequisite = { focus = TRN_ministry_of_industrial_development }
+		prerequisite = {
+			focus = TRN_confiscation_distribution_collectivization
+			focus = TRN_cooperation_with_junker
+		}
+		cost = 5
+
+		available = {
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			hidden_effect = {
+				country_event = { id = trnfla.5 days = 14 }
+				country_event = { id = trinity.40 days = 01 }
+				country_event = { id = trnfla.16 days = 30 }
+			}
+			IF = {
+				limit = { has_completed_focus = TRN_confiscation_distribution_collectivization }
+				add_timed_idea = {
+					idea = TRN_rebuild_ns
+					days = 400
+				}
+			}
+			else = {
+				add_timed_idea = {
+					idea = TRN_rebuild_ns
+					days = 365
+				}
+			}
+			add_political_power = 50
+		}
+	}
+
+	focus = { # 협동조합주의적 대표성을 향햐여
+		id = TRN_expanded_corporatism
+		icon = GFX_focus_BEL_christian_corporatism
+		prerequisite = { focus = TRN_improving_academy_industry }
+		x = 1
+		y = 1
+		relative_position_id = TRN_improving_academy_industry
+		cost = 7
+
+		available = {
+			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
+		}
+
+		ai_will_do = {
+
+		}
+		mutually_exclusive = { focus = TRN_planned_economy }
+		completion_reward = {
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = {
+				TRM_industries_dynamic_consumer_goods_factor = -0.15
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_production_speed_buildings_factor = 0.15
+				tooltip = production_speed_buildings_factor_tt
+			}
+		}
+	}
+
+	focus = { # 학원경제개발부 권한 강화
+		id = TRN_planned_economy
+		icon = GFX_focus_SOV_merge_plants
+		prerequisite = { focus = TRN_improving_academy_industry }
+		x = -1
+		y = 1
+		relative_position_id = TRN_improving_academy_industry
+		cost = 7
+
+		available = {
+			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
+		}
+
+		ai_will_do = {
+
+		}
+		mutually_exclusive = { focus = TRN_expanded_corporatism }
+		completion_reward = {
+			#add_ideas = TRN_Sie_merger
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = {
+				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.1
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_consumer_goods_factor = 0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_production_factory_efficiency_gain_factor = -0.1
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_production_factory_start_efficiency_factor = 0.1
+				tooltip = production_factory_start_efficiency_factor_tt
+			}
+		}
+	}
+	
+	focus = { # 철도망 개선
+		id = TRN_railway_improvement
+		icon = GFX_focus_generic_railroad
+		prerequisite = { 
+			focus = TRN_ministry_of_industrial_development 
+		}
+		x = 1
+		y = 1
+		relative_position_id = TRN_ministry_of_industrial_development
+		cost = 5
+
+		ai_will_do = {
+
+		}
+
+
+		available = {
+			has_idea = BA_railway_gauge_issue
+		}
+		bypass = {
+			NOT = { has_idea = BA_railway_gauge_issue }
+		}
+
+		completion_reward = {
+			modify_timed_idea = {
+				idea = BA_railway_gauge_issue
+				days = -1085
+			}
+		}
+	}
+
+	focus = { # 카이저 빌헬름 협회
+		id = TRN_KWG_open
+		icon = GFX_focus_generic_university_3
+		prerequisite = { 
+			focus = TRN_ministry_of_industrial_development 
+		}
+		x = 3
+		y = 1
+		relative_position_id = TRN_ministry_of_industrial_development
+		cost = 6
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_research_slot_until_five = yes
+			custom_effect_tooltip = tooltip_white_line
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+			add_tech_bonus = {
+				name = TRN_KWG_open
+				bonus = 1.5
+				uses = 1
+				category = electronics
+			}
+		}
+	}
+
+	focus = { # 통신망 확대
+		id = TRN_Reconnect_network_and_power
+		icon = GFX_focus_generic_energy
+		prerequisite = { 
+			focus = TRN_ministry_of_industrial_development 
+		}
+		x = 2
+		y = 2
+		relative_position_id = TRN_ministry_of_industrial_development
+		cost = 5
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			if = {
+				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
+				complete_special_project = sp:sp_air_radar
+			}
+			add_tech_bonus = {
+				name = TRN_Reconnect_network_and_power
+				bonus = 0.5
+				uses = 2
+				category = electronics
+			}
+			hidden_effect = {
+				country_event = trnfla.22
+			}
+
 		}
 	}
 	
@@ -7307,6 +7256,62 @@ focus_tree = {
 			mark_focus_tree_layout_dirty = yes
 		}
 	}
+
+	focus = { # 자경단 투입
+		id = TRN_bring_in_vigilantes
+		icon = GFX_focus_TRN_Suzumi
+		prerequisite = {
+			focus = TRN_challenge_the_host
+			focus = TRN_unprovable_problem
+		}
+		x = 3
+		y = 1
+		relative_position_id = TRN_challenge_the_host
+		cost = 4
+
+		available = {
+			OR = {
+				AND = {
+					country_exists = NSD
+					NOT = { owns_state = 66 }
+				}
+				AND = {
+					country_exists = KPD
+					NOT = { owns_state = 61 }
+				}
+			}
+		}
+		bypass = {
+			owns_state = 66
+			NOT = { country_exists = NSD }
+			owns_state = 61
+			NOT = { country_exists = KPD }
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			hidden_effect = {
+				set_variable = { TRN_completed_industrial_decisions = 0 }
+			}
+			add_to_variable = {
+				global.NSD_country_collapse_decisions_value = -15
+				tooltip = NSD_country_collapse_value_tt
+			}
+			add_to_variable = {
+				global.KPD_country_collapse_decisions_value = -5
+				tooltip = KPD_country_collapse_value_tt
+			}
+			hidden_effect = {
+				TRN_tmwmal = { 
+					unit_leader_event = { id = trnfla.17 days = 50 random_days = 50 } 
+				}
+				country_event = { id = trnfla.6 days = 365 }
+			}
+		}
+	}
+
 	focus = {
 		id = TRN_control_tea_party
 		icon = GFX_focus_TRN_control_tea_party
@@ -8753,7 +8758,7 @@ focus_tree = {
 
 	focus = { # 꼬리잡기
 		id = TRN_catch_tail
-		icon = GFX_focus_GER_strafbataillon
+		icon = GFX_focus_Arius_logo
 		x = 4
 		y = 1
 		relative_position_id = TRN_kivotos_dip
@@ -10903,17 +10908,29 @@ focus_tree = {
 		}
 	}
 
-	shared_focus = {
-	id = TRN_Luftwaffe
-	icon = GFX_focus_TRN_airforce
-	cost = 5
+shared_focus = {
+	id = TRN_research_rifle # 소총 개발?
+	icon = GFX_focus_TRN_army
 	available = {
 	}
-	prerequisite = {
-		#focus = TRM_localization
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { 
+		#focus = TRM_localization 
 	}
-	#relative_position_id = TRN_kickstart_the_civilian_industry
-	x = -5
+	available = {
+
+	}
+	x = 7
 	y = 1
 	offset = {
 		trigger = { has_completed_focus = TRM_newfocus_7 }
@@ -10925,9 +10942,794 @@ focus_tree = {
 	}
 	offset = {
 		trigger = { has_focus_tree = Trinity_focus }
-		x = 10
-		y = 11
+		x = 38
+		y = -1
 	}
+	#relative_position_id = TRN_kickstart_the_civilian_industry
+	cost = 5.00
+	completion_reward = {
+		add_tech_bonus = {
+			category = infantry_weapons
+			uses = 2
+			bonus = 0.5
+		}
+		add_tech_bonus = {
+			name = mystic_engineering_bonus
+			bonus = 1.0
+			uses = 2
+			category = mystic_engineering
+		}
+		add_dynamic_modifier = {
+			modifier = TRM_develop_the_heer_modifier
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Centralised_Command # 중앙임무체계
+	icon = GFX_focus_generic_full_social_mobilization
+	available = {
+	}
+	prerequisite = { focus = TRN_research_rifle }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+    mutually_exclusive = { focus = TRM_Asymmetric_Tactics }
+	x = -2
+	y = 1
+	relative_position_id = TRN_research_rifle
+	cost = 5
+	completion_reward = {
+		custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_army_org_factor = 0.05 
+			tooltip = army_org_factor_tt 
+		}
+        add_to_variable = { 
+			TRM_army_army_morale_factor = 0.05 
+			tooltip = army_morale_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_infantry_defence_factor = 0.05 
+			tooltip = army_infantry_defence_factor_tt
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Empower_the_Generals
+	icon = GFX_focus_generic_military_mission
+	prerequisite = { focus = TRM_Centralised_Command }
+	relative_position_id = TRM_Centralised_Command
+	x = 1
+	y = 1
+	cost = 6
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_planning_speed = 0.1 
+			tooltip = planning_speed_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_max_planning_factor = 0.1 
+			tooltip = max_planning_factor_tt
+		}
+	}
+}
+shared_focus = {
+	id = TRM_encourage_radio_use
+	icon = GFX_focus_SWE_radiotjanst
+	prerequisite = { focus = TRM_Centralised_Command }
+	relative_position_id = TRM_Centralised_Command
+	x = -1
+	y = 1
+	cost = 6
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_army_attack_speed_factor = 0.1 
+			tooltip = army_attack_speed_factor_tt
+		}
+        custom_effect_tooltip = tooltip_white_line
+		add_tech_bonus = {
+			name = TRM_encourage_radio_use
+			bonus = 1
+			uses = 1
+			category = electronics
+		}
+		add_tech_bonus = {
+			name = TRM_encourage_radio_use
+			bonus = 1.5
+			uses = 1
+			category = electronics
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Streamline_Intelligence_Gathering
+	icon = GFX_focus_SWI_embrace_rote_drei
+	prerequisite = { focus = TRM_encourage_radio_use }
+	relative_position_id = TRM_encourage_radio_use
+	x = 0
+	y = 1
+	cost = 6
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_initiative_factor = 0.02 
+			tooltip = initiative_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_intel_from_combat_factor = 0.1 
+			tooltip = intel_from_combat_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_recon_factor_while_entrenched = 0.1 
+			tooltip = recon_factor_while_entrenched_tt
+		}
+        custom_effect_tooltip = tooltip_white_line
+		army_experience = 25
+		add_command_power = 50
+	}
+}
+shared_focus = {
+	id = TRM_Protectors_of_the_Motherland
+	icon = GFX_focus_SOV_restore_cossack_units
+	prerequisite = { focus = TRM_Streamline_Intelligence_Gathering }
+	prerequisite = { focus = TRM_Empower_the_Generals }
+	relative_position_id = TRM_Streamline_Intelligence_Gathering
+	x = 1
+	y = 1
+	cost = 6
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_army_infantry_attack_factor = 0.05 
+			tooltip = army_infantry_attack_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_terrain_penalty_reduction = 0.05 
+			tooltip = terrain_penalty_reduction_tt
+		}
+        custom_effect_tooltip = tooltip_white_line
+        army_experience = 25
+	}
+}
+shared_focus = {
+	id = TRM_Reorganise_Armament_Production
+	icon = GFX_focus_generic_reorient_production
+	available = {
+
+    }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { 
+        focus = TRM_Asymmetric_Tactics 
+        focus = TRM_Centralised_Command
+    }
+	x = 1
+	y = 2
+	relative_position_id = TRN_research_rifle
+    cost = 8
+	completion_reward = {
+	    add_tech_bonus = {
+			name = TRM_Reorganise_Armament_Production
+		    bonus = 0.75
+		    uses = 2
+		    category = support_tech
+	    }
+	    add_ideas = TRN_army_industry_ns
+        mio:TRM_vickers_armstrong_eng_organization = {
+			add_mio_funds = 500
+			add_mio_research_bonus = 0.1
+	   }
+	}
+}
+shared_focus = {
+	id = TRM_Expand_the_Logistics_Corps
+	icon = GFX_focus_generic_supply_line
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Reorganise_Armament_Production }
+	x = -1
+	y = 1
+	relative_position_id = TRM_Reorganise_Armament_Production
+    cost = 5
+	completion_reward = {
+		if = {
+			limit = { has_focus_tree = Trinity_focus }
+			custom_effect_tooltip = GER_war_preparations_tt
+			effect_tooltip = {
+				add_timed_idea = {
+					idea = GER_strengthened_supply_lines_ns
+					days = 730
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+		}
+		IF = {
+			limit = {
+				has_idea = TRN_army_local_workshops_ns
+			}
+			swap_ideas = {
+				add_idea = TRN_army_industry_upgarde_ns
+				remove_idea = TRN_army_local_workshops_ns
+			}
+		}
+		else = {
+			swap_ideas = {
+				add_idea = TRN_army_industry_expand_logistics_ns
+				remove_idea = TRN_army_industry_ns
+			}
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Local_Workshops
+	icon = GFX_focus_generic_modernize_industry
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Reorganise_Armament_Production }
+	x = 1
+	y = 1
+	relative_position_id = TRM_Reorganise_Armament_Production
+    cost = 5
+	completion_reward = {
+		IF = {
+			limit = {
+				has_idea = TRN_army_industry_expand_logistics_ns
+			}
+			swap_ideas = {
+				add_idea = TRN_army_industry_upgarde_ns
+				remove_idea = TRN_army_industry_expand_logistics_ns
+			}
+		}
+		else = {
+			swap_ideas = {
+				add_idea = TRN_army_local_workshops_ns
+				remove_idea = TRN_army_industry_ns
+			}
+		}
+
+	}
+}
+shared_focus = {
+	id = TRM_Terrestrial_Dreadnoughts
+	icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { 
+        focus = TRM_Local_Workshops 
+        focus = TRM_Expand_the_Logistics_Corps
+    }
+	x = -1
+	y = 1
+	relative_position_id = TRM_Local_Workshops
+    cost = 10
+	completion_reward = {
+	    add_tech_bonus = {
+			name = TRM_Terrestrial_Dreadnoughts
+		    bonus = 0.75
+		    uses = 2
+			category = armor
+	    }
+        mio:TRM_vickers_armstrong_eng_organization = {
+			add_mio_size = 1
+			add_mio_funds = 500
+			add_mio_research_bonus = 0.1
+			unlock_mio_trait_tooltip = TRM_mio_trait_more_expanded_production_facilities
+	   }
+	}
+}
+shared_focus = {
+	id = TRM_Asymmetric_Tactics
+	icon = GFX_focus_generic_combined_arms
+	available = { }
+	ai_will_do = {
+		base = 0
+    }
+    mutually_exclusive = { focus = TRM_Centralised_Command }
+	prerequisite = { focus = TRN_research_rifle }
+	x = 2
+	y = 1
+	relative_position_id = TRN_research_rifle
+    cost = 5
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_army_morale_factor = 0.10 
+			tooltip = army_morale_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_land_reinforce_rate = 0.02 
+			tooltip = land_doctrine_tt
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Decentralised_Structure
+	icon = GFX_focus_SOV_mobilization_plan
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Asymmetric_Tactics }
+	x = 1
+	y = 1
+	relative_position_id = TRM_Asymmetric_Tactics
+	cost = 5
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_experience_gain_army_factor = 0.05 
+			tooltip = experience_gain_army_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_experience_loss_factor = -0.1
+			tooltip = experience_loss_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_special_forces_cap = 0.15 
+			tooltip = special_forces_cap_tt
+		}
+	}
+}
+shared_focus = {
+	id = TRM_Trinity_Field_Artillery 
+	icon = GFX_focus_SWE_let_fly_all_guns
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Decentralised_Structure }
+	x = 1
+	y = 1
+	relative_position_id = TRM_Decentralised_Structure
+	cost = 6
+	completion_reward = {
+        add_ideas = TRM_defense_industry_artillery_bonus
+        custom_effect_tooltip = tooltip_white_line
+    	add_tech_bonus = {
+			name = TRM_Trinity_Field_Artillery
+			bonus = 0.75
+			uses = 2
+			ahead_reduction = 2
+			category = artillery
+	    }
+	}
+}
+shared_focus = {
+	id = TRM_Officer_Initiative
+	icon = GFX_goal_TRM_Operation_Description
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Decentralised_Structure }
+	x = 3
+	y = 1
+	relative_position_id = TRM_Decentralised_Structure
+	cost = 6
+	completion_reward = {
+        custom_effect_tooltip = TRM_heer_modifier_change
+        add_to_variable = { 
+			TRM_army_max_planning_factor = 0.1 
+			tooltip = max_planning_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_experience_gain_army_factor = 0.1
+			tooltip = experience_gain_army_factor_tt
+		}
+        add_to_variable = { 
+			TRM_army_experience_loss_factor = -0.15
+			tooltip = experience_loss_factor_tt
+		}
+        custom_effect_tooltip = tooltip_white_line
+        every_army_leader = {
+    		limit = { skill < 4 }
+		    random_select_amount = 4
+	    	add_skill_level = 1
+    		add_attack = 1
+    		add_defense = 1
+		    add_logistics = 1
+		}
+	}
+}
+shared_focus = {
+	id = TRM_unity_of_doctrine
+	icon = GFX_focus_generic_manpower
+	available = { }
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	prerequisite = { focus = TRM_Trinity_Field_Artillery }
+	prerequisite = { focus = TRM_Officer_Initiative }
+    prerequisite = { focus = TRM_Local_Workshops }
+	x = 0
+	y = 1
+	relative_position_id = TRM_Trinity_Field_Artillery
+	cost = 6
+	completion_reward = {
+		custom_effect_tooltip = TRM_heer_modifier_change
+		add_to_variable = {
+			TRM_army_max_planning = 0.05
+			tooltip = max_planning_tt
+		}
+		add_to_variable = {
+			TRM_army_coordination_bonus = 0.1
+			tooltip = coordination_bonus_tt
+		}
+		add_to_variable = {
+			TRM_army_max_command_power = 50
+			tooltip = max_command_power_tt
+		}
+		custom_effect_tooltip = tooltip_white_line
+    	every_army_leader = {
+		    limit = {
+				skill > 1
+			    NOT = { has_trait = infantry_officer }
+		    }
+		    random_select_amount = 6
+		    add_trait = { trait = infantry_officer }
+	    }
+	}
+}
+shared_focus = {
+	id = TRM_superb_training
+	icon = GFX_focus_chi_army_reform
+	prerequisite = { 
+        focus = TRM_Protectors_of_the_Motherland
+        focus = TRM_unity_of_doctrine
+    }
+    mutually_exclusive = {
+        focus  = TRM_Combined_Arms
+    }
+	relative_position_id = TRM_Protectors_of_the_Motherland
+	x = 1
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 0
+    }
+	completion_reward = {
+        add_ideas = TRM_superb_training_idea_1
+        custom_effect_tooltip = tooltip_white_line
+		add_tech_bonus = {
+			name = TRM_superb_training
+			bonus = 1
+			uses = 1
+			category = cat_special_forces_generic
+		}
+		add_potential_special_forces_tree = yes
+	}
+}
+shared_focus = {
+	id = TRM_Expand_The_High_Command
+	icon = GFX_focus_generic_military_mission
+	prerequisite = { 
+        focus = TRM_superb_training
+    }
+	relative_position_id = TRM_superb_training
+	x = -2
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+	if = {
+		limit = { has_idea = TRM_superb_training_idea_3 }
+		swap_ideas = {
+			remove_idea = TRM_superb_training_idea_3
+			add_idea = TRM_superb_training_idea_4
+		}
+	}
+	else = {
+		swap_ideas = {
+			remove_idea = TRM_superb_training_idea_1
+			add_idea = TRM_superb_training_idea_2
+		}
+	}
+	add_doctrine_cost_reduction = {
+		name = TRM_Expand_The_High_Command
+		cost_reduction = 0.5
+		uses = 1
+		category = land_doctrine
+	}
+	}
+}
+shared_focus = {
+	id = TRM_Officer_Training_Academies
+	icon = GFX_focus_generic_military_academy
+	prerequisite = { 
+        focus = TRM_superb_training
+    }
+	relative_position_id = TRM_superb_training
+	x = 0
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+	if = {
+		limit = { has_idea = TRM_superb_training_idea_2 }
+		swap_ideas = {
+			remove_idea = TRM_superb_training_idea_2
+			add_idea = TRM_superb_training_idea_4
+		}
+	}
+	else = {
+		swap_ideas = {
+			remove_idea = TRM_superb_training_idea_1
+			add_idea = TRM_superb_training_idea_3
+		}
+	}
+	add_doctrine_cost_reduction = {
+		name = TRM_Officer_Training_Academies
+		cost_reduction = 0.5
+		uses = 1
+		category = land_doctrine
+	}
+	}
+}
+shared_focus = {
+	id = TRM_Combined_Arms
+	icon = GFX_focus_FIN_foreign_anti_air
+	prerequisite = { 
+        focus = TRM_Protectors_of_the_Motherland
+        focus = TRM_unity_of_doctrine
+    }
+    mutually_exclusive = {
+        focus  = TRM_superb_training
+    }
+	relative_position_id = TRM_unity_of_doctrine
+	x = -1
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 0
+    }
+	completion_reward = {
+	    add_ideas = TRM_combined_arms_idea_1
+	}
+}
+shared_focus = {
+	id = TRM_Mass_Breakthroughs
+	icon = GFX_goal_fra_arms3
+	prerequisite = { 
+        focus = TRM_Combined_Arms
+    }
+	relative_position_id = TRM_Combined_Arms
+	x = 0
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+	    if = {
+			limit = { has_idea = TRM_combined_arms_idea_3 }
+		    swap_ideas = {
+				remove_idea = TRM_combined_arms_idea_3
+			    add_idea = TRM_combined_arms_idea_4
+		    }
+	    }
+	    else = {
+			swap_ideas = {
+			    remove_idea = TRM_combined_arms_idea_1
+			    add_idea = TRM_combined_arms_idea_2
+		    }
+	    }
+	    add_tech_bonus = {
+			name = TRM_Mass_Breakthroughs
+		    bonus = 1
+			uses = 1
+		    category = armor
+	    }
+	}
+}
+shared_focus = {
+	id = TRM_Land_Air_Integration
+	icon = GFX_focus_generic_armored_air_support
+	prerequisite = { 
+        focus = TRM_Combined_Arms
+    }
+	relative_position_id = TRM_Combined_Arms
+	x = 2
+	y = 1
+	cost = 5
+	ai_will_do = {
+		base = 300
+		modifier = {
+			factor = 0.5
+			has_war = no
+		}
+		modifier = {
+			factor = 2
+			has_war = yes
+		}
+    }
+	completion_reward = {
+	    if = {
+		    limit = { has_idea = TRM_combined_arms_idea_2 }
+		    swap_ideas = {
+			    remove_idea = TRM_combined_arms_idea_2
+			    add_idea = TRM_combined_arms_idea_4
+			}
+	    }
+	    else = {
+		    swap_ideas = {
+				remove_idea = TRM_combined_arms_idea_1
+				add_idea = TRM_combined_arms_idea_3
+		    }
+		}
+	    add_tech_bonus = {
+			name = TRM_Land_Air_Integration
+	    	bonus = 1
+		    uses = 1
+		    category = cas_bomber
+	    }
+	}
+}
+
+	shared_focus = {
+	id = TRN_Luftwaffe
+	icon = GFX_focus_TRN_airforce
+	cost = 5
+	available = {
+	}
+	prerequisite = {
+		#focus = TRM_localization
+	}
+	relative_position_id = TRN_research_rifle
+	x = -12
+	y = 0
     ai_will_do = {
 	    factor = 2
 	    modifier = {
@@ -12200,819 +13002,6 @@ shared_focus = {
 			uses = 2
 			category = naval_air
 		}
-	}
-}
-
-
-
-
-shared_focus = {
-	id = TRN_research_rifle # 소총 개발?
-	icon = GFX_focus_TRN_army
-	available = {
-	}
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { 
-		#focus = TRM_localization 
-	}
-	available = {
-
-	}
-	x = 7
-	y = 1
-	offset = {
-		trigger = { has_completed_focus = TRM_newfocus_7 }
-		x = 3
-	}
-	offset = {
-		trigger = { has_completed_focus = TRN_nagisa_gyehek }
-		x = 1
-	}
-	offset = {
-		trigger = { has_focus_tree = Trinity_focus }
-		x = 10
-		y = 11
-	}
-	#relative_position_id = TRN_kickstart_the_civilian_industry
-	cost = 5.00
-	completion_reward = {
-		add_tech_bonus = {
-			category = infantry_weapons
-			uses = 2
-			bonus = 0.5
-		}
-		add_tech_bonus = {
-			name = mystic_engineering_bonus
-			bonus = 1.0
-			uses = 2
-			category = mystic_engineering
-		}
-		add_dynamic_modifier = {
-			modifier = TRM_develop_the_heer_modifier
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Centralised_Command # 중앙임무체계
-	icon = GFX_focus_generic_full_social_mobilization
-	available = {
-	}
-	prerequisite = { focus = TRN_research_rifle }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-    mutually_exclusive = { focus = TRM_Asymmetric_Tactics }
-	x = -2
-	y = 1
-	relative_position_id = TRN_research_rifle
-	cost = 5
-	completion_reward = {
-		custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_army_org_factor = 0.05 
-			tooltip = army_org_factor_tt 
-		}
-        add_to_variable = { 
-			TRM_army_army_morale_factor = 0.05 
-			tooltip = army_morale_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_infantry_defence_factor = 0.05 
-			tooltip = army_infantry_defence_factor_tt
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Empower_the_Generals
-	icon = GFX_focus_generic_military_mission
-	prerequisite = { focus = TRM_Centralised_Command }
-	relative_position_id = TRM_Centralised_Command
-	x = 1
-	y = 1
-	cost = 6
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_planning_speed = 0.1 
-			tooltip = planning_speed_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_max_planning_factor = 0.1 
-			tooltip = max_planning_factor_tt
-		}
-	}
-}
-shared_focus = {
-	id = TRM_encourage_radio_use
-	icon = GFX_focus_SWE_radiotjanst
-	prerequisite = { focus = TRM_Centralised_Command }
-	relative_position_id = TRM_Centralised_Command
-	x = -1
-	y = 1
-	cost = 6
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_army_attack_speed_factor = 0.1 
-			tooltip = army_attack_speed_factor_tt
-		}
-        custom_effect_tooltip = tooltip_white_line
-		add_tech_bonus = {
-			name = TRM_encourage_radio_use
-			bonus = 1
-			uses = 1
-			category = electronics
-		}
-		add_tech_bonus = {
-			name = TRM_encourage_radio_use
-			bonus = 1.5
-			uses = 1
-			category = electronics
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Streamline_Intelligence_Gathering
-	icon = GFX_focus_SWI_embrace_rote_drei
-	prerequisite = { focus = TRM_encourage_radio_use }
-	relative_position_id = TRM_encourage_radio_use
-	x = 0
-	y = 1
-	cost = 6
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_initiative_factor = 0.02 
-			tooltip = initiative_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_intel_from_combat_factor = 0.1 
-			tooltip = intel_from_combat_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_recon_factor_while_entrenched = 0.1 
-			tooltip = recon_factor_while_entrenched_tt
-		}
-        custom_effect_tooltip = tooltip_white_line
-		army_experience = 25
-		add_command_power = 50
-	}
-}
-shared_focus = {
-	id = TRM_Protectors_of_the_Motherland
-	icon = GFX_focus_SOV_restore_cossack_units
-	prerequisite = { focus = TRM_Streamline_Intelligence_Gathering }
-	prerequisite = { focus = TRM_Empower_the_Generals }
-	relative_position_id = TRM_Streamline_Intelligence_Gathering
-	x = 1
-	y = 1
-	cost = 6
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_army_infantry_attack_factor = 0.05 
-			tooltip = army_infantry_attack_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_terrain_penalty_reduction = 0.05 
-			tooltip = terrain_penalty_reduction_tt
-		}
-        custom_effect_tooltip = tooltip_white_line
-        army_experience = 25
-	}
-}
-shared_focus = {
-	id = TRM_Reorganise_Armament_Production
-	icon = GFX_focus_generic_reorient_production
-	available = {
-
-    }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { 
-        focus = TRM_Asymmetric_Tactics 
-        focus = TRM_Centralised_Command
-    }
-	x = 1
-	y = 2
-	relative_position_id = TRN_research_rifle
-    cost = 8
-	completion_reward = {
-	    add_tech_bonus = {
-			name = TRM_Reorganise_Armament_Production
-		    bonus = 0.75
-		    uses = 2
-		    category = support_tech
-	    }
-	    add_ideas = TRN_army_industry_ns
-        mio:TRM_vickers_armstrong_eng_organization = {
-			add_mio_funds = 500
-			add_mio_research_bonus = 0.1
-	   }
-	}
-}
-shared_focus = {
-	id = TRM_Expand_the_Logistics_Corps
-	icon = GFX_focus_generic_supply_line
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Reorganise_Armament_Production }
-	x = -1
-	y = 1
-	relative_position_id = TRM_Reorganise_Armament_Production
-    cost = 5
-	completion_reward = {
-		if = {
-			limit = { has_focus_tree = Trinity_focus }
-			custom_effect_tooltip = GER_war_preparations_tt
-			effect_tooltip = {
-				add_timed_idea = {
-					idea = GER_strengthened_supply_lines_ns
-					days = 730
-				}
-			}
-			custom_effect_tooltip = tooltip_white_line
-		}
-		IF = {
-			limit = {
-				has_idea = TRN_army_local_workshops_ns
-			}
-			swap_ideas = {
-				add_idea = TRN_army_industry_upgarde_ns
-				remove_idea = TRN_army_local_workshops_ns
-			}
-		}
-		else = {
-			swap_ideas = {
-				add_idea = TRN_army_industry_expand_logistics_ns
-				remove_idea = TRN_army_industry_ns
-			}
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Local_Workshops
-	icon = GFX_focus_generic_modernize_industry
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Reorganise_Armament_Production }
-	x = 1
-	y = 1
-	relative_position_id = TRM_Reorganise_Armament_Production
-    cost = 5
-	completion_reward = {
-		IF = {
-			limit = {
-				has_idea = TRN_army_industry_expand_logistics_ns
-			}
-			swap_ideas = {
-				add_idea = TRN_army_industry_upgarde_ns
-				remove_idea = TRN_army_industry_expand_logistics_ns
-			}
-		}
-		else = {
-			swap_ideas = {
-				add_idea = TRN_army_local_workshops_ns
-				remove_idea = TRN_army_industry_ns
-			}
-		}
-
-	}
-}
-shared_focus = {
-	id = TRM_Terrestrial_Dreadnoughts
-	icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { 
-        focus = TRM_Local_Workshops 
-        focus = TRM_Expand_the_Logistics_Corps
-    }
-	x = -1
-	y = 1
-	relative_position_id = TRM_Local_Workshops
-    cost = 10
-	completion_reward = {
-	    add_tech_bonus = {
-			name = TRM_Terrestrial_Dreadnoughts
-		    bonus = 0.75
-		    uses = 2
-			category = armor
-	    }
-        mio:TRM_vickers_armstrong_eng_organization = {
-			add_mio_size = 1
-			add_mio_funds = 500
-			add_mio_research_bonus = 0.1
-			unlock_mio_trait_tooltip = TRM_mio_trait_more_expanded_production_facilities
-	   }
-	}
-}
-shared_focus = {
-	id = TRM_Asymmetric_Tactics
-	icon = GFX_focus_generic_combined_arms
-	available = { }
-	ai_will_do = {
-		base = 0
-    }
-    mutually_exclusive = { focus = TRM_Centralised_Command }
-	prerequisite = { focus = TRN_research_rifle }
-	x = 2
-	y = 1
-	relative_position_id = TRN_research_rifle
-    cost = 5
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_army_morale_factor = 0.10 
-			tooltip = army_morale_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_land_reinforce_rate = 0.02 
-			tooltip = land_doctrine_tt
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Decentralised_Structure
-	icon = GFX_focus_SOV_mobilization_plan
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Asymmetric_Tactics }
-	x = 1
-	y = 1
-	relative_position_id = TRM_Asymmetric_Tactics
-	cost = 5
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_experience_gain_army_factor = 0.05 
-			tooltip = experience_gain_army_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_experience_loss_factor = -0.1
-			tooltip = experience_loss_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_special_forces_cap = 0.15 
-			tooltip = special_forces_cap_tt
-		}
-	}
-}
-shared_focus = {
-	id = TRM_Trinity_Field_Artillery 
-	icon = GFX_focus_SWE_let_fly_all_guns
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Decentralised_Structure }
-	x = 1
-	y = 1
-	relative_position_id = TRM_Decentralised_Structure
-	cost = 6
-	completion_reward = {
-        add_ideas = TRM_defense_industry_artillery_bonus
-        custom_effect_tooltip = tooltip_white_line
-    	add_tech_bonus = {
-			name = TRM_Trinity_Field_Artillery
-			bonus = 0.75
-			uses = 2
-			ahead_reduction = 2
-			category = artillery
-	    }
-	}
-}
-shared_focus = {
-	id = TRM_Officer_Initiative
-	icon = GFX_goal_TRM_Operation_Description
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Decentralised_Structure }
-	x = 3
-	y = 1
-	relative_position_id = TRM_Decentralised_Structure
-	cost = 6
-	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
-        add_to_variable = { 
-			TRM_army_max_planning_factor = 0.1 
-			tooltip = max_planning_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_experience_gain_army_factor = 0.1
-			tooltip = experience_gain_army_factor_tt
-		}
-        add_to_variable = { 
-			TRM_army_experience_loss_factor = -0.15
-			tooltip = experience_loss_factor_tt
-		}
-        custom_effect_tooltip = tooltip_white_line
-        every_army_leader = {
-    		limit = { skill < 4 }
-		    random_select_amount = 4
-	    	add_skill_level = 1
-    		add_attack = 1
-    		add_defense = 1
-		    add_logistics = 1
-		}
-	}
-}
-shared_focus = {
-	id = TRM_unity_of_doctrine
-	icon = GFX_focus_generic_manpower
-	available = { }
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	prerequisite = { focus = TRM_Trinity_Field_Artillery }
-	prerequisite = { focus = TRM_Officer_Initiative }
-    prerequisite = { focus = TRM_Local_Workshops }
-	x = 0
-	y = 1
-	relative_position_id = TRM_Trinity_Field_Artillery
-	cost = 6
-	completion_reward = {
-		custom_effect_tooltip = TRM_heer_modifier_change
-		add_to_variable = {
-			TRM_army_max_planning = 0.05
-			tooltip = max_planning_tt
-		}
-		add_to_variable = {
-			TRM_army_coordination_bonus = 0.1
-			tooltip = coordination_bonus_tt
-		}
-		add_to_variable = {
-			TRM_army_max_command_power = 50
-			tooltip = max_command_power_tt
-		}
-		custom_effect_tooltip = tooltip_white_line
-    	every_army_leader = {
-		    limit = {
-				skill > 1
-			    NOT = { has_trait = infantry_officer }
-		    }
-		    random_select_amount = 6
-		    add_trait = { trait = infantry_officer }
-	    }
-	}
-}
-shared_focus = {
-	id = TRM_superb_training
-	icon = GFX_focus_chi_army_reform
-	prerequisite = { 
-        focus = TRM_Protectors_of_the_Motherland
-        focus = TRM_unity_of_doctrine
-    }
-    mutually_exclusive = {
-        focus  = TRM_Combined_Arms
-    }
-	relative_position_id = TRM_Protectors_of_the_Motherland
-	x = 1
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 0
-    }
-	completion_reward = {
-        add_ideas = TRM_superb_training_idea_1
-        custom_effect_tooltip = tooltip_white_line
-		add_tech_bonus = {
-			name = TRM_superb_training
-			bonus = 1
-			uses = 1
-			category = cat_special_forces_generic
-		}
-		add_potential_special_forces_tree = yes
-	}
-}
-shared_focus = {
-	id = TRM_Expand_The_High_Command
-	icon = GFX_focus_generic_military_mission
-	prerequisite = { 
-        focus = TRM_superb_training
-    }
-	relative_position_id = TRM_superb_training
-	x = -2
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-	if = {
-		limit = { has_idea = TRM_superb_training_idea_3 }
-		swap_ideas = {
-			remove_idea = TRM_superb_training_idea_3
-			add_idea = TRM_superb_training_idea_4
-		}
-	}
-	else = {
-		swap_ideas = {
-			remove_idea = TRM_superb_training_idea_1
-			add_idea = TRM_superb_training_idea_2
-		}
-	}
-	add_doctrine_cost_reduction = {
-		name = TRM_Expand_The_High_Command
-		cost_reduction = 0.5
-		uses = 1
-		category = land_doctrine
-	}
-	}
-}
-shared_focus = {
-	id = TRM_Officer_Training_Academies
-	icon = GFX_focus_generic_military_academy
-	prerequisite = { 
-        focus = TRM_superb_training
-    }
-	relative_position_id = TRM_superb_training
-	x = 0
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-	if = {
-		limit = { has_idea = TRM_superb_training_idea_2 }
-		swap_ideas = {
-			remove_idea = TRM_superb_training_idea_2
-			add_idea = TRM_superb_training_idea_4
-		}
-	}
-	else = {
-		swap_ideas = {
-			remove_idea = TRM_superb_training_idea_1
-			add_idea = TRM_superb_training_idea_3
-		}
-	}
-	add_doctrine_cost_reduction = {
-		name = TRM_Officer_Training_Academies
-		cost_reduction = 0.5
-		uses = 1
-		category = land_doctrine
-	}
-	}
-}
-shared_focus = {
-	id = TRM_Combined_Arms
-	icon = GFX_focus_FIN_foreign_anti_air
-	prerequisite = { 
-        focus = TRM_Protectors_of_the_Motherland
-        focus = TRM_unity_of_doctrine
-    }
-    mutually_exclusive = {
-        focus  = TRM_superb_training
-    }
-	relative_position_id = TRM_unity_of_doctrine
-	x = -1
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 0
-    }
-	completion_reward = {
-	    add_ideas = TRM_combined_arms_idea_1
-	}
-}
-shared_focus = {
-	id = TRM_Mass_Breakthroughs
-	icon = GFX_goal_fra_arms3
-	prerequisite = { 
-        focus = TRM_Combined_Arms
-    }
-	relative_position_id = TRM_Combined_Arms
-	x = 0
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-	    if = {
-			limit = { has_idea = TRM_combined_arms_idea_3 }
-		    swap_ideas = {
-				remove_idea = TRM_combined_arms_idea_3
-			    add_idea = TRM_combined_arms_idea_4
-		    }
-	    }
-	    else = {
-			swap_ideas = {
-			    remove_idea = TRM_combined_arms_idea_1
-			    add_idea = TRM_combined_arms_idea_2
-		    }
-	    }
-	    add_tech_bonus = {
-			name = TRM_Mass_Breakthroughs
-		    bonus = 1
-			uses = 1
-		    category = armor
-	    }
-	}
-}
-shared_focus = {
-	id = TRM_Land_Air_Integration
-	icon = GFX_focus_generic_armored_air_support
-	prerequisite = { 
-        focus = TRM_Combined_Arms
-    }
-	relative_position_id = TRM_Combined_Arms
-	x = 2
-	y = 1
-	cost = 5
-	ai_will_do = {
-		base = 300
-		modifier = {
-			factor = 0.5
-			has_war = no
-		}
-		modifier = {
-			factor = 2
-			has_war = yes
-		}
-    }
-	completion_reward = {
-	    if = {
-		    limit = { has_idea = TRM_combined_arms_idea_2 }
-		    swap_ideas = {
-			    remove_idea = TRM_combined_arms_idea_2
-			    add_idea = TRM_combined_arms_idea_4
-			}
-	    }
-	    else = {
-		    swap_ideas = {
-				remove_idea = TRM_combined_arms_idea_1
-				add_idea = TRM_combined_arms_idea_3
-		    }
-		}
-	    add_tech_bonus = {
-			name = TRM_Land_Air_Integration
-	    	bonus = 1
-		    uses = 1
-		    category = cas_bomber
-	    }
 	}
 }
 
