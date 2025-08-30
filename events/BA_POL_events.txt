@@ -78,8 +78,12 @@ country_event = {
 	desc = BA_pol_event.3.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_gre_allied_diplomacy
 	option = {
 		name = BA_pol_event.3.a
+		RSA = {
+			leave_faction = yes
+		}
 		every_country = {
 			limit = {
 				has_war_with = SOV
@@ -105,6 +109,7 @@ country_event = {
 		POL = {
 			country_event = BA_pol_event.4
 		}
+		custom_effect_tooltip = BA_pol_event.3_tt
 	}
 	option = {
 		name = BA_pol_event.3.b
@@ -125,10 +130,11 @@ country_event = {
 	desc = BA_pol_event.4.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_gre_allied_diplomacy
 	option = {
 		name = BA_pol_event.4.a
+		POL_win_of_intermarium = yes
 		hidden_effect = {
-			POL_win_of_intermarium = yes
 			news_event = {
 				id = BA_pol_event.8
 				days = 3
@@ -145,6 +151,7 @@ country_event = {
 	desc = BA_pol_event.5.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_gre_allied_diplomacy
 	option = {
 		name = BA_pol_event.5.a
 	}
@@ -155,44 +162,27 @@ country_event = {
 	id = BA_pol_event.6
 	title = BA_pol_event.6.t
 	desc = BA_pol_event.6.d
-	trigger = {
-		POL = {
-			controls_state = 219
-		}
-		has_global_flag = sov_pol_war_superevent_trigger_flag
-		tag = POL
-	}
+	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_gre_allied_diplomacy
 	option = {
 		name = BA_pol_event.6.a
 		SOV = {
 			country_event = {
 				id = BA_pol_event.3
-				days = 3
+				days = 1
 			}
-		}
-	}
-	option = {
-		name = BA_pol_event.6.b
-		ai_chance = {
-			base = 0
 		}
 		add_war_support = 0.05
 	}
 }
 
 country_event = {
-	#축출된 스탈린
+	#안 씀
 	id = BA_pol_event.7
 	title = BA_pol_event.7.t
 	desc = BA_pol_event.7.d
-	trigger = {
-		POL = {
-			controls_state = 219
-		}
-		has_global_flag = sov_pol_war_superevent_trigger_flag
-		tag = SOV
-	}
+	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
 		name = BA_pol_event.7.a
@@ -1664,6 +1654,7 @@ country_event = {
 	desc = BA_pol_event.34.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_yugoslavian_cavalry
 	option = { 
 		name = BA_pol_event.34.a
 		add_ideas = POL_no_flood
@@ -2031,40 +2022,30 @@ country_event = { #자유 폴란드 의용군
 			original_tag = SOV
 		}
 		93 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
 				scope = POL
 			}
 		}
 		94 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
 				scope = POL
 			}
 		}
 		95 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
 				scope = POL
 			}
 		}
 		96 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
 				scope = POL
 			}
 		}
 		97 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
 				scope = POL
@@ -2072,7 +2053,7 @@ country_event = { #자유 폴란드 의용군
 		}
 	}
 }
-country_event = { #밸라루스 의용대 
+country_event = { #벨라루스 의용대 
 	id = BA_pol_event.43
 	title = BA_pol_event.43.t
 	desc = BA_pol_event.43.d
@@ -2094,41 +2075,31 @@ country_event = { #밸라루스 의용대
 		trigger = {
 			original_tag = SOV
 		}
+		96 = {
+			add_dynamic_modifier = {
+				modifier = POL_BVA_modifier
+				scope = POL
+			}
+		}
 		194 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_BVA_modifier
 				scope = POL
 			}
 		}
 		204 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_BVA_modifier
 				scope = POL
 			}
 		}
 		206 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_BVA_modifier
 				scope = POL
 			}
 		}
 		207 = {
-			add_compliance = -10
-			add_resistance = 10
-			add_dynamic_modifier = {
-				modifier = POL_BVA_modifier
-				scope = POL
-			}
-		}
-		241 = {
-			add_compliance = -10
-			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = POL_BVA_modifier
 				scope = POL
@@ -2179,7 +2150,14 @@ country_event = { #반소련 민족주의 민병대 봉기
 			create_unit = {
 				division = "name = \"Ukraine National Army\" division_template = \"Ukraine National Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
 				owner = ROOT
-				count = 2
+				count = 1
+				allow_spawning_on_enemy_provs = yes
+			}
+			create_unit = {
+				division = "name = \"Ukraine National Army\" division_template = \"Ukraine National Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+				owner = UKR
+				count = 1
+				allow_spawning_on_enemy_provs = yes
 			}
 			transfer_state_to = UKR
 		}
@@ -2217,7 +2195,14 @@ country_event = { #반소련 민족주의 민병대 봉기
 			create_unit = {
 				division = "name = \"Belarus Volunteer Army\" division_template = \"Belarus Volunteer Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
 				owner = ROOT
-				count = 2
+				count = 1
+				allow_spawning_on_enemy_provs = yes
+			}
+			create_unit = {
+				division = "name = \"Belarus Volunteer Army\" division_template = \"Belarus Volunteer Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+				owner = BLR
+				count = 1
+				allow_spawning_on_enemy_provs = yes
 			}
 			transfer_state_to = BLR
 		}
@@ -2257,7 +2242,8 @@ country_event = { #반소련 민족주의 민병대 봉기
 			create_unit = {
 				division = "name = \"Free Poland Volunteer\" division_template = \"Free Poland Volunteer\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
 				owner = ROOT
-				count = 2
+				count = 1
+				allow_spawning_on_enemy_provs = yes
 			}
 			transfer_state_to = POL
 		}
@@ -2290,7 +2276,7 @@ country_event = { #위 이벤트 한무반복
 							scope = POL
 						}
 					}
-					is_owned_by = PREV
+					is_controlled_by = PREV
 				}
 			}
 			country_event = {
@@ -2309,6 +2295,71 @@ country_event = { #위 이벤트 한무반복
 				days = 30
 			}
 		}
+	}
+}
+country_event = { #르부프 선언
+	id = BA_pol_event.46
+	title = BA_pol_event.46.t
+	desc = BA_pol_event.46.d
+	picture = GFX_report_event_canada_treaty
+	is_triggered_only = yes
+	option = { #아이조아요
+		name = BA_pol_event.46.a
+		every_controlled_state = {
+			limit = {
+				NOT = {
+					is_core_of = GEO
+					is_core_of = AZR
+					is_core_of = ARM
+				}
+				is_owned_by = SOV
+				is_core_of = SOV
+			}
+			RSA = {
+				set_state_controller = prev
+				if = {
+					limit = {
+						NOT = {
+							ROOT = {
+								has_template = "Russian Liberation Army" 
+							}
+						}
+					}
+					ROOT = {
+						division_template = {
+							name = "Russian Liberation Army"
+							is_locked = yes
+							regiments = {
+								militia = { x = 0 y = 0 }
+								militia = { x = 0 y = 1 }
+								militia = { x = 1 y = 0 }
+								militia = { x = 1 y = 1 }
+								militia = { x = 2 y = 0 }
+								militia = { x = 2 y = 1 }
+							}
+						}
+					}
+				}
+			}
+			create_unit = {
+				division = "name = \"Russian Liberation Army\" division_template = \"Russian Liberation Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
+				owner = RSA
+				count = 2
+				allow_spawning_on_enemy_provs = yes
+			}
+		}
+	}
+	option = { #ㄴㄴ
+		name = BA_pol_event.46.b
+		ai_chance = {
+			base = 0
+		}
+		trigger = {
+			NOT = {
+				original_tag = POL
+			}
+		}
+		add_political_power = 5
 	}
 }
 
@@ -2399,6 +2450,7 @@ country_event = {#공동 방위군
 	title = BA_intermarium_solidarity_event.3.t
 	desc = BA_intermarium_solidarity_event.3.d
 	is_triggered_only = yes
+	picture = GFX_report_event_SOV_mongolia_cavalry
 	option = { 
 		name = BA_intermarium_solidarity_event.3.a
 		division_template = {
@@ -2442,11 +2494,20 @@ country_event = {#공동 방위군
 				}
 			}
 		}
+		set_temp_variable = {
+			solidarity_unit_num = POL.POL_solidarity_unit_var
+		}
+		divide_temp_variable = {
+			solidarity_unit_num = faction_members
+		}
+		add_to_temp_variable = {
+			solidarity_unit_num = 1
+		}
 		capital_scope = {
 			create_unit = {
-				division = "name = \"Intermarium Joint Defence Force\" division_template = \"Intermarium Joint Defence Force\" start_experience_factor = 0.4 start_equipment_factor = 1"
+				division = "name = \"Intermarium Joint Defence Force\" division_template = \"Intermarium Joint Defence Force\" start_experience_factor = 0.25 start_equipment_factor = 1"
 				owner = ROOT
-				count = POL.POL_solidarity_unit_var
+				count = solidarity_unit_num
 			}
 		}
 	}

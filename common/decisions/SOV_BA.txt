@@ -449,84 +449,45 @@ SOV_UKR_dokrib_decision = {
 	}
 }
 BA_sov_pol_war_decision = {
-	BA_sov_pol_war_decision_protect_moscow = { #폴란드 점령
+	BA_sov_pol_war_decision_occupy_moscow = { #평화 제의
 		visible = {
-			tag = SOV
+			tag = POL
+			has_completed_focus = POL_invite_greece
 		}
 		allowed = {
-			tag = SOV
+			tag = POL
 		}
-		activation = {
-			POL = {
-				has_war_with = SOV
-			}
-		}
-		days_mission_timeout = 800
 		icon = GFX_decision_generic_operation
 		available = {
-			POL = {OR ={
-				has_capitulated = yes
-				exists = no
-				is_puppet_of = SOV
-				hidden_trigger = {
-					NOT={
-						has_war_with = SOV
+			OR = {
+				219 = {
+					is_controlled_by_ROOT_or_ally = yes
+				}
+				AND = {
+					195 = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+					217 = {
+						is_controlled_by_ROOT_or_ally = yes
 					}
 				}
-				}
 			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
-				state = 10
-				state = 98
-				state = 87
-				state = 90
-				state = 1026
-				state = 88
-				state = 92
-			}
-		}
-		is_good = no
-		timeout_effect = {
-			add_war_support = -0.1
-		}
-		complete_effect = {
-			custom_effect_tooltip = BA_sov_pol_war_decision_protect_moscow_tt
-			hidden_effect={}
-		}
-		fire_only_once = yes
-	}
-	BA_sov_pol_war_decision_occupy_moscow = {
-		visible = {
-			tag = POL
-		}
-		allowed = {
-			tag = POL
-		}
-		days_mission_timeout = 800
-		icon = GFX_decision_generic_operation
-		available = {
-			219 = {
-				is_controlled_by_ROOT_or_ally = yes
-			}
-		}
-		activation = {
-			POL = {
-				has_war_with = SOV
-			}
-		}
-		is_good = yes
-		timeout_effect = {
-			add_war_support = 0.1
-		}
-		highlight_states = {
-			highlight_state_targets = {
+				state = 195
+				state = 217
 				state = 219
 			}
 		}
-		is_good = no
+		cost = 10
 		fire_only_once = yes
+		complete_effect = {
+			country_event = {
+				id = BA_pol_event.6
+				hours = 4
+			}
+		}
 	}
 	BA_sov_pol_war_decision_flood = {
 		allowed = {

@@ -270,13 +270,65 @@ POL_intermarium_at_war = { #바다 사이의 개념
 					}
 					modify_timed_idea = {
 						idea = POL_aid_idea
-						days = 120
+						days = 30
 					}
 				}
 				else = {
 					add_timed_idea = {
 						idea = POL_aid_idea
-						days = 120
+						days = 30
+					}
+				}
+				if = {
+					limit = {
+						NOT = {has_template = "Intermarium Joint Defence Force"}
+					}
+					division_template = {
+						name = "Intermarium Joint Defence Force"
+						regiments = {
+							infantry = {
+								x = 0
+								y = 0
+							}
+							infantry = {
+								x = 0
+								y = 1
+							}
+							infantry = {
+								x = 0
+								y = 2
+							}
+							infantry = {
+								x = 1
+								y = 0
+							}
+							infantry = {
+								x = 1
+								y = 1
+							}
+							infantry = {
+								x = 1
+								y = 2
+							}
+							infantry = {
+								x = 2
+								y = 0
+							}
+							infantry = {
+								x = 2
+								y = 1
+							}
+							infantry = {
+								x = 2
+								y = 2
+							}
+						}
+					}
+				}
+				capital_scope = {
+					create_unit = {
+						division = "name = \"Intermarium Joint Defence Force\" division_template = \"Intermarium Joint Defence Force\" start_experience_factor = 0.3 start_equipment_factor = 1"
+						owner = prev
 					}
 				}
 			}
@@ -294,8 +346,24 @@ POL_intermarium_at_war = { #바다 사이의 개념
 			has_war = no
 		}
 		timeout_effect = {
+			set_temp_variable = {
+				war_var = 0
+			}
 			custom_effect_tooltip = POL_sov_war_mission_tt
 			effect_tooltip = {
+				if = {
+					limit = {
+						any_country = {
+							is_ally_with = POL
+							is_ai = no
+						}
+					}
+					custom_effect_tooltip = POL_sov_war_mission_tt_1
+					add_to_variable = {
+						POL_solidarity_var = -5
+						tooltip = POL_solidarity_tt
+					}
+				}
 				every_country = {
 					limit = {
 						is_ally_with = POL
@@ -354,6 +422,19 @@ POL_intermarium_at_war = { #바다 사이의 개념
 					tag = POL
 				}
 				hidden_effect = {
+					if = {
+						limit = {
+							any_country = {
+								is_ally_with = POL
+								is_ai = no
+							}
+						}
+						custom_effect_tooltip = POL_sov_war_mission_tt_1
+						add_to_variable = {
+							POL.POL_solidarity_var = -5
+							tooltip = POL_solidarity_tt
+						}
+					}
 					every_country = {
 						limit = {
 							is_ally_with = POL
@@ -431,7 +512,7 @@ POL_intermarium_at_war = { #바다 사이의 개념
 					check_variable = {
 						var = POL_solidarity_var
 						value = 80
-						compare = greater_than_or_equals
+						compare = greater_than
 					}
 				}
 			}
@@ -439,8 +520,11 @@ POL_intermarium_at_war = { #바다 사이의 개념
 		days_re_enable = 30
 		days_remove = 60
 		modifier = {
-			attack_bonus_against_cores = 0.03
 			army_attack_factor = 0.05
+		}
+		targeted_modifier = {
+			tag = SOV
+			attack_bonus_against_cores = 0.03
 		}
 		ai_will_do = {
 			base = 40
