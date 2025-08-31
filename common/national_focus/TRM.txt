@@ -6708,7 +6708,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 11
 			tag = TRM
 		}
 	}
@@ -7220,24 +7220,35 @@ focus_tree = {
 	##### 정치 중점
 	#####
 	focus = {
-		id = TRN_challenge_the_host
-		icon = GFX_focus_TRN_challenge_the_host
+		id = TRN_Kyrie_for_the_forgotten_ones
+		icon = GFX_focus_TRN_Kyrie_for_the_forgotten_ones
 		x = 6
 		y = 0
+		offset = {
+			x = 11
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
 		cost = 3
 		available = {
 			NOT = {
 				has_country_leader = { character = TRN_Misono_Mika }
 			}
 		}
-		ai_will_do = {
-
-		}
 		mutually_exclusive = {
 			focus = TRN_unprovable_problem
 		}
 		allow_branch = {
 			NOT = { has_completed_focus = TRN_unprovable_problem }
+		}
+		ai_will_do = {
+
 		}
 		bypass = {
 			has_country_leader = {
@@ -7250,7 +7261,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 150
-			custom_effect_tooltip = TRN_challenge_the_host_tt
+			custom_effect_tooltip = TRN_Kyrie_for_the_forgotten_ones_tt
 
 			mark_focus_tree_layout_dirty = yes
 		}
@@ -7260,12 +7271,23 @@ focus_tree = {
 		id = TRN_bring_in_vigilantes
 		icon = GFX_focus_TRN_Suzumi
 		prerequisite = {
-			focus = TRN_challenge_the_host
+			focus = TRN_Kyrie_for_the_forgotten_ones
 			focus = TRN_unprovable_problem
 		}
 		x = 3
 		y = 1
-		relative_position_id = TRN_challenge_the_host
+		offset = {
+			x = -1
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
+		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
 		cost = 4
 
 		available = {
@@ -7314,10 +7336,10 @@ focus_tree = {
 	focus = {
 		id = TRN_control_tea_party
 		icon = GFX_focus_TRN_control_tea_party
-		prerequisite = { focus = TRN_challenge_the_host }
+		prerequisite = { focus = TRN_Kyrie_for_the_forgotten_ones }
 		x = 0
 		y = 1
-		relative_position_id = TRN_challenge_the_host
+		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
 		cost = 5
 		available = {
 			NOT = { has_idea = TRN_political_instability_ns }
@@ -7330,7 +7352,7 @@ focus_tree = {
 
 		}
 		select_effect = {
-			country_event = { id = trinity.18 days = 02 }
+			country_event = { id = trinity.19 days = 02 }
 		}
 		completion_reward = {
 			country_event = trinity.1
@@ -7421,7 +7443,7 @@ focus_tree = {
 		select_effect = {
 			country_event = { id = trinity.16 days = 05 } # 상투스 분파의 절멸
 			country_event = { id = trinity.17 days = 15 } # 필리우스 분파의 운명
-			country_event = { id = trinity.19 days = 25 } # 파테르 분파 내부의 불충
+			country_event = { id = trinity.18 days = 25 } # 파테르 분파 내부의 불충
 			country_event = { id = trinity.21 days = 56 random_days = 45 } # 트리니티 의용군단
 		}
 		completion_reward = {
@@ -7462,6 +7484,9 @@ focus_tree = {
 			country_event = trinity.51
 			hidden_effect = {
 				country_event = { id = trinity.30 days = 25 } # 여성 인권
+				TRN_Alfred_Hugenberg = {
+					unit_leader_event = { id = trnfla.41  } # 알프레드 후겐베르크의 평론
+				}
 			}
 		}
 	}
@@ -7619,9 +7644,9 @@ focus_tree = {
 				TRM_hans_zehrer = { unit_leader_event = { id = trinity.39 days = 25 random_days = 25 } } # 한스 프리체
 				country_event = { id = trinity.37 days = 35 random_days = 125 } # 소규모 동아리들의 운명
 				country_event = { id = trinity.45 days = 35 random_days = 14 } # 사회 문제 발생!!
-				country_event = { id = trinity.36 days = 210 } # 안보 상황
 				country_event = { id = trnfla.12 days = 365 } # 세이아 음모론
 				country_event = { id = trnfla.33 days = 125 random_days = 125 } # 미소노 미카 드디어 다깟네요;;
+				country_event = { id = trnfla.40 days = 300 } # 미카 휴가 가는 이벤트
 			}
 			set_country_flag = TRN_mika_honor_activate
 			activate_mission = TRN_Mika_honor_loop_decision
@@ -7656,9 +7681,6 @@ focus_tree = {
 					add_idea = TRN_JTF_political_commissar_ns
 					remove_idea = TRM_justice_task_force
 				}
-			}
-			hidden_effect = {
-				add_ideas = TRN_JTF_political_commissar_ns
 			}
 		}
 	}
@@ -8637,7 +8659,7 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = 12
+		x = -12
 		y = 1
 		relative_position_id = TRN_Mika_basic_law
 		prerequisite = { focus = TRN_Mika_basic_law }
@@ -8659,7 +8681,7 @@ focus_tree = {
 			activate_targeted_decision = { target = TRM decision = TRN_international_propaganda }
 			activate_targeted_decision = { target = POL decision = TRN_border_fortifications }
 			hidden_effect = {
-				#country_event = { id = trinity.44 days = 14 random_days = 35 }
+				country_event = { id = trinity.36 days = 35 random_days = 35 } # 안보 상황
 			}
 		}
 	}
@@ -9816,7 +9838,9 @@ focus_tree = {
 
 		}
 		completion_reward = {
-
+			unlock_decision_tooltip = TRN_Ukraine_divine_Mandate
+			unlock_decision_tooltip = TRN_Belarus_Divine_Mandate
+			unlock_decision_tooltip = TRN_MOSCOW_HOLY_MANDATE
 		}
 	}
 
@@ -10150,7 +10174,7 @@ focus_tree = {
 		icon = GFX_focus_TRN_unprovable_problem
 		x = 6
 		y = 0
-		relative_position_id = TRN_challenge_the_host
+		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
 		cost = 3
 		available = {
 			NOT = {
@@ -10161,10 +10185,10 @@ focus_tree = {
 
 		}
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_challenge_the_host }
+			NOT = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
 		}
 		mutually_exclusive = {
-			focus = TRN_challenge_the_host
+			focus = TRN_Kyrie_for_the_forgotten_ones
 		}
 		bypass = {
 			has_country_leader = {

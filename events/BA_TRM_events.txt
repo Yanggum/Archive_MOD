@@ -9253,7 +9253,10 @@ country_event = { # 정의실현부 정치의원
 
 	option = {
 		name = trinity.15.a
-		remove_ideas = TRM_justice_task_force
+		swap_ideas = {
+			add_idea = TRN_JTF_political_commissar_ns
+			remove_idea = TRM_justice_task_force
+		}
 		every_unit_leader = {
 			limit = {
 				OR = {
@@ -9305,6 +9308,7 @@ country_event = { # 필리우스 분파의 운명
 		set_temp_variable = { TRN_Honor_change = -3 }
 		TRN_add_Honor = yes
 		add_popularity = { ideology = neutrality popularity = -0.06 }
+		set_country_flag = TRN_Nagisa_is_imprisoned
     }
 
 	option = {
@@ -9336,20 +9340,6 @@ country_event = { # 필리우스 분파의 운명
     }
 }
 country_event = { # 대법관 임명
-	id = trinity.18
-	title = trinity.18.t
-	desc = trinity.18.desc
-	picture = GFX_event_teaparty
-	
-	is_triggered_only = yes
-    fire_only_once = no
-
-	option = {
-		name = trinity.18.a
-		add_political_power = 50
-    }
-}
-country_event = { # 파테르 분파 내부의 불충
 	id = trinity.19
 	title = trinity.19.t
 	desc = trinity.19.desc
@@ -9360,6 +9350,20 @@ country_event = { # 파테르 분파 내부의 불충
 
 	option = {
 		name = trinity.19.a
+		add_political_power = 50
+    }
+}
+country_event = { # 파테르 분파 내부의 불충
+	id = trinity.18
+	title = trinity.18.t
+	desc = trinity.18.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = {
+		name = trinity.18.a
 		custom_effect_tooltip = TRM_pater_union_tt
 		set_variable = { TRM_internal_factions_remove_var = 0 } #지울 세력 코드
 		TRM_internal_factions_slot_remove = yes #지우는 스크립티드이펙트
@@ -9737,7 +9741,7 @@ country_event = { # 트리니티 교육과정
 		#add_ideas = TRN_new_culture_militarism_ns
 		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
 		add_to_variable = {
-			TRN_TNC_modifier_stability_factor = -0.06
+			TRN_TNC_modifier_stability_factor = -0.03
 			tooltip = stability_factor_tt
 		}
 		add_to_variable = {
@@ -9999,9 +10003,9 @@ country_event = { # '호스트 선출제'
 		}
 		IF = {
 			limit = {
-				NOT = { has_completed_focus = TRN_challenge_the_host }
+				NOT = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
 			}
-			complete_national_focus = TRN_challenge_the_host
+			complete_national_focus = TRN_Kyrie_for_the_forgotten_ones
 		}
     }
 
@@ -10012,7 +10016,7 @@ country_event = { # '호스트 선출제'
 		}
 		trigger = {
 			NOT = {
-				has_completed_focus = TRN_challenge_the_host
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
 			}
 		}
 		custom_effect_tooltip = TRN_sorry_Nagisa_branch_is_NOT_work
@@ -10437,10 +10441,6 @@ country_event = { # 아리우스 분교의 운명
 
 	option = {
 		name = trinity.44.a
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = -0.05
-		}
 		set_temp_variable = { TRN_Honor_change = 1 }
 		TRN_add_Honor = yes
 	}
@@ -12192,6 +12192,46 @@ country_event = { #
 	}
 }
 
+country_event = { # 
+	id = trnfla.40
+	title = trnfla.40.t
+	desc = trnfla.40.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		add_to_variable = { TRN_trnfla_40 = 1 }
+	}
+
+	option = {
+		name = trnfla.40.a
+		add_stability = -0.01
+		IF = {
+			limit = { check_variable = { TRN_trnfla_40 < 3 } }
+			hidden_effect = {
+				country_event = { id = trnfla.40 days = 180}
+			}
+		}
+	}
+}
+
+unit_leader_event = { # 
+	id = trnfla.41
+	title = trnfla.41.t
+	desc = trnfla.41.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trnfla.41.a
+
+	}
+}
+
 country_event = { # 폴린드 총독
 	id = trndivine.1
 	title = trndivine.1.t
@@ -12200,18 +12240,44 @@ country_event = { # 폴린드 총독
 	
 	is_triggered_only = yes
     	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    target_country = event_target:Trinity_Puppet_POL
+				    character = POL_wladyslaw_studnicki
+				}
+			}
+			TRM = {
+				set_nationality = {
+				    target_country = event_target:Trinity_Puppet_POL
+				    character = TRN_Kurusu_Rin
+				}
+			}
+		}
+	}
 
 	option = {
 		name = trndivine.1.a
 		event_target:Trinity_Puppet_POL = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
+          		add_country_leader_role = {
+            	  	character = TRN_Kurusu_Rin
+            	   	country_leader = {
+    			        	expire = "1965.1.1"
+            	        	ideology = pater_nazism
+            	        	traits = { 
+						TRN_puppet_leader_Trait 
+						ideological_crusader
+					}
+            	   	}
+            	  	promote_leader = yes
+          		}
 		}
 	}
 	option = {
 		name = trndivine.1.b
-		event_target:system = {
-			POL_wladyslaw_studnicki = { set_nationality =  event_target:Trinity_Puppet_POL}
-		}
 		event_target:Trinity_Puppet_POL = { 
 			add_country_leader_role = {
 				character = POL_wladyslaw_studnicki
@@ -12219,12 +12285,11 @@ country_event = { # 폴린드 총독
 				country_leader = {
 					ideology = pater_nazism
 					expire = "1965.1.1.1"
-					traits = { GER_governor_general_trait conservative_nationalist_lar }
+					traits = { GER_governor_general_trait }
 				}
 			}
 			add_ideas = TRN_local_controlled_divine_ns 
 		}
-
 	}
 }
 
@@ -12236,18 +12301,41 @@ country_event = { # 우크라이나 총독
 	
 	is_triggered_only = yes
     	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    target_country = event_target:Trinity_Puppet_UKRPR
+				    character = UKR_andriy_Melnky
+				}
+			}
+			TRM = {
+				set_nationality = {
+					target_country = event_target:Trinity_Puppet_UKRPR
+					character = TRN_Sayaka_Ohara
+				}
+			}
+		}
+	}
 
 	option = {
 		name = trndivine.1.a
 		event_target:Trinity_Puppet_UKRPR = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
+			add_country_leader_role = {
+				character = TRN_Sayaka_Ohara
+            	   	country_leader = {
+    			      	expire = "1965.1.1"
+            	      	ideology = pater_nazism
+            	        	traits = { TRN_puppet_leader_Trait AUS_fascist_writer }
+            	   	}
+            		promote_leader = yes
+			}
 		}
 	}
 	option = {
 		name = trndivine.1.b
-		event_target:system = {
-			UKR_andriy_Melnky = { set_nationality = event_target:Trinity_Puppet_UKRPR }
-		}
 		event_target:Trinity_Puppet_UKRPR = {
 			add_country_leader_role = {
 				character = UKR_andriy_Melnky
@@ -12255,10 +12343,277 @@ country_event = { # 우크라이나 총독
 				country_leader = {
 					ideology = pater_nazism
 					expire = "1965.1.1.1"
-					traits = { TRN_puppet_leader_Trait }
+					traits = { GER_governor_general_trait }
 				}
 			}
 			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BAUKR_fascism_party_long
+				name = BAUKR_fascism_party
+			}
+		}
+	}
+}
+
+country_event = { # 벨라루스 총독
+	id = trndivine.3
+	title = trndivine.3.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    	target_country = event_target:Trinity_Puppet_BLR
+				    	character = BLR_radasklaw_ostrowski
+				}
+			}
+			TRM = {
+				set_nationality = {
+					target_country = event_target:Trinity_Puppet_BLR
+				    	character = TRN_Ayaka_Ohashi
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trndivine.1.a
+		event_target:Trinity_Puppet_BLR = { 
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Ayaka_Ohashi
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait fascist_corporatist }
+            	      }
+            	      promote_leader = yes
+            	}
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		event_target:Trinity_Puppet_BLR = {
+			add_country_leader_role = {
+				character = BLR_radasklaw_ostrowski
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BABLR_fascism_party_long
+				name = BABLR_fascism_party
+			}
+		}
+	}
+}
+country_event = { # 모스크바 총독
+	id = trndivine.4
+	title = trndivine.4.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+					target_country = event_target:Trinity_Puppet_MOS
+					character = TRN_Wakayama_Shion
+				}
+			}
+			IF = {
+				limit = {
+					SOV = { 
+						NOT = { has_completed_focus = SOV_dismantle_the_zemsky_sobor } 
+					}
+				}
+				SOV = {
+					set_portraits = {
+						character = SOV_konstantin_rodzayevsky
+						civilian = { 
+							large = "gfx/leaders/ZZZ/portrait_RUS_konstantin_rodzaevsky.tga" 
+						}
+					}
+					set_nationality = {
+					    target_country = event_target:Trinity_Puppet_MOS
+					    character = SOV_konstantin_rodzayevsky
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trndivine.1.a
+		event_target:Trinity_Puppet_MOS = { 
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Wakayama_Shion
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait anti_communist_crusader}
+            	      }
+            	      promote_leader = yes
+            	}
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		trigger = {
+			SOV = {
+				NOT = { has_completed_focus = SOV_dismantle_the_zemsky_sobor }
+			}
+		}
+		event_target:Trinity_Puppet_MOS = {
+			add_country_leader_role = {
+				character = SOV_konstantin_rodzayevsky
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BASOV_fascism_party_russian
+				name = SOV_fascism_party_russian
+			}
+		}
+	}
+	option = {
+		name = trndivine.4.c
+		trigger = {
+			has_country_flag = TRN_Nagisa_is_imprisoned
+		}
+		custom_effect_tooltip = TRN_trndivine_4_tt
+		hidden_effect = {
+			TRN_Kirifuji_Nagisa = { clr_character_flag = TRN_nagisa_in_jail }
+			set_portraits = {
+				character = TRN_Kirifuji_Nagisa
+				civilian = { large = "gfx/leaders/TRN/TRN_Kirihuji_Nagisa_angry_Portrait.tga" }
+				army = { large = "gfx/leaders/TRN/TRN_Kirihuji_Nagisa_angry_Portrait.tga" }
+			}
+			set_nationality = {
+				target_country = event_target:Trinity_Puppet_MOS
+				character = TRN_Kirifuji_Nagisa
+			}
+			event_target:Trinity_Puppet_MOS = { 
+				country_event = { id = trndivine.5 } 
+			}
+		}
+		
+		
+	}
+}
+country_event = { # 모스크바 총독
+	id = trndivine.5
+	title = trndivine.4.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	hidden = yes
+	
+	immediate = {
+		IF = {
+			limit = { has_character = TRN_Kirifuji_Nagisa }
+			add_country_leader_role = {
+				character = TRN_Kirifuji_Nagisa
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { TRM_Kirifuji_Nagisa_trait }
+				}
+			}
+		}
+	}
+}
+
+country_event = { # 캅카스 총독
+	id = trndivine.6
+	title = trndivine.6.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+				    target_country = event_target:Trinity_Puppet_GEO
+				    character = TRN_Sakura_Ayane
+				}
+			}
+			IF = {
+				limit = {
+					GEO = {
+						exists = no
+					}
+				}
+				GEO = {
+					set_nationality = {
+					    target_country = RKK
+					    character = GEO_shalva_maglakelidze
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trndivine.1.a
+		event_target:Trinity_Puppet_GEO = { 
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Sakura_Ayane
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait IRQ_militant_politician }
+            	      }
+            	      promote_leader = yes
+            	}
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		event_target:Trinity_Puppet_GEO = {
+			add_country_leader_role = {
+				character = GEO_shalva_maglakelidze
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = GEO_fascism_party
+				name = GEO_fascism_party_long
+			}
 		}
 	}
 }
