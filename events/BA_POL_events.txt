@@ -357,7 +357,7 @@ country_event = {
 	option = {
 		name = BA_pol_event.11.a
 		set_temp_variable = {
-			POL_bunker_var = 0
+			POL_bunker_num_var = 0
 		}
 		if = {
 			limit = {
@@ -368,7 +368,7 @@ country_event = {
 				}
 			}
 			add_to_temp_variable = {
-				POL_bunker_var = 1
+				POL_bunker_num_var = 1
 			}
 			custom_effect_tooltip = BA_pol_event.11_tt
 		}
@@ -381,7 +381,7 @@ country_event = {
 				}
 			}
 			add_to_temp_variable = {
-				POL_bunker_var = 2
+				POL_bunker_num_var = 2
 			}
 			custom_effect_tooltip = BA_pol_event.11_tt_1
 		}
@@ -394,7 +394,7 @@ country_event = {
 				}
 			}
 			add_to_temp_variable = {
-				POL_bunker_var = 3
+				POL_bunker_num_var = 3
 			}
 			custom_effect_tooltip = BA_pol_event.11_tt_2
 		}
@@ -411,7 +411,7 @@ country_event = {
 			}
 			add_building_construction = {
 				type = bunker
-				level = 1
+				level = POL_bunker_num_var
 				instant_build = yes
 				province = {
 					all_provinces = yes
@@ -432,7 +432,7 @@ country_event = {
 			}
 			add_building_construction = {
 				type = bunker
-				level = 1
+				level = POL_bunker_num_var
 				instant_build = yes
 				province = {
 					all_provinces = yes
@@ -1723,7 +1723,10 @@ country_event = {
 		add_ideas = POL_no_flood
 		hidden_effect = {
 			POL = {
-				country_event = BA_pol_event.45
+				country_event = {
+					id = BA_pol_event.45
+					days = 15
+				}
 			} 
 		}
 	}
@@ -2102,12 +2105,6 @@ country_event = { #자유 폴란드 의용군
 				scope = POL
 			}
 		}
-		96 = {
-			add_dynamic_modifier = {
-				modifier = POL_FPV_modifier
-				scope = POL
-			}
-		}
 		97 = {
 			add_dynamic_modifier = {
 				modifier = POL_FPV_modifier
@@ -2210,6 +2207,28 @@ country_event = { #반소련 민족주의 민병대 봉기
 					}
 				}
 			}
+			if = {
+				limit = {
+					NOT = {
+						UKR = {
+							has_template = "Ukraine National Army" 
+						}
+					}
+				}
+				UKR = {
+					division_template = {
+						name = "Ukraine National Army"
+						is_locked = yes
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							cavalry = { x = 0 y = 2 }
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+						}
+					}
+				}
+			}
 			create_unit = {
 				division = "name = \"Ukraine National Army\" division_template = \"Ukraine National Army\" start_experience_factor = 0.1 start_equipment_factor = 0.85"
 				owner = ROOT
@@ -2243,6 +2262,27 @@ country_event = { #반소련 민족주의 민병대 봉기
 					}
 				}
 				ROOT = {
+					division_template = {
+						name = "Belarus Volunteer Army"
+						is_locked = yes
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						BLR = {
+							has_template = "Belarus Volunteer Army" 
+						}
+					}
+				}
+				BLR = {
 					division_template = {
 						name = "Belarus Volunteer Army"
 						is_locked = yes
