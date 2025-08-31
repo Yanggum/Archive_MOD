@@ -68,6 +68,12 @@ country_event = { #전쟁의 유산
 		add_ideas = export_focus
 		custom_effect_tooltip = BA_pol_event.2_tt_2
 		upgrade_economy_law = yes
+		hidden_effect = {
+			country_event = {
+				id = BA_pol_event.9
+				days = 1
+			}
+		}
 	}
 }
 
@@ -261,37 +267,17 @@ news_event = {
 }
 
 country_event = {
-	#슬라브 강권 - 폴란드의 합병 요구
+	#폴란드의 상황
 	id = BA_pol_event.9
 	title = BA_pol_event.9.t
 	desc = BA_pol_event.9.d
 	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_sanation_right_victory
 	option = {
-		#우리는 무력하다
+		#피우수트스키의 유산
 		name = BA_pol_event.9.a
-		POL = {
-			annex_country = {
-				target = ROOT
-				transfer_troops = yes
-			}
-		}
-	}
-	option = {
-		#족가
-		name = BA_pol_event.9.b
-		ai_chance = {
-			base = 0
-			modifier = {
-				tag = SLO
-				add = 1
-			}
-		}
-		POL = {
-			create_wargoal = {
-				target = ROOT
-				type = annex_everything
-			}
-		}
+		add_ideas = POL_legacy_of_Pilsudski 
 	}
 }
 
@@ -2081,6 +2067,7 @@ country_event = { #자유 폴란드 의용군
 		trigger = {
 			original_tag = POL
 		}
+		add_ideas = POL_anti_soviet_national_front
 	}
 	option = { #소련 반응
 		name = BA_pol_event.42.b
@@ -2124,6 +2111,21 @@ country_event = { #벨라루스 의용대
 		name = BA_pol_event.43.a
 		trigger = {
 			original_tag = POL
+		}
+		if = {
+			limit = {
+				has_idea = POL_anti_soviet_national_front
+			}
+			swap_ideas = {
+				remove_idea = POL_anti_soviet_national_front
+				add_idea = POL_anti_soviet_national_front_BLR
+			}
+		}
+		else = {
+			swap_ideas = {
+				remove_idea = POL_anti_soviet_national_front_UKR
+				add_idea = POL_anti_soviet_national_front_all
+			}
 		}
 		set_autonomy = {
 			target = BLR
