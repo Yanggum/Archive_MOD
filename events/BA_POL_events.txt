@@ -282,54 +282,112 @@ country_event = {
 }
 
 country_event = {
-	#연방 초대
+	#100% 받는 개사기 최면술 세력 초대
 	id = BA_pol_event.10
-	title = BA_pol_event.10.t
-	desc = BA_pol_event.10.d
-	is_triggered_only = yes
-	option = {
-		#우리는 무력하다
-		name = BA_pol_event.9.a
-		if = {
-			limit = {
-				tag = UKR
-			}
-			every_owned_state = {
-				limit = {
-					OR = {
-						is_claimed_by = POL
-						is_core_of = POL
-					}
+	title = poland.16.t
+	desc = { # FROM and ROOT are Democratic
+		text = generic.5.d.a
+		trigger = {
+			AND = {
+				FROM = {
+					has_government = democratic
 				}
-				transfer_state_to = POL
+				has_government = democratic
 			}
 		}
-		else = {
-			POL = {
-				annex_country = {
-					target = ROOT
-					transfer_troops = yes
+	}
+	desc = { # FROM and ROOT are Fascist
+		text = generic.5.d.b
+		trigger = {
+			AND = {
+				FROM = {
+					has_government = fascism
+				}
+				has_government = fascism
+			}
+		}
+	}
+	desc = { # FROM and ROOT are Communist
+		text = generic.5.d.c
+		trigger = {
+			AND = {
+				FROM = {
+					has_government = communism
+				}
+				has_government = communism
+			}
+		}
+	}
+	desc = { # FROM and ROOT are different ideologies
+		text = generic.5.d.e
+		trigger = {
+			NOT = {
+				AND = {
+					FROM = {
+						has_government = democratic
+					}
+					has_government = democratic
+				}
+				AND = {
+					FROM = {
+						has_government = fascism
+					}
+					has_government = fascism
+				}
+				AND = {
+					FROM = {
+						has_government = communism
+					}
+					has_government = communism
 				}
 			}
 		}
 	}
-	option = {
-		#족가
-		name = BA_pol_event.9.b
-		ai_chance = {
-			base = 0
-			modifier = {
-				OR = {
-					tag = LAT
-				}
-				add = 1
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	is_triggered_only = yes
+
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			save_event_target_as = alliance_applicant
+			FROM = {
+				save_event_target_as = alliance_inviter
 			}
 		}
-		POL = {
-			create_wargoal = {
-				target = ROOT
-				type = annex_everything
+	}
+	option = {
+		#굿
+		name = poland.16.a
+		hidden_effect = {
+			set_country_flag = alliance_applicant@ROOT
+			FROM = { set_country_flag = alliance_inviter@ROOT }
+		}
+		FROM = {
+			add_to_faction = PREV
+			country_event = { id = generic.6 hours = 6 }
+			add_ai_strategy = {
+				type = alliance
+				id = FROM
+				value = 200
 			}
+		}
+		add_ai_strategy = {
+			type = alliance
+			id = POL
+			value = 200
+		}
+	}
+	option = {
+		#ㄴㄴ
+		name = poland.16.b
+		ai_chance = {
+			base = 0
+		}
+		hidden_effect = { set_country_flag = rejected_miedzymorze_flag }
+		FROM = {
+			country_event = { id = poland.1602 }
 		}
 	}
 }
@@ -2425,12 +2483,12 @@ country_event = { #르부프 선언
 				if = {
 					limit = {
 						NOT = {
-							ROOT = {
+							RSA = {
 								has_template = "Russian Liberation Army" 
 							}
 						}
 					}
-					ROOT = {
+					RSA = {
 						division_template = {
 							name = "Russian Liberation Army"
 							is_locked = yes
