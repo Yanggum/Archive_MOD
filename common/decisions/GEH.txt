@@ -1378,6 +1378,72 @@ GEH_external_activities = {
 		}
 	}
 }
+
+GEH_trinity_preemptive_strike = {
+	GEH_preparations_for_operation_fall_of_angel = { # Mission for SOV (or SOV + ENG) to prepare the invasion of Iran
+		priority = 50
+
+		icon = hol_draw_up_staff_plans
+
+		allowed = {
+			OR = { original_tag = GEH original_tag = GEM }
+		}
+
+		available =  {
+			hidden_trigger = { always = no }
+		}
+
+		activation = {
+			always = no
+		}
+
+		cancel_trigger = {
+			OR = {
+				is_subject = yes
+				NOT = { country_exists = TRM }
+				is_in_faction_with = TRM
+
+				GEM = {
+					OR = {
+						is_in_faction_with = TRM
+						has_war_with = TRM
+					}
+				}
+			}
+		}
+
+		cancel_effect = {
+		}
+
+		is_good = yes
+
+		war_with_on_timeout = TRM
+
+		days_mission_timeout = 30
+
+		timeout_effect = {
+			diplomatic_relation = {
+				country = TRM
+				relation = military_access
+				active = no
+			}
+			diplomatic_relation = {
+				country = TRM
+				relation = docking_rights
+				active = no
+			}
+			diplomatic_relation = {
+				country = TRM
+				relation = non_aggression_pact
+				active = no
+			}
+			declare_war_on = {
+				target = TRM
+				type = annex_everything
+			}
+		}
+	}
+}
 GEH_basking_in_the_brilliance_of_their_serenade = {
 
 	GEH_basking_in_the_brilliance_of_their_serenade_mission = { 

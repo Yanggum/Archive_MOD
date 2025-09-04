@@ -5140,18 +5140,10 @@ focus_tree = {
         relative_position_id = GEH_first_congress_focus
 
 		ai_will_do = { 
-            base = 1000 
-			modifier = {
-				factor = 2
-				has_war = yes
-			}
-			modifier = {
-				factor = 0.5
-				has_war = no
-			}
+            base = 4000
 			modifier = {
 				factor = 0
-				date < 1939.12.01
+				date < 1942.2.1
 			}
         }
 
@@ -5175,9 +5167,13 @@ focus_tree = {
 		
 		will_lead_to_war_with = TRM
 		completion_reward = {
-			create_wargoal = {
-				target = TRM
-				type = annex_everything
+			if = {
+				limit = { country_exists = GEM }
+				GEM = { country_event = { id = GEH.war_event.12 hours = 4 } }
+			}
+			else = {
+				activate_mission = GEH_preparations_for_operation_fall_of_angel
+				custom_effect_tooltip = GEH_preparations_for_operation_fall_of_angel_tt
 			}
 		}
 	}
