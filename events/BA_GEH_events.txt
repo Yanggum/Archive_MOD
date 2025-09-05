@@ -53,7 +53,6 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		#A democratic faction leader whose faction holds at least one German core state while SOV holds another can get this.
 		has_war_with = TRM
 		NOT = { has_country_flag = GEH_unified_gehenna_flag }
 		OR = {
@@ -68,7 +67,11 @@ country_event = {
 		any_state = {
 			is_core_of = TRM
 			controller = {
-				is_in_faction_with = ROOT
+				OR = { 
+					original_tag = ROOT
+					original_tag = GEH
+					is_in_faction_with = ROOT
+				}
 			}
 		}
 		NOT = {
@@ -79,7 +82,6 @@ country_event = {
 		}
 		GEH = {
 			NOT = { has_country_flag = GEH_unified_gehenna_flag }
-			is_in_faction_with = ROOT
 			has_war_with = TRM
 		}
 		NOT = {
@@ -96,7 +98,8 @@ country_event = {
 					NOT = {
 						OR = {
 							is_in_faction_with = ROOT
-							is_in_faction_with = COU
+							is_in_faction_with = GEH
+							is_in_faction_with = KVT
 						}
 					}
 				}
@@ -4476,6 +4479,130 @@ country_event = { #소라사키 히나의 답장
 	option = { 
 		name = GEH.war_event.11.a 
 
+	}
+}
+
+country_event = { #트리니티 공동 대응
+	id = GEH.war_event.12
+	title = GEH.war_event.12.t
+	desc = GEH.war_event.12.desc
+	picture = GFX_event_mega_cities_GEH
+    is_triggered_only = yes
+
+	option = { 
+		name = GEH.war_event.12.a
+		add_war_support = 0.05
+		FROM = { country_event = { id = GEH.war_event.121 days = 1 } }
+	}
+	option = { 
+		name = GEH.war_event.12.b
+		add_political_power = -30
+		add_war_support = -0.05
+		ai_chance = {
+			base = 0
+		}
+		FROM = { country_event = { id = GEH.war_event.122 days = 1 } }
+	}
+}
+
+country_event = { #트리니티 공동 대응 | 수락
+	id = GEH.war_event.121
+	title = GEH.war_event.121.t
+	desc = GEH.war_event.121.desc
+	picture = GFX_event_mega_cities_GEH
+    is_triggered_only = yes
+
+	option = { 
+		name = GEH.war_event.121.a 
+		add_war_support = 0.05
+		GEM = { country_event = { id = GEH.war_event.13 days = 1 } }
+		GEH = { country_event = { id = GEH.war_event.13 days = 1 } }
+	}
+}
+
+country_event = { #트리니티 공동 대응 | 거절
+	id = GEH.war_event.122
+	title = GEH.war_event.122.t
+	desc = GEH.war_event.122.desc
+	picture = GFX_event_mega_cities_GEH
+    is_triggered_only = yes
+
+	option = { 
+		name = GEH.war_event.122.a 
+		create_wargoal = {
+			target = TRM
+			type = annex_everything
+		}
+	}
+}
+
+country_event = { #트리니티 공동 대응 | 준비 시작.
+	id = GEH.war_event.13
+	title = GEH.war_event.13.t
+	desc = GEH.war_event.13.desc
+	picture = GFX_event_mega_cities_GEH
+    is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			activate_mission = GEH_preparations_for_operation_fall_of_angel
+			if = {
+				limit = { is_in_faction_with = TRM is_faction_leader = no }
+				leave_faction = yes
+			}
+			if = {
+				limit = { is_in_faction_with = TRM is_faction_leader = yes }
+				remove_from_faction = TRM
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = TRM
+				value = -300
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = TRM
+				value = -1000
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = TRM
+				value = 500
+			}
+			TRM = {
+				add_ai_strategy = {
+					type = alliance
+					id = ROOT
+					value = -300
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = ROOT
+					value = -1000
+				}
+				add_ai_strategy = {
+					type = antagonize
+					id = ROOT
+					value = 200
+				}
+			}
+		}
+	}
+
+	option = { 
+		name = GEH.war_event.13.a 
+		if = {
+			limit = { has_focus_tree = GEH_makoto_focustree NOT = { has_completed_focus = GEM_war_with_trinity } }
+			unlock_national_focus = GEM_war_with_trinity
+		}
+		if = {
+			limit = { has_focus_tree = Sundobu_focus NOT = { has_completed_focus = GEH_Trinity_war } }
+			unlock_national_focus = GEH_Trinity_war
+		}
+		effect_tooltip = {
+			activate_mission = GEH_preparations_for_operation_fall_of_angel
+		}
+		custom_effect_tooltip = GEH_preparations_for_operation_fall_of_angel_tt
 	}
 }
 
