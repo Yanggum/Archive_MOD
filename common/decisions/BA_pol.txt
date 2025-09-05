@@ -346,9 +346,6 @@ POL_intermarium_at_war = { #바다 사이의 개념
 			has_war = no
 		}
 		timeout_effect = {
-			set_temp_variable = {
-				war_var = 0
-			}
 			custom_effect_tooltip = POL_sov_war_mission_tt
 			effect_tooltip = {
 				if = {
@@ -709,7 +706,10 @@ POL_intermarium_at_war = { #바다 사이의 개념
 				original_tag = POL
 			}
 			has_war_with = SOV
-			is_ally_with = POL
+			OR = {
+				is_ally_with = POL
+				has_idea = POL_intermarium_cut
+			}
 			POL = {
 				check_variable = {
 					var = POL_solidarity_var
@@ -752,12 +752,77 @@ POL_intermarium_at_war = { #바다 사이의 개념
 						tooltip = POL_solidarity_tt
 					}
 				}
-				every_country = {
-					limit = {
-						has_war_with = PREV
-						is_ally_with = SOV
+				ROOT = {
+					leave_faction = yes
+					every_country = {
+						limit = {
+							has_war_with = PREV
+							is_ally_with = SOV
+						}
+						white_peace = PREV
 					}
-					white_peace = PREV
+					POL = {
+						country_event = {
+							id = BA_intermarium_solidarity_event.4
+							days = 1
+						}
+						hidden_effect = {
+							add_to_variable = {
+								POL_solidarity_var = -5
+								tooltip = POL_solidarity_tt
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							original_tag = ROM
+						}
+					}
+					SOV = {
+						transfer_state = 766
+						transfer_state = 78
+						transfer_state = 80
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							original_tag = FIN
+						}
+					}
+					SOV = {
+						transfer_state = 146
+						transfer_state = 147
+						transfer_state = 722
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							original_tag = TUR
+						}
+					}
+					SOV = {
+						transfer_state = 354
+						transfer_state = 800
+						transfer_state = 353
+						transfer_state = 352
+						transfer_state = 350
+					}
+				}
+				if = {
+					limit = {
+						ROOT = {
+							original_tag = PER
+						}
+					}
+					SOV = {
+						transfer_state = 419
+						transfer_state = 229
+						transfer_state = 1000
+					}
 				}
 			}
 		}
