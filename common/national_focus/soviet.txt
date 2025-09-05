@@ -25,6 +25,8 @@ focus_tree = {
 	}
 	#/BA_MOD_FIX
 		shared_focus = SOVEX_second_western_offensive
+		shared_focus = SOVEX_anti_kivotos_policies
+		shared_focus = SOVEX_approach_milenium
 	#BA_MOD_FIX/
 	
 	default = no
@@ -12228,7 +12230,13 @@ ai_will_do = {
 				has_civil_war = yes
 			}	
 		}
-				
+		#BAmod
+		allow_branch = {
+			NOT = {
+				has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+			}
+		}
+		#/BAmod
 		search_filters = {FOCUS_FILTER_PROPAGANDA}
 
 		completion_reward = {
@@ -12371,7 +12379,10 @@ ai_will_do = {
 	focus = {
 		id = SOV_the_khakimov_proposal
 		icon = GFX_focus_generic_befriend_saudi_arabia
-		prerequisite = { focus = SOV_seek_a_defense_pact_with_the_allies }
+		prerequisite = { 
+			focus = SOV_seek_a_defense_pact_with_the_allies 
+			focus = SOVEX_italy_strategic_alliance #BAmod  
+		}
 		x = -1
 		y = 1
 		relative_position_id = SOV_seek_a_defense_pact_with_the_allies
@@ -12900,6 +12911,9 @@ ai_will_do = {
 				limit = {
 					is_major = yes
 					has_government = democratic
+					NOT = {
+						tag = MIL #BAmod
+					}
 				}
 				add_opinion_modifier = { target = SOV modifier = SOV_anti_capitalist_policies_bad } 
 			}

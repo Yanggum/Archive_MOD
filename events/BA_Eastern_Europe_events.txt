@@ -2838,3 +2838,298 @@ country_event = {#붕괴
 		}
 	}
 }
+
+
+add_namespace = BA_sov_event
+country_event = { #외교 정책 선회
+	id = BA_sov_event.1
+	title = BA_sov_event.1.t
+	desc = BA_sov_event.1.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_SOV_demands
+	option = {
+		name = BA_sov_event.1.a
+		set_country_flag = BA_SOV_new_diplomatic_thesis_flag
+		effect_tooltip = {
+			custom_effect_tooltip = BA_sov_event.1_tt
+			unlock_national_focus = SOVEX_anti_kivotos_policies
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+}
+country_event = { #상호원조조약 제안
+	id = BA_sov_event.2
+	title = NSB_soviet_policies_of_collective_security.1.t
+	desc = NSB_soviet_policies_of_collective_security.1.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_SOV_demands
+			
+	option = { # Accept
+		name = NSB_soviet_policies_of_collective_security.1.a
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 2
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+			modifier = {
+				factor = 2
+				has_completed_focus = FRA_form_the_popular_front
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					target = FROM
+					value > 50
+				}
+			}
+			modifier = {
+				factor = 1.5
+				has_opinion = {
+					target = FROM
+					value > 90
+				}
+			}
+			modifier = { #Appropriate PC for Foreign Affairs
+				factor = 1.5
+				SOV = { has_idea = SOV_maksim_litvinov }
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_wargoal_against = SOV
+					AND = {
+						is_subject = yes
+						NOT = { is_subject_of = SOV }
+					}
+					has_completed_focus = FRA_utilize_the_leagues
+					focus_progress = {
+						focus = FRA_utilize_the_leagues
+						progress > 0
+					}
+				}
+			}
+		}
+
+		effect_tooltip = {
+			SOV_clear_hostile_diplomacy_in_both_countries = yes #Clears wargoals and claims
+
+			#SOV -> FRA
+			FROM = {		
+				diplomatic_relation = {
+					country = ROOT
+					relation = non_aggression_pact
+					active = yes
+				}
+				give_guarantee = ROOT
+				add_opinion_modifier = { 
+					target = ROOT
+					modifier = SOV_policies_of_collective_security_opinion
+				}
+			}
+
+			#FRA -> SOV
+			diplomatic_relation = {
+				country = FROM
+				relation = non_aggression_pact
+				active = yes
+			}
+			give_guarantee = FROM
+			add_opinion_modifier = { 
+				target = FROM
+				modifier = SOV_policies_of_collective_security_opinion
+			}
+		}
+
+		FROM = { country_event = { id = NSB_soviet_policies_of_collective_security.2 hours = 8 random_hours = 4 } }
+	}
+
+	option = { # Nope
+		name = NSB_soviet_policies_of_collective_security.1.c
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 10
+				has_completed_focus = FRA_utilize_the_leagues
+			}
+			modifier = {
+				factor = 0.1
+				has_completed_focus = FRA_form_the_popular_front
+			}
+		}
+		effect_tooltip = {
+			FROM = {
+				add_opinion_modifier = { 
+					target = ROOT
+					modifier = SOV_rejected_defensive_pact
+				}
+			}
+		}
+
+		FROM = { country_event = { id = NSB_soviet_policies_of_collective_security.3 hours = 8 random_hours = 4 } }
+	}
+}
+# Soviet-German Trade Agreement - Event for GER
+country_event = {
+	id =  BA_sov_event.3
+	title =  BA_sov_event.3.t
+	desc = BA_sov_event.3.d
+	picture = GFX_report_event_SOV_demands
+
+	is_triggered_only = yes
+			
+	option = { # Accept -> This will also make GER more likely to take Molotov-Ribbentrop pact and less to take Anti-Soviet Pact
+		name = NSB_soviet_soviet_german_trade_agreement.1.a
+
+		ai_chance = {
+			base = 5
+			modifier = {
+				factor = 10
+				has_war = yes
+			}
+			modifier = {
+				factor = 10
+				has_war_with = ENG
+			}
+		}
+
+		add_timed_idea = { idea = SOV_soviet_milenium_trade_agreement days = 800 } #Technically 1 year but really 18 months for Soviet payment 
+
+		#Effects to Soviets
+		effect_tooltip = {
+			FROM = {
+				add_breakthrough_progress = {
+					value = 0.5
+					specialization = specialization_land
+				}
+				add_breakthrough_progress = {
+					value = 0.5
+					specialization = specialization_naval
+				}
+				add_breakthrough_progress = {
+					value = 0.5
+					specialization = specialization_air
+				}
+				add_breakthrough_progress = {
+					value = 0.5
+					specialization = specialization_nuclear
+				}
+			}
+		}
+
+		add_opinion_modifier = {
+			target = FROM
+			modifier = SOV_strengthened_relations_with_us
+		}
+		FROM = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = SOV_strengthened_relations_with_us
+			}
+		}
+		hidden_effect = {
+			add_opinion_modifier = {
+				target = FROM
+				modifier = SOV_strengthened_relations_with_us_trade
+			}
+			FROM = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SOV_strengthened_relations_with_us_trade
+				}
+			}
+		}
+		FROM = { country_event = { id = BA_sov_event.4 hours = 1 } }
+	}
+
+	option = { # Refuse
+		name = BA_sov_event.3.b
+
+		ai_chance = {
+			base = 1
+		}
+
+		FROM = {
+			country_event = { id = NSB_soviet_soviet_german_trade_agreement.3 hours = 1 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = SOV_rejected_our_demands
+			}
+		}
+	}
+}
+
+# Soviet-German Trade Agreement - GER Accepts - Event for SOV
+country_event = {
+	id = BA_sov_event.4
+	title = BA_sov_event.4.t
+	desc = BA_sov_event.4.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+
+	is_triggered_only = yes
+			
+	option = { # Good
+		name = BA_sov_event.4.a
+		add_breakthrough_progress = {
+			value = 0.5
+			specialization = specialization_land
+		}
+		add_breakthrough_progress = {
+			value = 0.5
+			specialization = specialization_naval
+		}
+		add_breakthrough_progress = {
+			value = 0.5
+			specialization = specialization_air
+		}
+		add_breakthrough_progress = {
+			value = 0.5
+			specialization = specialization_nuclear
+		}
+
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}	
+			}
+			prioritize = { 217 202 195 }
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}	
+		}	
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		#Effects to Germans
+		effect_tooltip = {
+			FROM = {
+				add_timed_idea = { idea = SOV_soviet_milenium_trade_agreement days = 800 } 
+			}
+
+			add_opinion_modifier = {
+				target = FROM
+				modifier = SOV_strengthened_relations_with_us
+			}
+			FROM = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SOV_strengthened_relations_with_us
+				}
+			}
+		}
+		hidden_effect = { news_event = { id = nsb_news.103 days = 1 } }
+	}
+}

@@ -1,4 +1,269 @@
-﻿shared_focus = {
+﻿#신 외교중점
+	#집단안보정책
+shared_focus = { #반키보토스 정책
+	id = SOVEX_anti_kivotos_policies
+	icon = GFX_focus_generic_red_flags
+	
+	allow_branch = {
+		has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+	}
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOV_policy_of_collective_security
+	}
+	x = 0
+	y = 1
+
+	cost = 5
+
+	relative_position_id = SOV_policy_of_collective_security
+
+	ai_will_do = {
+	}
+
+	available = {
+	}
+
+	bypass = {
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		every_other_country = {
+			limit = {
+				Kivotos_tag = no
+				is_major = yes
+			}
+			add_opinion_modifier = { target = SOV modifier = BASOV_anti_kivotos_policies_good } 
+		}
+
+		every_other_country = {
+			limit = {
+				Kivotos_tag = yes
+				NOT = {
+					is_ally_with = SOV
+				}
+			}
+			add_opinion_modifier = { target = SOV modifier = BASOV_anti_kivotos_policies_bad } 
+		}
+
+		if = {
+			limit = {
+				has_government = communism
+			}
+			custom_effect_tooltip = unlock_propaganda_campaign_tt
+			unlock_decision_tooltip = SOV_propaganda_anti_fascism
+			custom_effect_tooltip = propaganda_campaign_requirement_tt
+		}
+	}
+}
+shared_focus = { #이탈리아와의 전략 동맹
+	id = SOVEX_italy_strategic_alliance
+	icon = GFX_focus_befriend_italy
+
+	
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOVEX_anti_kivotos_policies
+	}
+	relative_position_id = SOVEX_anti_kivotos_policies
+	
+	x = 0
+	y = 1
+	
+
+	cost = 5
+
+	ai_will_do = {
+		base = 4000
+	}
+
+	available = {
+		ITA = {
+			exists = yes
+			has_capitulated = no
+			is_subject = no
+		}
+	}
+
+	bypass = {
+		ITA = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject = yes
+			}
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		ITA = {
+			set_variable = { SOV_collective_security_target = ITA }
+			country_event = { id = BA_sov_event.2 hours = 8 random_hours = 4 }
+			add_timed_idea = {
+				idea = SOVEX_soviet_proposal
+				days = 1080
+			}
+		}
+	}
+}
+shared_focus = { #작전: 붉은 폭풍
+	id = SOVEX_operatsiya_operation
+	icon = GFX_focus_ger_great_red_menace
+
+	
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOVEX_italy_strategic_alliance
+	}
+	relative_position_id = SOVEX_italy_strategic_alliance
+	
+	x = 0
+	y = 2
+	
+
+	cost = 5
+
+	ai_will_do = {
+		base = 4000
+	}
+
+	available = {
+	}
+
+	bypass = {
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		every_country = {
+			limit = {
+				Kivotos_school_tag = yes
+				NOT = {
+					is_ally_with = SOV
+				}
+			}
+			custom_effect_tooltip = war_aim_against_the_country_annex_tt
+			hidden_effect = {
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = annex_everything
+					}
+				}
+			}
+		}
+		custom_effect_tooltip = tooltip_white_line
+		add_ideas = { BALTIC_carrying_the_western_revolution }
+		hidden_effect = {
+			random_list = {
+				1 = { scoped_play_song = BA_prairie }
+				1 = { scoped_play_song = BA_Beyond_the_valleys_and_hills }
+			}
+		}
+	}
+}
+	#개별안보정책
+shared_focus = { #밀레니엄에 접근
+	id = SOVEX_approach_milenium
+	icon = GFX_focus_chi_mission_to_the_MIL
+	
+	allow_branch = {
+		#has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+	}
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOV_policy_of_individual_security
+	}
+	x = 0
+	y = 1
+
+	cost = 5
+
+	relative_position_id = SOV_policy_of_individual_security
+
+	ai_will_do = {
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		country_exists = MIL
+		MIL = { SOV_is_valid_subject = yes }
+		NOT = { has_war_with = MIL }
+		is_subject = no
+	}
+
+	bypass = {
+		NOT = { country_exists = MIL }
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		MIL = { country_event = { id = NSB_soviet_soviet_german_trade_agreement.1 hours = 1 } }
+
+		custom_effect_tooltip = tooltip_white_line 
+		custom_effect_tooltip = if_they_accept #This will also make GER more likely to take Molotov-Ribbentrop pact and less to take Anti-Soviet Pact
+		effect_tooltip = {
+			add_breakthrough_progress = {
+				value = 0.5
+				specialization = specialization_land
+			}
+			add_breakthrough_progress = {
+				value = 0.5
+				specialization = specialization_naval
+			}
+			add_breakthrough_progress = {
+				value = 0.5
+				specialization = specialization_air
+			}
+			add_breakthrough_progress = {
+				value = 0.5
+				specialization = specialization_nuclear
+			}
+			#Effects to Germans
+			MIL = {
+				add_timed_idea = { idea = SOV_soviet_milenium_trade_agreement days = 545 } #Technically 1 year but really 18 months for Soviet payment 
+				capital_scope = {
+					add_dynamic_modifier = { modifier = SOV_soviet_imports }
+				}
+			}
+
+			add_opinion_modifier = {
+				target = MIL
+				modifier = SOV_strengthened_relations_with_us
+			}
+			MIL = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SOV_strengthened_relations_with_us
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+shared_focus = {
 	id = SOVEX_second_western_offensive
 	icon = GFX_focus_CHL_union_of_hispanic_republics
 	
@@ -350,119 +615,6 @@ shared_focus = {
 			add_timed_idea = {
 				idea = SOVEX_soviet_federation_declaration_of_national_humanism
 				days = 1080
-			}
-		}
-	}
-}
-shared_focus = {
-	id = SOVEX_italy_strategic_alliance
-	icon = GFX_focus_befriend_italy
-
-	
-	mutually_exclusive = {
-	}
-	prerequisite = {
-		focus = SOVEX_border_force_expansion
-	}
-	relative_position_id = SOVEX_second_western_offensive
-	
-	x = 1
-	y = 2
-	
-
-	cost = 5
-
-	ai_will_do = {
-		base = 4000
-	}
-
-	available = {
-		ITA = {
-			exists = yes
-			has_capitulated = no
-			is_subject = no
-		}
-	}
-
-	bypass = {
-		ITA = {
-			OR = {
-				exists = no
-				has_capitulated = yes
-				is_subject = yes
-			}
-		}
-	}
-
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	completion_reward = {
-		ITA = {
-			add_timed_idea = {
-				idea = SOVEX_soviet_proposal
-				days = 1080
-			}
-		}
-	}
-}
-shared_focus = {
-	id = SOVEX_operatsiya_operation
-	icon = GFX_focus_ger_great_red_menace
-
-	
-	mutually_exclusive = {
-	}
-	prerequisite = {
-		focus = SOVEX_subjugation_of_western_allies
-	}
-	prerequisite = {
-		focus = SOVEX_italy_strategic_alliance
-	}
-	relative_position_id = SOVEX_second_western_offensive
-	
-	x = 0
-	y = 3
-	
-
-	cost = 5
-
-	ai_will_do = {
-		base = 4000
-	}
-
-	available = {
-	}
-
-	bypass = {
-	}
-
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	completion_reward = {
-		every_country = {
-			limit = {
-				Kivotos_school_tag = yes
-			}
-			custom_effect_tooltip = war_aim_against_the_country_annex_tt
-			hidden_effect = {
-				ROOT = {
-					create_wargoal = {
-						target = PREV
-						type = annex_everything
-					}
-				}
-			}
-		}
-		custom_effect_tooltip = tooltip_white_line
-		add_ideas = { BALTIC_carrying_the_western_revolution }
-		hidden_effect = {
-			random_list = {
-				1 = { scoped_play_song = BA_prairie }
-				1 = { scoped_play_song = BA_Beyond_the_valleys_and_hills }
 			}
 		}
 	}
