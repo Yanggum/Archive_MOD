@@ -189,8 +189,11 @@ shared_focus = { #밀레니엄에 접근
 	prerequisite = {
 		focus = SOV_policy_of_individual_security
 	}
+	prerequisite = {
+		focus = SOV_anti_capitalist_policies
+	}
 	x = 0
-	y = 2
+	y = 2 
 
 	cost = 5
 
@@ -253,6 +256,101 @@ shared_focus = { #밀레니엄에 접근
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = SOV_strengthened_relations_with_us
+				}
+			}
+		}
+	}
+}
+shared_focus = { #피억압민족 해방
+	id = SOVEX_liberate_oppressed_nations
+	icon = GFX_focus_ETH_african_wildfire
+	
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOVEX_approach_milenium
+	}
+	x = 0
+	y = 2 
+
+	cost = 5
+
+	relative_position_id = SOVEX_approach_milenium
+
+	ai_will_do = {
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		any_country = {
+			is_puppet = no
+			OR = {
+				original_tag = FRA
+				original_tag = ENG
+				original_tag = ITA
+				AND = {
+					is_major = yes
+					capital_scope = {
+						is_on_continent = europe
+					}
+				}
+			}
+			OR = {
+				any_state = {
+					is_on_continent = africa
+					is_owned_by = prev
+				}
+				any_country = {
+					is_puppet_of = prev
+					any_state = {
+						is_on_continent = africa
+						is_owned_by = prev
+					}
+				}
+			}
+		}
+	}
+
+	bypass = {
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		every_other_country = {
+			limit = {
+				is_puppet = no
+				OR = {
+					original_tag = FRA
+					original_tag = ENG
+					original_tag = ITA
+					AND = {
+						is_major = yes
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+				}
+				OR = {
+					any_state = {
+						is_on_continent = africa
+						is_owned_by = prev
+					}
+					any_country = {
+						is_puppet_of = prev
+						any_state = {
+							is_on_continent = africa
+							is_owned_by = prev
+						}
+					}
+				}
+			}
+			SOV = {
+				create_wargoal = {
+					target = prev
+					type = annex_everything
 				}
 			}
 		}
