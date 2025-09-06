@@ -356,7 +356,79 @@ shared_focus = { #피억압민족 해방
 		}
 	}
 }
+	#스페인 중점을 갈음
+shared_focus = { #전쟁해군 압박
+	id = SOVEX_partnership_with_kriegsmarine
+	icon = GFX_focus_BRA_german_submarine_development
+	
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOV_the_comintern
+	}
+	x = -3
+	y = 1
 
+	cost = 5
+	allow_branch = {
+		has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+	}
+	relative_position_id = SOV_the_comintern
+
+	ai_will_do = {
+	}
+
+	available = {
+		GEK = {
+			NOT = {
+				has_completed_focus = GEK_GER_government
+				has_completed_focus = GEK_RM_focus_0
+				has_completed_focus = GEK_raise_the_red_flag
+			}
+		}
+	}
+
+	bypass = {
+		GEK = {
+			OR = {
+				has_completed_focus = GEK_GER_government
+				has_completed_focus = GEK_RM_focus_0
+				has_completed_focus = GEK_raise_the_red_flag
+				exists = no
+				is_puppet = yes
+			}
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		add_timed_idea = {
+			idea = BA_SOV_support_kriegsmarine
+			days = 1095
+		}
+		GEK = {
+			country_event = {
+				id = BA_sov_event.5
+				hours = 2
+			}
+			add_timed_idea = {
+				idea = BA_SOV_supporting_kriegsmarine
+				days = 1095
+			}
+		}
+		if = {
+			limit = {
+				GEK = {
+					is_ai = yes
+				}
+			}
+			custom_effect_tooltip = SOVEX_partnership_with_kriegsmarine_tt
+		}
+	}
+}
 
 
 
