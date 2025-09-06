@@ -198,4 +198,56 @@ on_actions = {
 		}
 	}
 
+
+	#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
+	on_state_control_changed = {
+		#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
+		effect = { #Check how many occupied states Germany has
+			IF = {
+				limit = {
+					ROOT = {
+						original_tag = GEM
+					}
+					FROM.FROM = {
+						NOT = {	is_core_of = ROOT }
+						is_on_continent = europe
+					}
+				}
+				add_to_variable = { GEM_occupied_states_europe = 1 }
+			}
+			IF = {
+				limit = {
+					FROM = {
+						original_tag = GEM
+					}
+					FROM.FROM = {
+						NOT = {	is_core_of = FROM }
+						is_on_continent = europe
+					}
+				}
+				subtract_from_variable = { GEM_occupied_states_europe = 1 }
+			}
+		}
+	}
+
+	#ROOT is capitulated country, FROM is winner.
+	on_capitulation_immediate = {
+
+		#Count how many major countries Germany has capped so they can take the Supreme Leader Focus
+		effect = {
+			if = {
+				limit = {
+					FROM = {
+						original_tag = GEM
+					}
+					ROOT = {
+						is_major = yes
+					}
+				}
+				FROM = {
+					add_to_variable = { GEM_capitulated_major_countries = 1 }
+				}
+			}
+		}
+	}
 }
