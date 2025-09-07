@@ -14204,9 +14204,32 @@ focus_tree = {
 			#unlock_decision_tooltip = POL_diplomatic_mission_to_TUR
 		}
 	}
-	focus = { #러시아 인민해방위원회
+	focus = { #러시아 인민해방위원회 / 러시아 민중전선
 		id = POL_invite_greece
-		icon = GFX_focus_SOV_the_true_tsars
+		dynamic = yes
+		icon = {
+			trigger = {
+				SOV = {
+					OR = {
+						has_government = democratic
+						has_government = communism
+					}
+				}
+			}
+			value = GFX_focus_SOV_the_true_tsars
+		}
+		icon = {
+			trigger = {
+				SOV = {
+					OR = {
+						has_government = neutrality
+						has_government = fascism
+					}
+				}
+			}
+			value = GFX_focus_spr_the_anti_fascist_workers_revolution
+		}
+		dynamic = yes
 		prerequisite = {
 			focus = POL_protect_yugoslavia
 		}
@@ -14241,6 +14264,25 @@ focus_tree = {
 		}
 		completion_reward = {
 			unlock_decision_tooltip = BA_sov_pol_war_decision_occupy_moscow
+			if = {
+				limit = {
+					SOV = {
+						OR = {
+							has_government = fascism
+							has_government = neutrality
+						}
+					}
+				}
+				RSA = {
+					set_politics = {
+						ruling_party = democratic
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.8
+					}
+				}
+			}
 			every_state = {
 				limit = {
 					is_core_of = SOV

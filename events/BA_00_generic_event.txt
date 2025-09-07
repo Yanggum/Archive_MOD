@@ -1659,6 +1659,8 @@ country_event = {
 }
 
 # 센세모드 이벤트 13XX부터
+
+# 나의 실수였어요
 country_event = {
 	id = BA_generic_event.1301
 	title = BA_generic_event.1301.t
@@ -1684,6 +1686,7 @@ country_event = {
 	}
 }
 
+# 대충 린의 소개이벤트
 country_event = {
 	id = BA_generic_event.1302
 	title = BA_generic_event.1302.t
@@ -1715,6 +1718,7 @@ country_event = {
 	}
 }
 
+# 운명의 시간이다.
 country_event = {
 	id = BA_generic_event.1303
 	title = BA_generic_event.1303.t
@@ -1724,16 +1728,45 @@ country_event = {
 	is_triggered_only = yes
 	fire_only_once = yes
 
+	# 아리가또! (대충 받아들이겠다는 뜻)
 	option = {
 		name = BA_generic_event.1303.a
 		annex_country = {
 			target = COU
 			transfer_troops = yes
 		}
+		annex_country = {
+			target = SHE
+			transfer_troops = yes
+		}
+		every_state = {
+			limit = {
+				is_owned_and_controlled_by = COU
+			}
+			add_core_of = ROOT
+		}
+		every_state = {
+			limit = {
+				is_owned_and_controlled_by = SHE
+			}
+			add_core_of = ROOT
+		}
+		every_character = {
+			limit = {
+				owner = {
+					tag = COU
+				}
+			}
+			set_nationality = ROOT
+		}
+		set_country_flag = BA_is_earth_sensei
 		add_political_power = 100
 	}
+
+	# 쇼가나이나~ (일단 선생은 받되 괴뢰로 두겠다는 뜻)
 	option = {
 		name = BA_generic_event.1303.b
+		set_country_flag = BA_is_earth_sensei
 		COU = {
 			add_opinion_modifier = {
 				target = ROOT
@@ -1743,7 +1776,19 @@ country_event = {
 		puppet = {
 			target = COU
 		}
+		SHE = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = COU_opinion_friend_of_kivotos_small_negative
+			}
+		}
+		puppet = {
+			target = SHE
+		}
+
 	}
+
+	# 조까 (안하겠다는 뜻)
 	option = {
 		name = BA_generic_event.1303.c
 		COU = {
@@ -1756,6 +1801,7 @@ country_event = {
 	}
 }
 
+# 총학생회 어택
 country_event = {
 	id = BA_generic_event.1304
 	title = BA_generic_event.1304.t
@@ -1773,5 +1819,5 @@ country_event = {
 				type = puppet_wargoal_focus
 			}
 		}
-	}
+	}	
 }

@@ -2243,6 +2243,9 @@ country_event = { #반소련 민족주의 민병대 봉기
 					modifier = POL_UNA_modifier
 					scope = POL
 				}
+				ROOT = {
+					has_full_control_of_state = prev
+				}
 			}
 			remove_dynamic_modifier = {
 				modifier = POL_UNA_modifier
@@ -2311,6 +2314,9 @@ country_event = { #반소련 민족주의 민병대 봉기
 					modifier = POL_BVA_modifier
 					scope = POL
 				}
+				ROOT = {
+					has_full_control_of_state = prev
+				}
 			}
 			remove_dynamic_modifier = {
 				modifier = POL_BVA_modifier
@@ -2376,6 +2382,9 @@ country_event = { #반소련 민족주의 민병대 봉기
 				has_dynamic_modifier = {
 					modifier = POL_FPV_modifier
 					scope = POL
+				}
+				ROOT = {
+					has_full_control_of_state = prev
 				}
 			}
 			remove_dynamic_modifier = {
@@ -2465,7 +2474,30 @@ country_event = { #위 이벤트 한무반복
 country_event = { #르부프 선언
 	id = BA_pol_event.46
 	title = BA_pol_event.46.t
-	desc = BA_pol_event.46.d
+	desc = {
+		text = BA_pol_event.46.d
+		trigger = {
+			SOV = {
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+			}
+		}
+	}
+	desc = {
+		text = BA_pol_event.46.d_1
+		trigger = {
+			SOV = {
+				NOT = {
+					OR = {
+						has_government = communism
+						has_government = democratic
+					}
+				}
+			}
+		}
+	}
 	picture = GFX_report_event_canada_treaty
 	is_triggered_only = yes
 	option = { #아이조아요
@@ -2848,12 +2880,19 @@ country_event = { #외교 정책 선회
 	is_triggered_only = yes
 	fire_only_once = yes
 	picture = GFX_report_event_SOV_demands
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = BA_SOV_new_diplomatic_thesis_flag
+		}
+	}
 	option = {
 		name = BA_sov_event.1.a
 		set_country_flag = BA_SOV_new_diplomatic_thesis_flag
 		effect_tooltip = {
 			custom_effect_tooltip = BA_sov_event.1_tt
 			unlock_national_focus = SOVEX_anti_kivotos_policies
+			unlock_national_focus = SOVEX_approach_milenium
+			unlock_national_focus = SOVEX_partnership_with_kriegsmarine
 		}
 		mark_focus_tree_layout_dirty = yes
 	}
@@ -3131,5 +3170,21 @@ country_event = {
 			}
 		}
 		hidden_effect = { news_event = { id = nsb_news.103 days = 1 } }
+	}
+}
+country_event = { #붉은해군의 압박
+	id = BA_sov_event.5
+	title = BA_sov_event.5.t
+	desc = BA_sov_event.5.d
+	picture = GFX_report_event_SOV_purge_navy
+
+	is_triggered_only = yes
+			
+	option = {
+		name = BA_sov_event.5.a
+		add_timed_idea = {
+			idea = BA_SOV_supporting_kriegsmarine
+			days = 1095
+		}
 	}
 }
