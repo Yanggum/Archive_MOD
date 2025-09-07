@@ -1669,6 +1669,17 @@ news_event = { #소폴전쟁
 				id = BA_intermarium_solidarity_event.3
 				days = 10
 			}
+			if = {
+				limit = {
+					POL = {
+						has_idea = POL_legacy_of_Pilsudski
+					}
+				}
+				country_event = {
+					id = BA_pol_event.12
+					days = 15
+				}
+			}
 		}
 	}
 	option = {
@@ -5818,6 +5829,71 @@ news_event = { # 2차 미국 내전
     }
 }
 
+news_event = { # 유명무실해진 발칸 협상 
+    id = BA_news.154
+    title = BA_news.154.t
+    desc = BA_news.154.desc
+    picture = GFX_news_event_turkey_affirms_interest_in_protecting_balkans
+
+    major = yes
+    is_triggered_only = yes
+
+    option = {
+        name = BA_news.154.a
+		if = {
+			limit = {
+				OR = {
+					original_tag = GRE
+					original_tag = TUR
+					original_tag = YUG
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						has_guaranteed = prev
+					}
+				}
+				ROM = {
+					diplomatic_relation = {
+						country = prev
+						relation = guarantee
+						active = no
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					original_tag = ROM
+				}
+			}
+			every_other_country = {
+				limit = {
+					OR = {
+						original_tag = GRE
+						original_tag = TUR
+						original_tag = YUG
+					}
+				}
+				if = {
+					limit = {
+						ROM = {has_guaranteed = prev}
+					}
+					ROM = {
+						diplomatic_relation = {
+							country = prev
+							relation = guarantee
+							active = no
+						}
+					}
+				}
+			}
+		}
+    }
+
+}
 #news_event = { # 미국 트리니티 에덴 점령
 #    id = BA_news.112
 #    title = BA_news.112.t

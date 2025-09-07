@@ -13618,8 +13618,8 @@ focus_tree = {
 				}
 			}
 		}
-		x = 0
-		y = 2
+		x = -1
+		y = 1
 		relative_position_id = POL_the_baltic_alliance
 		cost = 5
 		ai_will_do = {
@@ -13701,11 +13701,63 @@ focus_tree = {
 			unlock_decision_tooltip = POL_diplomatic_mission_to_FIN
 		}
 	}
+	focus = { #핀란드-폴란드 조약
+		id = POL_finno_polish_pact
+		icon = GFX_focus_invite_finland
+		prerequisite = {
+			focus = POL_the_north_sea
+		}
+		available = {
+			has_global_flag = BA_second_great_northen_war_end
+			is_faction_leader = yes
+			FIN = {
+				is_in_faction = no
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		bypass = {
+			FIN = {
+				OR = {
+					is_subject = yes
+					exists = no
+					is_in_faction = yes					#Shouldn't block you from the rest of the North Sea focuses.
+					has_war_with = ROOT
+				}
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = POL_the_north_sea
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					FIN = {
+						has_idea = FIN_the_lone_wolf
+					}
+				}
+				custom_effect_tooltip = FIN_the_lone_wolf_no_faction_tt
+			}
+			else = {
+				FIN = {
+					country_event = {
+						id = poland.16
+						days = 1
+					}
+				}
+			}
+		}
+	}
 	focus = { #BAmod original 스칸디나비아 반공 전선
 		id = POL_scandinavian_anti_communist_front
 		icon = GFX_focus_generic_pan_scandinavism
 		prerequisite = {
-			focus = POL_the_north_sea
+			focus = POL_finno_polish_pact
 		}
 		available = {
 			has_country_flag = GAEBALJUNG
@@ -13750,9 +13802,9 @@ focus_tree = {
 		}
 		bypass = {
 		}
-		x = -1
-		y = 1
-		relative_position_id = POL_the_north_sea
+		x = 0
+		y = 2
+		relative_position_id = POL_finno_polish_pact
 		cost = 5
 		ai_will_do = {
 			factor = 10
@@ -13874,58 +13926,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = { #핀란드-폴란드 조약
-		id = POL_finno_polish_pact
-		icon = GFX_focus_invite_finland
-		prerequisite = {
-			focus = POL_the_north_sea
-		}
-		available = {
-			has_global_flag = BA_second_great_northen_war_end
-			is_faction_leader = yes
-			FIN = {
-				is_in_faction = no
-				NOT = {
-					has_war_with = ROOT
-				}
-			}
-		}
-		bypass = {
-			FIN = {
-				OR = {
-					is_subject = yes
-					exists = no
-					is_in_faction = yes					#Shouldn't block you from the rest of the North Sea focuses.
-					has_war_with = ROOT
-				}
-			}
-		}
-		x = 0
-		y = 2
-		relative_position_id = POL_the_north_sea
-		cost = 5
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-			if = {
-				limit = {
-					FIN = {
-						has_idea = FIN_the_lone_wolf
-					}
-				}
-				custom_effect_tooltip = FIN_the_lone_wolf_no_faction_tt
-			}
-			else = {
-				FIN = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-		}
-	}
 	focus = { #흑해
 		id = POL_the_mediterranean
 		icon = GFX_focus_generic_black_sea_focus
@@ -13984,19 +13984,53 @@ focus_tree = {
 			}
 		}
 	} 
+	focus = {
+		#동방 요새
+		id = POL_inter_2
+		icon = GFX_focus_BEL_koningshooikt_wavre_line
+		cost = 5
+		relative_position_id = POL_the_mediterranean
+		x = 1
+		y = 1
+		available = {
+			is_puppet = no
+			is_faction_leader = yes
+		}
+		ai_will_do = {
+			factor = 10
+		}
+		prerequisite = {
+			focus = POL_the_mediterranean
+		}
+		completion_reward = {
+			set_variable = {
+				POL_bunker_var = 0
+			}
+			every_country = {
+				limit = {
+					is_ally_with = POL
+					is_neighbor_of = SOV
+				}
+				country_event = {
+					id =  BA_pol_event.7
+					hours = 7
+				}
+			}
+		}
+	}
 	focus = { #자유 폴란드 의용군
 		id = POL_coerce_czechoslovakia
 		text = POL_coerce_slovakia
 		icon = GFX_focus_POL_plan_east
 		prerequisite = {
-			focus = POL_the_mediterranean
+			focus = POL_inter_2
 		}
 		available = {
 			is_faction_leader = yes
 		}
-		x = 1
-		y = 1
-		relative_position_id = POL_the_mediterranean
+		x = 0
+		y = 2
+		relative_position_id = POL_inter_2
 		cost = 4
 		ai_will_do = {
 			factor = 10
@@ -14045,14 +14079,14 @@ focus_tree = {
 		text = POL_hungarian_alliance
 		icon = GFX_focus_POL_belarus_army
 		prerequisite = {
-			focus = POL_coerce_czechoslovakia
+			focus = POL_inter_2
 		}
 		available = {
 			is_faction_leader = yes
 		}
 		x = 1
 		y = 1
-		relative_position_id = POL_coerce_czechoslovakia
+		relative_position_id = POL_inter_2
 		cost = 4
 		ai_will_do = {
 			factor = 10
@@ -14106,7 +14140,7 @@ focus_tree = {
 		id = POL_protect_yugoslavia
 		icon = GFX_focus_POL_ukrainian_army
 		prerequisite = {
-			focus = POL_coerce_czechoslovakia
+			focus = POL_inter_2
 		}
 		available = {
 			is_faction_leader = yes
@@ -14115,7 +14149,7 @@ focus_tree = {
 		}
 		x = 3
 		y = 1
-		relative_position_id = POL_coerce_czechoslovakia
+		relative_position_id = POL_inter_2
 		cost = 4
 		ai_will_do = {
 			factor = 10
@@ -14478,7 +14512,7 @@ focus_tree = {
 				}
 			}
 		}
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = POL_control_the_bosporus
 		cost = 5
@@ -14508,13 +14542,14 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#미엥지모제 통합군수체계
-		id = POL_inter_1
-		icon = GFX_focus_generic_military_industry
+		#대핀란드 협력 : 
+		id = POL_inter_fin_1
+		icon = GFX_focus_EST_national_pride_in_finland
 		cost = 5
 		relative_position_id = POL_the_between_the_seas_concept
 		x = 2
-		y = 1
+		y = 1 
+		text_icon = NORDIC_focus_style
 		prerequisite = {
 			focus = POL_the_between_the_seas_concept
 		}
@@ -14526,65 +14561,17 @@ focus_tree = {
 			is_faction_leader = yes
 		}
 		completion_reward = {
-			every_country = {
-				limit = {
-					is_ally_with = POL
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = PREV
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-					}
-				}
-			}
 		}
 	}
 	focus = {
-		#동방 요새
-		id = POL_inter_2
-		icon = GFX_focus_BEL_koningshooikt_wavre_line
+		#동맹 의제: 루마니아
+		id = POL_inter_rom_1
+		icon = GFX_focus_rom_preserve_romania
 		cost = 5
-		relative_position_id = POL_the_between_the_seas_concept
-		x = 4
+		relative_position_id = POL_inter_fin_1
+		x = 1
 		y = 1
-		available = {
-			is_puppet = no
-			is_faction_leader = yes
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		completion_reward = {
-			set_variable = {
-				POL_bunker_var = 0
-			}
-			every_country = {
-				limit = {
-					is_ally_with = POL
-					is_neighbor_of = SOV
-				}
-				country_event = {
-					id =  BA_pol_event.7
-					hours = 7
-				}
-			}
-		}
-	}
-	focus = {
-		#공동대응
-		id = POL_inter_3
-		icon = GFX_focus_attack_soviet
-		cost = 5
-		relative_position_id = POL_inter_2
-		x = -1
-		y = 1
+		text_icon = NORDIC_focus_style
 		available = {
 			is_puppet = no
 			is_faction_leader = yes
@@ -14594,19 +14581,32 @@ focus_tree = {
 			factor = 10
 		}
 		prerequisite = {
-			focus = POL_inter_1
-			focus = POL_inter_2
+			focus = POL_the_between_the_seas_concept
 		}
 		completion_reward = {
-			every_country = {
-				limit = {
-					is_ally_with = POL
-				}
-				add_timed_idea = {
-					idea = POL_together_fight
-					days = 400
-				}
-			}
+		}
+	}
+	focus = {
+		#동맹 의제: 터키
+		id = POL_inter_tur_1
+		icon = GFX_focus_generic_befriend_turkey
+		cost = 5
+		relative_position_id = POL_inter_fin_1
+		x = 2
+		y = 0
+		text_icon = NORDIC_focus_style
+		available = {
+			is_puppet = no
+			is_faction_leader = yes
+			has_global_flag = sov_pol_war_superevent_trigger_flag
+		}
+		ai_will_do = {
+			factor = 10
+		}
+		prerequisite = {
+			focus = POL_the_between_the_seas_concept
+		}
+		completion_reward = {
 		}
 	}
 	################
