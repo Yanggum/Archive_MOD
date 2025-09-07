@@ -10097,11 +10097,13 @@ country_event = { # 보안국 재편
 
 	option = { 
 		name = trinity.35.a
-		IF = {
-			limit = { has_intelligence_agency = no }
-			create_intelligence_agency = yes
-			else = { gain_random_agency_upgrade = yes }
+		if = {
+			limit = {
+				NOT = { has_done_agency_upgrade = upgrade_anti_partisan }
+			}
+			upgrade_intelligence_agency = upgrade_anti_partisan
 		}
+		else = { gain_random_agency_upgrade = yes }
 		add_ideas = TRN_general_school_Intelligence_service_ns 
 		hidden_effect = {
 			country_event = { id =  trinity.23 days = 180 }
@@ -11021,7 +11023,32 @@ country_event = { # 명예 - 독서하기
 		name = trnhonor.5.a
 		set_temp_variable = { TRN_Honor_change = 3 }
 		TRN_add_Honor = yes
+	}
+}
 
+country_event = { # 딸기 난동
+	id = trnhonor.6
+	title = trnhonor.6.t
+	desc = trnhonor.6.desc
+	picture = GFX_report_event_generic_trinity_market
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trnhonor.6.a
+		add_political_power = -35
+		add_stability = 0.01
+		set_temp_variable = { TRN_Honor_change = 3 }
+		TRN_add_Honor = yes
+	}
+
+	option = { # 
+		name = trnhonor.6.b
+		add_political_power = 35
+		add_stability = -0.01
+		set_temp_variable = { TRN_Honor_change = -3 }
+		TRN_add_Honor = yes
 	}
 }
 
@@ -12228,6 +12255,21 @@ unit_leader_event = { #
 
 	option = {
 		name = trnfla.41.a
+
+	}
+}
+
+country_event = { # 
+	id = trnfla.42
+	title = trnfla.42.t
+	desc = trnfla.42.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trnfla.42.a
 
 	}
 }
