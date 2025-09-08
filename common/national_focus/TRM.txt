@@ -6712,7 +6712,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 11
 			tag = TRM
 			is_debug = yes
 		}
@@ -7514,7 +7514,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			country_event = { id = trinity.29 } # 문화투쟁
+			country_event = { id = trinity.29 } # 신앙 개조
 			
 		}
 	}
@@ -7577,7 +7577,10 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-
+			custom_trigger_tooltip = {
+				tooltip = TRN_Kulturkampf_display_value_60_over_tt
+				check_variable = { TRN_Kulturkampf_display_value > 60 }
+			}
 		}
 
 		ai_will_do = {
@@ -8940,10 +8943,17 @@ focus_tree = {
 					level = 1
 					instant_build = yes
 				}
-				hidden_effect = {
-					remove_dynamic_modifier = { modifier = GEK_ari_religion }
+				if = {
+					limit = {
+						85 = {
+							has_dynamic_modifier = { modifier = GEK_ari_religion }
+						}
+					}
+					hidden_effect = {
+						remove_dynamic_modifier = { modifier = GEK_ari_religion }
+					}
+					add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
 				}
-				add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
 			}
 		}
 	}
