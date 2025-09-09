@@ -187,29 +187,29 @@ focus_tree = {
 			}
 		}
 
-		offset = {
-			x = -2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = -2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
-		offset = {
-			x = 2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_undermine_the_admiral
-			}
-		}
+		#offset = {
+		#	x = 2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_undermine_the_admiral
+		#	}
+		#}
 
 		available = {
 			OR = {
@@ -1289,6 +1289,7 @@ focus_tree = {
 					OR = {
 						state = 975
 						state = 76
+						state = 1044
 						state = 83
 						state = 84
 						state = 82
@@ -1341,30 +1342,30 @@ focus_tree = {
 			has_government = neutrality
 			AUS = {
 				has_civil_war = no
-				OR = {
-					exists = yes
-					AND = {
-						exists = no
-						4 = {
-							is_owned_by = ROOT
-						}
-						152 = {
-							is_owned_by = ROOT
-						}
-						153 = {
-							is_owned_by = ROOT
-						}
-						848 = {
-							is_owned_by = ROOT
-						}
-						975 = {
-							is_owned_by = ROOT
-						}
-						976 = {
-							is_owned_by = ROOT
-						}
-					}
-				}
+				#OR = {
+				#	exists = yes
+				#	AND = {
+				#		exists = no
+				#		4 = {
+				#			is_owned_by = ROOT
+				#		}
+				#		152 = {
+				#			is_owned_by = ROOT
+				#		}
+				#		153 = {
+				#			is_owned_by = ROOT
+				#		}
+				#		848 = {
+				#			is_owned_by = ROOT
+				#		}
+				#		975 = {
+				#			is_owned_by = ROOT
+				#		}
+				#		976 = {
+				#			is_owned_by = ROOT
+				#		}
+				#	}
+				#}
 				NOT = {
 					has_war_with = ROOT
 				}
@@ -1427,6 +1428,32 @@ focus_tree = {
 				add_political_power = 75
 				add_stability = 0.05
 				add_war_support = 0.025
+			}
+			ELSE_IF = {
+				limit = {
+					AUS = {
+						exists = no
+					}
+				}
+				every_other_country = {
+					limit = {
+						OR = {
+							controls_state = 4
+							controls_state = 152
+							controls_state = 153
+							controls_state = 848
+							controls_state = 975
+							controls_state = 976
+							controls_state = 1021
+						}
+					}
+					HUN = {
+						create_wargoal = {
+							type = annex_everything
+							target = PREV
+						}
+					}
+				}
 			}
 
 			custom_effect_tooltip = generic_skip_one_line_tt
@@ -1571,14 +1598,18 @@ focus_tree = {
 			factor = 25
 		}
 
+		allow_branch = {
+			always = no
+		}
+
 		available = {
-			GER = {
-				has_government = neutrality
-				OR = {
-					is_faction_leader = yes
-					is_in_faction = no
-				}
-			}
+			#GER = {
+			#	has_government = neutrality
+			#	OR = {
+			#		is_faction_leader = yes
+			#		is_in_faction = no
+			#	}
+			#}
 			NOT = {
 				has_global_flag = GER_Rejected_HUN_central_powers
 			}
@@ -1586,7 +1617,7 @@ focus_tree = {
 		}
 
 		bypass = {
-			is_in_faction_with = GER
+			#is_in_faction_with = GER
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -1616,13 +1647,13 @@ focus_tree = {
 				set_rule = { can_create_factions = yes }
 				create_faction = GER_central_powers_faction
 				# We create our own faction and invite Germany
-				GER = {
-					country_event = {
-						id = WW_hungary.38
-						hours = 24
-						random_hours = 12
-					}
-				}
+				#GER = {
+				#	country_event = {
+				#		id = WW_hungary.38
+				#		hours = 24
+				#		random_hours = 12
+				#	}
+				#}
 			}
 
 		}
@@ -2866,6 +2897,9 @@ focus_tree = {
 					76 = {
 						is_owned_by = ROOT
 					}
+					1044 = {
+						is_owned_by = ROOT
+					}
 					83 = {
 						is_owned_by = ROOT
 					}
@@ -2886,10 +2920,24 @@ focus_tree = {
 				}
 			}
 
+			1044 = {
+				OWNER = {
+					NOT = {
+						OR = {
+							is_in_faction_with = ROOT
+							has_war_with = ROOT
+						}
+					}
+				}
+			}
+
 			IF = {
 				limit = {
 					ROM = {
-						owns_state = 76
+						OR = {
+							owns_state = 1044
+							owns_state = 76
+						}
 					}
 				}
 				strength_ratio = { tag = ROM ratio > 0.66 }
@@ -2909,6 +2957,14 @@ focus_tree = {
 				76 = {
 					is_owned_by = ROOT
 				}
+				1044 = {
+					OWNER = {
+						has_war_with = ROOT
+					}
+				}
+				1044 = {
+					is_owned_by = ROOT
+				}
 			}
 
 		}
@@ -2925,6 +2981,7 @@ focus_tree = {
 				limit = {
 					OR = {
 						state = 76
+						state = 1044
 						state = 83
 						state = 84
 						state = 82
@@ -2945,7 +3002,10 @@ focus_tree = {
 			custom_effect_tooltip = HUN_demands_tt
 			random_country = {
 				limit = {
-					owns_state = 76
+					OR = {
+						owns_state = 1044
+						owns_state = 76
+					}
 				}
 				country_event = {
 					id = WW_hungary.4
@@ -5257,9 +5317,9 @@ focus_tree = {
 
 		available = {
 			975 = {
-				is_owned_and_controlled_by = AUS
+				is_owned_and_controlled_by = SHA
 			}
-			AUS = {
+			SHA = {
 				has_civil_war = no
 				NOT = {
 					has_war_with = ROOT
@@ -5279,7 +5339,7 @@ focus_tree = {
 
 		completion_reward = {
 
-			AUS = {
+			SHA = {
 				country_event = {
 					id = WW_hungary.83
 					hours = 2
@@ -5289,7 +5349,7 @@ focus_tree = {
 			custom_effect_tooltip = if_they_accept_tt
 
 			effect_tooltip = {
-				AUS = {
+				SHA = {
 					add_ideas = HUN_payments_from_hungary_idea
 					add_offsite_building = {
 						type = industrial_complex
@@ -5455,6 +5515,7 @@ focus_tree = {
 						state = 71
 						state = 73
 						state = 76
+						state = 1044
 						state = 84
 						state = 83
 						state = 82
@@ -6879,6 +6940,7 @@ focus_tree = {
 						owns_state = 83
 						owns_state = 84
 						owns_state = 76
+						owns_state = 1044
 					}
 				}
 				ROOT = {
@@ -7000,6 +7062,7 @@ focus_tree = {
 						state = 71
 						state = 73
 						state = 76
+						state = 1044
 						state = 84
 						state = 83
 						state = 82
@@ -7686,31 +7749,31 @@ focus_tree = {
 			factor = 15
 		}
 
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = wuw_HUN_end_the_regency }
-				NOT = { has_completed_focus = wuw_HUN_end_the_white_terror }
-				NOT = { has_completed_focus = wuw_HUN_undermine_the_admiral }
-			}
-		}
+		#allow_branch = {
+		#	IF = {
+		#		limit = {
+		#			has_game_rule = {
+		#				rule = obsolete_focus_branches_visibility
+		#				option = HIDE
+		#			}
+		#		}
+		#		NOT = { has_completed_focus = wuw_HUN_end_the_regency }
+		#		NOT = { has_completed_focus = wuw_HUN_end_the_white_terror }
+		#		NOT = { has_completed_focus = wuw_HUN_undermine_the_admiral }
+		#	}
+		#}
 
-		offset = {
-			x = 2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = 2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
 		available = {
 			has_country_leader = {
@@ -7785,31 +7848,31 @@ focus_tree = {
 			factor = 5
 		}
 
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = wuw_HUN_end_the_regency }
-				NOT = { has_completed_focus = wuw_HUN_end_the_white_terror }
-				NOT = { has_completed_focus = wuw_HUN_strengthen_horthys_reign }
-			}
-		}
+		#allow_branch = {
+		#	IF = {
+		#		limit = {
+		#			has_game_rule = {
+		#				rule = obsolete_focus_branches_visibility
+		#				option = HIDE
+		#			}
+		#		}
+		#		NOT = { has_completed_focus = wuw_HUN_end_the_regency }
+		#		NOT = { has_completed_focus = wuw_HUN_end_the_white_terror }
+		#		NOT = { has_completed_focus = wuw_HUN_strengthen_horthys_reign }
+		#	}
+		#}
 
-		offset = {
-			x = -2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_undermine_the_admiral
-			}
-		}
+		#offset = {
+		#	x = -2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_undermine_the_admiral
+		#	}
+		#}
 
 		available = {
 			has_country_leader = {
@@ -7877,17 +7940,17 @@ focus_tree = {
 			factor = 10
 		}
 
-		offset = {
-			x = -2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_undermine_the_admiral
-			}
-		}
+		#offset = {
+		#	x = -2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_undermine_the_admiral
+		#	}
+		#}
 
 		available = {
 			OR = {
@@ -8590,19 +8653,19 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = HUN_volksbund_good
 
-			IF = {
-				limit = {
-					GER = {
-						has_government = fascism
-					}
-				}
-				GER = {
-					add_opinion_modifier = {
-						target = ROOT
-						modifier = medium_increase
-					}	
-				}
-			}
+			#IF = {
+			#	limit = {
+			#		GER = {
+			#			has_government = fascism
+			#		}
+			#	}
+			#	GER = {
+			#		add_opinion_modifier = {
+			#			target = ROOT
+			#			modifier = medium_increase
+			#		}	
+			#	}
+			#}
 		}
 	}
 
@@ -8814,17 +8877,17 @@ focus_tree = {
 			}
 		}
 
-		offset = {
-			x = 2
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = 2
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
 		cost = 5
 
@@ -9635,6 +9698,7 @@ focus_tree = {
 						state = 71
 						state = 70
 						state = 76
+						state = 1044
 						state = 84
 						state = 83
 						state = 82
@@ -9981,6 +10045,9 @@ focus_tree = {
 					76 = {
 						is_owned_by = ROOT
 					}
+					1044 = {
+						is_owned_by = ROOT
+					}
 					83 = {
 						is_owned_by = ROOT
 					}
@@ -10001,10 +10068,24 @@ focus_tree = {
 				}
 			}
 
+			1044 = {
+				OWNER = {
+					NOT = {
+						OR = {
+							is_in_faction_with = ROOT
+							has_war_with = ROOT
+						}
+					}
+				}
+			}
+
 			IF = {
 				limit = {
 					ROM = {
-						owns_state = 76
+						OR = {
+							owns_state = 1044
+							owns_state = 76
+						}
 					}
 				}
 				strength_ratio = { tag = ROM ratio > 0.66 }
@@ -10024,6 +10105,14 @@ focus_tree = {
 				76 = {
 					is_owned_by = ROOT
 				}
+				1044 = {
+					OWNER = {
+						has_war_with = ROOT
+					}
+				}
+				1044 = {
+					is_owned_by = ROOT
+				}
 			}
 
 		}
@@ -10039,6 +10128,9 @@ focus_tree = {
 			IF = {
 				limit = {
 					76 = {
+						is_owned_by = ROM
+					}
+					1044 = {
 						is_owned_by = ROM
 					}
 				}
@@ -10061,7 +10153,10 @@ focus_tree = {
 			ELSE = {
 				random_country = {
 					limit = {
-						owns_state = 76
+						OR = {
+							owns_state = 1044
+							owns_state = 76
+						}
 					}
 					country_event = {
 						id = WW_hungary.4
@@ -10535,6 +10630,7 @@ focus_tree = {
 				owns_state = 664
 				owns_state = 73
 				owns_state = 76
+				owns_state = 1044
 				owns_state = 84
 				owns_state = 83
 				owns_state = 82
@@ -10615,6 +10711,10 @@ focus_tree = {
 				}
 				has_completed_focus = wuw_HUN_abide_by_the_little_ententes_stipulations
 			}
+		}
+
+		allow_branch = {
+			always = no
 		}
 
 		offset = {
@@ -10784,6 +10884,10 @@ focus_tree = {
 				}
 				has_completed_focus = wuw_HUN_elect_a_fascist_king
 			}
+		}
+
+		allow_branch = {
+			always = no
 		}
 
 		cost = 5
@@ -12775,9 +12879,15 @@ focus_tree = {
 			has_government = democratic
 			is_subject = no
 			any_other_country = {
-				AND = {
-					owns_state = 76
-					controls_state = 76
+				OR = {
+					AND = {
+						owns_state = 76
+						controls_state = 76
+					}
+					AND = {
+						owns_state = 1044
+						controls_state = 1044
+					}
 				}
 			}
 			TRA = {
@@ -12799,7 +12909,10 @@ focus_tree = {
 
 			every_country = {
 				limit = {
-					owns_state = 76
+					OR = {
+						owns_state = 1044
+						owns_state = 76
+					}
 				}
 				country_event = {
 					id = WW_hungary.99
@@ -13003,6 +13116,7 @@ focus_tree = {
 						state = 71
 						state = 70
 						state = 76
+						state = 1044
 						state = 84
 						state = 83
 						state = 82
@@ -13025,6 +13139,7 @@ focus_tree = {
 							owns_state = 71
 							owns_state = 70
 							owns_state = 76
+							owns_state = 1044
 							owns_state = 84
 							owns_state = 83
 							owns_state = 82
@@ -13123,6 +13238,7 @@ focus_tree = {
 						state = 45
 						state = 764
 						state = 76
+						state = 1044
 						state = 83
 						state = 84
 						state = 82
@@ -13783,6 +13899,7 @@ focus_tree = {
 						state = 73
 						state = 664
 						state = 76
+						state = 1044
 						state = 45
 						state = 975
 					}
@@ -13866,6 +13983,7 @@ focus_tree = {
 				NOT = { has_war_with = SOV }
 				OR = {
 					owns_state = 76
+					owns_state = 1044
 					owns_state = 78
 				}
 			}
@@ -14398,6 +14516,7 @@ focus_tree = {
 			NOT = {
 				AND = {
 					owns_state = 76
+					owns_state = 1044
 					owns_state = 84
 					owns_state = 83
 					owns_state = 82
@@ -14408,6 +14527,7 @@ focus_tree = {
 		bypass = {
 			AND = {
 				owns_state = 76
+				owns_state = 1044
 				owns_state = 84
 				owns_state = 83
 				owns_state = 82
@@ -14429,6 +14549,7 @@ focus_tree = {
 					}
 					OR = {
 						state = 76
+						state = 1044
 						state = 84
 						state = 83
 						state = 82
@@ -14444,6 +14565,7 @@ focus_tree = {
 					AND = {
 						OR = {
 							owns_state = 76
+							owns_state = 1044
 							owns_state = 84
 							owns_state = 83
 							owns_state = 82
@@ -14588,6 +14710,10 @@ focus_tree = {
 					controls_state = 76
 				}
 				OR = {
+					owns_state = 1044
+					controls_state = 1044
+				}
+				OR = {
 					owns_state = 84
 					controls_state = 84
 				}
@@ -14660,6 +14786,7 @@ focus_tree = {
 						state = 45
 						state = 764
 						state = 76
+						state = 1044
 						state = 83
 						state = 84
 						state = 82
@@ -14790,6 +14917,7 @@ focus_tree = {
 						owns_state = 82
 						owns_state = 84
 						owns_state = 76
+						owns_state = 1044
 						owns_state = 83
 						owns_state = 974
 						owns_state = 973
@@ -14994,17 +15122,17 @@ focus_tree = {
 			}
 		}
 
-		offset = {
-			x = -6
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = -6
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
 		offset = {
 			x = -38
@@ -15205,17 +15333,17 @@ focus_tree = {
 			}
 		}
 
-		offset = {
-			x = -6
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = -6
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
 		offset = {
 			x = -38
@@ -15413,17 +15541,17 @@ focus_tree = {
 			}
 		}
 
-		offset = {
-			x = -6
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = wuw_HUN_strengthen_horthys_reign
-			}
-		}
+		#offset = {
+		#	x = -6
+		#	y = 0
+		#	trigger = {
+		#		has_game_rule = {
+		#			rule = obsolete_focus_branches_visibility
+		#			option = HIDE
+		#		}
+		#		has_completed_focus = wuw_HUN_strengthen_horthys_reign
+		#	}
+		#}
 
 		offset = {
 			x = -38
@@ -18020,15 +18148,15 @@ focus_tree = {
 				}
 			}
 			OR = {
-				GER = {
-					custom_trigger_tooltip = {
-						tooltip = fighter_tt
-						OR = {
-							is_available_fighter_HUN = yes
-							is_available_heavy_fighter_HUN = yes
-						}
-					}
-				}
+				#GER = {
+				#	custom_trigger_tooltip = {
+				#		tooltip = fighter_tt
+				#		OR = {
+				#			is_available_fighter_HUN = yes
+				#			is_available_heavy_fighter_HUN = yes
+				#		}
+				#	}
+				#}
 				FRA = {
 					custom_trigger_tooltip = {
 						tooltip = fighter_tt
@@ -19538,6 +19666,9 @@ focus_tree = {
 			76 = {
 				is_fully_controlled_by = ROOT
 			}
+			1044 = {
+				is_fully_controlled_by = ROOT
+			}
 		}
 
 		bypass = {
@@ -19624,7 +19755,7 @@ focus_tree = {
 					
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size > 1
@@ -19633,7 +19764,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 3
@@ -19645,7 +19776,7 @@ focus_tree = {
 					
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size > 1
@@ -19654,7 +19785,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 3
@@ -19666,7 +19797,7 @@ focus_tree = {
 					
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size > 1
@@ -19675,7 +19806,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 3
@@ -19759,6 +19890,9 @@ focus_tree = {
 				76 = {
 					is_controlled_by = ROOT
 				}
+				1044 = {
+					is_controlled_by = ROOT
+				}
 				84 = {
 					is_controlled_by = ROOT
 				}
@@ -19820,6 +19954,9 @@ focus_tree = {
 			76 = {
 				is_fully_controlled_by = ROOT
 			}
+			1044 = {
+				is_fully_controlled_by = ROOT
+			}
 
 			custom_trigger_tooltip = {
 				tooltip = wuw_HUN_expand_the_arpad_line_available_tt
@@ -19849,7 +19986,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						free_building_slots = {
 							building = bunker
 							size > 1
@@ -19857,7 +19994,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						free_building_slots = {
 							building = bunker
 							size > 1
@@ -19865,7 +20002,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						free_building_slots = {
 							building = bunker
 							size > 1
@@ -19967,7 +20104,7 @@ focus_tree = {
 				
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size < 1
@@ -19976,7 +20113,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 2
@@ -19988,7 +20125,7 @@ focus_tree = {
 				
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size < 1
@@ -19997,7 +20134,7 @@ focus_tree = {
 						}
 					}
 
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 2
@@ -20009,7 +20146,7 @@ focus_tree = {
 				
 				IF = {
 					limit = {
-						76 = {
+						1044 = {
 							free_building_slots = {
 								building = bunker
 								size < 1
@@ -20017,7 +20154,7 @@ focus_tree = {
 							}
 						}
 					}
-					76 = {
+					1044 = {
 						add_building_construction = {
 						    type = bunker
 						    level = 2
@@ -20152,6 +20289,9 @@ focus_tree = {
 		available = {
 			#has_war = yes
 			76 = {
+				is_fully_controlled_by = ROOT
+			}
+			1044 = {
 				is_fully_controlled_by = ROOT
 			}
 			154 = {
