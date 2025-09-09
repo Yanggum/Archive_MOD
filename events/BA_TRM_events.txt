@@ -12479,6 +12479,7 @@ country_event = { # 벨라루스 총독
 		}
 	}
 }
+
 country_event = { # 모스크바 총독
 	id = trndivine.4
 	title = trndivine.4.t
@@ -12659,6 +12660,9 @@ country_event = { # 캅카스 총독
 	}
 	option = {
 		name = trndivine.1.b
+		trigger = {
+			GEO = { exists = no }
+		}
 		event_target:Trinity_Puppet_GEO = {
 			add_country_leader_role = {
 				character = GEO_shalva_maglakelidze
@@ -12675,6 +12679,150 @@ country_event = { # 캅카스 총독
 				long_name = GEO_fascism_party
 				name = GEO_fascism_party_long
 			}
+		}
+	}
+}
+
+country_event = { # 밀레니엄 총독
+	id = trndivine.7
+	title = trndivine.7.t
+	desc = trndivine.7.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			IF = {
+				limit = {
+					MIL = {
+						exists = no
+						NOT = { has_completed_focus = MIL_K_appeasement }
+					}
+				}
+				MIL = {
+					set_nationality = {
+					    target_country = event_target:Trinity_Puppet_MIL
+					    character = MIL_Koyuki
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trndivine.1.a
+		event_target:Trinity_Puppet_MIL = { 
+			add_ideas = MIL_neutrality_idea
+			add_ideas = TRN_trinity_controlled_divine_ns
+
+			# create country leader가 얼마나 구린 코드인지 나도 알고 있지만
+			# 그렇다고 잘 쓰고 있는 정치 고문 하나 날리는건 좀 마음이 아프잖냐..
+			create_country_leader = {
+				name = TRN_Kozeki_Ui
+				picture = GFX_Portrait_TRN_Kozeki_Ui
+				ideology = pater_nazism
+				traits = { TRN_puppet_leader_Trait TRN_economist_ui }
+			}
+			set_country_leader_ideology = technocracy
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		trigger = {
+			MIL = {
+				exists = no
+				NOT = { has_completed_focus = MIL_K_appeasement }
+			}
+		}
+		event_target:Trinity_Puppet_MIL = {
+			add_country_leader_role = {
+				character = MIL_Koyuki
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = MIL_neutrality_idea
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = MIL_democratic_party
+				name = MIL_democratic_party
+			}
+			set_country_leader_ideology = technocracy
+		}
+	}
+}
+
+country_event = { # 밀레니엄 총독
+	id = trndivine.8
+	title = trndivine.8.t
+	desc = trndivine.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+				    target_country = DMF
+				    character = TRN_Kusunoki_Tomori
+				}
+			}
+			event_target:system = {
+				set_nationality = {
+				    target_country = DMF
+				    character = FRA_fernand_de_brinon
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trndivine.1.a
+		DMF = { 
+            	add_country_leader_role = {
+            	      character = TRN_Kusunoki_Tomori
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait }
+            	      }
+            	      promote_leader = yes
+            	}
+			add_ideas = TRN_trinity_controlled_divine_ns 
+		}
+	}
+	option = {
+		name = trndivine.1.b
+		DMF = { 
+            	add_country_leader_role = {
+            	      character = FRA_fernand_de_brinon
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { GER_governor_general_trait }
+            	      }
+            	      promote_leader = yes
+            	}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BADMF_fascism_party_long
+				name = BADMF_fascism_party
+			}
+		}
+	}
+	after = {
+		21 = {
+			set_state_flag = Megacity_State
+			set_state_flag = Megacity_Vice_City
 		}
 	}
 }
