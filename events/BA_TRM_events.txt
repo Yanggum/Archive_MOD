@@ -4905,7 +4905,7 @@ country_event = {
 	option = { #
 		name = TRN_after_war_event.16.a
 		ROOT = { 
-			set_cosmetic_tag = TRM_colony_color
+			
 			TRM = {
 				puppet = PREV
 				set_autonomy = {
@@ -5516,7 +5516,7 @@ country_event = { # 디버그 이벤트
             copy_tag = COU
             original_tag = COU
             add_political_power =120
-			set_cosmetic_tag = TRM_mainland_color
+			
 			transfer_state = 34
 			transfer_state = 36
 			transfer_state = 1018
@@ -5552,7 +5552,7 @@ country_event = { # 디버그 이벤트
             copy_tag = COU
             original_tag = COU
             add_political_power =120
-			set_cosmetic_tag = TRM_mainland_color
+			
 			transfer_state = 34
 			transfer_state = 36
 			transfer_state = 1018
@@ -9279,20 +9279,6 @@ country_event = { # 필리우스 분파의 운명
 		BA_ban_neutrality_effect = yes
     }
 }
-country_event = { # 대법관 임명
-	id = trinity.19
-	title = trinity.19.t
-	desc = trinity.19.desc
-	picture = GFX_event_teaparty
-	
-	is_triggered_only = yes
-    fire_only_once = no
-
-	option = {
-		name = trinity.19.a
-		add_political_power = 50
-    }
-}
 country_event = { # 파테르 분파 내부의 불충
 	id = trinity.18
 	title = trinity.18.t
@@ -9325,11 +9311,30 @@ country_event = { # 파테르 분파 내부의 불충
 		hidden_effect = {
 			add_country_leader_trait = TRN_mika_trait_2
 			remove_country_leader_trait = TRM_pater_faction
-			promote_character = {
-				character = TRN_empty
-				ideology = democratic
+			TRN_Misono_Mika = {
+				IF = {
+					limit = { has_ideology_group = democratic }
+					remove_country_leader_role = {
+						character = PREV
+						ideology = tea_party_ideology
+					}
+				}
 			}
 		}
+    }
+}
+country_event = { # 대법관 임명
+	id = trinity.19
+	title = trinity.19.t
+	desc = trinity.19.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = {
+		name = trinity.19.a
+		add_political_power = 50
     }
 }
 unit_leader_event = { # 기사단국 선포
@@ -12248,13 +12253,13 @@ country_event = { # 폴린드 총독
 		hidden_effect = {
 			event_target:system = {
 				set_nationality = {
-				    target_country = event_target:Trinity_Puppet_POL
+				    target_country = TR3
 				    character = POL_wladyslaw_studnicki
 				}
 			}
 			TRM = {
 				set_nationality = {
-				    target_country = event_target:Trinity_Puppet_POL
+				    target_country = TR3
 				    character = TRN_Kurusu_Rin
 				}
 			}
@@ -12263,7 +12268,7 @@ country_event = { # 폴린드 총독
 
 	option = {
 		name = trndivine.1.a
-		event_target:Trinity_Puppet_POL = { 
+		TR3 = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
           		add_country_leader_role = {
             	  	character = TRN_Kurusu_Rin
@@ -12281,7 +12286,7 @@ country_event = { # 폴린드 총독
 	}
 	option = {
 		name = trndivine.1.b
-		event_target:Trinity_Puppet_POL = { 
+		TR3 = { 
 			add_country_leader_role = {
 				character = POL_wladyslaw_studnicki
 				promote_leader = yes
@@ -12309,13 +12314,13 @@ country_event = { # 우크라이나 총독
 		hidden_effect = {
 			event_target:system = {
 				set_nationality = {
-				    target_country = event_target:Trinity_Puppet_UKRPR
+				    target_country = TR5
 				    character = UKR_andriy_Melnky
 				}
 			}
 			TRM = {
 				set_nationality = {
-					target_country = event_target:Trinity_Puppet_UKRPR
+					target_country = TR5
 					character = TRN_Sayaka_Ohara
 				}
 			}
@@ -12324,7 +12329,7 @@ country_event = { # 우크라이나 총독
 
 	option = {
 		name = trndivine.1.a
-		event_target:Trinity_Puppet_UKRPR = { 
+		TR5 = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
 			add_country_leader_role = {
 				character = TRN_Sayaka_Ohara
@@ -12339,7 +12344,7 @@ country_event = { # 우크라이나 총독
 	}
 	option = {
 		name = trndivine.1.b
-		event_target:Trinity_Puppet_UKRPR = {
+		TR5 = {
 			add_country_leader_role = {
 				character = UKR_andriy_Melnky
 				promote_leader = yes
@@ -12372,13 +12377,13 @@ country_event = { # 벨라루스 총독
 		hidden_effect = {
 			event_target:system = {
 				set_nationality = {
-				    	target_country = event_target:Trinity_Puppet_BLR
+				    	target_country = TR4
 				    	character = BLR_radasklaw_ostrowski
 				}
 			}
 			TRM = {
 				set_nationality = {
-					target_country = event_target:Trinity_Puppet_BLR
+					target_country = TR4
 				    	character = TRN_Ayaka_Ohashi
 				}
 			}
@@ -12387,7 +12392,7 @@ country_event = { # 벨라루스 총독
 
 	option = {
 		name = trndivine.1.a
-		event_target:Trinity_Puppet_BLR = { 
+		TR4 = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
             	add_country_leader_role = {
             	      character = TRN_Ayaka_Ohashi
@@ -12402,7 +12407,7 @@ country_event = { # 벨라루스 총독
 	}
 	option = {
 		name = trndivine.1.b
-		event_target:Trinity_Puppet_BLR = {
+		TR4 = {
 			add_country_leader_role = {
 				character = BLR_radasklaw_ostrowski
 				promote_leader = yes
@@ -12435,7 +12440,7 @@ country_event = { # 모스크바 총독
 		hidden_effect = {
 			TRM = {
 				set_nationality = {
-					target_country = event_target:Trinity_Puppet_MOS
+					target_country = TR6
 					character = TRN_Wakayama_Shion
 				}
 			}
@@ -12453,7 +12458,7 @@ country_event = { # 모스크바 총독
 						}
 					}
 					set_nationality = {
-					    target_country = event_target:Trinity_Puppet_MOS
+					    target_country = TR6
 					    character = SOV_konstantin_rodzayevsky
 					}
 				}
@@ -12463,7 +12468,7 @@ country_event = { # 모스크바 총독
 
 	option = {
 		name = trndivine.1.a
-		event_target:Trinity_Puppet_MOS = { 
+		TR6 = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
             	add_country_leader_role = {
             	      character = TRN_Wakayama_Shion
@@ -12483,7 +12488,7 @@ country_event = { # 모스크바 총독
 				NOT = { has_completed_focus = SOV_dismantle_the_zemsky_sobor }
 			}
 		}
-		event_target:Trinity_Puppet_MOS = {
+		TR6 = {
 			add_country_leader_role = {
 				character = SOV_konstantin_rodzayevsky
 				promote_leader = yes
@@ -12515,10 +12520,10 @@ country_event = { # 모스크바 총독
 				army = { large = "gfx/leaders/TRN/TRN_Kirihuji_Nagisa_angry_Portrait.tga" }
 			}
 			set_nationality = {
-				target_country = event_target:Trinity_Puppet_MOS
+				target_country = TR6
 				character = TRN_Kirifuji_Nagisa
 			}
-			event_target:Trinity_Puppet_MOS = { 
+			TR6 = { 
 				country_event = { id = trndivine.5 } 
 			}
 		}
@@ -12565,7 +12570,7 @@ country_event = { # 캅카스 총독
 		hidden_effect = {
 			TRM = {
 				set_nationality = {
-				    target_country = event_target:Trinity_Puppet_GEO
+				    target_country = TR7
 				    character = TRN_Sakura_Ayane
 				}
 			}
@@ -12587,7 +12592,7 @@ country_event = { # 캅카스 총독
 
 	option = {
 		name = trndivine.1.a
-		event_target:Trinity_Puppet_GEO = { 
+		TR7 = { 
 			add_ideas = TRN_trinity_controlled_divine_ns 
             	add_country_leader_role = {
             	      character = TRN_Sakura_Ayane
@@ -12605,7 +12610,7 @@ country_event = { # 캅카스 총독
 		trigger = {
 			GEO = { exists = no }
 		}
-		event_target:Trinity_Puppet_GEO = {
+		TR7 = {
 			add_country_leader_role = {
 				character = GEO_shalva_maglakelidze
 				promote_leader = yes
