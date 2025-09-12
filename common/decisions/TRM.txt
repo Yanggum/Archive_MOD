@@ -9586,10 +9586,22 @@ TRN_Kulturkampf_cat = {
 
 		allowed = { tag = TRM }
 
-		cost = 10
-		days_remove = 90
+		cost = 25
+		days_remove = 60
 		modifier = {
 
+		}
+
+		state_target = yes
+		target_trigger = {
+			FROM = {
+				has_state_flag = TRN_completed_infiltrate_state
+				OR = {
+					has_dynamic_modifier = { modifier = GEK_protestant_state }
+					has_dynamic_modifier = { modifier = GEK_catholic_state }
+				}
+            		is_controlled_by = ROOT
+        		}
 		}
 
 		ai_will_do = { base = 0 }
@@ -9657,7 +9669,9 @@ TRN_Kulturkampf_cat = {
 			}
 		}
 		remove_effect = {
-			set_state_flag = TRN_completed_infiltrate_state
+			FROM = {
+				set_state_flag = TRN_completed_infiltrate_state
+			}
 		}
 	}
 	
