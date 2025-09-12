@@ -31,13 +31,11 @@ focus_tree = {
 					}
 				}
 				NOT = { has_completed_focus = return_khmer_empire }
-				NOT = { has_completed_focus = rise_facism }
 			}
 		}
 
 		mutually_exclusive = {
         focus = return_khmer_empire
-        focus = rise_facism
 		}
 		completion_reward = {
 			add_timed_idea = { 
@@ -67,13 +65,11 @@ focus_tree = {
 					}
 				}
 				NOT = { has_completed_focus = keep_under_fra }
-				NOT = { has_completed_focus = rise_facism }
 			}
 		}
 
 		mutually_exclusive = {
         focus = keep_under_fra
-        focus = rise_facism
 		}
 		completion_reward = {
 			add_timed_idea = { 
@@ -103,7 +99,7 @@ focus_tree = {
 	
 	focus = {
 		id = khmer_army_check
-		icon = no
+		icon = GFX_focus_CHL_incorporate_machi_into_the_army
 
 		x = 30
 		y = 2
@@ -111,8 +107,6 @@ focus_tree = {
 		cost = 10
 
 		prerequisite = { focus = angkor_power_up }
-
-		completion_reward = { add_command_power = 25 }
 	}
 
 	focus = {
@@ -164,20 +158,30 @@ focus_tree = {
 	}
 
 	focus = {
-		id = Phnom_Penh_National_University_Laboratory
-		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
+		id = khmer_base_check
+		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
 
 		x = 36
 		y = 2
 
 		cost = 10
 
-		prerequisite = {
-			focus = boost_industrialization
-		}
+		prerequisite = { focus = boost_industrialization }
+	}
+
+	focus = {
+		id = Aksar_khmer
+		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
+
+		x = 38
+		y = 3
+
+		cost = 10
+
+		prerequisite = { focus = khmer_base_check }
 
 		completion_reward = {
-			add_research_slot = 1
+			remove_ideas = serious_level_of_illiteracy_idea
 		}
 	}
 
@@ -185,17 +189,13 @@ focus_tree = {
 		id = Focus_on_Phnom_Penh
 		icon = GFX_focus_AFG_establish_darulaman
 
-		x = 34
+		x = 9
 		y = 3
 
 		cost = 10
 
 		mutually_exclusive = {
 			focus = balanced_development
-		}
-
-		prerequisite = {
-			focus = Phnom_Penh_National_University_Laboratory
 		}
 
 		completion_reward = {
@@ -219,17 +219,13 @@ focus_tree = {
 		id = balanced_development
 		icon = GFX_SOV_autonomous_soviet_republics_ccp_2d_sov_compatibility
 
-		x = 38
+		x = 11
 		y = 3
 
 		cost = 10
 
 		mutually_exclusive = {
 			focus = Focus_on_Phnom_Penh
-		}
-
-		prerequisite = {
-			focus = Phnom_Penh_National_University_Laboratory
 		}
 
 		completion_reward = {
@@ -256,7 +252,7 @@ focus_tree = {
 		id = Angkor_National_University_Laboratory
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
 
-		x = 36
+		x = 10
 		y = 4
 
 		cost = 10
@@ -335,7 +331,7 @@ focus_tree = {
 		id = khmer_krom_integration_requirements
 		icon = GFX_SOV_annex_tannu_tuva_ccp_2d_sov_compatibility
 
-		x = 33
+		x = 34
 		y = 4
 
 		cost = 5
@@ -404,7 +400,7 @@ focus_tree = {
 		id = lanxang_reannex
 		icon = GFX_focus_generic_annex_country
 
-		x = 31
+		x = 32
 		y = 4
 
 		cost = 5
@@ -437,7 +433,7 @@ focus_tree = {
 		id = khmer_empire_old_territory
 		icon = GFX_SOV_claims_on_poland_ccp_2d_sov_compatibility
 
-		x = 32
+		x = 33
 		y = 3
 
 		cost = 10
@@ -460,7 +456,7 @@ focus = {
 	id = siemreap
 	icon = GFX_SOV_protect_the_white_sea_baltic_canal_ccp_2d_sov_compatibility
 
-	x = 32
+	x = 33
 	y = 5
 
 	cost = 5
@@ -524,9 +520,9 @@ focus = {
 }
 focus = {
 	id = CAM_VIN_annex
-	icon = no 
+	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility 
 
-	x = 31
+	x = 32
 	y = 7
 
 	cost = 5 
@@ -542,7 +538,7 @@ focus = {
 }
 focus = {
 	id = CAM_BRM_annex
-	icon = no 
+	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility
 
 	x = 33
 	y = 8
@@ -560,9 +556,9 @@ focus = {
 }
 focus = {
 	id = CAM_YUN_annex
-	icon = no 
+	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility
 
-	x = 35
+	x = 34
 	y = 7
 
 	cost = 5 
@@ -596,256 +592,6 @@ focus = {
 				cost_reduction = 0.5
 				uses = 1
 				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_equipment_effort
-		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = CAM_army_effort }
-		x = -1
-		y = 1
-		relative_position_id = CAM_army_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-
-			add_breakthrough_progress = {
-				specialization = specialization_land
-				value = 0.1
-			}
-
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-
-		}
-	}
-
-	focus = {
-		id = CAM_motorization_effort
-		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = CAM_army_effort }
-		bypass = { has_tech = motorised_infantry }
-		x = 1
-		y = 1
-		relative_position_id = CAM_army_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = motorized_bonus
-				bonus = 1.0
-				technology = motorised_infantry
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_doctrine_effort
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = CAM_army_effort }
-		x = 0
-		y = 2
-		relative_position_id = CAM_army_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 25
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_equipment_effort_2
-		icon = GFX_goal_generic_army_artillery
-		prerequisite = { focus = CAM_equipment_effort }
-		x = 0
-		y = 2
-		relative_position_id = CAM_equipment_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-
-			add_breakthrough_progress = {
-				specialization = specialization_land
-				value = 0.1
-			}
-
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-
-		}
-	}
-
-	focus = {
-		id = CAM_mechanization_effort
-		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = CAM_motorization_effort }
-		x = 0
-		y = 2
-		relative_position_id = CAM_motorization_effort
-		cost = 10
-		
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = motorized_bonus
-				ahead_reduction = 2
-				uses = 1
-				category = motorized_equipment
-			}
-			IF = {
-				limit = {
-					has_tech = motorised_infantry
-				}
-				add_equipment_to_stockpile = { 
-					type = motorized_equipment
-					amount = 1
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_doctrine_effort_2
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = CAM_doctrine_effort }
-		x = 0
-		y = 2
-		relative_position_id = CAM_doctrine_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 25
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_equipment_effort_3
-		icon = GFX_goal_generic_army_artillery2
-		prerequisite = { focus = CAM_equipment_effort_2 }
-		x = 0
-		y = 2
-		relative_position_id = CAM_equipment_effort_2
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-
-			add_breakthrough_progress = {
-				specialization = specialization_land
-				value = 0.1
-			}
-
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				ahead_reduction = 2
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-
-		}
-	}
-
-	focus = {
-		id = CAM_armor_effort
-		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = CAM_mechanization_effort }
-		x = 0
-		y = 2
-		relative_position_id = CAM_mechanization_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = armor_bonus
-				bonus = 1.0
-				uses = 2
-				category = armor
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_special_forces
-		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = CAM_equipment_effort_3 }
-		prerequisite = { focus = CAM_doctrine_effort_2 }
-		prerequisite = { focus = CAM_armor_effort }
-		x = 1
-		y = 1
-		relative_position_id = CAM_equipment_effort_3
-		cost = 10
-
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_ideas = special_forces
-			add_tech_bonus = {
-				name = special_forces_bonus
-				bonus = 1.0
-				uses = 1
-				technology = paratroopers
-				technology = paratroopers2
-				technology = marines
-				technology = marines2
-				technology = tech_mountaineers
-				technology = tech_mountaineers2
 			}
 		}
 	}
@@ -933,234 +679,6 @@ focus = {
 				cost_reduction = 0.5
 				uses = 1
 				category = air_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_fighter_focus
-		icon = GFX_goal_generic_air_fighter
-		prerequisite = { focus = CAM_aviation_effort }
-		mutually_exclusive = { focus = CAM_bomber_focus }
-		x = -1
-		y = 1
-		relative_position_id = CAM_aviation_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = fighter_bonus
-				bonus = 1.0
-				uses = 2
-				category = light_fighter
-				category = cat_heavy_fighter
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_bomber_focus
-		icon = GFX_goal_generic_air_bomber
-		prerequisite = { focus = CAM_aviation_effort }
-		mutually_exclusive = { focus = CAM_fighter_focus }
-		x = 1
-		y = 1
-		relative_position_id = CAM_aviation_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = bomber_bonus
-				bonus = 1.0
-				uses = 2
-				category = cat_strategic_bomber
-				category = tactical_bomber
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_aviation_effort_2
-		icon = GFX_goal_generic_air_doctrine
-		prerequisite = { focus = CAM_bomber_focus focus = CAM_fighter_focus }
-		x = -1
-		y = 1
-		relative_position_id = CAM_bomber_focus
-		cost = 10
-
-		search_filters = {   FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-
-		complete_tooltip = {
-			air_experience = 25
-			if = { limit = { has_country_flag = aviation_effort_2_AB }
-				add_building_construction = {
-					type = air_base
-					level = 2
-					instant_build = yes
-				}
-			}
-			add_doctrine_cost_reduction = {
-				name =  air_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-		completion_reward = {
-			air_experience = 25
-			if = {
-				limit = {
-					capital_scope = {
-						OR = {
-							NOT = { is_controlled_by = ROOT }
-							NOT = {
-								free_building_slots = {
-									building = air_base
-									size > 1
-								}
-							}
-						}
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
-					add_building_construction = {
-						type = air_base
-						level = 2
-						instant_build = yes
-					}
-					ROOT = { set_country_flag = aviation_effort_2_AB }
-				}
-			}
-			if = {
-				limit = {
-					capital_scope = {
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
-				}
-				capital_scope = {
-					add_building_construction = {
-						type = air_base
-						level = 2
-						instant_build = yes
-					}				
-					ROOT = { set_country_flag = aviation_effort_2_AB }
-				}
-			}
-			add_doctrine_cost_reduction = {
-				name =  air_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_CAS_effort
-		icon = GFX_goal_generic_CAS
-		prerequisite = { focus = CAM_aviation_effort_2 }
-		prerequisite = { focus = CAM_motorization_effort }
-		x = -1
-		y = 1
-		relative_position_id = CAM_aviation_effort_2
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CAS_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = cas_bomber
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_rocket_effort
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = CAM_aviation_effort_2 }
-		x = 0
-		y = 2
-		relative_position_id = CAM_aviation_effort_2
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.5
-			}
-
-			add_tech_bonus = {
-				name = jet_rocket_bonus
-				ahead_reduction = 2
-				uses = 1 # was 2
-				category = rocketry
-				category = jet_technology
-			}
-
-		}
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.25
-				always = yes
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_NAV_effort
-		icon = GFX_goal_generic_air_naval_bomber
-		prerequisite = { focus = CAM_aviation_effort_2 }
-		prerequisite = { focus = CAM_flexible_navy }
-		x = 1
-		y = 1
-		relative_position_id = CAM_aviation_effort_2
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = nav_bomber_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = naval_bomber
 			}
 		}
 	}
@@ -1292,270 +810,6 @@ focus = {
 					}
 				}
 			}			
-		}
-	}
-
-	focus = {
-		id = CAM_flexible_navy
-		icon = GFX_goal_generic_build_navy
-		prerequisite = { focus = CAM_naval_effort }
-		mutually_exclusive = { focus = CAM_large_navy }
-		x = -1
-		y = 1
-		relative_position_id = CAM_naval_effort
-		cost = 10
-		
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-
-		available_if_capitulated = yes
-
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = sub_op_bonus
-				cost_reduction = 0.5
-				uses = 2
-				technology = convoy_interdiction_ti
-				technology = unrestricted_submarine_warfare
-				technology = wolfpacks
-				technology = advanced_submarine_warfare
-				technology = combined_operations_raiding
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_large_navy
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		prerequisite = { focus = CAM_naval_effort }
-		mutually_exclusive = { focus = CAM_flexible_navy }
-		x = 1
-		y = 1
-		relative_position_id = CAM_naval_effort
-		cost = 10
-		
-		search_filters = {   FOCUS_FILTER_RESEARCH }
-
-		available_if_capitulated = yes
-
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = fleet_in_being_bonus
-				cost_reduction = 0.25
-				uses = 2
-				category = fleet_in_being_tree
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_submarine_effort
-		icon = GFX_goal_generic_navy_submarine
-		prerequisite = { focus = CAM_flexible_navy focus = CAM_large_navy }
-		x = 0
-		y = 1
-		relative_position_id = CAM_flexible_navy
-		cost = 10
-		
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = ss_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = ss_tech
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_cruiser_effort
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = CAM_large_navy focus = flexible_navy }
-		x = 0
-		y = 1
-		relative_position_id = CAM_large_navy
-		cost = 10
-		
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-
-		available_if_capitulated = yes
-
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = cr_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = cl_tech
-				category = ca_tech
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_destroyer_effort
-		icon = GFX_goal_generic_wolf_pack
-		prerequisite = { focus = CAM_submarine_effort }
-		x = 0
-		y = 1
-		relative_position_id = CAM_submarine_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = dd_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = dd_tech
-			}
-		}
-	}
-
-	focus = {
-		id = CAM_capital_ships_effort
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = CAM_cruiser_effort }
-		x = 0
-		y = 1
-		relative_position_id = CAM_cruiser_effort
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				all_owned_state = {
-					OR = {
-						is_coastal = no
-						dockyard < 1
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			navy_experience = 25
-			add_tech_bonus = {
-				name = capital_ships_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = bc_tech
-				category = bb_tech
-				category = cv_tech
-			}
-		}
-	}
-#파시즘 루트
-
-	focus = {
-		id = rise_facism
-		icon = GFX_goal_support_fascism
-		
-    	x = 48
-		y = 0
-
-		cost = 10
-
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = return_khmer_empire }
-				NOT = { has_completed_focus = keep_under_fra }
-			}
-		}
-
-		mutually_exclusive = {
-        focus = keep_under_fra
-        focus = return_khmer_empire
 		}
 	}
 }
