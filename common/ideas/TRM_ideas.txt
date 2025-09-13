@@ -418,7 +418,7 @@ ideas = {
 				allowed = { always = no }
 				
 				modifier = {
-					stability_factor = 0.1
+					stability_factor = 0.15
 				}
 			}
 			TRM_justice_task_force_2 = { # 친위대
@@ -428,7 +428,7 @@ ideas = {
 				
 				modifier = {
 					war_support_factor = 0.05
-					stability_factor = 0.05
+					stability_factor = 0.1
 				}
 			}
 			TRM_justice_task_force_3 = { # 친위대
@@ -441,7 +441,7 @@ ideas = {
 				modifier = {
 					war_support_factor = 0.1
 					army_attack_speed_factor = 0.05
-					stability_factor = 0.05
+					stability_factor = 0.1
 				}
 			}
 			TRM_mucahbyueol_jingbyeong_idea = { # 무차별 징병
@@ -1330,7 +1330,7 @@ ideas = {
 		TRN_JTF_political_commissar_ns = {
 			picture = TRM_justice_task_force
 			modifier = {
-				stability_factor = 0.05
+				stability_factor = 0.075
 				army_morale_factor = 0.05
 				experience_gain_army = -0.01
 			}
@@ -1630,6 +1630,56 @@ ideas = {
 				political_power_factor = -0.1
 				consumer_goods_factor = 0.1
 				fascism_drift = 0.01
+			}
+		}
+
+		TRN_poland_trinity_border_dispute_ns = {
+			picture = chi_wargaming_division
+			on_remove = {
+				TRM = {
+					add_opinion_modifier = {
+						target = POL
+						modifier = TRN_poland_trinity_border_dispute_modifier
+					}
+				}
+				POL = {
+					add_opinion_modifier = {
+						target = TRM
+						modifier = TRN_poland_trinity_border_dispute_modifier
+					}
+				}
+			}
+			cancel = {
+				OR = {
+					OR = {
+						TRM = { exists = no }
+						POL = { exists = no }
+					}
+					any_country = {
+						original_tag = POL
+						original_tag = TRM
+						has_war_with = ROOT
+					}
+					OR = {
+						AND = {
+							any_country = {
+								original_tag = POL
+								NOT = { has_idea = TRN_poland_trinity_border_dispute_ns }
+							}
+						}
+						AND = {
+							any_country = {
+								original_tag = TRM
+								NOT = { has_idea = TRN_poland_trinity_border_dispute_ns }
+							}
+						}
+					}
+				}
+			}
+			modifier = {
+				war_support_factor = 0.05
+				#custom_modifier_tooltip = tooltip_white_line
+				custom_modifier_tooltip = TRN_poland_trinity_border_dispute_modifier_tt
 			}
 		}
 
