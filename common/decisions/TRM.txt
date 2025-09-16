@@ -9526,73 +9526,56 @@ TRN_Kulturkampf_cat = {
 		is_good = no
 		fixed_random_seed = no
 		selectable_mission = no
-		days_mission_timeout = 45
+		days_mission_timeout = 35
 
 		activation = {
 			has_completed_focus = TRN_take_over_the_church
 		}
 
 		timeout_effect = {
+			random_list = {
+				1 = {
+					custom_effect_tooltip = TRN_bonhoeffer_increase_influence_tt
+					add_to_variable = { TRN_Kulturkampf_display_value = -10 }
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+				1 = {
+					custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
+					add_to_variable = { TRN_Kulturkampf_display_value = -5 }
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+				1 = {
+					custom_effect_tooltip = TRN_bonhoeffer_increase_influence_3_tt
+					add_to_variable = { TRN_Kulturkampf_display_value = -1 }
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+			}
 			activate_mission = TRN_bonhoeffer_activation_decision
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var < 1 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -10 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 0 }
-					check_variable = { TRN_bonhoeffer_var < 7 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -5 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 6 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_3_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -2 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			add_to_variable = { TRN_bonhoeffer_var = 1 }
 		}
 		complete_effect = {
-			IF = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 0 }
-					check_variable = { TRN_bonhoeffer_var < 2 }
-				}
-				hidden_effect = {
 
-				}
-			}
 		}
 	}
 
-	TRN_fuking_your_ass = {
+	TRN_religion_assimilation= {
 		icon = GFX_decision_hol_attract_foreign_investors
 
 		allowed = { tag = TRM }
 
-		cost = 25
-		days_remove = 60
+		days_remove = 70
+
 		modifier = {
 
 		}
@@ -9612,7 +9595,33 @@ TRN_Kulturkampf_cat = {
 		ai_will_do = { base = 0 }
 
 		complete_effect = {
-
+			add_to_variable = { 
+				TRN_Kulturkampf_display_value = 5
+				tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
+			}
+			clamp_variable = {
+				var = TRN_Kulturkampf_display_value
+				min = 0
+				max = 100
+			}
+		}
+		remove_effect = {
+			FROM = {
+				IF = {
+					limit = { 
+						has_dynamic_modifier = { modifier = GEK_protestant_state } 
+					}
+					remove_dynamic_modifier = { modifier = GEK_protestant_state }
+					add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
+				}
+				IF = {
+					limit = { 
+						has_dynamic_modifier = { modifier = GEK_catholic_state } 
+					}
+					remove_dynamic_modifier = { modifier = GEK_catholic_state }
+					add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
+				}
+			}
 		}
 	}
 	
@@ -9636,6 +9645,7 @@ TRN_Kulturkampf_cat = {
 		state_target = yes
 		target_trigger = {
 			FROM = {
+				NOT = {  has_state_flag = TRN_completed_infiltrate_state }
 				OR = {
 					has_dynamic_modifier = { modifier = GEK_protestant_state }
 					has_dynamic_modifier = { modifier = GEK_catholic_state }
@@ -9658,23 +9668,41 @@ TRN_Kulturkampf_cat = {
 
 		on_map_mode = map_and_decisions_view
 
-		cost = 30
+		cost = 25
 
-		days_remove = 120
+		days_remove = 1
+
+		fire_only_once = yes
 
 		complete_effect = {
-			add_to_variable = { 
-				TRN_Kulturkampf_display_value = 5
-				tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
-			}
-			clamp_variable = {
-				var = TRN_Kulturkampf_display_value
-				min = 0
-				max = 100
+			random_list = {
+				1 = {
+					add_to_variable = { 
+						TRN_Kulturkampf_display_value = 1
+						tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
+					}
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+				1 = {
+					add_to_variable = { 
+						TRN_Kulturkampf_display_value = 5
+						tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
+					}
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
 			}
 		}
 		remove_effect = {
 			FROM = {
+				custom_effect_tooltip = TRM_infiltrate_church_FROM_tt
 				set_state_flag = TRN_completed_infiltrate_state
 			}
 		}
