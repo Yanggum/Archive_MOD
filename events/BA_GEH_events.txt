@@ -41,6 +41,8 @@ add_namespace = GEH_news
 add_namespace = TRM_auto_conference
 #선도부-판데모니움 소사이어티 두 나라에 동시에 발생하는 공동 이벤트
 add_namespace = GEH.GEM.shared_event
+# 풍기 이벤트
+add_namespace = GEH_discipline_system_event
 
 
 #The Yalta Conference
@@ -189,6 +191,84 @@ country_event = {
 		name = germany.119.b
 		ai_chance = {
 			base = 0
+		}
+	}
+}
+
+country_event = { # 풍기 감소주기 증가
+	id = GEH_discipline_system_event.1
+	title = GEH_discipline_system_event.1.t
+	desc = GEH_discipline_system_event.1.desc
+	picture = GFX_report_event_iori_shiromi_generic_3
+	
+	trigger = {
+		original_tag = GEH
+		has_country_flag = GEH_unified_gehenna_flag
+		NOT = { has_country_flag = GEH_discipline_system_event_1_flag }
+	}
+
+	immediate = {
+		set_country_flag = GEH_discipline_system_event_1_flag
+	}
+
+	fire_only_once = yes
+	
+	option = { 
+		name = GEH_discipline_system_event.1.a
+		custom_effect_tooltip = GEH_discipline_system_event_tt
+		add_to_variable = {
+			var:GEH_discipline_system_weak_discipline_day_value = 25
+		}
+		add_days_mission_timeout = {
+			mission = GEH_discipline_system_weak_discipline
+			days = 25
+		}
+	}
+}
+
+country_event = { # 풍기 감소주기 증가
+	id = GEH_discipline_system_event.2
+	title = GEH_discipline_system_event.2.t
+	desc = GEH_discipline_system_event.2.desc
+	picture = GFX_report_event_iori_shiromi_generic_3
+	
+	trigger = {
+		original_tag = GEH
+		NOT = { has_country_flag = GEH_discipline_system_event_2_flag }
+		OR = {
+			TRM = {
+				exists = no
+			}
+			TRM = {
+				is_subject_of = ROOT
+			}
+			TRM = {
+				is_in_faction_with = ROOT
+			}
+			TRK = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+			}
+			owns_state = 64
+		}
+	}
+
+	immediate = {
+		set_country_flag = GEH_discipline_system_event_2_flag
+	}
+
+	fire_only_once = yes
+	
+	option = { 
+		name = GEH_discipline_system_event.2.a
+		custom_effect_tooltip = GEH_discipline_system_event_tt
+		add_to_variable = {
+			var:GEH_discipline_system_weak_discipline_day_value = 25
+		}
+		add_days_mission_timeout = {
+			mission = GEH_discipline_system_weak_discipline
+			days = 25
 		}
 	}
 }
@@ -3076,7 +3156,7 @@ country_event = { #
 
 		if = {
 			limit = {
-				NOT = { has_completed_focus = GEH_Army_focus_7 }
+				NOT = { has_completed_focus = GEH_NEXT_Army_focus_1 }
 			}
 			add_to_variable = {
 				geh_discipline_var = -3
