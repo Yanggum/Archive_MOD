@@ -1,0 +1,73 @@
+#
+# TNO 개발자님들에게 무한한 감사를 보냅니다.
+#
+scripted_gui = {
+	PB_Mega_Cities_scripted_gui = {
+		window_name = "BA_state_lore_button"
+		context_type = selected_state_context
+		parent_window_token = selected_state_view
+
+		visible = {
+			is_in_array = { 
+				array = global.state_with_lore 
+				value = THIS.id 
+			}
+		}
+
+        	effects = {
+			BA_state_lore_button_click = {
+				if = {
+					limit = {
+						check_variable = { ROOT.selected_lore_state = THIS.id }
+					}
+					ROOT = {
+						clear_array = lore_entries_onscreen
+						clear_variable = selected_lore
+						clear_variable = selected_lore_alt
+						clear_variable = selected_lore_state
+					}
+					log = "작동 함! - 1"
+				}
+				else = {
+					clear_array = ROOT.lore_entries_onscreen
+					for_each_loop = {
+						array = lore_entries
+						add_to_array = { ROOT.lore_entries_onscreen = v }
+					}
+					set_variable = { ROOT.selected_lore_state = THIS.id }
+					ROOT = {
+						set_variable = { selected_lore = lore_entries_onscreen^0 }
+						set_variable = { selected_lore_alt = lore_entries_onscreen^0 }
+					}
+					log = "작동 함! - 2"
+				}
+			}
+		}
+	}
+	BA_state_lore = {
+		window_name = "BA_state_lore"
+		context_type = player_context
+		visible = { has_variable = selected_lore }
+		dynamic_lists = {
+			lore_selection_grid = {
+				array = lore_entries_onscreen
+				entry_container = "BA_lore_selection_entry"
+				index = sl_i
+				value = selected_lore
+			}
+		}
+		effects = {
+			close_btn_click = {
+				clear_array = lore_entries_onscreen
+				clear_variable = selected_lore
+				clear_variable = selected_lore_alt
+				clear_variable = selected_lore_state
+			}
+		}
+		properties = {
+			state_lore_image = {
+				image = "[Statelore_Get_picture]"
+			}
+		}
+	}
+}
