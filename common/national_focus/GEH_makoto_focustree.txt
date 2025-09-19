@@ -5721,10 +5721,12 @@ focus_tree = {
 		y = 2
 		relative_position_id = GEM_maintaining_dictatorship
 		completion_reward = {
+			add_stability = 0.10
 			if = {
 				limit = { has_idea = GEH_Emergency }
 				remove_ideas = GEH_Emergency
 			}
+			custom_effect_tooltip = GEM_satsuki_department_expansion_tt
 		}
 	}
 
@@ -5747,19 +5749,35 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = GEM_satsuki_department_expansion
 		completion_reward = {
+			custom_effect_tooltip = GEM_central_party_alliance_tt
 			if = {
-				limit = { has_idea = GEH_Emergency }
-				remove_ideas = GEH_Emergency
+				limit = { has_stability < 0.15 }
+				custom_effect_tooltip = GEM_central_party_alliance_3_tt
+				add_political_power = 100
+				add_stability = 0.30
 			}
+			else_if = {
+				limit = { has_stability < 0.45 }
+				custom_effect_tooltip = GEM_central_party_alliance_2_tt
+				add_political_power = 75
+				add_stability = 0.10
+			}
+			else = {
+				custom_effect_tooltip = GEM_central_party_alliance_1_tt
+				add_political_power = 50
+				add_stability = 0.05
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEM_what_are_you_talking_about_i_was_always_the_student_council_president_tt
 		}
 	}
 
 	focus = {
 		id = GEM_starting_today_a_special_department_just_for_me_should_be_created
-		icon = GFX_focus_GEM_what_are_you_talking_about_i_was_always_the_student_council_president
+		icon = GFX_focus_GEM_starting_today_a_special_department_just_for_me_should_be_created
 		text_icon = LONG_focus_style
 		cost = 5
 		prerequisite = {
@@ -5778,6 +5796,31 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = GEM_what_are_you_talking_about_i_was_always_the_student_council_president
+		completion_reward = {
+		}
+	}
+
+	focus = {
+		id = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+		icon = GFX_focus_GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+		text_icon = LONG_focus_style
+		cost = 5
+		prerequisite = {
+			focus = GEM_starting_today_a_special_department_just_for_me_should_be_created
+		}
+		available = {
+			has_country_leader = {
+				character = GEH_satsuki
+				ruling_only = yes
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_POLITICAL
+		}
+		x = 0
+		y = 2
+		relative_position_id = GEM_starting_today_a_special_department_just_for_me_should_be_created
 		completion_reward = {
 		}
 	}
@@ -5820,14 +5863,14 @@ focus_tree = {
 		id = GEM_pandemonium_reform
 		icon = GFX_goal_generic_propaganda
 		cost = 5.00
-		prerequisite = { focus = GEM_satsuki_department_expansion focus = GEM_natsume_iroha }
+		prerequisite = { focus = GEM_natsume_iroha }
 		available = {
 		}
 		search_filters = {
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = -3
-		y = 2
+		x = -2
+		y = 1
 		relative_position_id = GEM_natsume_iroha
 		completion_reward = {
 			GEH_Manmajun_Bupae_down_effect = yes
@@ -5851,7 +5894,7 @@ focus_tree = {
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
 		x = 0
-		y = 1
+		y = 2
 		relative_position_id = GEM_pandemonium_reform
 		completion_reward = {
 			GEH_Manmajun_Bupae_down_effect = yes
@@ -5863,7 +5906,7 @@ focus_tree = {
 		id = GEM_pandemonium_expansion
 		icon = GFX_goal_tripartite_pact
 		cost = 5.00
-		prerequisite = { focus = GEM_social_reorganization }
+		prerequisite = { focus = GEM_social_reorganization focus = GEM_pandemonium_reform }
 		available = {
 		}
 		search_filters = {
@@ -5891,7 +5934,7 @@ focus_tree = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
 		}
-		x = 0
+		x = 2
 		y = 1
 		relative_position_id = GEM_natsume_iroha
 		completion_reward = {
@@ -5903,7 +5946,7 @@ focus_tree = {
 		id = GEM_local_autonomy
 		icon = GFX_focus_spa_the_spanish_miracle
 		cost = 5.00
-		prerequisite = { focus = GEM_pandemonium_expansion }
+		prerequisite = { focus = GEM_social_reorganization }
 		available = {
 			has_country_leader = {
 				character = GEH_dlfhgk
@@ -5913,7 +5956,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 		}
-		x = 1
+		x = 2
 		y = 3
 		relative_position_id = GEM_natsume_iroha
 		completion_reward = {
@@ -5931,7 +5974,7 @@ focus_tree = {
 		id = GEM_local_government_takeover
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 5.00
-		prerequisite = { focus = GEM_social_reorganization }
+		prerequisite = { focus = GEM_social_reorganization focus = GEM_pandemonium_reform }
 		available = {
 
 		}
@@ -5954,6 +5997,8 @@ focus_tree = {
 		id = GEM_united_states_of_gehenna
 		icon = GFX_focus_ICE_state_corporatism
 		cost = 5.00
+		prerequisite = { focus = GEM_pandemonium_expansion }
+		prerequisite = { focus = GEM_budget_reorganization }
 		prerequisite = { focus = GEM_local_government_takeover }
 		prerequisite = { focus = GEM_local_autonomy }
 		available = {
