@@ -5502,7 +5502,37 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEH_secret_police_imitation
 		completion_reward = {
+			if = {
+				limit = { is_in_faction = yes NOT = { is_faction_leader = yes } }
+				leave_faction = yes
+			}
+			if = {
+				limit = { is_in_faction_with = GEH is_faction_leader = yes }
+				remove_from_faction = GEH
+				add_ai_strategy = {
+					type = alliance
+					id = GEH
+					value = -200
+				}
+			}
+			every_other_country = {
+				limit = {
+					NOT = { is_puppet_of = ROOT }
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = GEM_has_threatening_ambitions
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = embargo
+				}
+			}
+			
+			add_threat = 2
 			GEH_Manmajun_Bupae_down_effect = yes
+			country_event = GEM_balance_of_power_event.101
+			news_event = GEM_news.2
 		}
 	}
 
@@ -5815,7 +5845,20 @@ focus_tree = {
 		y = 2
 		relative_position_id = GEM_starting_today_a_special_department_just_for_me_should_be_created
 		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = { is_puppet_of = ROOT }
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = GEM_shocking_domestic_affairs
+				}
+			}
+			
+			add_threat = 1
 			GEH_Manmajun_Bupae_down_effect = yes
+			country_event = GEM_balance_of_power_event.102
+			news_event = GEM_news.3
 		}
 	}
 	
@@ -6054,7 +6097,33 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_united_states_of_gehenna
 		completion_reward = {
+			set_cosmetic_tag = GEM_usg
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.10
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.10
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.10
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.10
+			}
+
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = yes
+				election_frequency = 72
+			}
+
 			GEH_Manmajun_Bupae_down_effect = yes
+			country_event = GEM_balance_of_power_event.103
+			news_event = GEM_news.4
 		}
 	}
 #치아키 정치 중점
@@ -6946,6 +7015,14 @@ focus_tree = {
 					GEH_popular_support_up_effect = yes
 				}
 			}
+			custom_effect_tooltip = GEM_acceptance_of_german_nationalism_tt
+			every_state = {
+				limit = {
+					BA_is_GER_core = yes
+					NOT = { is_core_of = GEM }
+				}
+				add_claim_by = GEM
+			}
 		}
 	}
 	focus = {
@@ -6964,33 +7041,6 @@ focus_tree = {
 		completion_reward = {
 			GEH_gourmet_research_society_remove_effect = yes
 			GEH_hot_spring_department_remove_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_establishment_of_a_new_government
-		icon = GFX_goal_generic_territory_or_war
-		cost = 5.00
-		prerequisite = {
-			focus = GEM_deutsches_reich
-			focus = GEM_a_republic_of_two_peoples
-		}
-		search_filters = {
-			FOCUS_FILTER_ETHNIC_CONFLICT
-			FOCUS_FILTER_POLITICAL
-		}
-		x = 3
-		y = 1
-		relative_position_id = GEM_deutsches_reich
-		completion_reward = {
-			GEH_german_nationalism_issue_down_effect = yes
-			custom_effect_tooltip = GEM_acceptance_of_german_nationalism_tt
-			every_state = {
-				limit = {
-					BA_is_GER_core = yes
-					NOT = { is_core_of = GEM }
-				}
-				add_claim_by = GEM
-			}
 		}
 	}
 	focus = {
@@ -7034,6 +7084,14 @@ focus_tree = {
 				remove_ideas = GEH_Emergency
 			}
 			GEH_Manmajun_Bupae_down_effect = yes
+			custom_effect_tooltip = GEM_acceptance_of_german_nationalism_tt
+			every_state = {
+				limit = {
+					BA_is_GER_core = yes
+					NOT = { is_core_of = GEM }
+				}
+				add_claim_by = GEM
+			}
 		}
 	}
 #	focus = {
