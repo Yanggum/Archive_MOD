@@ -2852,7 +2852,7 @@ focus_tree = {
 
 		prerequisite = { focus = GEM_gehenna_hegemony_influence_the_south_kivotos focus = GEM_gehenna_hegemony_attack_south_kivotos }
 		x = 1
-		y = 1
+		y = 3
 		relative_position_id = GEM_gehenna_hegemony_influence_the_south_kivotos
 		cost = 5
 
@@ -3076,6 +3076,75 @@ focus_tree = {
 		completion_reward = {
 			KVT = {
 				country_event = generic.5
+			}
+		}
+	}
+
+	focus = {
+		id = GEM_war_with_MIL
+
+		icon = GFX_focus_attack_MIL
+
+		prerequisite = { focus = GEM_influence_the_COU focus = GEM_war_with_COU }
+
+		x = 1
+		y = 2
+		relative_position_id = GEM_influence_the_COU
+		cost = 5
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = MIL }
+				has_war_with = MIL
+			}
+		}
+		
+		available = {
+			is_subject = no			
+			NOT = { is_in_faction_with = MIL }
+		}
+
+		historical_ai = {
+			date > 1939.1.1
+			NOT = {
+				any_neighbor_country = {
+					has_war_with = ROOT
+				}		
+			}
+		}
+
+		ai_will_do = {
+			factor = 10			
+			modifier = {
+				factor = 0.05
+				date < 1939.1.1
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = MIL
+						original_tag = FRM
+						original_tag = FRA
+						original_tag = BLM
+					}
+					any_controlled_state = {
+						OR = {
+							is_core_of = MIL
+							is_core_of = BLM
+						}
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
+				}
 			}
 		}
 	}
@@ -3660,6 +3729,10 @@ focus_tree = {
 		y = 1
 
 		will_lead_to_war_with = SOV
+
+		available = {
+			is_puppet = no
+		}
 
 		bypass = {
 			OR = {
@@ -7198,14 +7271,32 @@ focus_tree = {
 		y = 3
 		relative_position_id = GEM_SS_men
 		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = { is_puppet_of = ROOT }
+					OR = {
+						original_tag = TRM
+						original_tag = GEH
+						original_tag = HEU
+						original_tag = SHA
+						original_tag = HYA
+						original_tag = ABY
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = GEM_german_has_threatening_ambitions
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = embargo
+				}
+			}
+			GEH_german_nationalism_issue_down_effect = yes
 			clr_country_flag = BA_german_claimant_1 #독일 정통성 낮음
 			set_country_flag = BA_german_claimant_2 #독일 정통성 중간
 
 			set_cosmetic_tag = GEM_german_only
-			swap_ideas = {
-				remove_idea = GEH_schutzstaffel_1_idea
-				add_idea = GEH_schutzstaffel_2_idea
-			}
 			swap_ideas = {
 				remove_idea = GEH_nazism_3_idea
 				add_idea = GEH_nazism_4_idea
@@ -7213,26 +7304,6 @@ focus_tree = {
 			if = {
 				limit = { has_idea = GEH_unstable_integration_idea }
 				remove_ideas = GEH_unstable_integration_idea
-			}
-			GEH_Manmajun_Bupae_down_effect = yes
-			GEH_german_nationalism_issue_down_effect = yes
-			country_event = { id = GEH_event.52 hours = 8 }
-			set_party_name = {
-				ideology = fascism
-				long_name = GER_fascism_party_long
-				name = GER_fascism_party
-			}
-
-			add_advisor_role = {
-				character = GEH_akzhxh
-				advisor = {
-					slot = political_advisor
-					idea_token = GEH_akzhxh_political_advisor
-					traits = { GEH_makoto_political_advisor }
-				}
-			}
-			hidden_effect = {
-				country_event = { id = GEH_event.53 hours = 24 }
 			}
 			if = {
 				limit = {
@@ -7252,22 +7323,162 @@ focus_tree = {
 			}
 		}
 	}
+	#focus = {
+	#	id = GEM_terrorist_arrested
+	#	icon = GFX_goal_generic_occupy_states_ongoing_war
+	#	cost = 5.00
+	#	prerequisite = {
+	#		focus = GEM_deutsches_reich
+	#	}
+	#	allow_branch = {
+	#		has_country_flag = GAEBALJUNG
+	#	}
+	#	x = -2
+	#	y = 1
+	#	relative_position_id = GEM_deutsches_reich
+	#	completion_reward = {
+	#		GEH_gourmet_research_society_remove_effect = yes
+	#		GEH_hot_spring_department_remove_effect = yes
+	#	}
+	#}
 	focus = {
-		id = GEM_terrorist_arrested
+		id = GEM_leadership_reshuffle
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		cost = 5.00
 		prerequisite = {
 			focus = GEM_deutsches_reich
 		}
-		allow_branch = {
-			has_country_flag = GAEBALJUNG
+		mutually_exclusive = {
+			focus = GEM_pandemonium_coalition_government
 		}
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = GEM_deutsches_reich
 		completion_reward = {
-			GEH_gourmet_research_society_remove_effect = yes
-			GEH_hot_spring_department_remove_effect = yes
+			GEH_Manmajun_Bupae_down_effect = yes
+			country_event = { id = GEH_event.52 hours = 8 }
+			set_party_name = {
+				ideology = fascism
+				long_name = GER_fascism_party_long
+				name = GER_fascism_party
+			}
+			hidden_effect = {
+				country_event = { id = GEH_event.53 hours = 24 }
+			}
+			custom_effect_tooltip = enter_tt
+			swap_ideas = {
+				remove_idea = GEH_schutzstaffel_1_idea
+				add_idea = GEH_schutzstaffel_2_idea
+			}
+		}
+	}
+	focus = {
+		id = GEM_pandemonium_coalition_government
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_deutsches_reich
+		}
+		mutually_exclusive = {
+			focus = GEM_leadership_reshuffle
+		}
+		x = 1
+		y = 1
+		relative_position_id = GEM_deutsches_reich
+		completion_reward = {
+			GEH_Manmajun_Bupae_down_effect = yes
+			set_party_name = {
+				ideology = fascism
+				long_name = GEM_manmajun_ger_party_long
+				name = GEM_manmajun_ger_party
+			}
+			custom_effect_tooltip = enter_tt
+			swap_ideas = {
+				remove_idea = GEH_schutzstaffel_1_idea
+				add_idea = GEH_schutzstaffel_alt_idea
+			}
+		}
+	}
+	focus = {
+		id = GEM_peace_achievement
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_leadership_reshuffle
+			focus = GEM_pandemonium_coalition_government
+		}
+		available = {
+			OR = {
+				TRM = {
+					exists = no
+				}
+				TRM = {
+					is_subject_of = ROOT
+				}
+				TRM = {
+					is_in_faction_with = ROOT
+				}
+				TRK = {
+					exists = yes
+					is_subject = no
+					is_in_faction = no
+				}
+				owns_state = 64
+			}
+			OR = {
+				GEH = {
+					exists = no
+				}
+				GEH = {
+					is_subject_of = ROOT
+				}
+				GEH = {
+					is_in_faction_with = ROOT
+				}
+				owns_state = 52
+			}
+			OR = {
+				HEU = {
+					exists = no
+				}
+				HEU = {
+					is_subject_of = ROOT
+				}
+				HEU = {
+					is_in_faction_with = ROOT
+				}
+				owns_state = 8
+			}
+		}
+		x = 0
+		y = 3
+		relative_position_id = GEM_deutsches_reich
+		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_stability_factor = 0.10
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			GEH_german_nationalism_issue_down_effect = yes
+			if = {
+				limit = { has_stability < 0.40 }
+				set_stability = 0.40
+			}
+		}
+	}
+	focus = {
+		id = GEM_german_ethnic_unification
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		cost = 5.00
+		prerequisite = {
+			focus = GEM_peace_achievement
+		}
+		x = 0
+		y = 1
+		relative_position_id = GEM_peace_achievement
+		completion_reward = {
+			
 		}
 	}
 	focus = {
