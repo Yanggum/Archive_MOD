@@ -1,7 +1,7 @@
 
 add_namespace = Highlander
 
-country_event = { #투자
+country_event = { #안 씀
 	id = Highlander.1
 	title = Highlander.1.t
 	desc = Highlander.1.d
@@ -22,15 +22,6 @@ country_event = { #투자
     }
 	option = { #대규모 투자
 		name = Highlander.1.f
-		if = {
-			limit = {
-				has_country_flag = BA_highlander_discount
-			}
-			add_timed_idea = {
-				idea = BA_highlander_invest_mid
-				days = 90
-			}
-		}
 		else = {
 			add_timed_idea = {
 				idea = BA_highlander_invest_big
@@ -85,55 +76,50 @@ country_event = { #철도 버프 이벤트를 위한 히든 이벤트
 				}
 				country_event =  Highlander.9
 			}
-			1 = { #철도 건설 속도
-				country_event =  Highlander.3
+			2 = { #철도 건설
+				country_event = Highlander.3
 			}
-			1 = { #무료 민간 열차
-				modifier = {
-					factor = 0
-					check_variable = {
-						BA_highlander_invest < 10
-					}
-				}
-				country_event =  Highlander.4
+			2 = { #무료 민간 열차
+				country_event = Highlander.4
 			}
-			1 = { #생산 효율
+			2 = { #생산 효율
+				country_event = Highlander.5
+			}
+			2 = { #아오바
 				modifier = {
 					factor = 0
 					check_variable = {
 						BA_highlander_invest < 15
 					}
 				}
-				country_event =  Highlander.5
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_utsumi_aoba
+					}
+				}
+				country_event = Highlander.14
 			}
-			1 = { #아오바
+			1 = { #정상운행
+				country_event = Highlander.6
+			}
+			2 = { #노조미
 				modifier = {
 					factor = 0
 					check_variable = {
-						BA_highlander_invest < 20
+						BA_highlander_invest < 15
 					}
 				}
-				country_event =  Highlander.14
-			}
-			1 = { #노조미
 				modifier = {
 					factor = 0
-					check_variable = {
-						BA_highlander_invest < 25
+					any_country = {
+						has_idea = BA_tachibana_nozomi
 					}
 				}
-				country_event =  Highlander.6
+				country_event = Highlander.7
+				
 			}
-			1 = { #히카리
-				modifier = {
-					factor = 0
-					check_variable = {
-						BA_highlander_invest < 30
-					}
-				}
-				country_event =  Highlander.7
-			}
-			1 = { #주식 매각
+			2 = { #주식 매각
 				modifier = {
 					factor = 0
 					check_variable = {
@@ -146,7 +132,7 @@ country_event = { #철도 버프 이벤트를 위한 히든 이벤트
 				}
 				country_event = Highlander.10
 			}
-			1 = { #지분 매각
+			2 = { #지분 매각
 				modifier = {
 					factor = 0
 					check_variable = {
@@ -157,41 +143,52 @@ country_event = { #철도 버프 이벤트를 위한 히든 이벤트
 					factor = 0.5
 					is_ai = yes
 				}
-				country_event =  Highlander.11
+				country_event = Highlander.11
 			}
-			1 = { #철도 불황
+			2 = { #철도 불황
 				modifier = {
 					factor = 0
 					check_variable = {
-						BA_highlander_invest < 20
+						BA_highlander_invest < 10
 					}
 				}
 				modifier = {
 					factor = 0.5
 					is_ai = yes
 				}
-				country_event =  Highlander.12
+				country_event = Highlander.12
 			}
-			1 = { #가격 완화
-				modifier = {
-					factor = 0
-					has_country_flag = BA_highlander_discount
-				}
-				country_event =  Highlander.13
+			2 = { #추가적인 투자
+				country_event = Highlander.13
 			}
 		}
     }
 }
-country_event = { #철도 건설 속도
+country_event = { #철도 건설
 	id = Highlander.3
 	title = Highlander.3.t
 	desc = Highlander.3.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
-		name = Highlander.3.a 
-		add_timed_idea = {
-			idea = BA_highlander_buff_building_rail
-			days = 90
+		name = Highlander.3.a
+		random_owned_controlled_state = {
+			limit = {
+				is_on_continent = europe
+				is_core_of = ROOT
+			}
+			ROOT.capital_scope = {
+				ROOT = {
+					build_railway = {
+						start_state = PREV
+						target_state = PREV.PREV
+					}
+				}
+			}
+		}
+		build_railway = {
+			start_state = 12
+			target_state = 1
 		}
 	}
 }
@@ -200,13 +197,13 @@ country_event = { #무료 민간 열차
 	title = Highlander.4.t
 	desc = Highlander.4.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
 		name = Highlander.3.a
 		add_equipment_to_stockpile = {
 			type = train_equipment
-			amount = 2
+			amount = 3
 		}
-		custom_effect_tooltip =  Highlander.4_tt
 	}
 }
 country_event = { #생산 효율 성장+
@@ -220,35 +217,33 @@ country_event = { #생산 효율 성장+
 			idea = BA_highlander_buff_production
 			days = 90
 		}
-		custom_effect_tooltip =  Highlander.5_tt
 	}
 }
-country_event = { #노조미
+country_event = { #정상 운행
 	id = Highlander.6
 	title = Highlander.6.t
 	desc = Highlander.6.d
+	picture = GFX_report_event_generic_train
 	is_triggered_only = yes
+	option = {
+		name = Highlander.6.a
+		add_political_power = 1
+		add_stability = 0.01
+		add_war_support = 0.01
+	}
+}
+country_event = { #노조미
+	id = Highlander.7
+	title = Highlander.7.t
+	desc = Highlander.7.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_trains
 	option = {
 		name = Highlander.3.a
 		add_timed_idea = {
 			idea = BA_tachibana_nozomi
 			days = 90
 		}
-		custom_effect_tooltip =  Highlander.7_tt
-	}
-}
-country_event = { #히카리
-	id = Highlander.7
-	title = Highlander.6.t
-	desc = Highlander.6.d
-	is_triggered_only = yes
-	option = {
-		name = Highlander.3.a
-		add_timed_idea = {
-			idea = BA_tachibana_hikari
-			days = 90
-		}
-		custom_effect_tooltip =  Highlander.7.5_tt
 	}
 }
 country_event = { #최대 투자국 변경
@@ -395,11 +390,12 @@ country_event = { #철도 개선
 		}
 	}
 }
-country_event = { #지분 매각
+country_event = { #주식 매각
 	id = Highlander.10
 	title = Highlander.10.t
 	desc = Highlander.10.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
 		name = Highlander.10.a
 		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
@@ -408,11 +404,12 @@ country_event = { #지분 매각
 		}
 	}
 }
-country_event = { #재정 안정
+country_event = { #지분 매각
 	id = Highlander.11
 	title = Highlander.11.t
 	desc = Highlander.11.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
 		name = Highlander.10.a
 		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
@@ -427,6 +424,7 @@ country_event = { #철도 불황
 	title = Highlander.12.t
 	desc = Highlander.12.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
 		name = Highlander.12.a
 		custom_effect_tooltip = BA_highlander_invest_big_negative_tt
@@ -435,29 +433,32 @@ country_event = { #철도 불황
 		}
 	}
 }
-country_event = { #가격 완화
+country_event = { #추가적인 투자
 	id = Highlander.13
 	title = Highlander.13.t
 	desc = Highlander.13.d
+	picture = GFX_report_event_generic_train
 	is_triggered_only = yes
 	option = {
 		name = Highlander.13.a
-		custom_effect_tooltip = Highlander.13_tt
-		set_country_flag = BA_highlander_discount
+		custom_effect_tooltip = BA_highlander_invest_small_tt
+		add_to_variable = {
+			BA_highlander_invest = 2
+		}
 	}
 }
 country_event = { #아오바
 	id = Highlander.14
-	title = Highlander.6.t
-	desc = Highlander.6.d
+	title = Highlander.7.t
+	desc = Highlander.14.d
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
 	option = {
 		name = Highlander.3.a
 		add_timed_idea = {
 			idea = BA_utsumi_aoba
 			days = 90
 		}
-		custom_effect_tooltip = Highlander.6_tt
 	}
 }
 country_event = { #궤간
