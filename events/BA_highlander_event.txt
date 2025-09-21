@@ -1,0 +1,643 @@
+
+add_namespace = Highlander
+
+country_event = { #투자
+	id = Highlander.1
+	title = Highlander.1.t
+	desc = Highlander.1.d
+	is_triggered_only = yes
+	option = { #소규모 투자
+		name = Highlander.1.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				tag = TRM
+				add = 1
+			}
+		}
+		add_timed_idea = {
+			idea = BA_highlander_invest_small
+			days = 90
+		}
+    }
+	option = { #대규모 투자
+		name = Highlander.1.f
+		if = {
+			limit = {
+				has_country_flag = BA_highlander_discount
+			}
+			add_timed_idea = {
+				idea = BA_highlander_invest_mid
+				days = 90
+			}
+		}
+		else = {
+			add_timed_idea = {
+				idea = BA_highlander_invest_big
+				days = 90
+			}
+		}
+		custom_effect_tooltip = BA_highlander_invest_big_tt
+		add_to_variable = {
+			BA_highlander_invest = 4
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				OR = {
+					tag = MIL
+					tag = GEM
+					#tag = GEH
+					tag = SHE
+					#tag = TRM
+					tag = COU
+				}
+				add = 1
+			}
+			modifier = {
+				tag = TRM
+				add = -1
+			}
+		}
+    }
+}
+country_event = { #철도 버프 이벤트를 위한 히든 이벤트
+	id = Highlander.2
+	title = Highlander.2.t
+	desc = Highlander.2.d
+	is_triggered_only = yes
+	hidden = yes
+	option = { 
+		name = Highlander.2.a
+		random_list = {
+			5 = { #철도 개선
+				modifier = {
+					factor = 0.5
+					date > 1940.1.1
+				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = BA_railway_gauge_issue }
+				}
+				modifier = {
+					factor = 0
+					date > 1942.1.1
+				}
+				country_event =  Highlander.9
+			}
+			1 = { #철도 건설 속도
+				country_event =  Highlander.3
+			}
+			1 = { #무료 민간 열차
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 10
+					}
+				}
+				country_event =  Highlander.4
+			}
+			1 = { #생산 효율
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				country_event =  Highlander.5
+			}
+			1 = { #아오바
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 20
+					}
+				}
+				country_event =  Highlander.14
+			}
+			1 = { #노조미
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 25
+					}
+				}
+				country_event =  Highlander.6
+			}
+			1 = { #히카리
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 30
+					}
+				}
+				country_event =  Highlander.7
+			}
+			1 = { #주식 매각
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 5
+					}
+				}
+				modifier = {
+					factor = 0.5
+					is_ai = yes
+				}
+				country_event = Highlander.10
+			}
+			1 = { #지분 매각
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 10
+					}
+				}
+				modifier = {
+					factor = 0.5
+					is_ai = yes
+				}
+				country_event =  Highlander.11
+			}
+			1 = { #철도 불황
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 20
+					}
+				}
+				modifier = {
+					factor = 0.5
+					is_ai = yes
+				}
+				country_event =  Highlander.12
+			}
+			1 = { #가격 완화
+				modifier = {
+					factor = 0
+					has_country_flag = BA_highlander_discount
+				}
+				country_event =  Highlander.13
+			}
+		}
+    }
+}
+country_event = { #철도 건설 속도
+	id = Highlander.3
+	title = Highlander.3.t
+	desc = Highlander.3.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a 
+		add_timed_idea = {
+			idea = BA_highlander_buff_building_rail
+			days = 90
+		}
+	}
+}
+country_event = { #무료 민간 열차
+	id = Highlander.4
+	title = Highlander.4.t
+	desc = Highlander.4.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		add_equipment_to_stockpile = {
+			type = train_equipment
+			amount = 2
+		}
+		custom_effect_tooltip =  Highlander.4_tt
+	}
+}
+country_event = { #생산 효율 성장+
+	id = Highlander.5
+	title = Highlander.5.t
+	desc = Highlander.5.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_highlander_buff_production
+			days = 90
+		}
+		custom_effect_tooltip =  Highlander.5_tt
+	}
+}
+country_event = { #노조미
+	id = Highlander.6
+	title = Highlander.6.t
+	desc = Highlander.6.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_tachibana_nozomi
+			days = 90
+		}
+		custom_effect_tooltip =  Highlander.7_tt
+	}
+}
+country_event = { #히카리
+	id = Highlander.7
+	title = Highlander.6.t
+	desc = Highlander.6.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_tachibana_hikari
+			days = 90
+		}
+		custom_effect_tooltip =  Highlander.7.5_tt
+	}
+}
+country_event = { #최대 투자국 변경
+	id = Highlander.8
+	title = Highlander.8.t
+	desc = Highlander.8.d
+	is_triggered_only = yes
+	hidden = yes
+	option = {
+		country_event = { id = Highlander.8 days = 10}
+		name = Highlander.8.a
+		if = {
+			limit = {
+				BA_highlander_COU_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = COU
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_MIL_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = MIL
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_KAI_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = KAI
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_KSP_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = KSP
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_SHE_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = SHE
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_HEU_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = HEU
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_GEH_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = GEH
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_GEM_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = GEM
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_SHA_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = SHA
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_ABY_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = ABY
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_HYA_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = HYA
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_TRM_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = TRM
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_ARI_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = ARI
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_RED_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = RED
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_WHY_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = WHY
+			}
+		}
+	}
+}
+country_event = { #철도 개선
+	id = Highlander.9
+	title = Highlander.9.t
+	desc = Highlander.9.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		modify_timed_idea = {
+			idea = BA_railway_gauge_issue
+			days = -240
+		}
+	}
+}
+country_event = { #지분 매각
+	id = Highlander.10
+	title = Highlander.10.t
+	desc = Highlander.10.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.10.a
+		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -1
+		}
+	}
+}
+country_event = { #재정 안정
+	id = Highlander.11
+	title = Highlander.11.t
+	desc = Highlander.11.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.10.a
+		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -1
+		}
+		add_political_power = 15
+	}
+}
+country_event = { #철도 불황
+	id = Highlander.12
+	title = Highlander.12.t
+	desc = Highlander.12.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.12.a
+		custom_effect_tooltip = BA_highlander_invest_big_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -2
+		}
+	}
+}
+country_event = { #가격 완화
+	id = Highlander.13
+	title = Highlander.13.t
+	desc = Highlander.13.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.13.a
+		custom_effect_tooltip = Highlander.13_tt
+		set_country_flag = BA_highlander_discount
+	}
+}
+country_event = { #아오바
+	id = Highlander.14
+	title = Highlander.6.t
+	desc = Highlander.6.d
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_utsumi_aoba
+			days = 90
+		}
+		custom_effect_tooltip = Highlander.6_tt
+	}
+}
+country_event = { #궤간
+	id = Highlander.15
+	title = Highlander.15.t
+	desc = Highlander.15.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #표준궤
+		name = Highlander.15.a
+		set_country_flag = BA_railroad_standard_gauge
+		every_neighbor_country = {
+			limit = {
+				exists = yes
+				NOT = {
+					has_war_with = PREV
+				}
+				Kivotos_tag = no
+				has_country_flag = BA_railroad_standard_gauge
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_standard_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+	option = { #협궤
+		name = Highlander.15.b
+		trigger = {
+			has_idea = BA_highlander_academy_generic
+		}
+		set_country_flag = BA_railroad_narrow_gauge
+		every_neighbor_country = {
+			limit = {
+				exists = yes
+				NOT = {
+					has_war_with = PREV
+				}
+				Kivotos_tag = no
+				has_country_flag = BA_railroad_narrow_gauge
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_narrow_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+		custom_effect_tooltip = Highlander.15.b_tt
+		custom_effect_tooltip = BA_highlander_invest_big_tt
+		add_to_variable = {
+			BA_highlander_invest = 4
+		}
+	}
+	option = { #이베리아 궤간을 쓰자
+		name = Highlander.15.c
+		set_country_flag = BA_railroad_iberian_gauge
+		trigger = {
+			any_neighbor_country = {
+				has_country_flag = BA_railroad_iberian_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				OR = {
+					original_tag = SPR
+					original_tag = POR
+					AND = {
+						is_neighbor_of = PREV
+						NOT = {
+							has_war_with = PREV
+						}
+						Kivotos_tag = no
+						has_country_flag = BA_railroad_iberian_gauge
+					}
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_iberian_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+	option = { #광궤를 쓰자
+		name = Highlander.15.e
+		set_country_flag = BA_railroad_broad_gauge
+		trigger = {
+			any_neighbor_country = {
+				has_country_flag = BA_railroad_broad_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				OR = {
+					original_tag = SOV
+					original_tag = LIT
+					original_tag = LAT
+					original_tag = EST
+					AND = {
+						is_neighbor_of = PREV
+						NOT = {
+							has_war_with = PREV
+						}
+						Kivotos_tag = no
+						has_country_flag = BA_railroad_broad_gauge
+					}
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_broad_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+}
