@@ -2064,9 +2064,6 @@ focus_tree = {
 			}
 		}
 
-		bypass = {
-			has_war_with = TRM
-		}
 		x = 0
 		y = 1
 		relative_position_id = GEM_march_of_the_demons
@@ -2271,7 +2268,10 @@ focus_tree = {
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
 		x = 4
 		y = 1
 		relative_position_id = GEM_ori_unified_gehenna
@@ -5252,15 +5252,28 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 5
 		y = 2
 		relative_position_id = GEM_maintaining_dictatorship
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_mobilization_speed = 0.05
+				tooltip = mobilization_speed_tt
+			}
+			add_to_variable = {
+				GEM_pandemonium_modifier_max_surrender_limit_offset = 0.05
+				tooltip = surrender_limit_tt
+			}
+			custom_effect_tooltip = enter_tt
 			if = {
 				limit = { has_idea = GEH_Emergency }
 				remove_ideas = GEH_Emergency
 			}
+			add_political_power = 100
+			add_war_support = 0.05
 		}
 
 	}
@@ -5289,11 +5302,21 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -2
 		y = 1
 		relative_position_id = GEH_towards_the_greatest_academy
 		completion_reward = {
+			random_character = {
+				limit = {
+					has_trait = b_dkagmrdmlchdxhd
+				}
+				swap_country_leader_traits = {
+					remove = b_dkagmrdmlchdxhd
+					add = b_dkagmrdmlchdxhd_l1
+				}
+			}
 		}
 
 	}
@@ -5315,11 +5338,29 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_ARMY_XP
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -1
 		y = 1
 		relative_position_id = GEH_guardian_of_entire_gehenna
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_max_command_power = 20
+				tooltip = max_command_power_tt
+			}
+			add_to_variable = {
+				GEM_pandemonium_modifier_defensive_war_stability_factor = 0.05
+				tooltip = defensive_war_stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
 		}
 	}
 	focus = {
@@ -5340,6 +5381,7 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 1
@@ -5377,11 +5419,21 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 1
 		y = 1
 		relative_position_id = GEH_towards_the_greatest_academy
 		completion_reward = {
+			random_character = {
+				limit = {
+					has_trait = b_dkagmrdmlchdxhd
+				}
+				swap_country_leader_traits = {
+					remove = b_dkagmrdmlchdxhd
+					add = b_dkagmrdmlchdxhd_r1
+				}
+			}
 		}
 	}
 	focus = {
@@ -5404,6 +5456,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_MANMAJUN_BUPAE
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 1
 		y = 1
@@ -5435,6 +5488,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_MANMAJUN_BUPAE
 			FOCUS_FILTER_ETHNIC_CONFLICT
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 1
 		y = 2
@@ -5463,6 +5517,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_ETHNIC_CONFLICT
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -1
 		y = 3
@@ -5497,11 +5552,16 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_MANMAJUN_BUPAE
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -1
 		y = 1
 		relative_position_id = GEH_secret_police_imitation
 		completion_reward = {
+			add_dynamic_modifier = {
+				modifier = GEM_perpetual_war_state
+			}
+			custom_effect_tooltip = enter_tt
 			if = {
 				limit = { is_in_faction = yes NOT = { is_faction_leader = yes } }
 				leave_faction = yes
@@ -5528,11 +5588,55 @@ focus_tree = {
 					modifier = embargo
 				}
 			}
-			
+			custom_effect_tooltip = enter_tt
+			every_other_country = {
+				limit = {
+					OR = {
+						original_tag = GEM
+						original_tag = FRM
+						original_tag = GEA
+						original_tag = GEK
+						original_tag = TRM
+					}
+					any_owned_state = {
+						OR = {
+							state = 42
+							state = 50
+							state = 51
+							state = 52
+							state = 53
+							state = 54
+							state = 55
+							state = 56
+							state = 57
+							state = 58
+							state = 59
+							state = 909
+							state = 1022
+							state = 978
+							state = 1025
+
+							state = 28
+							state = 1023
+							state = 8
+						}
+					}
+				}
+				custom_effect_tooltip = war_aim_against_the_country_annex_tt
+				hidden_effect = {
+					ROOT = {
+						create_wargoal = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = enter_tt
 			add_threat = 2
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.101
-			news_event = GEM_news.2
+			news_event = { id = GEM_news.2 hours = 8 }
 		}
 	}
 
@@ -5662,7 +5766,7 @@ focus_tree = {
 			}
 		}
 
-		search_filters = {}
+		search_filters = { FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
 			if = {
@@ -5719,6 +5823,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 11
 		y = 2
@@ -5730,6 +5835,22 @@ focus_tree = {
 				remove_ideas = GEH_Emergency
 			}
 			custom_effect_tooltip = GEM_satsuki_department_expansion_tt
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEM_central_party_alliance_tt
+			if = {
+				limit = { has_stability < 0.15 }
+				custom_effect_tooltip = GEM_central_party_alliance_3_tt
+				add_stability = 0.20
+			}
+			else_if = {
+				limit = { has_stability < 0.45 }
+				custom_effect_tooltip = GEM_central_party_alliance_2_tt
+				add_stability = 0.10
+			}
+			else = {
+				custom_effect_tooltip = GEM_central_party_alliance_1_tt
+				add_stability = 0.05
+			}
 		}
 	}
 
@@ -5750,6 +5871,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 1
@@ -5780,7 +5902,7 @@ focus_tree = {
 				limit = { has_stability < 0.45 }
 				custom_effect_tooltip = GEM_central_party_alliance_2_tt
 				add_political_power = 75
-				add_stability = 0.10
+				add_stability = 0.15
 			}
 			else = {
 				custom_effect_tooltip = GEM_central_party_alliance_1_tt
@@ -5809,11 +5931,63 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 2
 		relative_position_id = GEM_what_are_you_talking_about_i_was_always_the_student_council_president
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_political_power_factor = 0.10
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GEM_pandemonium_modifier_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				GEM_pandemonium_modifier_operative_slot = 1
+				tooltip = operative_slot_tt
+			}
+			add_to_variable = {
+				GEM_pandemonium_modifier_max_surrender_limit_offset = 0.05
+				tooltip = surrender_limit_tt
+			}
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					any_character = {
+						has_trait = GEH_satsuki_trait
+					}
+				}
+				random_character = {
+					limit = {
+						has_trait = GEH_satsuki_trait
+					}
+					swap_country_leader_traits = {
+						remove = GEH_satsuki_trait
+						add = GEH_satsuki_trait_1
+					}
+				}
+			}
+			else = {
+				effect_tooltip = {
+					random_character = {
+						limit = {
+							is_country_leader = yes
+						}
+						effect_tooltip = {
+							swap_country_leader_traits = {
+								remove = GEH_satsuki_trait
+								add = GEH_satsuki_trait_1
+							}
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = GEM_starting_today_a_special_department_just_for_me_should_be_created_tt
 		}
 	}
 
@@ -5840,6 +6014,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 2
@@ -5854,11 +6029,45 @@ focus_tree = {
 					modifier = GEM_shocking_domestic_affairs
 				}
 			}
+			custom_effect_tooltip = enter_tt
+
+			if = {
+				limit = {
+					any_character = {
+						has_trait = GEH_satsuki_trait_1
+					}
+				}
+				random_character = {
+					limit = {
+						has_trait = GEH_satsuki_trait_1
+					}
+					swap_country_leader_traits = {
+						remove = GEH_satsuki_trait_1
+						add = GEH_satsuki_trait_2
+					}
+				}
+			}
+			else = {
+				effect_tooltip = {
+					random_character = {
+						limit = {
+							is_country_leader = yes
+						}
+						effect_tooltip = {
+							swap_country_leader_traits = {
+								remove = GEH_satsuki_trait_1
+								add = GEH_satsuki_trait_2
+							}
+						}
+					}
+				}
+			}
 			
+			custom_effect_tooltip = enter_tt
 			add_threat = 1
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.102
-			news_event = GEM_news.3
+			news_event = { id = GEM_news.3 hours = 8 }
 		}
 	}
 	
@@ -5878,8 +6087,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 17
 		y = 2
@@ -5970,6 +6179,7 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 2
 		y = 1
@@ -5992,6 +6202,7 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 2
 		y = 3
@@ -6092,6 +6303,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 1
@@ -6114,6 +6327,7 @@ focus_tree = {
 				ideology = fascism
 				popularity = 0.10
 			}
+			custom_effect_tooltip = enter_tt
 
 			set_politics = {
 				ruling_party = fascism
@@ -6121,9 +6335,10 @@ focus_tree = {
 				election_frequency = 72
 			}
 
+			custom_effect_tooltip = enter_tt
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.103
-			news_event = GEM_news.4
+			news_event = { id = GEM_news.4 hours = 8 }
 		}
 	}
 #치아키 정치 중점
@@ -6142,8 +6357,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 23
 		y = 2
@@ -6180,6 +6395,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 2
 		y = 2
@@ -6199,6 +6416,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -2
 		y = 1
@@ -6218,6 +6437,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 0
 		y = 1
@@ -6238,6 +6459,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -1
 		y = 2
@@ -6312,6 +6535,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = -1
 		y = 1
@@ -6338,6 +6563,8 @@ focus_tree = {
 			}
 		}
 		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		x = 1
 		y = 1
