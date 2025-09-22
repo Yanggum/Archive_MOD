@@ -991,12 +991,12 @@ focus_tree = {
 	}
 	focus = {
 		id = GEH_warning_wuiongwuiong
-		icon = GFX_goal_GEH_pandemonium_society
+		icon = GFX_goal_GEH_Local_research
 		mutually_exclusive = {
 			focus = GEM_hot_spring
 		}
 		cost = 5
-		x = 45
+		x = 50
 		y = 0
 		completion_reward = {
 			add_political_power = 120
@@ -1004,6 +1004,35 @@ focus_tree = {
 		}
 	}
 # /외교
+	focus = {
+		id = GEM_working_with_the_perfect_team
+		icon = GFX_goal_HEU_geh_c
+		cost = 2
+		prerequisite = {
+			focus = GEH_warning_wuiongwuiong
+		}
+		mutually_exclusive = {
+			focus = GEM_self_reliance_pursuit
+		}
+		available = {
+			is_subject = no
+		}
+		search_filters = {
+			FOCUS_FILTER_MANMAJUN_BUPAE
+		}
+		x = -5
+		y = 1
+		relative_position_id = GEH_warning_wuiongwuiong
+		completion_reward = {
+			GEH_Manmajun_Bupae_down_effect = yes
+			GEM = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+	}
 	focus = {
 		id = GEM_self_reliance_pursuit
 		icon = GFX_focus_generic_support_the_left_right
@@ -1023,9 +1052,9 @@ focus_tree = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = 18
-		y = 1
-		relative_position_id = GEH_warning_wuiongwuiong
+		x = 15
+		y = 0
+		relative_position_id = GEM_working_with_the_perfect_team
 		completion_reward = {
 			GEH_Manmajun_Bupae_down_effect = yes
 			add_political_power = 60
@@ -1040,35 +1069,6 @@ focus_tree = {
 			if = {
 				limit = { NOT = { has_completed_focus = GEM_working_with_the_perfect_team } }
 				set_country_flag = GEM_leadership_attack_AI_flag
-			}
-		}
-	}
-	focus = {
-		id = GEM_working_with_the_perfect_team
-		icon = GFX_goal_HEU_geh_c
-		cost = 2
-		prerequisite = {
-			focus = GEH_warning_wuiongwuiong
-		}
-		mutually_exclusive = {
-			focus = GEM_self_reliance_pursuit
-		}
-		available = {
-			is_subject = no
-		}
-		search_filters = {
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = 3
-		y = 1
-		relative_position_id = GEH_warning_wuiongwuiong
-		completion_reward = {
-			GEH_Manmajun_Bupae_down_effect = yes
-			GEM = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
-				}
 			}
 		}
 	}
@@ -1254,7 +1254,7 @@ focus_tree = {
 				limit = { has_dlc = "Gotterdammerung" }
 				fighting_army_strength_ratio = {
 					tag = GEH
-					ratio > 2
+					ratio > 1.2
 				}
 			}
 			else = {
@@ -1301,29 +1301,15 @@ focus_tree = {
 		}
 		bypass = {
 		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_WAR_SUPPORT
+		}
 		x = 1
 		y = 3
 		relative_position_id = GEM_help_perfect_team
 		completion_reward = {
 			add_ideas = GEH_gehenna_academy_idea
-		}
-	}
-	focus = {
-		id = GEH_hyungzipa_ak
-		icon = GFX_goal_GEH_Local_research
-		cost = 5
-		prerequisite = {
-			focus = GEH_warning_wuiongwuiong
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-		x = -4
-		y = 1
-		relative_position_id = GEH_warning_wuiongwuiong
-		completion_reward = {
-			#unlock_decision_tooltip = GEM_club_problem_decision
-			country_event = { id = GEH_event.2 }
 		}
 	}
 	focus = {
@@ -1333,7 +1319,7 @@ focus_tree = {
 		prerequisite = {
 			focus = GEH_warning_wuiongwuiong
 		}
-		x = 20
+		x = 12
 		y = 1
 		relative_position_id = GEH_warning_wuiongwuiong
 		completion_reward = {
@@ -1995,7 +1981,7 @@ focus_tree = {
 	focus = {
 		id = GEM_march_of_the_demons
 		icon = GFX_goal_generic_territory_or_war
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = GEM_ethnic_hatred
 		}
@@ -2062,6 +2048,10 @@ focus_tree = {
 				}
 				owns_state = 64
 			}
+		}
+
+		search_filters = {
+			FOCUS_FILTER_STABILITY
 		}
 
 		x = 0
@@ -2399,10 +2389,17 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			NOT = {
+				country_exists = HEU
+				country_exists = GEH
+			}
+		}
 		x = 0
 		y = 1
 		relative_position_id = GEH_triple_alliance
 		will_lead_to_war_with = GEH
+		will_lead_to_war_with = HEU
 		completion_reward = {
 			if = {
 				limit = {
@@ -4238,11 +4235,29 @@ focus_tree = {
 # 선도부와 동행 or 축출/
 # /군사개혁 - 민병대
 	focus = {
+		id = GEH_warning_sunjun
+		icon = GFX_goal_GEH_warning_Emergency
+		cost = 5
+		prerequisite = {
+			focus = GEH_warning_wuiongwuiong
+		}
+		bypass = {
+			date > 1936.6.1
+		}
+		x = -10
+		y = 1
+		relative_position_id = GEH_warning_wuiongwuiong
+		completion_reward = {
+			country_event = { id = GEH_event.4 }
+			add_ideas = GEH_Emergency
+		}
+	}
+	focus = {
 		id = GEM_security_militia
 		icon = GFX_goal_generic_military_sphere
 		cost = 5
 		prerequisite = {
-			focus = GEH_hyungzipa_ak
+			focus = GEH_warning_sunjun
 		}
 		mutually_exclusive = {
 			focus = GEM_reorganization_of_the_private_army
@@ -4252,7 +4267,7 @@ focus_tree = {
 		}
 		x = -2
 		y = 1
-		relative_position_id = GEH_hyungzipa_ak
+		relative_position_id = GEH_warning_sunjun
 		completion_reward = {
 			add_ideas = GEH_pandemonium_militia
 			hidden_effect = {
@@ -4488,7 +4503,7 @@ focus_tree = {
 		icon = GFX_goal_generic_defence
 		cost = 10
 		prerequisite = {
-			focus = GEH_hyungzipa_ak
+			focus = GEH_warning_sunjun
 		}
 		available = {
 			has_idea = GEH_individualism
@@ -4502,7 +4517,7 @@ focus_tree = {
 		}
 		x = 2
 		y = 1
-		relative_position_id = GEH_hyungzipa_ak
+		relative_position_id = GEH_warning_sunjun
 		completion_reward = {
 			army_experience = 25
 			custom_effect_tooltip = GEM_reorganization_of_the_private_army_tt
@@ -4644,9 +4659,9 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = 0
-		y = 4
-		relative_position_id = GEH_hyungzipa_ak
+		x = 2
+		y = 2
+		relative_position_id = GEM_great_duty
 		completion_reward = {
 			if = {
 				limit = { has_idea = GEH_Emergency }
@@ -4655,420 +4670,7 @@ focus_tree = {
 			GEH_Manmajun_Bupae_down_effect = yes
 		}
 	}
-# /세계 제일의 학원
-	focus = {
-		id = GEM_worlds_top_academy
-		icon = GFX_goal_generic_demand_territory
-		cost = 5.00
-		prerequisite = {
-			focus = GEM_gehenna_identity
-		}
-		mutually_exclusive = {
-			focus = GEM_national_administration
-		}
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_WAR_SUPPORT
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = -4
-		y = 1
-		relative_position_id = GEM_gehenna_identity
-		completion_reward = {
-			add_political_power = 60
-			add_war_support = 0.10
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_gehenna_culture
-		icon = GFX_goal_generic_improve_relations
-		cost = 5.00
-		prerequisite = { focus = GEM_worlds_top_academy }
-		available = {
-		}
-		x = -1
-		y = 1
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_order_in_chaos
-		icon = GFX_focus_SWI_neutrality_on_the_move
-		cost = 5.00
-		prerequisite = { focus = GEM_gehenna_culture }
-		available = {
-		}
-		x = -1
-		y = 2
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_praise_of_the_halo
-		icon = GFX_goal_generic_propaganda
-		cost = 5.00
-		prerequisite = { focus = GEM_gehenna_culture }
-		available = {
-		}
-		x = -3
-		y = 2
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_strengthening_of_the_secession_bill
-		icon = GFX_goal_generic_political_pressure
-		cost = 5.00
-		prerequisite = { focus = GEM_worlds_top_academy }
-		available = {
-			has_idea = GEH_separation_law_1
-		}
-		search_filters = { FOCUS_FILTER_ETHNIC_CONFLICT FOCUS_FILTER_MANPOWER }
-		x = 3
-		y = 1
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = GEH_separation_law_1
-				add_idea = GEH_separation_law_2
-			}
-			custom_effect_tooltip = GEM_strengthening_of_the_secession_bill_tt
-		}
-	}
-	focus = {
-		id = GEM_second_class_citizenship
-		icon = GFX_focus_generic_conspiracy
-		cost = 5.00
-		prerequisite = { focus = GEM_strengthening_of_the_secession_bill }
-		available = {
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-		x = 3
-		y = 2
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-			custom_effect_tooltip = GEM_pandemonium_modifier_tt
-			add_to_variable = {
-				GEM_pandemonium_modifier_conscription = 0.01
-				tooltip = conscription_tt
-			}
-			add_manpower = 12000
-		}
-	}
-	focus = {
-		id = GEM_active_conscription_system
-		icon = GFX_focus_generic_manpower
-		cost = 5.00
-		prerequisite = { focus = GEM_worlds_top_academy }
-		available = {
-		}
-		x = 1
-		y = 2
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-			custom_effect_tooltip = GEM_pandemonium_modifier_tt
-			add_to_variable = {
-				GEM_pandemonium_modifier_mobilization_laws_cost_factor = -0.15
-				tooltip = mobilization_laws_cost_factor_tt
-			}
-			add_to_variable = {
-				GEM_pandemonium_modifier_mobilization_speed = 0.05
-				tooltip = mobilization_speed_tt
-			}
-			add_stability = -0.10
-		}
-	}
-	focus = {
-		id = GEM_abode_of_the_greats
-		icon = GFX_focus_generic_court
-		cost = 5.00
-		prerequisite = { focus = GEM_praise_of_the_halo focus = GEM_order_in_chaos }
-		prerequisite = { focus = GEM_second_class_citizenship focus = GEM_active_conscription_system }
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = 0
-		y = 3
-		relative_position_id = GEM_worlds_top_academy
-		completion_reward = {
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-	}
-# 세계 제일의 학원/
-# /국가 운영
-	focus = {
-		id = GEM_national_administration
-		icon = GFX_focus_hol_abandon_the_gold_standard
-		cost = 5.00
-		prerequisite = {
-			focus = GEM_gehenna_identity
-		}
-		mutually_exclusive = {
-			focus = GEM_worlds_top_academy
-		}
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_STABILITY
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = 4
-		y = 1
-		relative_position_id = GEM_gehenna_identity
-		completion_reward = {
-			add_stability = 0.10
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_promotion_of_the_left
-		icon = GFX_focus_DEN_heavy_regulations
-		cost = 5.00
-		prerequisite = { focus = GEM_national_administration }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		x = -1
-		y = 1
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_enhancement_of_trade_union_rights
-		icon = GFX_focus_eng_concessions_to_the_trade_unions
-		cost = 5.00
-		prerequisite = { focus = GEM_promotion_of_the_left }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		x = -3
-		y = 2
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			if = {
-				limit = { has_completed_focus = GEM_free_market_management }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = { has_completed_focus = GEM_expansion_of_private_investment }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = {
-					has_completed_focus = GEM_free_market_management
-					has_completed_focus = GEM_expansion_of_private_investment
-				}
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.25
-			}
-		}
-	}
-	focus = {
-		id = GEM_anti_discrimination_law
-		icon = GFX_goal_support_democracy
-		cost = 5.00
-		prerequisite = { focus = GEM_promotion_of_the_left }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		search_filters = { FOCUS_FILTER_ETHNIC_CONFLICT FOCUS_FILTER_MANPOWER }
-		x = -1
-		y = 2
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			if = {
-				limit = { has_completed_focus = GEM_free_market_management }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = { has_completed_focus = GEM_expansion_of_private_investment }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = {
-					has_completed_focus = GEM_free_market_management
-					has_completed_focus = GEM_expansion_of_private_investment
-				}
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.25
-			}
-			if = {
-				limit = { has_completed_focus = GEM_german_segregation_act }
-				custom_effect_tooltip = GEM_german_segregation_act_completed_tt
-				add_stability = -0.15
-			}
-			GEH_german_nationalism_issue_down_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_promotion_of_the_right
-		icon = GFX_focus_DEN_no_regulations
-		cost = 5.00
-		prerequisite = { focus = GEM_national_administration }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		x = 1
-		y = 1
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = GEM_free_market_management
-		icon = GFX_goal_generic_positive_trade_relations
-		cost = 5.00
-		prerequisite = { focus = GEM_promotion_of_the_right }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		x = 1
-		y = 2
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			if = {
-				limit = { has_completed_focus = GEM_anti_discrimination_law }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = { has_completed_focus = GEM_enhancement_of_trade_union_rights }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = {
-					has_completed_focus = GEM_enhancement_of_trade_union_rights
-					has_completed_focus = GEM_anti_discrimination_law
-				}
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.25
-			}
-		}
-	}
-	focus = {
-		id = GEM_expansion_of_private_investment
-		icon = GFX_goal_generic_neutrality_focus
-		cost = 5.00
-		prerequisite = { focus = GEM_promotion_of_the_right }
-		available = {
-			NOT = { has_completed_focus = GEM_completion_of_the_administrative_system }
-		}
-		x = 3
-		y = 2
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			if = {
-				limit = { has_completed_focus = GEM_anti_discrimination_law }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = { has_completed_focus = GEM_enhancement_of_trade_union_rights }
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.10
-			}
-			else_if = {
-				limit = {
-					has_completed_focus = GEM_enhancement_of_trade_union_rights
-					has_completed_focus = GEM_anti_discrimination_law
-				}
-				custom_effect_tooltip = completion_of_opposing_tendencies_focus_tt
-				add_stability = -0.25
-			}
-		}
-	}
-	focus = {
-		id = GEM_completion_of_the_administrative_system
-		icon = GFX_goal_generic_neutrality_focus
-		cost = 10.00
-		prerequisite = { focus = GEM_enhancement_of_trade_union_rights focus = GEM_anti_discrimination_law focus = GEM_free_market_management focus = GEM_expansion_of_private_investment }
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_MANMAJUN_BUPAE
-		}
-		x = 0
-		y = 3
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			GEH_Manmajun_Bupae_down_effect = yes
-		}
-	}
-	focus = {
-		id = GEM_cultural_integration
-		icon = GFX_goal_generic_neutrality_focus
-		cost = 5.00
-		prerequisite = { focus = GEM_anti_discrimination_law }
-		prerequisite = { focus = GEM_completion_of_the_administrative_system }
-		mutually_exclusive = {
-			focus = GEM_suppression_of_division
-		}
-		available = {
-		}
-		x = -1
-		y = 4
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-			if = {
-				limit = { has_completed_focus = GEM_german_segregation_act }
-				custom_effect_tooltip = GEM_german_segregation_act_completed_tt
-				add_stability = -0.05
-			}
-		}
-	}
-	focus = {
-		id = GEM_suppression_of_division
-		icon = GFX_goal_generic_neutrality_focus
-		cost = 5.00
-		prerequisite = { focus = GEM_completion_of_the_administrative_system }
-		mutually_exclusive = {
-			focus = GEM_cultural_integration
-		}
-		available = {
-		}
-		x = 1
-		y = 4
-		relative_position_id = GEM_national_administration
-		completion_reward = {
-		}
-	}
-# 국가 운영/
 # 치안력 유지 쪽/
-	focus = {
-		id = GEH_warning_sunjun
-		icon = GFX_goal_GEH_warning_Emergency
-		cost = 5
-		prerequisite = {
-			focus = GEH_warning_wuiongwuiong
-		}
-		bypass = {
-			date > 1936.6.1
-		}
-		x = 0
-		y = 1
-		relative_position_id = GEH_warning_wuiongwuiong
-		completion_reward = {
-			country_event = { id = GEH_event.4 }
-			add_ideas = GEH_Emergency
-		}
-	}
 # /마코토 루트
 	focus = {
 		id = GEM_maintaining_dictatorship
@@ -5082,7 +4684,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
-		x = 34
+		x = 26
 		y = 1
 		relative_position_id = GEH_warning_wuiongwuiong
 		completion_reward = {
@@ -5449,6 +5051,7 @@ focus_tree = {
 				character = GEH_akzhxh
 				ruling_only = yes
 			}
+			has_intelligence_agency = yes
 		}
 		bypass = {
 		}
@@ -7321,6 +6924,27 @@ focus_tree = {
 				}
 				add_claim_by = GEM
 			}
+
+			hidden_effect = {
+				if = {
+					limit = {
+						GEH = {
+							is_puppet = no
+							has_capitulated = no
+						}
+					}
+					GEH = { country_event = { id = GEM_event.6 days = 5 } }
+				}
+				else_if = {
+					limit = {
+						HEU = {
+							is_puppet = no
+							has_capitulated = no
+						}
+					}
+					HEU = { country_event = { id = GEM_event.6 days = 5 } }
+				}
+			}
 		}
 	}
 	#focus = {
@@ -7351,7 +6975,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = GEM_pandemonium_coalition_government
 		}
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = GEM_deutsches_reich
 		completion_reward = {
@@ -7382,7 +7006,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = GEM_leadership_reshuffle
 		}
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = GEM_deutsches_reich
 		completion_reward = {
@@ -7449,6 +7073,9 @@ focus_tree = {
 				}
 				owns_state = 8
 			}
+		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
 		}
 		x = 0
 		y = 3

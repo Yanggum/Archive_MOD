@@ -1110,6 +1110,165 @@ country_event = {
 		}
 	}
 }
+
+#반나치동맹 창설
+country_event = {
+	id = GEM_event.6
+	title = GEM_event.6.t
+	desc = GEM_event.6.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.6.a
+		if = {
+			limit = { is_in_faction_with = GEM is_faction_leader = no }
+			leave_faction = yes
+		}
+		if = {
+			limit = { is_in_faction_with = GEM is_faction_leader = yes }
+			remove_from_faction = GEM
+		}
+		diplomatic_relation = {
+			country = GEM
+			relation = military_access
+			active = no
+		}
+		diplomatic_relation = {
+			country = GEM
+			relation = docking_rights
+			active = no
+		}
+		diplomatic_relation = {
+			country = GEM
+			relation = non_aggression_pact
+			active = no
+		}
+		set_rule = {
+			can_create_factions = yes
+		}
+		set_rule = {
+			can_join_factions = yes
+		}
+		create_faction = GEH_antinazi_fac
+		set_country_flag = GEH_antinazi_fac_leader_flag
+
+		every_other_country = {
+			limit = {
+				OR = {
+					original_tag = FRM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			country_event = { id = GEM_event.601 hours = 8 }
+		}
+		add_war_support = 0.10
+
+		hidden_effect = {
+			country_event = { id = GEM_event.604 days = 10 }
+		}
+	}
+	option = {
+		name = GEM_event.6.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#반나치동맹 하실?
+country_event = {
+	id = GEM_event.601
+	title = GEM_event.601.t
+	desc = GEM_event.601.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.601.a
+		FROM = { add_to_faction = ROOT }
+		set_rule = {
+			can_join_factions = yes
+		}
+		set_country_flag = GEH_antinazi_fac_member_flag
+		
+		add_war_support = 0.10
+	}
+	option = {
+		name = GEM_event.6.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#반나치동맹 지도부용 선전포고
+country_event = {
+	id = GEM_event.602
+	title = GEM_event.602.t
+	desc = GEM_event.602.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	immediate = {
+		activate_mission = GEH_preparations_for_operation_longsword_breaking_operation
+	}
+
+	option = {
+		name = GEM_event.602.a
+		effect_tooltip = {
+			activate_mission = GEH_preparations_for_operation_longsword_breaking_operation
+			custom_effect_tooltip = GEH_preparations_for_operation_longsword_breaking_operation_tt
+		}
+	}
+}
+
+#반나치동맹 회원국용 살짝 늦게 자동참전
+country_event = {
+	id = GEM_event.603
+	title = GEM_event.603.t
+	desc = GEM_event.603.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	immediate = {
+		activate_mission = GEH_preparations_for_operation_longsword_breaking_operation_member
+	}
+
+	option = {
+		name = GEM_event.603.a
+		effect_tooltip = {
+			activate_mission = GEH_preparations_for_operation_longsword_breaking_operation_member
+			custom_effect_tooltip = GEH_preparations_for_operation_longsword_breaking_operation_tt
+		}
+	}
+}
+
+#반나치동맹 선전포고 로직 검증을 위한 2단계 트리거
+country_event = {
+	id = GEM_event.604
+	title = GEM_event.604.t
+	desc = GEM_event.604.desc
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = GEM_event.604.a
+		country_event = { id = GEM_event.602 hours = 6 }
+		every_country = {
+			limit = {
+				has_country_flag = GEH_antinazi_fac_member_flag
+			}
+			country_event = { id = GEM_event.603 hours = 12 }
+		}
+	}
+}
 country_event = { # 우리의 상황
 	id = GEH_event.1
 	title = GEH_event.1.t
@@ -1122,6 +1281,7 @@ country_event = { # 우리의 상황
 	option = { 
 		name = GEH_event.1.a
 		add_stability = 0.10
+		country_event = { id = GEH_event.2 hours = 8 }
 	}
 }
 country_event = { # 현지 파악
