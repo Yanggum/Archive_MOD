@@ -6716,7 +6716,7 @@ focus_tree = {
 			is_debug = yes
 		}
 	}
-	continuous_focus_position = { x = 100 y = 1700 }
+	continuous_focus_position = { x = 100 y = 100 }
 
 	
 	shared_focus = TRN_Luftwaffe
@@ -6759,8 +6759,19 @@ focus_tree = {
 	focus = { # 학원경제개발부 설립
 		id = TRN_ministry_of_industrial_development
 		icon = GFX_focus_TRN_improving_academy_industry
-		x = 25
+		x = 35
 		y = 0
+		offset = {
+			x = -10
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
 		cost = 4
 
 		available = {
@@ -7146,6 +7157,42 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 통신망 확대
+		id = TRN_Reconnect_network_and_power
+		icon = GFX_focus_generic_energy
+		prerequisite = { 
+			focus = TRN_railway_improvement 
+			focus = TRN_KWG_open
+		}
+		x = 1
+		y = 1
+		relative_position_id = TRN_railway_improvement
+		cost = 5
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			if = {
+				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
+				complete_special_project = sp:sp_air_radar
+			}
+			add_tech_bonus = {
+				name = TRN_Reconnect_network_and_power
+				bonus = 0.5
+				uses = 2
+				category = electronics
+			}
+			hidden_effect = {
+				country_event = trnfla.22
+			}
+		}
+	}
+
 	focus = { # 카이저 빌헬름 협회
 		id = TRN_KWG_open
 		icon = GFX_focus_generic_university_3
@@ -7191,7 +7238,7 @@ focus_tree = {
 		cost = 6
 
 		available = {
-			num_of_factories > 74
+			num_of_factories > 100
 		}
 
 		ai_will_do = {
@@ -7249,42 +7296,6 @@ focus_tree = {
 			}
 		}
 	}
-
-	focus = { # 통신망 확대
-		id = TRN_Reconnect_network_and_power
-		icon = GFX_focus_generic_energy
-		prerequisite = { 
-			focus = TRN_ministry_of_industrial_development 
-		}
-		x = 2
-		y = 2
-		relative_position_id = TRN_ministry_of_industrial_development
-		cost = 5
-
-		available = {
-			
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			if = {
-				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
-				complete_special_project = sp:sp_air_radar
-			}
-			add_tech_bonus = {
-				name = TRN_Reconnect_network_and_power
-				bonus = 0.5
-				uses = 2
-				category = electronics
-			}
-			hidden_effect = {
-				country_event = trnfla.22
-			}
-
-		}
-	}
 	
 
 	#####
@@ -7293,10 +7304,10 @@ focus_tree = {
 	focus = {
 		id = TRN_Kyrie_for_the_forgotten_ones
 		icon = GFX_focus_TRN_Kyrie_for_the_forgotten_ones
-		x = 5
+		x = 20
 		y = 0
 		offset = {
-			x = 11
+			x = -5
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -7346,7 +7357,7 @@ focus_tree = {
 			focus = TRN_Kyrie_for_the_forgotten_ones
 			focus = TRN_unprovable_problem
 		}
-		x = 6
+		x = 3
 		y = 1
 		offset = {
 			x = -1
@@ -7409,8 +7420,19 @@ focus_tree = {
 		id = TRN_control_tea_party
 		icon = GFX_focus_TRN_control_tea_party
 		prerequisite = { focus = TRN_Kyrie_for_the_forgotten_ones }
-		x = 0
+		x = -5
 		y = 1
+		offset = {
+			x = 5
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
 		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
 		cost = 5
 		available = {
@@ -7575,7 +7597,7 @@ focus_tree = {
 				id = TRM_power_balance
 				left_side = TRM_tirinty_socialism
 				right_side = TRN_trinity_militarism
-				set_value = -0.15
+				set_value = 0
 			}
 			hidden_effect = {
 				set_country_leader_ideology = pater_nazism
@@ -7806,7 +7828,7 @@ focus_tree = {
 	
 	focus = {
 		id = TRN_new_trinity_culture
-		icon = GFX_focus_SWI_establish_pro_helvetia
+		icon = GFX_focus_TRN_garden_city_movement
 		prerequisite = { focus = TRN_The_nature_of_the_united_front }
 		prerequisite = { focus = TRN_second_trintiy }
 		x = 2
@@ -7841,7 +7863,7 @@ focus_tree = {
 		icon = GFX_focus_TRN_invite_of_carl_schmitt
 		prerequisite = { focus = TRN_new_trinity_culture }
 		prerequisite = { focus = TRN_cult_of_Mika }
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = TRN_new_trinity_culture
 		cost = 5
@@ -7884,7 +7906,7 @@ focus_tree = {
 		icon = GFX_focus_TRN_alliance_of_faith
 		prerequisite = { focus = TRN_new_trinity_culture }
 		prerequisite = { focus = TRN_cult_of_Mika }
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = TRN_new_trinity_culture
 		cost = 5
@@ -7950,7 +7972,7 @@ focus_tree = {
 			focus = TRN_hiring_german_thinkers 
 			focus = TRN_alliance_of_faith
 		}
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = TRN_hiring_german_thinkers
 		cost = 8
@@ -8007,7 +8029,7 @@ focus_tree = {
 			focus = TRN_hiring_german_thinkers 
 			focus = TRN_alliance_of_faith
 		}
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = TRN_alliance_of_faith
 		cost = 8
@@ -8854,16 +8876,29 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = -17
-		y = 1
-		relative_position_id = TRN_Mika_basic_law
-		prerequisite = { focus = TRN_Mika_basic_law }
+		x = 46
+		y = 0
+		offset = {
+			x = -10
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
 		cost = 5
 
 		available = {
-			NOT = { 
-				has_idea = TRN_political_instability_ns 
-				has_idea = TRN_broken_balance_ns
+			IF = {
+				limit = { has_idea = TRN_political_instability_ns }
+				NOT = { has_idea = TRN_political_instability_ns }
+			}
+			IF = {
+				limit = { has_idea = TRN_broken_balance_ns }
+				NOT = { has_idea = TRN_broken_balance_ns}
 			}
 		}
 
@@ -10260,7 +10295,7 @@ focus_tree = {
 	focus = {
 		id = TRN_unprovable_problem
 		icon = GFX_focus_TRN_unprovable_problem
-		x = 10
+		x = 6
 		y = 0
 		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
 		cost = 3
@@ -11054,8 +11089,8 @@ shared_focus = {
 	}
 	offset = {
 		trigger = { has_focus_tree = Trinity_focus }
-		x = 38
-		y = -1
+		x = 15
+		y = 12
 	}
 	#relative_position_id = TRN_kickstart_the_civilian_industry
 	cost = 5.00
