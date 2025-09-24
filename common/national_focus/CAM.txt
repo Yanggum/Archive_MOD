@@ -99,7 +99,7 @@ focus_tree = {
 	
 	focus = {
 		id = khmer_army_check
-		icon = GFX_focus_CHL_incorporate_machi_into_the_army
+		icon = GFX_focus_secret_rearmament
 
 		x = 30
 		y = 2
@@ -748,4 +748,122 @@ focus = {
 			}			
 		}
 	}
+focus = {
+		id = CAM_expand_shipping_industry
+		icon = GFX_goal_generic_construct_naval_dockyard						
+			
+		x = 0
+		y = 1
+
+		prerequisite = { focus = CAM_naval_effort }
+
+		relative_position_id = CAM_naval_effort
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	
+		cost = 10
+	
+		bypass = {
+		}
+	
+		completion_reward = {
+
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}	
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}	
+			}	
+		}
+
+	}
+	focus = {
+		id = CAM_south_atlantic_navy
+		icon = GFX_focus_SMB_blue_water_fleet						
+			
+		x = -2
+		y = 2
+
+		prerequisite = { focus = CAM_naval_effort }
+
+		relative_position_id = CAM_naval_effort
+
+		search_filters = { FOCUS_FILTER_NAVY_XP FOCUS_FILTER_RESEARCH }
+	
+		cost = 10
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	
+		bypass = {
+		}
+
+		mutually_exclusive	= { focus = CAM_brown_water_navy }
+	
+		completion_reward = {
+
+			navy_experience = 50
+
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 2
+				category = trade_interdiction_tree
+			}	
+
+		}
+
+	}
+	focus = {
+		id = CAM_brown_water_navy
+		icon = GFX_focus_generic_merchant_fleet						
+			
+		x = 2
+		y = 2
+
+		prerequisite = { focus = CAM_naval_effort }
+
+		relative_position_id = CAM_naval_effort
+
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+	
+		cost = 10
+
+		mutually_exclusive	= { focus = CAM_south_atlantic_navy }
+	
+		completion_reward = {
+
+			IF = {
+				limit = {
+					NOT = {
+						has_tech = ToA_river_boats_tech	 
+					}
+				}
+				hidden_effect = { 
+					set_technology = { 
+						ToA_river_boats_tech = 1	
+						popup = no
+					} 
+				}
+				add_ideas = BRA_brown_water_navy_idea
+			}
+
+		}
+
+	}	
 }
