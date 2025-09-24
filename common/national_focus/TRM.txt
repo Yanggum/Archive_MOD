@@ -7641,7 +7641,7 @@ focus_tree = {
 		id = TRN_Justice_Task_Force_on_leash
 		icon = GFX_focus_TRN_Ministry_of_Justice_on_leash
 		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
-		x = -2
+		x = -4
 		y = 0
 		relative_position_id = TRN_second_trintiy
 		cost = 6
@@ -7720,10 +7720,10 @@ focus_tree = {
 	focus = {
 		id = TRN_The_nature_of_the_united_front
 		icon = GFX_focus_AFG_royal_guard
-		prerequisite = { focus = TRN_necessary_revenge }
-		x = 2
+		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
+		x = 5
 		y = 1
-		relative_position_id = TRN_necessary_revenge
+		relative_position_id = TRN_secret_meeting_with_Sisterhood
 		cost = 6
 
 		available = {
@@ -7733,6 +7733,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			add_popularity = { ideology = fascism popularity = 0.05 }
+			add_stability = 0.05
 			country_event = { id = trinity.24 }
 		}
 	}
@@ -7790,12 +7792,13 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			add_political_power = 50
 			add_popularity = { ideology = fascism popularity = 0.05 }
 			custom_effect_tooltip = tooltip_white_line
 			country_event = trinity.27
 			custom_effect_tooltip = TRN_cult_of_Mika_tt
 			hidden_effect = {
-				country_event = { id = trinity.32 days = 30 }
+				country_event = { id = trinity.32 days = 35 }
 			}
 		}
 	}
@@ -7804,8 +7807,8 @@ focus_tree = {
 		id = TRN_unknow_focus_01
 		icon = GFX_focus_TRN_cult_of_Mika
 		prerequisite = { focus = TRN_cult_of_Mika }
-		x = -1
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = TRN_cult_of_Mika
 		cost = 5
 
@@ -7829,9 +7832,11 @@ focus_tree = {
 	focus = {
 		id = TRN_new_trinity_culture
 		icon = GFX_focus_TRN_garden_city_movement
-		prerequisite = { focus = TRN_The_nature_of_the_united_front }
-		prerequisite = { focus = TRN_second_trintiy }
-		x = 2
+		prerequisite = { 
+			focus = TRN_The_nature_of_the_united_front 
+			focus = TRN_second_trintiy
+		}
+		x = 1
 		y = 1
 		relative_position_id = TRN_The_nature_of_the_united_front
 		cost = 5
@@ -7862,8 +7867,7 @@ focus_tree = {
 		text = TRM_invite_dignitary
 		icon = GFX_focus_TRN_invite_of_carl_schmitt
 		prerequisite = { focus = TRN_new_trinity_culture }
-		prerequisite = { focus = TRN_cult_of_Mika }
-		x = 3
+		x = 1
 		y = 1
 		relative_position_id = TRN_new_trinity_culture
 		cost = 5
@@ -7905,8 +7909,7 @@ focus_tree = {
 		id = TRN_alliance_of_faith
 		icon = GFX_focus_TRN_alliance_of_faith
 		prerequisite = { focus = TRN_new_trinity_culture }
-		prerequisite = { focus = TRN_cult_of_Mika }
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TRN_new_trinity_culture
 		cost = 5
@@ -7972,7 +7975,7 @@ focus_tree = {
 			focus = TRN_hiring_german_thinkers 
 			focus = TRN_alliance_of_faith
 		}
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = TRN_hiring_german_thinkers
 		cost = 8
@@ -7981,12 +7984,17 @@ focus_tree = {
 			has_government = fascism
 			power_balance_value = {
 				id = TRM_power_balance
-				value > 0.49
+				value > 0.24
 			}
 		}
-		mutually_exclusive = { focus = TRN_student_solidarity }
 		ai_will_do = {
 
+		}
+		allow_branch = {
+			power_balance_value = {
+				id = TRM_power_balance
+				value > 0.24
+			}
 		}
 
 		completion_reward = {
@@ -8029,7 +8037,7 @@ focus_tree = {
 			focus = TRN_hiring_german_thinkers 
 			focus = TRN_alliance_of_faith
 		}
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = TRN_alliance_of_faith
 		cost = 8
@@ -8038,10 +8046,17 @@ focus_tree = {
 			has_government = fascism
 			power_balance_value = {
 				id = TRM_power_balance
-				value < -0.49
+				value < -0.24
 			}
 		}
-		mutually_exclusive = { focus = TRN_Fourth_Reich }
+		allow_branch = {
+			NOT = {
+				power_balance_value = {
+					id = TRM_power_balance
+					value > 0.24
+				}
+			}
+		}
 		ai_will_do = {
 
 		}
@@ -8080,13 +8095,129 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 
+		id = TRN_unknow_focus_06
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_The_nature_of_the_united_front
+		}
+		x = 3
+		y = 1
+		relative_position_id = TRN_The_nature_of_the_united_front
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 
+		id = TRN_unknow_focus_07
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_unknow_focus_06
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_unknow_focus_06
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 
+		id = TRN_unknow_focus_08
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_unknow_focus_06
+		}
+		x = 1
+		y = 1
+		relative_position_id = TRN_unknow_focus_06
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 
+		id = TRN_unknow_focus_09
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_alliance_of_faith
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_alliance_of_faith
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 
+		id = TRN_unknow_focus_10
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_hiring_german_thinkers
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_hiring_german_thinkers
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
 	focus = { # 탈나치화
 		id = TRN_Denazification
 		icon = GFX_focus_GER_subdue_the_wehrmacht
-		prerequisite = { focus = TRN_second_trintiy }
+		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
+		prerequisite = { focus = TRN_necessary_revenge }
 		x = -6
 		y = 1
-		relative_position_id = TRN_second_trintiy
+		relative_position_id = TRN_secret_meeting_with_Sisterhood
 		cost = 6
 
 		available = {
@@ -8338,6 +8469,29 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 
+		id = TRN_unknow_focus_11
+		icon = GFX_goal_unknown
+		prerequisite = { 
+			focus = TRN_unknow_focus_02
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_unknow_focus_02
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
 	focus = { # 교회 장악
 		id = TRN_take_over_the_church
 		icon = GFX_focus_TRN_take_over_the_church
@@ -8413,9 +8567,9 @@ focus_tree = {
 	focus = { # 완전한 트리니티
 		id = TRN_Integrity_of_Trinity
 		icon = GFX_focus_TRN_Integrity_of_Trinity
-		prerequisite = { focus = TRN_destiny_of_trinity }
+		#prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 0
-		y = 1
+		y = 2
 		relative_position_id = TRN_destiny_of_trinity
 		cost = 7
 
