@@ -1,6 +1,65 @@
 #!gfx:interface\BA_goals.gfx
 focus_tree = {
 	id = GEH_makoto_focustree
+
+#
+# 분기1 :
+#  독일국 수립 (A)
+#  독일 게헨나 연방 (두 민족의 공화국 완료) (B)
+#  두 민족의 공화국 (독일 게헨나 연방 아니고 완료) (C)
+#  그냥 만마전 또는 독일국 아직 안찍음 (O)
+# 분기2 :
+#  마코토 (1)
+#  사츠키 (2)
+#  이로하 (3)
+#  치아키 (4)
+#  아직 마스터 중점 미완료 (O)
+# 분기 2.5 (탈선) : 
+#  독일 지도자 (9)
+#
+# 분기에서 파생될 곳: 독일국 수립 휘하 / 마스터 중점 휘하 / 두 민족의 공화국 (연방 or 게헨나) 휘하
+# 뭘 먼저 찍냐에 따라 분기
+#
+# 독일국 수립: 
+#  A-O : 나치당-만마전 양당제 + 레벤스라움
+#  A-O-9 : 레벤스라움 + 대게르만국 선언 (마스터중점 안찍으면 가능)
+#  1-A : 독일 헤게모니의 찬탈자 + 레벤스라움
+#  2-A : 대중게몽융화부 설립 - 민족 융화
+#  3-A : 독일 연방
+#  4-A : 나치당-만마전 융합 일당국가 재설립, '두 민족 하나의 당'
+#
+# 독일 게헨나 연방 - 두 민족의 공화국: 
+#  B-O : 게르만 민족국가 선전
+#  1-B : 더 넓은 레벤스라움!
+#  2-B : 대중게몽융화부 설립 - 게헨나적 민족 융화
+#  3-B : 독일-게헨나 연방 체제 개혁
+#  4-B : '게헨나 민족' 선언. 모든 국내 민족의 인정과 통합 (중화민족 느낌)
+#
+# 기본 - 두 민족의 공화국 수립: 
+#  C-O : [불가능. 일반루트는 해당 중점을 마스터 중점 완료시 가능]
+#  1-C : 대게헨나국 헌법 제정
+#  2-C : 대중계몽부 설립
+#  3-C : 실패할께 뻔한 이상주의를 향한 투쟁 (게헨나 내 독일계 단체들 시점. 이로하가 만든 체제 안에서 벌어지는 개혁)
+#  4-C : '게헨나 민족' 선언. 인종/종족 구분 금지. 빤히 보이는 게헨나 우위지만 반대 검열
+#
+# 마스터 중점:
+#  1-O : 가장 강력한 학원
+#  A-1 : 대게르만국의 총통
+#  B-1 : 가장 강력한 학원 + 가장 강력한 두 민족의 연합 (조금 더 온건)
+#
+#  2-O : 내적 안정성
+#  A-2 : 독일 민족의 정신적 이데아 건설
+#  B-2 : 내적 안정성 + 최면으로 민족갈등 낮추기
+#
+#  3-O : 게헨나 + 두 민족의 연방
+#  A-3 : 권위주의적 독일 연방 강화
+#  B-3 : 민주주의 + 두 민족의 연방
+#
+#  4-O : 선전과 프로파간다
+#  A-4 : 치아키 총통 / 마코토 위성화
+#  B-4 : 세계제국 건설
+#
+
 	country = {
 		factor = 0
 		modifier = {
@@ -5299,6 +5358,30 @@ focus_tree = {
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.101
 			news_event = { id = GEM_news.2 hours = 8 }
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEM_focus_ended_flag_AO
+						has_country_flag = GEM_focus_ended_flag_BO
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_1O
+				set_country_flag = GEM_focus_ended_flag_1O
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A1_1
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B1_1
+			}
 		}
 	}
 
@@ -5730,6 +5813,32 @@ focus_tree = {
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.102
 			news_event = { id = GEM_news.3 hours = 8 }
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEM_focus_ended_flag_AO
+						has_country_flag = GEM_focus_ended_flag_BO
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_2O
+				set_country_flag = GEM_focus_ended_flag_2O
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A2_2
+				set_country_flag = GEM_focus_ended_flag_A2_2
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B2_2
+				set_country_flag = GEM_focus_ended_flag_B2_2
+			}
 		}
 	}
 	
@@ -6001,6 +6110,32 @@ focus_tree = {
 			GEH_Manmajun_Bupae_down_effect = yes
 			country_event = GEM_balance_of_power_event.103
 			news_event = { id = GEM_news.4 hours = 8 }
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEM_focus_ended_flag_AO
+						has_country_flag = GEM_focus_ended_flag_BO
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_3O
+				set_country_flag = GEM_focus_ended_flag_3O
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A3_3
+				set_country_flag = GEM_focus_ended_flag_A3_3
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B3_3
+				set_country_flag = GEM_focus_ended_flag_B3_3
+			}
 		}
 	}
 #치아키 정치 중점
@@ -6205,6 +6340,32 @@ focus_tree = {
 		relative_position_id = GEM_dignified_nation
 		completion_reward = {
 			GEH_Manmajun_Bupae_down_effect = yes
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEM_focus_ended_flag_AO
+						has_country_flag = GEM_focus_ended_flag_BO
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_4O
+				set_country_flag = GEM_focus_ended_flag_4O
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A4_4
+				set_country_flag = GEM_focus_ended_flag_A4_4
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B4_4
+				set_country_flag = GEM_focus_ended_flag_B4_4
+			}
 		}
 	}
 	focus = {
@@ -6233,8 +6394,477 @@ focus_tree = {
 		relative_position_id = GEM_dignified_nation
 		completion_reward = {
 			GEH_Manmajun_Bupae_down_effect = yes
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEM_focus_ended_flag_AO
+						has_country_flag = GEM_focus_ended_flag_BO
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_4O
+				set_country_flag = GEM_focus_ended_flag_4O
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A4_4
+				set_country_flag = GEM_focus_ended_flag_A1_1
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B4_4
+				set_country_flag = GEM_focus_ended_flag_B1_1
+			}
 		}
 	}
+# /마코토 후속중점
+	# /마코토 후속중점 기본
+		focus = {
+			id = GEM_focus_ended_1O_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_1O
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_1O
+				}
+			}
+			prerequisite = {
+				focus = GEH_armageddon
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_A_endfocus
+				focus = GEM_focus_ended_1_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 0
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEH_armageddon
+			completion_reward = {
+			}
+		}
+	# /마코토 후속중점 독일국
+		focus = {
+			id = GEM_focus_ended_1_A_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A1_1
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A1_1
+				}
+			}
+			prerequisite = {
+				focus = GEH_armageddon
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1O_endfocus
+				focus = GEM_focus_ended_1_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 3
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEH_armageddon
+			completion_reward = {
+			}
+		}
+	# /마코토 후속중점 연방
+		focus = {
+			id = GEM_focus_ended_1_B_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B1_1
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B1_1
+				}
+			}
+			prerequisite = {
+				focus = GEH_armageddon
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1O_endfocus
+				focus = GEM_focus_ended_1_A_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 6
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEH_armageddon
+			completion_reward = {
+			}
+		}
+# 마코토 후속중점/
+# /사츠키 후속중점
+	# /사츠키 후속중점 기본
+		focus = {
+			id = GEM_focus_ended_2O_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			text_icon = LONG_focus_style
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_2O
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_2O
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_2_A_endfocus
+				focus = GEM_focus_ended_2_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 4
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			completion_reward = {
+			}
+		}
+	# /사츠키 후속중점 독일국
+		focus = {
+			id = GEM_focus_ended_2_A_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			text_icon = LONG_focus_style
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A2_2
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A2_2
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_2O_endfocus
+				focus = GEM_focus_ended_2_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 7
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			completion_reward = {
+			}
+		}
+	# /사츠키 후속중점 연방
+		focus = {
+			id = GEM_focus_ended_2_B_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			text_icon = LONG_focus_style
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B2_2
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B2_2
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_2O_endfocus
+				focus = GEM_focus_ended_2_A_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 10
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+			completion_reward = {
+			}
+		}
+# 사츠키 후속중점/
+# /이로하 후속중점
+	# /이로하 후속중점 기본
+		focus = {
+			id = GEM_focus_ended_3O_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_3O
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_3O
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_nation_founding
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_3_A_endfocus
+				focus = GEM_focus_ended_3_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 8
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_nation_founding
+			completion_reward = {
+			}
+		}
+	# /이로하 후속중점 독일국
+		focus = {
+			id = GEM_focus_ended_3_A_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A3_3
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A3_3
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_nation_founding
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_3O_endfocus
+				focus = GEM_focus_ended_3_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 11
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_nation_founding
+			completion_reward = {
+			}
+		}
+	# /이로하 후속중점 연방
+		focus = {
+			id = GEM_focus_ended_3_B_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B3_3
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B3_3
+				}
+			}
+			prerequisite = {
+				focus = GEM_gehenna_nation_founding
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_3O_endfocus
+				focus = GEM_focus_ended_3_A_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 14
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_gehenna_nation_founding
+			completion_reward = {
+			}
+		}
+# 이로하 후속중점/
+# /치아키 후속중점
+	# /치아키 후속중점 기본
+		focus = {
+			id = GEM_focus_ended_4O_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_4O
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_4O
+				}
+			}
+			prerequisite = {
+				focus = GEM_opinion_manipulation_and_secretariat_revolution
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_4_A_endfocus
+				focus = GEM_focus_ended_4_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 13
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_opinion_manipulation_and_secretariat_revolution
+			completion_reward = {
+			}
+		}
+	# /치아키 후속중점 독일국
+		focus = {
+			id = GEM_focus_ended_4_A_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A4_4
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A4_4
+				}
+			}
+			prerequisite = {
+				focus = GEM_opinion_manipulation_and_secretariat_revolution
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_4O_endfocus
+				focus = GEM_focus_ended_4_B_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 16
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_opinion_manipulation_and_secretariat_revolution
+			completion_reward = {
+			}
+		}
+	# /치아키 후속중점 연방
+		focus = {
+			id = GEM_focus_ended_4_B_endfocus
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B4_4
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B4_4
+				}
+			}
+			prerequisite = {
+				focus = GEM_opinion_manipulation_and_secretariat_revolution
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_4O_endfocus
+				focus = GEM_focus_ended_4_A_endfocus
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 0
+				x = 19
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_opinion_manipulation_and_secretariat_revolution
+			completion_reward = {
+			}
+		}
+# 치아키 후속중점/
 # 마코토 루트/
 
 # /독일 협상
@@ -6334,6 +6964,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEH_nego_whit_wehrmacht_new
 		completion_reward = {
+			set_cosmetic_tag = GEM_german
 			add_to_variable = {
 				GEH_HSD_var_GEH_resistance_strength_gourmet_research_society = 1
 				tooltip = GEH_resistance_strength_gourmet_research_society_var_tt
@@ -6469,7 +7100,7 @@ focus_tree = {
 			GEM_club_problem_decision_modifier_reload = yes
 			custom_effect_tooltip = enter_tt
 			add_stability = -0.05
-			add_ideas = GEH_nazism_idea
+			add_ideas = GEH_nazism_1_idea
 			GEA = {
 				set_country_flag = GER_absorbed_into_a_specific_country
 				every_character = {
@@ -6531,39 +7162,9 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_SS_men
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = GEH_nazism_2_idea
-				}
-				swap_ideas = {
-					remove_idea = GEH_nazism_2_idea
-					add_idea = GEH_nazism_3_idea
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = GEH_nazism_idea
-				}
-				swap_ideas = {
-					remove_idea = GEH_nazism_idea
-					add_idea = GEH_nazism_1_idea
-				}
-			}
-			else = {
-				if = {
-					limit = {
-						NOT = {
-							has_idea = GEH_nazism_idea
-							has_idea = GEH_nazism_1_idea
-							has_idea = GEH_nazism_2_idea
-							has_idea = GEH_nazism_3_idea
-						}
-					}
-					add_ideas = GEH_nazism_idea
-				}
-				else = {
-					add_political_power = 60
-				}
+			swap_ideas = {
+				remove_idea = GEH_nazism_1_idea
+				add_idea = GEH_nazism_2_idea
 			}
 		}
 	}
@@ -6588,48 +7189,20 @@ focus_tree = {
 	focus = {
 		id = GEM_put_up_the_flag_again
 		icon = GFX_goal_GEM_put_up_the_flag_again
-		cost = 10.00
+		cost = 5.00
 		prerequisite = {
 			focus = GEM_germany_first
+		}
+		prerequisite = {
 			focus = GEM_nationalism
 		}
 		x = 0
 		y = 2
 		relative_position_id = GEM_SS_men
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = GEH_nazism_1_idea
-				}
-				swap_ideas = {
-					remove_idea = GEH_nazism_1_idea
-					add_idea = GEH_nazism_3_idea
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = GEH_nazism_idea
-				}
-				swap_ideas = {
-					remove_idea = GEH_nazism_idea
-					add_idea = GEH_nazism_2_idea
-				}
-			}
-			else = {
-				if = {
-					limit = {
-						NOT = {
-							has_idea = GEH_nazism_idea
-							has_idea = GEH_nazism_1_idea
-							has_idea = GEH_nazism_2_idea
-							has_idea = GEH_nazism_3_idea
-						}
-					}
-					add_ideas = GEH_nazism_idea
-				}
-				else = {
-					add_political_power = 60
-				}
+			swap_ideas = {
+				remove_idea = GEH_nazism_2_idea
+				add_idea = GEH_nazism_3_idea
 			}
 		}
 	}
@@ -6639,7 +7212,7 @@ focus_tree = {
 		id = GEM_german_officer_corps
 		icon = GFX_goal_generic_dangerous_deal
 		cost = 5.00
-		prerequisite = { focus = GEM_german_wehrmacht focus = GEM_union_state }
+		prerequisite = { focus = GEM_german_wehrmacht }
 		mutually_exclusive = {
 			focus = GEM_accept_local_ideology
 		}
@@ -6961,6 +7534,15 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = GEM_pandemonium_coalition_government
 		}
+		available = {
+			NOT = {
+				has_completed_focus = GEH_armageddon
+				has_completed_focus = GEM_what_are_you_talking_about_i_was_always_the_student_council_president
+				has_completed_focus = GEM_gehenna_nation_founding
+				has_completed_focus = GEM_opinion_manipulation_and_secretariat_revolution
+				has_completed_focus = GEM_school_rules_revision
+			}
+		}
 		x = 1
 		y = 1
 		relative_position_id = GEM_deutsches_reich
@@ -7091,7 +7673,32 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_peace_achievement
 		completion_reward = {
-			
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = { has_country_flag = GEM_focus_ended_flag_1O }
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A1_A
+				set_country_flag = GEM_focus_ended_flag_A1_A
+			}
+			else_if = {
+				limit = { has_country_flag = GEM_focus_ended_flag_2O }
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A2_A
+				set_country_flag = GEM_focus_ended_flag_A2_A
+			}
+			else_if = {
+				limit = { has_country_flag = GEM_focus_ended_flag_3O }
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A3_A
+				set_country_flag = GEM_focus_ended_flag_A3_A
+			}
+			else_if = {
+				limit = { has_country_flag = GEM_focus_ended_flag_4O }
+				custom_effect_tooltip = GEM_focus_ended_tooltip_A4_A
+				set_country_flag = GEM_focus_ended_flag_A4_A
+			}
+			else = {
+				custom_effect_tooltip = GEM_focus_ended_tooltip_AO
+				set_country_flag = GEM_focus_ended_flag_AO
+			}
 		}
 	}
 	focus = {
@@ -7107,6 +7714,20 @@ focus_tree = {
 					controls_state = 58
 					controls_state = 59
 					controls_state = 56
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEH_federal_unification_flag
+					}
+				}
+				OR = {
+					has_completed_focus = GEH_armageddon
+					has_completed_focus = GEM_what_are_you_talking_about_i_was_always_the_student_council_president
+					has_completed_focus = GEM_gehenna_nation_founding
+					has_completed_focus = GEM_opinion_manipulation_and_secretariat_revolution
+					has_completed_focus = GEM_school_rules_revision
 				}
 			}
 		}
@@ -7143,8 +7764,615 @@ focus_tree = {
 				}
 				add_claim_by = GEM
 			}
+
+			if = {
+				limit = {
+					has_idea = GEH_nazism_3_idea
+				}
+				custom_effect_tooltip = enter_tt
+				swap_ideas = {
+					remove_idea = GEH_nazism_3_idea
+					add_idea = GEH_nazism_alt_idea
+				}
+				add_political_power = 20
+				add_stability = 0.02
+			}
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEH_federal_unification_flag
+					}
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_C
+				if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_1O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_C1
+					set_country_flag = GEM_focus_ended_flag_C1_C
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_2O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_C2
+					set_country_flag = GEM_focus_ended_flag_C2_C
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_3O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_C3
+					set_country_flag = GEM_focus_ended_flag_C3_C
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_4O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_C4
+					set_country_flag = GEM_focus_ended_flag_C4_C
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = GEH_federal_unification_flag
+				}
+				custom_effect_tooltip = GEM_focus_ended_tooltip_B
+				if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_1O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_B1_B
+					set_country_flag = GEM_focus_ended_flag_B1_B
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_2O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_B2_B
+					set_country_flag = GEM_focus_ended_flag_B2_B
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_3O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_B3_B
+					set_country_flag = GEM_focus_ended_flag_B3_B
+				}
+				else_if = {
+					limit = { has_country_flag = GEM_focus_ended_flag_4O }
+					custom_effect_tooltip = GEM_focus_ended_tooltip_B4_B
+					set_country_flag = GEM_focus_ended_flag_B4_B
+				}
+				else = {
+					custom_effect_tooltip = GEM_focus_ended_tooltip_BO
+					set_country_flag = GEM_focus_ended_flag_BO
+				}
+			}
 		}
 	}
+# /독일국
+	# /독일국 고유
+		focus = {
+			id = GEM_focus_ended_AO
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_AO
+				}
+			}
+			prerequisite = {
+				focus = GEM_german_ethnic_unification
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_A
+				focus = GEM_focus_ended_2_A
+				focus = GEM_focus_ended_3_A
+				focus = GEM_focus_ended_4_A
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 6
+				x = -7
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_german_ethnic_unification
+			completion_reward = {
+			}
+		}
+	# /독일국 마코토
+		focus = {
+			id = GEM_focus_ended_1_A
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A1_A
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A1_A
+				}
+			}
+			prerequisite = {
+				focus = GEM_german_ethnic_unification
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_AO
+				focus = GEM_focus_ended_2_A
+				focus = GEM_focus_ended_3_A
+				focus = GEM_focus_ended_4_A
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 6
+				x = -4
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_german_ethnic_unification
+			completion_reward = {
+			}
+		}
+	# /독일국 사츠키
+		focus = {
+			id = GEM_focus_ended_2_A
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A2_A
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A2_A
+				}
+			}
+			prerequisite = {
+				focus = GEM_german_ethnic_unification
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_AO
+				focus = GEM_focus_ended_1_A
+				focus = GEM_focus_ended_3_A
+				focus = GEM_focus_ended_4_A
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 6
+				x = -1
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_german_ethnic_unification
+			completion_reward = {
+			}
+		}
+	# /독일국 이로하
+		focus = {
+			id = GEM_focus_ended_3_A
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A3_A
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A3_A
+				}
+			}
+			prerequisite = {
+				focus = GEM_german_ethnic_unification
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_AO
+				focus = GEM_focus_ended_1_A
+				focus = GEM_focus_ended_2_A
+				focus = GEM_focus_ended_4_A
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 6
+				x = 2
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_german_ethnic_unification
+			completion_reward = {
+			}
+		}
+	# /독일국 치아키
+		focus = {
+			id = GEM_focus_ended_4_A
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_A4_A
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_A4_A
+				}
+			}
+			prerequisite = {
+				focus = GEM_german_ethnic_unification
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_AO
+				focus = GEM_focus_ended_1_A
+				focus = GEM_focus_ended_2_A
+				focus = GEM_focus_ended_3_A
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 6
+				x = 5
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_german_ethnic_unification
+			completion_reward = {
+			}
+		}
+# 독일국/
+# /독일-게헨나 연방제
+	# /독일-게헨나 연방제 고유
+		focus = {
+			id = GEM_focus_ended_BO
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_BO
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_B
+				focus = GEM_focus_ended_2_B
+				focus = GEM_focus_ended_3_B
+				focus = GEM_focus_ended_4_B
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 4
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /독일-게헨나 연방제 마코토
+		focus = {
+			id = GEM_focus_ended_1_B
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B1_B
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B1_B
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_BO
+				focus = GEM_focus_ended_2_B
+				focus = GEM_focus_ended_3_B
+				focus = GEM_focus_ended_4_B
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 7
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /독일-게헨나 연방제 사츠키
+		focus = {
+			id = GEM_focus_ended_2_B
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B2_B
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B2_B
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_BO
+				focus = GEM_focus_ended_1_B
+				focus = GEM_focus_ended_3_B
+				focus = GEM_focus_ended_4_B
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 10
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /독일-게헨나 연방제 이로하
+		focus = {
+			id = GEM_focus_ended_3_B
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B3_B
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B3_B
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_BO
+				focus = GEM_focus_ended_1_B
+				focus = GEM_focus_ended_2_B
+				focus = GEM_focus_ended_4_B
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 13
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /독일-게헨나 연방제 치아키
+		focus = {
+			id = GEM_focus_ended_4_B
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_B4_B
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_B4_B
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_BO
+				focus = GEM_focus_ended_1_B
+				focus = GEM_focus_ended_2_B
+				focus = GEM_focus_ended_3_B
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 16
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+# 독일-게헨나 연방제/
+# /두 민족의 국가
+	# /두 민족의 국가 마코토
+		focus = {
+			id = GEM_focus_ended_1_C
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_C1_C
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_C1_C
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_2_C
+				focus = GEM_focus_ended_3_C
+				focus = GEM_focus_ended_4_C
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 22
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /두 민족의 국가 사츠키
+		focus = {
+			id = GEM_focus_ended_2_C
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_C2_C
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_C2_C
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_C
+				focus = GEM_focus_ended_3_C
+				focus = GEM_focus_ended_4_C
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 25
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /두 민족의 국가 이로하
+		focus = {
+			id = GEM_focus_ended_3_C
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_C3_C
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_C3_C
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_C
+				focus = GEM_focus_ended_2_C
+				focus = GEM_focus_ended_4_C
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 28
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+	# /두 민족의 국가 치아키
+		focus = {
+			id = GEM_focus_ended_4_C
+			icon = GFX_goal_generic_occupy_states_ongoing_war
+			cost = 5.00
+			allow_branch = {
+				OR = {
+					is_debug = yes
+					has_country_flag = GEM_focus_ended_flag_C4_C
+				}
+			}
+			available = {
+				hidden_trigger = {
+					has_country_flag = GEM_focus_ended_flag_C4_C
+				}
+			}
+			prerequisite = {
+				focus = GEM_a_republic_of_two_peoples
+			}
+			mutually_exclusive = {
+				focus = GEM_focus_ended_1_C
+				focus = GEM_focus_ended_2_C
+				focus = GEM_focus_ended_3_C
+			}
+			offset = {
+				trigger = {
+					is_debug = yes
+				}
+				y = 10
+				x = 31
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_a_republic_of_two_peoples
+			completion_reward = {
+			}
+		}
+# 두 민족의 국가/
 #	focus = {
 #		id = GEM_angel_hunting
 #		icon = GFX_focus_attack_TRN
