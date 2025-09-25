@@ -9778,7 +9778,7 @@ country_event = { # 독일 문화의 운명
 	id = trinity.31
 	title = trinity.31.t
 	desc = trinity.31.desc
-	picture = GFX_report_event_SWE_summer_government
+	picture = GFX_report_event_germany_politician_handshake
 	
 	is_triggered_only = yes
 	fire_only_once = no
@@ -9789,10 +9789,6 @@ country_event = { # 독일 문화의 운명
 		ai_chance = { 
 			base = 10
 		}
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = 0.05
-		}
     }
 
 	option = {
@@ -9800,12 +9796,24 @@ country_event = { # 독일 문화의 운명
 		name = trinity.31.b
 		ai_chance = { 
 			base = 2
+			modifier = {
+				OR = {
+					TRN_very_low_honor = yes
+					TRN_low_honor = yes
+				}
+				add = 1000
+			}
 		}
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = -0.05
+		# 이스터에그성 효과
+		if = {
+			limit = { country_exists = GER } 
+			annex_country = {
+				target = GER
+				transfer_troops = yes
+			}
 		}
-    }
+		# 근데 정상적인 게임에서 독일이 존재하진 않겠지..?
+    	}
 	
 }
 
