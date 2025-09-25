@@ -3,6 +3,7 @@ add_namespace = HEU_news
 add_namespace = HEU.flavor_event
 add_namespace = HEU.persona_event
 add_namespace = HEU.mutsuki_event
+add_namespace = HEU.aru_event
 add_namespace = HEU.diplomacy_event
 add_namespace = HEU.election_event
 
@@ -1708,19 +1709,19 @@ unit_leader_event = { #민권법 공개 토론회
 
 	option = { 
 		name = HEU_event.151.a 
-		if = {
-			limit = {
-				is_debug = no
-			}
-			custom_effect_tooltip = HEU_no_anti_gehenna_fascism_tt
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = generic_skip_one_line_tt
-			subtract_from_variable = { 
-				var = benriya_debate^1
-				# 다미엔 지지율
-				value = 10
-			}
-		}
+		#if = {
+		#	limit = {
+		#		is_debug = no
+		#	}
+		#	custom_effect_tooltip = HEU_no_anti_gehenna_fascism_tt
+		#	custom_effect_tooltip = generic_skip_one_line_tt
+		#	custom_effect_tooltip = generic_skip_one_line_tt
+		#	subtract_from_variable = { 
+		#		var = benriya_debate^1
+		#		# 다미엔 지지율
+		#		value = 10
+		#	}
+		#}
 
 		custom_effect_tooltip = HEU_event.151.a.tt
 		custom_effect_tooltip = generic_skip_one_line_tt
@@ -1760,19 +1761,19 @@ unit_leader_event = { #민권법 공개 토론회
 
 	option = { 
 		name = HEU_event.151.b
-		if = {
-			limit = {
-				is_debug = no
-			}
-			custom_effect_tooltip = HEU_no_anti_gehenna_fascism_tt
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = generic_skip_one_line_tt
-			subtract_from_variable = { 
-				var = benriya_debate^1
-				# 다미엔 지지율
-				value = 10
-			}
-		}
+		#if = {
+		#	limit = {
+		#		is_debug = no
+		#	}
+		#	custom_effect_tooltip = HEU_no_anti_gehenna_fascism_tt
+		#	custom_effect_tooltip = generic_skip_one_line_tt
+		#	custom_effect_tooltip = generic_skip_one_line_tt
+		#	subtract_from_variable = { 
+		#		var = benriya_debate^1
+		#		# 다미엔 지지율
+		#		value = 10
+		#	}
+		#}
 
 		custom_effect_tooltip = HEU_event.151.b.tt
 		custom_effect_tooltip = generic_skip_one_line_tt
@@ -1819,10 +1820,6 @@ unit_leader_event = { #민권법 공개 토론회
 
 	option = { 
 		name = HEU_event.151.c
-		trigger = {
-			is_debug = yes
-		}
-
 		ai_chance = {
 			base = 0
 		}
@@ -2405,10 +2402,21 @@ country_event = { #여론조사 발표
 
     is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			country_event = { id = HEU.mutsuki_event.35 days = 5 }
+			country_event = { id = HEU.mutsuki_event.37 days = 8 }
+			country_event = { id = HEU.mutsuki_event.36 days = 17 }
+			country_event = { id = HEU.mutsuki_event.1 days = 35 }
+		}
+	}
+
 	option = { 
 		name = HEU_event.159.a 
 		complete_national_focus = HEU_negotiations_with_parties
-		complete_national_focus = HEU_civil_rights_act_2
+		custom_effect_tooltip =  HEU_fail_debate_tt
+		
+		
 	}
 
 }
@@ -3529,8 +3537,12 @@ country_event = { #리쿠하치마 아루의 마지막 인사
 			add_trait = {
 				trait = unconscious
 			}
-			unit_leader_event = { id = HEU_event.233 hours = 2 }
+			
 		}
+		HE_ancmzl = {
+			unit_leader_event = { id = HEU.mutsuki_event.38 hours = 2 }
+		}
+		
 	}
 }
 
@@ -3632,14 +3644,32 @@ unit_leader_event = { #빈 집의 모험 - 페이즈 4
 country_event = { #병실에서
 	id = HEU_event.239
 	title = HEU_event.239.t
-	desc = HEU_event.239.desc
+	
+	desc = {
+		text = HEU_event.239.desc
+		trigger = { 
+			NOT = { has_completed_focus = HEU_no_more_hope }
+		}
+		
+	}
+
+	desc = {
+		text = HEU_event.239.desc.mutsuki
+		trigger = { 
+			has_completed_focus = HEU_no_more_hope
+		}
+		
+	}
 
 	picture = GFX_report_event_aru_rikuhachima
 
     is_triggered_only = yes
 
 	option = { 
-		name = HEU_event.239.a 
+		name = HEU_event.239.a
+		trigger = {
+			NOT = { has_completed_focus = HEU_no_more_hope }
+		}
 
 		remove_trait = {
 			character = HEU_aru
@@ -3671,6 +3701,23 @@ country_event = { #병실에서
 		}
 	}
 
+	option = { 
+		name = HEU_event.239.b
+		trigger = {
+			has_completed_focus = HEU_no_more_hope
+		}
+
+		hidden_effect = {
+			country_event = { id = HEU_event.240 days = 3 }
+		}
+		
+		hidden_effect = {
+			news_event = {
+				id = HEU_news.20
+			}
+		}
+	}
+
 }
 
 country_event = { #연합법 선언
@@ -3680,19 +3727,29 @@ country_event = { #연합법 선언
 	desc = {
 		text = HEU_event.240.desc.a
 		trigger = { 
-			has_dynamic_modifier = {
-				modifier = HEU_luxembourgism_idea
-			} 
+			NOT = { has_completed_focus = HEU_no_more_hope }
 		}
-		
 	}
 
 	desc = {
 		text = HEU_event.240.desc.b
 		trigger = { 
-			has_dynamic_modifier = {
-				modifier = HEU_rikuhachimaism_idea
-			} 
+			has_completed_focus = HEU_no_more_hope
+			NOT = {	
+				check_variable = {
+					aru_mental_trauma_var > 0.74
+				}
+			}
+		}
+	}
+
+	desc = {
+		text = HEU_event.240.desc.c
+		trigger = { 
+			has_completed_focus = HEU_no_more_hope
+			check_variable = {
+				aru_mental_trauma_var > 0.74
+			}
 		}
 	}
 
@@ -3709,6 +3766,14 @@ country_event = { #연합법 선언
 		every_state = {
 			limit = { is_core_of = TRM }
 			add_core_of	= HEU
+		}
+
+		if = {
+			limit = {
+				has_completed_focus = HEU_no_more_hope
+			}
+			custom_effect_tooltip = HEU_aru_true_leader_mutsuki_path_tt
+			set_country_flag = HEU_aru_true_leader_mutsuki_path
 		}
 	}
 }
@@ -4726,6 +4791,7 @@ country_event = { #룩셈부르크 대공국의 멸망
 		AND = {
 			NOT = { original_tag = HEU }
 			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
 			NOT = { country_exists = HEU }
 			ROOT = { owns_state = 8 }
 			NOT = { has_global_flag = HEU_game_over_flag }
@@ -4861,6 +4927,70 @@ country_event = { #총학생회는 대체 뭘 한 거야!
 		name = HEU_event.2005.a
 		custom_effect_tooltip = HEU_beneluxfixed_tt
 		add_stability = 0.05
+	}
+}
+
+country_event = { #룩셈부르크 대공국의 멸망
+	id = HEU_event.2006
+	title = HEU_event.2006.t
+	desc = HEU_event.2006.desc
+	picture = GFX_report_event_luxembourg_city
+
+	immediate = {
+		hidden_effect = {
+			set_global_flag = HEU_game_over_flag
+		}
+	}
+
+    fire_only_once = yes
+
+	trigger = {
+		AND = {
+			NOT = { original_tag = HEU }
+			NOT = { country_exists = HEU }
+			ROOT = { owns_state = 8 }
+			NOT = { has_global_flag = HEU_game_over_flag }
+			Kivotos_tag = yes
+			ROOT = { tag = GEM }
+		}
+	}
+
+	option = { 
+		name = HEU_event.2006.a
+		ai_chance = {
+			base = 10
+		}
+		
+		country_event = { id = HEU_event.2007 hours = 8 }
+	}
+
+	option = { 
+		name = HEU_event.2006.b
+		ai_chance = {
+			base = 0
+		}
+		country_event = { id = HEU_event.2007 hours = 8 }
+	}
+}
+
+country_event = { #점령 그 이후
+	id = HEU_event.2007
+	title = HEU_event.2007.t
+	desc = HEU_event.2007.desc
+	picture = GFX_report_event_generic_kivotos_city_2
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU_event.2007.a
+		HEU = {
+			retire_character = HEU_aru
+			retire_character = HEU_zkdyzh
+			retire_character = HEU_ancmzl
+			retire_character = HEU_gkfnzk
+			set_cosmetic_tag = HEU_luxembourg
+		}
+		
 	}
 }
 
@@ -8500,7 +8630,7 @@ country_event = { #총알 하나
 
 	option = { 
 		name = HEU.mutsuki_event.1.a 
-
+		complete_national_focus = HEU_civil_rights_act_2
 	}
 }
 
@@ -9139,6 +9269,157 @@ country_event = { #룩셈부르크 신 총리
 	}
 }
 
+country_event = { #단절
+	id = HEU.mutsuki_event.34
+	title = HEU.mutsuki_event.34.t
+	desc = HEU.mutsuki_event.34.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.34.a 
+		
+	}
+}
+
+country_event = { #단절
+	id = HEU.mutsuki_event.35
+	title = HEU.mutsuki_event.35.t
+	desc = HEU.mutsuki_event.35.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.35.a 
+		
+	}
+}
+
+country_event = { #단절
+	id = HEU.mutsuki_event.36
+	title = HEU.mutsuki_event.36.t
+	desc = HEU.mutsuki_event.36.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.36.a 
+		
+	}
+}
+
+country_event = { #단절
+	id = HEU.mutsuki_event.37
+	title = HEU.mutsuki_event.37.t
+	desc = HEU.mutsuki_event.37.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.37.a 
+		
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 1
+	id = HEU.mutsuki_event.38
+	title = HEU.mutsuki_event.38.t
+	desc = HEU.mutsuki_event.38.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.38.a 
+		
+		HEU_ancmzl = {
+			unit_leader_event = { id = HEU.mutsuki_event.39 }
+		}
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 2
+	id = HEU.mutsuki_event.39
+	title = HEU.mutsuki_event.39.t
+	desc = HEU.mutsuki_event.39.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.39.a 
+		
+		HEU_ancmzl = {
+			unit_leader_event = { id = HEU.mutsuki_event.40 }
+		}
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 3
+	id = HEU.mutsuki_event.40
+	title = HEU.mutsuki_event.40.t
+	desc = HEU.mutsuki_event.40.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.40.a 
+		
+		HEU_ancmzl = {
+			unit_leader_event = { id = HEU.mutsuki_event.41 }
+		}
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 4
+	id = HEU.mutsuki_event.41
+	title = HEU.mutsuki_event.41.t
+	desc = HEU.mutsuki_event.41.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.41.a 
+		
+		HEU_ancmzl = {
+			unit_leader_event = { id = HEU.mutsuki_event.42 }
+		}
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 4
+	id = HEU.mutsuki_event.42
+	title = HEU.mutsuki_event.42.t
+	desc = HEU.mutsuki_event.42.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.42.a 
+		
+		HEU_ancmzl = {
+			unit_leader_event = { id = HEU_event.238 }
+		}
+	}
+}
+
+unit_leader_event = { #빈 집의 모험 - 페이즈 4
+	id = HEU_event.238
+	title = HEU_event.238.t
+	desc = HEU_event.238.desc
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU_event.238.a 
+		
+		HEU_aru = {
+			remove_trait = {
+				trait = unconscious
+			}
+		}
+		hidden_effect = {
+			country_event = { id = HEU_event.239 days = 1 }
+		}
+	}
+}
+
 country_event = { #경제동맹 제안
 	id = HEU.diplomacy_event.1
 	title = HEU.diplomacy_event.1.t
@@ -9442,7 +9723,57 @@ country_event = { #게르만 연합공국 의회 선거
 	}
 }
 
+country_event = { # 외교 회의
+	id = HEU.aru_event.1
+	title = HEU.aru_event.1.t
+	desc = HEU.aru_event.1.desc
+	picture = GFX_report_event_grand_ducal_palace_luxembourg
+    is_triggered_only = yes
 
+	option = { 
+		name = HEU.aru_event.1.a 
+
+	}
+}
+
+country_event = { # 조촐한 집
+	id = HEU.aru_event.2
+	title = HEU.aru_event.2.t
+	desc = HEU.aru_event.2.desc
+	picture = GFX_report_event_aru_rikuhachima
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.aru_event.2.a 
+
+	}
+}
+
+country_event = { # 친 아루 시위
+	id = HEU.aru_event.3
+	title = HEU.aru_event.3.t
+	desc = HEU.aru_event.3.desc
+	picture = GFX_report_event_generic_kivotos_city_2
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.aru_event.3.a 
+
+	}
+}
+
+country_event = { # 여론 분석
+	id = HEU.aru_event.4
+	title = HEU.aru_event.4.t
+	desc = HEU.aru_event.4.desc
+	picture = GFX_report_event_generic_conference
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.aru_event.4.a 
+
+	}
+}
 
 # 룩셈부르크 노트르담 대성당의 폭파
 news_event = {
