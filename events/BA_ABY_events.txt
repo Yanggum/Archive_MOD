@@ -15868,6 +15868,15 @@ country_event = {
     		long_name = ABY_neutrality_party_united
     		name = ABY_neutrality_party_united
 		}
+		hidden_effect = {
+			add_dynamic_modifier = {
+				modifier = ABY_mobilization_dynamic_modifier
+			}
+			country_event = {
+				id = ABY_hidden_event.10
+				days = 30
+			}
+		}
 		promote_character = ABYDOS_sudete
 		set_cosmetic_tag = ABY_provisional_government
 	}
@@ -16692,26 +16701,65 @@ country_event = {
 
 	trigger = {
 		tag = ABY
-		9 = {is_controlled_by = ABY}
-		69 = {is_controlled_by = ABY}
-		74 = {is_controlled_by = ABY}
-		72 = {is_controlled_by = ABY}
-		75 = {is_controlled_by = ABY}
-		972 = {is_controlled_by = ABY}
-		1021 = {is_controlled_by = ABY}
-		975 = {is_controlled_by = ABY}
-		4 = {is_controlled_by = ABY}
-		976 = {is_controlled_by = ABY}
-		152 = {is_controlled_by = ABY}
-		153 = {is_controlled_by = ABY}
-		848 = {is_controlled_by = ABY}
-		
+		9 = {is_controlled_by_ROOT_or_subject = yes}
+		69 = {is_controlled_by_ROOT_or_subject = yes}
+		74 = {is_controlled_by_ROOT_or_subject = yes}
+		72 = {is_controlled_by_ROOT_or_subject = yes}
+		75 = {is_controlled_by_ROOT_or_subject = yes}
+		972 = {is_controlled_by_ROOT_or_subject = yes}
+		1021 = {is_controlled_by_ROOT_or_subject = yes}
+		975 = {is_controlled_by_ROOT_or_subject = yes}
+		4 = {is_controlled_by_ROOT_or_subject = yes}
+		976 = {is_controlled_by_ROOT_or_subject = yes}
+		152 = {is_controlled_by_ROOT_or_subject = yes}
+		153 = {is_controlled_by_ROOT_or_subject = yes}
+		848 = {is_controlled_by_ROOT_or_subject = yes}
 	}
 	fire_only_once = yes
 
 	option = {
 		name = ABY_descision_focus_event.30.a
 		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				HYA = {
+					is_subject_of = ABY
+				}
+			}
+			annex_country = {
+				target = HYA
+			}
+		}
+		if = {
+			limit = {
+				CZE = {
+					is_subject_of = ABY
+				}
+			}
+			annex_country = {
+				target = CZE
+			}
+		}
+		if = {
+			limit = {
+				AUS = {
+					is_subject_of = ABY
+				}
+			}
+			annex_country = {
+				target = AUS
+			}
+		}
+		if = {
+			limit = {
+				SHA = {
+					is_subject_of = ABY
+				}
+			}
+			annex_country = {
+				target = SHA
+			}
+		}
 		set_country_flag = ABY_flag_recovered_land
 		set_capital = {
 			state = 1021
@@ -18176,12 +18224,39 @@ country_event = {
 	title = ABY_descision_focus_event.76.t
 	desc = ABY_descision_focus_event.76.d
 
-	is_triggered_only = yes
+	trigger = {
+		#백귀야행 항복
+		#백귀야행 미존재
+		#보헤미아 소유
+		#백귀야행을 괴뢰국으로 보유
+		tag = ABY
+		OR = {
+			has_full_control_of_state = 9
+			HYA = {
+				is_puppet_of = ABY
+			}
+			CZE = {
+				is_puppet_of = ABY
+			}
+			AND = {
+				HYA = {
+					has_capitulated = yes
+				}
+				controls_state = 9
+			}
+		}
+	}
 	fire_only_once = yes
 
 	option = {
 		name = ABY_descision_focus_event.76.a
 		ai_chance = { factor = 100 }
+		hidden_effect = {
+			remove_dynamic_modifier = {
+				modifier = ABY_mobilization_dynamic_modifier
+			}
+		}
+		remove_country_leader_trait = ABY_trait_emergency_mobilization
 	}
 }
 
@@ -19713,6 +19788,45 @@ country_event = {
 		}
 		else = { #Debug logs
 			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot complete focus"
+		}
+	}
+}
+
+country_event = { 
+	id = ABY_hidden_event.10
+	title = ABY_hidden_event.10.t
+	desc = ABY_hidden_event.10.desc
+
+	hidden = yes
+    is_triggered_only = yes
+	
+	option = { 
+		name = ABY_hidden_event.10.a 
+		if = {
+			limit = {
+				check_variable = {
+					ABY_var_debuff_level < 75
+				}
+			}
+			add_to_variable = {
+        	    var = ABY_var_debuff_factor
+        	    value = -0.015
+        	}
+			add_to_variable = {
+        	    var = ABY_var_debuff_level
+        	    value = 1
+        	}
+			country_event = {
+				id = ABY_hidden_event.10
+				days = 30
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					ABY_var_debuff_level = 75
+				}
+			}
 		}
 	}
 }
