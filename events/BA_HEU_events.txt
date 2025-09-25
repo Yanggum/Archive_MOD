@@ -4,6 +4,7 @@ add_namespace = HEU.flavor_event
 add_namespace = HEU.persona_event
 add_namespace = HEU.mutsuki_event
 add_namespace = HEU.diplomacy_event
+add_namespace = HEU.election_event
 
 country_event = { #1936년 신년사, 국회 본회의장 속기록
 	id = HEU_event.0
@@ -1182,6 +1183,7 @@ country_event = { #[FROM.GetName] 측의 망명 제안
 				id = HEU_news.12
 			}
 		}
+		GEM_to_HEU_effect_replace_negotiation_partner_with_luxembourg = yes
 	}
 	
 	option = { 
@@ -8894,19 +8896,31 @@ country_event = { #조제프 베슈의 사임
 	}
 }
 
-country_event = { #룩셈부르크 공산당의 항의
-	id = HEU.mutsuki_event.999
-	title = HEU.mutsuki_event.999.t
-	desc = HEU.mutsuki_event.999.desc
-	picture = GFX_report_event_SOV_cossack_cavalry
+country_event = { # 아사기 내각의 끝
+	id = HEU.mutsuki_event.28
+	title = HEU.mutsuki_event.28.t
+	desc = HEU.mutsuki_event.28.desc
+	picture = GFX_report_event_generic_flowers
     is_triggered_only = yes
 
 	option = { 
-		name = HEU.mutsuki_event.999.a 
+		name = HEU.mutsuki_event.28.a 
+
+		HEU_ancmzl = {
+			remove_country_leader_role = {
+				ideology = artnocracy_fascism
+			}
+		}
+
 		set_party_name = {
 			ideology = fascism
 			long_name = HEU_neutrality_party
 			name = HEU_neutrality_party
+		}
+
+		set_portraits = {
+			character = HEU_ancmzl
+			army = { large ="gfx/leaders/HEU/HEU_mutsuki_asagi_com_black.dds" }
 		}
 
 		set_portraits = {
@@ -8921,14 +8935,78 @@ country_event = { #룩셈부르크 공산당의 항의
 				ideology = technocracy_fascism
 				desc = "HEU_haruka_igusa_fascist_leader_mutsuki_happy_ending_desc"
 				traits = { 
-					GEM_leader_hater_trait 
+					GEM_leader_hater_trait HEU_haruka_prime_minster
 				}
 			}
 		}
+
+		if = {
+			limit = {
+				check_variable = {
+					aru_mental_trauma_var > 0.74
+				}
+				# 아루 멘탈이 75% 이상 훼손되었다면 배드엔딩
+			}
+			country_event = { id = HEU.mutsuki_event.30 days = 7 }
+		}
+		else = {
+			# 그렇지 않다면 굿엔딩
+			country_event = { id = HEU.mutsuki_event.29 days = 7 }
+		}
+	}
+}
+
+country_event = { #너를 용서하고 싶어
+	id = HEU.mutsuki_event.29
+	title = HEU.mutsuki_event.29.t
+	desc = HEU.mutsuki_event.29.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.29.a 
+		set_country_flag = HEU_mutsuki_route_good_ending
+	}
+}
+
+country_event = { #단절
+	id = HEU.mutsuki_event.30
+	title = HEU.mutsuki_event.30.t
+	desc = HEU.mutsuki_event.30.desc
+	picture = GFX_event_none_picture
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.30.a 
+		set_country_flag = HEU_mutsuki_route_bad_ending
+	}
+}
+
+country_event = { #총리 선출
+	id = HEU.mutsuki_event.31
+	title = HEU.mutsuki_event.31.t
+	desc = HEU.mutsuki_event.31.desc
+	picture = GFX_event_mega_cities_GEH_2
+    is_triggered_only = yes
+
+	immediate = {
+		clr_country_flag = HEU_the_end_of_benriya_flag
 	}
 
 	option = { 
-		name = HEU.mutsuki_event.999.b
+		name = HEU.mutsuki_event.31.a 
+		HEU_gkfnzk = {
+			remove_country_leader_role = {
+				ideology = artnocracy_fascism
+			}
+		}
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
 		set_party_name = {
 			ideology = fascism
 			long_name = HEU_pro_kayoko_party
@@ -8947,16 +9025,118 @@ country_event = { #룩셈부르크 공산당의 항의
 				ideology = technocracy_fascism
 				desc = "HEU_kayoko_onikata_fascist_leader_mutsuki_happy_ending_desc"
 				traits = { 
-					HEU_school_of_atheism_trait 
+					HEU_the_last_hope 
 				}
 			}
 		}
-			promote_character = {
-				character = HEU_zkdyzh
-				ideology = technocracy_fascism
-			}
+		
+		promote_character = {
+			character = HEU_zkdyzh
+			ideology = technocracy_fascism
+		}
+		
+		country_event = { id = HEU.mutsuki_event.32 hours = 8 }
 	}
 
+	option = { 
+		name = HEU.mutsuki_event.31.b 
+		trigger = {
+			has_country_flag = HEU_mutsuki_route_good_ending # 무츠키는 해피엔딩에서만 선출 가능
+		}
+
+		HEU_gkfnzk = {
+			remove_country_leader_role = {
+				ideology = artnocracy_fascism
+			}
+		}
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
+		add_country_leader_role = {
+			character = HEU_ancmzl
+			promote_leader = yes
+			country_leader = {
+				ideology = technocracy_fascism
+				desc = "HEU_mutsuki_asagi_fascist_leader_mutsuki_happy_ending_desc"
+				traits = { 
+					HEU_evil_mutsuki_ending 
+				}
+			}
+		}
+		
+		promote_character = {
+			character = HEU_ancmzl
+			ideology = technocracy_fascism
+		}
+		
+		country_event = { id = HEU.mutsuki_event.32 hours = 8 }
+	}
+}
+
+country_event = { #룩셈부르크 신 총리
+	id = HEU.mutsuki_event.32
+	title = HEU.mutsuki_event.32.t
+
+	desc = { 
+		text = HEU.mutsuki_event.32.desc.a
+		trigger = {
+			has_country_leader = {
+        		character = HEU_zkdyzh
+        		ruling_only = yes
+			}
+		}
+	}
+
+	desc = { 
+		text = HEU.mutsuki_event.32.desc.b
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+		}
+	}
+
+	picture = GFX_event_mega_cities_GEH_2
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.32.a 
+		custom_effect_tooltip = HEU_two_year_term_tt
+		hidden_effect = {
+			news_event = { id = HEU_news.32 hours = 4 }
+			country_event = { id = HEU.election_event.4 days = 720 } # 2년
+		}
+	}
+}
+
+country_event = { #룩셈부르크 신 총리
+	id = HEU.mutsuki_event.33
+	title = HEU.mutsuki_event.33.t
+
+	desc = { 
+		text = HEU.mutsuki_event.33.desc.nomal_ending
+		trigger = {
+			has_country_flag = HEU_mutsuki_route_bad_ending
+		}
+	}
+
+	desc = { 
+		text = HEU.mutsuki_event.33.desc.good_ending
+		trigger = {
+			has_country_flag = HEU_mutsuki_route_good_ending
+		}
+	}
+
+	picture = GFX_report_event_aru_rikuhachima_smile
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.33.a 
+		custom_effect_tooltip = HEU_game_victory_tt
+	}
 }
 
 country_event = { #경제동맹 제안
@@ -9051,6 +9231,218 @@ country_event = { #[FROM.GetNameDef]의 경제동맹 거절
 		}
 	}
 }
+
+country_event = { #게르만 연합공국 의회 선거
+	id = HEU.election_event.4
+	title = HEU.election_event.4.t
+	
+	desc = { 
+		text = HEU.election_event.4.desc.kayoko.generic
+		trigger = {
+			has_country_leader = {
+        		character = HEU_zkdyzh
+        		ruling_only = yes
+			}
+		}
+	}
+	
+	desc = { 
+		text = HEU.election_event.4.desc.mutsuki.generic
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+			NOT = { check_variable = { mutsuki_gehenna_trinity = 1 } }
+		}
+	}
+	
+	desc = { 
+		text = HEU.election_event.4.desc.mutsuki.hidden
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+			check_variable = { mutsuki_gehenna_trinity = 1 }
+		}
+	}
+
+	picture = GFX_event_mega_cities_GEH_2
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.election_event.4.kayoko
+		trigger = {
+			has_country_leader = {
+        		character = HEU_zkdyzh
+        		ruling_only = yes
+			}
+		}
+
+		add_political_power = 25
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
+		if = {
+			limit = {
+				NOT = {
+					has_country_leader = {
+        				character = HEU_zkdyzh
+        				ruling_only = yes
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = HEU_zkdyzh
+				promote_leader = yes
+				country_leader = {
+					ideology = technocracy_fascism
+					desc = "HEU_kayoko_onikata_fascist_leader_mutsuki_happy_ending_desc"
+					traits = { 
+						HEU_the_last_hope 
+					}
+				}
+			}
+
+			promote_character = {
+				character = HEU_zkdyzh
+				ideology = technocracy_fascism
+			}
+		}
+	}
+
+	option = { 
+		name = HEU.election_event.4.mine
+		trigger = {
+			OR = {
+				AND = {
+					has_country_leader = {
+        				character = HEU_zkdyzh
+        				ruling_only = yes
+					}
+				}
+				AND = {
+					has_country_leader = {
+        				character = HEU_ancmzl
+        				ruling_only = yes
+					}
+					NOT = { check_variable = { mutsuki_gehenna_trinity = 1 } }
+				}
+			}
+		}
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
+		every_country = {
+			TRN_Aomori_Mine = {
+				set_nationality = FROM
+			}
+			add_country_leader_role = {
+				character = TRN_Aomori_Mine
+				promote_leader = yes
+				country_leader = {
+					ideology = falangism
+					desc = "HEU_mine_aomori_leader_desc"
+					traits = { 
+						HEU_mine_ga_kowashite HEU_kishidan_ga_naosu 
+					}
+				}
+			}
+			promote_character = {
+				character = TRN_Aomori_Mine
+				ideology = falangism
+			}
+		}
+
+	}
+
+	option = { 
+		name = HEU.election_event.4.mutsuki
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+		}
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
+		add_political_power = 25
+
+		if = {
+			limit = {
+				NOT = {
+					has_country_leader = {
+        				character = HEU_ancmzl
+        				ruling_only = yes
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = HEU_ancmzl
+				promote_leader = yes
+				country_leader = {
+					ideology = technocracy_fascism
+					desc = "HEU_mutsuki_asagi_fascist_leader_mutsuki_happy_ending_desc"
+					traits = { 
+						HEU_evil_mutsuki_ending` 
+					}
+				}
+			}
+
+			promote_character = {
+				character = HEU_ancmzl
+				ideology = technocracy_fascism
+			}
+		}
+
+	}
+
+	option = { 
+		name = HEU.election_event.4.uzawa
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+			check_variable = { mutsuki_gehenna_trinity = 1 }
+		}
+		
+		set_politics = {
+			ruling_party = fascism
+		}
+
+		every_country = {
+			TRN_Uzawa_Reisa = {
+				set_nationality = FROM
+			}
+			add_country_leader_role = {
+				character = TRN_Uzawa_Reisa
+				promote_leader = yes
+				country_leader = {
+					ideology = falangism
+					desc = "HEU_kayoko_onikata_fascist_leader_mutsuki_happy_ending_desc"
+					traits = { 
+						HEU_leader_uzawa 
+					}
+				}
+			}
+			promote_character = {
+				character = TRN_Uzawa_Reisa
+				ideology = falangism
+			}
+		}
+	}
+}
+
+
 
 # 룩셈부르크 노트르담 대성당의 폭파
 news_event = {
@@ -10103,6 +10495,145 @@ news_event = {
 		name = HEU_news.29.b
 		trigger = {
 			NOT = { tag = HEU }
+		}
+	}
+}
+
+# 룩셈부르크 대공국 쿠데타
+news_event = {
+	id = HEU_news.30
+	title = HEU_news.30.t
+	desc = HEU_news.30.desc
+	picture = GFX_news_event_generic_sign_treaty1
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = HEU_news.30.a
+		trigger = {
+			tag = HEU
+		}
+	}
+
+	option = {
+		name = HEU_news.30.b
+		trigger = {
+			NOT = { tag = HEU }
+			Kivotos_tag = yes
+		}
+	}
+
+	option = {
+		name = HEU_news.30.c
+		trigger = {
+			Kivotos_tag = no
+		}
+	}
+}
+
+# 룩셈부르크 대공국 쿠데타
+news_event = {
+	id = HEU_news.31
+	title = HEU_news.31.t
+
+	desc = { 
+		text = HEU_news.31.desc.kayoko
+		trigger = {
+			has_country_leader = {
+        		character = HEU_zkdyzh
+        		ruling_only = yes
+			}
+		}
+	}
+
+	desc = { 
+		text = HEU_news.31.desc.mutsuki
+		trigger = {
+			has_country_leader = {
+        		character = HEU_ancmzl
+        		ruling_only = yes
+			}
+		}
+	}
+
+	desc = { 
+		text = HEU_news.31.desc.mine
+		trigger = {
+			has_country_leader = {
+        		character = TRN_Aomori_Mine
+        		ruling_only = yes
+			}
+		}
+	}
+
+	desc = { 
+		text = HEU_news.31.desc.uzawa
+		trigger = {
+			has_country_leader = {
+        		character = TRN_Uzawa_Reisa
+        		ruling_only = yes
+			}
+		}
+	}
+
+	picture = GFX_news_event_generic_sign_treaty1
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = HEU_news.31.a
+		trigger = {
+			tag = HEU
+		}
+	}
+
+	option = {
+		name = HEU_news.31.b
+		trigger = {
+			NOT = { tag = HEU }
+			Kivotos_tag = yes
+		}
+	}
+
+	option = {
+		name = HEU_news.31.c
+		trigger = {
+			Kivotos_tag = no
+		}
+	}
+}
+
+# 연합법 이후의 총리 선출
+news_event = {
+	id = HEU_news.32
+	title = HEU_news.32.t
+	desc = HEU_news.32.desc
+	picture = GFX_news_event_generic_rally_3
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = HEU_news.32.a
+		trigger = {
+			tag = HEU
+		}
+	}
+
+	option = {
+		name = HEU_news.32.b
+		trigger = {
+			NOT = { tag = HEU }
+			Kivotos_tag = yes
+		}
+	}
+
+	option = {
+		name = HEU_news.32.c
+		trigger = {
+			Kivotos_tag = no
 		}
 	}
 }
