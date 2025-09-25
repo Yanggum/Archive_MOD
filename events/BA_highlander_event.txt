@@ -8,47 +8,37 @@ country_event = { #안 씀
 	is_triggered_only = yes
 	option = { #소규모 투자
 		name = Highlander.1.b
-		ai_chance = {
-			base = 1
-			modifier = {
-				tag = TRM
-				add = 1
+		if = {
+			limit = {
+				has_country_flag = asdf
 			}
+			add_stability = 0.1
 		}
-		add_timed_idea = {
-			idea = BA_highlander_invest_small
-			days = 90
-		}
-    }
-	option = { #대규모 투자
-		name = Highlander.1.f
-		else = {
-			add_timed_idea = {
-				idea = BA_highlander_invest_big
-				days = 90
-			}
-		}
-		custom_effect_tooltip = BA_highlander_invest_big_tt
-		add_to_variable = {
-			BA_highlander_invest = 4
-		}
-		ai_chance = {
-			base = 0
-			modifier = {
-				OR = {
-					tag = MIL
-					tag = GEM
-					#tag = GEH
-					tag = SHE
-					#tag = TRM
-					tag = COU
+		if = {
+			limit = {
+				has_country_flag = {
+					flag = asdf
+					value = 1
 				}
-				add = 1
 			}
-			modifier = {
-				tag = TRM
-				add = -1
+			add_stability = 1
+		}
+		if = {
+			limit = {
+				has_country_flag = {
+					flag = asdf
+					value = 2
+				}
 			}
+			add_war_support = 1
+		}
+		set_country_flag = {
+			flag = asdf
+			value = 1
+		}
+		set_country_flag = {
+			flag = asdf
+			value = 2
 		}
     }
 }
@@ -63,16 +53,8 @@ country_event = { #철도 버프 이벤트를 위한 히든 이벤트
 		random_list = {
 			5 = { #철도 개선
 				modifier = {
-					factor = 0.5
-					date > 1940.1.1
-				}
-				modifier = {
 					factor = 0
 					NOT = { has_idea = BA_railway_gauge_issue }
-				}
-				modifier = {
-					factor = 0
-					date > 1942.1.1
 				}
 				country_event =  Highlander.9
 			}
@@ -102,6 +84,9 @@ country_event = { #철도 버프 이벤트를 위한 히든 이벤트
 			}
 			1 = { #정상운행
 				country_event = Highlander.6
+			}
+			1 = { #열차 소동
+				country_event = Highlander.16
 			}
 			2 = { #노조미
 				modifier = {
@@ -377,7 +362,7 @@ country_event = { #최대 투자국 변경
 		}
 	}
 }
-country_event = { #철도 개선
+country_event = { #철로 사업: 선로 재작업
 	id = Highlander.9
 	title = Highlander.9.t
 	desc = Highlander.9.d
@@ -640,5 +625,42 @@ country_event = { #궤간
 		}
 		set_country_flag = BA_can_remove_isolation_flag
 		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+}
+country_event = { #열차 소동
+	id = Highlander.16
+	title = Highlander.16.t
+	desc = Highlander.16.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.16.a
+		random_owned_controlled_state = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = Highlander_hub
+				}
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 0.2
+			}
+		}
+		add_stability = -0.01
+	}
+}
+
+
+add_namespace = Highlander_upgrade
+
+country_event = {
+	id = Highlander_upgrade.1
+	title = Highlander_upgrade.1.t
+	desc = Highlander_upgrade.1.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander_upgrade.1.a
+		
 	}
 }
