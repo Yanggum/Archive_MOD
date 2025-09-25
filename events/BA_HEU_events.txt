@@ -1519,7 +1519,6 @@ country_event = { #룩셈부르크 내전 위기
 
 	option = { 
 		name = HEU_event.142.a 
-		HEU_pierre_prum = { retire = yes }
 		add_manpower = -14
 		add_popularity = {
 			ideology = democratic
@@ -1529,7 +1528,6 @@ country_event = { #룩셈부르크 내전 위기
 
 	option = { 
 		name = HEU_event.142.b
-		HEU_pierre_prum = { retire = yes }
 		add_manpower = -32
 		add_popularity = {
 			ideology = communism
@@ -3336,9 +3334,7 @@ country_event = { #영광스러운 승리의 날
 	desc = {
 		text = HEU_event.229.desc.a
 		trigger = { 
-			has_dynamic_modifier = {
-				modifier = HEU_luxembourgism_idea
-			} 
+			has_completed_focus = HEU_no_more_hope
 		}
 		
 	}
@@ -3365,9 +3361,21 @@ country_event = { #영광스러운 승리의 날
 	option = { 
 		name = HEU_event.229.a 
 
-		swap_ruler_traits = {
-			remove = HEU_aru_depression_1
-			add = HEU_aru_depression_2
+		if = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = HEU_rikuhachimaism_idea
+				} 
+			}
+			swap_ruler_traits = {
+				remove = HEU_aru_depression_1
+				add = HEU_aru_depression_2
+			}
+
+			country_event = { id = HEU.flavor_event.51 days = 7 }
+			country_event = { id = HEU.flavor_event.52 days = 14 }
+			country_event = { id = HEU.flavor_event.53 days = 21 }
+			country_event = { id = HEU.flavor_event.46 days = 30 }
 		}
 
 		hidden_effect = {
@@ -3392,11 +3400,6 @@ country_event = { #영광스러운 승리의 날
 			add_state_core = 53
 			add_state_core = 54
 			set_global_flag = HEU_victory_west_germanic_union
-
-			country_event = { id = HEU.flavor_event.51 days = 7 }
-			country_event = { id = HEU.flavor_event.52 days = 14 }
-			country_event = { id = HEU.flavor_event.53 days = 21 }
-			country_event = { id = HEU.flavor_event.46 days = 30 }
 		}
 	}
 
@@ -8814,12 +8817,29 @@ country_event = { #룩셈부르크 공산당의 항의
 
 	option = { 
 		name = HEU.mutsuki_event.13.a 
+		
+		add_to_variable = {
+			aru_mental_trauma_var = -0.03
+			tooltip = mutsuki_aru_mental_edit_tt
+		}
+		HEU_mental_setting = yes
 
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
 	}
 
 	option = { 
 		name = HEU.mutsuki_event.13.b
 
+		add_to_variable = {
+			aru_mental_trauma_var = 0.02
+			tooltip = mutsuki_aru_mental_edit_tt
+		}
+		HEU_mental_setting = yes
+
+		add_war_support = 0.02
 	}
 }
 
@@ -8832,11 +8852,20 @@ country_event = { #급진자유당이 행진하다
 
 	option = { 
 		name = HEU.mutsuki_event.14.a 
-
+		
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.03
+		}
 	}
 
 	option = { 
 		name = HEU.mutsuki_event.14.b
+		add_to_variable = {
+			aru_mental_trauma_var = 0.02
+			tooltip = mutsuki_aru_mental_edit_tt
+		}
+		HEU_mental_setting = yes
 
 	}
 }
