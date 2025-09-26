@@ -4,7 +4,275 @@ add_namespace = GEH_event
 add_namespace = GEH_hidden_event
 add_namespace = GEHENNA_event
 add_namespace = GEM_balance_of_power_event
+add_namespace = GEM_iroha_story
 add_namespace = GEAC_event
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.1
+	title = GEM_iroha_story.1.t
+	desc = GEM_iroha_story.1.desc
+	picture = GFX_report_event_generic_kivotos_city_2
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEM_iroha_story.1.a
+		add_political_power = 10
+	}
+}
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.2
+	title = GEM_iroha_story.2.t
+	desc = GEM_iroha_story.2.desc
+	picture = GFX_report_event_generic_kivotos_city
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEM_iroha_story.2.a
+	}
+}
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.3
+	title = GEM_iroha_story.3.t
+	desc = GEM_iroha_story.3.desc
+	picture = GFX_report_event_generic_railways
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEM_iroha_story.3.a
+	}
+}
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.4
+	title = GEM_iroha_story.4.t
+	desc = GEM_iroha_story.4.desc
+	picture = GFX_report_event_generic_railways
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	immediate = {
+		set_variable = {
+			var_GEM_next_leader_trait = 0
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEH_chairman_of_the_people }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 100
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 200
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_1 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 300
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_2 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 400
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_3 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 500
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_4 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 600
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_5 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 700
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEM_rising_star }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 800
+			}
+		}
+	}
+	option = { 
+		name = GEM_iroha_story.4.a
+		trigger = {
+			has_character = GEH_kirara
+		}
+		add_country_leader_role = {
+			character = GEH_kirara
+			promote_leader = yes
+			country_leader = {
+				ideology = neopandemonium
+				traits = {
+					GEM_friendly
+				}
+				desc = GEM_iroha_story_a_leader_desc
+			}
+		}
+	}
+	option = { 
+		name = GEM_iroha_story.4.b
+		trigger = {
+			has_character = GEH_hatami_ericha
+		}
+		remove_country_leader_role = {
+			character = GEH_hatami_ericha
+			ideology = centrism
+		}
+		add_country_leader_role = {
+			character = GEH_hatami_ericha
+			promote_leader = yes
+			country_leader = {
+				ideology = neopandemonium
+				traits = {
+					GEM_close_to_common_people
+				}
+				desc = GEM_iroha_story_b_leader_desc
+			}
+		}
+	}
+	after = {
+		set_temp_variable = {
+			var_GEM_next_leader_trait_temp = var_GEM_next_leader_trait
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 799
+				}
+			}
+			add_country_leader_trait = GEM_next_rising_star
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 800
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 699
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_5
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 700
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 599
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_4
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 600
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 499
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_3
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 500
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 399
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_2
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 400
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 299
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_1
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 300
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 199
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 200
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 99
+				}
+			}
+			add_country_leader_trait = GEM_next_chairman_of_the_people
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 100
+			}
+		}
+		clear_variable = var_GEM_next_leader_trait
+	}
+}
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.5
+	title = GEM_iroha_story.5.t
+	desc = GEM_iroha_story.5.desc
+	picture = GFX_report_event_generic_door
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEM_iroha_story.5.a
+	}
+}
+
+country_event = { # 나츠메 이로하 - 오리진
+	id = GEM_iroha_story.6
+	title = GEM_iroha_story.6.t
+	desc = GEM_iroha_story.6.desc
+	picture = GFX_report_event_generic_door
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	option = { 
+		name = GEM_iroha_story.6.a
+	}
+}
 
 country_event = { # 만마전의 의장 교체!
 	id = GEM_balance_of_power_event.1

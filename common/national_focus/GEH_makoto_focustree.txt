@@ -1525,6 +1525,9 @@ focus_tree = {
 			909 = {
 				set_demilitarized_zone = no
 			}
+			set_global_flag = GEA_negotiating_independence
+			unlock_decision_category_tooltip = GEM_gehenna_national_reconquest
+			unlock_decision_tooltip = GEM_gehenna_national_reconquest_decision
 		}
 
 	}
@@ -6085,8 +6088,12 @@ focus_tree = {
 				modifier = GEM_unionism
 			}
 			if = {
-				limit = { has_cosmetic_tag = GEM_united_states }
+				limit = { has_cosmetic_tag = GEM_german }
 				set_cosmetic_tag = GEM_german_united_states
+			}
+			else_if = {
+				limit = { has_cosmetic_tag = GEM_german_only }
+				set_cosmetic_tag = GEM_german_only_united_states
 			}
 			else = {
 				set_cosmetic_tag = GEM_united_states
@@ -6704,6 +6711,7 @@ focus_tree = {
 					ideology = ROOT
 					popularity = 0.02
 				}
+				country_event = GEM_iroha_story.1
 			}
 		}
 		focus = {
@@ -6735,6 +6743,7 @@ focus_tree = {
 				add_political_power = 20
 				add_stability = 0.05
 				add_manpower = 13000
+				country_event = GEM_iroha_story.2
 			}
 		}
 		focus = {
@@ -6760,6 +6769,27 @@ focus_tree = {
 					GEM_ENDMOD_production_factory_max_efficiency_factor = -0.03
 					tooltip = production_factory_max_efficiency_factor_tt
 				}
+				custom_effect_tooltip = enter_tt
+				random_owned_controlled_state = {
+					prioritize = {
+						55
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = {
+						50
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
 			}
 		}
 		focus = {
@@ -6784,6 +6814,27 @@ focus_tree = {
 				add_to_variable = {
 					GEM_ENDMOD_production_factory_max_efficiency_factor = 0.05
 					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				random_owned_controlled_state = {
+					prioritize = {
+						51
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = {
+						1022
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -6865,14 +6916,6 @@ focus_tree = {
 			icon = GFX_focus_ARG_defense_and_democracy
 			cost = 5.00
 			available = {
-				has_country_flag = {
-					flag = GEM_federal_basic_law_enactment_flag
-					days > 120
-				}
-				has_country_flag = {
-					flag = GEM_practical_results_flag
-					days > 120
-				}
 			}
 			prerequisite = {
 				focus = GEM_practical_results
@@ -6887,6 +6930,8 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_federal_basic_law_enactment
 			completion_reward = {
+				country_event = GEM_iroha_story.4
+				custom_effect_tooltip = GEM_retirement_of_a_giant_tt
 			}
 		}
 		focus = {
@@ -6916,9 +6961,41 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_federal_basic_law_enactment
 			completion_reward = {
-				swap_ruler_traits = {
-					remove = GEH_chairman_of_the_people
-					add = GEH_chairman_of_the_people_1
+				if = {
+					limit = {
+						any_character = {
+							has_trait = GEH_chairman_of_the_people
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = GEH_chairman_of_the_people
+						}
+						swap_country_leader_traits = {
+							remove = GEH_chairman_of_the_people
+							add = GEH_chairman_of_the_people_1
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = GEH_chairman_of_the_people
+									add = GEH_chairman_of_the_people_1
+								}
+							}
+						}
+					}
+				}
+				country_event = GEM_iroha_story.3
+
+				set_country_leader_description = {
+					desc = GEM_reelection_decision_leader_desc
 				}
 			}
 		}
@@ -7714,7 +7791,18 @@ focus_tree = {
 			clr_country_flag = BA_german_claimant_1 #독일 정통성 낮음
 			set_country_flag = BA_german_claimant_2 #독일 정통성 중간
 
-			set_cosmetic_tag = GEM_german_only
+			if = {
+				limit = {
+					OR = {
+						has_cosmetic_tag = GEM_united_states
+						has_cosmetic_tag = GEM_german_united_states
+					}
+				}
+				set_cosmetic_tag = GEM_german_only_united_states
+			}
+			else = {
+				set_cosmetic_tag = GEM_german_only
+			}
 			swap_ideas = {
 				remove_idea = GEH_nazism_3_idea
 				add_idea = GEH_nazism_4_idea
@@ -8553,7 +8641,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 10
-				x = 25
+				x = 27
 			}
 			x = 0
 			y = 1
@@ -8590,12 +8678,284 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 10
-				x = 28
+				x = 32
 			}
 			x = 0
 			y = 1
 			relative_position_id = GEM_a_republic_of_two_peoples
 			completion_reward = {
+				country_event = GEM_iroha_story.5
+			}
+		}
+		focus = {
+			id = GEM_file_human_rights_commission
+			icon = GFX_focus_BRA_rio_protocol
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_3_C
+			}
+			x = -2
+			y = 1
+			relative_position_id = GEM_focus_ended_3_C
+			completion_reward = {
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_mobilization_laws_cost_factor = -0.05
+					tooltip = mobilization_laws_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_economy_cost_factor = -0.05
+					tooltip = economy_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_trade_laws_cost_factor = -0.05
+					tooltip = trade_laws_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_stability = -0.05
+			}
+		}
+		focus = {
+			id = GEM_demolish_gray_zone
+			icon = GFX_focus_DEN_no_regulations
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_file_human_rights_commission
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_file_human_rights_commission
+			completion_reward = {
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_global_building_slots_factor = 0.05
+					tooltip = global_building_slots_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_mobilization_speed = 0.05
+					tooltip = mobilization_speed_tt
+				}
+				set_country_flag = GEM_demolish_gray_zone_flag
+			}
+		}
+		focus = {
+			id = GEM_under_natsume_iroha_arrangement
+			icon = GFX_focus_DEN_civilian_preparations
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_3_C
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_focus_ended_3_C
+			completion_reward = {
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_army_chief_cost_factor = -0.05
+					tooltip = army_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_navy_chief_cost_factor = -0.05
+					tooltip = navy_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_air_chief_cost_factor = -0.05
+					tooltip = air_chief_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 20
+				add_stability = 0.01
+				add_war_support = 0.01
+			}
+		}
+		focus = {
+			id = GEM_enact_equal_labor_law
+			icon = GFX_focus_BRA_reach_out_to_military_dem
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_under_natsume_iroha_arrangement
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_under_natsume_iroha_arrangement
+			completion_reward = {
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_research_speed_factor = 0.03
+					tooltip = research_speed_factor_tt
+				}
+				set_country_flag = GEM_enact_equal_labor_law_flag
+			}
+		}
+		focus = {
+			id = GEM_pass_ethnic_quota_system
+			icon = GFX_focus_ICE_embrace_the_workers_revolution
+			cost = 5.00
+			available = {
+				has_country_flag = {
+					flag = GEM_demolish_gray_zone_flag
+					days > 150
+				}
+				has_country_flag = {
+					flag = GEM_enact_equal_labor_law_flag
+					days > 150
+				}
+			}
+			prerequisite = {
+				focus = GEM_demolish_gray_zone
+			}
+			prerequisite = {
+				focus = GEM_enact_equal_labor_law
+			}
+			x = 1
+			y = 1
+			relative_position_id = GEM_demolish_gray_zone
+			completion_reward = {
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.03
+					tooltip = production_factory_efficiency_gain_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_max_efficiency_factor = 0.03
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				country_event = GEM_iroha_story.6
+			}
+		}
+		focus = {
+			id = GEM_federal_republic_of_all_germans
+			icon = GFX_focus_GER_tend_to_the_future
+			cost = 5.00
+			available = {
+				OR = {
+					TRM = {
+						exists = no
+					}
+					TRM = {
+						is_subject_of = ROOT
+					}
+					TRK = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+					}
+					owns_state = 64
+				}
+				OR = {
+					GEH = {
+						exists = no
+					}
+					GEH = {
+						is_subject_of = ROOT
+					}
+					owns_state = 52
+				}
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_3_C
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+				FOCUS_FILTER_MANPOWER
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
+			x = 2
+			y = 2
+			relative_position_id = GEM_focus_ended_3_C
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_production_speed_buildings_factor = 0.05
+					tooltip = production_speed_buildings_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_conscription_factor = 0.05
+					tooltip = conscription_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_industrial_complex_factor = 0.10
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_arms_factory_factor = -0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
+				if = {
+					limit = { has_stability < 0.40 }
+					set_stability = 0.40
+				}
+			}
+		}
+		focus = {
+			id = GEM_build_all_german_memorial
+			icon = GFX_focus_RAJ_go_into_hiding
+			cost = 10.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_federal_republic_of_all_germans
+			}
+			prerequisite = {
+				focus = GEM_pass_ethnic_quota_system
+			}
+			x = -1
+			y = 2
+			relative_position_id = GEM_federal_republic_of_all_germans
+
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+				FOCUS_FILTER_STABILITY
+			}
+
+			select_effect = {
+				add_ideas = GEM_build_all_german_memorial_idea
+			}
+
+			completion_reward = {
+				#Tooltip purposes (Select Effect)
+				custom_effect_tooltip = SOV_focus_select_effect_tt
+				effect_tooltip = {
+					add_ideas = GEM_build_all_german_memorial_idea
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = GEM_unionism_tt
+				add_to_variable = {
+					GEM_ENDMOD_army_core_defence_factor = 0.05
+					tooltip = army_core_defence_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_ideas = GEM_build_all_german_memorial_buff_idea
+				hidden_effect = {
+					remove_ideas = GEM_build_all_german_memorial_idea
+				}
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
 			}
 		}
 	# /두 민족의 국가 치아키
@@ -8627,7 +8987,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 10
-				x = 31
+				x = 37
 			}
 			x = 0
 			y = 1
