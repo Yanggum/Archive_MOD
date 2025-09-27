@@ -1879,6 +1879,15 @@ focus_tree = {
 				}
 			}
 		}
+		bypass = {
+			GEH = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+				}
+			}
+		}
 		x = 0
 		y = 1
 		relative_position_id = GEH_national_socialism_gehenna_pact
@@ -3577,7 +3586,7 @@ focus_tree = {
 
 		icon = GFX_focus_generic_polish_deal
 
-		prerequisite = { focus = GEM_expand_claims_in_baltic focus = GEM_influence_the_baltics }
+		prerequisite = { focus = GEM_influence_the_baltics }
 
 		mutually_exclusive = { focus = GEM_demand_further_polish_concessions focus = GEM_ostdeutsches_kolonialreich }
 
@@ -3872,26 +3881,30 @@ focus_tree = {
 		}
 
 		bypass = {
-			AND = {
-				EST = { 
-					OR = {
-						is_subject = yes
-						exists = no
-					}
-				}
-				LAT = { 
-					OR = {
-						is_subject = yes
-						exists = no
-					}
-				}
-				LIT = { 
-					OR = {
-						is_subject = yes
-						exists = no
-					}
-				}
+			custom_trigger_tooltip = {
+				tooltip = THIS_IS_WIP_TT
+				always = yes
 			}
+			#AND = {
+			#	EST = { 
+			#		OR = {
+			#			is_subject = yes
+			#			exists = no
+			#		}
+			#	}
+			#	LAT = { 
+			#		OR = {
+			#			is_subject = yes
+			#			exists = no
+			#		}
+			#	}
+			#	LIT = { 
+			#		OR = {
+			#			is_subject = yes
+			#			exists = no
+			#		}
+			#	}
+			#}
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -8407,13 +8420,6 @@ focus_tree = {
 				focus = GEM_pandemonium_coalition_government
 				focus = GEM_leadership_reshuffle
 			}
-			offset = {
-				trigger = {
-					is_debug = yes
-				}
-				y = 6
-				x = -31
-			}
 			x = 1
 			y = 2
 			relative_position_id = GEM_pandemonium_coalition_government
@@ -8474,17 +8480,19 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 6
-				x = -25
+				x = -28
 			}
 			x = 0
 			y = 1
 			relative_position_id = GEM_pandemonium_coalition_government
 			completion_reward = {
+				add_political_power = 100
+				add_stability = 0.05
 			}
 		}
 		focus = {
 			id = GEM_peace_achievement
-			icon = GFX_goal_generic_occupy_states_ongoing_war
+			icon = GFX_focus_usa_focus_on_europe
 			cost = 5.00
 			prerequisite = {
 				focus = GEM_focus_ended_AO
@@ -8534,6 +8542,7 @@ focus_tree = {
 			}
 			search_filters = {
 				FOCUS_FILTER_STABILITY
+				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 0
 			y = 3
@@ -8549,6 +8558,245 @@ focus_tree = {
 				if = {
 					limit = { has_stability < 0.40 }
 					set_stability = 0.40
+				}
+			}
+		}
+		focus = {
+			id = GEM_union_of_affection
+			icon = GFX_focus_ITA_banda_carita
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_focus_ended_AO
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = -2
+			y = 1
+			relative_position_id = GEM_focus_ended_AO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_political_advisor_cost_factor = 0.15
+					tooltip = political_advisor_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_consumer_goods_factor = -0.08
+					tooltip = consumer_goods_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_stability = 0.03
+				add_popularity = {
+					ideology = ROOT
+					popularity = 0.05
+				}
+			}
+		}
+		focus = {
+			id = GEM_to_not_lose_initiative
+			icon = GFX_focus_GER_customs_union
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_focus_ended_AO
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 2
+			y = 1
+			relative_position_id = GEM_focus_ended_AO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = -0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_operative_slot = 1
+					tooltip = operative_slot_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 20
+			}
+		}
+		focus = {
+			id = GEM_fierce_political_propaganda
+			icon = GFX_focus_generic_fascist_propaganda
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_to_not_lose_initiative
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 1
+			y = 1
+			relative_position_id = GEM_to_not_lose_initiative
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_political_power_factor = 0.15
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_economy_cost_factor = -0.05
+					tooltip = economy_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 60
+			}
+		}
+		focus = {
+			id = GEM_two_nations_one_state
+			icon = GFX_focus_ITA_devaluate_the_lire
+			cost = 10.00
+			prerequisite = {
+				focus = GEM_to_not_lose_initiative
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = -1
+			y = 1
+			relative_position_id = GEM_to_not_lose_initiative
+
+			select_effect = {
+				add_ideas = GEM_two_nations_one_state_idea_deff
+			}
+
+			completion_reward = {
+				#Tooltip purposes (Select Effect)
+				custom_effect_tooltip = SOV_focus_select_effect_tt
+				effect_tooltip = {
+					add_ideas = GEM_two_nations_one_state_idea_deff
+				}
+				custom_effect_tooltip = enter_tt
+				add_ideas = GEM_two_nations_one_state_idea
+				add_war_support = 0.05
+				hidden_effect = {
+					remove_ideas = GEM_two_nations_one_state_idea_deff
+				}
+			}
+		}
+		focus = {
+			id = GEM_rolling_the_dice
+			icon = GFX_focus_hol_the_foundations_of_defense
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_union_of_affection
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = -1
+			y = 1
+			relative_position_id = GEM_union_of_affection
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_production_factory_max_efficiency_factor = 0.05
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				country_event = GEM_germany_story.1
+			}
+		}
+		focus = {
+			id = GEM_leader_of_us
+			icon = GFX_focus_generic_support_the_left_right
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_union_of_affection
+			}
+			available = {
+				OR = {
+					has_completed_focus = GEH_armageddon
+					has_completed_focus = GEM_what_are_you_talking_about_i_was_always_the_student_council_president
+					has_completed_focus = GEM_gehenna_nation_founding
+					has_completed_focus = GEM_opinion_manipulation_and_secretariat_revolution
+					has_completed_focus = GEM_school_rules_revision
+				}
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 1
+			y = 1
+			relative_position_id = GEM_union_of_affection
+			completion_reward = {
+				add_country_leader_trait = GEM_leader_of_us_trait
+			}
+		}
+		focus = {
+			id = GEM_redefinition_of_german_nation
+			icon = GFX_focus_GER_appease_the_wehrmacht
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_peace_achievement
+			}
+			prerequisite = {
+				focus = GEM_rolling_the_dice
+			}
+			prerequisite = {
+				focus = GEM_leader_of_us
+			}
+			mutually_exclusive = {
+				focus = GEM_multiethnic_state
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
+			x = 0
+			y = 3
+			relative_position_id = GEM_union_of_affection
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_4_idea
+					add_idea = GEH_nazism_6_idea
+				}
+				GEH_german_nationalism_issue_down_effect = yes
+			}
+		}
+		focus = {
+			id = GEM_multiethnic_state
+			icon = GFX_focus_GER_defender_of_democracy
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_peace_achievement
+			}
+			prerequisite = {
+				focus = GEM_two_nations_one_state
+			}
+			prerequisite = {
+				focus = GEM_fierce_political_propaganda
+			}
+			mutually_exclusive = {
+				focus = GEM_redefinition_of_german_nation
+			}
+			available = {
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 0
+			y = 3
+			relative_position_id = GEM_to_not_lose_initiative
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_4_idea
+					add_idea = GEH_nazism_5_idea
 				}
 			}
 		}
@@ -8582,7 +8830,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 6
-				x = -20
+				x = -21
 			}
 			x = 0
 			y = 1
@@ -8620,7 +8868,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 6
-				x = -15
+				x = -14
 			}
 			x = 0
 			y = 1
@@ -8658,7 +8906,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 6
-				x = -10
+				x = -7
 			}
 			x = 0
 			y = 1
@@ -9140,7 +9388,7 @@ focus_tree = {
 					is_debug = yes
 				}
 				y = 6
-				x = -5
+				x = 0
 			}
 			x = 0
 			y = 1
@@ -9171,13 +9419,6 @@ focus_tree = {
 			}
 			prerequisite = {
 				focus = GEM_a_republic_of_two_peoples
-			}
-			offset = {
-				trigger = {
-					is_debug = yes
-				}
-				y = 10
-				x = 0
 			}
 			x = 0
 			y = 3
@@ -9787,25 +10028,25 @@ focus_tree = {
 				custom_effect_tooltip = enter_tt
 				custom_effect_tooltip = GEM_federation_of_three_nations1_tt
 				effect_tooltip = {
-					country_event = GEM_iroha_story.10
+					country_event = GEM_iroha_story.9
 				}
 				custom_effect_tooltip = enter_tt
 				custom_effect_tooltip = GEM_federation_of_three_nations2_tt
 				effect_tooltip = {
-					country_event = GEM_iroha_story.9
+					country_event = GEM_iroha_story.10
 				}
 				hidden_effect = {
 					if = {
 						limit = {
 							has_completed_focus = GEM_reaching_out_to_each_other
 						}
-						country_event = GEM_iroha_story.10
+						country_event = GEM_iroha_story.9
 					}
 					else_if = {
 						limit = {
 							has_completed_focus = GEM_gehenna_grand_coalition
 						}
-						country_event = GEM_iroha_story.9
+						country_event = GEM_iroha_story.10
 					}
 				}
 			}
