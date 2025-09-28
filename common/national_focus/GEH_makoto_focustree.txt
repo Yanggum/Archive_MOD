@@ -1849,6 +1849,7 @@ focus_tree = {
 			custom_effect_tooltip = enter_tt
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = GEM_albert_speer
+			show_ideas_tooltip = GEM_otto_strasser
 		}
 
 	}
@@ -7210,6 +7211,13 @@ focus_tree = {
 				set_country_leader_description = {
 					desc = GEM_reelection_decision_leader_desc
 				}
+
+				set_portraits = {
+					character = GEH_dlfhgk
+					civilian = {
+						large = GFX_portrait_GEH_Natsume_Iroha_O_portrait
+					}
+				}
 			}
 		}
 	# /이로하 후속중점 독일국
@@ -7734,7 +7742,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = GEM_albert_speer
+			show_ideas_tooltip = GEM_anton_drexler
 		}
 	}
 	focus = {
@@ -9018,6 +9026,9 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_focus_ended_3_A
 			}
+			search_filters = {
+				FOCUS_FILTER_INDUSTRY
+			}
 			x = -2
 			y = 2
 			relative_position_id = GEM_focus_ended_3_A
@@ -9060,6 +9071,9 @@ focus_tree = {
 			}
 			x = -1
 			y = 1
+			search_filters = {
+				FOCUS_FILTER_INDUSTRY
+			}
 			relative_position_id = GEM_focus_ended_3_A
 			completion_reward = {
 				custom_effect_tooltip = GEM_unionism_tt
@@ -9117,6 +9131,9 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_focus_ended_3_A
 			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
 			x = 2
 			y = 2
 			relative_position_id = GEM_focus_ended_3_A
@@ -9130,6 +9147,8 @@ focus_tree = {
 					GEM_ENDMOD_war_support_factor = 0.05
 					tooltip = war_support_factor_tt
 				}
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
 			}
 		}
 		focus = {
@@ -9258,10 +9277,15 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_master_of_central_europe
 			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+				FOCUS_FILTER_ANNEXATION
+			}
 			x = 1
 			y = 1
 			relative_position_id = GEM_introduce_socialist_economy
 			completion_reward = {
+				GEH_german_nationalism_issue_down_effect = yes
 				every_state = {
 					limit = {
 						OR = {
@@ -9515,13 +9539,308 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 4
+				y = 7
+				x = 2
 			}
 			x = 0
 			y = 1
 			relative_position_id = GEM_a_republic_of_two_peoples
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_alt_idea
+					add_idea = GEH_nazism_alt_1_idea
+				}
+			}
+		}
+		focus = {
+			id = GEM_new_people_of_new_regime
+			icon = GFX_focus_ARG_develop_the_electricity_sector
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_BO
+			}
+			search_filters = {
+			}
+			x = -3
+			y = 2
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_mobilization_speed = 0.05
+					tooltip = mobilization_speed_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_consumer_goods_factor = -0.05
+					tooltip = consumer_goods_factor_tt
+				}
+			}
+		}
+		focus = {
+			id = GEM_gehenna_ruling_party_formation
+			icon = GFX_focus_ARG_crackdown_on_corruption
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_BO
+			}
+			search_filters = {
+			}
+			x = -1
+			y = 2
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_political_power_factor = 0.05
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				if = {
+					limit = { has_character = GEH_akzhxh }
+					GEH_akzhxh = {
+						remove_trait = {
+							trait = GEM_gehenna_largest_journalist_trait
+							slot = political_advisor
+						}
+						add_trait = {
+							trait = GEM_flower_of_gehenna_trait
+							slot = political_advisor
+						}
+					}
+				}
+				else = {
+					add_stability = 0.05
+					add_political_power = 100
+				}
+				custom_effect_tooltip = enter_tt
+				set_party_name = {
+					ideology = fascism
+					long_name = GEM_manmajun_partys_union_party_long
+					name = GEM_manmajun_partys_union_party
+				}
+			}
+		}
+		focus = {
+			id = GEM_push_reform_beyond
+			icon = GFX_focus_GER_end_european_communism
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_gehenna_ruling_party_formation
+			}
+			prerequisite = {
+				focus = GEM_new_people_of_new_regime
+			}
+			search_filters = {
+			}
+			x = -2
+			y = 3
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = -0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_production_factory_max_efficiency_factor = 0.05
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_conscription_factor = 0.05
+					tooltip = conscription_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_war_support = 0.05
+				add_tech_bonus = {
+					name = GEM_push_reform_beyond
+					bonus = 1
+					uses = 1
+					category = construction_tech
+				}
+			}
+		}
+		focus = {
+			id = GEM_anton_drexler_rehabilitation
+			icon = GFX_focus_GER_customs_union
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_BO
+			}
+			search_filters = {
+			}
+			x = 3
+			y = 2
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				if = {
+					limit = { has_character = GEM_anton_drexler }
+					GEM_anton_drexler = {
+						remove_trait = {
+							trait = GEM_anton_drexler_trait
+							slot = political_advisor
+						}
+						add_trait = {
+							trait = GEM_anton_drexler_ex_trait
+							slot = political_advisor
+						}
+					}
+				}
+				else = {
+					add_stability = 0.05
+					add_political_power = 100
+				}
+			}
+		}
+		focus = {
+			id = GEM_in_the_name_of_the_fuehrer
+			icon = GFX_focus_ARG_fascist_researchers
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_BO
+			}
+			search_filters = {
+			}
+			x = 1
+			y = 2
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_alt_1_idea
+					add_idea = GEH_nazism_alt_2_idea
+				}
+				country_event = GEM_germany_story.5
+			}
+		}
+		focus = {
+			id = GEM_in_the_name_of_all_germany
+			icon = GFX_focus_GER_tend_to_the_future
+			cost = 5.00
+			available = {
+				OR = {
+					TRM = {
+						exists = no
+					}
+					TRM = {
+						is_subject_of = ROOT
+					}
+					TRK = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+					}
+					owns_state = 64
+				}
+				OR = {
+					GEH = {
+						exists = no
+					}
+					GEH = {
+						is_subject_of = ROOT
+					}
+					owns_state = 52
+				}
+			}
+			prerequisite = {
+				focus = GEM_anton_drexler_rehabilitation
+			}
+			prerequisite = {
+				focus = GEM_in_the_name_of_the_fuehrer
+			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
+			x = 2
+			y = 3
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = 0.10
+					tooltip = stability_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
+				if = {
+					limit = { has_stability < 0.40 }
+					set_stability = 0.40
+				}
+			}
+		}
+		focus = {
+			id = GEM_the_more_things_change
+			icon = GFX_focus_GER_brothers_in_arms
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_focus_ended_BO
+			}
+			search_filters = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_focus_ended_BO
+			completion_reward = {
+			}
+		}
+		focus = {
+			id = GEM_the_more_they_stay_the_same
+			icon = GFX_focus_GER_autarky_achieved
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_the_more_things_change
+			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
+			x = 0
+			y = 2
+			relative_position_id = GEM_the_more_things_change
+			completion_reward = {
+				GEH_german_nationalism_issue_down_effect = yes
+			}
+		}
+		focus = {
+			id = GEM_two_party_state
+			icon = GFX_focus_BEL_v_for_victory
+			cost = 5.00
+			available = {
+			}
+			prerequisite = {
+				focus = GEM_the_more_they_stay_the_same
+			}
+			prerequisite = {
+				focus = GEM_push_reform_beyond
+			}
+			prerequisite = {
+				focus = GEM_in_the_name_of_all_germany
+			}
+			search_filters = {
+			}
+			x = 0
+			y = 1
+			relative_position_id = GEM_the_more_they_stay_the_same
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_alt_2_idea
+					add_idea = GEH_nazism_alt_3_idea
+				}
 			}
 		}
 	# /독일-게헨나 연방제 마코토
@@ -9553,7 +9872,7 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
+				y = 7
 				x = 9
 			}
 			x = 0
@@ -9591,8 +9910,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 14
+				y = 7
+				x = 16
 			}
 			x = 0
 			y = 1
@@ -9629,8 +9948,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 19
+				y = 7
+				x = 23
 			}
 			x = 0
 			y = 1
@@ -10080,8 +10399,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 24
+				y = 7
+				x = 30
 			}
 			x = 0
 			y = 1
@@ -10119,8 +10438,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 32
+				y = 7
+				x = 58
 			}
 			x = 0
 			y = 1
@@ -10156,8 +10475,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 37
+				y = 7
+				x = 44
 			}
 			x = 0
 			y = 1
@@ -10193,8 +10512,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 42
+				y = 7
+				x = 51
 			}
 			x = 0
 			y = 1
@@ -10506,8 +10825,8 @@ focus_tree = {
 				trigger = {
 					is_debug = yes
 				}
-				y = 10
-				x = 47
+				y = 7
+				x = 37
 			}
 			x = 0
 			y = 1
