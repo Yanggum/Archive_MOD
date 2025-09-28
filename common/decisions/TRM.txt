@@ -4770,7 +4770,7 @@ TRN_after_war_decisions = {
 					NOT = { has_country_flag = TRN_actived_club_ns } 
 				}
 				add_ideas = TRN_gehenna_clup_resistance_ns
-				country_event = { id = trinity.43 days = 01 }
+				country_event = { id = trinity_events.43 days = 01 }
 				set_country_flag = TRN_actived_club_ns
 			}
 			hidden_effect = {
@@ -7179,22 +7179,22 @@ TRN_Mika_honor_decision_cat = {
 						modifier = {
 							add = -0.5
 						}
-						country_event = { id = trnhonor.3 }
+						country_event = { id = trinity_honor_events.3 }
 					}
 					1 = {
-						country_event = { id = trnhonor.4 }
+						country_event = { id = trinity_honor_events.4 }
 					}
 					1 = {
 						modifier = {
 							add = -0.5
 						}
-						country_event = { id = trnhonor.5 }
+						country_event = { id = trinity_honor_events.5 }
 					}
 					1 = {
-						country_event = { id = trnhonor.7 }
+						country_event = { id = trinity_honor_events.7 }
 					}
 					1 = {
-						country_event = { id = trnhonor.8 }
+						country_event = { id = trinity_honor_events.8 }
 					}
 				}
 			}
@@ -8296,7 +8296,7 @@ TRN_economic_plan_cat = {
 		}
 
 		remove_effect = {
-			hidden_effect = { country_event = trnfla.21}
+			hidden_effect = { country_event = trinity_flavor_events.21}
 			FROM = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -9025,7 +9025,7 @@ TRN_Mika_social_problem_cat = {
 					limit = { 
 						has_government = fascism
 					}
-					country_event = { id = trnfla.31 days = 70 }
+					country_event = { id = trinity_flavor_events.31 days = 70 }
 				}
 			}
 		}
@@ -9071,26 +9071,29 @@ TRN_Mika_social_problem_cat = {
 			hidden_effect = {
 				random_list = {
 					1 = {
-						country_event = { id = trnsocial.2 }
+						country_event = { id = trinity_social_ploblem_events.2 }
 					}
 					1 = {
-						country_event = { id = trnsocial.3 }
+						country_event = { id = trinity_social_ploblem_events.3 }
 					}
 					1 = {
-						country_event = { id = trnsocial.4 }
+						country_event = { id = trinity_social_ploblem_events.4 }
 					}
 					1 = {
-						country_event = { id = trnsocial.5 }
+						country_event = { id = trinity_social_ploblem_events.5 }
 					}
 					1 = {
-						country_event = { id = trnsocial.6 }
+						country_event = { id = trinity_social_ploblem_events.6 }
+					}
+					1 = {
+						country_event = { id = trinity_social_ploblem_events.8 }
 					}
 					0 = {
 						modifier = {
 							has_country_flag = TRN_trinity_available_SPD_flag
 							add = 1
 						}
-						country_event = trnsocial.7
+						country_event = trinity_social_ploblem_events.7
 					}
 				}
 			}
@@ -9117,11 +9120,6 @@ TRN_Mika_social_problem_cat = {
 		fire_only_once = yes
 
 		cost = 15
-
-		modifier = {
-			stability_factor = -0.05
-			research_speed_factor = 0.03
-		}
 
 		ai_will_do = {
 			base = 5
@@ -9545,6 +9543,175 @@ TRN_Mika_social_problem_cat = {
 			}
 			custom_effect_tooltip = enter_tt
 		}
+	}
+
+	TRN_social_child_brainwashing_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+			
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+		}
+
+	}
+
+	TRN_social_causing_regional_conflict_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+		}
+
+	}
+
+	TRN_social_edit_textbook_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+		}
+
 	}
 
 }
