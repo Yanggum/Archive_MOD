@@ -9546,7 +9546,7 @@ TRN_Mika_social_problem_cat = {
 	}
 
 	TRN_social_child_brainwashing_decision = {
-		icon = GFX_decision_generic_cctv
+		icon = GFX_decision_generic_brainwash
 
 		allowed = { always = no  } #activated by effect
 
@@ -9746,11 +9746,15 @@ TRN_Kulturkampf_cat = {
 		days_mission_timeout = 35
 
 		activation = {
-			has_completed_focus = TRN_take_over_the_church
+			has_country_flag = TRN_kulturkampf_activetion_flag
 		}
 
 		timeout_effect = {
 			if = {
+				limit = { has_country_flag = TRN_bonhoeffer_no_more_activation }
+				custom_effect_tooltip = TRN_bonhoeffer_no_more_activation_tt
+			}
+			else_if = {
 				limit = { has_country_flag = TRN_bonhoeffer_not_activation }
 				custom_effect_tooltip = TRN_bonhoeffer_not_activation_tt
 				clr_country_flag = TRN_bonhoeffer_not_activation
@@ -9776,6 +9780,18 @@ TRN_Kulturkampf_cat = {
 						}
 					}
 					1 = {
+						modifier = {
+							add = 0.5
+							check_variable = { TRN_Kulturkampf_display_value > 50 }
+						}
+						modifier = {
+							add = 1
+							check_variable = { TRN_Kulturkampf_display_value > 55 }
+						}
+						modifier = {
+							add = 5
+							check_variable = { TRN_Kulturkampf_display_value > 60 }
+						}
 						custom_effect_tooltip = TRN_bonhoeffer_increase_influence_3_tt
 						add_to_variable = { TRN_Kulturkampf_display_value = -1 }
 						clamp_variable = {
@@ -9785,21 +9801,196 @@ TRN_Kulturkampf_cat = {
 						}
 					}
 				}
+				random_owned_state = {
+					limit = { 
+						is_core_of = TRM
+						OR = {
+							has_dynamic_modifier = { modifier = GEK_protestant_state }
+							has_dynamic_modifier = { modifier = GEK_catholic_state }
+						}
+						NOT = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state} }
+						NOT = { has_dynamic_modifier = { modifier = TRN_church_in_resistance} }
+					}
+					add_dynamic_modifier = { modifier = TRN_church_in_resistance }
+					add_to_variable = { TRN_church_is_resistance_ns_stability_factor = -0.05 }
+				}
 			}
 			custom_effect_tooltip = tooltip_white_line
 			activate_mission = TRN_bonhoeffer_activation_decision
 		}
 		complete_effect = {
-
+			clr_country_flag = TRN_kulturkampf_activetion_flag
+			remove_decision = TRN_bonhoeffer_activation_decision
+			if = {
+				limit = { has_country_flag = TRN_bonhoeffer_no_more_activation }
+				hidden_effect = { country_event = { id = trinity_kulturkampf_events.2 days = 02 } }
+			}
+			else = {
+				hidden_effect = { country_event = { id = trinity_kulturkampf_events.2 days = 05 } }
+			}
+			
 		}
 	}
 
-	TRN_religion_assimilation= {
+	TRN_bonhoeffer_ban_speech_decision = {
+		icon = GFX_decision_generic_political_address
+		allowed = { tag = TRM }
+
+		fire_only_once = yes
+
+		available = {
+			TRN_bonhoeffer_decision_trgger = yes 
+		}
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = TRN_bonhoeffer_not_activation
+			custom_effect_tooltip = TRN_bonhoeffer_not_activation_tt
+		}
+	}
+
+	TRN_bonhoeffer_radio_broadcasting_decision = {
+		icon = GFX_decision_hol_radio_oranje
+		allowed = { tag = TRM }
+
+		fire_only_once = yes
+
+		available = {
+			TRN_bonhoeffer_decision_trgger = yes 
+		}
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = TRN_bonhoeffer_not_activation
+			custom_effect_tooltip = TRN_bonhoeffer_not_activation_tt
+		}
+	}
+
+	TRN_bonhoeffer_ban_writing_and_publishing_decision = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = { tag = TRM }
+
+		fire_only_once = yes
+
+		available = {
+			TRN_bonhoeffer_decision_trgger = yes 
+		}
+
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = TRN_bonhoeffer_not_activation
+			custom_effect_tooltip = TRN_bonhoeffer_not_activation_tt
+		}
+	}
+
+	TRN_arrest_bonhoeffer_decision = {
+		icon = GFX_decision_generic_arrest
+		allowed = { tag = TRM }
+
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = TRN_revolution_in_the_spirit
+		}
+
+		days_remove = 5
+
+		complete_effect = {
+			set_country_flag = TRN_bonhoeffer_no_more_activation
+			custom_effect_tooltip = TRN_bonhoeffer_no_more_activation_tt
+		}
+
+	}
+
+	TRN_infiltrate_church_deicision = {
+
+		allowed = {
+			original_tag = TRM
+		}
+
+		icon = eng_trade_unions_demand
+
+		ai_will_do = {
+			base = 40
+			modifier = {
+				factor = 3
+				has_political_power > 99
+			}
+		}
+		
+		state_target = yes
+		target_trigger = {
+			FROM = {
+				NOT = {  has_state_flag = TRN_completed_infiltrate_state }
+				OR = {
+					has_dynamic_modifier = { modifier = GEK_protestant_state }
+					has_dynamic_modifier = { modifier = GEK_catholic_state }
+				}
+            		is_controlled_by = ROOT
+        		}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = TRN_take_over_the_church
+		}
+
+		available = { 
+			has_completed_focus = TRN_take_over_the_church
+		}
+		visible = {
+			has_completed_focus = TRN_take_over_the_church
+		}
+
+		on_map_mode = map_and_decisions_view
+
+		cost = 25
+
+		days_remove = 70
+
+		fire_only_once = yes
+
+		complete_effect = {
+			random_list = {
+				1 = {
+					add_to_variable = { 
+						TRN_Kulturkampf_display_value = 1
+						tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
+					}
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+				1 = {
+					add_to_variable = { 
+						TRN_Kulturkampf_display_value = 5
+						tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
+					}
+					clamp_variable = {
+						var = TRN_Kulturkampf_display_value
+						min = 0
+						max = 100
+					}
+				}
+			}
+		}
+		remove_effect = {
+			FROM = {
+				custom_effect_tooltip = TRM_infiltrate_church_FROM_tt
+				set_state_flag = TRN_completed_infiltrate_state
+			}
+		}
+	}
+	TRN_religion_assimilation_deicision = {
 		icon = GFX_decision_hol_attract_foreign_investors
 
 		allowed = { tag = TRM }
 
-		days_remove = 70
+		days_remove = 35
 
 		modifier = {
 
@@ -9849,88 +10040,9 @@ TRN_Kulturkampf_cat = {
 			}
 		}
 	}
-	
 
-	TRM_infiltrate_church = {
-
-		allowed = {
-			original_tag = TRM
-		}
-
-		icon = eng_trade_unions_demand
-
-		ai_will_do = {
-			base = 40
-			modifier = {
-				factor = 3
-				has_political_power > 99
-			}
-		}
-		
-		state_target = yes
-		target_trigger = {
-			FROM = {
-				NOT = {  has_state_flag = TRN_completed_infiltrate_state }
-				OR = {
-					has_dynamic_modifier = { modifier = GEK_protestant_state }
-					has_dynamic_modifier = { modifier = GEK_catholic_state }
-				}
-            		is_controlled_by = ROOT
-        		}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = TRN_take_over_the_church
-		}
-
-		available = {
-			has_completed_focus = TRN_take_over_the_church
-		}
-
-		visible = {
-
-		}
-
-		on_map_mode = map_and_decisions_view
-
-		cost = 25
-
-		days_remove = 1
-
-		fire_only_once = yes
-
-		complete_effect = {
-			random_list = {
-				1 = {
-					add_to_variable = { 
-						TRN_Kulturkampf_display_value = 1
-						tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
-					}
-					clamp_variable = {
-						var = TRN_Kulturkampf_display_value
-						min = 0
-						max = 100
-					}
-				}
-				1 = {
-					add_to_variable = { 
-						TRN_Kulturkampf_display_value = 5
-						tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
-					}
-					clamp_variable = {
-						var = TRN_Kulturkampf_display_value
-						min = 0
-						max = 100
-					}
-				}
-			}
-		}
-		remove_effect = {
-			FROM = {
-				custom_effect_tooltip = TRM_infiltrate_church_FROM_tt
-				set_state_flag = TRN_completed_infiltrate_state
-			}
-		}
+	TRN_infiltrate_church_unlock_tt_deicision = {
+		visible = { always = no }
 	}
 	
 }
