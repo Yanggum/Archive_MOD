@@ -9735,6 +9735,88 @@ country_event = { #[FROM.GetNameDef]의 경제동맹 거절
 	}
 }
 
+country_event = { # [ROOT.GetNameDef] 의회 선거
+	id = HEU.election_event.1
+	title = HEU.election_event.1.t
+	desc = HEU.election_event.1.desc
+	picture = GFX_event_mega_cities_GEH_2
+    is_triggered_only = yes
+
+	trigger = {
+		tag = HEU
+		NOT = { has_government = democratic }
+		has_completed_focus = HEU_we_still_hope
+	}
+
+	option = { 
+		name = HEU.election_event.1.a # 농민과 함께, 우파당이 승리했다!
+		trigger = {
+			NOT = { has_completed_focus = HEU_for_you_3 }
+		}
+		IF = {
+			limit = {
+				NOT = { has_completed_focus = HEU_for_you_3 }
+			}
+			set_temp_variable = { 
+				var = HEU_abgeordnetenkammer_right_temp
+				value = 0.15
+			}
+			HEU_add_influence_right_party = yes
+		}
+		ELSE = {
+			set_temp_variable = { 
+				var = HEU_abgeordnetenkammer_kivotos_temp
+				value = 0.15
+			}
+			HEU_add_influence_kivotos_party = yes
+		}
+		
+	}
+
+	option = { 
+		name = HEU.election_event.1.b # 게헨나의 자유로, 연방생도당의 승리다!
+		trigger = {
+			has_completed_focus = HEU_for_you_3
+		}
+		IF = {
+			limit = {
+				NOT = { has_completed_focus = HEU_for_you_3 }
+			}
+			set_temp_variable = { 
+				var = HEU_abgeordnetenkammer_right_temp
+				value = 0.15
+			}
+			HEU_add_influence_right_party = yes
+		}
+		ELSE = {
+			set_temp_variable = { 
+				var = HEU_abgeordnetenkammer_kivotos_temp
+				value = 0.15
+			}
+			HEU_add_influence_kivotos_party = yes
+		}
+	}
+
+	option = { 
+		name = HEU.election_event.1.c # 소시민들의 힘으로서, 급진자유당 만세!
+			set_temp_variable = { 
+				var = HEU_abgeordnetenkammer_centre_temp
+				value = 0.15
+			}
+			HEU_add_influence_centre_party = yes
+	}
+
+	option = { 
+		name = HEU.election_event.1.d # 노동조합의 연대로서, 공산당의 대약진!
+
+		set_temp_variable = { 
+			var = HEU_abgeordnetenkammer_left_temp
+			value = 0.15
+		} 
+		HEU_add_influence_left_party = yes
+	}
+}
+
 country_event = { #게르만 연합공국 의회 선거
 	id = HEU.election_event.4
 	title = HEU.election_event.4.t
