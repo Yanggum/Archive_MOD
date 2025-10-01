@@ -10952,6 +10952,41 @@ country_event = { # 명예 - 고립감
 	}
 }
 
+country_event = { # (히든)
+	id = trinity_kulturkampf_events.100
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		tag = TRM
+		has_country_flag = TRN_kulturkampf_activetion_flag
+		any_state = {
+			is_core_of = TRM
+			OR = {
+				has_dynamic_modifier = { modifier = GEK_protestant_state }
+				has_dynamic_modifier = { modifier = GEK_catholic_state }
+			}
+		}
+	}
+
+	immediate = {
+		random_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				OR = {
+					has_dynamic_modifier = { modifier = GEK_protestant_state }
+					has_dynamic_modifier = { modifier = GEK_catholic_state }
+				}
+			}
+			save_global_event_target_as = TRN_church_in_resistance_state
+			state_event = { id = trinity_kulturkampf_events.5 trigger_for = controller }
+		}
+		hidden_effect = {
+			country_event = { id = trinity_kulturkampf_events.100 days = 25 random_days = 15 }
+		}
+	}
+}
+
 country_event = { # 저항하는 교회
 	id = trinity_kulturkampf_events.1
 	title = trinity_kulturkampf_events.1.t
@@ -10961,17 +10996,20 @@ country_event = { # 저항하는 교회
 	is_triggered_only = yes
 	fire_only_once = no
 
+	immediate = {
+		hidden_effect = {
+			country_event = { id = trinity_kulturkampf_events.4 days = 35 }
+			country_event = { id = trinity_kulturkampf_events.100 days = 50 random_days = 15 }
+		}
+	}
+
 	option = { # 
 		name = trinity_kulturkampf_events.1.a
 		set_country_flag = TRN_kulturkampf_activetion_flag
 		unlock_decision_category_tooltip = TRN_Kulturkampf_cat
 		activate_mission = TRN_bonhoeffer_activation_decision
 		hidden_effect = {
-			set_variable = { TRN_church_is_resistance_ns_stability_factor = -0.05}
 			add_dynamic_modifier = { modifier = TRN_church_in_resistance_ns }
-		}
-		66 = {
-			add_dynamic_modifier = { modifier = TRN_church_in_resistance }
 		}
 	}
 }
@@ -11001,11 +11039,11 @@ country_event = { # 디트리히 본회퍼의 마지막 편지
 	title = trinity_kulturkampf_events.3.t
 	desc = {
 		text = trinity_kulturkampf_events.3.desc
-		trigger = { has_country_flag = TRN_bonhoeffer_no_more_activation }
+		trigger = { has_country_flag = TRN_bonhoeffer_is_arrest }
 	}
 	desc = {
 		text = trinity_kulturkampf_events.3_2.desc
-		trigger = { NOT = { has_country_flag = TRN_bonhoeffer_no_more_activation} }
+		trigger = { NOT = { has_country_flag = TRN_bonhoeffer_is_arrest} }
 	}
 	
 	picture = GFX_report_event_dietrich_bonhoeffer
@@ -11016,6 +11054,52 @@ country_event = { # 디트리히 본회퍼의 마지막 편지
 	option = { # 
 		name = trinity_kulturkampf_events.3.a
 
+	}
+}
+
+country_event = { # 고백교회
+	id = trinity_kulturkampf_events.4
+	title = trinity_kulturkampf_events.4.t
+	desc = trinity_kulturkampf_events.4.desc
+	picture = GFX_report_event_dietrich_bonhoeffer
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
+			add_to_variable = { TRN_Kulturkampf_display_value = -5 }
+			clamp_variable = {
+				var = TRN_Kulturkampf_display_value
+				min = 0
+				max = 100
+			}
+		}
+	}
+
+	option = { # 
+		name = trinity_kulturkampf_events.4.a
+		custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
+		
+	}
+}
+
+country_event = { # FROM주의 저항
+	id = trinity_kulturkampf_events.5
+	title = trinity_kulturkampf_events.5.t
+	desc = trinity_kulturkampf_events.5.desc
+	picture = GFX_report_event_generic_germany_father
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trinity_kulturkampf_events.5.a
+		unlock_decision_tooltip = { decision = TRN_church_in_resistance_decision show_effect_tooltip = yes }
+		event_target:TRN_church_in_resistance_state = {
+			set_state_flag = trinity_church_in_resistance_state_flag
+		}
 	}
 }
 
