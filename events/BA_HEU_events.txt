@@ -857,7 +857,7 @@ country_event = { #독립국가당의 종언
 
 	option = { 
 		name = HEU_event.117.a 
-		HEU_pierre_prum = { retire = yes }
+		#HEU_pierre_prum = { retire = yes }
 		add_manpower = -32
 	}
 }
@@ -3433,7 +3433,7 @@ country_event = { #트리니티의 폐허 위에서
 		text = HEU_event.230.desc.b
 		trigger = { 
 			has_dynamic_modifier = {
-				modifier = HEU_rikuhachimaism_idea
+				modifier = HEU_luxembourg_administration_idea
 			} 
 		}
 	}
@@ -4111,8 +4111,26 @@ country_event = { #국가 가톨릭 혁명회 창설
 country_event = { #트리니티와의 전쟁
 	id = HEU_event.255
 	title = HEU_event.255.t
-	desc = HEU_event.255.desc
-	picture = GFX_report_event_kayoko_onikata
+
+	desc = {
+		text = HEU_event.255.desc.generic
+		trigger = { 
+			has_dynamic_modifier = {
+				modifier = HEU_luxembourgism_idea
+			} 
+		}
+	}	
+
+	desc = {
+		text = HEU_event.255.desc.mutsuki
+		trigger = { 
+			has_dynamic_modifier = {
+				modifier = HEU_luxembourg_administration_idea
+			} 
+		}
+	}	
+
+	picture = GFX_report_event_aru_rikuhachima_senaka
 
     fire_only_once = yes
 
@@ -4145,7 +4163,25 @@ country_event = { #트리니티와의 전쟁
 country_event = { #울지 마
 	id = HEU_event.256
 	title = HEU_event.256.t
-	desc = HEU_event.256.desc
+
+	desc = {
+		text = HEU_event.256.desc.generic
+		trigger = { 
+			has_dynamic_modifier = {
+				modifier = HEU_luxembourgism_idea
+			} 
+		}
+	}	
+
+	desc = {
+		text = HEU_event.256.desc.mutsuki
+		trigger = { 
+			has_dynamic_modifier = {
+				modifier = HEU_luxembourg_administration_idea
+			} 
+		}
+	}	
+
 	picture = GFX_report_event_haruka_igusa
 
     is_triggered_only = yes
@@ -9642,6 +9678,61 @@ country_event = { # 트리니티 호스트?
 	}
 }
 
+country_event = { # 무엇을 망설이는 거야?
+	id = HEU.mutsuki_event.51
+	title = HEU.mutsuki_event.51.t
+	desc = HEU.mutsuki_event.51.desc
+	picture = GFX_report_event_trinity_student
+
+	trigger = {
+		original_tag = HEU
+		has_completed_focus = HEU_representative_of_the_germanic
+		has_completed_focus = HEU_no_more_hope
+		is_neighbor_of = TRM
+		NOT = {
+			country_exists = GEM
+		}
+		NOT = {
+			has_completed_focus = HEU_germany_union
+		}
+		NOT = {
+			has_war_with = TRM
+		}
+		check_variable = {
+			aru_mental_trauma_var > 0.74
+		}
+		has_country_leader = {
+        	character = HEU_ancmzl
+        	ruling_only = yes
+		}
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = { 
+		name = HEU.mutsuki_event.51.a
+		
+	}
+}
+
+country_event = { # 우리들의 대전략
+	id = HEU.mutsuki_event.52
+	title = HEU.mutsuki_event.52.t
+	desc = HEU.mutsuki_event.52.desc
+	picture = GFX_report_event_haruka_igusa
+
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.mutsuki_event.52.a
+		
+	}
+}
+
 country_event = { #경제동맹 제안
 	id = HEU.diplomacy_event.1
 	title = HEU.diplomacy_event.1.t
@@ -9814,6 +9905,25 @@ country_event = { # [ROOT.GetNameDef] 의회 선거
 			value = 0.15
 		} 
 		HEU_add_influence_left_party = yes
+	}
+}
+
+country_event = { # [ROOT.GetNameDef] 의회 선거
+	id = HEU.election_event.2
+	title = HEU.election_event.2.t
+	desc = HEU.election_event.2.desc
+	picture = GFX_event_mega_cities_GEH_2
+    is_triggered_only = yes
+
+	trigger = {
+		tag = HEU
+		NOT = { has_government = democratic }
+		has_completed_focus = HEU_rikuhachima_governemnt
+	}
+
+	option = { 
+		name = HEU.election_event.2.a
+		add_political_power = 25
 	}
 }
 
