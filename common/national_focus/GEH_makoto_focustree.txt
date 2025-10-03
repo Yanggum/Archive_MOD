@@ -1475,55 +1475,91 @@ focus_tree = {
 			focus = GEH_gukbanggun_problem
 		}
 		available = {
-			NOT = {
-				has_country_leader = {
-					character = GEH_akzhxh
-					ruling_only = yes
+			OR = {
+				NOT = {
+					has_country_leader = {
+						character = GEH_akzhxh
+						ruling_only = yes
+					}
 				}
+				has_global_flag = HINA_DISAGREE
+			}
+		}
+		bypass = {
+			AND = {
+				has_global_flag = HINA_DISAGREE
+				controls_state = 909
+				controls_state = 58
+				controls_state = 59
+				controls_state = 56
 			}
 		}
 		mutually_exclusive = { focus = GEH_nego_whit_wehrmacht_new }
 		x = 3
 		y = 2
 		relative_position_id = GEH_gukbanggun_problem
+		bypass_effect = {
+			set_global_flag = GEA_negotiating_independence
+			unlock_decision_category_tooltip = GEM_gehenna_national_reconquest
+			unlock_decision_tooltip = GEM_gehenna_national_reconquest_decision
+		}
 		completion_reward = {
-			custom_effect_tooltip = GEH_subjugation_tt
-			every_owned_state = {
-				limit = {
-					has_dynamic_modifier = {
-						modifier = GEH_ucantusefactory
+			if = {
+				limit = { has_global_flag = HINA_DISAGREE }
+				if = {
+					limit = { country_exists = GEK }
+					create_wargoal = {
+						target = GEK
+						type = annex_everything
 					}
 				}
 				if = {
-					limit = {
-						NOT = { is_core_of = GEM }
+					limit = { country_exists = GEA }
+					create_wargoal = {
+						target = GEA
+						type = annex_everything
 					}
-					add_resistance = 100
 				}
-				remove_dynamic_modifier = {
-					modifier = GEH_ucantusefactory
-				}
-				add_dynamic_modifier = {
-					modifier = GEH_ucantusefactory_2
-				}
-				set_state_flag = GEK_state_flag
 			}
-			every_owned_state = {
-				limit = {
-					has_dynamic_modifier = {
+			else = {
+				custom_effect_tooltip = GEH_subjugation_tt
+				every_owned_state = {
+					limit = {
+						has_dynamic_modifier = {
+							modifier = GEH_ucantusefactory
+						}
+					}
+					if = {
+						limit = {
+							NOT = { is_core_of = GEM }
+						}
+						add_resistance = 100
+					}
+					remove_dynamic_modifier = {
+						modifier = GEH_ucantusefactory
+					}
+					add_dynamic_modifier = {
 						modifier = GEH_ucantusefactory_2
 					}
+					set_state_flag = GEK_state_flag
 				}
-				remove_dynamic_modifier = {
-					modifier = GEH_ucantusefactory_2
+				every_owned_state = {
+					limit = {
+						has_dynamic_modifier = {
+							modifier = GEH_ucantusefactory_2
+						}
+					}
+					remove_dynamic_modifier = {
+						modifier = GEH_ucantusefactory_2
+					}
+					set_state_flag = GEK_state_flag
 				}
-				set_state_flag = GEK_state_flag
-			}
-			58 = {
-				set_demilitarized_zone = no
-			}
-			909 = {
-				set_demilitarized_zone = no
+				58 = {
+					set_demilitarized_zone = no
+				}
+				909 = {
+					set_demilitarized_zone = no
+				}
 			}
 			set_global_flag = GEA_negotiating_independence
 			unlock_decision_category_tooltip = GEM_gehenna_national_reconquest
@@ -3151,10 +3187,6 @@ focus_tree = {
 		cost = 5
 
 		bypass = {
-			OR = {
-				NOT = { country_exists = MIL }
-				has_war_with = MIL
-			}
 		}
 		
 		available = {
@@ -5224,6 +5256,13 @@ focus_tree = {
 			}
 		}
 		bypass = {
+			NOT = {
+				has_idea = GEH_Manmajun_Bupae_5
+				has_idea = GEH_Manmajun_Bupae_4
+				has_idea = GEH_Manmajun_Bupae_3
+				has_idea = GEH_Manmajun_Bupae_2
+				has_idea = GEH_Manmajun_Bupae_1
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -5946,6 +5985,15 @@ focus_tree = {
 		prerequisite = { focus = GEM_natsume_iroha }
 		available = {
 		}
+		bypass = {
+			NOT = {
+				has_idea = GEH_Manmajun_Bupae_5
+				has_idea = GEH_Manmajun_Bupae_4
+				has_idea = GEH_Manmajun_Bupae_3
+				has_idea = GEH_Manmajun_Bupae_2
+				has_idea = GEH_Manmajun_Bupae_1
+			}
+		}
 		search_filters = {
 			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
@@ -6109,7 +6157,16 @@ focus_tree = {
 
 		}
 		bypass = {
-			has_completed_focus = GEM_dissolution_of_state_government
+			OR = {
+				has_completed_focus = GEM_dissolution_of_state_government
+				NOT = {
+					any_owned_state = {
+						has_dynamic_modifier = {
+							modifier = GEH_state_government
+						}
+					}
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -10367,9 +10424,6 @@ focus_tree = {
 			icon = GFX_focus_GER_appease_the_wehrmacht
 			cost = 5.00
 			prerequisite = {
-				focus = GEM_peace_achievement
-			}
-			prerequisite = {
 				focus = GEM_rolling_the_dice
 			}
 			prerequisite = {
@@ -10398,9 +10452,6 @@ focus_tree = {
 			id = GEM_multiethnic_state
 			icon = GFX_focus_GER_defender_of_democracy
 			cost = 5.00
-			prerequisite = {
-				focus = GEM_peace_achievement
-			}
 			prerequisite = {
 				focus = GEM_two_nations_one_state
 			}
