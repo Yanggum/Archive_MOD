@@ -7316,7 +7316,7 @@ focus_tree = {
 		x = 20
 		y = 0
 		offset = {
-			x = -5
+			x = -4
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -8001,6 +8001,7 @@ focus_tree = {
 
 		}
 		allow_branch = {
+			NOT = { has_completed_focus = TRN_unprovable_problem }
 			power_balance_value = {
 				id = TRM_power_balance
 				value > 0.24
@@ -8060,6 +8061,7 @@ focus_tree = {
 			}
 		}
 		allow_branch = {
+			NOT = { has_completed_focus = TRN_unprovable_problem }
 			NOT = {
 				power_balance_value = {
 					id = TRM_power_balance
@@ -8349,7 +8351,7 @@ focus_tree = {
 			has_government = fascism
 		}
 		mutually_exclusive = {
-			focus = TRN_crushing_german_party
+			focus = TRN_limit_german_party
 		}
 
 		ai_will_do = {
@@ -8360,8 +8362,8 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 독일 정당 분쇄
-		id = TRN_crushing_german_party
+	focus = { # 정당 운동 
+		id = TRN_limit_german_party
 		icon = GFX_focus_ITA_banda_carita
 		prerequisite = { focus = TRN_solving_social_problems }
 		x = 0
@@ -8385,15 +8387,15 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = TRN_unknow_focus_02
-		icon = GFX_goal_unknown
+		id = TRN_appeasement_of_germany_politicians
+		icon = GFX_focus_BRA_reach_out_to_military_dem
 		prerequisite = { 
-			focus = TRN_crushing_german_party 
+			focus = TRN_limit_german_party 
 			focus = TRN_contact_SPD
 		}
 		x = 1
 		y = 1
-		relative_position_id = TRN_crushing_german_party
+		relative_position_id = TRN_limit_german_party
 		cost = 5
 
 		available = {
@@ -8412,11 +8414,11 @@ focus_tree = {
 		id = TRN_death_or_dishonor
 		icon = GFX_focus_generic_infiltration
 		prerequisite = { 
-			focus = TRN_crushing_german_party
+			focus = TRN_limit_german_party
 		}
 		x = 0
 		y = 2
-		relative_position_id = TRN_crushing_german_party
+		relative_position_id = TRN_limit_german_party
 		cost = 5
 
 		available = {
@@ -8459,7 +8461,7 @@ focus_tree = {
 		icon = GFX_goal_unknown
 		prerequisite = { 
 			focus = TRN_contact_SPD
-			focus = TRN_crushing_german_party
+			focus = TRN_limit_german_party
 		}
 		x = 1
 		y = 1
@@ -8482,11 +8484,11 @@ focus_tree = {
 		id = TRN_unknow_focus_11
 		icon = GFX_goal_unknown
 		prerequisite = { 
-			focus = TRN_unknow_focus_02
+			focus = TRN_appeasement_of_germany_politicians
 		}
 		x = 0
 		y = 2
-		relative_position_id = TRN_unknow_focus_02
+		relative_position_id = TRN_appeasement_of_germany_politicians
 		cost = 5
 
 		available = {
@@ -9711,7 +9713,10 @@ focus_tree = {
 		cost = 5
 
 		available = {
-			Eden_country_defend_trigger = no
+			IF = {
+				limit = { has_completed_focus = TRN_unprovable_problem }
+				Eden_country_defend_trigger = no
+			}
 		}
 		prerequisite = { focus = TRN_eden_accord }
 
@@ -9752,8 +9757,11 @@ focus_tree = {
 		cost = 2
 
 		available = {
+			IF = {
+				limit = { has_completed_focus = TRN_unprovable_problem }
+				Eden_country_defend_trigger = no
+			}
 			NOT = { has_completed_focus = TRN_spiritual_warfare }
-			Eden_country_defend_trigger = no
 			NOT = { has_global_flag = HEU_TRM_alliance }
 			country_exists = HEU
 			HEU = { NOT = { has_completed_focus = HEU_watch_right_wing_party } }
@@ -9779,8 +9787,11 @@ focus_tree = {
 		cost = 2
 
 		available = {
+			IF = {
+				limit = { has_completed_focus = TRN_unprovable_problem }
+				Eden_country_defend_trigger = no
+			}
 			NOT = { has_completed_focus = TRN_spiritual_warfare }
-			Eden_country_defend_trigger = no
 			country_exists = GEM
 			country_exists = GEH
 		}
@@ -9808,7 +9819,10 @@ focus_tree = {
 		cost = 5
 
 		available = {
-			Eden_country_defend_trigger = no
+			IF = {
+				limit = { has_completed_focus = TRN_unprovable_problem }
+				Eden_country_defend_trigger = no
+			}
 			is_faction_leader = yes
 			has_army_manpower = { size > 249999 }
 			has_war_support > 0.4
@@ -9890,6 +9904,10 @@ focus_tree = {
 
 		ai_will_do = {
 
+		}
+
+		allow_branch = {
+			NOT = { has_completed_focus = TRN_unprovable_problem }
 		}
 		completion_reward = {
 			add_war_support = 0.05
@@ -11715,7 +11733,7 @@ shared_focus = {
 }
 shared_focus = {
 	id = TRM_Trinity_Field_Artillery 
-	icon = GFX_focus_SWE_let_fly_all_guns
+	icon = GFX_focus_TRN_Trinity_Field_Artillery
 	available = { }
 	ai_will_do = {
 		base = 300
