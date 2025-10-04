@@ -5269,6 +5269,10 @@ GEM_gehenna_national_reconquest_orign = {
 				has_completed_focus = GEM_outer_gehenna_unification
 				has_completed_focus = GEM_unification_of_all_gehenna_states
 			}
+			any_state = {
+				BA_luxembourg_is = yes
+				NOT = { is_core_of = ROOT }
+			}
 		}
 
 		available = {
@@ -5302,6 +5306,10 @@ GEM_gehenna_national_reconquest_orign = {
 
 		visible = {
 			has_completed_focus = GEM_south_germany_unification
+			any_state = {
+				BA_sha_core_is = yes
+				NOT = { is_core_of = ROOT }
+			}
 		}
 
 		available = {
@@ -5321,7 +5329,7 @@ GEM_gehenna_national_reconquest_orign = {
 
 GEM_establishment_of_reichskommissariat = {
 	GEM_establishment_of_reichskommissariat_GM1 = {
-		icon = GFX_decision_Gehenna_Emblem
+		icon = GFX_decision_ger_reichskommissariats
 
 		highlight_states = {
      		highlight_states_trigger = {
@@ -5341,6 +5349,7 @@ GEM_establishment_of_reichskommissariat = {
 		}
 
 		available = {
+			is_subject = no
 			BA_poland_little_controll = yes
 		}
 
@@ -5409,7 +5418,7 @@ GEM_establishment_of_reichskommissariat = {
 		}
 	}
 	GEM_establishment_of_reichskommissariat_GM2 = {
-		icon = GFX_decision_Gehenna_Emblem
+		icon = GFX_decision_ger_reichskommissariats
 
 		highlight_states = {
      		highlight_states_trigger = {
@@ -5434,6 +5443,7 @@ GEM_establishment_of_reichskommissariat = {
 		}
 
 		available = {
+			is_subject = no
 			BA_estonia_controll = yes
 			BA_lithuania_controll = yes
 			BA_latvia_controll = yes
@@ -5466,7 +5476,12 @@ GEM_establishment_of_reichskommissariat = {
 			}
 			every_state = {	
 				limit = {
-					BA_poland_little_is = yes
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
 					NOT = {
 						state = 808
 					}
@@ -5509,8 +5524,206 @@ GEM_establishment_of_reichskommissariat = {
 			}
 		}
 	}
+
+	GEM_establishment_of_reichskommissariat_GM3 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 94
+
+		fire_only_once = yes
+
+
+		visible = {
+			NOT = { country_exists = GM3 }
+		}
+
+		available = {
+			is_subject = no
+			BA_russia_moscow_controll = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_russia_moscow_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			219 = {
+				transfer_state_to = GM3
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM3
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM3
+				set_state_controller_to = GM3
+				add_claim_by = GM3
+				add_compliance = 25
+			}
+			GM3 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = GER
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = GER
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+			
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM4 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_spain_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM4 }
+		}
+
+		available = {
+			is_subject = no
+			BA_spain_controll = yes
+		}
+
+		complete_effect = {
+			41 = {
+				transfer_state_to = GM4
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_spain_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM4
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM4
+				set_state_controller_to = GM4
+				add_claim_by = GM4
+				add_compliance = 25
+			}
+			GM4 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+		}
+	}
 	GEM_establishment_of_reichskommissariat_GM5 = {
-		icon = GFX_decision_Gehenna_Emblem
+		icon = GFX_decision_ger_reichskommissariats
 
 		highlight_states = {
      		highlight_states_trigger = {
@@ -5533,6 +5746,7 @@ GEM_establishment_of_reichskommissariat = {
 		}
 
 		available = {
+			is_subject = no
 			BA_ukraine_93_controll = yes
 			BA_ukraine_soviet_controll = yes
 		}
@@ -5584,6 +5798,105 @@ GEM_establishment_of_reichskommissariat = {
 				add_compliance = 25
 			}
 			GM5 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM6 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_wildhunt_is = yes
+					BA_catalonia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM6 }
+		}
+
+		available = {
+			is_subject = no
+			BA_wildhunt_controll = yes
+			BA_catalonia_controll = yes
+		}
+
+		complete_effect = {
+			1043 = {
+				transfer_state_to = GM6
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM6
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM6
+				set_state_controller_to = GM6
+				add_claim_by = GM6
+				add_compliance = 25
+			}
+			GM6 = {
 				ROOT = {
 					puppet = PREV
 					set_autonomy = {
