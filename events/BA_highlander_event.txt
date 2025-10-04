@@ -653,14 +653,60 @@ country_event = { #열차 소동
 
 add_namespace = Highlander_upgrade
 
-country_event = {
+country_event = { #철로 산업: 선로 재작업
 	id = Highlander_upgrade.1
 	title = Highlander_upgrade.1.t
 	desc = Highlander_upgrade.1.d
 	is_triggered_only = yes
 	picture = GFX_report_event_generic_train
-	option = {
+	option = { #채택
 		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.1_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
 		
 	}
 }
