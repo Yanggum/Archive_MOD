@@ -7541,56 +7541,6 @@ TRN_economic_evelopment_department = {
 		}
 	}
 	
-	
-	TRN_ammo_factory_decision  = {
-		priority = 100
-		icon = GFX_decision_generic_factory
-
-		ai_will_do = { 
-			base = 40 
-			modifier = {
-				arms_factory < 50
-				add = 100
-			}
-		}
-		allowed = { original_tag = TRM }
-
-		visible = { }
-
-		available = { }
-
-		cost = 35
-		days_remove = 70
-		fire_only_once = yes
-
-		modifier = {
-
-		}
-
-		complete_effect = {
-
-		}
-
-		remove_effect = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}	
-			}
-		}
-	}
-	
 	TRN_air_factory_decision  = {
 		priority = 100
 		icon = GFX_decision_generic_merge_plant_aircraft
@@ -7648,116 +7598,6 @@ TRN_economic_evelopment_department = {
 		}
 	}
 	
-	TRN_design_bureau_and_arsenal_expansion  = {
-		priority = 100
-		icon = GFX_decision_gre_investment_decisions
-
-		ai_will_do = { 
-			base = 3
-		}
-		allowed = { original_tag = TRM }
-
-		visible = {
-			NOT = { has_country_flag = TRN_design_bureau_and_arsenal_expansion_completed }
-		}
-
-		available = { }
-
-		cost = 35
-		days_remove = 70
-
-		fire_only_once = yes
-
-		modifier = {
-			consumer_goods_factor = 0.1
-		}
-
-		complete_effect = {
-
-		}
-
-		remove_effect = {
-			set_country_flag = TRN_design_bureau_and_arsenal_expansion_completed
-			mio:TRM_royal_arsenal_organization = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.25
-				add_mio_research_bonus = 0.05
-			}
-			mio:TRM_infantry_equipment_organization = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.25
-				add_mio_research_bonus = 0.05
-			}
-		}
-	}
-	
-	TRN_takeover_of_german_tank_factories  = {
-		priority = 100
-		icon = GFX_decision_gre_investment_decisions
-
-		ai_will_do = { 
-			base = 3
-		}
-		allowed = { original_tag = TRM }
-
-		visible = {
-			
-		}
-
-		available = { }
-
-		cost = 35
-		days_remove = 70
-
-		fire_only_once = yes
-
-		modifier = {
-			consumer_goods_factor = 0.1
-		}
-
-		complete_effect = {
-
-		}
-
-		remove_effect = {
-			mio:TRM_royal_arsenal_organization = {
-				add_mio_size = 2
-			}
-			mio:TRM_vickers_armstrong_eng_organization = {
-				add_mio_size = 1
-			}
-			mio:TRM_motorized_mechanized_organization = {
-				add_mio_size = 1
-			}
-
-			army_experience = 25
-			
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = cat_medium_armor
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}	
-			}
-
-
-		}
-	}
-	
 	TRN_garden_city_movement  = {
 		priority = 100
 		icon = GFX_decision_trinity_city
@@ -7804,6 +7644,49 @@ TRN_economic_evelopment_department = {
 					NOT = { state = 64 } #Ile de France
 				}
 				BA_increase_state_category_by_one_level = yes
+			}
+		}
+	}
+
+	TRN_Abydos_clearing_sand = {
+		priority = 999
+		icon = GFX_decision_Abydos_Emblem
+
+		allowed = { always = no } #activated by effect
+
+		available = {
+			FROM = { 
+				is_owned_and_controlled_by = ROOT 
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
+				is_owned_and_controlled_by = ROOT 
+			}
+		}
+
+		days_remove = 180
+		fire_only_once = yes
+		state_target = yes
+
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_political_power < 159
+			}
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			FROM = {
+				remove_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
 			}
 		}
 	}
@@ -7859,49 +7742,6 @@ TRN_economic_evelopment_department = {
 	}
 }
 TRN_economic_plan_cat = {
-
-	TRN_Abydos_clearing_sand = {
-		priority = 999
-		icon = GFX_decision_Abydos_Emblem
-
-		allowed = { always = no } #activated by effect
-
-		available = {
-			FROM = { 
-				is_owned_and_controlled_by = ROOT 
-			}
-		}
-
-		visible = {
-			FROM = {
-				has_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
-				is_owned_and_controlled_by = ROOT 
-			}
-		}
-
-		days_remove = 180
-		fire_only_once = yes
-		state_target = yes
-
-		modifier = {
-			consumer_goods_factor = 0.05
-		}
-
-		ai_will_do = {
-			factor = 20
-			modifier = {
-				factor = 0
-				has_political_power < 159
-			}
-		}
-		complete_effect = {
-		}
-		remove_effect = {
-			FROM = {
-				remove_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
-			}
-		}
-	}
 
 	TRN_Opelwerk_Brandenburg = {
 		icon = GFX_decision_generic_motorized
@@ -8077,7 +7917,6 @@ TRN_economic_plan_cat = {
 
 		available = {
 			FROM = { is_owned_and_controlled_by = ROOT }
-			61 = { is_owned_and_controlled_by = ROOT }
 			num_of_civilian_factories_available_for_projects > 1
 			NOT = {
 				has_country_flag = TRN_industry_deicision_active
@@ -8403,7 +8242,6 @@ TRN_economic_plan_cat = {
 			}
 		}
 	}
-	
 	TRN_rebuilding_Landwehrkanal  = {
 		priority = 100
 		icon = GFX_decision_hol_drain_water_lines

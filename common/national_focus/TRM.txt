@@ -6720,7 +6720,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 99
 			tag = TRM
 			is_debug = yes
 		}
@@ -6798,19 +6798,24 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_dynamic_modifier = {
-				modifier = TRM_industries_dynamic
-			}
-			unlock_decision_tooltip = {
-				decision = TRN_Industrial_Regions
-				show_effect_tooltip = yes
-				show_modifiers = no
+			add_dynamic_modifier = { modifier = TRM_industries_dynamic }
+			unlock_decision_category_tooltip = TRN_economic_evelopment_department
+			IF = {
+				limit = {
+					has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+				}
+				unlock_decision_tooltip = {
+					decision = TRN_Industrial_Regions
+					show_effect_tooltip = yes
+					show_modifiers = no
+				}
+				hidden_effect = {
+					activate_targeted_decision = { target = 63 decision = TRN_Industrial_Regions }
+					activate_targeted_decision = { target = 68 decision = TRN_Industrial_Regions }
+					activate_targeted_decision = { target = 66 decision = TRN_Industrial_Regions }
+				}
 			}
 			hidden_effect = {
-				activate_targeted_decision = { target = 63 decision = TRN_Industrial_Regions }
-				activate_targeted_decision = { target = 68 decision = TRN_Industrial_Regions }
-				activate_targeted_decision = { target = 66 decision = TRN_Industrial_Regions }
-
 				activate_targeted_decision = { target = 65 decision = TRN_Infrastructure_Development } # 작센
 				activate_targeted_decision = { target = 60 decision = TRN_Infrastructure_Development } # 튀링겐
 				activate_targeted_decision = { target = 64 decision = TRN_Infrastructure_Development } # 브란덴부르크
@@ -7117,7 +7122,7 @@ focus_tree = {
 			#add_ideas = TRN_Sie_merger
 			custom_effect_tooltip = TRM_industry_change
 			add_to_variable = {
-				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.1
+				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
 			add_to_variable = {
@@ -7125,7 +7130,7 @@ focus_tree = {
 				tooltip = consumer_goods_factor_tt
 			}
 			add_to_variable = {
-				TRM_industries_dynamic_production_factory_efficiency_gain_factor = -0.1
+				TRM_industries_dynamic_production_factory_efficiency_gain_factor = -0.15
 				tooltip = production_factory_efficiency_gain_factor_tt
 			}
 			add_to_variable = {
@@ -8581,7 +8586,7 @@ focus_tree = {
 		icon = GFX_focus_TRN_Integrity_of_Trinity
 		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = TRN_destiny_of_trinity
 		cost = 7
 
@@ -10533,6 +10538,391 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = TRN_increase_military_budget
+		icon = GFX_focus_TRN_increase_military_budget
+		x = 10
+		y = 13
+		offset = {
+			y = 10
+			trigger = { is_debug = yes }
+		}
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+		allow_branch = {
+			is_debug = yes
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = TRN_increase_military_budget
+				bonus = 0.5
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+				category = motorized_equipment
+				category = support_tech
+				category = air_equipment
+				category = naval_equipment
+			}
+			add_tech_bonus = {
+				name = TRN_arsenal_support
+				bonus = 0.5
+				uses = 1
+				category = mystic_engineering
+			}
+
+			random_core_state = {
+				prioritize = { 64 }
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_military_factory_maintenance
+		icon = GFX_focus_generic_reorient_production
+		prerequisite = { focus = TRN_increase_military_budget }
+		x = -1
+		y = 1
+		relative_position_id = TRN_increase_military_budget
+		cost = 5
+		available = {
+			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+	    		add_tech_bonus = {
+				name = TRN_military_factory_maintenance
+			    	bonus = 0.75
+			    	uses = 2
+			    	category = support_tech
+	    		}
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = { 
+				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05 
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_supply_line_improvements
+		icon = GFX_focus_generic_supply_line
+		prerequisite = { focus = TRN_military_factory_maintenance }
+		x = -3
+		y = 1
+		relative_position_id = TRN_military_factory_maintenance
+		cost = 5
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = GER_war_preparations_tt
+			effect_tooltip = {
+				add_timed_idea = {
+					idea = GER_strengthened_supply_lines_ns
+					days = 730
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = { 
+				TRM_industries_dynamic_out_of_supply_factor = -0.1 
+				tooltip = out_of_supply_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_supply_node_range = 0.1
+				tooltip = supply_node_range_tt
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_flexible_line
+		icon = GFX_focus_GER_factories_for_resources
+		prerequisite = { focus = TRN_military_factory_maintenance }
+		x = -1
+		y = 1
+		relative_position_id = TRN_military_factory_maintenance
+		cost = 5
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = {
+				TRM_industries_dynamic_conversion_cost_civ_to_mil_factor = -0.2
+				tooltip = conversion_cost_civ_to_mil_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05
+				tooltip =  production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_optimize_production_line
+		icon = GFX_focus_generic_printing_press
+		prerequisite = { focus = TRN_flexible_line }
+		prerequisite = { focus = TRN_supply_line_improvements }
+		x = -1
+		y = 1
+		relative_position_id = TRN_flexible_line
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = {
+				TRM_industrial_capacity_factory_factor = 0.02
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = { 
+				TRM_industries_dynamic_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				TRM_industries_dynamic_production_factory_start_efficiency_factor = 0.02
+				tooltip = production_factory_start_efficiency_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_mass_production
+		icon = GFX_focus_generic_mass_production
+		prerequisite = { focus = TRN_optimize_production_line }
+		x = 0
+		y = 1
+		relative_position_id = TRN_optimize_production_line
+		cost = 4
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRM_industry_change
+			add_to_variable = {
+				TRM_industrial_capacity_factory_factor = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+
+			add_to_variable = {
+				TRM_industries_dynamic_industry_air_damage_factor = 0.2
+				tooltip = industry_air_damage_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_arsenal_support
+		icon = GFX_focus_TRN_arsenal_support
+		prerequisite = { focus = TRN_military_factory_maintenance }
+		x = 1
+		y = 1
+		relative_position_id = TRN_military_factory_maintenance
+		cost = 4
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = TRN_arsenal_support
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = TRN_arsenal_support
+				bonus = 1
+				uses = 1
+				category = mystic_engineering
+			}
+			mio:TRM_infantry_equipment_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_design_bureau_support
+		icon = GFX_focus_TRN_arsenal_support_2
+		prerequisite = { focus = TRN_arsenal_support }
+		x = 1
+		y = 1
+		relative_position_id = TRN_arsenal_support
+		cost = 4
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = TRN_design_bureau_support
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_medium_armor
+			}
+			mio:TRM_vickers_armstrong_eng_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_motors_support
+		icon = GFX_focus_TRN_arsenal_support_1
+		prerequisite = { focus = TRN_arsenal_support }
+		x = -1
+		y = 1
+		relative_position_id = TRN_arsenal_support
+		cost = 4
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+			add_tech_bonus = {
+				name = TRN_motors_support
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+			mio:TRM_motorized_mechanized_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_germany_army_reform
+		icon = GFX_focus_GER_army
+		prerequisite = { focus = TRN_increase_military_budget }
+		x = 1
+		y = 1
+		relative_position_id = TRN_increase_military_budget
+		cost = 5
+		available = {
+
+		}
+		mutually_exclusive = {
+			focus = TRN_trinity_army_reform
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+			add_dynamic_modifier = {
+				modifier = TRM_develop_the_heer_modifier
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_army_reform
+		icon = GFX_focus_TRN_army
+		prerequisite = { focus = TRN_increase_military_budget }
+		x = 5
+		y = 1
+		relative_position_id = TRN_increase_military_budget
+		cost = 5
+		available = {
+
+		}
+		mutually_exclusive = {
+			focus = TRN_germany_army_reform
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_grand_battle_plan
+			}
+			add_dynamic_modifier = {
+				modifier = TRM_develop_the_heer_modifier
+			}
+
+		}
+	}
 }
 
 	shared_focus = {
@@ -10565,8 +10955,8 @@ focus_tree = {
 			}
 			add_dynamic_modifier = { modifier = TRM_industries_dynamic }
 
-			activate_targeted_decision = { target = 64 decision = TRN_Opelwerk_Brandenburg } # 브란덴부르크
-			activate_targeted_decision = { target = 64 decision = TRN_dessert_shop_expansion } # 브란덴부르크 
+			#activate_targeted_decision = { target = 64 decision = TRN_Opelwerk_Brandenburg } # 브란덴부르크
+			#activate_targeted_decision = { target = 64 decision = TRN_dessert_shop_expansion } # 브란덴부르크 
 			hidden_effect = {
 				country_event = { id = trinity_flavor_events.22 days = 35 }
 			}
