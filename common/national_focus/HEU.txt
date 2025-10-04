@@ -3,7 +3,6 @@
 focus_tree = {
 	id = HEU
 	continuous_focus_position = { x = 5200 y = 1300 } 
-	shared_focus = BA_new_world_technology
 	shared_focus = GEAC_unified_but_divided_gehenna_academy
 	shared_focus = Eden_formation_of_alliance_treaty_organization
 	country = {
@@ -8142,7 +8141,7 @@ focus_tree = {
 		
 		relative_position_id = HEU_gehenna_labour_council
 
-		icon = GFX_focus_BRA_support_sugar_barons
+		icon = GFX_focus_generic_agricultural_subsidies
 
 		prerequisite = { 
 			focus = HEU_gehenna_people 
@@ -8413,6 +8412,10 @@ focus_tree = {
 			focus = HEU_gehenna_labour_council_3 
 		}
 
+		mutually_exclusive = {
+			focus = HEU_UNESCO
+		}
+
 		available = {
 			NOT = {
 				has_dynamic_modifier = {
@@ -8460,6 +8463,74 @@ focus_tree = {
 		}
 	}
 	
+	focus = {
+		id = HEU_UNESCO
+		
+		relative_position_id = HEU_gehenna_labour_council
+
+		icon = GFX_goal_HEU_flag_of_league_of_nations
+
+		prerequisite = { 
+			focus = HEU_school_of_culture 
+		}
+
+		prerequisite = { 
+			focus = HEU_gehenna_labour_council_3 
+		}
+
+		mutually_exclusive = {
+			focus = HEU_civil_partnership
+		}
+
+		available = {
+			IF = {
+				limit = {
+					has_completed_focus = HEU_rikuhachima_governemnt
+				}
+				has_completed_focus = HEU_pro_gehenna_route_ending
+			}
+			ELSE_IF = {
+				limit = {
+					has_completed_focus = HEU_no_more_hope
+				}
+				has_completed_focus = HEU_question_of_succession_law_mutsuki_path
+			}
+		}
+
+		cost = 5.00
+
+		ai_will_do = {
+			base = 0
+		}
+
+		x = 2
+		y = 4
+
+		bypass = {
+
+		}
+		
+		completion_reward = {			
+			ROOT = { add_to_tech_sharing_group = UNESCO_research }
+			every_country = {
+				limit = {
+					is_league_of_nations_member = yes 
+					is_major = yes
+					NOT = { original_tag = HEU } # 기본적으로 국제연맹 메이저만 가능
+				}
+				add_to_tech_sharing_group = UNESCO_research
+			}
+			every_country = {
+				limit = {
+					is_league_of_nations_member = yes 
+					is_major = no
+					is_in_faction_with = HEU # 하지만 마이너라도 흥신소랑 같은 팩션이면 예외
+				}
+				add_to_tech_sharing_group = UNESCO_research
+			}
+		}
+	}
+	
 	###############
 	#
 	# 흥신소 중점
@@ -8475,7 +8546,7 @@ focus_tree = {
 		y = 9
 
 		available = {
-			has_completed_focus = BA_factoriesof_new_world
+			
 		}
 
 		bypass = {
