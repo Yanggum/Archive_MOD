@@ -15,39 +15,10 @@ BA_highlander = { #하이랜더 철도학원
 		fixed_random_seed = yes
 		icon = GFX_decision_highlander
 		complete_effect = {
-			if = {
-				limit = {
-					is_ai = no
-				}
-				random_list = {
-					1 = {
-						custom_effect_tooltip = BA_highlander_invest_small_tt
-						add_to_variable = {
-							BA_highlander_invest = 2
-						}
-					}
-					1 = {
-						custom_effect_tooltip = BA_highlander_invest_big_tt
-						add_to_variable = { 
-							BA_highlander_invest = 4
-						}
-					}
-					1 = {
-						custom_effect_tooltip = BA_highlander_invest_enourmous_tt
-						add_to_variable = {
-							BA_highlander_invest = 6
-						}
-					}
-				}
-			}
+			custom_effect_tooltip = BA_highlander_invest_random_tt
 			hidden_effect = {
-				if = {
-					limit = {
-						is_ai = yes
-					}
-					country_event = Highlander.0
-					country_event = Highlander.0
-				}
+				country_event = Highlander.0
+				country_event = Highlander.0
 			}
 		}
 		remove_effect = {
@@ -74,7 +45,7 @@ BA_highlander = { #하이랜더 철도학원
 			### 이런 상황일 때엔 투자를 줄인다 ###
 			modifier = {
 				has_war = yes
-				# 전쟁 중에 소비재 10%~20% 쓰지 말자
+				# 전쟁 중에 소비재 쓰지 말자
 				factor = 0.5 
 			}
 			modifier = {
@@ -84,8 +55,8 @@ BA_highlander = { #하이랜더 철도학원
 			}
 			modifier = {
 				surrender_progress > 0.1
-				# 자기 나라가 박살나고 있을 때 소비재 수십 퍼센트 바치지 말자
-				factor = 0
+				# 자기 나라가 박살나고 있을 때 소비재 바치지 말자
+				factor = 0.1
 			}
 			modifier = {
 				OR = {
@@ -105,13 +76,8 @@ BA_highlander = { #하이랜더 철도학원
 				factor = 0 
 			}
 			modifier = {
-				num_of_civilian_factories < 10
-				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
-				factor = 0 
-			}
-			modifier = {
 				num_of_civilian_factories < 25
-				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
+				# 민공 없을 때 소비재 쓰지 않기
 				factor = 0.1
 			}
 			modifier = {
