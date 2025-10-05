@@ -1598,7 +1598,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRM_heer_modifier_change
+			custom_effect_tooltip = TRN_army_ns_change
 			add_to_variable = { 
 				TRM_army_unit_leader_as_advisor_cp_cost_factor = -0.15 
 				tooltip = unit_leader_as_advisor_cp_cost_factor_tt 
@@ -6725,7 +6725,7 @@ focus_tree = {
 			is_debug = yes
 		}
 	}
-	continuous_focus_position = { x = 100 y = 100 }
+	continuous_focus_position = { x = 100 y = 1400 }
 
 	
 	shared_focus = TRN_Luftwaffe
@@ -6735,30 +6735,38 @@ focus_tree = {
 	shared_focus = Eden_formation_of_alliance_treaty_organization
 
 	
-	#shortcut = {
-	#	name = GER_economic_path_shortcut
-	#	target = TRN_ministry_of_industrial_development
-	#	scroll_wheel_factor = 1
-	#	trigger = {
-	#		always = yes
-	#	}
-	#}
-	#shortcut = {
-	#	name = TRN_trinity_Mika_policy
-	#	target = TRN_Kyrie_for_the_forgotten_ones
-	#	scroll_wheel_factor = 0.654
-	#	trigger = {
-	#		always = yes
-	#	}
-	#}
-	#shortcut = {
-	#	name = TRN_trinity_army_focus
-	#	target = TRN_research_rifle
-	#	scroll_wheel_factor = 0.654
-	#	trigger = {
-	#		always = yes
-	#	}
-	#}
+	shortcut = {
+		name = GER_economic_path_shortcut
+		target = TRN_ministry_of_industrial_development
+		scroll_wheel_factor = 1
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = TRN_trinity_Mika_policy
+		target = TRN_Kyrie_for_the_forgotten_ones
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = TRN_trinity_army_focus
+		target = TRN_increase_military_budget
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = TRN_trinity_diplomacy
+		target = TRN_kivotos_dip
+		scroll_wheel_factor = 0.77
+		trigger = {
+			always = yes
+		}
+	}
 
 
 	#########
@@ -8610,44 +8618,6 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 우리만의 '에덴 조약'
-		id = TRN_union_with_gehenna
-		icon = GFX_focus_TRM_united_law
-		x = 0
-		y = 1
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 5
-
-		available = {
-			has_global_flag = TRINITY_WON_THE_GEHENNA
-		}
-		prerequisite = { focus = TRN_Integrity_of_Trinity }
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			every_controlled_state = {
-				limit = {
-					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
-				}
-				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
-				add_dynamic_modifier = {
-					modifier = TRN_gehenna_resistance_movement
-					days = 1095
-				}
-			}
-			every_controlled_state = {
-				limit = { is_core_of = GEM }
-				add_core_of = TRM
-			}
-			hidden_effect = {
-				country_event = { id = trinity_flavor_events.39 days = 05 }
-			}
-		}
-	}
-
 	focus = { # 정권의 성문화
 		id = TRN_codification_of_regime
 		icon = GFX_goal_TRN_Sovereign
@@ -8658,6 +8628,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
+
+		mutually_exclusive = { focus = TRN_supreme_leader }
 
 		available = {
 			has_country_leader = {
@@ -8678,7 +8650,6 @@ focus_tree = {
 			add_stability = 0.05
 			add_war_support = -0.1
 			add_country_leader_trait = TRN_Misono_the_mother_of_trinity
-			mark_focus_tree_layout_dirty = yes
 		}
 	}
 
@@ -8690,6 +8661,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
+
+		mutually_exclusive = { focus = TRN_codification_of_regime }
 
 		available = {
 			has_country_leader = {
@@ -8847,196 +8820,18 @@ focus_tree = {
 			has_government = fascism
 			is_subject = no
 			any_other_country = {
-				is_major = yes
+				Kivotos_school_tag = yes
 				any_controlled_state = { is_on_continent = europe }
 				NOT = { has_war_with = ROOT }
 			}
 			64 = { is_fully_controlled_by = ROOT }
 		}
 
-		allow_branch = {
-			NOT = { has_completed_focus = TRN_codification_of_regime }
-			NOT = { has_completed_focus = TRN_unprovable_problem }
-		}
-
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
-			IF = {
-				limit = {
-					OR = {
-						TRN_very_low_honor = yes
-						TRN_low_honor = yes
-					}
-				}
-				custom_effect_tooltip = TRN_your_honor_is_low_tt
-				custom_effect_tooltip = GER_war_against_major_countries_in_europe_tt
-				every_other_country = {
-					limit = {
-						is_major = yes
-						any_controlled_state = {
-							is_on_continent = europe
-						}
-						OR = {
-							is_in_faction_with = ROOT
-							is_guaranteed_by = ROOT
-							has_non_aggression_pact_with = ROOT
-						}
-						NOT = {
-							GER = {
-								has_wargoal_against = PREV
-							}
-						}
-					}
-					if = {
-						limit = {
-							ROOT = { is_faction_leader = yes }
-						}
-						ROOT = { remove_from_faction = PREV }
-					}
-					else_if = {
-						limit = {
-							is_faction_leader = no
-						}
-						ROOT = { leave_faction = yes }
-					}
-					if = {
-						limit = {
-							ROOT = {
-								has_guaranteed = PREV
-							}
-						}
-						ROOT = {
-							diplomatic_relation = {
-							    country = PREV
-							    relation = guarantee
-							    active = no
-							}
-						}
-					}
-					if = {
-						limit = {
-							has_non_aggression_pact_with = ROOT
-						}
-						ROOT = {
-							diplomatic_relation = {
-							    country = PREV
-							    relation = non_aggression_pact
-							    active = no
-							}
-						}
-					}
-					ROOT = {
-						create_wargoal = {
-							type = annex_everything
-							target = PREV
-						}
-					}
-				}
-				every_other_country = {
-					limit = {
-						is_major = yes
-						any_controlled_state = {
-							is_on_continent = europe
-						}
-						NOT = { is_in_faction_with = ROOT }
-						NOT = { is_guaranteed_by = ROOT }
-						NOT = { has_non_aggression_pact_with = ROOT }	
-						NOT = {
-							GER = {
-								has_wargoal_against = PREV
-							}
-						}
-					}
-					ROOT = {
-						create_wargoal = {
-							type = annex_everything
-							target = PREV
-						}
-					}
-				}
-			}
-
-			IF = {
-				limit = {
-					OR = {
-						TRN_middle_honor = yes
-						TRN_high_honor = yes
-						TRN_very_high_honor = yes
-					}
-				}
-				custom_effect_tooltip = TRN_your_honor_is_high_tt
-
-				every_country = {
-					limit = { Kivotos_school_tag = yes }
-					# 모든 키보토스 학원들을 초대 하는 결정 추가 좀요 ㅜㅜ
-				}
-
-				IF = {
-					limit = { is_faction_leader = yes }
-					set_faction_name = holy_league
-					ELSE = {
-						create_faction = holy_league
-					}
-				}
-			}
-		}
-	}
-
-	focus = { # 키보토스의 구세주
-		id = TRN_savior_of_kivotos_2
-		icon = GFX_focus_TRN_savior_of_kivotos
-		prerequisite = { 
-			focus = TRN_horseman_of_the_apocalypse 
-			focus = TRN_sheep_and_shepherd
-		}
-		x = 0
-		y = 3
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 6
-
-		available = {
-			has_government = fascism
-			is_subject = no
-			64 = { is_fully_controlled_by = ROOT }
-		}
-
-		allow_branch = {
-			has_completed_focus = TRN_codification_of_regime
-			NOT = { has_completed_focus = TRN_unprovable_problem }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			IF = {
-				limit = {
-					OR = {
-						TRN_middle_honor = yes
-						TRN_high_honor = yes
-						TRN_very_high_honor = yes
-					}
-				}
-				custom_effect_tooltip = TRN_your_honor_is_high_tt
-
-				every_country = {
-					limit = { Kivotos_school_tag = yes }
-					# 모든 키보토스 학원들을 초대 하는 결정 추가 좀요 ㅜㅜ
-				}
-
-				IF = {
-					limit = { is_faction_leader = yes }
-					set_faction_name = holy_league
-					ELSE = {
-						create_faction = holy_league
-					}
-				}
-			}
-
 		}
 	}
 
@@ -9099,19 +8894,9 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = 46
+		x = 12
 		y = 0
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
-			}
-		}
+		relative_position_id = TRN_ministry_of_industrial_development
 		cost = 5
 
 		available = {
@@ -10542,15 +10327,17 @@ focus_tree = {
 	focus = {
 		id = TRN_increase_military_budget
 		icon = GFX_focus_TRN_increase_military_budget
-		x = 10
-		y = 13
-		offset = {
-			y = 10
-			trigger = { is_debug = yes }
-		}
+		x = 25
+		y = 0
+		relative_position_id = TRN_ministry_of_industrial_development
+		#offset = {
+		#	y = 10
+		#	trigger = { is_debug = yes }
+		#}
 		cost = 5
 		available = {
-
+			is_debug = yes
+			is_ai = no 
 		}
 		ai_will_do = {
 
@@ -10560,6 +10347,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			hidden_effect = {
+				set_variable = { TRM_army_planning_speed = -0.15 }
+				set_variable = { TRM_army_army_org_factor = 0.05 }
+				set_variable = { TRM_army_attack_factor = -0.05 }
+				set_variable = { TRM_army_defence_factor = -0.05 }
+				set_variable = { TRM_army_experience_gain_army_factor = 0.05 }
+			}
 			add_tech_bonus = {
 				name = TRN_increase_military_budget
 				bonus = 0.5
@@ -10885,10 +10679,115 @@ focus_tree = {
 				uses = 1
 				category = cat_mobile_warfare
 			}
-			add_dynamic_modifier = {
-				modifier = TRM_develop_the_heer_modifier
+			army_experience = 15
+			effect_tooltip = { add_ideas = TRN_trinity_army_ns_fake }
+			hidden_effect = {
+				add_dynamic_modifier = {
+					modifier = TRN_army_ns
+				}
 			}
 
+		}
+	}
+
+	focus = {
+		id = TRN_germany_army_reform_1
+		icon = GFX_focus_GER_army
+		prerequisite = { focus = TRN_germany_army_reform }
+		x = 1
+		y = 1
+		relative_position_id = TRN_germany_army_reform
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_germany_army_reform_2
+		icon = GFX_focus_GER_army
+		prerequisite = { focus = TRN_germany_army_reform_1 }
+		x = 0
+		y = 2
+		relative_position_id = TRN_germany_army_reform_1
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_germany_army_reform_3
+		icon = GFX_focus_GER_army
+		prerequisite = { focus = TRN_germany_army_reform_1 }
+		x = 1
+		y = 1
+		relative_position_id = TRN_germany_army_reform_1
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_germany_army_reform_4
+		icon = GFX_focus_GER_army
+		prerequisite = { focus = TRN_germany_army_reform_2 }
+		prerequisite = { focus = TRN_germany_army_reform_1 }
+		x = 1
+		y = 1
+		relative_position_id = TRN_germany_army_reform_2
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_germany_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
 		}
 	}
 
@@ -10912,14 +10811,350 @@ focus_tree = {
 
 		completion_reward = {
 			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
+				name = TRN_trinity_army_reform
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_grand_battle_plan
 			}
-			add_dynamic_modifier = {
-				modifier = TRM_develop_the_heer_modifier
+			army_experience = 15
+			effect_tooltip = { add_ideas = TRN_trinity_army_ns_fake }
+			hidden_effect = {
+				add_dynamic_modifier = {
+					modifier = TRN_army_ns
+				}
 			}
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_army_reform_1
+		icon = GFX_focus_FIN_motti_tactics
+		prerequisite = { focus = TRN_trinity_army_reform }
+		x = -1
+		y = 1
+		relative_position_id = TRN_trinity_army_reform
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TRN_trinity_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_grand_battle_plan
+			}
+
+			army_experience = 15
+
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = { 
+				TRN_army_ns_army_attack_speed_factor  = -0.1
+				tooltip = army_attack_speed_factor_tt
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_artillery_attack_factor = 0.05
+				tooltip = army_artillery_defence_factor_tt
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_artillery_defence_factor = 0.05
+				tooltip = army_artillery_attack_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_army_reform_2
+		icon = GFX_focus_TRN_army
+		prerequisite = { focus = TRN_trinity_army_reform_1 }
+		x = 0
+		y = 2
+		relative_position_id = TRN_trinity_army_reform_1
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			army_experience = 30
+			add_doctrine_cost_reduction = {
+				name = TRN_trinity_army_reform
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_grand_battle_plan
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = { 
+				TRN_army_ns_army_attack_factor = 0.1
+				tooltip = army_attack_factor_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_attack_speed_factor  = -0.05
+				tooltip = army_attack_speed_factor_tt
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_army_reform_3
+		icon = GFX_focus_TRN_army
+		prerequisite = { focus = TRN_trinity_army_reform }
+		x = 0
+		y = 2
+		relative_position_id = TRN_trinity_army_reform
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = {
+				TRN_army_ns_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_combat_width_factor = -0.1
+				tooltip = combat_width_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_army_reform_4
+		icon = GFX_focus_TRN_army
+		prerequisite = { focus = TRN_trinity_army_reform_3 }
+		prerequisite =  { focus = TRN_trinity_army_reform_2 }
+		x = 0
+		y = 2
+		relative_position_id = TRN_trinity_army_reform_3
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_generic_army_reform
+		icon = GFX_focus_generic_drone
+		prerequisite = { focus = TRN_trinity_army_reform_4 }
+		prerequisite =  { focus = TRN_germany_army_reform_4 }
+		x = -1
+		y = 1
+		relative_position_id = TRN_trinity_army_reform_4
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+        		custom_effect_tooltip = TRN_army_ns_change
+        		add_to_variable = { 
+				TRM_army_initiative_factor = 0.02 
+				tooltip = initiative_factor_tt
+			}
+        		add_to_variable = { 
+				TRM_army_intel_from_combat_factor = 0.1 
+				tooltip = intel_from_combat_factor_tt
+			}
+        		add_to_variable = { 
+				TRM_army_recon_factor_while_entrenched = 0.1 
+				tooltip = recon_factor_while_entrenched_tt
+			}
+        		custom_effect_tooltip = tooltip_white_line
+			army_experience = 25
+			add_command_power = 50
+		}
+	}
+
+	focus = { # 우리만의 '에덴 조약'
+		id = TRN_union_with_gehenna
+		icon = GFX_focus_TRM_united_law
+		x = -14
+		y = 0
+		offset = {
+			trigger = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			x = 5
+		}
+		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+		}
+
+		ai_will_do = {
+
+		}
+		allow_branch = {
+			OR = {
+				is_debug = yes
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones 
+			}
+		}
+
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				add_dynamic_modifier = {
+					modifier = TRN_gehenna_resistance_movement
+					days = 1095
+				}
+			}
+			every_controlled_state = {
+				limit = { is_core_of = GEM }
+				add_core_of = TRM
+			}
+			hidden_effect = {
+				country_event = { id = trinity_flavor_events.39 days = 05 }
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_reduce_authority_of_pandemonium_society
+		icon = GFX_focus_generic_pandemonium_society
+		x = -12
+		y = 0
+		offset = {
+			trigger = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			x = 5
+		}
+		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+		}
+
+		ai_will_do = {
+
+		}
+		allow_branch = {
+			OR = {
+				is_debug = yes
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones 
+			}
+		}
+
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				add_dynamic_modifier = {
+					modifier = TRN_gehenna_resistance_movement
+					days = 1095
+				}
+			}
+			every_controlled_state = {
+				limit = { is_core_of = GEM }
+				add_core_of = TRM
+			}
+			hidden_effect = {
+				country_event = { id = trinity_flavor_events.39 days = 05 }
+			}
+		}
+	}
+
+	focus = { # 마그데부르크 군사재판
+		id = TRN_magdeburg_trials
+		icon = GFX_focus_generic_industrialists
+		prerequisite = { focus = TRN_union_with_gehenna }
+		prerequisite = { focus = TRN_reduce_authority_of_pandemonium_society }
+		x = 1
+		y = 1
+		relative_position_id = TRN_union_with_gehenna
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_forcibly_disband_HSD
+		icon = GFX_goal_GEH_hot_spring
+		prerequisite = { focus = TRN_magdeburg_trials }
+		x = 3
+		y = 1
+		relative_position_id = TRN_magdeburg_trials
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_forcibly_disband_GRS
+		icon = GFX_goal_GEH_gourmet_research_society
+		prerequisite = { focus = TRN_magdeburg_trials }
+		x = -3
+		y = 1
+		relative_position_id = TRN_magdeburg_trials
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
 
 		}
 	}
@@ -11730,7 +11965,7 @@ shared_focus = {
 	relative_position_id = TRN_research_rifle
 	cost = 5
 	completion_reward = {
-		custom_effect_tooltip = TRM_heer_modifier_change
+		custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_army_org_factor = 0.05 
 			tooltip = army_org_factor_tt 
@@ -11765,7 +12000,7 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_planning_speed = 0.1 
 			tooltip = planning_speed_factor_tt
@@ -11796,7 +12031,7 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_army_attack_speed_factor = 0.1 
 			tooltip = army_attack_speed_factor_tt
@@ -11836,7 +12071,7 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_initiative_factor = 0.02 
 			tooltip = initiative_factor_tt
@@ -11875,7 +12110,7 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_army_infantry_attack_factor = 0.05 
 			tooltip = army_infantry_attack_factor_tt
@@ -12074,7 +12309,7 @@ shared_focus = {
 			category = land_doctrine
 		}
 
-        	custom_effect_tooltip = TRM_heer_modifier_change
+        	custom_effect_tooltip = TRN_army_ns_change
         	add_to_variable = { 
 			TRM_army_army_morale_factor = 0.10 
 			tooltip = army_morale_factor_tt
@@ -12106,7 +12341,7 @@ shared_focus = {
 	relative_position_id = TRM_Asymmetric_Tactics
 	cost = 5
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_experience_gain_army_factor = 0.05 
 			tooltip = experience_gain_army_factor_tt
@@ -12174,7 +12409,7 @@ shared_focus = {
 	relative_position_id = TRM_Decentralised_Structure
 	cost = 6
 	completion_reward = {
-        custom_effect_tooltip = TRM_heer_modifier_change
+        custom_effect_tooltip = TRN_army_ns_change
         add_to_variable = { 
 			TRM_army_max_planning_factor = 0.1 
 			tooltip = max_planning_factor_tt
@@ -12221,7 +12456,7 @@ shared_focus = {
 	relative_position_id = TRM_Trinity_Field_Artillery
 	cost = 6
 	completion_reward = {
-		custom_effect_tooltip = TRM_heer_modifier_change
+		custom_effect_tooltip = TRN_army_ns_change
 		add_to_variable = {
 			TRM_army_max_planning = 0.05
 			tooltip = max_planning_tt
