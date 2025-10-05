@@ -10,7 +10,7 @@ BA_highlander = { #하이랜더 철도학원
 			}
 		}
 		modifier = {
-			consumer_goods_factor = 0.10
+			consumer_goods_factor = 0.05 #가난한 나라들을 위한 정상화
 		}
 		fixed_random_seed = yes
 		icon = GFX_decision_highlander
@@ -128,6 +128,86 @@ BA_highlander = { #하이랜더 철도학원
 		}
 		remove_effect = {
 			clr_country_flag = BA_highlander_hide_list_flag
+		}
+	}
+	BA_highlander_hub_construction = { #철도허브 설치
+		icon = GFX_decision_generic_construction
+		priority = -100
+		days_remove = 60
+		on_map_mode = map_only
+		state_target = yes
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_dynamic_modifier = {
+						modifier = Highlander_hub
+						scope = ROOT
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		visible = {
+			has_idea = BA_highlander_academy_generic
+			check_variable = {
+				var = BA_highlander_hub_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				BA_highlander_hub_available = -1
+			}
+		}
+		remove_effect = {
+			FROM = {
+				add_dynamic_modifier = {
+					modifier = Highlander_hub
+					scope = ROOT
+				}
+				set_state_flag = Highlander_hub_state_flag
+			}
+		}
+	}
+	BA_highlander_hub_eat = { #철도허브 장악
+		icon = GFX_decision_generic_construction
+		priority = -100
+		days_remove = 1
+		on_map_mode = map_only
+		state_target = yes
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				has_state_flag = Highlander_hub_state_flag
+				NOT = {
+					has_dynamic_modifier = {
+						modifier = Highlander_hub
+						scope = ROOT
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		visible = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			FROM = {
+				remove_dynamic_modifier = {
+					modifier = Highlander_hub
+				}
+				add_dynamic_modifier = {
+					modifier = Highlander_hub
+					scope = ROOT
+				}
+			}
 		}
 	}
 }
