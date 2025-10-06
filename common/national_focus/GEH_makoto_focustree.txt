@@ -6209,6 +6209,9 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 60
 			unlock_decision_category_tooltip = GEM_state_government_takeover_categorie
+			custom_effect_tooltip = value_GEM_state_government_takeover_tt
+			set_variable = { value_GEM_state_government_takeover = 24 }
+			country_event = GEM_story.1
 		}
 	}
 	focus = {
@@ -6412,11 +6415,19 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_MANMAJUN_BUPAE
 		}
 		x = 2
 		y = 2
 		relative_position_id = GEM_motomiya_chiaki_focus
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_political_advisor_cost_factor = -0.05
+				tooltip = political_advisor_cost_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			GEH_Manmajun_Bupae_down_effect = yes
 		}
 	}
 	focus = {
@@ -6438,6 +6449,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_motomiya_chiaki_focus
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_party_popularity_stability_factor = 0.05
+				tooltip = party_popularity_stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_political_power = 120
 		}
 	}
 	focus = {
@@ -6454,11 +6472,13 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_STABILITY
 		}
 		x = 0
 		y = 1
 		relative_position_id = GEM_motomiya_chiaki_focus
 		completion_reward = {
+			add_stability = 0.10
 		}
 	}
 	focus = {
@@ -6481,6 +6501,20 @@ focus_tree = {
 		y = 2
 		relative_position_id = GEM_motomiya_chiaki_focus
 		completion_reward = {
+			add_country_leader_trait = GEM_publicity_director_chiaki_trait
+			if = {
+				limit = { has_character = GEH_motomiya_chiaki }
+				GEH_motomiya_chiaki = {
+					remove_trait = {
+						trait = GEM_pandemonium_journalist
+						slot = political_advisor
+					}
+					add_trait = {
+						trait = GEM_pandemonium_journalist_1
+						slot = political_advisor
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -6496,6 +6530,14 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_publicity_director_chiaki
 		completion_reward = {
+			custom_effect_tooltip = GEM_pandemonium_modifier_tt
+			add_to_variable = {
+				GEM_pandemonium_modifier_party_popularity_stability_factor = 0.05
+				tooltip = party_popularity_stability_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_political_power = 60
+			add_stability = -0.05
 		}
 	}
 	focus = {
@@ -6512,6 +6554,21 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_manmajeon_secretariat_founding
 		completion_reward = {
+			add_stability = 0.10
+			if = {
+				limit = { has_character = GEH_dlqnzl }
+				GEH_dlqnzl = {
+					remove_trait = {
+						trait = GEH_dlqnzl_trait
+						slot = political_advisor
+					}
+					add_trait = {
+						trait = GEH_public_propaganda_model_trait
+						slot = political_advisor
+					}
+				}
+			}
+			country_event = GEM_story.2
 		}
 	}
 	focus = {
@@ -6565,6 +6622,8 @@ focus_tree = {
 				mark_focus_tree_layout_dirty = yes
 			}
 			GEH_Manmajun_Bupae_down_effect = yes
+
+			promote_character = GEH_motomiya_chiaki
 
 			custom_effect_tooltip = enter_tt
 			if = {
