@@ -7814,6 +7814,11 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
 			completion_reward = {
+				custom_effect_tooltip = GEM_peaceful_nation_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
 			}
 		}
 		focus = {
@@ -7829,6 +7834,7 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				add_country_leader_trait = GEM_occult_reconstruction_trait
 			}
 		}
 		focus = {
@@ -7844,6 +7850,21 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_pandemonium_modifier_tt
+				add_to_variable = {
+					GEM_pandemonium_modifier_political_power_factor = 0.05
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					GEM_pandemonium_modifier_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = GEM_peaceful_nation_tt
+				add_to_variable = {
+					GEM_ENDMOD_conscription = 0.01
+					tooltip = conscription_tt
+				}
 			}
 		}
 		focus = {
@@ -7855,10 +7876,29 @@ focus_tree = {
 			}
 			mutually_exclusive = {
 			}
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+				FOCUS_FILTER_STABILITY
+			}
 			x = 1
 			y = 1
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_peaceful_nation_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_surrender_limit = 0.05
+					tooltip = surrender_limit_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 20
+				add_stability = 0.05
+				add_manpower = 21000
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
 			}
 		}
 		focus = {
@@ -7874,11 +7914,26 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_peaceful_nation_tt
+				add_to_variable = {
+					GEM_ENDMOD_army_chief_cost_factor = -0.15
+					tooltip = army_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_navy_chief_cost_factor = -0.15
+					tooltip = navy_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_air_chief_cost_factor = -0.15
+					tooltip = air_chief_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
 				set_party_name = {
 					ideology = fascism
 					long_name = GEM_fascism_A2_party_long
 					name = GEM_fascism_A2_party
 				}
+				country_event = GEM_satsuki_story.2
 			}
 		}
 		focus = {
@@ -7900,15 +7955,23 @@ focus_tree = {
 			mutually_exclusive = {
 				focus = GEM_provable_issue
 			}
+			available = {
+				has_completed_focus = GEM_redefinition_of_german_nation
+			}
 			x = -2
 			y = 2
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				unlock_decision_tooltip = GEM_thule_radiance_1
+				unlock_decision_tooltip = GEM_thule_radiance_2
+				custom_effect_tooltip = enter_tt
 				country_event = GEM_satsuki_story.1
+				custom_effect_tooltip = BA_choose_one_event_tt
 				effect_tooltip = {
 					set_cosmetic_tag = GEM_german_only_thule_1
 					set_cosmetic_tag = GEM_german_only_thule_2
 					set_cosmetic_tag = GEM_german_only_thule_3
+					news_event = GEM_news.7
 				}
 			}
 		}
@@ -7931,10 +7994,17 @@ focus_tree = {
 			mutually_exclusive = {
 				focus = GEM_thule_radiance
 			}
+			available = {
+				has_completed_focus = GEM_multiethnic_state
+			}
 			x = 2
 			y = 2
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				set_cosmetic_tag = GEM_german_only_provable_issue
+				unlock_decision_tooltip = GEM_provable_issue_1
+				unlock_decision_tooltip = GEM_provable_issue_2
+				news_event = GEM_news.8
 			}
 		}
 		focus = {
@@ -7950,6 +8020,37 @@ focus_tree = {
 			y = 3
 			relative_position_id = GEM_focus_ended_2_A_endfocus
 			completion_reward = {
+				if = {
+					limit = {
+						any_character = {
+							has_trait = GEH_satsuki_trait_2
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = GEH_satsuki_trait_2
+						}
+						swap_country_leader_traits = {
+							remove = GEH_satsuki_trait_2
+							add = GEH_satsuki_trait_A
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = GEH_satsuki_trait_2
+									add = GEH_satsuki_trait_A
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		focus = {
@@ -7969,6 +8070,55 @@ focus_tree = {
 			y = 2
 			relative_position_id = GEM_thule_radiance
 			completion_reward = {
+				add_war_support = 0.05
+				if = {
+					limit = { has_template = "Aryanland" }
+					delete_unit_template_and_units = {
+						division_template = "Aryanland"
+						disband = yes #will refund equipment and manpower
+					}
+				}
+				division_template = {
+					name = "Aryanland"
+					priority = 0
+					division_names_group = GEH_INF_01
+					is_locked = no
+
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 1 y = 0 }
+						militia = { x = 1 y = 1 }
+						militia = { x = 1 y = 2 }
+						militia = { x = 2 y = 0 }
+						militia = { x = 2 y = 1 }
+						militia = { x = 2 y = 2 }
+					}
+				}
+				random_controlled_state = {
+					create_unit = {
+						division = "name = \"Aryanland\" division_template = \"Aryanland\" start_experience_factor = 0.3 start_equipment_factor = 1"
+						owner = GEM
+						count = 2
+					}
+				}
+				random_controlled_state = {
+					create_unit = {
+						division = "name = \"Aryanland\" division_template = \"Aryanland\" start_experience_factor = 0.3 start_equipment_factor = 1"
+						owner = GEM
+						count = 2
+					}
+				}
+				random_controlled_state = {
+					create_unit = {
+						division = "name = \"Aryanland\" division_template = \"Aryanland\" start_experience_factor = 0.3 start_equipment_factor = 1"
+						owner = GEM
+						count = 2
+					}
+				}
+				unlock_decision_tooltip = GEM_aryan_spirit_1
+				unlock_decision_tooltip = GEM_aryan_spirit_2
 			}
 		}
 		focus = {
@@ -7988,6 +8138,9 @@ focus_tree = {
 			y = 2
 			relative_position_id = GEM_provable_issue
 			completion_reward = {
+				add_stability = 0.05
+				unlock_decision_tooltip = GEM_choir_1
+				unlock_decision_tooltip = GEM_choir_2
 			}
 		}
 	# /사츠키 후속중점 연방
