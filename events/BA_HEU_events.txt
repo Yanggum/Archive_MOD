@@ -9876,6 +9876,136 @@ country_event = { #[FROM.GetNameDef]의 경제동맹 거절
 	}
 }
 
+country_event = { # [ROOT.GetName]와 [FROM.GetName]의 협상
+	id = HEU.diplomacy_event.7
+	title = HEU.diplomacy_event.7.t
+	desc = HEU.diplomacy_event.7.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.7.a
+		ai_chance = {
+			base = 10
+		}
+
+		IF = {
+			limit = {
+				has_government = fascism
+			}
+			FROM = {
+				puppet = ROOT
+				set_autonomy = {
+					target = BEL
+					autonomy_state = autonomy_collaboration_government
+				}
+			}
+			set_politics = {
+				ruling_party = fascism
+			}
+		}
+		ELSE_IF = {
+			limit = {
+				has_government = communism
+			}
+			FROM = {
+				puppet = ROOT
+				set_autonomy = {
+					target = BEL
+					autonomy_state = autonomy_collaboration_government
+				}
+			}
+			set_politics = {
+				ruling_party = communism
+			}
+		}
+		ELSE_IF = {
+			limit = {
+				has_government = democratic
+			}
+			FROM = {
+				puppet = ROOT
+				set_autonomy = {
+					target = BEL
+					autonomy_state = autonomy_collaboration_government
+				}
+			}
+			set_politics = {
+				ruling_party = democratic
+			}
+		}
+		ELSE = {
+			FROM = {
+				puppet = ROOT
+				set_autonomy = {
+					target = BEL
+					autonomy_state = autonomy_collaboration_government
+				}
+			}
+			set_politics = {
+				ruling_party = neutrality
+			}
+		}
+
+		HEU = {
+			country_event = { id = HEU.diplomacy_event.8 }
+		}
+	}
+
+	option = { 
+		name = HEU.diplomacy_event.1.b
+		ai_chance = {
+			base = 0
+		}
+		HEU = {
+			country_event = { id = HEU.diplomacy_event.9 }
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 협상 승인
+	id = HEU.diplomacy_event.8
+	title = HEU.diplomacy_event.8.t
+	desc = HEU.diplomacy_event.8.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.8.a
+		ai_chance = {
+			base = 10
+		}
+		
+		every_state = {	
+			limit = {
+				BA_belgium_is = yes
+				OR = {
+					is_owned_by = ROOT
+					owner = { is_subject_of = ROOT }
+				}
+			}
+			transfer_state_to = BEL
+			set_state_controller_to = BEL
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 협상 거부
+	id = HEU.diplomacy_event.9
+	title = HEU.diplomacy_event.9.t
+	desc = HEU.diplomacy_event.9.desc
+	picture = GFX_event_none_picture
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.9.a
+		ai_chance = {
+			base = 10
+		}
+
+	}
+}
+
 country_event = { # [ROOT.GetNameDef] 의회 선거
 	id = HEU.election_event.1
 	title = HEU.election_event.1.t
