@@ -8041,6 +8041,108 @@ benriya_decolonisation_decision_category = {
 		}
 	}
 
+	benriya_decolonisation_decision_LP1 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 96
+
+		fire_only_once = yes
+
+		visible = {
+			NOT = { country_exists = LP1 }
+			BA_millennium_control = yes
+		}
+
+		available = {
+			is_subject = no
+			BA_millennium_control = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_millennium_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			16 = {
+				transfer_state_to = LP1
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_millennium_is = yes
+					NOT = {
+						state = 16
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP1
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_caucasus_is = yes
+					NOT = {
+						state = 16
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP1
+				set_state_controller_to = LP1
+				add_claim_by = LP1
+				add_compliance = 25
+			}
+			LP1 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = ROOT
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+			
+		}
+	}
+
 	benriya_return_belgium = {
 
 		icon = ger_reichskommissariats
