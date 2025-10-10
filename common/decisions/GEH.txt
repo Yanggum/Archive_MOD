@@ -6553,6 +6553,158 @@ GEH_hina_corruption_last_decision_category = {
 		}
 	}
 
+}
+
+GEH_luxembourg_negotiations_category = {
+
+    GEH_luxembourg_negotiations = {
+		icon = GFX_decision_Prefect_team
+
+		allowed = {
+			original_tag = GEH
+		}
+
+        fire_only_once = yes
+
+		visible = {
+			AND = {
+				country_exists = GEH
+				country_exists = HEU
+				NOT = { 
+					country_exists = GEM
+				}
+			}
+			### 선도부와 흥신소 둘만 남았을 때, 두 세력이 전쟁 또는 평화적으로 재통일하도록 하기 위한 코드
+		}
+
+		ai_will_do = {
+			base = 4000 # 선도부와 흥신소는 반드시 이것을 선택한다.
+		}
+
+        available = {
+			# 흥신소-선도부가 전쟁중이지 않아야 함
+			NOT = {
+				has_war_with = HEU 
+			}
+
+			# 트리니티 문제가 먼저 해결되어야 한다
+			NOT = {
+				country_exists = TRM 
+			}
+
+			# 둘 다 괴뢰국 아님
+			is_puppet = no
+			HEU = { is_puppet = no }
+
+			# 흥신소- 선도부가 인접함
+			is_neighbor_of = HEU
+
+			#HEU = {
+			#	owns_state = 55
+			#}
+			
+			# 흥신소가 반게헨나면 불가능
+			HEU = {
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+			}
+        }
+		
+		cost = 0
+		days_remove = 14
+
+		complete_effect = {
+			custom_effect_tooltip = GEH_luxembourg_negotiations_tt
+			### 협상을 받아 줄 가능성이 높아짐
+			IF = {
+				limit = {	
+					### 소라사키 히나와 아마우 아코가 연애 중 = 68혁명의 이상 지지
+					has_country_flag = GEH_ako_route_ako_sorasaki_ending_flag
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 2 # 2점 상승
+				}
+			}
+			IF = {
+				limit = {	
+					### 히나 루트로 진입하지 않음 = 평화통일 이후에도 탄압받지 않을 것으로 예상
+					NOT = { has_completed_focus = GEH_hina_route_focus }
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 1 # 1점 상승
+				}
+			}
+			IF = {
+				limit = {	
+					### 소라사키 히나 또는 아마우 아코가 선도부장§ = 신뢰할 수 있는 지도자
+					OR = {
+						has_country_leader = {
+							character = GEH_hina # 히나 (진짜)
+							ruling_only = yes
+						}
+						has_country_leader = {
+							character = GEH_robot_hina # 히나 (가짜, 하지만 아루는 알지 못함)
+							ruling_only = yes
+						}
+						has_country_leader = {
+							character = GEH_dkzh # 아코
+							ruling_only = yes
+						}
+					}
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 1 # 1점 상승
+				}
+			}
+
+			### 감소 조건
+			IF = {
+				limit = {	
+					### GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2 중점을 완료 = 신뢰하기 어려운 정부
+					has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -2 # 2점 하락
+				}
+			}
+			IF = {
+				limit = {	
+					### 룩셈부르크 국민들이 선도부를 경멸함
+					has_government = fascism
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -3 # 3점 하락
+				}
+			}
+			IF = {
+				limit = {	
+					### 룩셈부르크 의회가 우리를 반대함: §g선도부의 정통성이 나락, 약함 중 하나§!
+					OR = {
+						has_idea = GEH_popular_support_1
+						has_idea = GEH_popular_support_2
+					}
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -1 # 1점 하락
+				}
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEH_luxembourg_negotiations_end_tt
+			hidden_effect = {
+				HEU = {
+					country_event = { id = HEU.diplomacy_event.4 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 1000
+		}
+    }
+
+}
+
 prefect_team_decolonisation_decision_category = {
 
 	prefect_team_decolonisation_decision_LP2 = {
