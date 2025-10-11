@@ -12556,26 +12556,31 @@ country_event = { # 벨라루스 총독
             	}
 		}
 	}
-	option = {
-		name = trinity_divine_mandate_events.1.b
-		TR4 = {
-			add_country_leader_role = {
-				character = BLR_radasklaw_ostrowski
-				promote_leader = yes
-				country_leader = {
-					ideology = pater_nazism
-					expire = "1965.1.1.1"
-					traits = { GER_governor_general_trait }
-				}
-			}
-			add_ideas = TRN_local_controlled_divine_ns 
-			set_party_name = {
-				ideology = fascism
-				long_name = BABLR_fascism_party_long
-				name = BABLR_fascism_party
-			}
+	after = {
+		hidden_effect = {
+			country_event = trinity_divine_mandate_events.10
 		}
 	}
+	#option = {
+	#	name = trinity_divine_mandate_events.1.b
+	#	TR4 = {
+	#		add_country_leader_role = {
+	#			character = BLR_radasklaw_ostrowski
+	#			promote_leader = yes
+	#			country_leader = {
+	#				ideology = pater_nazism
+	#				expire = "1965.1.1.1"
+	#				traits = { GER_governor_general_trait }
+	#			}
+	#		}
+	#		add_ideas = TRN_local_controlled_divine_ns 
+	#		set_party_name = {
+	#			ideology = fascism
+	#			long_name = BABLR_fascism_party_long
+	#			name = BABLR_fascism_party
+	#		}
+	#	}
+	#}
 }
 
 country_event = { # 모스크바 총독
@@ -12976,6 +12981,52 @@ country_event = { # 밀레니엄 총독
             	      promote_leader = yes
             	}
 			add_ideas = TRN_local_controlled_divine_ns
+		}
+	}
+}
+
+country_event = { # 벨라루스 중앙라다
+	id = trinity_divine_mandate_events.10
+	title = trinity_divine_mandate_events.10.t
+	desc = trinity_divine_mandate_events.10.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		every_state = {
+			limit = {
+				OR = {
+					state = 95
+					state = 65
+					state = 96
+					state = 207
+					state = 206
+					state = 204
+					state = 194
+					state = 94
+				}
+			}
+			set_state_flag = TRN_state_of_central_council
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.10.a
+		every_state = {
+			limit = { has_state_flag = TRN_state_of_central_council }
+			add_dynamic_modifier = { modifier = TRN_central_council }
+		}
+		TR4 = { add_ideas = TR4_radaslau_astrouski_ns }
+	}
+	option = {
+		name = trinity_divine_mandate_events.10.b
+	}
+	after = {
+		every_state = {
+			limit = { has_state_flag = TRN_state_of_central_council }
+			clr_state_flag = TRN_state_of_central_council
 		}
 	}
 }
