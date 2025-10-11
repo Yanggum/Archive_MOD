@@ -645,10 +645,10 @@ focus_tree = {
                 }
             }
 			add_advisor_role = {
-				character = TRN_tlalzh
+				character = TRN_Endo_Shimiko
 				advisor = {
 					slot = air_chief
-					idea_token = TRN_tlalzh_air_chief
+					idea_token = TRN_Endo_Shimiko_air_chief
 					cost = 100
 					traits = { air_chief_reform_2 }
 				}
@@ -3085,7 +3085,7 @@ focus_tree = {
 				name = TRM_filius_democratic_party
 			}
 			add_country_leader_role = {
-				character = TRN_Hifumi
+				character = TRN_Ajitani_Hifumi
 				promote_leader = yes
 				country_leader = {
 					ideology = liberalism
@@ -5371,6 +5371,7 @@ focus_tree = {
 			}
 		}
 		bypass = {
+
 		}
 		relative_position_id = TRN_support_for_the_sisterhood
 		prerequisite = { focus = TRN_support_for_the_sisterhood }
@@ -5492,12 +5493,12 @@ focus_tree = {
 			if = {
 				limit = {
 					has_country_leader = {
-						character = TRN_Hifumi
+						character = TRN_Ajitani_Hifumi
 						ruling_only = yes
 					}
 				}
 				has_country_leader = {
-					character = TRN_Hifumi
+					character = TRN_Ajitani_Hifumi
 					ruling_only = yes
 				}
 			}
@@ -6792,14 +6793,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
-			IF = {
-				limit = { has_idea = TRN_political_instability_ns }
-				NOT = { has_idea = TRN_political_instability_ns }
-			}
-			IF = {
-				limit = { has_idea = TRN_broken_balance_ns }
-				NOT = { has_idea = TRN_broken_balance_ns}
-			}
+
 		}
 
 		ai_will_do = {
@@ -6816,11 +6810,6 @@ focus_tree = {
 					decision = TRN_Industrial_Regions
 					show_effect_tooltip = yes
 					show_modifiers = no
-				}
-				hidden_effect = {
-					activate_targeted_decision = { target = 63 decision = TRN_Industrial_Regions }
-					activate_targeted_decision = { target = 68 decision = TRN_Industrial_Regions }
-					activate_targeted_decision = { target = 66 decision = TRN_Industrial_Regions }
 				}
 			}
 			hidden_effect = {
@@ -8115,7 +8104,7 @@ focus_tree = {
 			TRN_add_Honor = yes
 			custom_effect_tooltip = tooltip_white_line
 			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = TRN_Hifumi_political_advisor
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_political_advisor
 
 			add_power_balance_value = {
 				id = TRM_power_balance
@@ -10664,7 +10653,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_germany_army_reform_1
-		icon = GFX_focus_GER_army
+		icon = GFX_focus_generic_tank_assault
 		prerequisite = { focus = TRN_germany_army_reform }
 		x = 1
 		y = 1
@@ -10678,18 +10667,38 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = tooltip_white_line
+
 			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
+				name = TRN_germany_army_reform_1
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_mobile_warfare
+			}
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
+
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_high_command
+
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = {
+				TRN_army_ns_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_army_armor_attack_factor = 0.05
+				tooltip = army_armor_attack_factor_tt
 			}
 		}
 	}
 
 	focus = {
 		id = TRN_germany_army_reform_2
-		icon = GFX_focus_GER_army
+		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = TRN_germany_army_reform_1 }
 		x = 0
 		y = 2
@@ -10703,18 +10712,39 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			army_experience = 15
+
+			custom_effect_tooltip = tooltip_white_line
+
 			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
-				cost_reduction = 0.5
-				uses = 1
-				category = cat_mobile_warfare
+				name = TRN_germany_army_reform_2
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
+			add_trait = {
+                    	character = TRN_Ajitani_Hifumi
+                    	slot = high_command
+                    	trait = army_armored_2
+			}
+			hidden_effect = {
+				remove_trait = {
+                  	  	character = TRN_Ajitani_Hifumi
+                  	  	slot = high_command
+                  	  	trait = army_armored_1
+				}
+			}
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = {
+				TRN_army_ns_coordination_bonus = 0.05
+				tooltip = coordination_bonus_tt
 			}
 		}
 	}
 
 	focus = {
 		id = TRN_germany_army_reform_3
-		icon = GFX_focus_GER_army
+		icon = GFX_focus_generic_mechanized
 		prerequisite = { focus = TRN_germany_army_reform_1 }
 		x = 1
 		y = 1
@@ -10728,20 +10758,37 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
-				cost_reduction = 0.5
+			add_tech_bonus = {
+				name = TRN_germany_army_reform_3
+				ahead_reduction = 1
+				bonus = 1
 				uses = 1
-				category = cat_mobile_warfare
+				category = cat_mechanized_equipment
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = {
+				TRN_army_ns_motorized_attack_factor = 0.1
+				tooltip = motorized_attack_factor_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_mechanized_attack_factor = 0.1
+				tooltip = mechanized_attack_factor_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			mio:TRM_motorized_mechanized_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
 			}
 		}
 	}
 
 	focus = {
 		id = TRN_germany_army_reform_4
-		icon = GFX_focus_GER_army
+		icon = GFX_focus_generic_heavy_tank
 		prerequisite = { focus = TRN_germany_army_reform_2 }
-		prerequisite = { focus = TRN_germany_army_reform_1 }
+		prerequisite = { focus = TRN_germany_army_reform_3 }
 		x = 1
 		y = 1
 		relative_position_id = TRN_germany_army_reform_2
@@ -10754,12 +10801,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_command_power = 25
+			army_experience = 35
+			custom_effect_tooltip = tooltip_white_line
 			add_doctrine_cost_reduction = {
 				name = TRN_germany_army_reform
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_mobile_warfare
 			}
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = {
+				TRN_army_ns_army_armor_attack_factor = 0.05
+				tooltip = army_armor_attack_factor_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+			
 		}
 	}
 
@@ -10870,12 +10930,40 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRN_general_staff_reform
+		icon = GFX_focus_generic_military_mission
+		prerequisite =  { focus = TRN_retracing_the_mechanized_brigade_tragedy }
+		x = -1
+		y = 1
+		relative_position_id = TRN_small_attack_groups
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			army_experience = 35
+			add_command_power = 50
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRN_army_ns_change
+			add_to_variable = { 
+				TRN_army_ns_planning_speed = 0.1
+				tooltip = planning_speed_tt
+			}
+		}
+	}
+
+	focus = {
 		id = TRN_thousand_blades
 		icon = GFX_focus_TRN_thousand_blades
-		prerequisite = { focus = TRN_retracing_the_mechanized_brigade_tragedy }
+		prerequisite = { focus = TRN_small_attack_groups }
+		prerequisite = { focus = TRN_general_staff_reform}
 		x = 0
 		y = 2
-		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
+		relative_position_id = TRN_small_attack_groups
 		cost = 5
 		available = {
 
@@ -10911,41 +10999,13 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_trinity_army_reform_4
-		icon = GFX_focus_TRN_army
-		prerequisite = { focus = TRN_small_attack_groups }
-		prerequisite =  { focus = TRN_thousand_blades }
-		x = 0
-		y = 2
-		relative_position_id = TRN_small_attack_groups
-		cost = 5
-		available = {
-
-		}
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			army_experience = 35
-			add_command_power = 50
-			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
-			add_to_variable = { 
-				TRN_army_ns_planning_speed = 0.1
-				tooltip = planning_speed_tt
-			}
-		}
-	}
-
-	focus = {
 		id = TRN_generic_army_reform
 		icon = GFX_focus_generic_drone
-		prerequisite = { focus = TRN_trinity_army_reform_4 }
+		prerequisite = { focus = TRN_thousand_blades }
 		prerequisite =  { focus = TRN_germany_army_reform_4 }
 		x = -1
 		y = 1
-		relative_position_id = TRN_trinity_army_reform_4
+		relative_position_id = TRN_thousand_blades
 		cost = 5
 		available = {
 
@@ -10969,7 +11029,7 @@ focus_tree = {
 				tooltip = recon_factor_while_entrenched_tt
 			}
         		custom_effect_tooltip = tooltip_white_line
-			army_experience = 15
+			air_experience = 15
 		}
 	}
 
