@@ -6624,6 +6624,101 @@ GEM_establishment_of_reichskommissariat = {
 			}
 		}
 	}
+	GEM_establishment_of_reichskommissariat_GM7 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_bohemia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM7 }
+		}
+
+		available = {
+			is_subject = no
+			BA_bohemia_controll = yes
+		}
+
+		complete_effect = {
+			9 = {
+				transfer_state_to = GM7
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM7
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM7
+				set_state_controller_to = GM7
+				add_claim_by = GM7
+				add_compliance = 25
+			}
+			GM7 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+		}
+	}
 }
 
 war_measures = {
