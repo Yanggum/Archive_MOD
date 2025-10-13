@@ -8778,23 +8778,28 @@ country_event = { # 티파티 통제
 	is_triggered_only = yes
 	fire_only_once = no
 
-	option = {
-		name = trinity_events.10000.a
-		country_event = { id = trinity_events.6 days = 03 }
-		if = {
-			limit = {
-				NOT = { has_focus_tree = Trinity_focus }
-			}
-			load_focus_tree = { tree = Trinity_focus }
-		}
-		IF = {
-			limit = {
-				NOT = { 
-					has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+	immediate = {
+		TRM = {
+			TRN_Kozeki_Ui = {
+				add_trait = {
+					slot = political_advisor
+					trait = TRN_magician_of_the_old_library
+				}
+				remove_trait = {
+					slot = political_advisor
+					trait = TRN_economist_ui
 				}
 			}
 			add_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+			add_dynamic_modifier = { modifier = TRN_industry_ns }
+			country_event = { id = trinity_flavor_events.36 hours = 01 }
+			country_event = { id = trinity_events.6 days = 02 }
+			country_event = { id = trinity_flavor_events.29 days = 04 }
 		}
+	}
+
+	option = {
+		name = trinity_events.10000.a
     	}
 }
 country_event = { # 티파티 통제
@@ -8915,8 +8920,8 @@ country_event = { # 미소노 미카 법
 	option = {
 		name = trinity_events.4.a
 		swap_ruler_traits = {
-			remove = TRN_mika_trait_1
-			add = TRN_mika_trait_2
+			remove = TRN_archangel
+			add = TRN_archangel_2
 		}
 		TRM_remove_inner_faction = yes
 		add_popularity = {
@@ -9114,7 +9119,7 @@ unit_leader_event = { # 미카의 호스트 취임
 				ideology = tea_party_ideology
 				expire = "1965.1.1.1"
 				traits = { 
-					TRN_mika_trait_1
+					TRN_archangel
 					TRM_pater_faction
 				}
 				desc = TRN_Misono_Mika_leader_desc
@@ -9914,7 +9919,15 @@ country_event = { # 학원경제개발부 부장은 누구로 할까요
 			slot = political_advisor
 			trait = TRN_AED_club_manager
 		}
-		hidden_effect = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		if = {
+			limit = {
+				amount_taken_ideas = {
+					amount < 3
+					slots = { political_advisor }
+				}
+			}
+			hidden_effect = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		}
 		IF = {
 			limit = { has_government = fascism }
 			effect_tooltip = { country_event = trinity_flavor_events.18 }
@@ -9926,26 +9939,33 @@ country_event = { # 학원경제개발부 부장은 누구로 할까요
 		}
     	}
 
-	option = { # 우이
+	option = { # 시미코
 		name = trinity_events.34.b
+		add_trait = {
+			character = TRN_Endo_Shimiko
+			slot = political_advisor
+			trait = TRN_AED_club_manager
+		}
+		if = {
+			limit = {
+				amount_taken_ideas = {
+					amount < 3
+					slots = { political_advisor }
+				}
+			}
+			hidden_effect = { activate_advisor = TRN_Endo_Shimiko_political_advisor }
+		}
+		#IF = {
+		#	limit = { has_government = fascism }
+		#	effect_tooltip = { country_event = trinity_flavor_events.18 }
+		#	hidden_effect = {
+		#		TRN_Endo_Shimiko = {
+		#			unit_leader_event = { id = trinity_flavor_events.18 }
+		#		}
+		#	}
+		#}
 
 	}
-    option = {
-		name = trinity_events.34.c
-		custom_effect_tooltip = TRM_industry_change
-		add_to_variable = {
-			TRM_industries_dynamic_conversion_cost_civ_to_mil_factor = -0.2
-			tooltip = conversion_cost_civ_to_mil_factor_tt
-		}
-		add_to_variable = {
-			TRM_industries_dynamic_production_factory_efficiency_gain_factor = 0.05
-			tooltip = production_factory_efficiency_gain_factor_tt
-		}
-		add_to_variable = {
-			TRM_industries_dynamic_consumer_goods_factor = -0.05
-			tooltip = consumer_goods_factor_tt
-		}
-    	}
 }
 
 country_event = { # 보안국 재편
@@ -12393,14 +12413,14 @@ country_event = { #
 	id = trinity_flavor_events.44
 	title = trinity_flavor_events.44.t
 	desc = trinity_flavor_events.44.desc
-	picture = GFX_report_event_kreisau_ircle
+	picture = GFX_report_event_TRN_mika_2
 	
 	is_triggered_only = yes
     	fire_only_once = no
 
 	option = {
 		name = trinity_flavor_events.44.a
-
+		unlock_decision_tooltip = TRN_Mika_honor_loop_decision
 	}
 }
 

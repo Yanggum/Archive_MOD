@@ -1598,7 +1598,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = { 
 				TRM_army_unit_leader_as_advisor_cp_cost_factor = -0.15 
 				tooltip = unit_leader_as_advisor_cp_cost_factor_tt 
@@ -6721,7 +6724,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 99
 			tag = TRM
 			is_debug = yes
 		}
@@ -6729,9 +6732,9 @@ focus_tree = {
 	continuous_focus_position = { x = 100 y = 1400 }
 
 	
-	shared_focus = TRN_Luftwaffe
-	shared_focus = TRN_research_rifle
-	shared_focus = TRN_Take_To_The_Seas
+	#shared_focus = TRN_Luftwaffe
+	#shared_focus = TRN_research_rifle
+	#shared_focus = TRN_Take_To_The_Seas
 
 	shared_focus = Eden_formation_of_alliance_treaty_organization
 
@@ -6800,8 +6803,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_dynamic_modifier = { modifier = TRM_industries_dynamic }
 			unlock_decision_category_tooltip = TRN_economic_evelopment_department
+			country_event = trinity_events.34 
 			IF = {
 				limit = {
 					has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
@@ -6812,6 +6815,8 @@ focus_tree = {
 					show_modifiers = no
 				}
 			}
+			custom_effect_tooltip = tooltip_white_line
+			unlock_decision_tooltip = TRN_Infrastructure_development_fake
 			hidden_effect = {
 				activate_targeted_decision = { target = 65 decision = TRN_Infrastructure_Development } # 작센
 				activate_targeted_decision = { target = 60 decision = TRN_Infrastructure_Development } # 튀링겐
@@ -6820,11 +6825,11 @@ focus_tree = {
 				activate_targeted_decision = { target = 68 decision = TRN_Infrastructure_Development } # 오스트마르크
 				activate_targeted_decision = { target = 86 decision = TRN_Infrastructure_Development } # 포즈난
 			}
-			country_event = trinity_events.34 
 			hidden_effect = {
 				country_event = { id = trinity_events.38 days = 25 }
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 몰수, 분배, 집단화
@@ -7086,15 +7091,11 @@ focus_tree = {
 		}
 		mutually_exclusive = { focus = TRN_planned_economy }
 		completion_reward = {
-			custom_effect_tooltip = TRM_industry_change
-			add_to_variable = {
-				TRM_industries_dynamic_consumer_goods_factor = -0.15
-				tooltip = consumer_goods_factor_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_industry_ns
 			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_speed_buildings_factor = 0.15
-				tooltip = production_speed_buildings_factor_tt
-			}
+
 		}
 	}
 
@@ -7116,28 +7117,11 @@ focus_tree = {
 		}
 		mutually_exclusive = { focus = TRN_expanded_corporatism }
 		completion_reward = {
-			#add_ideas = TRN_Sie_merger
-			custom_effect_tooltip = TRM_industry_change
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05
-				tooltip = production_factory_max_efficiency_factor_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_industry_ns
 			}
-			add_to_variable = {
-				TRM_industries_dynamic_consumer_goods_factor = 0.05
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_efficiency_gain_factor = -0.15
-				tooltip = production_factory_efficiency_gain_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_production_factory_start_efficiency_factor = 0.1
-				tooltip = production_factory_start_efficiency_factor_tt
-			}
-			add_to_variable = {
-				TRM_industries_dynamic_conversion_cost_civ_to_mil_factor = -0.2
-				tooltip = conversion_cost_civ_to_mil_factor_tt
-			}
+			
 		}
 	}
 	
@@ -7342,7 +7326,15 @@ focus_tree = {
 			focus = TRN_unprovable_problem
 		}
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_unprovable_problem }
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = TRN_unprovable_problem }
+			}
 		}
 		ai_will_do = {
 
@@ -7819,7 +7811,7 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = TRN_unknow_focus_01
+		id = TRN_those_who_lead_those_who_follow
 		icon = GFX_focus_TRN_cult_of_Mika
 		prerequisite = { focus = TRN_cult_of_Mika }
 		x = 0
@@ -7835,11 +7827,17 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_popularity = { ideology = fascism popularity = 0.05 }
-			custom_effect_tooltip = tooltip_white_line
-			country_event = trinity_events.27
-			custom_effect_tooltip = TRN_cult_of_Mika_tt
-			hidden_effect = {
-				country_event = { id = trinity_events.32 days = 30 }
+			add_political_power = 25
+			add_stability = 0.02
+			add_war_support = 0.02
+
+			add_power_balance_value = {
+				id = TRM_power_balance
+				value = 0.05
+			}
+			swap_ruler_traits = {
+				add = TRN_archangel_3
+				remove = TRN_archangel_2
 			}
 		}
 	}
@@ -8171,13 +8169,18 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			has_idea = TRN_general_school_Intelligence_service_ns
+			agency_upgrade_number > 4
 		}
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-
+			swap_ideas = {
+				add_idea = TRN_general_school_Intelligence_service_2_ns
+				remove_idea = TRN_general_school_Intelligence_service_ns
+			}
 		}
 	}
 
@@ -8264,7 +8267,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-			has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 		}
 
 		ai_will_do = {
@@ -8282,7 +8284,7 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 탈나치화
+	focus = { # 나치 조직 해산
 		id = TRN_dismantled_Nazi_organization
 		icon = GFX_focus_FIN_parmis_devils
 		prerequisite = { focus = TRN_denazification }
@@ -8293,21 +8295,14 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-			has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+
 		}
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-			add_war_support = 0.1
-			country_event = trinity_events.51
-			hidden_effect = {
-				country_event = { id = trinity_events.30 days = 35 } # 여성 인권
-				TRN_Alfred_Hugenberg = {
-					unit_leader_event = { id = trinity_flavor_events.41 days = 15 } # 알프레드 후겐베르크의 평론
-				}
-			}
+
 		}
 	}
 
@@ -8322,21 +8317,13 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-			has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 		}
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-			add_war_support = 0.1
-			country_event = trinity_events.51
-			hidden_effect = {
-				country_event = { id = trinity_events.30 days = 35 } # 여성 인권
-				TRN_Alfred_Hugenberg = {
-					unit_leader_event = { id = trinity_flavor_events.41 days = 15 } # 알프레드 후겐베르크의 평론
-				}
-			}
+
 		}
 	}
 
@@ -8384,6 +8371,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			set_temp_variable = { TRN_Honor_change = -5 }
+			TRN_add_Honor = yes
 			country_event = trinity_events.54
 		}
 	}
@@ -8526,6 +8515,7 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = trinity_events.29 } # 문화 투쟁
 			unlock_decision_tooltip = TRN_infiltrate_church_unlock_tt_deicision
+			unlock_decision_tooltip = TRN_asset_seizure_decision
 		}
 	}
 
@@ -8821,6 +8811,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+
 		}
 	}
 
@@ -8845,7 +8836,15 @@ focus_tree = {
 
 		}
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			}
 		}
 		mutually_exclusive = {
 			focus = TRN_Kyrie_for_the_forgotten_ones
@@ -10325,24 +10324,13 @@ focus_tree = {
 		#}
 		cost = 5
 		available = {
-			is_debug = yes
-			is_ai = no 
+
 		}
 		ai_will_do = {
 
 		}
-		allow_branch = {
-			is_debug = yes
-		}
 
 		completion_reward = {
-			hidden_effect = {
-				set_variable = { TRM_army_planning_speed = -0.15 }
-				set_variable = { TRM_army_army_org_factor = 0.05 }
-				set_variable = { TRM_army_attack_factor = -0.05 }
-				set_variable = { TRM_army_defence_factor = -0.05 }
-				set_variable = { TRM_army_experience_gain_army_factor = 0.05 }
-			}
 			add_tech_bonus = {
 				name = TRN_increase_military_budget
 				bonus = 0.5
@@ -10390,7 +10378,7 @@ focus_tree = {
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
 		available = {
-			has_dynamic_modifier = { modifier = TRM_industries_dynamic }
+
 		}
 
 		ai_will_do = {
@@ -10404,9 +10392,12 @@ focus_tree = {
 			    	uses = 2
 			    	category = support_tech
 	    		}
-			custom_effect_tooltip = TRM_industry_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_industry_ns
+			}
 			add_to_variable = { 
-				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05 
+				TRN_industry_ns_production_factory_max_efficiency_factor = 0.05 
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
 		}
@@ -10437,16 +10428,18 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRM_industry_change
-			add_to_variable = { 
-				TRM_industries_dynamic_out_of_supply_factor = -0.1 
-				tooltip = out_of_supply_factor_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
 			}
 			add_to_variable = {
-				TRM_industries_dynamic_supply_node_range = 0.1
+				TRN_army_ns_supply_node_range = 0.1
 				tooltip = supply_node_range_tt
 			}
-
+			add_to_variable = { 
+				TRN_army_ns_out_of_supply_factor = -0.1 
+				tooltip = out_of_supply_factor_tt
+			}
 		}
 	}
 
@@ -10467,13 +10460,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRM_industry_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_industry_ns
+			}
 			add_to_variable = {
-				TRM_industries_dynamic_conversion_cost_civ_to_mil_factor = -0.2
+				TRN_industry_ns_conversion_cost_civ_to_mil_factor = -0.2
 				tooltip = conversion_cost_civ_to_mil_factor_tt
 			}
 			add_to_variable = {
-				TRM_industries_dynamic_production_factory_max_efficiency_factor = 0.05
+				TRN_industry_ns_production_factory_max_efficiency_factor = 0.05
 				tooltip =  production_factory_max_efficiency_factor_tt
 			}
 		}
@@ -10496,17 +10492,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRM_industry_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_industry_ns
+			}
 			add_to_variable = {
-				TRM_industrial_capacity_factory_factor = 0.02
+				TRN_industry_ns_industrial_capacity_factory = 0.02
 				tooltip = industrial_capacity_factory_tt
 			}
 			add_to_variable = { 
-				TRM_industries_dynamic_production_factory_efficiency_gain_factor = 0.05
+				TRN_industry_ns_production_factory_efficiency_gain_factor = 0.05
 				tooltip = production_factory_efficiency_gain_factor_tt
 			}
 			add_to_variable = {
-				TRM_industries_dynamic_production_factory_start_efficiency_factor = 0.02
+				TRN_industry_ns_production_factory_start_efficiency_factor = 0.02
 				tooltip = production_factory_start_efficiency_factor_tt
 			}
 		}
@@ -10683,7 +10682,10 @@ focus_tree = {
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = TRN_Ajitani_Hifumi_high_command
 
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = {
 				TRN_army_ns_org_loss_when_moving = -0.1
 				tooltip = org_loss_when_moving_tt
@@ -10737,7 +10739,10 @@ focus_tree = {
                   	  	trait = army_armored_1
 				}
 			}
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = {
 				TRN_army_ns_coordination_bonus = 0.05
 				tooltip = coordination_bonus_tt
@@ -10769,7 +10774,10 @@ focus_tree = {
 				category = cat_mechanized_equipment
 			}
 			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = {
 				TRN_army_ns_motorized_attack_factor = 0.1
 				tooltip = motorized_attack_factor_tt
@@ -10813,7 +10821,10 @@ focus_tree = {
 				uses = 1
 				category = cat_mobile_warfare
 			}
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = {
 				TRN_army_ns_army_armor_attack_factor = 0.05
 				tooltip = army_armor_attack_factor_tt
@@ -10887,7 +10898,10 @@ focus_tree = {
 			army_experience = 15
 
 			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = { 
 				TRN_army_ns_army_attack_speed_factor  = -0.1
 				tooltip = army_attack_speed_factor_tt
@@ -10919,8 +10933,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
+			army_experience = 35
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = {
 				TRN_army_ns_org_loss_when_moving = -0.1
 				tooltip = org_loss_when_moving_tt
@@ -10928,6 +10945,10 @@ focus_tree = {
 			add_to_variable = {
 				TRN_army_ns_combat_width_factor = -0.1
 				tooltip = combat_width_factor_tt
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_artillery_defence_factor = 0.05
+				tooltip = army_artillery_attack_factor_tt
 			}
 		}
 	}
@@ -10948,10 +10969,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			army_experience = 35
 			add_command_power = 50
-			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = { 
 				TRN_army_ns_planning_speed = 0.1
 				tooltip = planning_speed_tt
@@ -10984,7 +11006,10 @@ focus_tree = {
 				category = cat_grand_battle_plan
 			}
 			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = TRN_army_ns_change
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 			add_to_variable = { 
 				TRN_army_ns_army_attack_factor = 0.1
 				tooltip = army_attack_factor_tt
@@ -10994,10 +11019,13 @@ focus_tree = {
 				tooltip = breakthrough_factor_tt
 			}
 			add_to_variable = { 
-				TRN_army_ns_army_attack_speed_factor  = -0.05
+				TRN_army_ns_army_attack_speed_factor  = -0.1
 				tooltip = army_attack_speed_factor_tt
 			}
-
+			add_to_variable = { 
+				TRN_army_ns_army_artillery_attack_factor = 0.05
+				tooltip = army_artillery_defence_factor_tt
+			}
 		}
 	}
 
@@ -11020,7 +11048,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-        		custom_effect_tooltip = TRN_army_ns_change
+        		custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         		add_to_variable = { 
 				TRN_army_ns_initiative_factor = 0.02 
 				tooltip = initiative_factor_tt
@@ -11044,7 +11075,13 @@ focus_tree = {
 		x = -14
 		y = 0
 		offset = {
-			trigger = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
 			x = 5
 		}
 		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
@@ -11088,13 +11125,9 @@ focus_tree = {
 	focus = {
 		id = TRN_reduce_authority_of_pandemonium_society
 		icon = GFX_focus_generic_pandemonium_society
-		x = -12
+		x = 2
 		y = 0
-		offset = {
-			trigger = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
-			x = 5
-		}
-		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
+		relative_position_id = TRN_union_with_gehenna
 		cost = 5
 
 		available = {
@@ -12009,7 +12042,10 @@ shared_focus = {
 	relative_position_id = TRN_research_rifle
 	cost = 5
 	completion_reward = {
-		custom_effect_tooltip = TRN_army_ns_change
+		custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_army_org_factor = 0.05 
 			tooltip = army_org_factor_tt 
@@ -12044,7 +12080,10 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        	custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod 
+			DYNMOD = TRN_army_ns
+		}
         add_to_variable = { 
 			TRM_army_planning_speed = 0.1 
 			tooltip = planning_speed_factor_tt
@@ -12075,7 +12114,10 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_army_attack_speed_factor = 0.1 
 			tooltip = army_attack_speed_factor_tt
@@ -12115,7 +12157,10 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_initiative_factor = 0.02 
 			tooltip = initiative_factor_tt
@@ -12154,7 +12199,10 @@ shared_focus = {
 		}
     }
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_army_infantry_attack_factor = 0.05 
 			tooltip = army_infantry_attack_factor_tt
@@ -12353,7 +12401,10 @@ shared_focus = {
 			category = land_doctrine
 		}
 
-        	custom_effect_tooltip = TRN_army_ns_change
+        	custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         	add_to_variable = { 
 			TRM_army_army_morale_factor = 0.10 
 			tooltip = army_morale_factor_tt
@@ -12385,7 +12436,10 @@ shared_focus = {
 	relative_position_id = TRM_Asymmetric_Tactics
 	cost = 5
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_experience_gain_army_factor = 0.05 
 			tooltip = experience_gain_army_factor_tt
@@ -12453,7 +12507,10 @@ shared_focus = {
 	relative_position_id = TRM_Decentralised_Structure
 	cost = 6
 	completion_reward = {
-        custom_effect_tooltip = TRN_army_ns_change
+        custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
         add_to_variable = { 
 			TRM_army_max_planning_factor = 0.1 
 			tooltip = max_planning_factor_tt
@@ -12500,7 +12557,10 @@ shared_focus = {
 	relative_position_id = TRM_Trinity_Field_Artillery
 	cost = 6
 	completion_reward = {
-		custom_effect_tooltip = TRN_army_ns_change
+		custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
 		add_to_variable = {
 			TRM_army_max_planning = 0.05
 			tooltip = max_planning_tt
