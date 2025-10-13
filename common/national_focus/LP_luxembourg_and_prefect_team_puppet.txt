@@ -1,0 +1,1121 @@
+#!gfx:interface\BA_goals.gfx
+
+focus_tree = {
+	id = luxembourg_and_prefect_team_puppet_shared_focus
+
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			OR = {
+				tag = LP1
+				tag = LP2
+				tag = LP3
+				tag = LP4
+				tag = LP5
+				tag = LP6
+				tag = LP7
+			}
+		}
+	}
+
+	continuous_focus_position = { x = 550 y = 950 }  
+
+	focus = { #
+		id = LPX_establishment_of_government
+		icon = GFX_focus_hol_the_foundations_of_defense
+		cost = 10
+		x = 10
+		y = 0
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_political_power = 75
+			add_timed_idea = {
+			 	idea = LPX_establishment_of_government_idea
+			 	days = 730
+			} 
+		}
+	}
+
+	focus = { #
+		id = LPX_mandate_of_LoN
+		icon = GFX_goal_HEU_flag_of_league_of_nations
+		cost = 10
+		
+		relative_position_id = LPX_establishment_of_government
+
+		prerequisite = { focus = LPX_establishment_of_government }
+
+		mutually_exclusive = {
+			focus = LPX_under_the_order_of_prefect_team
+		}
+
+		available = {
+			HEU = {
+				any_subject_country = {
+					tag = ROOT
+				}
+			}
+		}
+		
+		x = -2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_political_power = 150
+		}
+	}
+
+	focus = { #
+		id = LPX_guarantee_of_regional_autonomy
+		icon = GFX_focus_BRA_rio_protocol
+		cost = 10
+		
+		relative_position_id = LPX_mandate_of_LoN
+
+		prerequisite = { focus = LPX_mandate_of_LoN }
+		
+		x = 0
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			every_owned_state = { add_compliance = 15 }
+		}
+	}
+
+	focus = { #
+		id = LPX_league_of_nations_police_oversight
+		icon = GFX_goal_HEU_luxembourg_soldier_focus
+		cost = 10
+		
+		relative_position_id = LPX_mandate_of_LoN
+
+		prerequisite = { focus = LPX_mandate_of_LoN }
+		
+		x = -2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_stability = 0.15
+		}
+	}
+
+	focus = { #
+		id = LPX_new_parliament
+		icon = GFX_focus_ETH_re-convene_the_parliament
+		cost = 10
+		
+		relative_position_id = LPX_mandate_of_LoN
+
+		prerequisite = { focus = LPX_guarantee_of_regional_autonomy }
+		prerequisite = { focus = LPX_league_of_nations_police_oversight }
+		
+		x = -1
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_ideas = LPX_parliament
+		}
+	}
+
+	focus = { #
+		id = LPX_twenty_year_independence_pact
+		icon = GFX_focus_spr_masters_of_our_own_fate
+		cost = 10
+		
+		relative_position_id = LPX_mandate_of_LoN
+
+		prerequisite = { focus = LPX_guarantee_of_regional_autonomy }
+		prerequisite = { focus = LPX_league_of_nations_police_oversight }
+		
+		x = 1
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+			 	idea = LPX_assimilation_work
+			 	days = 1095
+			} 
+		}
+	}
+
+	focus = { #
+		id = LPX_supported_new_government
+		icon = GFX_focus_TRN_kivotos_dip
+		cost = 10
+		
+		relative_position_id = LPX_mandate_of_LoN
+
+		prerequisite = { focus = LPX_new_parliament }
+		prerequisite = { focus = LPX_twenty_year_independence_pact }
+		
+		x = 0
+		y = 3
+
+		available = {
+			NOT = { has_idea = LPX_assimilation_work }
+			AND = {
+				has_completed_focus = LPX_the_grand_university_of_capital
+				has_completed_focus = LPX_professional_education
+			}
+		}
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			every_state = {
+				limit = {
+					is_claimed_by = ROOT
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	focus = { #
+		id = LPX_under_the_order_of_prefect_team
+		icon = GFX_goal_GEH_hina_ishbosheth
+		cost = 10
+		
+		relative_position_id = LPX_establishment_of_government
+
+		prerequisite = { focus = LPX_establishment_of_government }
+
+		mutually_exclusive = {
+			focus = LPX_mandate_of_LoN
+		}
+
+		available = {
+			GEH = {
+				any_subject_country = {
+					tag = ROOT
+				}
+			}
+		}
+
+		x = 2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_political_power = 150
+			IF = {
+				limit = { tag = LP5 }
+				add_ideas = LPX_derussianization
+			}
+		}
+	}
+
+	focus = { #
+		id = LPX_prefect_team_security_maintenance
+		icon = GFX_goal_GEH_Emergency_Medicine_Club
+		cost = 10
+		
+		relative_position_id = LPX_under_the_order_of_prefect_team
+
+		prerequisite = { focus = LPX_under_the_order_of_prefect_team }
+
+		x = 2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_stability = 0.15
+		}
+	}
+
+	focus = { #
+		id = LPX_civil_administration_establishment
+		icon = GFX_focus_GEH_sword_defending_gehenna
+		cost = 10
+		
+		relative_position_id = LPX_under_the_order_of_prefect_team
+
+		prerequisite = { focus = LPX_under_the_order_of_prefect_team }
+
+		x = 0
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+			 	idea = LPX_assimilation_work
+			 	days = 1095
+			} 
+		}
+	}
+
+	focus = { #
+		id = LPX_gehenna_culture_transplantation
+		icon = GFX_goal_hmmngshinso_broken
+		cost = 10
+		
+		relative_position_id = LPX_under_the_order_of_prefect_team
+
+		prerequisite = { focus = LPX_civil_administration_establishment }
+
+		x = 1
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_ideas = LPX_gehenna_culture
+		}
+	}
+
+	focus = { #
+		id = LPX_local_collaborators
+		icon = GFX_focus_generic_industrialists
+		cost = 10
+		
+		relative_position_id = LPX_under_the_order_of_prefect_team
+
+		prerequisite = { focus = LPX_civil_administration_establishment }
+
+		x = -1
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			IF = {
+				limit = { tag = LP1 }
+				add_ideas = LPX_pseudo_science
+			}
+			ELSE = {
+				every_owned_state = { 
+					add_compliance = 10 
+					add_resistance = -5
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = LPX_establishment_of_permanent_dominion
+		icon = GFX_goal_HEU_gehenna
+		cost = 10
+		
+		relative_position_id = LPX_under_the_order_of_prefect_team
+
+		prerequisite = { focus = LPX_gehenna_culture_transplantation }
+		prerequisite = { focus = LPX_local_collaborators }
+
+		x = 0
+		y = 3
+
+		available = {
+			NOT = { has_idea = LPX_assimilation_work }
+			AND = {
+				has_completed_focus = LPX_the_grand_university_of_capital
+				has_completed_focus = LPX_professional_education
+			}
+		}
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			every_state = {
+				limit = {
+					is_claimed_by = ROOT
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	###
+
+	focus = { #
+		id = LPX_initiation_of_industrial_socialization
+		icon = GFX_focus_SOV_organize_wreckers
+		cost = 10
+		
+		relative_position_id = LPX_establishment_of_government
+
+		prerequisite = { 
+			focus = LPX_mandate_of_LoN 
+			focus = LPX_under_the_order_of_prefect_team 
+		}
+
+		x = 0 
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = LPX_post_war_reconstruction
+		icon = GFX_focus_generic_economic_recovery
+		cost = 10
+		
+		relative_position_id = LPX_initiation_of_industrial_socialization
+
+		prerequisite = { 
+			focus = LPX_initiation_of_industrial_socialization 
+		}
+
+		x = 0 
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			capital_scope = {
+				IF = {
+					limit = {
+						capital_scope = { infrastructure < 5 }
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_timed_idea = {
+			 	idea = LPX_post_war_reconstruction_idea
+			 	days = 730
+			} 
+		}
+	}
+
+	focus = { #
+		id = LPX_industrial_prioritization
+		icon = GFX_focus_DEN_heavy_regulations
+		cost = 10
+		
+		relative_position_id = LPX_post_war_reconstruction
+
+		prerequisite = { 
+			focus = LPX_post_war_reconstruction 
+		}
+
+		x = -2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_one_random_civilian_factory = yes
+			add_one_random_civilian_factory = yes
+		}
+	}
+
+	focus = { #
+		id = LPX_electricity_production
+		icon = GFX_focus_generic_electrification
+		cost = 10
+		
+		relative_position_id = LPX_post_war_reconstruction
+
+		prerequisite = { 
+			focus = LPX_post_war_reconstruction 
+		}
+
+		x = 0
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = LPX_electricity_production
+				bonus = 1
+				uses = 2
+				category = electronics
+			}
+			add_war_support = 0.05
+			add_stability = 0.05
+		}
+	}
+
+	focus = { #
+		id = LPX_promotion_of_suburban_development
+		icon = GFX_focus_generic_agricultural_subsidies
+		cost = 10
+		
+		relative_position_id = LPX_post_war_reconstruction
+
+		prerequisite = { 
+			focus = LPX_post_war_reconstruction 
+		}
+
+		x = 2
+		y = 1
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			add_ideas = LPX_promotion_of_suburban_development_idea
+		}
+	}
+
+	focus = { #
+		id = LPX_professional_education
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 10
+		
+		relative_position_id = LPX_post_war_reconstruction
+
+		prerequisite = { 
+			focus = LPX_industrial_prioritization
+			focus = LPX_electricity_production
+			focus = LPX_promotion_of_suburban_development
+		}
+
+		x = 0
+		y = 2
+
+		ai_will_do = {
+			base = 5 
+		}
+
+		completion_reward = {
+			if = {
+				limit = { amount_research_slots < 5 }
+				add_research_slot = 1
+			}
+		}
+	}
+
+### 군대 중점
+
+	focus = {
+		id = LPX_rearmament_start
+		icon = GFX_goal_HEU_gehenna
+		#prerequisite = { focus = }
+
+		x = 3
+		y = 0
+		#relative_position_id = 
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			army_experience = 30
+			add_one_random_military_factory = yes
+			add_one_random_military_factory = yes
+
+			division_template = { # 현지인 지역방위민병대
+				name = "Einheimische Gebietsverteidigungsmiliz" 
+				division_names_group = KIV_SEC_01
+
+				regiments = { 
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+					militia = { x = 1 y = 2 }
+				}
+				support = { 
+
+				}
+			}
+			
+			capital_scope = {
+				create_unit = {
+					division = "division_template = \"Einheimische Gebietsverteidigungsmiliz\" start_experience_factor = 0.5 start_equipment_factor = 1.0"
+					owner = ROOT
+					count = 2
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = LPX_kivotos_paramilitary_organization_expansion 
+		icon = GFX_goal_GEH_sundoboo
+		prerequisite = { focus = LPX_rearmament_start }
+
+		x = -2
+		y = 1
+		relative_position_id = LPX_rearmament_start
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			every_owned_state = { add_compliance = 5 }
+		}
+	}
+
+	focus = {
+		id = LPX_our_new_navy
+		icon = GFX_focus_GER_navy
+		prerequisite = { focus = LPX_rearmament_start }
+
+		x = 1
+		y = 1
+		relative_position_id = LPX_rearmament_start
+		cost = 8
+
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+		}
+	}
+
+	focus = {
+		id = LPX_new_naval_officers
+		icon = GFX_KSP_focus_gyeongbiguk_helping
+		prerequisite = { focus = LPX_our_new_navy }
+
+		x = 0
+		y = 1
+		relative_position_id = LPX_our_new_navy
+		cost = 8
+		
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			create_navy_leader = {
+				skill = 3
+				female = yes
+				portrait_path = GFX_Portrait_BlueArchive_KSP_Generic_2
+				traits = { spotter bold }
+				skill = 3
+				attack_skill = 2
+				defense_skill = 4
+				maneuvering_skill = 3
+				coordination_skill = 2
+			}
+		}
+	}
+	focus = {
+		id = LPX_local_militia_formation
+		icon = GFX_focus_RAJ_military_into_the_workforce
+		prerequisite = { focus = LPX_kivotos_paramilitary_organization_expansion }
+		dynamic = yes 
+		mutually_exclusive = { focus = LPX_heavy_industry_development }
+		x = -1
+		y = 1
+		relative_position_id = LPX_kivotos_paramilitary_organization_expansion
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			custom_effect_tooltip = LPX_local_militia_formation_tt
+			
+			set_variable = {
+				var = halo_militia_cap
+				value = 6 # 헤일로 민병대 6사단
+			}
+			division_template = { # 헤일로 지역방위민병대
+				name = "Halo Gebietsverteidigungsmiliz" 
+				division_names_group = KIV_SEC_01
+				is_locked = yes
+				force_allow_recruiting = yes
+				division_cap = 0
+
+				regiments = { 
+					halo_militia = { x = 0 y = 0 }
+					halo_militia = { x = 0 y = 1 }
+					halo_militia = { x = 0 y = 2 }
+					halo_militia = { x = 1 y = 0 }
+					halo_militia = { x = 1 y = 1 }
+					halo_militia = { x = 1 y = 2 }
+				}
+				support = { 
+					halo_recon = { x = 0 y = 0 }
+				}
+			}
+			hidden_effect = {
+				set_division_template_cap = {
+					division_template = "Halo Gebietsverteidigungsmiliz"
+					division_cap = halo_militia_cap
+				}
+			}
+		}
+	}
+	focus = {
+		id = LPX_heavy_industry_development
+		icon = GFX_focus_generic_mass_production
+		prerequisite = { focus = LPX_kivotos_paramilitary_organization_expansion }
+		mutually_exclusive = { focus = LPX_local_militia_formation }
+		x = 1
+		y = 1
+		relative_position_id = LPX_kivotos_paramilitary_organization_expansion
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = { 
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = LPX_new_coast_ports
+		icon = GFX_focus_generic_atlantic_coast
+		prerequisite = { focus = LPX_new_naval_officers }
+
+		x = 0
+		y = 1
+		relative_position_id = LPX_new_naval_officers
+		cost = 8
+		
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = 75
+				producer = ROOT
+			}
+
+			add_tech_bonus = {
+				name = LPX_new_coast_ports
+				bonus = 1
+				uses = 1
+				category = tp_tech
+			}
+		}
+	}
+	focus = {
+		id = LPX_conscription_law_amendment
+		icon = GFX_focus_RAJ_a_private_military
+		prerequisite = { focus = LPX_local_militia_formation }
+
+		x = -1
+		y = 1
+		relative_position_id = LPX_local_militia_formation
+		cost = 10
+
+		available = {
+			NOT = {
+				OR = {
+					has_idea = scraping_the_barrel
+					has_idea = service_by_requirement
+					has_idea = all_adults_serve
+				}
+			}
+		}
+
+		bypass = {
+			OR = {
+				has_idea = scraping_the_barrel
+				has_idea = service_by_requirement
+				has_idea = all_adults_serve
+			}
+		}
+
+		bypass_effect = {
+			add_political_power = 150
+		}
+
+		search_filters = {}
+
+		completion_reward = {			
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_idea = scraping_the_barrel
+							has_idea = service_by_requirement
+							has_idea = all_adults_serve
+						}
+					}
+				}
+				add_ideas = service_by_requirement
+			}
+		}
+	}
+	focus = {
+		id = LPX_republic_regular_army_establishment
+		icon = GFX_focus_generic_tank_assault
+		prerequisite = { focus = LPX_local_militia_formation focus = LPX_heavy_industry_development }
+
+		x = 1
+		y = 1
+		relative_position_id = LPX_local_militia_formation
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = LPX_republic_regular_army_establishment
+				bonus = 0.25
+				uses = 2
+				category = industry 
+			}
+			add_tech_bonus = {
+				name = LPX_republic_regular_army_establishment
+				bonus = 0.5
+				uses = 1
+				category = support_tech
+			}
+		}
+	}
+	focus = {
+		id = LPX_affordable_weapons_research
+		icon = GFX_focus_PER_construct_air_defenses
+		prerequisite = { focus = LPX_republic_regular_army_establishment }
+		mutually_exclusive = { focus = LPX_kivotos_technology_provision }
+		x = -1
+		y = 1
+		relative_position_id = LPX_republic_regular_army_establishment
+		cost = 10
+
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+		    add_tech_bonus = {
+			    name = LPX_affordable_weapons_research
+			    bonus = 0.75
+			    uses = 2
+    			category = infantry_weapons
+		    }
+			
+			add_tech_bonus = {
+				name = LPX_affordable_weapons_research
+				uses = 1
+				bonus = 0.5
+				category = military_police_tech
+			}
+		}
+	}
+
+	focus = {
+		id = LPX_kivotos_technology_provision  
+		icon = GFX_goal_Perfect_team_zero_congress
+		prerequisite = { focus = LPX_republic_regular_army_establishment }
+		mutually_exclusive = { focus = LPX_affordable_weapons_research }
+		dynamic = yes 
+		x = 1
+		y = 1
+		relative_position_id = LPX_republic_regular_army_establishment  
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 1
+			}
+
+			add_tech_bonus = {
+				name = LPX_kivotos_technology_provision
+				bonus = 0.5
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+		}
+	}
+	focus = { 
+		id = LPX_counterintelligence_organization
+		icon = GFX_focus_SWI_embrace_rote_drei
+		prerequisite = { focus = LPX_affordable_weapons_research }
+
+		x = -1
+		y = 1
+		relative_position_id = LPX_affordable_weapons_research
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		bypass = {
+			has_intelligence_agency = yes
+		}
+
+		bypass_effect = {
+			add_political_power = 25
+		}
+
+		completion_reward = {
+			create_intelligence_agency = yes
+			add_political_power = 25
+		}
+	}
+	focus = {
+		id = LPX_infrastructure_for_military
+		icon = GFX_focus_generic_road_investment
+		prerequisite = { focus = LPX_affordable_weapons_research focus = LPX_kivotos_technology_provision }
+
+		x = 1
+		y = 1
+		relative_position_id = LPX_affordable_weapons_research
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = { infrastructure < 5 }
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = LPX_our_new_air_force
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = LPX_kivotos_technology_provision }
+
+		x = 1
+		y = 1
+		relative_position_id = LPX_kivotos_technology_provision
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = LPX_our_new_air_force
+				bonus = 0.5
+				uses = 1
+				category = light_air
+			}
+			add_tech_bonus = {
+				name = LPX_our_new_air_force
+				bonus = 0.5
+				uses = 1
+				category = medium_air
+			}
+			add_tech_bonus = {
+				name = LPX_our_new_air_force
+				bonus = 0.5
+				uses = 1
+				category = heavy_air
+			}
+			air_experience = 20
+		}
+	}
+	focus = {
+		id = LPX_military_cooperation_with_home_country
+		icon = GFX_focus_FIN_oy_alkoholiliike
+		prerequisite = { focus = LPX_counterintelligence_organization focus = LPX_our_new_air_force focus = LPX_infrastructure_for_military }
+
+		x = 2
+		y = 1
+		relative_position_id = LPX_counterintelligence_organization
+		cost = 10
+		available = {
+		}
+
+		search_filters = {}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = LPX_military_cooperation_with_home_country
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = LPX_the_grand_university_of_capital 
+		icon = GFX_goal_HEU_junsulnote_1
+		prerequisite = { focus = LPX_military_cooperation_with_home_country }
+
+		x = 0
+		y = 1
+		relative_position_id = LPX_military_cooperation_with_home_country
+		cost = 10
+		available = {  
+		}
+
+		search_filters = {} 
+
+		completion_reward = {
+			if = {
+				limit = { amount_research_slots < 5 }
+				add_research_slot = 1
+			}
+		}
+	}
+
+
+
+}
