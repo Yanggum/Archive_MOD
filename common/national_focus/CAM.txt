@@ -10,40 +10,6 @@ focus_tree = {
 			tag = CAM
 		}
 	}
-	
-#프랑스 괴뢰국 루트
-
-	focus = {
-		id = keep_under_fra
-		icon = GFX_focus_CZE_german_puppet
-		
-        x = 66
-		y = 0
-
-		cost = 10
-
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = return_khmer_empire }
-			}
-		}
-
-		mutually_exclusive = {
-        focus = return_khmer_empire
-		}
-		completion_reward = {
-			add_timed_idea = { 
-				idea = keep_under_fra_idea
-				days = 365
-			}
-		}
-	}
 
 #크메르 제국 루트
 
@@ -51,7 +17,7 @@ focus_tree = {
 		id = return_khmer_empire
 		icon = GFX_return_khmer_empire
 		
-        x = 33
+        x = 8
 		y = 0
 
 		cost = 10
@@ -83,26 +49,47 @@ focus_tree = {
 		id = angkor_power_up
 		icon = GFX_focus_secret_rearmament
 
-		x = 31
+		x = -2
 		y = 1
 
 		cost = 5
+
+		prerequisite = {
+			focus = return_khmer_empire
+		}
+
+		relative_position_id = return_khmer_empire
+
+		completion_reward = {
+			add_ideas = angkor_power_up_idea
+		}
+	}
+
+	focus = {
+		id = glorious_reminder
+		icon = GFX_glorious_reminder
+
+		x = 0
+		y = 1
+
+		cost = 5
+
+		relative_position_id = return_khmer_empire
 
 		prerequisite = {
 			focus = return_khmer_empire
 		}
 
 		completion_reward = {
-			add_ideas = angkor_power_up_idea
+			add_ideas = glorious_reminder_idea
 		}
-	}
-	
+	}	
 
 	focus = {
 		id = boost_industrialization
 		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
 
-		x = 35
+		x = 2
 		y = 1
 
 		cost = 5
@@ -110,6 +97,8 @@ focus_tree = {
 		prerequisite = {
 			focus = return_khmer_empire
 		}
+
+		relative_position_id = return_khmer_empire
 
 		completion_reward = {
 			741 = {
@@ -163,12 +152,14 @@ focus_tree = {
 		id = Aksar_khmer
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
 
-		x = 36
-		y = 2
+		x = 1
+		y = 1
 
 		cost = 5
 
 		prerequisite = { focus = boost_industrialization }
+
+		relative_position_id = boost_industrialization
 
 		completion_reward = {
 			remove_ideas = serious_level_of_illiteracy_idea
@@ -180,10 +171,12 @@ focus_tree = {
 		id = Angkor_National_University_Laboratory
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
 
-		x = 37
-		y = 3
+		x = 1
+		y = 1
 
 		cost = 10
+
+		relative_position_id = Aksar_khmer
 
 		prerequisite = {
 			focus = Aksar_khmer
@@ -195,29 +188,13 @@ focus_tree = {
 	}
 
 	focus = {
-		id = glorious_reminder
-		icon = GFX_glorious_reminder
-
-		x = 33
-		y = 1
-
-		cost = 5
-
-		prerequisite = {
-			focus = return_khmer_empire
-		}
-
-		completion_reward = {
-			add_ideas = glorious_reminder_idea
-		}
-	}
-
-	focus = {
 		id = to_the_glory_of_khmer_empire
 		icon = GFX_to_the_glory_of_khmer_empire
 
-		x = 33
-		y = 2
+		x = 0
+		y = 1
+
+		relative_position_id = glorious_reminder
 
 		cost = 10 
 
@@ -240,32 +217,94 @@ focus_tree = {
 			set_autonomy = {
 			target = CAM
 			autonomy_state = autonomy_free
-		}
-	}
-			drop_cosmetic_tag = yes
-			FRA = {
-				country_event = {
-				id = CAM_event.2
-				hours = 6
-				random_hours = 24
 			}
 		}
-		set_cosmetic_tag = CAM_khmer
+				drop_cosmetic_tag = yes
+				FRA = {
+					country_event = {
+					id = CAM_event.2
+					hours = 6
+					random_hours = 24
+				}
+			}
+			set_cosmetic_tag = CAM_khmer
+		}
 	}
-}
 
 	focus = {
-		id = khmer_krom_integration_requirements
-		icon = GFX_khmer_krom_integration_requirements
+		id = khmer_empire_old_territory
+		icon = GFX_khmer_empire_old_territory
 
-		x = 34
-		y = 4
+		x = 0
+		y = 1
+
+		cost = 10
+
+		relative_position_id = to_the_glory_of_khmer_empire
+
+		prerequisite = {
+			focus = to_the_glory_of_khmer_empire
+		}
+
+		completion_reward = {
+			set_country_flag = khmer_empire_old_territory_decision_flag
+			unlock_decision_tooltip = CAM_reannex_lanxang
+			unlock_decision_tooltip = CAM_isan
+			unlock_decision_tooltip = CAM_siam
+			unlock_decision_tooltip = CAM_north_malay
+			unlock_decision_tooltip = CAM_move_capital_angkor
+		}
+	}	
+
+	focus = {
+		id = lanxang_reannex
+		icon = GFX_lanxang_reannex
+
+		x = -1
+		y = 1
 
 		cost = 5
 
 		prerequisite = {
 			focus = khmer_empire_old_territory
 		}
+		
+		relative_position_id = khmer_empire_old_territory
+
+		completion_reward = {
+			add_state_claim = 670
+			create_wargoal = {
+				target = LAO
+                type = take_state
+				expire = 0
+			}
+			if = {
+			limit = {
+				controls_province = 1464
+                controls_state = 670
+        }
+			set_province_name = {
+				id = 1464
+				name = CAM_VICTORY_POINTS_1464
+			}
+		}
+		}
+	}	
+
+	focus = {
+		id = khmer_krom_integration_requirements
+		icon = GFX_khmer_krom_integration_requirements
+
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = khmer_empire_old_territory
+		}
+
+		relative_position_id = khmer_empire_old_territory
 		
 		available = {
 			CAM = {
@@ -324,186 +363,4515 @@ focus_tree = {
 	}
 
 	focus = {
-		id = lanxang_reannex
-		icon = GFX_lanxang_reannex
+		id = CAM_VIN_annex
+		icon = GFX_CAM_VIN_annex
 
-		x = 32
-		y = 4
+		x = -2
+		y = 2
+
+		relative_position_id = khmer_empire_old_territory
+
+		cost = 5 
+		prerequisite = { focus = khmer_empire_old_territory }
+
+		available = { 
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
+		}
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = VIN
+				expire = 0
+			}
+		}
+	}	
+
+	focus = {
+		id = siemreap
+		icon = GFX_siemreap
+
+		x = 1
+		y = 1
 
 		cost = 5
 
-		prerequisite = {
-			focus = khmer_empire_old_territory
-		}
+		prerequisite = { focus = lanxang_reannex }
+		prerequisite = { focus = khmer_krom_integration_requirements }
+
+		relative_position_id = lanxang_reannex
 
 		completion_reward = {
-			add_state_claim = 670
+			add_state_claim = 868
+			add_state_claim = 289
+			add_state_claim = 724
 			create_wargoal = {
-				target = LAO
-                type = take_state
+				target = SIA
+				type = take_state
 				expire = 0
 			}
 			if = {
-			limit = {
-				controls_province = 1464
-                controls_state = 670
-        }
-			set_province_name = {
-				id = 1464
-				name = CAM_VICTORY_POINTS_1464
+				limit = {
+					controls_province = 10438
+					controls_state = 868
 			}
-		}
+				set_province_name = {
+					id = 10438
+					name = CAM_VICTORY_POINTS_10438
+				}
+			}
+			if = {
+				limit = {
+					controls_province = 7408
+					controls_state = 289
+			}
+				set_province_name = {
+					id = 7408
+					name = CAM_VICTORY_POINTS_7408
+				}
+			}
+			if = {
+				limit = {
+					controls_province = 7236
+					controls_state = 724
+			}
+				set_province_name = {
+					id = 7236
+					name = CAM_VICTORY_POINTS_7236
+				}
+			}
 		}
 	}
 
 	focus = {
-		id = khmer_empire_old_territory
-		icon = GFX_khmer_empire_old_territory
+		id = CAM_YUN_annex
+		icon = GFX_CAM_YUN_annex
 
-		x = 33
-		y = 3
+		x = 2
+		y = 2
 
-		cost = 10
+		cost = 5 
+		prerequisite = { focus = khmer_empire_old_territory }
 
-		prerequisite = {
-			focus = to_the_glory_of_khmer_empire
+		relative_position_id = khmer_empire_old_territory
+
+		available = { 
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
 		}
 
 		completion_reward = {
-			set_country_flag = khmer_empire_old_territory_decision_flag
-			unlock_decision_tooltip = CAM_reannex_lanxang
-			unlock_decision_tooltip = CAM_isan
-			unlock_decision_tooltip = CAM_siam
-			unlock_decision_tooltip = CAM_north_malay
-			unlock_decision_tooltip = CAM_move_capital_angkor
-	}
-}
-
-focus = {
-	id = siemreap
-	icon = GFX_siemreap
-
-	x = 33
-	y = 5
-
-	cost = 5
-
-	prerequisite = { focus = lanxang_reannex }
-	prerequisite = { focus = khmer_krom_integration_requirements }
-
-	completion_reward = {
-		add_state_claim = 868
-		add_state_claim = 289
-		add_state_claim = 724
-		create_wargoal = {
-			target = SIA
-			type = take_state
-			expire = 0
-		}
-		if = {
-			limit = {
-				controls_province = 10438
-                controls_state = 868
-        }
-			set_province_name = {
-				id = 10438
-				name = CAM_VICTORY_POINTS_10438
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = YUN
+				expire = 0
 			}
 		}
-		if = {
-			limit = {
-				controls_province = 7408
-                controls_state = 289
-        }
-			set_province_name = {
-				id = 7408
-				name = CAM_VICTORY_POINTS_7408
-			}
+	}	
+
+	focus = {
+		id = CAM_BRM_annex
+		icon = GFX_CAM_BRM_annex
+
+		x = 2
+		y = 1
+
+		cost = 5 
+		prerequisite = { focus = CAM_VIN_annex focus = CAM_YUN_annex }
+
+		relative_position_id = CAM_VIN_annex
+
+		available = { 
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
 		}
-		if = {
-			limit = {
-				controls_province = 7236
-                controls_state = 724
-        }
-			set_province_name = {
-				id = 7236
-				name = CAM_VICTORY_POINTS_7236
+
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = BRM
+				expire = 0
 			}
 		}
 	}
-}
 
-focus = {
-	id = CAM_VIN_annex
-	icon = GFX_CAM_VIN_annex
+	#프랑스 괴뢰국 루트
 
-	x = 31
-	y = 5
+	focus = {
+		id = keep_under_fra
+		icon = GFX_focus_CZE_german_puppet
+		
+        x = 20
+		y = 0
 
-	cost = 5 
-	prerequisite = { focus = khmer_empire_old_territory }
+		cost = 10
 
-	available = { 
-		has_full_control_of_state = 868
-		has_full_control_of_state = 289
-		has_full_control_of_state = 724
+		relative_position_id = return_khmer_empire
+
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = return_khmer_empire }
+			}
+		}
+
+		mutually_exclusive = {
+        focus = return_khmer_empire
+		}
+		completion_reward = {
+			add_timed_idea = { 
+				idea = keep_under_fra_idea
+				days = 365
+			}
+		}
+	}	
+
+	#########################################################################################################
+	# 밀리터리
+	#########################################################################################################
+    ### Starter ###
+	focus = {
+		id = CAM_status_of_the_admiralty
+		icon = GFX_CAM_admirality
+		cost = 7
+
+		x = 23
+		y = 7
+
+		ai_will_do = { factor = 1000 }
+
+		available = {
+			has_country_flag = GAEBALJUNG
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_status_of_the_admiralty"
+			add_stability = 0.05
+			add_political_power = 25
+			navy_experience = 30
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
 	}
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = VIN
-			expire = 0
+
+   ### Army ###
+	focus = {
+		id = CAM_ostasien_force
+		icon = GFX_CAM_Ostasiatische_Heer
+		cost = 8
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -10
+		y = 1
+
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_ostasien_force"
+			army_experience = 20
+			add_doctrine_cost_reduction = {
+				name = CAM_ostasien_force
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_request_arms_from_berlin
+		icon = GFX_goal_mittel_arms_trade
+		cost = 8
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -10
+		y = 3
+
+		prerequisite = {
+			focus = CAM_ostasien_force
+		}
+		available = {
+			is_subject_of = GER
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_request_arms_from_berlin"
+			add_tech_bonus = {
+				name = CAM_request_arms_from_berlin
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+			add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = GER }
+			add_equipment_to_stockpile = { type = support_equipment amount = 200 producer = GER }
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_modern_artillery_shipments
+		icon = GFX_goal_Krupp_Artillery
+		cost = 8
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -10
+		y = 4
+
+		prerequisite = {
+			focus = CAM_request_arms_from_berlin
+		}
+		available = {
+			is_subject_of = GER
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_modern_artillery_shipments"
+			add_tech_bonus = {
+				name = CAM_modern_artillery_shipments
+				bonus = 1
+				uses = 1
+				category = artillery
+			}
+			add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = GER }
+			add_equipment_to_stockpile = { type = artillery_equipment amount = 250 producer = GER }
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_increased_arms_supplies
+		icon = GFX_focus_ger_oppose_hitler
+		cost = 8
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -10
+		y = 5
+
+		prerequisite = {
+			focus = CAM_modern_artillery_shipments
+		}
+		available = {
+			is_subject_of = GER
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_increased_arms_supplies"
+			add_tech_bonus = {
+				name = CAM_increased_arms_supplies
+				bonus = 1
+				uses = 1
+				category = armor
+			}
+			add_equipment_to_stockpile = { type = infantry_equipment amount = 1000 producer = GER }
+			add_equipment_to_stockpile = { type = support_equipment amount = 500 producer = GER }
+			add_equipment_to_stockpile = { type = light_tank_chassis amount = 200 producer = GER }
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_support_the_grand_fleet
+		icon = GFX_goal_generic_naval_command
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -11
+		y = 2
+
+		prerequisite = {
+			focus = CAM_ostasien_force
+		}
+		mutually_exclusive = {
+			focus = CAM_unorthodox_approach
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_support_the_grand_fleet"
+			swap_ideas = {
+				remove_idea = CAM_colonial_question
+				add_idea = CAM_army_of_marines_1
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_MANPOWER }
+	}
+
+	focus = {
+		id = CAM_refine_our_methods
+		icon = GFX_goal_radio
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -12
+		y = 3
+
+		prerequisite = {
+			focus = CAM_support_the_grand_fleet
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_refine_our_methods"
+			army_experience = 50
+			if = {
+				limit = { NOT = { has_tech = radio } }
+				set_technology = { radio = 1 }
+			}
+			else = {
+				add_tech_bonus = {
+					name = CAM_refine_our_methods
+					bonus = 1
+					uses = 1
+					category = electronics
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = CAM_refine_our_methods
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_naval_hutier_tactics
+		icon = GFX_focus_prc_infiltration
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -12
+		y = 4
+
+		prerequisite = {
+			focus = CAM_refine_our_methods
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_naval_hutier_tactics"
+			swap_ideas = {
+				remove_idea = CAM_army_of_marines_1
+				add_idea = CAM_army_of_marines_2
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+	}
+
+	focus = {
+		id = CAM_east_asian_marine_detachment
+		icon = GFX_CAM_Kaiserliche_Marine
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -12
+		y = 5
+
+		prerequisite = {
+			focus = CAM_naval_hutier_tactics
+		}
+		available = {
+			336 = { is_owned_and_controlled_by = CAM }
+			GER = {
+				exists = yes
+				is_subject = no
+			}
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_east_asian_marine_detachment"
+			swap_ideas = {
+				remove_idea = CAM_army_of_marines_2
+				add_idea = CAM_army_of_marines_3
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_unorthodox_approach
+		icon = GFX_goal_LEP_patronize_xiangshen
+		cost = 8
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -9
+		y = 2
+
+		prerequisite = {
+			focus = CAM_ostasien_force
+		}
+		mutually_exclusive = {
+			focus = CAM_support_the_grand_fleet
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_unorthodox_approach"
+			swap_ideas = {
+				remove_idea = CAM_colonial_question
+				add_idea = CAM_native_recruitment_1
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_MANPOWER }
+	}
+
+	focus = {
+		id = CAM_reform_the_garrisons
+		icon = GFX_goal_Sturmtruppen
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -8
+		y = 3
+
+		prerequisite = {
+			focus = CAM_unorthodox_approach
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_reform_the_garrisons"
+			army_experience = 50
+			add_doctrine_cost_reduction = {
+				name = CAM_east_asian_heer
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_ARMY_XP }
+	}
+
+	focus = {
+		id = CAM_local_ncos
+		icon = GFX_goal_rights_for_service
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -8
+		y = 4
+
+		prerequisite = {
+			focus = CAM_reform_the_garrisons
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_local_ncos"
+			swap_ideas = {
+				remove_idea = CAM_native_recruitment_1
+				add_idea = CAM_native_recruitment_2
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_MANPOWER }
+	}
+
+	focus = {
+		id = CAM_east_asian_heer
+		icon = GFX_focus_generic_army_tanks2
+		cost = 10
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -8
+		y = 5
+
+		prerequisite = {
+			focus = CAM_local_ncos
+		}
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 5
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 2
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_east_asian_heer"
+			swap_ideas = {
+				remove_idea = CAM_native_recruitment_2
+				add_idea = CAM_native_recruitment_3
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH }
+	}
+
+   ### Air Focus ###
+	focus = {
+		id = CAM_singapore_flying_corps
+		icon = GFX_CAM_Fliegerabteilung
+		cost = 5
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -6
+		y = 1
+
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_singapore_flying_corps"
+			air_experience = 25
+		}
+		search_filters = { FOCUS_FILTER_AIR_XP }
+	}
+
+	focus = {
+		id = CAM_qingdao_airbases
+		icon = GFX_goal_generic_build_airforce
+		cost = 5
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -5
+		y = 2
+
+		available = {
+			controls_state = 744
+		}
+
+		prerequisite = {
+			focus = CAM_singapore_flying_corps
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_qingdao_airbases"
+			744 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_aviation_advisors
+		icon = GFX_goal_GER_Pilots
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -6
+		y = 3
+
+		prerequisite = {
+			focus = CAM_singapore_flying_corps
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_aviation_advisors"
+			air_experience = 25
+			add_doctrine_cost_reduction = {
+				name = CAM_aviation_advisors
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH FOCUS_FILTER_AIRFORCE_BONUS }
+	}
+
+	focus = {
+		id = CAM_focke_wulf_ostasien
+		icon = GFX_goal_generic_production
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -6
+		y = 4
+
+		prerequisite = {
+			focus = CAM_aviation_advisors
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_focke_wulf_ostasien"
+			add_tech_bonus = {
+				name = CAM_focke_wulf_ostasien
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
+			add_one_random_military_factory = yes
+			add_one_random_military_factory = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_east_asian_fallschirmjager
+		icon = GFX_focus_generic_paratrooper
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -6
+		y = 5
+
+		prerequisite = {
+			focus = CAM_focke_wulf_ostasien
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_east_asian_fallschirmjager"
+			add_tech_bonus = {
+				name = CAM_east_asian_fallschirmjager
+				bonus = 1
+				uses = 1
+				category = para_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_fighter_shipments
+		icon = GFX_goal_generic_air_fighter2_new
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -6
+		y = 6
+
+		prerequisite = {
+			focus = CAM_east_asian_fallschirmjager
+		}
+		available = {
+			GER = {
+				exists = yes
+				is_subject = no
+				has_design_based_on = small_plane_airframe
+				has_design_based_on = cv_small_plane_airframe
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_fighter_shipments"
+			add_equipment_to_stockpile = {
+				type = small_plane_airframe
+				amount = 200
+				producer = GER
+			}
+			add_equipment_to_stockpile = {
+				type = cv_small_plane_airframe
+				amount = 100
+				producer = GER
+			}
 		}
 	}
-}
 
-focus = {
-	id = CAM_BRM_annex
-	icon = GFX_CAM_BRM_annex
+   ### Navy Focus ###
+	focus = {
+		id = CAM_grand_fleet
+		icon = GFX_CAM_Ostasiatische_Station
+		cost = 5
 
-	x = 33
-	y = 6
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 0
+		y = 1
 
-	cost = 5 
-	prerequisite = { focus = CAM_VIN_annex focus = CAM_YUN_annex }
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
 
-	available = { 
-		has_full_control_of_state = 868
-		has_full_control_of_state = 289
-		has_full_control_of_state = 724
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_grand_fleet"
+			add_offsite_building = { type = dockyard level = 1 }
+			add_doctrine_cost_reduction = {
+				name = CAM_grand_fleet
+				cost_reduction = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+			custom_effect_tooltip = tooltip_white_line
+			random_owned_controlled_state = {
+				prioritize = { 336 }
+				limit = {
+					is_core_of = ROOT
+					can_construct_building = naval_facility
+				}
+				construct_building_in_random_province = { naval_facility = 1 }
+			}
+		}
+		search_filters = { FOCUS_FILTER_NAVY_XP }
 	}
 
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = BRM
-			expire = 0
+	focus = {
+		id = CAM_fleet_in_being
+		icon = GFX_goal_generic_sea_focused_navy
+		cost = 5
+
+		relative_position_id = CAM_grand_fleet
+		x = -2
+		y = 2
+
+		prerequisite = {
+			focus = CAM_grand_fleet
+		}
+		mutually_exclusive = {
+			focus = CAM_command_of_the_sea
+			focus = CAM_aviation_school
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_fleet_in_being"
+			navy_experience = 15
+			add_doctrine_cost_reduction = {
+				name = CAM_fleet_in_being
+				cost_reduction = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_sms_neckar
+		icon = GFX_goal_generic_navy_battleship
+		cost = 5
+
+		relative_position_id = CAM_fleet_in_being
+		x = 0
+		y = 1
+
+		available = {
+			if = {
+				limit = { has_dlc_mtg = yes }
+				has_tech = basic_ship_hull_heavy
+			}
+			else = {
+				has_tech = basic_battleship
+			}
+		}
+		prerequisite = {
+			focus = CAM_fleet_in_being
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_sms_neckar"
+			add_tech_bonus = {
+				name = CAM_sms_neckar
+				bonus = 1.5
+				uses = 1
+				category = bb_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = { has_dlc_mtg = yes }
+				create_equipment_variant = {
+					name = "Neckar Class" #equivalent to OTL Bismarck
+					type = ship_hull_heavy_2
+					name_group = GER_BB_IMPERIAL
+					parent_version = 0
+					modules = {
+						fixed_ship_battery_slot = ship_heavy_battery_2
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+						fixed_ship_radar_slot = empty
+						fixed_ship_engine_slot = heavy_ship_engine_2
+						fixed_ship_secondaries_slot = ship_secondaries_2
+						fixed_ship_armor_slot = ship_armor_bb_1
+						front_1_custom_slot = ship_anti_air_1
+						mid_1_custom_slot = ship_airplane_launcher_1
+						mid_2_custom_slot = ship_secondaries_2
+						rear_1_custom_slot = ship_heavy_battery_2
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_heavy_2
+						version_name = "Neckar Class"
+					}
+					name = "SMS Neckar"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = battleship_2
+					}
+					name = "SMS Neckar"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_command_of_the_sea
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		cost = 5
+
+		relative_position_id = CAM_grand_fleet
+		x = 0
+		y = 2
+
+		prerequisite = {
+			focus = CAM_grand_fleet
+		}
+		mutually_exclusive = {
+			focus = CAM_fleet_in_being
+			focus = CAM_aviation_school
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_command_of_the_sea"
+			navy_experience = 15
+			add_doctrine_cost_reduction = {
+				name = CAM_command_of_the_sea
+				cost_reduction = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_NAVY_XP FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_modern_destroyers
+		icon = GFX_goal_generic_navy_anti_submarine
+		cost = 10
+
+		relative_position_id = CAM_grand_fleet
+		x = -1
+		y = 1
+
+		available = {
+			if = {
+				limit = { has_dlc_mtg = yes }
+				has_tech = improved_ship_hull_light
+			}
+			else = {
+				has_tech = improved_destroyer
+			}
+		}
+		prerequisite = {
+			focus = CAM_grand_fleet
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_modern_destroyers"
+			navy_experience = 15
+			add_tech_bonus = {
+				name = CAM_modern_destroyers
+				bonus = 1
+				uses = 1
+				category = dd_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = { has_dlc_mtg = yes }
+				create_equipment_variant = {
+					name = "Zerstörer 1939"
+					type = ship_hull_light_3
+					name_group = GER_DD_IMPERIAL
+					parent_version = 0
+					modules = {
+						fixed_ship_battery_slot = ship_light_battery_2
+						fixed_ship_anti_air_slot = ship_anti_air_2
+						fixed_ship_fire_control_system_slot = ship_sonar_1
+						fixed_ship_radar_slot = ship_radar_1
+						fixed_ship_engine_slot = light_ship_engine_2
+						fixed_ship_torpedo_slot = ship_torpedo_2
+						mid_1_custom_slot = ship_mine_layer_1
+						rear_1_custom_slot = ship_depth_charge_2
+						front_1_custom_slot = ship_light_battery_2
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_light_3
+						version_name = "Zerstörer 1939"
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = destroyer_3
+					}
+					requested_factories = 1
+					progress = 0.35
+					amount = 1
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_colonial_battlecruisers
+		icon = GFX_focus_generic_navy_battleship2
+		cost = 5
+
+		relative_position_id = CAM_command_of_the_sea
+		x = 0
+		y = 1
+
+		available = {
+			if = {
+				limit = { has_dlc_mtg = yes }
+				has_tech = basic_ship_hull_heavy
+			}
+			else = {
+				has_tech = basic_battlecruiser
+			}
+		}
+		prerequisite = {
+			focus = CAM_command_of_the_sea
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_colonial_battlecruisers"
+			add_tech_bonus = {
+				name = CAM_colonial_battlecruisers
+				bonus = 1.5
+				uses = 1
+				category = bc_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = { has_dlc_mtg = yes }
+				create_equipment_variant = {
+					name = "Johann Jakob Class" #equivalent to OTL Richelieu
+					type = ship_hull_heavy_2
+					name_group = GER_BC_IMPERIAL
+					parent_version = 0
+					modules = {
+						fixed_ship_battery_slot = ship_heavy_battery_2
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+						fixed_ship_radar_slot = empty
+						fixed_ship_engine_slot = heavy_ship_engine_2
+						fixed_ship_secondaries_slot = ship_secondaries_2
+						fixed_ship_armor_slot = ship_armor_bc_2
+						front_1_custom_slot = ship_heavy_battery_2
+						mid_1_custom_slot = ship_secondaries_2
+						mid_2_custom_slot = ship_anti_air_1
+						rear_1_custom_slot = ship_airplane_launcher_1
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_heavy_2
+						version_name = "Johann Jakob Class"
+					}
+					name = "SMS Johann Jakob"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_heavy_2
+						version_name = "Johann Jakob Class"
+					}
+					name = "SMS Emden"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = battle_cruiser_2
+					}
+					name = "SMS Neckar"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = battle_cruiser_2
+					}
+					name = "SMS Emden"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_aviation_school
+		icon = GFX_goal_generic_coastal_navy
+		cost = 5
+
+		relative_position_id = CAM_grand_fleet
+		x = 2
+		y = 2
+
+		prerequisite = {
+			focus = CAM_grand_fleet
+		}
+		mutually_exclusive = {
+			focus = CAM_fleet_in_being
+			focus = CAM_command_of_the_sea
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_aviation_school"
+			navy_experience = 15
+			add_doctrine_cost_reduction = {
+				name = CAM_aviation_school
+				cost_reduction = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_light_cruisers
+		icon = GFX_goal_generic_wolf_pack
+		cost = 10
+
+		relative_position_id = CAM_grand_fleet
+		x = 1
+		y = 1
+
+		available = {
+			if = {
+				limit = { has_dlc_mtg = yes }
+				has_tech = improved_ship_hull_cruiser
+			}
+			else = {
+				has_tech = improved_light_cruiser
+			}
+		}
+		prerequisite = {
+			focus = CAM_grand_fleet
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_light_cruisers"
+			navy_experience = 15
+			add_tech_bonus = {
+				name = CAM_light_cruisers
+				bonus = 1.5
+				uses = 1
+				category = cl_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = { has_dlc_mtg = yes }
+				create_equipment_variant = {
+					name = "Aachen Class"
+					type = ship_hull_cruiser_3
+					name_group = GER_CL_IMPERIAL
+					parent_version = 0
+					modules = {
+						front_1_custom_slot = ship_light_medium_battery_3
+						mid_1_custom_slot = ship_torpedo_2
+						mid_2_custom_slot = dp_ship_secondaries_2
+						rear_1_custom_slot = ship_anti_air_3
+						rear_2_custom_slot = ship_airplane_launcher_2
+						fixed_ship_battery_slot = ship_light_medium_battery_3
+						fixed_ship_anti_air_slot = ship_anti_air_3
+						fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+						fixed_ship_radar_slot = ship_sonar_1
+						fixed_ship_engine_slot = cruiser_ship_engine_3
+						fixed_ship_secondaries_slot = dp_ship_secondaries_2
+						fixed_ship_armor_slot = ship_armor_cruiser_3
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_cruiser_3
+						version_name = "Aachen Class"
+					}
+					name = "SMS Saipan"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_cruiser_3
+						version_name = "Aachen Class"
+					}
+					name = "SMS Sarawak"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_cruiser_3
+						version_name = "Aachen Class"
+					}
+					name = "SMS Tonkin"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = light_cruiser_3
+					}
+					name = "SMS Saipan"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = light_cruiser_3
+					}
+					name = "SMS Sarawak"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+				add_equipment_production = {
+					equipment = {
+						type = light_cruiser_3
+					}
+					name = "SMS Tonkin"
+					requested_factories = 1
+					progress = 0.5
+					amount = 1
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_carrier_conversion
+		icon = GFX_goal_generic_navy_carrier
+		cost = 5
+
+		relative_position_id = CAM_aviation_school
+		x = 0
+		y = 1
+
+		prerequisite = {
+			focus = CAM_aviation_school
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_carrier_conversion"
+			add_tech_bonus = {
+				name = CAM_carrier_conversion
+				bonus = 1.5
+				uses = 1
+				category = cv_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = { has_dlc_mtg = yes }
+				create_equipment_variant = {
+					name = "Malaya Class" #equivalent to OTL Soryu
+					type = ship_hull_carrier_1
+					name_group = GER_CV_IMPERIAL
+					parent_version = 0
+					modules = {
+						fixed_ship_deck_slot_1 = ship_deck_space
+						fixed_ship_deck_slot_2 = ship_deck_space
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_radar_slot = empty
+						fixed_ship_engine_slot = carrier_ship_engine_2
+						fixed_ship_secondaries_slot = dp_ship_secondaries_1
+						front_1_custom_slot = ship_deck_space
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_carrier_1
+						version_name = "Malaya Class"
+					}
+					name = "SMS Malaya"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+			else = {
+				add_equipment_production = {
+					equipment = {
+						type = carrier_2
+					}
+					name = "SMS Malaya"
+					requested_factories = 1
+					progress = 0.45
+					amount = 1
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_expand_naval_facilities
+		icon = GFX_goal_generic_navy_cruiser
+		cost = 10
+
+		relative_position_id = CAM_colonial_battlecruisers
+		x = 0
+		y = 1
+
+		prerequisite = {
+			focus = CAM_colonial_battlecruisers
+			focus = CAM_sms_neckar
+			focus = CAM_carrier_conversion
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_expand_naval_facilities"
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_expand_local_dockyards
+		icon = GFX_goal_generic_shipyard
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -2
+		y = 6
+
+		prerequisite = {
+			focus = CAM_expand_naval_facilities
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_expand_local_dockyards"
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_underwater_fleet
+		icon = GFX_goal_generic_navy_submarine
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -3
+		y = 7
+
+		prerequisite = {
+			focus = CAM_expand_local_dockyards
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_underwater_fleet"
+			add_tech_bonus = {
+				name = CAM_underwater_fleet
+				bonus = 0.75
+				uses = 2
+				category = ss_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_east_asian_merchant_navy
+		icon = GFX_goal_USA_liberty_ships
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -1
+		y = 7
+
+		prerequisite = {
+			focus = CAM_expand_local_dockyards
+		}
+
+		ai_will_do = {
+			factor = 3
+			modifier = {
+				factor = 3
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_east_asian_merchant_navy"
+			add_equipment_to_stockpile = { type = convoy amount = 150 }
 		}
 	}
-}
-focus = {
-	id = CAM_YUN_annex
-	icon = GFX_CAM_YUN_annex
 
-	x = 35
-	y = 5
+	focus = {
+		id = CAM_coastal_fortifications_programme
+		icon = GFX_goal_generic_fortify_city
+		cost = 10
 
-	cost = 5 
-	prerequisite = { focus = khmer_empire_old_territory }
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 1
+		y = 6
 
-	available = { 
-		has_full_control_of_state = 868
-		has_full_control_of_state = 289
-		has_full_control_of_state = 724
+		prerequisite = {
+			focus = CAM_expand_naval_facilities
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_coastal_fortifications_programme"
+			add_war_support = 0.05
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					is_valid_state_for_development = yes
+				}
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = coastal_bunker
+						province = {
+							all_provinces = yes
+							limit_to_naval_base = yes
+						}
+						level = 3
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_naval_base
+						BUILDING = coastal_bunker
+						NUMBER = 3
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
 	}
 
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = YUN
-			expire = 0
+	focus = {
+		id = CAM_anti_invasion_plan
+		icon = GFX_goal_continuous_def_against_influence
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 1
+		y = 7
+
+		prerequisite = {
+			focus = CAM_coastal_fortifications_programme
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_anti_invasion_plan"
+			add_war_support = 0.05
+			add_ideas = CAM_Anti_Invasion_Plan_idea
+			add_one_random_military_factory = yes
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_absolute_defence_sphere
+		icon = GFX_focus_generic_coastal_fort
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 2
+		y = 8
+
+		prerequisite = {
+			focus = CAM_anti_invasion_plan
+		}
+		prerequisite = {
+			focus = CAM_expand_the_singapore_detachment
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_absolute_defence_sphere"
+			add_war_support = 0.1
+			swap_ideas = {
+				remove_idea = CAM_Anti_Invasion_Plan_idea
+				add_idea = CAM_Absolute_Defense_Sphere_idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_improved_marine_training
+		icon = GFX_goal_generic_marines2
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 4
+		y = 6
+
+		prerequisite = {
+			focus = CAM_expand_naval_facilities
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_improved_marine_training"
+			add_tech_bonus = {
+				name = CAM_improved_marine_training
+				bonus = 1
+				uses = 2
+				category = marine_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_expand_the_singapore_detachment
+		icon = GFX_goal_continuous_reduce_training_time
+		cost = 5
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 4
+		y = 7
+
+		prerequisite = {
+			focus = CAM_improved_marine_training
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_expand_the_singapore_detachment"
+			add_one_random_military_factory = yes
+			custom_effect_tooltip = tooltip_white_line
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Singapur-Marine-Division"
+					LINE_1 = { localization_key = line_battalion_tt NAME = marine ICON = GFX_unit_marine_icon_small COUNT = 9 }
+				}
+				if = {
+					limit = { has_template = "Singapur-Marine-Division" }
+					delete_unit_template_and_units = { division_template = "Singapur-Marine-Division" disband = yes } #no cheating
+				}
+				division_template = {
+					name = "Singapur-Marine-Division"
+					division_names_group = CAM_MAR_02
+					regiments = {
+						marine = { x = 0 y = 0 }
+						marine = { x = 0 y = 1 }
+						marine = { x = 0 y = 2 }
+						marine = { x = 1 y = 0 }
+						marine = { x = 1 y = 1 }
+						marine = { x = 1 y = 2 }
+						marine = { x = 2 y = 0 }
+						marine = { x = 2 y = 1 }
+						marine = { x = 2 y = 2 }
+					}
+					priority = 2
+				}
+			}
+			capital_scope = {
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_spawn_units
+						COUNT = 2
+						TYPE = "Singapur-Marine-Division"
+					}
+					create_unit = {
+						division = "division_template = \"Singapur-Marine-Division\" start_experience_factor = 0.5"
+						owner = ROOT
+						count = 2
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_jungle_warfare
+		icon = GFX_SIA_jungletraining
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 4
+		y = 8
+
+		prerequisite = {
+			focus = CAM_expand_the_singapore_detachment
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_jungle_warfare"
+			enable_tech_jungle_warfare = yes
 		}
 	}
-}
 
+	focus = {
+		id = CAM_naval_aviation_ambition
+		icon = GFX_goal_generic_air_naval_bomber_new
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -4
+		y = 6
+
+		prerequisite = {
+			focus = CAM_expand_naval_facilities
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_naval_aviation_ambition"
+			add_tech_bonus = {
+				name = CAM_naval_aviation_ambition
+				bonus = 0.75
+				uses = 2
+				category = naval_bomber
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_form_a_naval_aerial_corps
+		icon = GFX_goal_generic_air_naval_bomber2_new
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -5
+		y = 7
+
+		prerequisite = {
+			focus = CAM_naval_aviation_ambition
+		}
+		prerequisite = {
+			focus = CAM_fighter_shipments
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_form_a_naval_aerial_corps"
+			add_equipment_to_stockpile = {
+				type = small_plane_naval_bomber_airframe
+				amount = 150
+				producer = GER
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_reinforce_aerial_defences
+		icon = GFX_focus_generic_cryptologic_bomb
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -5
+		y = 8
+
+		prerequisite = {
+			focus = CAM_form_a_naval_aerial_corps
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 5
+				any_enemy_country = { is_actual_major = yes }
+			}
+			modifier = {
+				factor = 2
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_reinforce_aerial_defences"
+			add_tech_bonus = {
+				name = CAM_reinforce_aerial_defences
+				bonus = 1
+				uses = 1
+				category = electronics
+			}
+			if = {
+				limit = { NOT = { has_tech = interwar_antiair } }
+				set_technology = { interwar_antiair = 1 }
+			}
+			else = {
+				add_tech_bonus = {
+					name = CAM_reinforce_aerial_defences
+					bonus = 1
+					uses = 1
+					category = cat_anti_air
+				}
+			}
+			336 = {
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_new_shipbuilding_methods
+		icon = GFX_goal_AST_upgrade_reserves
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = -2
+		y = 8
+
+		prerequisite = {
+			focus = CAM_underwater_fleet
+		}
+		prerequisite = {
+			focus = CAM_east_asian_merchant_navy
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_new_shipbuilding_methods"
+			add_ideas = CAM_New_Shipbuilding_Methods_idea
+		}
+	}
+
+	focus = {
+		id = CAM_rule_the_pacific
+		icon = GFX_goal_continuous_naval_production
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 0
+		y = 9
+
+		prerequisite = {
+			focus = CAM_new_shipbuilding_methods
+		}
+		prerequisite = {
+			focus = CAM_absolute_defence_sphere
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 3
+				has_war = yes
+			}
+			modifier = {
+				factor = 1.25
+				date > 1937.1.1
+			}
+			modifier = {
+				factor = 1.5
+				date > 1938.1.1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_rule_the_pacific"
+			add_ideas = CAM_pacific_rule_idea
+		}
+		search_filters = { FOCUS_FILTER_NAVY_BONUS }
+	}
+
+   ### Domestic Policy-Colonization Path ###
+	focus = {
+		id = CAM_fiscal_austerity
+		icon = GFX_goal_bankruptcy
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 7
+		y = 1
+
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+		mutually_exclusive = {
+			focus = CAM_collaborate_with_local_elites
+		}
+		available = {
+			has_idea = CAM_black_monday_idea
+		}
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = { rule = CAM_path option = CAM_PATH_PATAUT }
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_fiscal_austerity"
+			swap_ideas = {
+				add_idea = CAM_austerity_budget
+				remove_idea = CAM_black_monday_idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_colonial_mark
+		icon = GFX_goal_generic_deals
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 2
+
+		prerequisite = {
+			focus = CAM_fiscal_austerity
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_colonial_mark"
+			swap_ideas = {
+				remove_idea = CAM_austerity_budget
+				add_idea = CAM_austerity_budget2
+				days = 365
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_share_our_burden
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 8
+		y = 2
+
+		prerequisite = {
+			focus = CAM_fiscal_austerity
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_share_our_burden"
+			add_political_power = 50
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CAM_pacify_indochina
+		icon = GFX_goal_JAP_target_indochina
+		cost = 10
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 3
+
+		prerequisite = {
+			focus = CAM_colonial_mark
+		}
+		prerequisite = {
+			focus = CAM_share_our_burden
+		}
+		available = {
+			OR = {
+				controls_state = 286
+				controls_state = 671
+			}
+		}
+		bypass = {
+			NOT = { owns_state = 671 }
+			NOT = { owns_state = 286 }
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_pacify_indochina"
+			add_stability = 0.05
+			add_war_support = 0.05
+			if = {
+				limit = { controls_state = 286 }
+				286 = {
+					custom_override_tooltip = {
+						add_building_construction = {
+							type = bunker
+							province = {
+								all_provinces = yes
+							}
+							level = 3
+							instant_build = yes
+						}
+						tooltip = {
+							localization_key = tooltip_add_building_on_all_provinces
+							BUILDING = bunker
+							NUMBER = 3
+						}
+					}
+				}
+				826 = { #Stung Treng
+					add_building_construction = {
+						type = bunker
+						province = 12150
+						level = 3
+						instant_build = yes
+					}
+				}
+				827 = { #Annam
+					add_building_construction = {
+						type = bunker
+						province = 10232
+						level = 3
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						province = 12176
+						level = 3
+						instant_build = yes
+					}
+				}
+				else = {
+					custom_effect_tooltip = reduce_10_guerilla_tooltip
+					add_to_variable = { var = INC.guerilla_activity value = -10 }
+					671 = { #Tonkin
+						custom_override_tooltip = {
+							add_building_construction = {
+								type = bunker
+								province = 4075
+								level = 3
+								instant_build = yes
+							}
+							tooltip = {
+								localization_key = tooltip_add_building_on_victory_point
+								BUILDING = bunker
+								NUMBER = 3
+								VP = 4075
+							}
+						}
+						add_building_construction = {
+							type = bunker
+							province = 12075
+							level = 3
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							province = 4119
+							level = 3
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							province = 1185
+							level = 3
+							instant_build = yes
+						}
+					}
+					827 = { #Annam
+						add_building_construction = {
+							type = bunker
+							province = 10129
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_indochinese_investments
+		icon = GFX_goal_generic_construct_civ_factory
+		cost = 10
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 4
+
+		prerequisite = {
+			focus = CAM_pacify_indochina
+		}
+		available = {
+			OR = {
+				controls_state = 286
+				controls_state = 671
+			}
+		}
+		bypass = {
+			NOT = { owns_state = 286 }
+			NOT = { owns_state = 671 }
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_indochinese_investments"
+			if = {
+				limit = { has_idea = CAM_colonial_disaster_idea }
+				swap_ideas = {
+					remove_idea = CAM_colonial_disaster_idea
+					add_idea = CAM_colonial_instability_idea
+				}
+			}
+			else_if = {
+				limit = { has_idea = CAM_colonial_instability_idea }
+				remove_ideas = CAM_colonial_instability_idea
+			}
+			if = {
+				limit = { controls_state = 286 }
+				286 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				else = {
+					671 = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = industrial_complex
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CAM_pacify_malaya
+		icon = GFX_goal_JAP_target_indonesia
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 8
+		y = 3
+
+		prerequisite = {
+			focus = CAM_colonial_mark
+		}
+		prerequisite = {
+			focus = CAM_share_our_burden
+		}
+		available = {
+			336 = { is_owned_and_controlled_by = ROOT }
+			846 = { is_owned_and_controlled_by = ROOT }
+			963 = { is_owned_and_controlled_by = ROOT }
+			1002 = { is_owned_and_controlled_by = ROOT }
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_pacify_malaya"
+			add_stability = 0.05
+			add_war_support = 0.05
+			336 = {
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						province = 12299
+						level = 3
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 3
+						VP = 12299
+					}
+				}
+			}
+			846 = {
+				add_building_construction = {
+					type = bunker
+					province = 4424
+					level = 3
+					instant_build = yes
+				}
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						province = 10313
+						level = 3
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 3
+						VP = 10313
+					}
+				}
+			}
+			963 = {
+				add_building_construction = {
+					type = bunker
+					province = 4310
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					province = 4384
+					level = 3
+					instant_build = yes
+				}
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						province = 13543
+						level = 3
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 3
+						VP = 13543
+					}
+				}
+			}
+			1002 = {
+				add_building_construction = {
+					type = bunker
+					province = 1392
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					province = 7399
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_factories_of_singapore
+		icon = GFX_goal_generic_construct_civ_factory
+		cost = 10
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 8
+		y = 4
+
+		prerequisite = {
+			focus = CAM_pacify_malaya
+		}
+		available = {
+			owns_state = 336
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_factories_of_singapore"
+			if = {
+				limit = { has_idea = CAM_colonial_disaster_idea }
+				swap_ideas = {
+					remove_idea = CAM_colonial_disaster_idea
+					add_idea = CAM_colonial_instability_idea
+				}
+			}
+			else_if = {
+				limit = { has_idea = CAM_colonial_instability_idea }
+				remove_ideas = CAM_colonial_instability_idea
+			}
+			336 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CAM_reinforce_colonial_bureaucracy
+		icon = GFX_goal_GER_colonial_administration
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 7
+		y = 5
+
+		prerequisite = {
+			focus = CAM_factories_of_singapore
+		}
+		prerequisite = {
+			focus = CAM_indochinese_investments
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_reinforce_colonial_bureaucracy"
+			if = {
+				limit = { has_idea = CAM_colonial_disaster_idea }
+				remove_ideas = CAM_colonial_disaster_idea
+			}
+			else_if = {
+				limit = { has_idea = CAM_colonial_instability_idea }
+				remove_ideas = CAM_colonial_instability_idea
+			}
+			add_political_power = 100
+			add_tech_bonus = {
+				name = CAM_reinforce_colonial_bureaucracy
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_new_admiralty
+		icon = GFX_goal_navy_hat_ships
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 9
+		y = 6
+
+		prerequisite = {
+			focus = CAM_local_economic_initiative
+			focus = CAM_reinforce_colonial_bureaucracy
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_new_admiralty"
+			if = {
+				limit = { has_completed_focus = CAM_fiscal_austerity }
+				set_politics = {
+					ruling_party = authoritarian_democrat
+				}
+				add_popularity = {
+					ideology = authoritarian_democrat
+					popularity = 0.4
+				}
+				add_ideas = CAM_colonisation_idea
+			}
+			else_if = {
+				limit = { has_completed_focus = CAM_collaborate_with_local_elites }
+				add_ideas = CAM_pure_admirality_idea
+			}
+			else = {
+				custom_effect_tooltip = {
+					localization_key = tooltip_if_focus_completed
+					FOCUS = CAM_fiscal_austerity
+				}
+				effect_tooltip = {
+					set_politics = {
+						ruling_party = authoritarian_democrat
+					}
+					add_popularity = {
+						ideology = authoritarian_democrat
+						popularity = 0.4
+					}
+					add_ideas = CAM_colonisation_idea
+				}
+				custom_effect_tooltip = tooltip_white_line
+				custom_effect_tooltip = {
+					localization_key = tooltip_if_focus_completed
+					FOCUS = CAM_collaborate_with_local_elites
+				}
+				effect_tooltip = { add_ideas = CAM_pure_admirality_idea }
+			}
+			if = {
+				limit = { has_global_flag = CAM_Indochina_Uprising_Fired_for_real }
+				custom_effect_tooltip = tooltip_white_line
+				if = {
+					limit = { has_completed_focus = CAM_collaborate_with_local_elites }
+					activate_targeted_decision = { decision = CAM_german_indochinese_reconciliation target = THIS }
+				}
+				else = {
+					activate_targeted_decision = { decision = CAM_reintegrate_indochina target = THIS }
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_education_reform
+		icon = GFX_focus_generic_concessions
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 8
+		y = 7
+
+		prerequisite = {
+			focus = CAM_new_admiralty
+		}
+
+		ai_will_do = {
+			factor = 16
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_education_reform"
+			add_research_slot_until_five = yes
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_research_institutes
+		icon = GFX_focus_research
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 8
+		y = 8
+
+		available = {
+			num_of_factories > 50
+		}
+		prerequisite = {
+			focus = CAM_education_reform
+		}
+
+		ai_will_do = {
+			factor = 16
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_research_institutes"
+			add_research_slot_until_five = yes
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_collaborate_with_local_elites
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 11
+		y = 1
+
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+		mutually_exclusive = {
+			focus = CAM_fiscal_austerity
+		}
+		available = {
+			has_idea = CAM_black_monday_idea
+		}
+		select_effect = {
+			log = "[GetLogRoot]: Select Focus CAM_collaborate_with_local_elites"
+			hidden_effect = { country_event = { id = german_east_asia_events.9 days = 3 } }
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+			modifier = {
+				factor = 100
+				has_game_rule = { rule = INC_revolt option = INC_REVOLT_VIN }
+			}
+			modifier = {
+				factor = 0
+				has_game_rule = { rule = CAM_path option = CAM_PATH_AUTDEM }
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_collaborate_with_local_elites"
+			swap_ideas = {
+				remove_idea = CAM_colonial_disaster_idea
+				add_idea = CAM_colonial_instability_idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CAM_negotiate_with_the_sultan_of_johore
+		icon = GFX_goal_continuous_restrict_freedom
+		cost = 10
+		dynamic = yes
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 10
+		y = 2
+
+		prerequisite = {
+			focus = CAM_collaborate_with_local_elites
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_negotiate_with_the_sultan_of_johore"
+			add_stability = 0.1
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_bao_dais_reforms
+		icon = GFX_focus_rom_handle_king
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 12
+		y = 2
+
+		prerequisite = {
+			focus = CAM_collaborate_with_local_elites
+		}
+		select_effect = {
+			log = "[GetLogRoot]: Select Focus CAM_bao_dais_reforms"
+			hidden_effect = { country_event = { id = german_east_asia_events.10 days = 8 } }
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+			modifier = {
+				factor = 100
+				has_game_rule = { rule = INC_revolt option = INC_REVOLT_VIN }
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_bao_dais_reforms"
+			add_stability = 0.1
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+	}
+
+	focus = {
+		id = CAM_strengthen_local_ties
+		icon = GFX_focus_rom_parties_end
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 11
+		y = 3
+
+		prerequisite = {
+			focus = CAM_negotiate_with_the_sultan_of_johore
+		}
+		prerequisite = {
+			focus = CAM_bao_dais_reforms
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_strengthen_local_ties"
+			if = {
+				limit = { has_idea = CAM_colonial_disaster_idea }
+				swap_ideas = {
+					remove_idea = CAM_colonial_disaster_idea
+					add_idea = CAM_colonial_instability_idea
+				}
+			}
+			else_if = {
+				limit = { has_idea = CAM_colonial_instability_idea }
+				remove_ideas = CAM_colonial_instability_idea
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_help_small_businesses
+		icon = GFX_goal_generic_neutrality_focus
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 10
+		y = 4
+
+		prerequisite = {
+			focus = CAM_strengthen_local_ties
+		}
+		mutually_exclusive = {
+			focus = CAM_collaborate_with_local_monopolies
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_help_small_businesses"
+			swap_ideas = {
+				remove_idea = CAM_black_monday_idea
+				add_idea = CAM_black_monday_idea2
+				days = 400
+			}
+			add_war_support = 0.05
+			add_ideas = CAM_help_small_business_idea
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_collaborate_with_local_monopolies
+		icon = GFX_goal_constitutional_guarantees
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 12
+		y = 4
+
+		prerequisite = {
+			focus = CAM_strengthen_local_ties
+		}
+		mutually_exclusive = {
+			focus = CAM_help_small_businesses
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_collaborate_with_local_monopolies"
+			swap_ideas = {
+				remove_idea = CAM_black_monday_idea
+				add_idea = CAM_black_monday_idea2
+				days = 120
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_lessons_from_mittelafrika
+		icon = GFX_goal_MAF_Vorbeck
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 13
+		y = 7
+
+		available = {
+			country_exists = MAF
+			is_ally_with = MAF
+		}
+		prerequisite = {
+			focus = CAM_new_admiralty
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_lessons_from_mittelafrika"
+			army_experience = 25
+			air_experience = 25
+			navy_experience = 25
+			add_command_power = 50
+			add_doctrine_cost_reduction = {
+				name = CAM_lessons_from_mittelafrika
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+
+	focus = {
+		id = CAM_counter_insurgency_lessons
+		icon = GFX_goal_MAF_Graveyard
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 12
+		y = 8
+
+		available = {
+			country_exists = MAF
+			is_ally_with = MAF
+		}
+		prerequisite = {
+			focus = CAM_lessons_from_mittelafrika
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_counter_insurgency_lessons"
+			add_ideas = CAM_counter_insurgency
+		}
+		search_filters = { FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_white_phosphorus_bombs
+		icon = GFX_goal_MAF_white_phosphorus
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 14
+		y = 8
+
+		available = {
+			country_exists = MAF
+			is_ally_with = MAF
+		}
+		prerequisite = {
+			focus = CAM_lessons_from_mittelafrika
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_white_phosphorus_bombs"
+			add_ideas = MAF_white_phosphorus_idea
+		}
+		search_filters = { FOCUS_FILTER_AIRFORCE_BONUS }
+	}
+
+	focus = {
+		id = CAM_valkyries_of_the_battlefield
+		icon = GFX_goal_healthcare
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 13
+		y = 9
+
+		available = {
+			country_exists = MAF
+			is_ally_with = MAF
+		}
+		prerequisite = {
+			focus = CAM_counter_insurgency_lessons
+		}
+		prerequisite = {
+			focus = CAM_white_phosphorus_bombs
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_valkyries_of_the_battlefield"
+			enable_tech_improved_field_hospitals = yes
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_drinks_with_king_sisavang
+		icon = GFX_goal_generic_improve_relations
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 13
+		y = 3
+
+		prerequisite = {
+			focus = CAM_bao_dais_reforms
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 0.25
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_drinks_with_king_sisavang"
+			add_political_power = 50
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CAM_local_economic_initiative
+		icon = GFX_goal_generic_oil_refinery
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 11
+		y = 5
+
+		prerequisite = {
+			focus = CAM_collaborate_with_local_monopolies
+			focus = CAM_help_small_businesses
+		}
+
+		ai_will_do = {
+			factor = 12
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_local_economic_initiative"
+			add_tech_bonus = {
+				name = CAM_local_economic_initiative
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+			add_one_random_civilian_factory = yes
+			add_one_random_civilian_factory = yes
+			add_one_random_civilian_factory = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_german_advisory_group
+		icon = GFX_goal_rights_for_service
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 14
+		y = 5
+
+		prerequisite = {
+			focus = CAM_deploy_local_guards
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 2
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_german_advisory_group"
+			add_war_support = 0.05
+			swap_ideas = {
+				remove_idea = CAM_Local_Guard_Idea
+				add_idea = CAM_Local_Guard_with_advisors_Idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ARMY_BONUS FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESISTANCE }
+	}
+
+	focus = {
+		id = CAM_deploy_local_guards
+		icon = GFX_focus_generic_little_entente
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 14
+		y = 4
+
+		prerequisite = {
+			focus = CAM_strengthen_local_ties
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 2
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_deploy_local_guards"
+			add_ideas = CAM_Local_Guard_Idea
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Ostasiatische Schützendivision"
+					LINE_1 = { localization_key = line_battalion_tt NAME = irregular_infantry ICON = GFX_unit_irregular_infantry_icon_small COUNT = 6 }
+				}
+				if = {
+					limit = { has_template = "Ostasiatische Schützendivision" }
+					delete_unit_template_and_units = { division_template = "Ostasiatische Schützendivision" disband = yes } #no cheating
+				}
+				division_template = {
+					name = "Ostasiatische Schützendivision"
+					division_names_group = CAM_GAR_02
+					regiments = {
+						irregular_infantry = { x = 0 y = 0 }
+						irregular_infantry = { x = 0 y = 1 }
+						irregular_infantry = { x = 0 y = 2 }
+						irregular_infantry = { x = 1 y = 0 }
+						irregular_infantry = { x = 1 y = 1 }
+						irregular_infantry = { x = 1 y = 2 }
+					}
+				}
+			}
+			capital_scope = {
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_spawn_units
+						COUNT = 5
+						TYPE = "Ostasiatische Schützendivision"
+					}
+					create_unit = {
+						division = "division_template = \"Ostasiatische Schützendivision\" start_experience_factor = 0.1"
+						owner = ROOT
+						count = 5
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESISTANCE }
+	}
+
+	focus = {
+		id = CAM_local_arms_foundries
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 10
+		y = 8
+
+		prerequisite = {
+			focus = CAM_authorise_local_arms_production
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 2
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_local_arms_foundries"
+			add_one_random_military_factory = yes
+			add_one_random_military_factory = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_authorise_local_arms_production
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		cost = 5
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 10
+		y = 7
+
+		prerequisite = {
+			focus = CAM_new_admiralty
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 2
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_authorise_local_arms_production"
+			add_political_power = 25
+			add_tech_bonus = {
+				name = CAM_authorise_local_arms_production
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_siamese_border_fortifications
+		icon = GFX_goal_generic_construct_military
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 10
+		y = 9
+
+		prerequisite = {
+			focus = CAM_local_arms_foundries
+		}
+		available = {
+			is_owner_neighbor_of = SIA
+		}
+
+		ai_will_do = { factor = 5 }
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_siamese_border_fortifications"
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					any_neighbor_state = {
+						is_owned_by = SIA
+						OR = {
+							is_core_of = SIA
+							is_claimed_by = SIA
+						}
+					}
+				}
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = {
+							all_provinces = yes
+							limit_to_border_country = SIA
+						}
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_border_provinces_with_tag
+						BUILDING = bunker
+						NUMBER = 2
+						TAG = "[SIA.GetTag]"
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_transindochinese_railways
+		icon = GFX_goal_generic_railroad
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 7
+
+		available = {
+			670 = { controller = { is_ally_with = ROOT } }
+			671 = { controller = { is_ally_with = ROOT } }
+			827 = { controller = { is_ally_with = ROOT } }
+		}
+		bypass = {
+			NOT = { 670 = { owner = { is_ally_with = ROOT } } }
+			NOT = { 671 = { owner = { is_ally_with = ROOT } } }
+			NOT = { 827 = { owner = { is_ally_with = ROOT } } }
+		}
+		prerequisite = {
+			focus = CAM_new_admiralty
+		}
+
+		ai_will_do = {
+			factor = 12
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_transindochinese_railways"
+			build_railway = {
+				path = { 4397 1362 12332 1464 }
+			}
+			build_railway = {
+				start_province = 10162
+				target_province = 4075
+			}
+			custom_effect_tooltip = tooltip_white_line
+			every_owned_state = {
+				limit = {
+					OR = {
+						is_core_of = INC
+						is_core_of = VIN
+						is_core_of = CAM
+						is_core_of = LAO
+					}
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_tonkin_gulf_steel_factories
+		icon = GFX_focus_generic_steel
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 8
+
+		prerequisite = {
+			focus = CAM_transindochinese_railways
+		}
+		available = {
+			671 = { controller = { is_ally_with = ROOT } }
+		}
+		bypass = {
+			NOT = { 671 = { owner = { is_ally_with = ROOT } } }
+		}
+
+		ai_will_do = {
+			factor = 12
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_tonkin_gulf_steel_factories"
+			add_tech_bonus = {
+				name = CAM_tonkin_gulf_steel_factories
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+			671 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 28
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CAM_east_asian_infrastructural_plan
+		icon = GFX_goal_generic_industry_reallocation
+		cost = 10
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 6
+		y = 9
+
+		prerequisite = {
+			focus = CAM_tonkin_gulf_steel_factories
+		}
+
+		ai_will_do = {
+			factor = 12
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_east_asian_infrastructural_plan"
+			add_tech_bonus = {
+				name = CAM_east_asian_infrastructural_plan
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+			add_ideas = CAM_Infrastructural_Effort_Idea
+			custom_effect_tooltip = tooltip_white_line
+			every_owned_state = {
+				limit = {
+					OR = {
+						is_core_of = MAL
+						is_core_of = SAR
+					}
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+   ### CHINA ###
+	focus = {
+		id = CAM_send_aid_to_the_nanjing_warlords
+		icon = GFX_goal_LEP_generic_flag
+		cost = 2
+
+		relative_position_id = CAM_status_of_the_admiralty
+		x = 16
+		y = 1
+
+		available = {
+			LEP = {
+				OR = {
+					has_war_with = CHI
+					has_war_with = ANQ
+					has_war_with = SHD
+				}
+			}
+		}
+		bypass = {
+			OR = {
+				NOT = { country_exists = LEP }
+				has_global_flag = LEP_victory
+			}
+		}
+
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+		ai_will_do = { factor = 100 }
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_send_aid_to_the_nanjing_warlords"
+			unlock_decision_category_tooltip = CAM_help_lep_decisions
+			hidden_effect = {
+				activate_targeted_decision = { decision = CAM_give_guns_to_lep target = LEP }
+				activate_targeted_decision = { decision = CAM_give_factories_to_lep target = LEP }
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_develop_tsingtau
+		icon = GFX_goal_construction
+		cost = 2
+
+		relative_position_id = CAM_send_aid_to_the_nanjing_warlords
+		x = 2
+		y = 0
+
+		available = {
+			744 = { is_owned_and_controlled_by = ROOT }
+		}
+		prerequisite = {
+			focus = CAM_status_of_the_admiralty
+		}
+
+		ai_will_do = {
+			factor = 6
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_develop_tsingtau"
+			744 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_invest_in_the_concessions
+		icon = GFX_goal_generic_german_construction
+		cost = 5
+
+		relative_position_id = CAM_develop_tsingtau
+		x = -1
+		y = 1
+
+		available = {
+			OR = {
+				728 = {
+					OR = {
+						is_owned_and_controlled_by = CAM
+						german_alligned_chinese_tag_controlled = yes
+					}
+				}
+				996 = {
+					OR = {
+						is_owned_and_controlled_by = CAM
+						german_alligned_chinese_tag_controlled = yes
+					}
+				}
+			}
+		}
+		prerequisite = {
+			focus = CAM_develop_tsingtau
+		}
+
+		ai_will_do = {
+			factor = 6
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_invest_in_the_concessions"
+			728 = {
+				if = {
+					limit = {
+						OR = {
+							is_owned_and_controlled_by = CAM
+							german_alligned_chinese_tag_controlled = yes
+						}
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			996 = {
+				if = {
+					limit = {
+						OR = {
+							is_owned_and_controlled_by = CAM
+							german_alligned_chinese_tag_controlled = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_secure_the_legation_cities
+		icon = GFX_goal_QIE_destroy_LEC
+		cost = 5
+
+		relative_position_id = CAM_develop_tsingtau
+		x = -1
+		y = 3
+
+		available = {
+			LEC_is_legation_council_member = no
+			NOT = { has_non_aggression_pact_with = LEC }
+			NOT = { has_guaranteed = LEC }
+			LEC = { is_in_same_economic_sphere_as_ROOT = no }
+		}
+		bypass = {
+			NOT = { can_declare_war_on = LEC }
+		}
+		prerequisite = {
+			focus = CAM_invest_in_the_concessions
+		}
+
+		ai_will_do = {
+			factor = 35
+			modifier = {
+				factor = 0
+				country_has_any_active_threat = yes
+			}
+			modifier = {
+				factor = 0
+				LEC = { dont_start_major_faction_wars = yes }
+			}
+			modifier = {
+				factor = 0
+				LEC = { default_attack_AI_trigger = yes }
+			}
+		}
+		will_lead_to_war_with = LEC
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_secure_the_legation_cities"
+			hidden_effect = {
+				LEC_remove_from_legation_council = yes
+				GER = { LEC_remove_from_legation_council = yes }
+			}
+			declare_war_on = {
+				target = LEC
+				type = annex_everything
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+	}
+
+	focus = {
+		id = CAM_tighten_the_grip_on_the_concessions
+		icon = GFX_goal_foreign_diplomacy
+		cost = 10
+
+		relative_position_id = CAM_develop_tsingtau
+		x = 0
+		y = 2
+
+		available = {
+			country_exists = LEP
+			LEP = { has_war = no }
+			LEP = { market_liberal > 0.5 }
+		}
+		prerequisite = {
+			focus = CAM_invest_in_the_concessions
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_tighten_the_grip_on_the_concessions"
+			LEP = { country_event = league_german_influence_events.57 }
+		}
+	}
+
+	focus = {
+		id = CAM_resume_sino_german_cooperation
+		icon = GFX_goal_QIE_glory
+		cost = 10
+
+		relative_position_id = CAM_develop_tsingtau
+		x = -2
+		y = 2
+
+		available = {
+			OR = {
+				AND = {
+					country_exists = QIE
+					QIE = {
+						OR = {
+							has_completed_focus = QIE_overtures_to_the_assembly
+							has_country_flag = QIE_manchu_ger_negotiations
+						}
+						NOT = {
+							has_war_with = GER
+							has_war_with = ROOT
+						}
+					}
+				}
+				AND = {
+					country_exists = SZC
+					SZC = {
+						has_completed_focus = SZC_partners_of_law_and_order
+						NOT = {
+							has_war_with = GER
+							has_war_with = ROOT
+						}
+					}
+				}
+			}
+		}
+		prerequisite = {
+			focus = CAM_send_aid_to_the_nanjing_warlords
+			focus = CAM_invest_in_the_concessions
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_resume_sino_german_cooperation"
+			if = {
+				limit = {
+					QIE = {
+						OR = {
+							has_completed_focus = QIE_overtures_to_the_assembly
+							has_country_flag = QIE_manchu_ger_negotiations
+						}
+					}
+				}
+				QIE = { country_event = german_east_asia_events.212 }
+				add_opinion_modifier = {
+					target = QIE
+					modifier = CAM_sinogerman_cooperation
+				}
+				reverse_add_opinion_modifier = {
+					target = QIE
+					modifier = CAM_sinogerman_cooperation
+				}
+			}
+			if = {
+				limit = {
+					SZC = { has_completed_focus = SZC_partners_of_law_and_order }
+				}
+				SZC = { country_event = german_east_asia_events.212 }
+				add_opinion_modifier = {
+					target = SZC
+					modifier = CAM_sinogerman_cooperation
+				}
+				reverse_add_opinion_modifier = {
+					target = SZC
+					modifier = CAM_sinogerman_cooperation
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = CAM_fortify_the_concessions
+		icon = GFX_goal_generic_construct_military
+		cost = 2
+
+		relative_position_id = CAM_develop_tsingtau
+		x = 2
+		y = 2
+
+		available = {
+			OR = {
+				592 = { german_alligned_chinese_tag_controlled = yes }
+				802 = { german_alligned_chinese_tag_controlled = yes }
+				803 = { german_alligned_chinese_tag_controlled = yes }
+				1075 = { german_alligned_chinese_tag_controlled = yes }
+			}
+		}
+		prerequisite = {
+			focus = CAM_invest_in_the_concessions
+		}
+
+		ai_will_do = {
+			factor = 4
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_fortify_the_concessions"
+			592 = {
+				if = {
+					limit = { german_alligned_chinese_tag_controlled = yes }
+					custom_override_tooltip = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							instant_build = yes
+							province = 1047
+						}
+						tooltip = {
+							localization_key = tooltip_add_building_on_victory_point
+							BUILDING = bunker
+							NUMBER = 2
+							VP = 1047
+						}
+					}
+				}
+			}
+			802 = {
+				if = {
+					limit = { german_alligned_chinese_tag_controlled = yes }
+					custom_override_tooltip = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							instant_build = yes
+							province = 7071
+						}
+						tooltip = {
+							localization_key = tooltip_add_building_on_victory_point
+							BUILDING = bunker
+							NUMBER = 2
+							VP = 7071
+						}
+					}
+				}
+			}
+			803 = {
+				if = {
+					limit = { german_alligned_chinese_tag_controlled = yes }
+					custom_override_tooltip = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							instant_build = yes
+							province = 4013
+						}
+						tooltip = {
+							localization_key = tooltip_add_building_on_victory_point
+							BUILDING = bunker
+							NUMBER = 2
+							VP = 4013
+						}
+					}
+				}
+			}
+			1075 = {
+				if = {
+					limit = { german_alligned_chinese_tag_controlled = yes }
+					custom_override_tooltip = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							instant_build = yes
+							province = 13707
+						}
+						tooltip = {
+							localization_key = tooltip_add_building_on_victory_point
+							BUILDING = bunker
+							NUMBER = 2
+							VP = 13707
+						}
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = CAM_dispatch_workers_to_the_borneo_mines
+		icon = GFX_goal_generic_foreign_investments
+		cost = 5
+
+		relative_position_id = CAM_develop_tsingtau
+		x = 1
+		y = 1
+
+		available = {
+			333 = { is_owned_and_controlled_by = ROOT }
+		}
+		prerequisite = {
+			focus = CAM_develop_tsingtau
+		}
+
+		ai_will_do = {
+			factor = 6
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			log = "[GetLogRoot]: Focus Completed CAM_dispatch_workers_to_the_borneo_mines"
+			333 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	#########################################################################################################
+	# 경제
+	#########################################################################################################
+	shared_focus = CAM_the_mountain_economy
 }
