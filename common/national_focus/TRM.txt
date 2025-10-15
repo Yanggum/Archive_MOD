@@ -6780,7 +6780,7 @@ focus_tree = {
 	focus = { # 학원경제개발부 설립
 		id = TRN_ministry_of_industrial_development
 		icon = GFX_focus_TRN_improving_academy_industry
-		x = 35
+		x = 40
 		y = 0
 		offset = {
 			x = -10
@@ -6796,6 +6796,14 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			IF = {
+				limit = { has_idea = TRN_political_instability_ns }
+				NOT = { has_idea = TRN_political_instability_ns }
+			}
+			IF = {
+				limit = { has_idea = TRN_broken_balance_ns }
+				NOT = { has_idea = TRN_broken_balance_ns}
+			}
 
 		}
 
@@ -6819,7 +6827,6 @@ focus_tree = {
 			unlock_decision_tooltip = TRN_Infrastructure_development_fake
 			unlock_decision_tooltip = TRN_garden_city_movement
 			unlock_decision_tooltip = TRN_embrace_chain_production
-			unlock_decision_tooltip = TRN_trade_controls
 			hidden_effect = {
 				activate_targeted_decision = { target = 65 decision = TRN_Infrastructure_Development } # 작센
 				activate_targeted_decision = { target = 60 decision = TRN_Infrastructure_Development } # 튀링겐
@@ -6896,6 +6903,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 융커와의 협력
@@ -6953,6 +6961,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 무너진 산업 복구
@@ -6994,6 +7003,7 @@ focus_tree = {
 			}
 			
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
 	}
 
 	focus = { # 서부 공업화
@@ -7032,6 +7042,7 @@ focus_tree = {
 			activate_targeted_decision = { target = 63 decision = TRN_stettin_oil_mining } # 힌터포메른
 			
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 트리니티 재산업화
@@ -7074,6 +7085,7 @@ focus_tree = {
 			}
 			add_political_power = 50
 		}
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 협동조합주의적 대표성을 향햐여
@@ -7098,8 +7110,20 @@ focus_tree = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = TRN_industry_ns
 			}
-
+			add_to_variable = {
+				TRN_industry_ns_consumer_goods_factor = -0.1
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				TRN_industry_ns_production_speed_buildings_factor = 0.1
+				tooltip = production_speed_buildings_factor_tt
+			}
+			add_to_variable = {
+				TRN_industry_ns_production_speed_arms_factory_factor = 0.07
+				tooltip = production_speed_arms_factory_factor_tt
+			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 학원경제개발부 권한 강화
@@ -7124,8 +7148,20 @@ focus_tree = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = TRN_industry_ns
 			}
-			
+			add_to_variable = {
+				TRN_industry_ns_consumer_goods_factor = 0.1
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				TRN_industry_ns_conversion_cost_civ_to_mil_factor = -0.2
+				tooltip = conversion_cost_civ_to_mil_factor_tt
+			}
+			add_to_variable = {
+				TRN_industry_ns_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 	
 	focus = { # 철도망 개선
@@ -7162,6 +7198,7 @@ focus_tree = {
 				days = -1085
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = { # 통신망 확대
@@ -7198,6 +7235,7 @@ focus_tree = {
 				country_event = trinity_flavor_events.22
 			}
 		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 
 	focus = { # 카이저 빌헬름 협회
@@ -7230,7 +7268,12 @@ focus_tree = {
 				uses = 1
 				category = electronics
 			}
+			if = {
+				limit = { has_idea = BA_exiles_of_the_future }
+				remove_ideas = BA_exiles_of_the_future
+			}
 		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 
 	focus = { # 트리니티 계획
@@ -7302,6 +7345,7 @@ focus_tree = {
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 	
 
@@ -8405,7 +8449,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-
+			set_temp_variable = { TRN_Honor_change = -5 }
+			TRN_add_Honor = yes
 		}
 	}
 
@@ -8456,9 +8501,9 @@ focus_tree = {
 		}
 	}
 
-	focus = { #
-		id = TRN_unknow_focus_05
-		icon = GFX_goal_unknown
+	focus = { # 민병대를 해산한다.
+		id = TRN_absorb_the_reichsbanner_schwarz_rot_gold
+		icon = GFX_focus_TRN_absorb_the_reichsbanner_schwarz_rot_gold
 		prerequisite = { 
 			focus = TRN_contact_SPD
 			focus = TRN_limit_german_party
@@ -8890,7 +8935,7 @@ focus_tree = {
 	focus = { # 키보토스 외교
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
-		x = 12
+		x = 10
 		y = 0
 		relative_position_id = TRN_ministry_of_industrial_development
 		cost = 5
@@ -10323,7 +10368,7 @@ focus_tree = {
 	focus = {
 		id = TRN_increase_military_budget
 		icon = GFX_focus_TRN_increase_military_budget
-		x = 25
+		x = 22
 		y = 0
 		relative_position_id = TRN_ministry_of_industrial_development
 		#offset = {
@@ -10405,7 +10450,7 @@ focus_tree = {
 				DYNMOD = TRN_industry_ns
 			}
 			add_to_variable = { 
-				TRN_industry_ns_production_factory_max_efficiency_factor = 0.05 
+				TRN_industry_ns_production_factory_max_efficiency_factor = 0.03
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
 		}
@@ -10473,12 +10518,8 @@ focus_tree = {
 				DYNMOD = TRN_industry_ns
 			}
 			add_to_variable = {
-				TRN_industry_ns_conversion_cost_civ_to_mil_factor = -0.2
+				TRN_industry_ns_conversion_cost_civ_to_mil_factor = -0.3
 				tooltip = conversion_cost_civ_to_mil_factor_tt
-			}
-			add_to_variable = {
-				TRN_industry_ns_production_factory_max_efficiency_factor = 0.05
-				tooltip =  production_factory_max_efficiency_factor_tt
 			}
 		}
 	}
@@ -10508,13 +10549,13 @@ focus_tree = {
 				TRN_industry_ns_industrial_capacity_factory = 0.02
 				tooltip = industrial_capacity_factory_tt
 			}
-			add_to_variable = { 
-				TRN_industry_ns_production_factory_efficiency_gain_factor = 0.05
-				tooltip = production_factory_efficiency_gain_factor_tt
-			}
 			add_to_variable = {
 				TRN_industry_ns_production_factory_start_efficiency_factor = 0.02
 				tooltip = production_factory_start_efficiency_factor_tt
+			}
+			add_to_variable = { 
+				TRN_industry_ns_production_factory_efficiency_gain_factor = 0.03
+				tooltip = production_factory_efficiency_gain_factor_tt
 			}
 		}
 	}
