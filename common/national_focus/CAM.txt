@@ -1,8 +1,6 @@
 ﻿#!gfx:interface\BA_goals.gfx
-
 focus_tree = {
 	id = CAM_focus
-	
 	country = {
 		factor = 0
 		modifier = {
@@ -10,20 +8,17 @@ focus_tree = {
 			tag = CAM
 		}
 	}
-
-#크메르 제국 루트
-
+	#크메르 제국 루트
 	focus = {
 		id = return_khmer_empire
 		icon = GFX_return_khmer_empire
-		
-        x = 50
+		x = 50
 		y = 0
-
 		cost = 10
-
 		available = {
-			NOT = { is_subject = yes }
+			NOT = {
+				is_subject = yes
+			}
 		}
 		allow_branch = {
 			IF = {
@@ -33,13 +28,16 @@ focus_tree = {
 						option = HIDE
 					}
 				}
-				NOT = { has_completed_focus = keep_under_fra }
+				NOT = {
+					has_completed_focus = keep_under_fra
+				}
 			}
 		}
-
-		mutually_exclusive = { focus = keep_under_fra }
+		mutually_exclusive = {
+			focus = keep_under_fra
+		}
 		completion_reward = {
-			add_timed_idea = { 
+			add_timed_idea = {
 				idea = return_khmer_empire_idea
 				days = 365
 			}
@@ -48,58 +46,41 @@ focus_tree = {
 	focus = {
 		id = angkor_power_up
 		icon = GFX_focus_secret_rearmament
-
 		x = -2
 		y = 1
-
 		cost = 5
-
 		prerequisite = {
 			focus = return_khmer_empire
 		}
-
 		relative_position_id = return_khmer_empire
-
 		completion_reward = {
 			add_ideas = angkor_power_up_idea
 		}
 	}
-
 	focus = {
 		id = glorious_reminder
 		icon = GFX_glorious_reminder
-
 		x = 0
 		y = 1
-
 		cost = 5
-
 		relative_position_id = return_khmer_empire
-
 		prerequisite = {
 			focus = return_khmer_empire
 		}
-
 		completion_reward = {
 			add_ideas = glorious_reminder_idea
 		}
-	}	
-
+	}
 	focus = {
 		id = boost_industrialization
 		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
-
 		x = 2
 		y = 1
-
 		cost = 5
-
 		prerequisite = {
 			focus = return_khmer_empire
 		}
-
 		relative_position_id = return_khmer_empire
-
 		completion_reward = {
 			741 = {
 				add_extra_state_shared_building_slots = 10
@@ -139,69 +120,52 @@ focus_tree = {
 					level = 3
 					instant_build = yes
 				}
-			}	
-
+			}
 			add_timed_idea = {
 				idea = boost_industrialization_idea
 				days = 365
 			}
 		}
 	}
-
 	focus = {
 		id = Aksar_khmer
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-
 		x = 0
 		y = 1
-
 		cost = 5
-
-		prerequisite = { focus = boost_industrialization }
-
+		prerequisite = {
+			focus = boost_industrialization
+		}
 		relative_position_id = boost_industrialization
-
 		completion_reward = {
 			remove_ideas = serious_level_of_illiteracy_idea
 			add_ideas = CAM_the_educated_commoners_idea
 		}
 	}
-
 	focus = {
 		id = Angkor_National_University_Laboratory
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-
 		x = 0
 		y = 1
-
 		cost = 10
-
 		relative_position_id = angkor_power_up
-
 		prerequisite = {
 			focus = angkor_power_up
 		}
-
 		completion_reward = {
 			add_research_slot = 1
 		}
 	}
-
 	focus = {
 		id = to_the_glory_of_khmer_empire
 		icon = GFX_to_the_glory_of_khmer_empire
-
 		x = 0
 		y = 1
-
 		relative_position_id = glorious_reminder
-
-		cost = 10 
-
+		cost = 10
 		bypass = {
 			has_country_flag = CAM_free
 		}
-
 		prerequisite = {
 			focus = boost_industrialization
 		}
@@ -212,27 +176,23 @@ focus_tree = {
 			focus = angkor_power_up
 		}
 		completion_reward = {
-			set_politics = { ruling_party = neutrality }
+			set_politics = {
+				ruling_party = neutrality
+			}
 			drop_cosmetic_tag = yes
 			set_cosmetic_tag = CAM_khmer
 		}
 	}
-
 	focus = {
 		id = khmer_empire_old_territory
 		icon = GFX_khmer_empire_old_territory
-
 		x = 0
 		y = 1
-
 		cost = 10
-
 		relative_position_id = to_the_glory_of_khmer_empire
-
 		prerequisite = {
 			focus = to_the_glory_of_khmer_empire
 		}
-
 		completion_reward = {
 			set_country_flag = khmer_empire_old_territory_decision_flag
 			unlock_decision_tooltip = CAM_reannex_lanxang
@@ -242,61 +202,50 @@ focus_tree = {
 			unlock_decision_tooltip = CAM_move_capital_angkor
 			unlock_decision_tooltip = Khmer_victory
 		}
-	}	
-
+	}
 	focus = {
 		id = lanxang_reannex
 		icon = GFX_lanxang_reannex
-
 		x = -1
 		y = 1
-
 		cost = 5
-
 		prerequisite = {
 			focus = khmer_empire_old_territory
 		}
-
-		bypass = { has_country_flag = Khmer_victory_flag }
-		
+		bypass = {
+			has_country_flag = Khmer_victory_flag
+		}
 		relative_position_id = khmer_empire_old_territory
-
 		completion_reward = {
 			add_state_claim = 670
 			add_state_claim = 1044
 			create_wargoal = {
 				target = LAO
-                type = take_state
+				type = take_state
 				expire = 0
 			}
 			if = {
-			limit = {
-				controls_province = 1464
-                controls_state = 670
-        }
-			set_province_name = {
-				id = 1464
-				name = CAM_VICTORY_POINTS_1464
+				limit = {
+					controls_province = 1464
+					controls_state = 670
+				}
+				set_province_name = {
+					id = 1464
+					name = CAM_VICTORY_POINTS_1464
+				}
 			}
 		}
-		}
-	}	
-
+	}
 	focus = {
 		id = khmer_krom_integration_requirements
 		icon = GFX_khmer_krom_integration_requirements
-
 		x = 1
 		y = 1
-
 		cost = 5
-
 		prerequisite = {
 			focus = khmer_empire_old_territory
 		}
-
 		relative_position_id = khmer_empire_old_territory
-		
 		available = {
 			CAM = {
 				has_war = no
@@ -310,16 +259,16 @@ focus_tree = {
 						tag = VIN
 					}
 				}
-				
 			}
 		}
-
-		bypass = { has_country_flag = Khmer_victory_flag }
-
+		bypass = {
+			has_country_flag = Khmer_victory_flag
+		}
 		completion_reward = {
-			1038 = { add_core_of = CAM }
+			1038 = {
+				add_core_of = CAM
+			}
 			add_state_claim = 1038
-
 			if = {
 				limit = {
 					1038 = {
@@ -330,7 +279,6 @@ focus_tree = {
 						}
 					}
 				}
-
 				1038 = {
 					controller = {
 						country_event = {
@@ -341,35 +289,35 @@ focus_tree = {
 					}
 				}
 			}
-		if = {
-			limit = {
-				controls_province = 4401
-                controls_state = 1038
-        }
-			set_province_name = {
-				id = 4401
-				name = CAM_VICTORY_POINTS_4401
-			}
-				1038 = { set_state_name = CAM_STATE_1038 }
+			if = {
+				limit = {
+					controls_province = 4401
+					controls_state = 1038
+				}
+				set_province_name = {
+					id = 4401
+					name = CAM_VICTORY_POINTS_4401
+				}
+				1038 = {
+					set_state_name = CAM_STATE_1038
+				}
 			}
 		}
 	}
-
 	focus = {
 		id = CAM_VIN_annex
 		icon = GFX_CAM_VIN_annex
-
 		x = -2
 		y = 2
-
 		relative_position_id = khmer_empire_old_territory
-
-		cost = 5 
-		prerequisite = { focus = khmer_empire_old_territory }
-
-		bypass = { has_country_flag = Khmer_victory_flag }
-
-		available = { 
+		cost = 5
+		prerequisite = {
+			focus = khmer_empire_old_territory
+		}
+		bypass = {
+			has_country_flag = Khmer_victory_flag
+		}
+		available = {
 			has_full_control_of_state = 868
 			has_full_control_of_state = 289
 			has_full_control_of_state = 724
@@ -381,22 +329,20 @@ focus_tree = {
 				expire = 0
 			}
 		}
-	}	
-
+	}
 	focus = {
 		id = siemreap
 		icon = GFX_siemreap
-
 		x = 1
 		y = 1
-
 		cost = 5
-
-		prerequisite = { focus = lanxang_reannex }
-		prerequisite = { focus = khmer_krom_integration_requirements }
-
+		prerequisite = {
+			focus = lanxang_reannex
+		}
+		prerequisite = {
+			focus = khmer_krom_integration_requirements
+		}
 		relative_position_id = lanxang_reannex
-
 		completion_reward = {
 			add_state_claim = 868
 			add_state_claim = 289
@@ -410,7 +356,7 @@ focus_tree = {
 				limit = {
 					controls_province = 10438
 					controls_state = 868
-			}
+				}
 				set_province_name = {
 					id = 10438
 					name = CAM_VICTORY_POINTS_10438
@@ -420,7 +366,7 @@ focus_tree = {
 				limit = {
 					controls_province = 7408
 					controls_state = 289
-			}
+				}
 				set_province_name = {
 					id = 7408
 					name = CAM_VICTORY_POINTS_7408
@@ -430,7 +376,7 @@ focus_tree = {
 				limit = {
 					controls_province = 7236
 					controls_state = 724
-			}
+				}
 				set_province_name = {
 					id = 7236
 					name = CAM_VICTORY_POINTS_7236
@@ -438,25 +384,21 @@ focus_tree = {
 			}
 		}
 	}
-
 	focus = {
 		id = CAM_YUN_annex
 		icon = GFX_CAM_YUN_annex
-
 		x = 2
 		y = 2
-
-		cost = 5 
-		prerequisite = { focus = khmer_empire_old_territory }
-
+		cost = 5
+		prerequisite = {
+			focus = khmer_empire_old_territory
+		}
 		relative_position_id = khmer_empire_old_territory
-
-		available = { 
+		available = {
 			has_full_control_of_state = 868
 			has_full_control_of_state = 289
 			has_full_control_of_state = 724
 		}
-
 		completion_reward = {
 			create_wargoal = {
 				type = puppet_wargoal_focus
@@ -464,26 +406,23 @@ focus_tree = {
 				expire = 0
 			}
 		}
-	}	
-
+	}
 	focus = {
 		id = CAM_BRM_annex
 		icon = GFX_CAM_BRM_annex
-
 		x = 2
 		y = 1
-
-		cost = 5 
-		prerequisite = { focus = CAM_VIN_annex focus = CAM_YUN_annex }
-
+		cost = 5
+		prerequisite = {
+			focus = CAM_VIN_annex
+			focus = CAM_YUN_annex
+		}
 		relative_position_id = CAM_VIN_annex
-
-		available = { 
+		available = {
 			has_full_control_of_state = 868
 			has_full_control_of_state = 289
 			has_full_control_of_state = 724
 		}
-
 		completion_reward = {
 			create_wargoal = {
 				type = puppet_wargoal_focus
@@ -492,23 +431,19 @@ focus_tree = {
 			}
 		}
 	}
-
 	#프랑스 괴뢰국 루트
-
 	focus = {
 		id = keep_under_fra
 		icon = GFX_focus_CZE_german_puppet
-		
-        x = 20
+		x = 20
 		y = 0
-
 		cost = 10
-
 		available = {
-			NOT = { is_subject = yes }
+			NOT = {
+				is_subject = yes
+			}
 		}
 		relative_position_id = return_khmer_empire
-
 		allow_branch = {
 			IF = {
 				limit = {
@@ -517,34 +452,34 @@ focus_tree = {
 						option = HIDE
 					}
 				}
-				NOT = { has_completed_focus = return_khmer_empire }
+				NOT = {
+					has_completed_focus = return_khmer_empire
+				}
 			}
 		}
-
 		mutually_exclusive = {
-        focus = return_khmer_empire
+			focus = return_khmer_empire
 		}
 		completion_reward = {
-			add_timed_idea = { 
+			add_timed_idea = {
 				idea = keep_under_fra_idea
 				days = 365
 			}
 		}
-	}	
-
-#########################################################################################################
-# 프랑스 식민당국 중점도
-#########################################################################################################
+	}
+	#########################################################################################################
+	# 프랑스 식민당국 중점도
+	#########################################################################################################
 	shared_focus = IDC_french_colonial_authorities
-#########################################################################################################
-# 무장독립 중점도
-#########################################################################################################
+	#########################################################################################################
+	# 무장독립 중점도
+	#########################################################################################################
 	shared_focus = IDC_indochina_communist_party_contact
-#########################################################################################################
-# 밀리터리
-#########################################################################################################
+	#########################################################################################################
+	# 밀리터리
+	#########################################################################################################
 	shared_focus = IDC_establish_the_anc
-#########################################################################################################
-# 경제
-#########################################################################################################
+	#########################################################################################################
+	# 경제
+	#########################################################################################################
 }
