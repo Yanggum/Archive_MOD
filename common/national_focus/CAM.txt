@@ -12,8 +12,8 @@ focus_tree = {
 	focus = {
 		id = return_khmer_empire
 		icon = GFX_return_khmer_empire
-		x = 50
-		y = 0
+		x = 35
+		y = 8
 		cost = 10
 		available = {
 			is_subject = no
@@ -416,14 +416,293 @@ focus_tree = {
 	#########################################################################################################
 	shared_focus = IDC_french_colonial_authorities
 	#########################################################################################################
-	# 무장독립 중점도
-	#########################################################################################################
-	shared_focus = IDC_indochina_communist_party_contact
-	#########################################################################################################
 	# 밀리터리
 	#########################################################################################################
 	shared_focus = IDC_establish_the_anc
 	#########################################################################################################
 	# 경제
 	#########################################################################################################
+	#########################################################################################################
+	# 무장독립 중점도
+	#########################################################################################################
+	shared_focus = IDC_indochina_communist_party_contact
+	#프랑스 협상
+	focus = {
+		id = CAM_royal_negotiation
+		icon = GFX_focus_generic_monarchy_1
+		mutually_exclusive = {
+			focus = IDC_indochina_communist_party_contact
+		}
+		x = 43
+		y = 0
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 150
+					localization = CAM_royal_negotiation
+				}	
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.10
+			}
+		}
+	}
+	focus = {
+		id = CAM_formation_of_khmer_issarak
+		icon = GFX_focus_ETH_peacekeeping_forces
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = -3
+		y = 1
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			FRA = {
+				OR = {
+					surrender_progress > 0.1
+					has_capitulated = yes
+					ROOT = {
+						has_autonomy_state = autonomy_dominion
+					}
+				}
+			}
+		}
+		completion_reward = {
+			add_ideas = idea_CAM_formation_of_khmer_issarak
+		}
+	}
+	focus = {
+		id = CAM_royal_crusade_for_cambodian_independence
+		icon = GFX_focus_generic_monarchy_2
+		prerequisite = {
+			focus = CAM_formation_of_khmer_issarak
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = CAM_formation_of_khmer_issarak
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			add_ideas = idea_CAM_royal_crusade_for_cambodian_independence
+		}
+	}
+	focus = {
+		id = CAM_modernization_support
+		icon = GFX_focus_fra_devalue_the_franc
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 100
+					localization = CAM_modernization_support
+				}	
+			}
+			add_stability = 0.05
+			custom_effect_tooltip = generic_skip_one_line_tt
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = CAM_french_intellectual_recruitment
+		icon = GFX_focus_chi_reach_out_to_france
+		prerequisite = {
+			focus = CAM_modernization_support
+		}
+		mutually_exclusive = {
+		}
+		x = -1
+		y = 1
+		relative_position_id = CAM_modernization_support
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 150
+					localization = CAM_french_intellectual_recruitment
+				}	
+			}
+		}
+	}
+	focus = {
+		id = CAM_light_industry_investment
+		icon = GFX_focus_generic_modernize_industry
+		prerequisite = {
+			focus = CAM_modernization_support
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = CAM_modernization_support
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 100
+					localization = CAM_light_industry_investment
+				}	
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = CAM_infantry_command_transfer
+		icon = GFX_focus_generic_manpower
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = 1
+		y = 2
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			NOT = {
+				has_global_flag = IDC_tirailleurs_reformed_flag
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = modify_IDC_tirailleurs_tt
+			add_to_variable = {
+				IDC_tirailleurs_army_morale_factor = 0.1
+				tooltip = army_morale_factor_tt
+			}
+			add_to_variable = {
+				IDC_tirailleurs_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = CAM_foundation_of_future_cambodian_army
+		icon = GFX_focus_chi_army_reform
+		prerequisite = {
+			focus = CAM_infantry_command_transfer
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = CAM_infantry_command_transfer
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			NOT = {
+				has_global_flag = IDC_tirailleurs_reformed_flag
+			}
+		}
+		completion_reward = {
+			army_experience = 25
+			add_tech_bonus = {
+				name = CAM_foundation_of_future_cambodian_army
+				bonus = 0.5
+				uses = 2
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = CAM_foundation_of_future_cambodian_army
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
+		}
+	}
 }
