@@ -5717,6 +5717,51 @@ TRN_Trinity_divine_mandate_cat = {
 		}
 	}
 
+	TRN_ukraine_divine_mandate_expand = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = { }
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = TRN_Divine_Mandate_Trigger_tt
+				80 = { is_controlled_by_ROOT_or_subject = yes }
+				78 = { is_controlled_by_ROOT_or_subject = yes }
+				766 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+        	}
+		visible = {
+			TR5 = {
+				exists = yes
+				is_puppet_of = TRM
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 80
+				state = 78
+				state = 766
+			}
+		}
+
+		ai_will_do = { factor = 999 }
+
+		fire_only_once = yes
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 80
+						state = 78
+						state = 766
+					}
+				}
+				transfer_state_to = TR5
+			}
+		}
+	}
+
     	TRN_Belarus_Divine_Mandate = {
 		icon = GFX_decision_Trinity_Emblem
 		allowed = { }
@@ -5801,7 +5846,6 @@ TRN_Trinity_divine_mandate_cat = {
 				TRN_SOV_divine_mandate_expand_highlight_trigger = yes
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5816,6 +5860,7 @@ TRN_Trinity_divine_mandate_cat = {
 	}
 
 	TRN_Russia_divine_mandate_expand_2 = {
+		name = TRN_Russia_divine_mandate_expand
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = { }
 		available = {
@@ -5841,7 +5886,6 @@ TRN_Trinity_divine_mandate_cat = {
 				state = 213
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5858,6 +5902,36 @@ TRN_Trinity_divine_mandate_cat = {
 				}
 				transfer_state_to = TR6
 			}
+		}
+	}
+	TRN_Russia_divine_mandate_expand_3 = {
+		name = TRN_Russia_divine_mandate_expand
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = { }
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = TRN_Divine_Mandate_Trigger_tt
+				146 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+        	}
+		visible = {
+			TR6 = {
+				exists = yes
+				is_puppet_of = TRM
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = { state = 146 }
+		}
+
+		ai_will_do = { factor = 999 }
+
+		fire_only_once = yes
+
+		complete_effect = {
+			TR6 = { transfer_state = 146 }
 		}
 	}
 
@@ -5914,7 +5988,6 @@ TRN_Trinity_divine_mandate_cat = {
 				TRN_South_Russia_divine_mandate_highlight_expand_trigger = yes
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5925,6 +5998,132 @@ TRN_Trinity_divine_mandate_cat = {
 				limit = { TRN_South_Russia_divine_mandate_highlight_expand_trigger = yes }
 				transfer_state_to = TR7
 			}
+		}
+	}
+
+	TRN_support_east_divine_mandate = {
+		allowed = { tag = TRM }
+
+		days_re_enable = 90
+
+		cost = 30
+
+		available = {
+			OR = {
+				country_exists = TR3
+				country_exists = TR4
+				country_exists = TR5
+				country_exists = TR6
+				country_exists = TR7
+			}
+			has_manpower > 15000
+		}
+
+		visible = {
+			OR = {
+				country_exists = TR3
+				country_exists = TR4
+				country_exists = TR5
+				country_exists = TR6
+				country_exists = TR7
+			}
+		}
+
+		complete_effect = {
+			# ==== TR3 ====
+			IF = {
+				limit = { country_exists = TR3 }
+				add_manpower = -2500
+				TR3 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR3
+						NOT = { is_core_of = TR3 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR4 ====
+			IF = {
+				limit = { country_exists = TR4 }
+				add_manpower = -2500
+				TR4 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR4
+						NOT = { is_core_of = TR4 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR5 ====
+			IF = {
+				limit = { country_exists = TR5 }
+				add_manpower = -2500
+				TR5 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR5
+						NOT = { is_core_of = TR5 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR6 ====
+			IF = {
+				limit = { country_exists = TR6 }
+				add_manpower = -2500
+				TR6 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR6
+						NOT = { is_core_of = TR6 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR7 ====
+			IF = {
+				limit = { country_exists = TR7 }
+				add_manpower = -2500
+				TR7 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR7
+						NOT = { is_core_of = TR7 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "90"
+			}
+		}
+
+		ai_will_do = {
+			base = 5
 		}
 	}
 

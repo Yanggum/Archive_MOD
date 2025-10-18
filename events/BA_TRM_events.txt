@@ -5,6 +5,7 @@ add_namespace = TRN_faction_event
 add_namespace = TRN_collapse_event
 add_namespace = TRMDIP
 add_namespace = TRM_ironsword_event
+add_namespace = TRN_opposition
 
 country_event = {
 	id = TRM_event.1
@@ -4292,7 +4293,6 @@ country_event = { # 발키리에게 합동 수사 제안 - > 찬성
 		add_to_variable = { GEI_Secure_Royal_Blood_Search_back_var = -10 } #-> 수색 반대
 	}
 }
-add_namespace = TRN_opposition
 country_event = { # 작전 중지
 	id = TRN_opposition.200 
 	title = TRN_opposition.200.t
@@ -4745,72 +4745,6 @@ country_event = { # 히요리 체포
 		name = TRN_opposition.344.a
 		add_political_power = 10
 		add_stability = 0.015
-	}
-}
-unit_leader_event = {
-	id = trnedenwar.0
-	title = trnedenwar.0.t
-	desc = trnedenwar.0.desc
-	picture = GFX_event_none_picture
-	
-	fire_only_once = no
-	is_triggered_only = yes
-
-	option = {
-		name = trnedenwar.0.a
-		TRN_cmfnrl = {
-			unit_leader_event = { 
-				id = trnedenwar.1 
-			}
-		}
-	}
-}
-unit_leader_event = {
-	id = trnedenwar.1
-	title = trnedenwar.1.t
-	desc = trnedenwar.1.desc
-	picture = GFX_event_none_picture
-	
-	fire_only_once = no
-	is_triggered_only = yes
-
-	option = {
-		name = trnedenwar.1.a
-		TRN_gktmal = {
-			unit_leader_event = { 
-				id = trnedenwar.2
-			}
-		}
-	}
-}
-unit_leader_event = {
-	id = trnedenwar.2
-	title = trnedenwar.2.t
-	desc = trnedenwar.2.desc
-	picture = GFX_event_none_picture
-	
-	fire_only_once = no
-	is_triggered_only = yes
-
-	option = {
-		name = trnedenwar.2.a
-		TRN_dlclzk = {
-			unit_leader_event = { id = trnedenwar.3 }
-		}
-	}
-}
-unit_leader_event = {
-	id = trnedenwar.3
-	title = trnedenwar.3.t
-	desc = trnedenwar.3.desc
-	picture = GFX_event_none_picture
-	
-	fire_only_once = no
-	is_triggered_only = yes
-
-	option = {
-		name = trnedenwar.3.a
-
 	}
 }
 country_event = { 
@@ -8760,6 +8694,12 @@ add_namespace = trinity_social_ploblem_events # 사회문제발생!!
 add_namespace = trinity_honor_events # 미카용 명예
 add_namespace = trinity_divine_mandate_events # 신성통치령 총독부
 add_namespace = trinity_kulturkampf_events # 문화투쟁
+# /* 나기사 루트 코드용
+# 기본적으로 기존 코드인 trinity_events를 그대로 사용해서 혼동을 줄이되, 나기사 루트는 _nagisa로 구분 */
+add_namespace = trinity_events_nagisa # 기본 이벤트
+add_namespace = trinity_events_nagisa_faction # 파벌 이벤트
+add_namespace = trinity_events_nagisa_diplomacy # 외교 이벤트
+add_namespace = trinity_events_nagisa_election # 선거 이벤트 (민주 나기사용)
 ##
 # trinity_events 1-14, 33 = 인트로 및 시스템 이벤트
 # trinity_events 15-? = 미카용 이벤트
@@ -9939,15 +9879,6 @@ country_event = { # 학원경제개발부 부장은 누구로 할까요
 			}
 			hidden_effect = { activate_advisor = TRN_Endo_Shimiko_political_advisor }
 		}
-		#IF = {
-		#	limit = { has_government = fascism }
-		#	effect_tooltip = { country_event = trinity_flavor_events.18 }
-		#	hidden_effect = {
-		#		TRN_Endo_Shimiko = {
-		#			unit_leader_event = { id = trinity_flavor_events.18 }
-		#		}
-		#	}
-		#}
 
 	}
 }
@@ -10577,40 +10508,6 @@ country_event = { # ㅂ반독일 프로파간다
     	}
 }
 
-
-unit_leader_event = { # 나기나기의 호스트 취임 - 이벤트 아이디는 임시이며 추후 수정해야 합니다.
-	id = trinity_events.1000
-	title = trinity_events.1000.t
-	desc = trinity_events.1000.desc
-	picture = GFX_event_none_picture
-	
-	is_triggered_only = yes
-	fire_only_once = no
-
-	option = {
-		name = trinity_events.1000.a
-		add_country_leader_role = {
-			character = TRN_Kirifuji_Nagisa
-			promote_leader = yes
-			country_leader = {
-				ideology = tea_party_ideology
-				expire = "1965.1.1.1"
-				traits = { 
-					TRN_noble_duty
-					TRM_filius_faction
-					TRN_nagisa_1_off
-				}
-				desc = TRN_Kirifuji_Nagisa_desc
-			}
-		}
-
-		hidden_effect = {
-			TRN_Utazumi_Sakurako = {
-				unit_leader_event = { id = trinity_events.13 days = 10 } # 시스터후드 음모
-			}
-		}
-    	}
-}
 
 country_event = { # 문제 - 1
 	id = trinity_social_ploblem_events.1
@@ -12162,13 +12059,27 @@ country_event = { #
 	id = trinity_flavor_events.35
 	title = trinity_flavor_events.35.t
 	desc = trinity_flavor_events.35.desc
-	picture = GFX_report_event_generic_beachside_sunset
+	picture = GFX_report_event_TRN_mika_2
 	
 	is_triggered_only = yes
 	fire_only_once = no
 
 	option = {
 		name = trinity_flavor_events.35.a
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.05
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+
+	option = {
+		name = trinity_flavor_events.35.b
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+		mark_focus_tree_layout_dirty = yes
 	}
 }
 
@@ -12389,7 +12300,35 @@ country_event = { #
 
 	option = {
 		name = trinity_flavor_events.44.a
-		unlock_decision_tooltip = TRN_Mika_honor_loop_decision
+		effect_tooltip = { unlock_decision_tooltip = TRN_Mika_honor_loop_decision }
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.45
+	title = trinity_flavor_events.45.t
+	desc = trinity_flavor_events.45.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.45.a
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+
+	option = {
+		name = trinity_flavor_events.45.b
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.15
+		}
+		mark_focus_tree_layout_dirty = yes
 	}
 }
 
@@ -13144,28 +13083,58 @@ country_event = { #
 
 	option = {
 		name = trinity_flavor_events.10000.a
-		TRN_Ibaragi_Yoshimi = { add_skill_level = 1 }
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 1
+		}
 	}
 }
 
-# /* 나기사 루트 코드용
-# 기본적으로 기존 코드인 trinity_events를 그대로 사용해서 혼동을 줄이되, 나기사 루트는 .nagisa로 구분 */
-add_namespace = trinity_events.nagisa # 기본 이벤트
-add_namespace = trinity_events.nagisa.flavor # 플레이버 이벤트
-add_namespace = trinity_events.nagisa.faction # 파벌 이벤트
-add_namespace = trinity_events.nagisa.diplomacy # 외교 이벤트
-add_namespace = trinity_events.nagisa.election # 선거 이벤트 (민주 나기사용)
-add_namespace = trinity_events.nagisa.news # 뉴스 이벤트
 
+
+unit_leader_event = { # 나기나기의 호스트 취임 - 이벤트 아이디는 임시이며 추후 수정해야 합니다.
+	id = trinity_events_nagisa.1000
+	title = trinity_events_nagisa.1000.t
+	desc = trinity_events_nagisa.1000.desc
+	picture = GFX_event_none_picture
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events_nagisa.1000.a
+		add_country_leader_role = {
+			character = TRN_Kirifuji_Nagisa
+			promote_leader = yes
+			country_leader = {
+				ideology = tea_party_ideology
+				expire = "1965.1.1.1"
+				traits = { 
+					TRN_noble_duty
+					TRM_filius_faction
+					TRN_nagisa_1_off
+				}
+				desc = TRN_Kirifuji_Nagisa_desc
+			}
+		}
+
+		hidden_effect = {
+			TRN_Utazumi_Sakurako = {
+				unit_leader_event = { id = trinity_events.13 days = 10 } # 시스터후드 음모
+			}
+		}
+    	}
+}
 country_event = { # 나기사 BoP 테스트용
-	id = trinity_events.nagisa.10000
-	title = trinity_events.nagisa.10000.t
-	desc = trinity_events.nagisa.10000.desc
+	id = trinity_events_nagisa_10000
+	title = trinity_events_nagisa_10000.t
+	desc = trinity_events_nagisa_10000.desc
 	picture = GFX_report_event_GEH_haruna_kurodate
-    is_triggered_only = yes
+    	
+	is_triggered_only = yes
 
 	option = { 
-		name = trinity_events.nagisa.10000.a 
+		name = trinity_events_nagisa_10000.a 
 
 		set_power_balance = {
 		    id = TRM_nagisa_power_balance # 고치라오 고란 쿠다사이

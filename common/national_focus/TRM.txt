@@ -6724,7 +6724,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 99
 			tag = TRM
 			is_debug = yes
 		}
@@ -7943,9 +7943,6 @@ focus_tree = {
 		ai_will_do = {
 
 		}
-		mutually_exclusive = {
-			focus = TRN_alliance_of_faith
-		}
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
@@ -7985,9 +7982,6 @@ focus_tree = {
 		ai_will_do = {
 
 		}
-		mutually_exclusive = {
-			focus = TRN_hiring_german_thinkers
-		}
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
@@ -8006,29 +8000,10 @@ focus_tree = {
 				}
 				activate_targeted_decision = { target = TRM decision = TRN_honor_utilize_the_church_authority }
 			}
-			if = {
-				limit = {
-					TRN_Utazumi_Sakurako = { has_advisor_role = political_advisor }
-				}
-				add_trait = {
-					character = TRN_Utazumi_Sakurako
-					slot = political_advisor
-					trait = TRM_defender_of_faith
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = { TRN_Utazumi_Sakurako = { has_advisor_role = political_advisor } }
-				}
-				add_advisor_role = {
-					character = TRN_Wakaba_Hinata
-					advisor = {
-						slot = political_advisor
-						idea_token = TRN_Wakaba_Hinata_political_advisor
-						traits = { TRM_defender_of_faith }
-						cost = 75
-					}
-				}
+			add_trait = {
+				character = TRN_Utazumi_Sakurako
+				slot = political_advisor
+				trait = TRM_defender_of_faith
 			}
 		}
 	}
@@ -8237,25 +8212,50 @@ focus_tree = {
 	}
 
 	focus = { # 
-		id = TRN_unknow_focus_09
+		id = TRN_faith_and_faith
 		icon = GFX_goal_unknown
 		prerequisite = { 
 			focus = TRN_alliance_of_faith
 		}
+		text_icon = GER_inner_circle_focus_style
 		x = 0
 		y = 2
 		relative_position_id = TRN_alliance_of_faith
-		cost = 5
+		cost = 20
 
 		available = {
-			has_government = fascism
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+					CHARACTER = TRN_Utazumi_Sakurako
+					FOCUS = TRN_alliance_of_faith
+				}
+				always = no
+			}
 		}
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-
+			add_political_power = 40
+			add_stability = 0.02
+			swap_ideas = {
+				add_idea = TRM_defender_of_faith_ns_2_fake
+				remove = TRM_defender_of_faith_ns_fake
+			}
+			hidden_effect = {
+				add_trait = {
+					character = TRN_Utazumi_Sakurako
+					slot = political_advisor
+					trait = TRM_defender_of_faith_2
+				}
+				remove_trait = {
+					character = TRN_Utazumi_Sakurako
+					slot = political_advisor
+					trait = TRM_defender_of_faith
+				}
+			}
 		}
 	}
 
@@ -8265,13 +8265,21 @@ focus_tree = {
 		prerequisite = { 
 			focus = TRN_hiring_german_thinkers
 		}
+		text_icon = GER_inner_circle_focus_style
 		x = 0
 		y = 2
 		relative_position_id = TRN_hiring_german_thinkers
-		cost = 5
+		cost = 20
 
 		available = {
-			has_government = fascism
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+					CHARACTER = TRN_Carl_Schmitt
+					FOCUS = TRN_hiring_german_thinkers
+				}
+				always = no
+			}
 		}
 
 		ai_will_do = {
