@@ -8685,8 +8685,9 @@ country_event = {
 	}
 }
 
-
-add_namespace = trinity_events 
+########################## 재작업
+add_namespace = trinity_system_events # 시스템용 이벤트 hidden 이벤트를 처리할때 사용합니다.
+add_namespace = trinity_events # 기본 이벤트( 미카 루트 )
 add_namespace = trinity_flavor_events # 플레이버 이벤트
 add_namespace = trinity_news_events # 뉴스 이벤트
 add_namespace = trinity_culture_events # 트리니티 문화 개조
@@ -8702,17 +8703,16 @@ add_namespace = trinity_events_nagisa_diplomacy # 외교 이벤트
 add_namespace = trinity_events_nagisa_election # 선거 이벤트 (민주 나기사용)
 ##
 # trinity_events 1-14, 33 = 인트로 및 시스템 이벤트
-# trinity_events 15-? = 미카용 이벤트
-# trinity_flavor_events 1-99 = 플레이버 이벤트용
+# trinity_flavor_events 1- 999 = 플레이버 이벤트용
 # trinity_events 34, 38, 40 = 학원경제개발부 이벤트
 ##
-# TRMDIP 1 ~ 49 리워크 이전 외교 이벤트
-# TRMDIP 50~ 리워크 이후 외교 이벤트
+# TRMDIP 1 ~ 49  (구) 외교 이벤트
+# TRMDIP 50~ (신) 외교 이벤트
 ##
-country_event = { # 티파티 통제
-	id = trinity_events.10000
-	title = trinity_events.10000.t
-	desc = trinity_events.10000.desc
+country_event = { # 리워크 중인 중점과 새로운 사건을 불러옵니다.
+	id = trinity_system_events.0
+	title = trinity_system_events.0.t
+	desc = trinity_system_events.0.desc
 	picture = GFX_event_teaparty
 	
 	is_triggered_only = yes
@@ -8723,9 +8723,67 @@ country_event = { # 티파티 통제
 	}
 
 	option = {
-		name = trinity_events.10000.a
+		name = trinity_system_events.0.a
     	}
 }
+country_event = { # 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
+	id = trinity_system_events.1
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = TRN_jewel_of_the_trinity_faith
+			}
+			complete_national_focus = {
+				focus = TRN_jewel_of_the_trinity_faith
+				use_side_message = yes
+				originator_name = TRN_Utazumi_Sakurako
+			}
+			clr_country_flag = TRN_jewel_of_the_trinity_faith_in_progress_flag
+		}
+	}
+}
+country_event = { # 문화투쟁, 랜덤한 주에 '저항하는 교회' 변동치를 부여하기 위해 사용 됩니다.
+	id = trinity_system_events.2
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		tag = TRM
+		has_country_flag = TRN_kulturkampf_activetion_flag
+		any_state = {
+			is_core_of = TRM
+			OR = {
+				has_dynamic_modifier = { modifier = GEK_protestant_state }
+				has_dynamic_modifier = { modifier = GEK_catholic_state }
+			}
+		}
+	}
+
+	immediate = {
+		random_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				OR = {
+					has_dynamic_modifier = { modifier = GEK_protestant_state }
+					has_dynamic_modifier = { modifier = GEK_catholic_state }
+				}
+			}
+			save_global_event_target_as = TRN_church_in_resistance_state
+			state_event = { id = trinity_kulturkampf_events.5 trigger_for = controller }
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_system_events.2 days = 35 random_days = 35 }
+		}
+	}
+}
+
+########################## 시작
 country_event = { # 티파티 통제
 	id = trinity_events.1
 	title = trinity_events.1.t
@@ -9332,7 +9390,6 @@ country_event = { # 충성조항
 
     	}
 }
-
 country_event = { # 내부 및 외부 국경 통제 법령
 	id = trinity_events.23
 	title = trinity_events.23.t
@@ -9368,7 +9425,6 @@ country_event = { # 내부 및 외부 국경 통제 법령
 		}
 	}
 }
-
 country_event = { # 연합전선의 부상
 	id = trinity_events.24
 	title = trinity_events.24.t
@@ -9388,7 +9444,6 @@ country_event = { # 연합전선의 부상
 		add_war_support = 0.05
     	}
 }
-
 country_event = { # 파테르 분파의 부상
 	id = trinity_events.25
 	title = trinity_events.25.t
@@ -9415,7 +9470,6 @@ country_event = { # 파테르 분파의 부상
 		}
     	}
 }
-
 country_event = { # 대회의 끝
 	id = trinity_events.26
 	title = trinity_events.26.t
@@ -9434,7 +9488,6 @@ country_event = { # 대회의 끝
 		}
     	}
 }
-
 country_event = { # 미소노 미카의 인상
 	id = trinity_events.27
 	title = trinity_events.27.t
@@ -9475,7 +9528,6 @@ country_event = { # 미소노 미카의 인상
 		}
     	}
 }
-
 country_event = { # 트리니티 교육과정
 	id = trinity_events.28
 	title = trinity_events.28.t
@@ -9554,7 +9606,6 @@ country_event = {
 		}
 	}
 }
-
 country_event = {
 	id = trinity_culture_events.2
 	title = trinity_culture_events.2.t
@@ -9594,7 +9645,6 @@ country_event = {
 		}
 	}
 }
-
 country_event = {
 	id = trinity_culture_events.3
 	title = trinity_culture_events.3.t
@@ -9652,7 +9702,6 @@ country_event = { # 종교 갈등
 		add_political_power = 120
     	}
 }
-
 country_event = { # 여성 인권에 대한 논의
 	id = trinity_events.30
 	title = trinity_events.30.t
@@ -9694,7 +9743,6 @@ country_event = { # 여성 인권에 대한 논의
 		add_stability = -0.05
     	}
 }
-
 country_event = { # 독일 문화의 운명
 	id = trinity_events.31
 	title = trinity_events.31.t
@@ -9742,7 +9790,6 @@ country_event = { # 독일 문화의 운명
 	}
 	
 }
-
 country_event = { # 젋은 길잡이
 	id = trinity_events.32
 	title = trinity_events.32.t
@@ -9766,7 +9813,6 @@ country_event = { # 젋은 길잡이
 		}
     	}
 }
-
 country_event = { # '호스트 선출제'
 	id = trinity_events.33
 	title = trinity_events.33.t
@@ -9826,7 +9872,6 @@ country_event = { # '호스트 선출제'
 		}
     	}
 }
-
 country_event = { # 학원경제개발부 부장은 누구로 할까요
 	id = trinity_events.34
 	title = trinity_events.34.t
@@ -9882,7 +9927,6 @@ country_event = { # 학원경제개발부 부장은 누구로 할까요
 
 	}
 }
-
 country_event = { # 보안국 재편
 	id = trinity_events.35
 	title = trinity_events.35.t
@@ -9905,7 +9949,6 @@ country_event = { # 보안국 재편
 
     	}
 }
-
 country_event = { # 안보상황
 	id = trinity_events.36
 	title = trinity_events.36.t
@@ -9920,7 +9963,6 @@ country_event = { # 안보상황
 		add_war_support = 0.05
     	}
 }
-
 country_event = { # 소규모 동아리들의 운명
 	id = trinity_events.37
 	title = trinity_events.37.t
@@ -9946,7 +9988,6 @@ country_event = { # 소규모 동아리들의 운명
 		hidden_effect = { country_event = { id = trinity_flavor_events.20 days = 25} }
     	}
 }
-
 country_event = { # 우리만의 자본가
 	id = trinity_events.38
 	title = trinity_events.38.t
@@ -10051,7 +10092,6 @@ country_event = { # 우리만의 자본가
 		}
     	}
 }
-
 unit_leader_event = { # 한스 프리체
 	id = trinity_events.39
 	title = trinity_events.39.t
@@ -10068,7 +10108,6 @@ unit_leader_event = { # 한스 프리체
 		show_ideas_tooltip = TRM_hans_zehrer_idea
     	}
 }
-
 country_event = { # 트리니티 재개발
 	id = trinity_events.40
 	title = trinity_events.40.t
@@ -10093,7 +10132,6 @@ country_event = { # 트리니티 재개발
 		}
     	}
 }
-
 country_event = { # 게헨나 학원에서 발생한 저항의 움직임
 	id = trinity_events.41
 	title = trinity_events.41.t
@@ -10124,8 +10162,8 @@ country_event = { # 게헨나 학원에서 발생한 저항의 움직임
 }
 country_event = { #게헨나 항복 이벤트
 	id = trinity_events.42
-	title = TRM_event.15.t
-	desc = TRM_event.15.desc
+	title = TRM_event.42.t
+	desc = TRM_event.42.desc
 	picture = GFX_event_TRM_event_15
 
 	is_triggered_only = no
@@ -10179,16 +10217,10 @@ country_event = { #게헨나 항복 이벤트
 		days = 5
 	}
 	option = {
-		name = TRM_event.15.a
-		hidden_effect = {
-			country_event = { id = trinity_events.41 days = 03 }
-		}
-		set_country_flag = TRM_after_war_flag_decision_active
-		unlock_decision_category_tooltip = TRN_after_war_decisions
-        #hidden_effect = { news_event = { id = BA_news.5 } }
+		name = TRM_event.42.a
+
 	}
 }
-
 country_event = { # 게헨나 동아리 문제
 	id = trinity_events.43
 	title = trinity_events.43.t
@@ -10224,7 +10256,6 @@ country_event = { # 게헨나 동아리 문제
 		}
 	}
 }
-
 country_event = { # 아리우스 분교의 운명
 	id = trinity_events.44
 	title = trinity_events.44.t
@@ -10246,7 +10277,6 @@ country_event = { # 아리우스 분교의 운명
 		add_war_support = 0.02
 	}
 }
-
 country_event = { # 중앙구에서 대규모 시위
 	id = trinity_events.45
 	title = trinity_events.45.t
@@ -10306,7 +10336,6 @@ country_event = { # 중앙구에서 대규모 시위
 		}
 	}
 }
-
 country_event = { # 아리우스용
 	id = trinity_events.46
 	title = trinity_events.46.t
@@ -10335,7 +10364,6 @@ country_event = { # 아리우스용
 		add_command_power = 5
 	}
 }
-
 country_event = { # 타협의 끝
 	id = trinity_events.47
 	title = trinity_events.47.t
@@ -10350,7 +10378,6 @@ country_event = { # 타협의 끝
 		country_event = { id =  trinity_events.48 days = 7 }
     	}
 }
-
 country_event = { # 타협의 끝
 	id = trinity_events.48
 	title = trinity_events.48.t
@@ -10366,7 +10393,6 @@ country_event = { # 타협의 끝
 
     	}
 }
-
 country_event = { # 타협의 끝
 	id = trinity_events.49
 	title = trinity_events.49.t
@@ -10381,7 +10407,6 @@ country_event = { # 타협의 끝
 		country_event = { id =  trinity_events.50 days = 02 } 
     	}
 }
-
 country_event = { # 타협의 끝
 	id = trinity_events.50
 	title = trinity_events.50.t
@@ -10399,7 +10424,6 @@ country_event = { # 타협의 끝
 		}
     	}
 }
-
 country_event = { # 탈나치화 운동
 	id = trinity_events.51
 	title = trinity_events.51.t
@@ -10417,7 +10441,6 @@ country_event = { # 탈나치화 운동
 		}
     	}
 }
-
 country_event = { # 사민당과 접촉
 	id = trinity_events.52
 	title = trinity_events.52.t
@@ -10437,7 +10460,6 @@ country_event = { # 사민당과 접촉
 		}
 	}
 }
-
 country_event = { # 사민당과 접촉
 	id = trinity_events.53
 	title = trinity_events.53.t
@@ -10458,7 +10480,6 @@ country_event = { # 사민당과 접촉
 		show_ideas_tooltip = TRN_kurt_schumacher_political_advisor
     	}
 }
-
 country_event = { # 정당 본부 폐쇄
 	id = trinity_events.54
 	title = trinity_events.54.t
@@ -10483,7 +10504,6 @@ country_event = { # 정당 본부 폐쇄
 		}
 	}
 }
-
 country_event = { # ㅂ반독일 프로파간다
 	id = trinity_events.55
 	title = trinity_events.55.t
@@ -10525,7 +10545,6 @@ country_event = { # 문제 - 1
 
 	}
 }
-
 country_event = { # 문제 - 노조 파업
 	id = trinity_social_ploblem_events.2
 	title = trinity_social_ploblem_events.2.t
@@ -10586,7 +10605,6 @@ country_event = { # 문제 - 노조 파업
 		add_popularity = { ideology = communism popularity = 0.02 }
 	}
 }
-
 country_event = { # 관공서 폭탄 테러
 	id = trinity_social_ploblem_events.3
 	title = trinity_social_ploblem_events.3.t
@@ -10603,7 +10621,6 @@ country_event = { # 관공서 폭탄 테러
 		add_stability = -0.05
 	}
 }
-
 country_event = { # 문제 - 국민라디오
 	id = trinity_social_ploblem_events.4
 	title = trinity_social_ploblem_events.4.t
@@ -10621,7 +10638,6 @@ country_event = { # 문제 - 국민라디오
 
 	}
 }
-
 country_event = { # 문제 -  베어울프
 	id = trinity_social_ploblem_events.5
 	title = trinity_social_ploblem_events.5.t
@@ -10657,7 +10673,6 @@ country_event = { # 문제 -  베어울프
 		TRN_Social_Problem_effect = yes
 	}
 }
-
 country_event = { # 문제 -  파괴된 트리니티 상징물
 	id = trinity_social_ploblem_events.6
 	title = trinity_social_ploblem_events.6.t
@@ -10674,7 +10689,6 @@ country_event = { # 문제 -  파괴된 트리니티 상징물
 		TRN_Social_Problem_effect = yes
 	}
 }
-
 country_event = { # 사민당과 협력을 완료 했을때 일정 효과를 받는거 나옴
 	id = trinity_social_ploblem_events.7
 	title = trinity_social_ploblem_events.7.t
@@ -10694,7 +10708,6 @@ country_event = { # 사민당과 협력을 완료 했을때 일정 효과를 받
 		}
 	}
 }
-
 country_event = { # 저항하는 음악가들
 	id = trinity_social_ploblem_events.8
 	title = trinity_social_ploblem_events.8.t
@@ -10711,7 +10724,6 @@ country_event = { # 저항하는 음악가들
 		TRN_Social_Problem_effect = yes
 	}
 }
-
 country_event = { # 암살 기도
 	id = trinity_social_ploblem_events.9
 	title = trinity_social_ploblem_events.9.t
@@ -10753,7 +10765,6 @@ country_event = { # 명예 - 구호기사단 무인 병동에서의 강도 사�
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 츠루기의 과잉 진압
 	id = trinity_honor_events.2
 	title = trinity_honor_events.2.t
@@ -10778,7 +10789,6 @@ country_event = { # 명예 - 츠루기의 과잉 진압
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 롤케이크 섭취
 	id = trinity_honor_events.3
 	title = trinity_honor_events.3.t
@@ -10794,7 +10804,6 @@ country_event = { # 명예 - 롤케이크 섭취
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 혼자 티파티
 	id = trinity_honor_events.4
 	title = trinity_honor_events.4.t
@@ -10811,7 +10820,6 @@ country_event = { # 명예 - 혼자 티파티
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 독서하기
 	id = trinity_honor_events.5
 	title = trinity_honor_events.5.t
@@ -10827,7 +10835,6 @@ country_event = { # 명예 - 독서하기
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 딸기 난동
 	id = trinity_honor_events.6
 	title = trinity_honor_events.6.t
@@ -10853,7 +10860,6 @@ country_event = { # 딸기 난동
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 히스테리
 	id = trinity_honor_events.7
 	title = trinity_honor_events.7.t
@@ -10870,7 +10876,6 @@ country_event = { # 명예 - 히스테리
 		TRN_add_Honor = yes
 	}
 }
-
 country_event = { # 명예 - 고립감
 	id = trinity_honor_events.8
 	title = trinity_honor_events.8.t
@@ -10886,39 +10891,33 @@ country_event = { # 명예 - 고립감
 		TRN_add_Honor = yes
 	}
 }
+country_event = { # 명예 - 시스터후드의 선교 활동
+	id = trinity_honor_events.9
+	title = trinity_honor_events.9.t
+	desc = trinity_honor_events.9.desc
+	picture = GFX_report_event_generic_terrace
 
-country_event = { # (히든)
-	id = trinity_kulturkampf_events.100
-	hidden = yes
 	is_triggered_only = yes
+	fire_only_once = no
 
-	trigger = {
-		tag = TRM
-		has_country_flag = TRN_kulturkampf_activetion_flag
-		any_state = {
-			is_core_of = TRM
-			OR = {
-				has_dynamic_modifier = { modifier = GEK_protestant_state }
-				has_dynamic_modifier = { modifier = GEK_catholic_state }
-			}
+	option = { # 
+		name = trinity_honor_events.9.a
+		add_stability = -0.02
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.05
 		}
+		set_country_flag = { flag = TRN_jewel_of_the_trinity_faith_in_progress_flag days = 141 value = 1 }
+		hidden_effect = { 
+			activate_shine_on_focus = TRN_jewel_of_the_trinity_faith
+			country_event = { id = trinity_system_events.1 days = 140 }
+		} 
+		effect_tooltip = { unlock_national_focus = TRN_jewel_of_the_trinity_faith }
 	}
 
-	immediate = {
-		random_owned_state = {
-			limit = {
-				is_core_of = ROOT
-				OR = {
-					has_dynamic_modifier = { modifier = GEK_protestant_state }
-					has_dynamic_modifier = { modifier = GEK_catholic_state }
-				}
-			}
-			save_global_event_target_as = TRN_church_in_resistance_state
-			state_event = { id = trinity_kulturkampf_events.5 trigger_for = controller }
-		}
-		hidden_effect = {
-			country_event = { id = trinity_kulturkampf_events.100 days = 25 random_days = 15 }
-		}
+	option = { #
+		name = trinity_honor_events.9.b
+		add_political_power = 35
 	}
 }
 
@@ -10934,7 +10933,7 @@ country_event = { # 저항하는 교회
 	immediate = {
 		hidden_effect = {
 			country_event = { id = trinity_kulturkampf_events.4 days = 35 }
-			country_event = { id = trinity_kulturkampf_events.100 days = 50 random_days = 15 }
+			country_event = { id = trinity_system_events.2 days = 50 random_days = 15 }
 		}
 	}
 

@@ -6724,7 +6724,7 @@ focus_tree = {
 	country = {
 		factor = 0
 		modifier = {
-			add = 9
+			add = 99
 			tag = TRM
 			is_debug = yes
 		}
@@ -7834,6 +7834,33 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = { #
+		id = TRN_lend_eyes_and_ears
+		icon = GFX_focus_TRN_lend_eyes_and_ears
+		prerequisite = { 
+			focus = TRN_intelligence_agency
+		}
+		x = 1
+		y = 1
+		relative_position_id = TRN_intelligence_agency
+		cost = 5
+
+		available = {
+			has_government = fascism
+			agency_upgrade_number > 4
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			swap_ideas = {
+				add_idea = TRN_general_school_Intelligence_service_2_ns
+				remove_idea = TRN_general_school_Intelligence_service_ns
+			}
+		}
+	}
 	
 	focus = {
 		id = TRN_cult_of_Mika
@@ -8005,6 +8032,9 @@ focus_tree = {
 				slot = political_advisor
 				trait = TRM_defender_of_faith
 			}
+			hidden_effect = {
+				country_event = { id = trinity_honor_events.9 days = 70 }
+			}
 		}
 	}
 	
@@ -8137,83 +8167,9 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 학원 방위대
-		id = TRN_academy_defense_force
-		icon = GFX_focus_TRN_national_guard
-		prerequisite = { 
-			focus = TRN_The_nature_of_the_united_front
-		}
-		x = 3
-		y = 1
-		relative_position_id = TRN_The_nature_of_the_united_front
-		cost = 5
-
-		available = {
-			has_government = fascism
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			country_event = trinity_events.23
-		}
-	}
-
-	focus = { # 
-		id = TRN_unknow_focus_07
-		icon = GFX_goal_unknown
-		prerequisite = { 
-			focus = TRN_academy_defense_force
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_academy_defense_force
-		cost = 5
-
-		available = {
-			has_government = fascism
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { # 
-		id = TRN_unknow_focus_08
-		icon = GFX_goal_unknown
-		prerequisite = { 
-			focus = TRN_academy_defense_force
-		}
-		x = 1
-		y = 1
-		relative_position_id = TRN_academy_defense_force
-		cost = 5
-
-		available = {
-			has_government = fascism
-			has_idea = TRN_general_school_Intelligence_service_ns
-			agency_upgrade_number > 4
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			swap_ideas = {
-				add_idea = TRN_general_school_Intelligence_service_2_ns
-				remove_idea = TRN_general_school_Intelligence_service_ns
-			}
-		}
-	}
-
-	focus = { # 
-		id = TRN_faith_and_faith
-		icon = GFX_goal_unknown
+	focus = { # 트리니티 신앙의 보석
+		id = TRN_jewel_of_the_trinity_faith
+		icon = GFX_focus_TRN_jewel_of_the_trinity_faith
 		prerequisite = { 
 			focus = TRN_alliance_of_faith
 		}
@@ -8224,13 +8180,28 @@ focus_tree = {
 		cost = 20
 
 		available = {
-			custom_override_tooltip = {
-				tooltip = {
-					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-					CHARACTER = TRN_Utazumi_Sakurako
-					FOCUS = TRN_alliance_of_faith
+			if = {
+				limit = { has_country_flag = TRN_jewel_of_the_trinity_faith_in_progress_flag }
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = TRN_Utazumi_Sakurako
+						FLAG_DAYS = [?TRN_jewel_of_the_trinity_faith_in_progress_flag:days]
+					}
+					always = no 
 				}
-				always = no
+			}
+			else = {
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = TRN_Utazumi_Sakurako
+						FOCUS = TRN_alliance_of_faith
+					}
+					always = no
+				}
 			}
 		}
 
@@ -8276,7 +8247,7 @@ focus_tree = {
 				tooltip = {
 					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 					CHARACTER = TRN_Carl_Schmitt
-					FOCUS = TRN_hiring_german_thinkers
+					FOCUS = TRM_invite_dignitary
 				}
 				always = no
 			}
@@ -8287,6 +8258,55 @@ focus_tree = {
 		}
 		completion_reward = {
 
+		}
+	}
+
+	focus = { # 학원 방위대
+		id = TRN_academy_defense_force
+		icon = GFX_focus_TRN_national_guard
+		prerequisite = { 
+			focus = TRN_The_nature_of_the_united_front
+		}
+		x = 3
+		y = 1
+		relative_position_id = TRN_The_nature_of_the_united_front
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			country_event = trinity_events.23
+		}
+	}
+
+	focus = { # 
+		id = TRN_white_uniformed_corps_assault_battalion
+		icon = GFX_focus_ITA_blackshirts
+		prerequisite = { 
+			focus = TRN_academy_defense_force
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_academy_defense_force
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			custom_effect_tooltip = ITA_battaglioni_d_assalto_tt
+			hidden_effect = {
+				set_technology = { blackshirt_assault_battalion_tech = 1 popup = no }
+			}
 		}
 	}
 
@@ -8513,12 +8533,11 @@ focus_tree = {
 		id = TRN_absorb_the_reichsbanner_schwarz_rot_gold
 		icon = GFX_focus_TRN_absorb_the_reichsbanner_schwarz_rot_gold
 		prerequisite = { 
-			focus = TRN_contact_SPD
-			focus = TRN_limit_german_party
+			focus = TRN_new_law_for_germany_party
 		}
-		x = 1
-		y = 1
-		relative_position_id = TRN_contact_SPD
+		x = 0
+		y = 2
+		relative_position_id = TRN_new_law_for_germany_party
 		cost = 5
 
 		available = {
@@ -8537,11 +8556,11 @@ focus_tree = {
 		id = TRN_unknow_focus_11
 		icon = GFX_goal_unknown
 		prerequisite = { 
-			focus = TRN_new_law_for_germany_party
+			focus = TRN_contact_SPD
 		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_new_law_for_germany_party
+		x = 1
+		y = 1
+		relative_position_id = TRN_contact_SPD
 		cost = 5
 
 		available = {
