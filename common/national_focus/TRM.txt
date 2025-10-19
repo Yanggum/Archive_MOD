@@ -8930,6 +8930,359 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = TRN_victory_of_intra_party_democracy
+		icon = GFX_goal_generic_parliament 
+		prerequisite = { focus = TRN_unprovable_problem }
+		x = 5
+		y = 1
+
+		offset = {
+			x = -5
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_unprovable_problem
+			}
+		}
+
+		relative_position_id = TRN_unprovable_problem
+
+		cost = 4
+
+		available = {
+			NOT = { has_idea = TRN_political_instability_ns }
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_victory_of_intra_party_democracy_tt
+			hidden_effect = {
+				set_power_balance = {
+		    		id = TRM_nagisa_power_balance # 필리우스 지지도
+				}		
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_support_various_factions
+		icon = GFX_focus_TRN_necessary_revenge
+		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
+		x = -1
+		y = 1
+
+		relative_position_id = TRN_victory_of_intra_party_democracy
+
+		mutually_exclusive = {
+			focus = TRN_prioritize_filius
+		}
+
+		cost = 3
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRN_prioritize_filius
+		icon = GFX_goal_TRN_Hug_students
+		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_victory_of_intra_party_democracy
+
+		mutually_exclusive = {
+			focus = TRN_support_various_factions
+		}
+
+		cost = 3
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			TRM_nagisa_bop_very_low_increase_effect = yes
+		}
+	}
+
+	focus = {
+		id = TRN_absorb_sanctus_faction
+		icon = GFX_focus_TRN_cause_of_trinity_no_sword
+		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
+		x = -3
+		y = 1
+
+		relative_position_id = TRN_victory_of_intra_party_democracy
+
+		cost = 2
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+			NOT = { has_completed_focus = TRN_nagisa_constitution_discussion }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			TRM_nagisa_bop_very_low_increase_effect = yes
+		}
+	}
+	
+	focus = {
+		id = TRN_nagisa_meeting_with_sisterhood
+		icon = GFX_focus_TRN_secret_meeting_with_Sisterhood
+		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
+		x = 3
+		y = 1
+		relative_position_id = TRN_victory_of_intra_party_democracy
+		cost = 2
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+			NOT = { has_completed_focus = TRN_nagisa_constitution_discussion }
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			# country_event = { id = trinity_events.47 hours = 04 } # 타협의 끝
+		}
+		completion_reward = {
+			add_popularity = { ideology = democratic popularity = 0.06 }
+		}
+	}
+
+	focus = {
+		id = TRN_repromote_eden_treaty
+		icon = GFX_goal_GEH_ako_sorasaki_administrative_officer
+		prerequisite = { focus = TRN_nagisa_constitution_discussion }
+		x = 4
+		y = 1
+
+		relative_position_id = TRN_nagisa_constitution_discussion
+
+		cost = 4
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+			GEH = { is_puppet = no }
+			IF = {
+				limit = { 
+					has_global_flag = GEH_BTBOTS_END_flag # 히나가 탈주했을 경우
+				}
+				NOT = { GEH = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2 } } # 선도부가 문화대혁명 난리통이 아니어야 회담이 가능함
+			}
+		}
+		
+		bypass = {
+			OR = {
+				GEH = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2 }
+				NOT = { country_exists = GEH }
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_repromote_eden_treaty_tt
+			add_intel = {
+				target = GEH
+				civilian_intel = 5
+			}
+			GEH = {
+				add_intel = {
+					target = FROM
+					civilian_intel = 5
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_nagisa_constitution_discussion
+		icon = GFX_focus_TRN_garden_city_movement
+		
+		prerequisite = { 
+			focus = TRN_support_various_factions 
+			focus = TRN_prioritize_filius
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_victory_of_intra_party_democracy
+
+		cost = 5
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			add_political_power = 100
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_nagisa_constitution_discussion_tt
+			IF = {
+				limit = { NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood } }
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRN_nagisa_constitution_discussion_warning_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_successor_to_the_first_trinity
+		icon = GFX_focus_TRN_tea_party
+		
+		prerequisite = { 
+			focus = TRN_nagisa_constitution_discussion
+		}
+
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_nagisa_constitution_discussion
+
+		cost = 6
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = { has_idea = TRN_broken_balance_ns }
+				remove_ideas = TRN_broken_balance_ns
+			}
+			if = {
+				limit = { has_idea = TRN_political_instability_ns }
+				remove_ideas = TRN_political_instability_ns
+			}
+			add_political_power = 100
+		}
+	}
+
+	focus = {
+		id = TRN_coexistence_with_germans
+		icon = GFX_goal_HEU_representative_of_the_germanic
+		
+		prerequisite = { 
+			focus = TRN_nagisa_constitution_discussion
+		}
+
+		x = -4
+		y = 1
+
+		relative_position_id = TRN_nagisa_constitution_discussion
+
+		cost = 6
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		bypass = {
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_appeasement_germany_modifier
+				}
+			}
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_trinity_social_issues_modifier
+				}
+			}
+		}
+
+		bypass_effect = {
+			add_stability = 0.05
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+
 	
 
 	##########
