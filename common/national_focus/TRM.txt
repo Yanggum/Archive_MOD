@@ -9123,6 +9123,50 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRN_nagisa_constitution_discussion
+		icon = GFX_focus_TRN_garden_city_movement
+		
+		prerequisite = { 
+			focus = TRN_support_various_factions 
+			focus = TRN_prioritize_filius
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_victory_of_intra_party_democracy
+
+		cost = 5
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			add_political_power = 100
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_nagisa_constitution_discussion_tt
+			IF = {
+				limit = { NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood } }
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRN_nagisa_constitution_discussion_warning_tt
+				effect_tooltip = {
+					TRM_nagisa_bop_low_decrease_effect = yes
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = TRN_repromote_eden_treaty
 		icon = GFX_goal_GEH_ako_sorasaki_administrative_officer
 		prerequisite = { focus = TRN_nagisa_constitution_discussion }
@@ -9180,26 +9224,20 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_nagisa_constitution_discussion
-		icon = GFX_focus_TRN_garden_city_movement
-		
-		prerequisite = { 
-			focus = TRN_support_various_factions 
-			focus = TRN_prioritize_filius
-		}
+		id = TRN_capriccioso_ruling_the_sora
+		icon = GFX_focus_GEH_unified_gehenna_makoto
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		x = -1
+		y = 1
 
-		x = 0
-		y = 2
+		relative_position_id = TRN_repromote_eden_treaty
 
-		relative_position_id = TRN_victory_of_intra_party_democracy
-
-		cost = 5
+		cost = 4
 
 		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
+			country_exists = GEM
+			NOT = { has_war_with = GEM }
+			GEM = { is_puppet = no }
 		}
 
 		ai_will_do = {
@@ -9207,19 +9245,52 @@ focus_tree = {
 		}
 
 		select_effect = {
-			add_political_power = 100
+			
+		}
+
+		mutually_exclusive = {
+			focus = TRN_affettuoso_looking_up_to_the_sora
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRN_nagisa_constitution_discussion_tt
-			IF = {
-				limit = { NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood } }
-				custom_effect_tooltip = enter_tt
-				custom_effect_tooltip = TRN_nagisa_constitution_discussion_warning_tt
-				effect_tooltip = {
-					TRM_nagisa_bop_low_decrease_effect = yes
-				}
+			add_intel = {
+				target = GEM
+				civilian_intel = 10
 			}
+		}
+	}
+
+	focus = {
+		id = TRN_affettuoso_looking_up_to_the_sora
+		icon = GFX_goal_GEH_gehenna_reunification_ako
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 4
+
+		available = {
+			country_exists = GEM
+			NOT = { has_war_with = GEM }
+			GEM = { is_puppet = no }
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		mutually_exclusive = {
+			focus = TRN_capriccioso_ruling_the_sora
+		}
+
+		completion_reward = {
+
 		}
 	}
 
@@ -9259,6 +9330,107 @@ focus_tree = {
 				remove_ideas = TRN_political_instability_ns
 			}
 			add_political_power = 100
+		}
+	}
+
+	focus = {
+		id = TRN_mediator_among_factions
+		icon = GFX_focus_TRN_declare_trinity_order_state
+		
+		prerequisite = { 
+			focus = TRN_successor_to_the_first_trinity
+		}
+
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 6
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRN_safeguarding_the_ideal_of_factional_democracy # 민주 나기사
+		icon = GFX_goal_unknown 
+		
+		prerequisite = { 
+			focus = TRN_mediator_among_factions
+		}
+
+		mutually_exclusive = {
+			focus = TRN_iron_woman
+		}
+
+		x = -1
+		y = 2
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 6
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRN_iron_woman # 나기사 독재로 이탈
+		icon = GFX_goal_unknown
+		
+		prerequisite = { 
+			focus = TRN_mediator_among_factions
+		}
+
+		mutually_exclusive = {
+			focus = TRN_safeguarding_the_ideal_of_factional_democracy
+		}
+
+		x = 1
+		y = 2
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 6
+
+		available = {
+			has_country_leader = {
+				character = TRN_Kirifuji_Nagisa
+				ruling_only = yes
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
 		}
 	}
 
@@ -9307,6 +9479,136 @@ focus_tree = {
 
 		completion_reward = {
 			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = TRN_idealistic_approach
+		icon = GFX_focus_BRA_reach_out_to_military_dem
+		
+		prerequisite = { 
+			focus = TRN_coexistence_with_germans
+		}
+
+		mutually_exclusive = {
+			focus = TRN_realistic_approach
+		}
+
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_coexistence_with_germans
+
+		cost = 6
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		bypass = {
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_appeasement_germany_modifier
+				}
+			}
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_trinity_social_issues_modifier
+				}
+			}
+		}
+
+		bypass_effect = {
+			add_stability = 0.05
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = TRN_realistic_approach
+		icon = GFX_focus_ITA_banda_carita
+		
+		prerequisite = { 
+			focus = TRN_coexistence_with_germans
+		}
+
+		mutually_exclusive = {
+			focus = TRN_idealistic_approach
+		}
+
+		x = -2
+		y = 1
+
+		relative_position_id = TRN_coexistence_with_germans
+
+		cost = 6
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		bypass = {
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_appeasement_germany_modifier
+				}
+			}
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_trinity_social_issues_modifier
+				}
+			}
+		}
+
+		bypass_effect = {
+			add_stability = 0.05
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = TRN_trinity_religious_issue
+		icon = GFX_focus_TRN_take_over_the_church
+
+		prerequisite = { focus = TRN_coexistence_with_germans }
+		prerequisite = { focus = TRN_successor_to_the_first_trinity }
+
+		x = 2
+		y = 1
+
+		relative_position_id = TRN_coexistence_with_germans
+
+		cost = 5
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
 		}
 	}
 
