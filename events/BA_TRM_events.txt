@@ -10096,7 +10096,6 @@ unit_leader_event = { # 한스 프리체
 	id = trinity_events.39
 	title = trinity_events.39.t
 	desc = trinity_events.39.desc
-	picture = GFX_event_Trinity_Campus
 	
 	is_triggered_only = yes
 	fire_only_once = no
@@ -10106,6 +10105,11 @@ unit_leader_event = { # 한스 프리체
 		set_country_flag = TRN_hans_zehrer_flag
 		custom_effect_tooltip = available_political_advisor
 		show_ideas_tooltip = TRM_hans_zehrer_idea
+    	}
+
+	option = { 
+		name = trinity_events.39.b
+		retire_character = TRM_hans_zehrer
     	}
 }
 country_event = { # 트리니티 재개발
@@ -10527,6 +10531,30 @@ country_event = { # ㅂ반독일 프로파간다
 		}
     	}
 }
+country_event = { # 나치 엘리트 숙청
+	id = trinity_events.56
+	title = trinity_events.56.t
+	desc = trinity_events.56.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.56.a
+
+		add_stability = 0.02
+		add_popularity = { ideology = ROOT popularity = 0.02 }
+		add_timed_idea = {
+			idea = TRN_nazi_elite_purge_ns 
+			days = 365
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.1
+		}
+    	}
+}
 
 
 country_event = { # 문제 - 1
@@ -10737,6 +10765,85 @@ country_event = { # 암살 기도
 	option = { #  
 		name = trinity_social_ploblem_events.9.a
 		add_war_support = 0.01
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 로테 카펠레(붉은 오케스트라)
+	id = trinity_social_ploblem_events.10
+	title = trinity_social_ploblem_events.10.t
+	desc = trinity_social_ploblem_events.10.desc
+	picture = GFX_report_event_generic_rote_kapelle
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.10.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 노동자 태업 문제
+	id = trinity_social_ploblem_events.11
+	title = trinity_social_ploblem_events.11.t
+	desc = trinity_social_ploblem_events.11.desc
+	picture = GFX_report_event_worker_protests
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.11.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_political_power < 100
+				factor = 3
+			}
+		}
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 31
+		}
+		TRN_Social_Problem_effect = yes
+	}
+	option = { #  
+		name = trinity_social_ploblem_events.11.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_political_power > 75
+				factor = 3
+			}
+		}
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 7
+		}
+		add_political_power = -25
+	}
+}
+country_event = { # 히틀러 청소년단
+	id = trinity_social_ploblem_events.12
+	title = trinity_social_ploblem_events.12.t
+	desc = trinity_social_ploblem_events.12.desc
+	picture = GFX_report_event_generic_hitlerjugend
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.12.a
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.01
+		}
 		TRN_Social_Problem_effect = yes
 	}
 }
