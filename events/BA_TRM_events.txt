@@ -13216,7 +13216,8 @@ unit_leader_event = {
 				expire = "1965.1.1.1"
 				traits = { 
 					TRN_noble_duty
-					TRM_filius_faction
+					#TRM_filius_faction 
+					# 분파는 힘의 균형 기능 사용
 					TRN_nagisa_1_off
 				}
 				desc = TRN_Kirifuji_Nagisa_desc
@@ -13308,6 +13309,140 @@ unit_leader_event = { # 증명 불가능한 문제
 	}
 }
 
+country_event = { # 시스터후드와의 만남
+	id = trinity_events_nagisa.7
+	title = trinity_events_nagisa.7.t
+	desc = trinity_events_nagisa.7.desc
+	picture = GFX_event_tmr_event_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.7.a
+	}
+}
+
+country_event = { # 말을 뒤집으며
+	id = trinity_events_nagisa.8
+	title = trinity_events_nagisa.8.t
+	desc = trinity_events_nagisa.8.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.8.a
+	}
+}
+
+country_event = { # 회담의 끝
+	id = trinity_events_nagisa.9
+	title = trinity_events_nagisa.9.t
+	desc = trinity_events_nagisa.9.desc
+	picture = GFX_report_event_generic_handshake
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.9.a
+		add_stability = 0.01
+	}
+}
+
+country_event = { # [GetYear]년 트리니티 공의회
+	id = trinity_events_nagisa.10
+	title = trinity_events_nagisa.10.t
+	desc = trinity_events_nagisa.10.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.10.a
+		if = {
+			limit = {
+				NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood }
+			}
+			custom_effect_tooltip = trinity_events_nagisa_10sakurako_tt
+			TRM_nagisa_bop_low_decrease_effect = yes
+		}
+	}
+}
+
+country_event = { # 호스트의 권한
+	id = trinity_events_nagisa.11
+	title = trinity_events_nagisa.11.t
+	desc = trinity_events_nagisa.11.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.11.a
+		set_country_flag = trn_nagisa_autocracy_flag # 호스트 권한 확대 -> 비동맹으로 탈선하기 위한 조건
+		set_country_leader_ideology = technocracy 
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.11.b
+		set_country_flag = trn_nagisa_democracy_flag
+	}
+}
+
+country_event = { # 게헨나 문제
+	id = trinity_events_nagisa.12
+	title = trinity_events_nagisa.12.t
+	desc = trinity_events_nagisa.12.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.12.a
+		add_political_power = 50
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.12.b
+		add_war_support = -0.02
+		add_stability = 0.03
+	}
+}
+
+country_event = { # 신앙
+	id = trinity_events_nagisa.13
+	title = trinity_events_nagisa.13.t
+	desc = trinity_events_nagisa.13.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.13.a
+		set_country_flag = trn_nagisa_religion_hardline_flag
+		add_political_power = 25
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.13.b
+		set_country_flag = trn_nagisa_religion_moderate_flag
+	}
+}
+
+country_event = { # 공의회를 마무리하며
+	id = trinity_events_nagisa.14
+	title = trinity_events_nagisa.14.t
+	desc = trinity_events_nagisa.14.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.14.a
+
+	}
+}
+
 country_event = { # 나기사 BoP 테스트용
 	id = trinity_events_nagisa.10000
 	title = trinity_events_nagisa.10000.t
@@ -13317,7 +13452,7 @@ country_event = { # 나기사 BoP 테스트용
 	is_triggered_only = yes
 
 	option = { 
-		name = trinity_events_nagisa_10000.a 
+		name = trinity_events_nagisa.10000.a 
 
 		set_power_balance = {
 		    id = TRM_nagisa_power_balance # 고치라오 고란 쿠다사이
