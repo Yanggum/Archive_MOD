@@ -6731,6 +6731,10 @@ focus_tree = {
 	}
 	continuous_focus_position = { x = 100 y = 1400 }
 
+	inlay_window = {
+		id = nagisa_faction_inlay_window
+		position = { x = 2025 y = 300 }
+	}
 	
 	#shared_focus = TRN_Luftwaffe
 	#shared_focus = TRN_research_rifle
@@ -6783,7 +6787,7 @@ focus_tree = {
 		x = 45
 		y = 0
 		offset = {
-			x = -20
+			x = -13
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -7438,6 +7442,17 @@ focus_tree = {
 					option = HIDE
 				}
 				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
+		offset = {
+			x = -9
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = TRN_unprovable_problem
 			}
 		}
 		relative_position_id = TRN_Kyrie_for_the_forgotten_ones
@@ -8882,7 +8897,7 @@ focus_tree = {
 		x = 6
 		y = 0
 		offset = {
-			x = -6
+			x = -10
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -9048,7 +9063,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			TRM_nagisa_bop_very_low_increase_effect = yes
 		}
 	}
 
@@ -9056,8 +9070,8 @@ focus_tree = {
 		id = TRN_absorb_sanctus_faction
 		icon = GFX_focus_TRN_cause_of_trinity_no_sword
 		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
-		x = -3
-		y = 1
+		x = -2
+		y = 2
 
 		relative_position_id = TRN_victory_of_intra_party_democracy
 
@@ -9077,7 +9091,17 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = { id = trinity_events_nagisa.2 }
-			TRM_nagisa_bop_very_low_increase_effect = yes
+			custom_effect_tooltip = nagisa_faction_B_join
+			set_country_flag = nagisa_faction_B_flag
+			add_to_variable = {
+				nagisa_faction_A = 5
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_B = -5
+				tooltip = nagisa_faction_B_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 	
@@ -9085,8 +9109,8 @@ focus_tree = {
 		id = TRN_nagisa_meeting_with_sisterhood
 		icon = GFX_focus_TRN_secret_meeting_with_Sisterhood
 		prerequisite = { focus = TRN_victory_of_intra_party_democracy }
-		x = 3
-		y = 1
+		x = 2
+		y = 2
 		relative_position_id = TRN_victory_of_intra_party_democracy
 		cost = 2
 
@@ -9108,6 +9132,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = nagisa_faction_D_join
+			set_country_flag = nagisa_faction_D_flag
+			TRM_nagisa_faction_modified = yes
 			country_event = { id = trinity_events_nagisa.9 }
 			add_popularity = { ideology = democratic popularity = 0.06 }
 		}
@@ -9154,9 +9181,6 @@ focus_tree = {
 				limit = { NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood } }
 				custom_effect_tooltip = enter_tt
 				custom_effect_tooltip = TRN_nagisa_constitution_discussion_warning_tt
-				effect_tooltip = {
-					TRM_nagisa_bop_low_decrease_effect = yes
-				}
 			}
 			country_event = { id = trinity_events_nagisa.14 }
 		}

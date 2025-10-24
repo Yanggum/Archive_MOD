@@ -1824,6 +1824,9 @@ TRM_anti_geh_emotion_effect = {
 TRM_remove_inner_faction = {
 	custom_effect_tooltip = TRN_tooltip_delete_powers
 	set_country_flag = TRN_delete_power_flag
+	set_variable = {
+		TRN_opp_auto_var = 99
+	}
 }
 
 TRN_add_Honor = {
@@ -1871,6 +1874,7 @@ TRN_Social_Problem_effect = {
 
 
 TRN_init_rework_setting_effect = {
+	TRM_remove_inner_faction = yes
 	TRN_Kozeki_Ui = {
 		add_trait = {
 			slot = political_advisor
@@ -2422,5 +2426,112 @@ TRM_nagisa_bop_very_low_decrease_effect = {
 	add_power_balance_value = {
 		id = TRM_nagisa_power_balance
 		value = -0.05
+	}
+}
+
+TRM_nagisa_faction_setup = {
+	#### 파벌 지지도 (기존 파벌 시스템은 해체)
+	set_variable = { nagisa_faction_A = 40 } #필리우스
+	set_variable = { nagisa_faction_B = 10 } #상투스
+	set_variable = { nagisa_faction_C = 24 } #파테르
+	set_variable = { nagisa_faction_D = 5 } #시스터후드
+	set_variable = { nagisa_faction_E = 5 } #요한 (구호기사단)
+	set_variable = { nagisa_faction_F = 1 } #보충수업부 (아마 일반 트리니티 학생?)
+	set_variable = { nagisa_faction_G = 5 } #독일-사회민주당
+	set_variable = { nagisa_faction_H = 2 } #독일-공산당
+	set_variable = { nagisa_faction_I = 3 } #독일-국가인민당
+	set_variable = { nagisa_faction_J = 5 } #독일-나치당
+
+	set_country_flag = nagisa_faction_A_flag
+
+	TRM_nagisa_faction_modified = yes
+}
+
+TRM_nagisa_faction_modified = {
+	set_temp_variable = {
+		nagisa_faction_var_temp = 0
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_J_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_J
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_I_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_I
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_H_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_H
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_G_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_G
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_F_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_F
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_E_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_E
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_D_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_D
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_C_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_C
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_B_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_B
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = nagisa_faction_A_flag
+		}
+		add_to_temp_variable = {
+			nagisa_faction_var_temp = nagisa_faction_A
+		}
+	}
+	set_variable = {
+		nagisa_faction_core_var = nagisa_faction_var_temp
 	}
 }
