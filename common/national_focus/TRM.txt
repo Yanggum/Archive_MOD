@@ -9190,7 +9190,7 @@ focus_tree = {
 		id = TRN_repromote_eden_treaty
 		icon = GFX_goal_GEH_ako_sorasaki_administrative_officer
 		prerequisite = { focus = TRN_nagisa_constitution_discussion }
-		x = 4
+		x = 5
 		y = 1
 
 		relative_position_id = TRN_nagisa_constitution_discussion
@@ -9240,6 +9240,10 @@ focus_tree = {
 					civilian_intel = 5
 				}
 			}
+			effect_tooltip = {
+				add_ideas = TRM_joint_security_organization
+				GEH = { add_ideas = TRM_joint_security_organization }
+			}
 		}
 	}
 
@@ -9255,9 +9259,9 @@ focus_tree = {
 		cost = 4
 
 		available = {
-			country_exists = GEM
-			NOT = { has_war_with = GEM }
-			GEM = { is_puppet = no }
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+			GEH = { is_puppet = no }
 		}
 
 		ai_will_do = {
@@ -9311,6 +9315,457 @@ focus_tree = {
 
 		completion_reward = {
 
+		}
+	}
+
+	focus = {
+		id = TRN_war_of_good_and_evil
+		icon = GFX_goal_GEH_prefect_team_charge
+
+		prerequisite = {
+			focus = TRN_capriccioso_ruling_the_sora 
+			focus = TRN_affettuoso_looking_up_to_the_sora
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 3
+
+		available = {
+			GEH = { has_war_with = GEM }
+			NOT = { has_war_with = GEH }
+			has_equipment = { infantry_equipment > 999 }
+		}
+
+		bypass = {
+			OR = {
+				NOT = {
+					country_exists = GEM
+				}
+				NOT = {
+					country_exists = GEH
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			GEH = {
+				add_ideas = TRN_military_mission_generic_ns
+				country_event = { id = trinity_events_nagisa.17 }
+			}
+			custom_effect_tooltip = tooltip_white_line
+			send_equipment = {
+				target = GEH
+				type = infantry_equipment
+				amount = 1000
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_technology_exchange_agreement
+		icon = GFX_focus_SWE_lynx_armored_car
+
+		prerequisite = {
+			focus = TRN_affettuoso_looking_up_to_the_sora
+		}
+
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_affettuoso_looking_up_to_the_sora
+
+		cost = 4
+
+		available = {
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					TRM = {
+						NOT = { has_tech = improved_medium_tank }
+						NOT = { has_tech = basic_medium_tank }
+						NOT = { has_tech = basic_medium_tank_chassis }
+					}
+				}
+				custom_effect_tooltip = TRN_technology_exchange_agreement_tt_1
+			}
+			TRM = {
+				if = {
+					limit = {
+						has_tech = advanced_medium_tank
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_equipment_3
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_3
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_medium_tank
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_equipment_2
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_2
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = basic_medium_tank
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_equipment_1
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_1
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_tech = advanced_medium_tank_chassis
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_chassis_3
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_3
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_medium_tank_chassis
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_chassis_2
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_2
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = basic_medium_tank_chassis
+					}
+					create_production_license = {
+						target = GEH
+						equipment = {
+							type = medium_tank_chassis_1
+						}
+						cost_factor = 0
+					}
+					GEH = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_1
+						    amount = 250
+						    producer = TRM
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					GEH = {
+						NOT = { has_tech = improved_medium_tank }
+						NOT = { has_tech = basic_medium_tank }
+						NOT = { has_tech = basic_medium_tank_chassis }
+					}
+				}
+				custom_effect_tooltip = TRN_technology_exchange_agreement_tt_2
+			}
+			GEH = {
+				if = {
+					limit = {
+						has_tech = advanced_medium_tank
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_equipment_3
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_3
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_medium_tank
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_equipment_2
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_2
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = basic_medium_tank
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_equipment_1
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_equipment_1
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_tech = advanced_medium_tank_chassis
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_chassis_3
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_3
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_medium_tank_chassis
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_chassis_2
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_2
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = basic_medium_tank_chassis
+					}
+					create_production_license = {
+						target = TRM
+						equipment = {
+							type = medium_tank_chassis_1
+						}
+						cost_factor = 0
+					}
+					TRM = {
+						add_equipment_to_stockpile = {
+						    type = medium_tank_chassis_1
+						    amount = 250
+						    producer = GEH
+						}
+					}
+				}
+			}
+			add_equipment_subsidy = {
+				cic = 500
+				equipment_type = medium_tank_chassis
+				seller_tags = { GEH } 
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_start_of_the_eden_treaty_negotiations
+		icon = GFX_focus_GEH_sword_defending_gehenna
+
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+
+		x = 3
+		y = 1
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 4
+
+		available = {
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+			GEH = { is_puppet = no }
+			OR = {
+				has_completed_focus = TRN_affettuoso_looking_up_to_the_sora
+				has_completed_focus = TRN_capriccioso_ruling_the_sora
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_start_of_the_eden_treaty_negotiations_tt
+		}
+	}
+
+	focus = {
+		id = TRN_nagisa_support_for_the_prefect_team_intelligence
+		icon = GFX_focus_GEH_national_defense_commissioner_sorasaki_hina
+
+		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations }
+
+		x = 4
+		y = 2
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 5
+
+		available = {
+			NOT = { country_exists = GEH }
+			owns_state = 52
+			agency_upgrade_number > 4
+			NOT = { has_completed_focus = TRN_nagisa_support_for_the_JTF }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = TRM_JTF_intelligence_ns
+				add_idea = TRM_JTF_intelligence_hina_ns
+			}
+		}
+	}
+	focus = {
+		id = TRN_union_of_two_academies
+		icon = GFX_focus_GEH_expulsion_of_pandemonium
+		text_icon = GER_inner_circle_focus_style
+
+		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations }
+
+		x = 3
+		y = 3
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 10
+
+		available = {
+			NOT = { country_exists = GEM }
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+					CHARACTER = TRN_Kirifuji_Nagisa
+					FOCUS = TRN_start_of_the_eden_treaty_negotiations
+					FLAG_DAYS = [?TRN_union_of_two_academies_in_progress_flag:days]
+				}
+				always = no
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_union_of_two_academies_tt
 		}
 	}
 
@@ -9386,7 +9841,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_safeguarding_the_ideal_of_factional_democracy # 민주 나기사
-		icon = GFX_goal_unknown 
+		icon = GFX_focus_BEL_belgian_gates 
 		
 		prerequisite = { 
 			focus = TRN_mediator_among_factions
@@ -9553,6 +10008,7 @@ focus_tree = {
 			add_stability = 0.05
 		}
 	}
+	
 
 	focus = {
 		id = TRN_realistic_approach
@@ -9607,6 +10063,167 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRN_dual_identity_card
+		icon = GFX_focus_LAT_suspend_constitution_of_latvia
+		
+		prerequisite = { 
+			focus = TRN_realistic_approach
+		}
+
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_realistic_approach
+
+		cost = 5
+
+		available = {
+
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_discriminate_but_equal
+		icon = GFX_focus_generic_court
+		
+		prerequisite = { 
+			focus = TRN_dual_identity_card
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_realistic_approach
+
+		cost = 5
+
+		available = {
+
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = TRN_new_education_for_all
+		icon = GFX_focus_generic_university_1
+		
+		prerequisite = { 
+			focus = TRN_idealistic_approach
+		}
+
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_idealistic_approach
+
+		cost = 5
+
+		available = {
+
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = TRN_civil_rights_act
+		icon = GFX_goal_HEU_negotiations_with_parties
+		
+		prerequisite = { 
+			focus = TRN_new_education_for_all
+		}
+
+		x = 2
+		y = 2
+
+		relative_position_id = TRN_idealistic_approach
+
+		cost = 5
+
+		available = {
+
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_denazification_nagisa
+		icon = GFX_focus_GER_subdue_the_wehrmacht
+		
+		prerequisite = { 
+			focus = TRN_realistic_approach
+			focus = TRN_idealistic_approach
+		}
+
+		x = -3
+		y = 2
+
+		relative_position_id = TRN_coexistence_with_germans
+
+		cost = 6
+
+		available = {
+
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_war_support = 0.1
+		}
+	}
+
+	focus = {
 		id = TRN_trinity_religious_issue
 		icon = GFX_focus_TRN_take_over_the_church
 
@@ -9629,6 +10246,124 @@ focus_tree = {
 		}
 		completion_reward = {
 
+		}
+	}
+
+	focus = {
+		id = TRN_german_cultural_revolution
+		icon = GFX_focus_TRN_fate_of_small_club
+		
+		prerequisite = { 
+			focus = TRN_realistic_approach
+			focus = TRN_idealistic_approach
+		}
+
+		x = 0
+		y = 3
+
+		relative_position_id = TRN_coexistence_with_germans
+
+		cost = 6
+
+		available = {
+
+		}
+
+		bypass = {
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_appeasement_germany_modifier
+				}
+			}
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = TRM_trinity_social_issues_modifier
+				}
+			}
+		}
+
+		bypass_effect = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_nagisa_justice_task_force
+		icon = GFX_focus_TRN_justice_task_force
+
+		prerequisite = { focus = TRN_successor_to_the_first_trinity }
+
+		x = 2
+		y = 1
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 5
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = TRM_justice_task_force # 리워크 후에 아마 ns 붙을 듯
+				add_idea = TRM_JTF_intelligence_ns
+			}
+			IF = {
+				limit = {
+					NOT = { has_global_flag = TRN_country_collapse_decisions_end_flag }
+				}
+				add_to_variable = {
+					global.NSD_country_collapse_decisions_value = -10
+					tooltip = NSD_country_collapse_value_tt
+				}
+				add_to_variable = {
+					global.KPD_country_collapse_decisions_value = -10
+					tooltip = KPD_country_collapse_value_tt
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_nagisa_support_for_the_JTF
+		icon = GFX_focus_TRN_hanekawa_hasumi
+
+		prerequisite = { focus = TRN_nagisa_justice_task_force }
+
+		x = 3
+		y = 2
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 5
+
+		available = {
+			agency_upgrade_number > 4
+			NOT = { has_completed_focus = TRN_nagisa_support_for_the_prefect_team_intelligence }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = TRM_JTF_intelligence_ns
+				add_idea = TRM_JTF_intelligence_hasumi_ns
+			}
 		}
 	}
 
