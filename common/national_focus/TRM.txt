@@ -7722,34 +7722,6 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = TRN_Justice_Task_Force_on_leash
-		icon = GFX_focus_TRN_Ministry_of_Justice_on_leash
-		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
-		x = -2
-		y = 0
-		relative_position_id = TRN_second_trintiy
-		cost = 6
-
-		available = {
-			has_government = fascism
-			NOT = { has_completed_focus = TRN_support_justice_task_force }
-		}
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			add_popularity = { ideology = fascism popularity = 0.06 }
-			country_event = trinity_events.15 #정의실현부 정치의원
-			effect_tooltip = {
-				swap_ideas = {
-					add_idea = TRN_JTF_political_commissar_ns
-					remove_idea = TRM_justice_task_force
-				}
-			}
-		}
-	}
-
 	focus = { # 트리니티의 대의
 		id = TRN_cause_of_trinity
 		icon = GFX_focus_TRN_cause_of_trinity
@@ -7807,7 +7779,7 @@ focus_tree = {
 		id = TRN_The_nature_of_the_united_front
 		icon = GFX_focus_AFG_royal_guard
 		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
-		x = 5
+		x = -3
 		y = 1
 		relative_position_id = TRN_secret_meeting_with_Sisterhood
 		cost = 6
@@ -7992,7 +7964,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-			NOT = { has_completed_focus = TRN_Justice_Task_Force_on_leash }
 		}
 		ai_will_do = {
 
@@ -8285,7 +8256,7 @@ focus_tree = {
 		prerequisite = { 
 			focus = TRN_The_nature_of_the_united_front
 		}
-		x = 3
+		x = -1
 		y = 1
 		relative_position_id = TRN_The_nature_of_the_united_front
 		cost = 5
@@ -8333,7 +8304,7 @@ focus_tree = {
 		icon = GFX_focus_TRN_solving_social_problems
 		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
 		prerequisite = { focus = TRN_necessary_revenge }
-		x = -4
+		x = -8
 		y = 1
 		relative_position_id = TRN_secret_meeting_with_Sisterhood
 		cost = 6
@@ -8446,6 +8417,16 @@ focus_tree = {
 		}
 		completion_reward = {
 			country_event = { id = trinity_events.52 }
+			custom_effect_tooltip = one_of_the_options_tt
+			effect_tooltip = {
+				custom_effect_tooltip = nagisa_faction_G_join
+				set_country_flag = nagisa_faction_G_flag
+				TRM_nagisa_faction_modified = yes
+				add_to_variable = {
+					nagisa_faction_G = 5
+					tooltip = nagisa_faction_G_tt
+				}
+			}
 		}
 	}
 
@@ -8472,6 +8453,15 @@ focus_tree = {
 			set_temp_variable = { TRN_Honor_change = -5 }
 			TRN_add_Honor = yes
 			country_event = trinity_events.54
+			custom_effect_tooltip = tooltip_white_line
+			add_to_variable = {
+				nagisa_faction_G = -5
+				tooltip = nagisa_faction_G_tt
+			}
+			add_to_variable = {
+				nagisa_faction_I = -5
+				tooltip = nagisa_faction_I_tt
+			}
 		}
 	}
 
@@ -8570,6 +8560,32 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 정신에서의 혁명
+		id = TRN_revolution_in_the_spirit
+		icon = GFX_focus_generic_workers
+		prerequisite = { 
+			focus = TRN_limit_german_party 
+			focus = TRN_contact_SPD
+		}
+		x = 1
+		y = 1
+		relative_position_id = TRN_contact_SPD
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			activate_targeted_decision = { decision = TRN_social_edit_textbook_decision target = TRM }
+			activate_targeted_decision = { decision = TRN_social_causing_regional_conflict_decision target = TRM }
+			activate_targeted_decision = { decision = TRN_social_child_brainwashing_decision target = TRM }
+		}
+	}
+
 	focus = { # 교회 장악
 		id = TRN_take_over_the_church
 		icon = GFX_focus_TRN_take_over_the_church
@@ -8591,6 +8607,7 @@ focus_tree = {
 			country_event = { id = trinity_events.29 } # 문화 투쟁
 			unlock_decision_tooltip = TRN_infiltrate_church_unlock_tt_deicision
 			unlock_decision_tooltip = TRN_asset_seizure_decision
+			unlock_decision_tooltip = TRN_arrest_bonhoeffer_decision
 		}
 	}
 
@@ -8612,31 +8629,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			country_event = { id = trinity_events.31} # 독일 문화의 운명
-		}
-	}
-
-	focus = { # 정신에서의 혁명
-		id = TRN_revolution_in_the_spirit
-		icon = GFX_focus_generic_workers
-		prerequisite = { focus = TRN_take_over_the_church }
-		x = -1
-		y = 1
-		relative_position_id = TRN_take_over_the_church
-		cost = 5
-
-		available = {
-			has_government = fascism
-			custom_trigger_tooltip = {
-				tooltip = TRN_Kulturkampf_display_value_60_over_tt
-				check_variable = { TRN_Kulturkampf_display_value > 60 }
-			}
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			unlock_decision_tooltip = TRN_arrest_bonhoeffer_decision
 		}
 	}
 
@@ -9882,7 +9874,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_iron_woman # 나기사 독재로 이탈
-		icon = GFX_goal_TRN_Removing_doubt
+		icon = GFX_focus_TRN_kirifuji_nagisa
 		
 		prerequisite = { 
 			focus = TRN_mediator_among_factions
