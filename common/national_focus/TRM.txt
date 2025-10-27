@@ -9820,9 +9820,9 @@ focus_tree = {
 			else = { #NOT BEEN WORKED ON (Just Explain)
 				custom_override_tooltip = {
 					tooltip = {
-						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 						CHARACTER = TRN_Kirifuji_Nagisa
-						FOCUS = TRN_union_of_two_academies_in_progress_flag
+						FOCUS = TRN_start_of_the_eden_treaty_negotiations
 					}
 					always = no
 				}
@@ -11011,6 +11011,10 @@ focus_tree = {
 				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
 				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 			}
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0
+			}	
 		}
 
 		bypass = {
@@ -11028,6 +11032,9 @@ focus_tree = {
 
 		bypass_effect = {
 			add_stability = 0.05
+			add_dynamic_modifier = {
+				modifier = TRN_german_new_culture_order_modifier
+			}
 		}
 
 		ai_will_do = {
@@ -11035,7 +11042,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			TRM_nagisa_bop_low_decrease_effect = yes
 			add_stability = 0.05
+			add_dynamic_modifier = {
+				modifier = TRN_german_new_culture_order_modifier
+			}
 		}
 	}
 
@@ -11063,6 +11074,10 @@ focus_tree = {
 				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
 				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 			}
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.35
+			}	
 		}
 
 		bypass = {
@@ -11087,7 +11102,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			TRM_nagisa_bop_medium_decrease_effect = yes
 			add_stability = 0.05
+			add_to_variable = {
+				nagisa_faction_G = 5
+				tooltip = nagisa_faction_G_tt
+			}
 		}
 	}
 	
@@ -11141,6 +11161,10 @@ focus_tree = {
 
 		completion_reward = {
 			add_stability = 0.05
+			add_to_variable = {
+				nagisa_faction_D = 5
+				tooltip = nagisa_faction_D_tt
+			}
 		}
 	}
 
@@ -11256,7 +11280,10 @@ focus_tree = {
 		cost = 5
 
 		available = {
-
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.5
+			}	
 		}
 
 		bypass_effect = {
@@ -11268,7 +11295,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			TRM_nagisa_bop_high_decrease_effect = yes
 		}
 	}
 
@@ -11302,6 +11329,10 @@ focus_tree = {
 
 		completion_reward = {
 			add_war_support = 0.1
+			add_to_variable = {
+				nagisa_faction_J = -10
+				tooltip = nagisa_faction_J_tt
+			}
 		}
 	}
 
@@ -11327,7 +11358,33 @@ focus_tree = {
 
 		}
 		completion_reward = {
-
+			if = {
+				limit = {
+					has_country_flag = trn_nagisa_religion_hardline_flag
+				}
+				custom_effect_tooltip = trn_nagisa_religion_hardline_tt
+				add_to_variable = {
+					nagisa_faction_D = 10
+					tooltip = nagisa_faction_D_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = trn_nagisa_religion_moderate_flag
+				}
+				custom_effect_tooltip = trn_nagisa_religion_moderate_tt
+				add_to_variable = {
+					nagisa_faction_G = 5
+					tooltip = nagisa_faction_G_tt
+				}
+				add_to_variable = {
+					nagisa_faction_I = 5
+					tooltip = nagisa_faction_I_tt
+				}
+			}
+			else = {
+				custom_effect_tooltip = trn_nagisa_religion_null_tt
+			}
 		}
 	}
 
