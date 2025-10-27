@@ -10264,6 +10264,188 @@ TRN_Kulturkampf_cat = {
 }
 TRM_nagisa_balance_of_power_cat = {
 	
+	TRM_nagisa_bop_support_for_the_sisterhood_orphanage = {
+		icon = GFX_decision_trinity_city
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				has_political_power < 75
+				add = 0
+			}
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0.5
+				}	
+			}
+		}
+
+		cost = 25
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_medium_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_exposing_the_host_to_the_media = {
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_war = no
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				has_political_power < 100
+				add = 0
+			}
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0.5
+				}	
+			}
+		}
+
+		cost = 50
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_high_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_investing_budget_in_maintaining_security = {
+		icon = GFX_decision_TRN_justice
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_war = no
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 0 # CP를 너무 많이 써서, AI가 조절 못 할 것으로 보임
+		}
+
+		custom_cost_trigger = {
+			command_power > 24
+		}
+
+		custom_cost_text = decision_cost_CP_25
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_high_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_opening_a_social_gathering = {
+		icon = GFX_decision_generic_political_rally
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_government = democratic
+			num_of_civilian_factories > 1
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 4
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0
+				}	
+			}
+		}
+
+		days_remove = 14
+		days_re_enable = 60
+
+        modifier = { civilian_factory_use = 2 }
+
+		remove_effect = {
+			TRM_nagisa_bop_low_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_meeting_with_minor_factions = {
+		icon = GFX_decision_generic_political_address
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_government = democratic
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+
+		days_remove = 21
+		days_re_enable = 60
+
+        modifier = { 
+			political_power_factor = -0.15
+		}
+
+		remove_effect = {
+			TRM_nagisa_bop_low_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+
 }
 eden_treaty_negotiation_cat = {
 	eden_treaty_negotiation_debug_1 = {
@@ -10343,7 +10525,7 @@ eden_treaty_negotiation_cat = {
 
 		days_remove = 14
 		days_re_enable = 14
-		cost = 30
+		cost = 20
 
 		remove_effect = {
 			add_to_variable = {
@@ -10426,10 +10608,10 @@ eden_treaty_negotiation_cat = {
 
 		custom_cost_trigger = {
 			command_power > 24
-			has_army_experience > 14
+			#has_army_experience > 14
 		}
 
-		custom_cost_text = decision_cost_CP_25_ArmXP_15
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
 
 		remove_effect = {
 			add_to_variable = {
@@ -10446,7 +10628,7 @@ eden_treaty_negotiation_cat = {
 			}
 			hidden_effect = {
 				add_command_power = -25
-				army_experience = -15
+				#army_experience = -15
 			}
 		}
 	}
@@ -10464,7 +10646,7 @@ eden_treaty_negotiation_cat = {
 		}
 
 		ai_will_do = {
-			base = 8
+			base = 12
 			modifier = {
 				check_variable = { geh_discipline_var < 50 }
 				factor = 0.1
@@ -10476,7 +10658,7 @@ eden_treaty_negotiation_cat = {
 		}
 
 		days_remove = 28
-		days_re_enable = 30
+		days_re_enable = 21
 
 		remove_effect = {
 			add_to_variable = {
@@ -10489,7 +10671,7 @@ eden_treaty_negotiation_cat = {
 		complete_effect = {
 			custom_effect_tooltip = {
 				localization_key = tooltip_re_enable
-				TIME = "30"
+				TIME = "21"
 			}
 			add_to_variable = {
 				geh_discipline_var = -10
@@ -10518,7 +10700,7 @@ eden_treaty_negotiation_cat = {
 		}
 
 		days_remove = 14
-		days_re_enable = 7
+		days_re_enable = 14
 		cost = 30
 
 		remove_effect = {
@@ -10532,7 +10714,7 @@ eden_treaty_negotiation_cat = {
 		complete_effect = {
 			custom_effect_tooltip = {
 				localization_key = tooltip_re_enable
-				TIME = "7"
+				TIME = "14"
 			}
 		}
 	}
@@ -10692,7 +10874,7 @@ eden_treaty_negotiation_cat = {
 
 		days_remove = 14
 		days_re_enable = 14
-		cost = 30
+		cost = 20
 
 		remove_effect = {
 			add_to_variable = {
@@ -10771,14 +10953,14 @@ eden_treaty_negotiation_cat = {
 		}
 
 		days_remove = 10
-		days_re_enable = 45
+		days_re_enable = 30
 
 		custom_cost_trigger = {
 			command_power > 24
-			has_army_experience > 14
+			#has_army_experience > 14
 		}
 
-		custom_cost_text = decision_cost_CP_25_ArmXP_15
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
 
 		remove_effect = {
 			add_to_variable = {
@@ -10791,11 +10973,11 @@ eden_treaty_negotiation_cat = {
 		complete_effect = {
 			custom_effect_tooltip = {
 				localization_key = tooltip_re_enable
-				TIME = "45"
+				TIME = "30"
 			}
 			hidden_effect = {
 				add_command_power = -25
-				army_experience = -15
+				#army_experience = -15
 			}
 		}
 	}
@@ -10872,6 +11054,8 @@ eden_treaty_negotiation_cat = {
 		
 		activation = {
 			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
 		}
 
 		visible = {
@@ -10922,6 +11106,8 @@ eden_treaty_negotiation_cat = {
 		
 		activation = {
 			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
 		}
 		
 		visible = {
@@ -10972,6 +11158,8 @@ eden_treaty_negotiation_cat = {
 		
 		activation = {
 			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
 		}
 		
 		visible = {
@@ -11001,6 +11189,116 @@ eden_treaty_negotiation_cat = {
 		}
 	}
 
+	eden_treaty_negotiation_remove_host = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_host
+			num_of_civilian_factories > 0
+		}
+
+		ai_will_do = {
+			base = 200
+		}
+
+		days_remove = 14
+
+        modifier = { civilian_factory_use = 1 }
+
+		remove_effect = {
+
+		}
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_host
+				days = 14
+			}
+		}
+	}
+
+	eden_treaty_negotiation_remove_sardine_pie = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_sardine_pie
+		}
+
+		ai_will_do = {
+			base = 200
+			modifier = {
+				has_political_power < 50
+				add = 0
+			}
+		}
+
+		cost = 10
+
+		days_remove = 14
+
+		remove_effect = {
+
+		}
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_sardine_pie
+				days = 14
+			}
+		}
+	}
+
+	eden_treaty_negotiation_remove_angry_JTF = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_angry_JTF
+			num_of_civilian_factories > 2
+		}
+
+		ai_will_do = {
+			base = 200
+		}
+
+		days_remove = 14
+
+        modifier = { civilian_factory_use = 3 }
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_angry_JTF
+				days = 14
+			}
+		}
+	}
+
 	## 짬통 디시전
 
 	eden_treaty_negotiation_generic_propaganda = {
@@ -11020,7 +11318,7 @@ eden_treaty_negotiation_cat = {
 		}
 
 		ai_will_do = {
-			base = 10
+			base = 20
 		}
 
 		days_remove = 21
