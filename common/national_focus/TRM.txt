@@ -9188,7 +9188,7 @@ focus_tree = {
 		id = TRN_repromote_eden_treaty
 		icon = GFX_goal_GEH_ako_sorasaki_administrative_officer
 		prerequisite = { focus = TRN_nagisa_constitution_discussion }
-		x = 5
+		x = 6
 		y = 1
 
 		relative_position_id = TRN_nagisa_constitution_discussion
@@ -9282,6 +9282,51 @@ focus_tree = {
 			add_intel = {
 				target = GEM
 				civilian_intel = 10
+				army_intel = 10
+			}
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = TRN_hanuma_line
+		icon = GFX_focus_attack_GEH
+		prerequisite = { focus = TRN_capriccioso_ruling_the_sora }
+		x = -1
+		y = 1
+
+		relative_position_id = TRN_capriccioso_ruling_the_sora
+
+		cost = 4
+
+		available = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+			}
+			country_exists = GEM
+			country_exists = GEH
+			has_war = no
+			has_facility_specialization = specialization_land
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			add_intel = {
+				target = GEM
+				army_intel = 10
+			}
+			complete_special_project = sp:sp_land_stronghold_network
+			GEH = {
+				complete_special_project = sp:sp_land_stronghold_network
+				country_event = { id = trinity_events_nagisa_diplomacy.11 }
 			}
 		}
 	}
@@ -9316,7 +9361,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			GEH = {
+				add_war_support = 0.1
+				add_to_variable = {
+					geh_discipline_var = 10
+					tooltip = geh_discipline_system_tt
+				}
+				geh_discipline_system_setting_effect = yes
+			}
 		}
 	}
 
@@ -9750,14 +9802,30 @@ focus_tree = {
 
 		available = {
 			NOT = { country_exists = GEM }
-			custom_override_tooltip = {
-				tooltip = {
-					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-					CHARACTER = TRN_Kirifuji_Nagisa
-					FOCUS = TRN_start_of_the_eden_treaty_negotiations
-					FLAG_DAYS = [?TRN_union_of_two_academies_in_progress_flag:days]
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = TRN_union_of_two_academies_in_progress_flag
 				}
-				always = no
+				set_temp_variable = { temp_focus_days = 5 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = TRN_Kirifuji_Nagisa
+						FLAG_DAYS = [?TRN_union_of_two_academies_in_progress_flag:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GEH_focus_can_only_be_completed_by_focus_tt
+						CHARACTER = TRN_Kirifuji_Nagisa
+						FOCUS = TRN_union_of_two_academies_in_progress_flag
+					}
+					always = no
+				}
 			}
 		}
 
