@@ -9932,7 +9932,8 @@ focus_tree = {
 				character = TRN_Kirifuji_Nagisa
 				ruling_only = yes
 			}
-			has_country_flag = nagisa_faction_D_flag
+			# 공의회 이벤트 -> 호스트에 권한 제한
+			has_country_flag = trn_nagisa_democracy_flag
 		}
 
 		ai_will_do = {
@@ -9967,6 +9968,8 @@ focus_tree = {
 				character = TRN_Kirifuji_Nagisa
 				ruling_only = yes
 			}
+			# 공의회 이벤트 -> 호스트에 권한 부여
+			# has_country_flag = trn_nagisa_autocracy_flag 일단은 주석
 		}
 
 		ai_will_do = {
@@ -11229,31 +11232,10 @@ focus_tree = {
 		cost = 6
 
 		available = {
-			OR = {
-				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
-				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
-			}
 			power_balance_value = {
 				id = TRM_nagisa_power_balance
 				value > 0.35
 			}	
-		}
-
-		bypass = {
-			NOT = {
-				has_dynamic_modifier = {
-					modifier = TRM_appeasement_germany_modifier
-				}
-			}
-			NOT = {
-				has_dynamic_modifier = {
-					modifier = TRM_trinity_social_issues_modifier
-				}
-			}
-		}
-
-		bypass_effect = {
-			add_stability = 0.05
 		}
 
 		ai_will_do = {
@@ -11276,6 +11258,24 @@ focus_tree = {
 				tooltip = nagisa_faction_C_tt
 			}
 			TRM_nagisa_faction_modified = yes
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				new_culture_order_economy_cost_factor = -0.1
+				tooltip = economy_cost_factor_tt
+			}
+			add_to_variable = {
+				new_culture_order_mobilization_laws_cost_factor = -0.1
+				tooltip = mobilization_laws_cost_factor_tt
+			}
+			add_to_variable = {
+				new_culture_order_trade_laws_cost_factor = -0.1
+				tooltip = trade_laws_cost_factor_tt
+			}
+			add_to_variable = {
+				new_culture_order_political_advisor_cost_factor = 0.05
+				tooltip = political_advisor_cost_factor_tt
+			}
 		}
 	}
 	
@@ -11306,23 +11306,6 @@ focus_tree = {
 			}
 		}
 
-		bypass = {
-			NOT = {
-				has_dynamic_modifier = {
-					modifier = TRM_appeasement_germany_modifier
-				}
-			}
-			NOT = {
-				has_dynamic_modifier = {
-					modifier = TRM_trinity_social_issues_modifier
-				}
-			}
-		}
-
-		bypass_effect = {
-			add_stability = 0.05
-		}
-
 		ai_will_do = {
 
 		}
@@ -11342,6 +11325,12 @@ focus_tree = {
 				tooltip = nagisa_faction_C_tt
 			}
 			TRM_nagisa_faction_modified = yes
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				new_culture_order_industry_repair_factor = 0.1
+				tooltip = industry_repair_factor_tt
+			}
 		}
 	}
 
@@ -11373,7 +11362,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				TRN_new_culture_order_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				TRN_new_culture_order_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
 		}
 	}
 
@@ -11393,7 +11390,10 @@ focus_tree = {
 		cost = 5
 
 		available = {
-
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.25
+			}	
 		}
 
 		bypass_effect = {
@@ -11405,7 +11405,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			TRM_nagisa_bop_low_decrease_effect = yes
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				TRN_new_culture_order_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				TRN_new_culture_order_experience_loss_factor = -0.05
+				tooltip = experience_loss_factor_tt
+			}
 		}
 	}
 	
@@ -11437,7 +11447,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				TRN_new_culture_order_research_speed_factor = 0.05
+				tooltip = research_speed_factor_tt
+			}
+			add_to_variable = {
+				TRN_new_culture_order_conscription_factor = 0.06
+				tooltip = conscription_factor_tt
+			}
 		}
 	}
 	
@@ -11473,6 +11491,19 @@ focus_tree = {
 
 		completion_reward = {
 			TRM_nagisa_bop_high_decrease_effect = yes
+			custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+			add_to_variable = {
+				TRN_new_culture_order_weekly_casualties_war_support = 0.003
+				tooltip =weekly_casualties_war_support_tt
+			}
+			add_to_variable = {
+				TRN_new_culture_order_monthly_population = 0.2
+				tooltip = monthly_population_tt
+			}
+			add_to_variable = {
+				new_culture_order_industry_repair_factor = 0.03
+				tooltip = industry_repair_factor_tt
+			}
 		}
 	}
 
@@ -11510,6 +11541,11 @@ focus_tree = {
 				nagisa_faction_J = -10
 				tooltip = nagisa_faction_J_tt
 			}
+			add_to_variable = {
+				nagisa_faction_A = 10
+				tooltip = nagisa_faction_A_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -11582,7 +11618,10 @@ focus_tree = {
 		cost = 6
 
 		available = {
-
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.25
+			}	
 		}
 
 		bypass = {
@@ -11607,7 +11646,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			TRM_nagisa_bop_medium_decrease_effect = yes
+			add_stability = 0.05
+			add_political_power = 100
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_political_advisor
 		}
 	}
 
