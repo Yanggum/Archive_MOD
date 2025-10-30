@@ -9203,6 +9203,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			has_country_leader = {
 				character = TRN_Kirifuji_Nagisa
 				ruling_only = yes
@@ -9268,6 +9269,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			country_exists = GEH
 			NOT = { has_war_with = GEH }
 			GEH = { is_puppet = no }
@@ -9307,6 +9309,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			OR = {
 				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
 				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
@@ -9350,6 +9353,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			country_exists = GEM
 			NOT = { has_war_with = GEM }
 			GEM = { is_puppet = no }
@@ -9396,6 +9400,7 @@ focus_tree = {
 		cost = 3
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			GEH = { has_war_with = GEM }
 			NOT = { has_war_with = GEH }
 			has_equipment = { infantry_equipment > 999 }
@@ -9450,6 +9455,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
 			country_exists = GEH
 			NOT = { has_war_with = GEH }
 		}
@@ -9727,10 +9733,15 @@ focus_tree = {
 		id = TRN_start_of_the_eden_treaty_negotiations
 		icon = GFX_focus_GEH_sword_defending_gehenna
 
+		prerequisite = { focus = TRN_mediator_among_factions }
 		prerequisite = { focus = TRN_repromote_eden_treaty }
 
-		x = 3
-		y = 1
+		mutually_exclusive = {
+			focus = TRN_eventually_happen
+		}
+
+		x = -3
+		y = 3
 
 		relative_position_id = TRN_repromote_eden_treaty
 
@@ -9766,12 +9777,12 @@ focus_tree = {
 		id = TRN_nagisa_support_for_the_prefect_team_intelligence
 		icon = GFX_focus_GEH_national_defense_commissioner_sorasaki_hina
 
-		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations }
+		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations focus = TRN_eventually_happen }
 
-		x = 4
-		y = 2
+		x = -1
+		y = 1
 
-		relative_position_id = TRN_repromote_eden_treaty
+		relative_position_id = TRN_start_of_the_eden_treaty_negotiations
 
 		cost = 5
 
@@ -9802,10 +9813,10 @@ focus_tree = {
 
 		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations }
 
-		x = 3
-		y = 3
+		x = 0
+		y = 2
 
-		relative_position_id = TRN_repromote_eden_treaty
+		relative_position_id = TRN_start_of_the_eden_treaty_negotiations
 
 		cost = 10
 
@@ -9921,6 +9932,82 @@ focus_tree = {
 		}
 	}
 
+
+	focus = {
+		id = TRN_eventually_happen
+		icon = GFX_focus_TRN_Kyrie_eleison
+		x = 1
+		y = 1
+		relative_position_id = TRN_mediator_among_factions
+		cost = 5
+
+		mutually_exclusive = {
+			focus = TRN_start_of_the_eden_treaty_negotiations
+		}
+
+		available = {
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+			GEH = { is_puppet = no }
+		}
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		prerequisite = { focus = TRN_mediator_among_factions }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_eventually_happen_tt
+			hidden_effect = {
+				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.31 } }
+			}
+		}
+	}
+	focus = { # 예방 전쟁
+		id = TRN_nagi_preventive_war
+		icon = GFX_focus_GEH_expulsion_of_pandemonium
+
+		prerequisite = { focus = TRN_eventually_happen }
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_eventually_happen
+
+		cost = 10
+
+		available = {
+			has_army_manpower = { size > 249999 }
+			has_war_support > 0.4
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+		will_lead_to_war_with = GEH
+		will_lead_to_war_with = GEM
+		completion_reward = {
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = GEH
+				type = annex_everything
+			}
+		}
+	}
+
 	focus = {
 		id = TRN_safeguarding_the_ideal_of_factional_democracy # 민주 나기사
 		icon = GFX_focus_BEL_belgian_gates 
@@ -9933,7 +10020,7 @@ focus_tree = {
 			focus = TRN_iron_woman
 		}
 
-		x = -1
+		x = -2
 		y = 4
 
 		relative_position_id = TRN_successor_to_the_first_trinity
@@ -9969,7 +10056,7 @@ focus_tree = {
 			focus = TRN_safeguarding_the_ideal_of_factional_democracy
 		}
 
-		x = 5
+		x = 0
 		y = 4
 
 		relative_position_id = TRN_successor_to_the_first_trinity
@@ -9994,1179 +10081,6 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_trinity_politics # 나기사의 권위주의
-		icon = GFX_goal_TRN_steel_of_academy
-		
-		prerequisite = { 
-			focus = TRN_iron_woman
-		}
-
-		mutually_exclusive = {
-			focus = TRN_alliance_with_germany
-		}
-
-		x = 0
-		y = 1
-
-		relative_position_id = TRN_iron_woman
-
-		cost = 6
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_alliance_with_germany # 나기사의 더 급진화
-		icon = GFX_focus_GER_autarky_ambitions
-		
-		prerequisite = { 
-			focus = TRN_iron_woman
-		}
-
-		mutually_exclusive = {
-			focus = TRN_trinity_politics
-		}
-
-		x = 5
-		y = 1
-
-		relative_position_id = TRN_iron_woman
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			TRM_nagisa_bop_low_increase_effect = yes
-		}
-	}
-
-	focus = {
-		id = TRN_kurt_schumacher_president
-		icon = GFX_goal_unknown
-		
-		prerequisite = { 
-			focus = TRN_alliance_with_germany
-		}
-
-		mutually_exclusive = {
-			focus = TRN_almar_schacht_president
-			focus = TRN_franz_von_papen_president
-		}
-
-		x = -2
-		y = 1
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			TRM_nagisa_bop_very_low_increase_effect = yes
-
-			custom_effect_tooltip = nagisa_faction_D_exit
-			clr_country_flag = nagisa_faction_D_flag
-			TRM_nagisa_faction_modified = yes
-			
-			custom_effect_tooltip = nagisa_faction_G_join
-			set_country_flag = nagisa_faction_G_flag
-			TRM_nagisa_faction_modified = yes
-
-			
-			add_to_variable = {
-				nagisa_faction_G = 5
-				tooltip = nagisa_faction_G_tt
-			}
-			add_to_variable = {
-				nagisa_faction_D = -3
-				tooltip = nagisa_faction_D_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = -2
-				tooltip = nagisa_faction_C_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_almar_schacht_president
-		icon = GFX_goal_unknown
-		
-		prerequisite = { 
-			focus = TRN_alliance_with_germany
-		}
-
-		mutually_exclusive = {
-			focus = TRN_kurt_schumacher_president
-			focus = TRN_franz_von_papen_president
-		}
-
-		x = 0
-		y = 1
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_political_power = 100
-		}
-	}
-
-	focus = {
-		id = TRN_franz_von_papen_president
-		icon = GFX_goal_unknown
-		
-		prerequisite = { 
-			focus = TRN_alliance_with_germany
-		}
-
-		mutually_exclusive = {
-			focus = TRN_almar_schacht_president
-			focus = TRN_kurt_schumacher_president
-		}
-
-		x = 2
-		y = 1
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			TRM_nagisa_bop_very_low_increase_effect = yes
-
-			custom_effect_tooltip = nagisa_faction_D_exit
-			clr_country_flag = nagisa_faction_D_flag
-			TRM_nagisa_faction_modified = yes
-
-			custom_effect_tooltip = nagisa_faction_B_exit
-			clr_country_flag = nagisa_faction_B_flag
-			TRM_nagisa_faction_modified = yes
-			
-			custom_effect_tooltip = nagisa_faction_I_join
-			set_country_flag = nagisa_faction_I_flag
-			TRM_nagisa_faction_modified = yes
-
-			
-			add_to_variable = {
-				nagisa_faction_I = 5
-				tooltip = nagisa_faction_I_tt
-			}
-			add_to_variable = {
-				nagisa_faction_B = -1
-				tooltip = nagisa_faction_B_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = -2
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_J = -2
-				tooltip = nagisa_faction_J_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_epic_for_the_fallen
-		icon = GFX_focus_GER_hegemony_over_europe
-		
-		prerequisite = { 
-			focus = TRN_kurt_schumacher_president
-		}
-
-		x = -1
-		y = 1
-
-		relative_position_id = TRN_kurt_schumacher_president
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_german_technocrat
-		icon = GFX_focus_generic_industrialists
-		
-		prerequisite = { 
-			focus = TRN_almar_schacht_president
-			focus = TRN_franz_von_papen_president
-		}
-
-		x = 2
-		y = 2
-
-		relative_position_id = TRN_franz_von_papen_president
-
-		cost = 6
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_national_industrialization
-		icon = GFX_focus_GER_vereinigte_stahlwerke
-		
-		prerequisite = { 
-			focus = TRN_almar_schacht_president
-			focus = TRN_kurt_schumacher_president
-			focus = TRN_franz_von_papen_president
-		}
-
-		mutually_exclusive = {
-			focus = TRN_bread_and_circuses
-		}
-
-		x = 2
-		y = 2
-
-		relative_position_id = TRN_almar_schacht_president
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_bread_and_circuses
-		icon = GFX_focus_generic_population_growth
-		
-		prerequisite = { 
-			focus = TRN_almar_schacht_president
-			focus = TRN_kurt_schumacher_president
-		}
-
-		mutually_exclusive = {
-			focus = TRN_national_industrialization
-		}
-
-		x = 0
-		y = 2
-
-		relative_position_id = TRN_almar_schacht_president
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_focus_on_domestic_economic_issues
-		icon = GFX_focus_generic_economic_recovery
-		
-		prerequisite = { 
-			focus = TRN_almar_schacht_president
-			focus = TRN_kurt_schumacher_president
-		}
-
-		x = -2
-		y = 2
-
-		relative_position_id = TRN_almar_schacht_president
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_divide_and_rule
-		icon = GFX_focus_generic_annex_country
-		
-		prerequisite = { 
-			focus = TRN_franz_von_papen_president
-			focus = TRN_almar_schacht_president
-			focus = TRN_kurt_schumacher_president
-		}
-
-		x = 3
-		y = 1
-
-		relative_position_id = TRN_almar_schacht_president
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_establishment_of_ministry_of_cultural_integration
-		icon = GFX_goal_socialist_lone_warrior
-		
-		prerequisite = { 
-			focus = TRN_bread_and_circuses
-			focus = TRN_focus_on_domestic_economic_issues
-		}
-
-		mutually_exclusive = {
-			focus = TRN_dissolution_of_black_red_gold_flag_corp
-			focus = TRN_restriction_on_german_political_activity
-		}
-
-		x = -4
-		y = 4
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-			has_country_flag = nagisa_faction_G_flag
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_G = 5
-				tooltip = nagisa_faction_G_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = -2
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_I = -3
-				tooltip = nagisa_faction_I_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_restriction_on_german_political_activity
-		icon = GFX_focus_ITA_banda_carita
-		
-		prerequisite = { 
-			focus = TRN_national_industrialization
-			focus = TRN_bread_and_circuses
-			focus = TRN_focus_on_domestic_economic_issues
-		}
-
-		mutually_exclusive = {
-			focus = TRN_dissolution_of_black_red_gold_flag_corp
-			focus = TRN_establishment_of_ministry_of_cultural_integration
-		}
-
-		x = 0
-		y = 4
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-			NOT = {
-				has_country_flag = nagisa_faction_G_flag
-				has_country_flag = nagisa_faction_I_flag
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			set_temp_variable = {
-				temp_A = -3
-			}
-			add_to_temp_variable = {
-				temp_A = nagisa_faction_G
-			}
-			add_to_temp_variable = {
-				temp_A = nagisa_faction_I
-			}
-			add_to_temp_variable = {
-				temp_A = nagisa_faction_H
-			}
-			add_to_temp_variable = {
-				temp_A = nagisa_faction_J
-			}
-			add_to_variable = {
-				nagisa_faction_A = temp_A
-				tooltip = nagisa_faction_A_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = 3
-				tooltip = nagisa_faction_C_tt
-			}
-
-			set_temp_variable = {
-				temp_G = nagisa_faction_G
-			}
-			multiply_temp_variable = {
-				temp_G = -1
-			}
-			add_to_variable = {
-				nagisa_faction_G = temp_G
-				tooltip = nagisa_faction_G_tt
-			}
-
-			set_temp_variable = {
-				temp_I = nagisa_faction_I
-			}
-			multiply_temp_variable = {
-				temp_I = -1
-			}
-			add_to_variable = {
-				nagisa_faction_I = temp_I
-				tooltip = nagisa_faction_I_tt
-			}
-
-			set_temp_variable = {
-				temp_H = nagisa_faction_H
-			}
-			multiply_temp_variable = {
-				temp_H = -1
-			}
-			add_to_variable = {
-				nagisa_faction_H = temp_H
-				tooltip = nagisa_faction_H_tt
-			}
-
-			set_temp_variable = {
-				temp_J = nagisa_faction_J
-			}
-			multiply_temp_variable = {
-				temp_J = -1
-			}
-			add_to_variable = {
-				nagisa_faction_J = temp_J
-				tooltip = nagisa_faction_J_tt
-			}
-
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_dissolution_of_black_red_gold_flag_corp
-		icon = GFX_focus_TRN_absorb_the_reichsbanner_schwarz_rot_gold
-		
-		prerequisite = { 
-			focus = TRN_national_industrialization
-			focus = TRN_bread_and_circuses
-			focus = TRN_focus_on_domestic_economic_issues
-		}
-
-		mutually_exclusive = {
-			focus = TRN_restriction_on_german_political_activity
-			focus = TRN_establishment_of_ministry_of_cultural_integration
-		}
-
-		x = 5
-		y = 4
-
-		relative_position_id = TRN_alliance_with_germany
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-			NOT = { has_country_flag = nagisa_faction_G_flag }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_G = -5
-				tooltip = nagisa_faction_G_tt
-			}
-			add_to_variable = {
-				nagisa_faction_H = -2
-				tooltip = nagisa_faction_H_tt
-			}
-			add_to_variable = {
-				nagisa_faction_A = 4
-				tooltip = nagisa_faction_A_tt
-			}
-			add_to_variable = {
-				nagisa_faction_I = 3
-				tooltip = nagisa_faction_I_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_agreement_with_soviet_union
-		icon = GFX_focus_SOV_socialism_in_one_country
-		
-		prerequisite = { 
-			focus = TRN_establishment_of_ministry_of_cultural_integration
-		}
-
-		x = -3
-		y = 1
-
-		relative_position_id = TRN_establishment_of_ministry_of_cultural_integration
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_industrial_cooperation
-		icon = GFX_goal_generic_soviet_construction
-		
-		prerequisite = { 
-			focus = TRN_agreement_with_soviet_union
-		}
-
-		x = 0
-		y = 1
-
-		relative_position_id = TRN_agreement_with_soviet_union
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_focus_on_populism
-		icon = GFX_focus_PER_stage_mass_protests
-		
-		prerequisite = { 
-			focus = TRN_establishment_of_ministry_of_cultural_integration
-		}
-
-		mutually_exclusive = {
-			focus = TRN_introduction_of_socialist_economy
-		}
-
-		x = 1
-		y = 1
-
-		relative_position_id = TRN_establishment_of_ministry_of_cultural_integration
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_A = 5
-				tooltip = nagisa_faction_A_tt
-			}
-			add_to_variable = {
-				nagisa_faction_G = 3
-				tooltip = nagisa_faction_G_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = -5
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_E = -1
-				tooltip = nagisa_faction_E_tt
-			}
-			add_to_variable = {
-				nagisa_faction_J = -1
-				tooltip = nagisa_faction_J_tt
-			}
-			add_to_variable = {
-				nagisa_faction_I = -1
-				tooltip = nagisa_faction_I_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_introduction_of_socialist_economy
-		icon = GFX_focus_generic_communist_industry
-		
-		prerequisite = { 
-			focus = TRN_establishment_of_ministry_of_cultural_integration
-		}
-
-		mutually_exclusive = {
-			focus = TRN_focus_on_populism
-		}
-
-		x = -1
-		y = 1
-
-		relative_position_id = TRN_establishment_of_ministry_of_cultural_integration
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_G = nagisa_faction_H
-				tooltip = nagisa_faction_G_tt
-			}
-			set_temp_variable = {
-				temp_H = nagisa_faction_H
-			}
-			multiply_temp_variable = {
-				temp_H = -1
-			}
-			add_to_variable = {
-				nagisa_faction_H = temp_H
-				tooltip = nagisa_faction_H_tt
-			}
-			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_imperial_host_position
-		icon = GFX_focus_TRN_necessary_revenge
-		
-		prerequisite = { 
-			focus = TRN_introduction_of_socialist_economy
-			focus = TRN_focus_on_populism
-		}
-
-		x = 1
-		y = 2
-
-		relative_position_id = TRN_introduction_of_socialist_economy
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_cult_of_nagisa
-		icon = GFX_focus_TRN_tea_party
-		
-		prerequisite = { 
-			focus = TRN_restriction_on_german_political_activity
-		}
-
-		mutually_exclusive = {
-			focus = TRN_architect_of_trinity
-		}
-
-		x = -1
-		y = 1
-
-		relative_position_id = TRN_restriction_on_german_political_activity
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_A = -2
-				tooltip = nagisa_faction_A_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = 1
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_D = 1
-				tooltip = nagisa_faction_D_tt
-			}
-		}
-	}
-
-	focus = {
-		id = TRN_architect_of_trinity
-		icon = GFX_focus_TRN_eden_accord
-		
-		prerequisite = { 
-			focus = TRN_restriction_on_german_political_activity
-		}
-
-		mutually_exclusive = {
-			focus = TRN_cult_of_nagisa
-		}
-
-		x = 1
-		y = 1
-
-		relative_position_id = TRN_restriction_on_german_political_activity
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_alliance_with_pater
-		icon = GFX_focus_TRN_Kyrie_eleison
-		
-		prerequisite = { 
-			focus = TRN_cult_of_nagisa
-		}
-
-		mutually_exclusive = {
-			focus = TRN_restoration_of_supplementary_lessons_department
-		}
-
-		x = 0
-		y = 2
-
-		relative_position_id = TRN_cult_of_nagisa
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = nagisa_faction_D_exit
-			clr_country_flag = nagisa_faction_D_flag
-			TRM_nagisa_faction_modified = yes
-
-			custom_effect_tooltip = nagisa_faction_B_exit
-			clr_country_flag = nagisa_faction_B_flag
-			TRM_nagisa_faction_modified = yes
-			
-			custom_effect_tooltip = nagisa_faction_C_join
-			set_country_flag = nagisa_faction_C_flag
-			TRM_nagisa_faction_modified = yes
-			add_to_variable = {
-				nagisa_faction_A = -5
-				tooltip = nagisa_faction_A_tt
-			}
-			add_to_variable = {
-				nagisa_faction_C = 5
-				tooltip = nagisa_faction_C_tt
-			}
-		}
-	}
-
-	focus = {
-		id = TRN_restoration_of_supplementary_lessons_department
-		icon = GFX_focus_TRN_student_solidarity_no_icon
-		
-		prerequisite = { 
-			focus = TRN_architect_of_trinity
-		}
-
-		mutually_exclusive = {
-			focus = TRN_alliance_with_pater
-		}
-
-		x = 0
-		y = 2
-
-		relative_position_id = TRN_architect_of_trinity
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_creation_of_angel_brigade
-		icon = GFX_focus_TRN_national_guard
-		
-		prerequisite = { 
-			focus = TRN_dissolution_of_black_red_gold_flag_corp
-			focus = TRN_restriction_on_german_political_activity
-		}
-
-		x = -2
-		y = 2
-
-		relative_position_id = TRN_dissolution_of_black_red_gold_flag_corp
-
-		cost = 6
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			add_ideas = TRN_angel_brigade_force_ns
-
-			hidden_effect = {
-				set_technology = {
-					trinity_white_uniform_security_militias = 1
-					popup = no
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = TRN_trinity_assault_battalion
-		icon = GFX_focus_ITA_blackshirts
-		
-		prerequisite = { 
-			focus = TRN_creation_of_angel_brigade
-		}
-
-		x = -0
-		y = 1
-
-		relative_position_id = TRN_creation_of_angel_brigade
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = ITA_battaglioni_d_assalto_tt
-			hidden_effect = {
-				set_technology = { blackshirt_assault_battalion_tech = 1 popup = no }
-			}
-		}
-	}
-
-	focus = {
-		id = TRN_cooperative_parliamentarism
-		icon = GFX_focus_chi_mission_to_the_TRN
-		
-		prerequisite = { 
-			focus = TRN_dissolution_of_black_red_gold_flag_corp
-		}
-
-		x = 1
-		y = 1
-
-		relative_position_id = TRN_dissolution_of_black_red_gold_flag_corp
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_appointment_of_german_collaborators
-		icon = GFX_focus_TRN_alliance_with_the_germany
-		
-		prerequisite = { 
-			focus = TRN_dissolution_of_black_red_gold_flag_corp
-		}
-
-		x = -1
-		y = 1
-
-		relative_position_id = TRN_dissolution_of_black_red_gold_flag_corp
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = TRN_establishment_of_eden_system
-		icon = GFX_goal_TRN_nagisa_gyehek
-		
-		prerequisite = { 
-			focus = TRN_cooperative_parliamentarism
-		}
-		prerequisite = { 
-			focus = TRN_appointment_of_german_collaborators
-		}
-
-		x = 0
-		y = 3
-
-		relative_position_id = TRN_dissolution_of_black_red_gold_flag_corp
-
-		cost = 5
-
-		available = {
-			has_country_leader = {
-				character = TRN_Kirifuji_Nagisa
-				ruling_only = yes
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-		}
-	}
-
-	focus = {
 		id = TRN_coexistence_with_germans
 		icon = GFX_goal_HEU_representative_of_the_germanic
 		
@@ -11174,7 +10088,7 @@ focus_tree = {
 			focus = TRN_nagisa_constitution_discussion
 		}
 
-		x = -4
+		x = -5
 		y = 1
 
 		relative_position_id = TRN_nagisa_constitution_discussion
@@ -11544,11 +10458,11 @@ focus_tree = {
 		completion_reward = {
 			add_war_support = 0.1
 			add_to_variable = {
-				nagisa_faction_J = -10
+				nagisa_faction_J = -2
 				tooltip = nagisa_faction_J_tt
 			}
 			add_to_variable = {
-				nagisa_faction_A = 10
+				nagisa_faction_A = 2
 				tooltip = nagisa_faction_A_tt
 			}
 			TRM_nagisa_faction_modified = yes
@@ -11562,7 +10476,7 @@ focus_tree = {
 		prerequisite = { focus = TRN_coexistence_with_germans }
 		prerequisite = { focus = TRN_successor_to_the_first_trinity }
 
-		x = 2
+		x = 4
 		y = 1
 
 		relative_position_id = TRN_coexistence_with_germans
@@ -11667,7 +10581,7 @@ focus_tree = {
 
 		prerequisite = { focus = TRN_successor_to_the_first_trinity }
 
-		x = 2
+		x = -3
 		y = 1
 
 		relative_position_id = TRN_successor_to_the_first_trinity
@@ -11709,7 +10623,7 @@ focus_tree = {
 
 		prerequisite = { focus = TRN_nagisa_justice_task_force }
 
-		x = 2
+		x = -2
 		y = 2
 
 		relative_position_id = TRN_successor_to_the_first_trinity

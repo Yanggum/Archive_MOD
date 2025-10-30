@@ -77,6 +77,7 @@ eden_treaty_negotiation_winner_check_system = {
 			GEH = {
 				give_guarantee = TRM
 				give_military_access = TRM
+				set_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag
 			}
 		}
 	}
@@ -99,6 +100,60 @@ eden_treaty_negotiation_winner_check_system = {
 			TRM = { country_event = { id = trinity_events_nagisa_diplomacy.4 } }
 			GEH = { country_event = { id = trinity_events_nagisa_diplomacy.5 } }
 			GEM = { country_event = { id = trinity_events_nagisa_diplomacy.6 } }
+		}
+	}
+}
+eden_treaty_negotiation_winner_check_system_ALT = {
+	if = {
+		limit = {
+			check_variable = { global.eden_point_array^0 > 74 } # 75 이상이어야 합니다.
+		}
+		set_temp_variable = {
+			temp_eden_point_array_0 = global.eden_point_array^0 # 트리니티-선도부 변수
+		}
+		set_temp_variable = {
+			temp_eden_point_array_1 = global.eden_point_array^1 # 판데모니움 변수
+		}
+		subtract_from_temp_variable = { temp_eden_point_array_0 = temp_eden_point_array_1 } # 트선-판데모니움으로 차이를 계산 (15 이상이면 트선 승리)
+		if = {
+			limit = {
+				check_variable = { temp_eden_point_array_0 > 14 } # 15 이상이면 승리
+			}
+			set_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag
+			TRM = { country_event = { id = trinity_events_nagisa_diplomacy.38 } }
+			GEH = { country_event = { id = trinity_events_nagisa_diplomacy.39 } }
+			GEM = { country_event = { id = trinity_events_nagisa_diplomacy.40 } }
+			TRM = {
+				diplomatic_relation = {
+					country = GEH
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+			GEH = {
+				set_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { global.eden_point_array^1 > 74 } # 75 이상이어야 합니다.
+		}
+		set_temp_variable = {
+			temp_eden_point_array_0 = global.eden_point_array^0 # 트리니티-선도부 변수
+		}
+		set_temp_variable = {
+			temp_eden_point_array_1 = global.eden_point_array^1 # 판데모니움 변수
+		}
+		subtract_from_temp_variable = { temp_eden_point_array_1 = temp_eden_point_array_0 } # 판데모니움-트선으로 차이를 계산 (15 이상이면 트선 승리)
+		if = {
+			limit = {
+				check_variable = { temp_eden_point_array_1 > 14 } # 15 이상이면 승리
+			}
+			set_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+			TRM = { country_event = { id = trinity_events_nagisa_diplomacy.34 } }
+			GEH = { country_event = { id = trinity_events_nagisa_diplomacy.35 } }
+			GEM = { country_event = { id = trinity_events_nagisa_diplomacy.36 } }
 		}
 	}
 }
