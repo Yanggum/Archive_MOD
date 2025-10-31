@@ -9196,7 +9196,7 @@ focus_tree = {
 		icon = GFX_goal_GEH_ako_sorasaki_administrative_officer
 		prerequisite = { focus = TRN_nagisa_constitution_discussion }
 		x = 6
-		y = 1
+		y = 3
 
 		relative_position_id = TRN_nagisa_constitution_discussion
 
@@ -9299,7 +9299,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_hanuma_line
-		icon = GFX_focus_attack_GEH
+		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = TRN_capriccioso_ruling_the_sora }
 		x = -1
 		y = 1
@@ -9733,7 +9733,6 @@ focus_tree = {
 		id = TRN_start_of_the_eden_treaty_negotiations
 		icon = GFX_focus_GEH_sword_defending_gehenna
 
-		prerequisite = { focus = TRN_mediator_among_factions }
 		prerequisite = { focus = TRN_repromote_eden_treaty }
 
 		mutually_exclusive = {
@@ -9741,7 +9740,7 @@ focus_tree = {
 		}
 
 		x = -3
-		y = 3
+		y = 1
 
 		relative_position_id = TRN_repromote_eden_treaty
 
@@ -9769,6 +9768,91 @@ focus_tree = {
 			custom_effect_tooltip = TRN_start_of_the_eden_treaty_negotiations_tt
 			hidden_effect = {
 				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.1 } }
+			}
+		}
+	}
+
+
+	focus = {
+		id = TRN_eventually_happen
+		icon = GFX_focus_TRN_Kyrie_eleison
+
+		x = -5
+		y = 1
+
+		relative_position_id = TRN_repromote_eden_treaty
+		cost = 5
+
+		mutually_exclusive = {
+			focus = TRN_start_of_the_eden_treaty_negotiations
+		}
+
+		available = {
+			country_exists = GEH
+			NOT = { has_war_with = GEH }
+			GEH = { is_puppet = no }
+		}
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		prerequisite = { focus = TRN_mediator_among_factions }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_eventually_happen_tt
+			hidden_effect = {
+				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.31 } }
+			}
+		}
+	}
+	focus = { # 예방 전쟁
+		id = TRN_nagi_preventive_war
+		icon = GFX_focus_attack_GEH
+
+		prerequisite = { focus = TRN_eventually_happen focus = TRN_start_of_the_eden_treaty_negotiations }
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_eventually_happen
+
+		cost = 10
+
+		available = {
+			has_army_manpower = { size > 249999 }
+			has_war_support > 0.4
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+		will_lead_to_war_with = GEH
+		will_lead_to_war_with = GEM
+		completion_reward = {
+			add_stability = -0.02
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+			if = {
+				limit = {
+					has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+					has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+				}
+				declare_war_on = {
+					target = GEH
+					type = annex_everything
+				}
 			}
 		}
 	}
@@ -9861,6 +9945,59 @@ focus_tree = {
 			custom_effect_tooltip = TRN_union_of_two_academies_tt
 		}
 	}
+	focus = {
+		id = TRN_eden_system_establishment
+		icon = GFX_goal_TRN_nagisa_gyehek
+
+		prerequisite = { focus = TRN_nagi_preventive_war }
+		prerequisite = { focus = TRN_union_of_two_academies }
+
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_nagi_preventive_war
+
+		cost = 10
+
+		available = {
+			is_puppet = no
+			GEH = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			GEM = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+		}
+
+		bypass = {
+			is_faction_leader = yes
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			create_faction = eden_pact
+			set_rule = {
+				can_create_factions = yes
+			}
+		}
+	}
 
 	focus = {
 		id = TRN_successor_to_the_first_trinity
@@ -9929,82 +10066,6 @@ focus_tree = {
 
 		completion_reward = {
 			
-		}
-	}
-
-
-	focus = {
-		id = TRN_eventually_happen
-		icon = GFX_focus_TRN_Kyrie_eleison
-		x = 1
-		y = 1
-		relative_position_id = TRN_mediator_among_factions
-		cost = 5
-
-		mutually_exclusive = {
-			focus = TRN_start_of_the_eden_treaty_negotiations
-		}
-
-		available = {
-			country_exists = GEH
-			NOT = { has_war_with = GEH }
-			GEH = { is_puppet = no }
-		}
-		prerequisite = { focus = TRN_repromote_eden_treaty }
-		prerequisite = { focus = TRN_mediator_among_factions }
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = TRN_eventually_happen_tt
-			hidden_effect = {
-				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.31 } }
-			}
-		}
-	}
-	focus = { # 예방 전쟁
-		id = TRN_nagi_preventive_war
-		icon = GFX_focus_GEH_expulsion_of_pandemonium
-
-		prerequisite = { focus = TRN_eventually_happen }
-
-		x = 0
-		y = 2
-
-		relative_position_id = TRN_eventually_happen
-
-		cost = 10
-
-		available = {
-			has_army_manpower = { size > 249999 }
-			has_war_support > 0.4
-			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			custom_trigger_tooltip = {
-				tooltip = TRN_gehenna_eq_trigger_tt
-				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			}
-		}
-
-		ai_will_do = {
-
-		}
-
-		select_effect = {
-			
-		}
-		will_lead_to_war_with = GEH
-		will_lead_to_war_with = GEM
-		completion_reward = {
-			declare_war_on = {
-				target = GEM
-				type = annex_everything
-			}
-			declare_war_on = {
-				target = GEH
-				type = annex_everything
-			}
 		}
 	}
 
