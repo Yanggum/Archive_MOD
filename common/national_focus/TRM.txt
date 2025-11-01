@@ -7775,7 +7775,7 @@ focus_tree = {
 	focus = { # 에덴협정
 		id = TRN_eden_accord
 		icon = GFX_focus_TRN_eden_accord
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = TRN_second_trintiy
 		cost = 5
@@ -7853,7 +7853,7 @@ focus_tree = {
 		id = TRN_intelligence_agency
 		icon = GFX_focus_TRN_intelligence_agency
 		prerequisite = { focus = TRN_second_trintiy }
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TRN_second_trintiy
 		cost = 6
@@ -7892,7 +7892,7 @@ focus_tree = {
 		prerequisite = { 
 			focus = TRN_intelligence_agency
 		}
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TRN_intelligence_agency
 		cost = 5
@@ -10793,7 +10793,7 @@ focus_tree = {
 		id = TRN_kivotos_dip
 		icon = GFX_focus_TRN_kivotos_dip
 		prerequisite = { focus = TRN_second_trintiy }
-		x = -2
+		x = 2
 		y = 2
 		relative_position_id = TRN_second_trintiy
 		cost = 5
@@ -11059,6 +11059,7 @@ focus_tree = {
 			country_exists = GEH
 		}
 		prerequisite = { focus = TRN_impossible_to_coexist }
+		prerequisite = { focus = TRN_kivotos_dip }
 
 		ai_will_do = {
 
@@ -11195,6 +11196,7 @@ focus_tree = {
 						}
 					}
 				}
+				display_individual_scopes = yes
 				ROOT = {
 					create_wargoal = {
 						type = annex_everything
@@ -11586,8 +11588,20 @@ focus_tree = {
 		ai_will_do = {
 
 		}
+		will_lead_to_war_with = SOV
 		completion_reward = {
-
+			reverse_add_opinion_modifier = {
+				target = SOV
+				modifier = existential_threat
+			}
+			add_timed_idea = {
+				idea = TRN_idea_destruction_of_soviet_hegemony_ns
+				days = 110
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SOV
+			}
 		}
 	}
 
@@ -11597,7 +11611,7 @@ focus_tree = {
 		x = -3
 		y = 1
 		relative_position_id = TRN_destruction_of_soviet_hegemony
-		cost = 6
+		cost = 5
 
 		bypass = {
 
@@ -11605,6 +11619,7 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			has_war_with = SOV
 		}
 		prerequisite = { 
 			focus = TRN_destruction_of_soviet_hegemony 
@@ -11621,6 +11636,16 @@ focus_tree = {
 					modifier = SWI_suspicious_preparations
 				}
 			}
+			every_state = {
+				limit = {
+					BA_ukraine_west_is = yes
+				}
+				display_individual_scopes = yes
+				add_dynamic_modifier = {
+					modifier = TRM_ukrainian_modifier_us
+					scope = POL
+				}
+			}
 		}
 	}
 
@@ -11630,7 +11655,7 @@ focus_tree = {
 		x = -2
 		y = 2
 		relative_position_id = TRN_destruction_of_soviet_hegemony
-		cost = 6
+		cost = 5
 
 		bypass = {
 
@@ -11638,6 +11663,7 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			has_war_with = SOV
 		}
 		prerequisite = { 
 			focus = TRN_destruction_of_soviet_hegemony 
@@ -11652,6 +11678,16 @@ focus_tree = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = SWI_suspicious_preparations
+				}
+			}
+			every_state = {
+				limit = {
+					BA_belarus_is = yes
+				}
+				display_individual_scopes = yes
+				add_dynamic_modifier = {
+					modifier = TRM_belarusian_modifier_us
+					scope = POL
 				}
 			}
 		}
