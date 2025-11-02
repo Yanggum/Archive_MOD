@@ -8,7 +8,7 @@ focus_tree = {
 			tag = CAM
 		}
 	}
-	#크메르 제국 루트
+	#일반 크메르 제국 루트
 	focus = {
 		id = CAM_nokor_reach
 		icon = GFX_CAM_nokor_reach
@@ -19,48 +19,19 @@ focus_tree = {
 		y = 7
 		cost = 2
 		completion_reward = {
-			CAM = {
-				drop_cosmetic_tag = yes
-				set_party_name = {
+			set_party_name = {
 					ideology = neutrality
 					long_name = CAM_neutrality_party_new
 					name = CAM_neutrality_party_new
 				}
-				if = {
-					limit = {
-						has_character = CAM_henri_louis_marie_richomme
-					}
-					CAM_henri_louis_marie_richomme = {
-						retire = yes
-					}
-				}
-				if = {
-					limit = {
-						has_character = CAM_leon_thibaudeau
-					}
-					CAM_leon_thibaudeau = {
-						retire = yes
-					}
-				}
-				add_country_leader_role = {
-					character = CAM_Norodom_Sihanouk
-					country_leader = {
-						ideology = despotism
-						traits = {
-							CAM_King_Father
-						}
-						expire = "1953.3.1"
-					}
-					promote_leader = yes
-				}
-			}
 			set_variable = { IDC_break_the_law_cost_var = 180 }
+			custom_effect_tooltip = CAM_nokor_reach_tt
 		}
 	}
 	focus = {
 		id = return_khmer_empire
 		icon = GFX_return_khmer_empire
-		x = 0
+		x = -4
 		y = 1
 		cost = 10
 		prerequisite = { focus = CAM_nokor_reach }
@@ -71,7 +42,7 @@ focus_tree = {
 			democratic < 0.4
 		}
 		mutually_exclusive = {
-		}
+			focus = khmer_fascist }
 		completion_reward = {
 			add_timed_idea = {
 				idea = return_khmer_empire_idea
@@ -460,6 +431,29 @@ focus_tree = {
 				type = puppet_wargoal_focus
 				target = BRM
 				expire = 0
+			}
+		}
+	}
+	#파시즘 크메르 제국 루트
+	focus = {
+		id = khmer_fascist
+		#icon = GFX_return_khmer_empire
+		x = 4
+		y = 1
+		cost = 10
+		prerequisite = { focus = CAM_nokor_reach }
+		relative_position_id = CAM_nokor_reach
+		available = {
+			is_subject = no
+			communism < 0.4
+			democratic < 0.4
+		}
+		mutually_exclusive = {
+			focus = return_khmer_empire }
+		completion_reward = {
+			add_timed_idea = {
+				idea = khmer_fascist_idea
+				days = 365
 			}
 		}
 	}
