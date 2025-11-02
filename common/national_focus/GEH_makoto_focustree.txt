@@ -2596,31 +2596,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = GEM_switzerland_partition
-		icon = GFX_focus_GER_fate_of_czechoslovakia
-		cost = 5
-		prerequisite = {
-			focus = GEM_victory_from_trinity
-		}
-		prerequisite = {
-			focus = GEM_gehenna_unification_promotion
-		}
-		search_filters = {
-			FOCUS_FILTER_ANNEXATION
-		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = THIS_IS_WIP_TT
-				is_debug = yes
-			}
-		}
-		x = 1
-		y = 1
-		relative_position_id = GEM_gehenna_unification_promotion
-		completion_reward = {
-		}
-	}
 # 삼자 동맹 이후 /
 
 	focus = {
@@ -3786,6 +3761,543 @@ focus_tree = {
 							target = POL
 							autonomy_state = autonomy_puppet
 							end_wars = no
+						}
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GEM_manifest_destiny
+
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_c_united_nation_reconstruction_committee
+
+		prerequisite = { focus = GEM_demand_further_polish_concessions focus = GEM_ostdeutsches_kolonialreich focus = GEM_danzig_for_poland }
+
+		mutually_exclusive = { focus = GEM_pax_gehenica }
+
+		x = 1
+		y = 2
+		relative_position_id = GEM_danzig_for_poland
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+		
+		available = {
+			is_subject = no
+			OR = {
+				AND = {
+					POL = { is_subject_of = ROOT }
+				}
+				AND = {
+					is_faction_leader = yes
+					POL = { is_in_faction_with = ROOT }
+				}
+				AND = {
+					controls_state = 87
+					controls_state = 98
+					controls_state = 97
+					BA_poland_little_controll = yes
+				}
+				AND = {
+					owns_state = 87
+					owns_state = 98
+					owns_state = 97
+				}
+			}
+		}
+
+		search_filters = {  }
+
+		completion_reward = {
+			add_ideas = idea_GEM_manifest_destiny
+			random_owned_controlled_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GEM_pax_gehenica
+
+		icon = GFX_goal_GEH_Pax_Gehennia
+
+		prerequisite = { focus = GEM_demand_further_polish_concessions focus = GEM_ostdeutsches_kolonialreich focus = GEM_danzig_for_poland }
+
+		mutually_exclusive = { focus = GEM_manifest_destiny }
+
+		x = 3
+		y = 2
+		relative_position_id = GEM_danzig_for_poland
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+		
+		available = {
+			is_subject = no
+			OR = {
+				AND = {
+					POL = { is_subject_of = ROOT }
+				}
+				AND = {
+					is_faction_leader = yes
+					POL = { is_in_faction_with = ROOT }
+				}
+				AND = {
+					controls_state = 87
+					controls_state = 98
+					controls_state = 97
+					BA_poland_little_controll = yes
+				}
+				AND = {
+					owns_state = 87
+					owns_state = 98
+					owns_state = 97
+				}
+			}
+			
+			country_exists = SOV
+			NOT = { has_war_with = SOV }
+			SOV = { is_puppet = no }
+			is_puppet = no
+		}
+
+		search_filters = {  }
+
+		completion_reward = {
+			add_threat = -2
+			add_war_support = -0.05
+			add_stability = 0.05
+			SOV = {
+				country_event = { id = GEH.event.1039 hours = 6 }
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			every_country = {
+				limit = {
+					has_opinion_modifier = existential_threat
+					OR = {
+						original_tag = EST
+						original_tag = LAT
+						original_tag = LIT
+						original_tag = POL
+					}
+				}
+				remove_opinion_modifier = {
+					target = ROOT
+					modifier = existential_threat
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_country = {
+				limit = {
+					has_opinion_modifier = GER_seeks_to_restore_brest_litovsk_worse
+					original_tag = SOV
+				}
+				remove_opinion_modifier = {
+					target = ROOT
+					modifier = GER_seeks_to_restore_brest_litovsk_worse
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_country = {
+				limit = {
+					has_opinion_modifier = GER_seeks_to_restore_brest_litovsk
+					OR = {	
+						original_tag = ENG
+						original_tag = FRA
+						original_tag = ROM
+					}
+				}
+				remove_opinion_modifier = {
+					target = ROOT
+					modifier = GER_seeks_to_restore_brest_litovsk
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GEM_cross_the_strait
+
+		icon = GFX_focus_generic_naval_invasion
+
+		prerequisite = { focus = GEM_war_with_MIL focus = GEM_manifest_destiny }
+
+		x = 2
+		y = 2
+		relative_position_id = GEM_war_with_MIL
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+
+		available = {
+			has_army_manpower = { size > 999999 }
+			check_variable = {
+				num_equipment_in_armies_k@infantry_equipment > 90
+				tooltip = trigger_BA_infantry_equipment_k_tt
+			}
+		}
+
+		bypass = {
+			BA_britain_england_controll = yes
+			BA_britain_scotland_controll = yes
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						controls_state = 126
+						controls_state = 125
+						controls_state = 127
+						controls_state = 123
+						controls_state = 338
+						controls_state = 129
+						controls_state = 122
+						controls_state = 132
+						controls_state = 100
+						controls_state = 931
+						controls_state = 131
+						controls_state = 121
+						controls_state = 133
+						controls_state = 136
+						controls_state = 120
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = annex_everything
+					}
+				}
+			}
+			add_timed_idea = {
+				idea = idea_GEM_cross_the_strait
+				days = 180
+			}
+		}
+	}
+	
+	focus = {
+		id = GEM_crossing_the_atlantic
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = GEM_cross_the_strait }
+
+		x = 0
+		y = 2
+		relative_position_id = GEM_cross_the_strait
+		cost = 10
+
+		cancel_if_invalid = yes
+		
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = GER_crossing_the_atlantic_trigger_tt
+				NOT = {
+					any_enemy_country = {
+						is_major = yes
+						any_controlled_state = { 
+							is_on_continent = europe
+						}
+					}
+				}
+			}
+		}
+
+		bypass = {
+			USA = {
+				exists = no
+			}
+		}
+
+		will_lead_to_war_with = USA
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			IF = {
+				limit = {
+					NOT = {
+						OR = {
+							has_war_with = USA
+							has_wargoal_against = {
+								target = USA
+							}
+						}
+					}
+
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = USA
+				}
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = marine_tech
+				name = GER_crossing_the_atlantic
+			}
+
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_doctrine_cost_reduction = {
+					cost_reduction = 0.5
+					uses = 2
+					category = cat_marines_doctrine
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_ideas = GER_crossing_the_atlantic_ns
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			# Add Dockyards and Replace Mils - Cap is 10 states
+			custom_effect_tooltip = GEM_crossing_the_atlantic_dockyards_tt
+
+			if = { #Tooltip so players can know where the hell the dockyards were added
+				limit = {
+					check_variable = { number_of_states_getting_dockyards > 0 }
+				}
+				custom_effect_tooltip = generic_states_affected_tt
+				every_controlled_state = {
+					limit = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					display_individual_scopes = yes
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+
+			hidden_effect = {
+				every_controlled_state = { #Prio "self-sufficient" coastal states, with 2 mils
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						arms_factory > 1
+						NOT = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						remove_building = {
+							type = arms_factory
+							level = 2
+						}
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+
+						set_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag
+						add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+						#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 2 mils" #Debug tool
+					}
+				}
+
+				every_controlled_state = { #Next prio coastal states with only 1 mil
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						AND = {
+							arms_factory < 2
+							arms_factory > 0
+						}
+						NOT = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						add_extra_state_shared_building_slots = 1
+						remove_building = {
+							type = arms_factory
+							level = 1
+						}
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+						custom_effect_tooltip = GER_crossing_the_atlantic_1_factory_tt
+						hidden_effect = {
+							ROOT = {
+								random_controlled_state = {
+									limit = {
+										is_fully_controlled_by = ROOT
+										is_on_continent = europe
+										NOT = { is_coastal = yes }
+										arms_factory > 0
+									}
+									remove_building = {
+										type = arms_factory
+										level = 1
+									}
+								}
+							}
+
+							set_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag
+							add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+							#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 1 mil" #Debug tool
+						}
+					}
+				}
+
+				every_controlled_state = { #Last are coastal states with no mils on them
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						arms_factory < 1
+						NOT = { has_state_flag = GER_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+						custom_effect_tooltip = GER_crossing_the_atlantic_2_factories_tt
+						hidden_effect = {
+							ROOT = {
+								random_controlled_state = {
+									limit = {
+										is_fully_controlled_by = ROOT
+										is_on_continent = europe
+										NOT = { is_coastal = yes }
+										arms_factory > 1
+									}
+									remove_building = {
+										type = arms_factory
+										level = 2
+									}
+								}
+							}
+
+							set_state_flag = GER_crossing_the_atlantic_dockyards_built_flag
+							add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+							#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 0 mils" #Debug tool
 						}
 					}
 				}
