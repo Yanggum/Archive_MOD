@@ -3,6 +3,335 @@ add_namespace = FRA_recover
 add_namespace = FRA_free_france_event
 add_namespace = FRM_event
 add_namespace = FRA_hidden
+add_namespace = FRA_disruption_event
+add_namespace = FRA_strike_event
+
+country_event = {
+	#작은 공 - 1
+	id = FRA_disruption_event.1
+	title = FRA_disruption_event.1.t
+	desc = FRA_disruption_event.1.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
+	option = {
+		name = FRA_disruption_event.1.a
+		country_event = FRA_disruption_event.2
+	}
+}
+
+country_event = {
+	#작은 공 - 2
+	id = FRA_disruption_event.2
+	title = FRA_disruption_event.2.t
+	desc = FRA_disruption_event.2.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_spr_nationalists_capture_tank
+	option = {
+		name = FRA_disruption_event.2.a
+		460 = {
+			add_manpower = -21
+		}
+	}
+}
+
+country_event = {
+	#알제리인 저항
+	id = FRA_disruption_event.3
+	title = FRA_disruption_event.3.t
+	desc = FRA_disruption_event.3.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_spr_army_of_africa
+	hidden = no
+	option = {
+		name = FRA_disruption_event.3.a
+		if = {
+			limit = {
+				check_variable = { FRA_disruption_level > 0 }
+			}
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		458 = {
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities
+				days = 365
+			}
+		}
+		459 = {
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities
+				days = 365
+			}
+		}
+		460 = {
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities
+				days = 365
+			}
+		}
+		461 = {
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities
+				days = 365
+			}
+		}
+	}
+}
+
+country_event = {
+	#오랑의 겨울
+	id = FRA_disruption_event.4
+	title = FRA_disruption_event.4.t
+	desc = FRA_disruption_event.4.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_SOV_purge_navy
+	hidden = no
+	option = {
+		name = FRA_disruption_event.4.a
+		if = {
+			limit = {
+				check_variable = { FRA_disruption_level > 0 }
+			}
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+		}
+	}
+}
+
+country_event = {
+	#도시화
+	id = FRA_disruption_event.5
+	title = FRA_disruption_event.5.t
+	desc = FRA_disruption_event.5.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	hidden = no
+	option = {
+		name = FRA_disruption_event.5.a
+		if = {
+			limit = {
+				check_variable = { FRA_disruption_level > 0 }
+			}
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+		}
+	}
+}
+
+country_event = {
+	#땅
+	id = FRA_disruption_event.6
+	title = FRA_disruption_event.6.t
+	desc = FRA_disruption_event.6.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_COG_force_publique_capturing_area
+	hidden = no
+	option = {
+		name = FRA_disruption_event.6.a
+		if = {
+			limit = {
+				check_variable = { FRA_disruption_level > 0 }
+			}
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+		}
+		hidden_effect = {
+			country_event = FRA_disruption_event.7
+		}
+	}
+}
+
+country_event = {
+	#미티자 평야에서 울려 퍼진 정의의 외침
+	id = FRA_disruption_event.7
+	picture = GFX_report_event_tur_ataturk_writing_desk
+	title = FRA_disruption_event.7.t
+	desc = FRA_disruption_event.7.d
+	is_triggered_only = yes
+	option = {
+		name = FRA_disruption_event.7.a
+		country_event = FRA_disruption_event.8
+	}
+}
+
+country_event = {
+	#북아프리카 인민당
+	id = FRA_disruption_event.8
+	title = FRA_disruption_event.8.t
+	desc = FRA_disruption_event.8.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_bul_muraviev_protest
+	option = {
+		name = FRA_disruption_event.8.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+		set_party_name = {
+			ideology = communism
+			long_name = FRA_PPNA_long
+			name = FRA_PPNA
+		}
+		hidden_effect = {
+			create_country_leader = {
+				name = ALG_Messali_Hadj
+				picture = "gfx/leaders/FRA/Portrait_FRA_de.tga"
+				ideology = marxism
+				traits = {
+					retired_officer
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	#실업
+	id = FRA_disruption_event.9
+	title = FRA_disruption_event.9.t
+	desc = FRA_disruption_event.9.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	hidden = no
+	picture = GFX_report_event_tank_factory
+	option = {
+		name = FRA_disruption_event.9.a
+		if = {
+			limit = {
+				check_variable = { FRA_disruption_level > 0 }
+			}
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+		}
+	}
+}
+
+country_event = {
+	id = FRA_strike_event.1
+	title = FRA_strike_event.1.t
+	desc = FRA_strike_event.1.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_worker_protests
+	option = {
+		name = FRA_strike_event.1.b
+		swap_ideas = {
+			remove_idea = FRA_general_strike_4
+			add_idea = FRA_general_strike_3
+		}
+	}
+}
+country_event = {
+	#불복종
+	id = FRA_strike_event.2
+	title = FRA_strike_event.2.t
+	desc = FRA_strike_event.2.d
+	is_triggered_only = yes
+	picture = GFX_report_event_tur_kurdish_guerillas
+	option = { #식민지를 유지하자
+		name = FRA_strike_event.2.a
+		swap_ideas = {
+			remove_idea = FRA_general_strike_3
+			add_idea = FRA_general_strike_2
+		}
+	} 
+}
+
+country_event = {
+	#소작쟁의
+	id = FRA_strike_event.3
+	title = FRA_strike_event.3.t
+	desc = FRA_strike_event.3.d
+	is_triggered_only = yes
+	picture = GFX_report_event_spr_civil_war_faction_defeated
+	option = {
+		name = FRA_strike_event.3.a
+		swap_ideas = {
+			remove_idea = FRA_general_strike_2
+			add_idea = FRA_general_strike_1
+		}
+	}
+}
+
+country_event = {
+	#총파업
+	id = FRA_strike_event.4
+	title = FRA_strike_event.4.t
+	desc = FRA_strike_event.4.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_india_protests2
+	immediate = {
+		set_country_flag = FRA_in_general_strike
+	}
+	option = {
+		name = FRA_strike_event.4.a
+		swap_ideas = {
+			remove_idea = FRA_general_strike_1
+			add_idea = FRA_general_strike_0
+		}
+		hidden_effect = {
+			news_event = FRA_prov_event.44
+			458 = {
+				set_variable = {
+					FRA_CGT_org = 100
+				}
+				set_variable = {
+					FRA_ppna_search = 0
+				}
+			}
+			459 = {
+				set_variable = { #알제
+					FRA_CGT_org = 120
+				}
+				set_variable = {
+					FRA_ppna_search = 0
+				}
+			}
+			460 = {
+				set_variable = {
+					FRA_CGT_org = 100
+				}
+				set_variable = {
+					FRA_ppna_search = 0
+				}
+			}
+			461 = {
+				set_variable = {
+					FRA_CGT_org = 100
+				}
+				set_variable = {
+					FRA_ppna_search = 0
+				}
+			}
+			unlock_decision_category_tooltip = FRA_manage_strike_cat
+			activate_mission = FRA_PPNA_activation
+		}
+	}
+}
+
+country_event = {
+	#메이데이
+	id = FRA_strike_event.5
+	title = FRA_strike_event.5.t
+	desc = FRA_strike_event.5.d
+	is_triggered_only = yes
+	picture = GFX_report_event_communists_in_riga
+	option = {
+		add_ideas = FRA_general_strike_4
+		activate_mission = FRA_strike_going_bad_mission
+		name = FRA_strike_event.5.a
+	}
+}
+
 country_event = {
 	id = FRM_event.1
 	title = FRM_event.1.t
@@ -33,7 +362,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # 망명 하지 마 !
 	#망명
 	id = FRA_prov_event.1
 	title = FRA_prov_event.1.t
@@ -148,13 +477,15 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { # 망명 하지 마 !
 	#망명 시작
 	id = FRA_prov_event.2
 	title = FRA_prov_event.1.t
 	desc = FRA_prov_event.1.d
 	fire_only_once = yes
+	is_triggered_only = yes
 	trigger = {
+		always = no
 		date > 1936.4.30
 		tag = FRA
 	}
@@ -174,7 +505,7 @@ country_event = {
 		tag = FRA
 		controls_state = 459
 		check_variable = {
-			var = FRA_rol_anger
+			var = FRA_disruption_level
 			compare = greater_than_or_equals
 			value = 8
 		}
@@ -892,7 +1223,7 @@ country_event = { #서아프리카 해방
 
 
 country_event = {
-	#확산되는 저항
+	#확산되는 저항 (미사용)
 	id = FRA_prov_event.4
 	title = FRA_prov_event.4.t
 	desc = FRA_prov_event.4.d
@@ -903,10 +1234,10 @@ country_event = {
 	option = {
 		if = {
 			limit = {
-				check_variable = { FRA_rol_anger > 0 }
+				check_variable = { FRA_disruption_level > 0 }
 			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
 		}
 		add_popularity = {
 			ideology = var:current_party_ideology_group
@@ -983,52 +1314,6 @@ country_event = {
 			country_event = {
 				id = FRA_prov_event.100
 				days = 5
-			}
-		}
-	}
-}
-
-country_event = {
-	#알제리인 저항
-	id = FRA_prov_event.7
-	title = FRA_prov_event.7.t
-	desc = FRA_prov_event.7.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_spr_army_of_africa
-	hidden = no
-	option = {
-		name = FRA_prov_event.7.a
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
-		custom_effect_tooltip = CHL_skip_one_line_tt
-		458 = {
-			add_dynamic_modifier = {
-				modifier = FRA_ENA_activities
-				days = 365
-			}
-		}
-		459 = {
-			add_dynamic_modifier = {
-				modifier = FRA_ENA_activities
-				days = 365
-			}
-		}
-		460 = {
-			add_dynamic_modifier = {
-				modifier = FRA_ENA_activities
-				days = 365
-			}
-		}
-		461 = {
-			add_dynamic_modifier = {
-				modifier = FRA_ENA_activities
-				days = 365
 			}
 		}
 	}
@@ -1664,27 +1949,6 @@ country_event = {
 }
 
 country_event = {
-	#오랑의 겨울
-	id = FRA_prov_event.27
-	title = FRA_prov_event.27.t
-	desc = FRA_prov_event.27.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_SOV_purge_navy
-	hidden = no
-	option = {
-		name = FRA_prov_event.27.a
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
-	}
-}
-
-country_event = {
 	#안 씀
 	id = FRA_prov_event.28
 	title = FRA_prov_event.28.t
@@ -1767,27 +2031,6 @@ country_event = {
 }
 
 country_event = {
-	#도시화
-	id = FRA_prov_event.31
-	title = FRA_prov_event.31.t
-	desc = FRA_prov_event.31.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_spr_civil_war_faction_defeated
-	hidden = no
-	option = {
-		name = FRA_prov_event.31.a
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
-	}
-}
-
-country_event = {
 	#포대 운용
 	id = FRA_prov_event.32
 	title = FRA_prov_event.32.t
@@ -1840,30 +2083,6 @@ country_event = {
 }
 
 country_event = {
-	#땅
-	id = FRA_prov_event.34
-	title = FRA_prov_event.34.t
-	desc = FRA_prov_event.34.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_COG_force_publique_capturing_area
-	hidden = no
-	option = {
-		name = FRA_prov_event.34.a
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
-		hidden_effect = {
-			country_event = FRA_prov_event.53
-		}
-	}
-}
-
-country_event = {
 	#군부의 불만
 	picture = GFX_report_event_AUS_military_march
 	id = FRA_prov_event.35
@@ -1899,27 +2118,6 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.36.a
-	}
-}
-
-country_event = {
-	#실업
-	id = FRA_prov_event.37
-	title = FRA_prov_event.37.t
-	desc = FRA_prov_event.37.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	hidden = no
-	picture = GFX_report_event_tank_factory
-	option = {
-		name = FRA_prov_event.37.a
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
 	}
 }
 
@@ -2267,40 +2465,7 @@ news_event = {
 	}
 }
 
-country_event = {
-	#북아프리카 인민당
-	id = FRA_prov_event.42
-	title = FRA_prov_event.42.t
-	desc = FRA_prov_event.42.d
-	is_triggered_only = yes
-	fire_only_once = yes
-	picture = GFX_report_event_bul_muraviev_protest
-	option = {
-		name = FRA_prov_event.42.a
-		add_popularity = {
-			ideology = communism
-			popularity = 0.1
-		}
-		set_party_name = {
-			ideology = communism
-			long_name = FRA_PPNA_long
-			name = FRA_PPNA
-		}
-		hidden_effect = {
-			create_country_leader = {
-				name = ALG_Messali_Hadj
-				picture = "gfx/leaders/FRA/Portrait_FRA_de.tga"
-				ideology = marxism
-				traits = {
-					retired_officer
-				}
-			}
-		}
-	}
-}
-
-country_event = {
-	#거리에서의 대치
+country_event = { #미사용
 	id = FRA_prov_event.43
 	title = FRA_prov_event.43.t
 	desc = FRA_prov_event.43.d
@@ -2309,10 +2474,6 @@ country_event = {
 	picture = GFX_report_event_worker_protests
 	option = {
 		name = FRA_prov_event.43.b
-		swap_ideas = {
-			remove_idea = FRA_general_strike_4
-			add_idea = FRA_general_strike_3
-		}
 	}
 }
 
@@ -2338,21 +2499,6 @@ news_event = {
 		}
 		name = FRA_prov_event.44.b
 	}
-}
-country_event = {
-	#불복종
-	id = FRA_prov_event.45
-	title = FRA_prov_event.45.t
-	desc = FRA_prov_event.45.d
-	is_triggered_only = yes
-	picture = GFX_report_event_tur_kurdish_guerillas
-	option = { #식민지를 유지하자
-		name = FRA_prov_event.45.a
-		swap_ideas = {
-			remove_idea = FRA_general_strike_3
-			add_idea = FRA_general_strike_2
-		}
-	} 
 }
 
 news_event = {
@@ -2408,36 +2554,6 @@ country_event = {
 					retired_officer
 				}
 			}
-		}
-	}
-}
-
-country_event = {
-	#메이데이
-	id = FRA_prov_event.48
-	title = FRA_prov_event.48.t
-	desc = FRA_prov_event.48.d
-	is_triggered_only = yes
-	picture = GFX_report_event_communists_in_riga
-	option = {
-		add_ideas = FRA_general_strike_4
-		activate_mission = FRA_strike_going_bad_mission
-		name = FRA_prov_event.48.a
-	}
-}
-
-country_event = {
-	#소작쟁의
-	id = FRA_prov_event.49
-	title = FRA_prov_event.49.t
-	desc = FRA_prov_event.49.d
-	is_triggered_only = yes
-	picture = GFX_report_event_spr_civil_war_faction_defeated
-	option = {
-		name = FRA_prov_event.49.a
-		swap_ideas = {
-			remove_idea = FRA_general_strike_2
-			add_idea = FRA_general_strike_1
 		}
 	}
 }
@@ -2553,19 +2669,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.52.a
 		add_war_support = -0.1
-	}
-}
-
-country_event = {
-	#미티자 평야에서 울려 퍼진 정의의 외침
-	id = FRA_prov_event.53
-	picture = GFX_report_event_tur_ataturk_writing_desk
-	title = FRA_prov_event.53.t
-	desc = FRA_prov_event.53.d
-	is_triggered_only = yes
-	option = {
-		name = FRA_prov_event.53.a
-		country_event = FRA_prov_event.42
 	}
 }
 
@@ -4248,7 +4351,7 @@ country_event = {
 			}
 		}
 		set_variable = {
-			FRA_rol_anger = 0
+			FRA_disruption_level = 0
 		}
 		remove_mission = FRA_african_rage_mission
 	}
@@ -4630,36 +4733,6 @@ country_event = {
 }
 
 country_event = {
-	#작은 공 - 1
-	id = FRA_prov_event.118
-	title = FRA_prov_event.118.t
-	desc = FRA_prov_event.118.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_generic_sign_treaty2
-	option = {
-		name = FRA_prov_event.118.a
-		country_event = FRA_prov_event.119
-	}
-}
-
-country_event = {
-	#작은 공 - 2
-	id = FRA_prov_event.119
-	title = FRA_prov_event.119.t
-	desc = FRA_prov_event.119.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_spr_nationalists_capture_tank
-	option = {
-		name = FRA_prov_event.119.a
-		460 = {
-			add_manpower = -21
-		}
-	}
-}
-
-country_event = {
 	#군부 쿠데타
 	id = FRA_prov_event.120
 	title = FRA_prov_event.120.t
@@ -4686,28 +4759,20 @@ country_event = {
 				days = 100
 			}
 			country_event = { #저항도 이벤트 - 오랑의 겨울
-				id = FRA_prov_event.27
+				id = FRA_disruption_event.4
 				days = 350
 			}
 			country_event = { #저항도 이벤트 - 도시화
-				id = FRA_prov_event.27
+				id = FRA_disruption_event.5
 				days = 410
 			}
 			country_event = { #저항도 이벤트 - 실업
-				id = FRA_prov_event.37
+				id = FRA_disruption_event.9
 				days = 540
 			}
 			country_event = { #저항도 이벤트 - 땅
-				id = FRA_prov_event.34
+				id = FRA_disruption_event.6
 				days = 785
-			}
-			country_event = { #작은 공
-				id = FRA_prov_event.118
-				days = 820
-			}
-			country_event = { #메이데이
-				id = FRA_prov_event.48
-				days = 831
 			}
             if = {
                 limit = {
@@ -4766,8 +4831,7 @@ country_event = {
 	}
 }
 
-country_event = {
-	#테러리즘
+country_event = { #미사용
 	id = FRA_prov_event.121
 	title = FRA_prov_event.121.t
 	desc = FRA_prov_event.121.d
@@ -4775,13 +4839,6 @@ country_event = {
 	is_triggered_only = yes
 	picture = GFX_report_event_generic_destroyed_vehicles
 	option = {
-		if = {
-			limit = {
-				check_variable = { FRA_rol_anger > 0 }
-			}
-			set_temp_variable = { FRA_anger_change = 1 }
-			FRA_change_rol_anger = yes
-		}
 		custom_effect_tooltip = CHL_skip_one_line_tt
 		name = FRA_prov_event.121.a
 		add_stability = -0.01
@@ -5032,63 +5089,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.131.a
 		add_political_power = -10
-	}
-}
-
-country_event = {
-	#총파업
-	id = FRA_prov_event.132
-	title = FRA_prov_event.132.t
-	desc = FRA_prov_event.132.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	picture = GFX_report_event_india_protests2
-	immediate = {
-		set_country_flag = FRA_in_general_strike
-	}
-	option = {
-		name = FRA_prov_event.132.a
-		swap_ideas = {
-			remove_idea = FRA_general_strike_1
-			add_idea = FRA_general_strike_0
-		}
-		hidden_effect = {
-			news_event = FRA_prov_event.44
-			458 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			459 = {
-				set_variable = { #알제
-					FRA_CGT_org = 120
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			460 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			461 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			unlock_decision_category_tooltip = FRA_manage_strike_cat
-			activate_mission = FRA_PPNA_activation
-		}
 	}
 }
 
@@ -5998,10 +5998,10 @@ unit_leader_event = {
 		custom_effect_tooltip = FRA_pet.8_tt
 		if = {
 			limit = {
-				check_variable = { FRA_rol_anger > 0 }
+				check_variable = { FRA_disruption_level > 0 }
 			}
-			set_temp_variable = { FRA_anger_change = -1 }
-			FRA_change_rol_anger = yes
+			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+			FRA_change_to_disruption_level = yes
 		}
 	}
 }
@@ -6021,10 +6021,10 @@ unit_leader_event = {
 		custom_effect_tooltip = FRA_pet.8_tt
 		if = {
 			limit = {
-				check_variable = { FRA_rol_anger > 0 }
+				check_variable = { FRA_disruption_level > 0 }
 			}
-			set_temp_variable = { FRA_anger_change = -1 }
-			FRA_change_rol_anger = yes
+			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+			FRA_change_to_disruption_level = yes
 		}
 	}
 }

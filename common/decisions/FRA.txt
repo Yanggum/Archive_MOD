@@ -10,8 +10,14 @@ FRA_industrialize = {
 			always = no
 		}
 		timeout_effect = {
-			country_event = FRA_prov_event.4
 			activate_mission = FRA_african_rage_mission
+			if = {
+				limit = {
+					check_variable = { FRA_disruption_level < 10 }
+				}
+				set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+				FRA_change_to_disruption_level = yes
+			}
 		}
 	}
 	FRA_input_military = { #군대 투입
@@ -26,22 +32,18 @@ FRA_industrialize = {
 			base = 1000
 		}
 		visible = {
-			check_variable = { FRA_rol_anger > 0 }
+			check_variable = { FRA_disruption_level > 0 }
 		}
+		fire_only_once = yes
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = FRA_input_military_tt
-				check_variable = { FRA_rol_anger > 1 }
+				check_variable = { FRA_disruption_level > 1 }
 			}
 		}
 		complete_effect = {
-			if = {
-				limit = {
-					check_variable = { FRA_rol_anger > 0 }
-				}
-				set_temp_variable = { FRA_anger_change = -1 }
-				FRA_change_rol_anger = yes
-			}
+			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+			FRA_change_to_disruption_level = yes
 		}
 	}
 }
@@ -3337,21 +3339,21 @@ FRA_manage_strike_cat = {
 					limit = {
 						has_idea = FRA_general_strike_4
 					}
-					country_event = FRA_prov_event.43
+					country_event = FRA_strike_event.1
 					activate_mission = FRA_strike_going_bad_mission
 				}
 				else_if = {
 					limit = {
 						has_idea = FRA_general_strike_3
 					}
-					country_event = FRA_prov_event.45
+					country_event = FRA_strike_event.2
 					activate_mission = FRA_strike_going_bad_mission
 				}
 				else_if = {
 					limit = {
 						has_idea = FRA_general_strike_2
 					}
-					country_event = FRA_prov_event.49
+					country_event = FRA_strike_event.3
 					activate_mission = FRA_strike_going_bad_mission
 				}
 				else_if = {
@@ -3571,10 +3573,10 @@ FRA_manage_strike_cat = {
 				3 = {
 					if = {
 						limit = {
-							check_variable = { FRA_rol_anger > 0 }
+							check_variable = { FRA_disruption_level > 0 }
 						}
-						set_temp_variable = { FRA_anger_change = 1 }
-						FRA_change_rol_anger = yes
+						set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+						FRA_change_to_disruption_level = yes
 					}
 				}
 				1 = {
