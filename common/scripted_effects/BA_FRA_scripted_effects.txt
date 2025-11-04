@@ -1,211 +1,333 @@
 FRA_debug_effect3 = {
 	every_possible_country = {
-		limit = { has_character = FRA_charles_de_gaulle }
+		limit = {
+			has_character = FRA_charles_de_gaulle
+		}
 		FRA_charles_de_gaulle = {
 			set_nationality = ROOT
 		}
 	}
 }
+
 FRA_change_to_disruption_level = {
+	# avoid going < 0 or 10 >
+	clamp_temp_variable = {
+		var = temp_FRA_change_to_disruption
+		min = 0
+		max = 10
+	}
+	set_temp_variable = {
+		temp_FRA_disruption_level = FRA_disruption_level
+	}
 	if = {
 		limit = {
-			has_idea = FRA_resistance_of_locals
 			OR = {
-				check_variable = { temp_FRA_change_to_disruption > 0 }
-				AND = {
-					check_variable = { temp_FRA_change_to_disruption < 0 }
-					check_variable = { FRA_disruption_level > 0 }
+				NOT = {
+					check_variable = {
+						temp_FRA_change_to_disruption = 0
+					}
 				}
 			}
 		}
-
-		set_temp_variable = { FRA_anger_lower_limit = 1 }
-		subtract_from_temp_variable = { FRA_anger_lower_limit = FRA_disruption_level }
-
-		set_temp_variable = { FRA_anger_upper_limit = 8 }
-		subtract_from_temp_variable = { FRA_anger_upper_limit = FRA_disruption_level }
-
-		# avoid going < 1 or > 10
-		clamp_temp_variable = {
-			var = temp_FRA_change_to_disruption
-			min = FRA_anger_lower_limit
-			max = FRA_anger_upper_limit
-		}
-
 		if = {
 			limit = {
-				OR = {
-					NOT = { has_variable = FRA_disruption_level } #bypass the check when initialising
-					NOT = { check_variable = { temp_FRA_change_to_disruption = 0 } }
+				check_variable = {
+					temp_FRA_change_to_disruption > 0
 				}
 			}
-			if = {
-				limit = { check_variable = { temp_FRA_change_to_disruption > 0 } }
-				custom_effect_tooltip = FRA_resistance_of_locals_up
-				log = "Popular Anger Increased"
-			}
-			else = {
-				custom_effect_tooltip = FRA_resistance_of_locals_down
-				log = "Popular Anger Decreased"
-			}
-
-			# for the tooltips
-			set_temp_variable = { FRA_rol_anger_pp_temp = 0.01 }
-			multiply_temp_variable = { FRA_rol_anger_pp_temp = temp_FRA_change_to_disruption }
-
-			set_temp_variable = { FRA_rol_anger_stability_temp = 0.03 }
-			multiply_temp_variable = { FRA_rol_anger_stability_temp = temp_FRA_change_to_disruption }
-
-			set_temp_variable = { FRA_rol_anger_factory_output_temp = -0.03 }
-			multiply_temp_variable = { FRA_rol_anger_factory_output_temp = temp_FRA_change_to_disruption }
-
-			# set the new variables
-			add_to_variable = { FRA_disruption_level = temp_FRA_change_to_disruption }
-			add_to_variable = { FRA_rol_pp = FRA_rol_anger_pp_temp }
-			add_to_variable = { FRA_rol_stability = FRA_rol_anger_factory_output_temp }
-			add_to_variable = { FRA_rol_resist = FRA_rol_anger_stability_temp }
-			add_to_variable = { FRA_rol_cg = FRA_rol_anger_factory_output_temp }
-
-			if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 1
-					}
-				}
-				set_variable = { FRA_rol_pp = 0 }
-				set_variable = { FRA_rol_stability = 0 }
-				set_variable = { FRA_rol_resist = 0.05 }
-				set_variable = { FRA_rol_cg = 0 }
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 2
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.05 }
-				set_variable = { FRA_rol_stability = -0.05 }
-				set_variable = { FRA_rol_resist = 0.05 }
-				set_variable = { FRA_rol_cg = -0.01 }
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 3
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.10 }
-				set_variable = { FRA_rol_stability = -0.10 }
-				set_variable = { FRA_rol_resist = 0.10 }
-				set_variable = { FRA_rol_cg = -0.02 }
-
-				country_event =  FRA_prov_event.118
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 4
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.10 }
-				set_variable = { FRA_rol_stability = -0.10 }
-				set_variable = { FRA_rol_resist = 0.15 }
-				set_variable = { FRA_rol_cg = -0.02 }
-
-				country_event = FRA_strike_event.5
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 5
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.10 }
-				set_variable = { FRA_rol_stability = -0.10 }
-				set_variable = { FRA_rol_resist = 0.20 }
-				set_variable = { FRA_rol_cg = -0.02 }
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 6
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.10 }
-				set_variable = { FRA_rol_stability = -0.10 }
-				set_variable = { FRA_rol_resist = 0.20 }
-				set_variable = { FRA_rol_cg = -0.02 }
-
-				every_state = {
-					limit = {
-						is_owned_by = FRA
-						NOT = {
-							is_core_of = FRA
-						}
-						is_on_continent = africa
-						has_resistance = yes
-					}
-					add_resistance = 15
-				}
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 7
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.15 }
-				set_variable = { FRA_rol_stability = -0.15 }
-				set_variable = { FRA_rol_resist = 0.25 }
-				set_variable = { FRA_rol_cg = -0.02 }
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 8
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.15 }
-				set_variable = { FRA_rol_stability = -0.15 }
-				set_variable = { FRA_rol_resist = 0.25 }
-				set_variable = { FRA_rol_cg = -0.02 }
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 9
-					}
-				}
-				set_variable = { FRA_rol_pp = -0.15 }
-				set_variable = { FRA_rol_stability = -0.15 }
-				set_variable = { FRA_rol_resist = 0.25 }
-				set_variable = { FRA_rol_cg = -0.02 }
-				
-				every_state = {
-					limit = {
-						is_owned_by = FRA
-						NOT = {
-							is_core_of = FRA
-						}
-						is_on_continent = africa
-						has_resistance = yes
-					}
-					add_resistance = 15
-				}
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						FRA_disruption_level = 10
-					}
-				}
-				set_variable = { FRA_rol_pp = 0 }
-				set_variable = { FRA_rol_stability = 0 }
-				set_variable = { FRA_rol_resist = 0 }
-				set_variable = { FRA_rol_cg = 0 }
-
-				
-			}
+			custom_effect_tooltip = FRA_resistance_of_locals_up
+			log = "Popular Anger Increased"
+		}
+		else = {
+			custom_effect_tooltip = FRA_resistance_of_locals_down
+			log = "Popular Anger Decreased"
 		}
 	}
+	add_to_temp_variable = {
+		temp_FRA_disruption_level = temp_FRA_change_to_disruption
+	}
+	set_variable = {
+		FRA_disruption_level = temp_FRA_disruption_level
+	}
+	if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 1
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 1
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.05
+		}
+		set_variable = {
+			FRA_rol_stability = 0
+		}
+		set_variable = {
+			FRA_rol_resist = 0.05
+		}
+		set_variable = {
+			FRA_rol_cg = 0
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 2
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 2
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.1
+		}
+		set_variable = {
+			FRA_rol_stability = -0.05
+		}
+		set_variable = {
+			FRA_rol_resist = 0.05
+		}
+		set_variable = {
+			FRA_rol_cg = -0.01
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 3
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 3
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.2
+		}
+		set_variable = {
+			FRA_rol_stability = -0.1
+		}
+		set_variable = {
+			FRA_rol_resist = 0.1
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+		country_event = FRA_prov_event.118
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 4
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 4
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.3
+		}
+		set_variable = {
+			FRA_rol_stability = -0.1
+		}
+		set_variable = {
+			FRA_rol_resist = 0.15
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+		country_event = FRA_strike_event.5
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 5
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 5
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.4
+		}
+		set_variable = {
+			FRA_rol_stability = -0.1
+		}
+		set_variable = {
+			FRA_rol_resist = 0.2
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 6
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 6
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.5
+		}
+		set_variable = {
+			FRA_rol_stability = -0.1
+		}
+		set_variable = {
+			FRA_rol_resist = 0.2
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FRA
+				NOT = {
+					is_core_of = FRA
+				}
+				is_on_continent = africa
+				has_resistance = yes
+			}
+			add_resistance = 15
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 7
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 7
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.6
+		}
+		set_variable = {
+			FRA_rol_stability = -0.15
+		}
+		set_variable = {
+			FRA_rol_resist = 0.25
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 8
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 8
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.7
+		}
+		set_variable = {
+			FRA_rol_stability = -0.15
+		}
+		set_variable = {
+			FRA_rol_resist = 0.25
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 9
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 9
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0.8
+		}
+		set_variable = {
+			FRA_rol_stability = -0.15
+		}
+		set_variable = {
+			FRA_rol_resist = 0.25
+		}
+		set_variable = {
+			FRA_rol_cg = -0.02
+		}
+		every_state = {
+			limit = {
+				is_owned_by = FRA
+				NOT = {
+					is_core_of = FRA
+				}
+				is_on_continent = africa
+				has_resistance = yes
+			}
+			add_resistance = 15
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				temp_FRA_disruption_level = 10
+			}
+			check_variable = {
+				FRA_limit_to_disruption < 10
+			}
+		}
+		add_to_variable = {
+			FRA_limit_to_disruption = 1
+		}
+		set_variable = {
+			FRA_rol_pp = 0
+		}
+		set_variable = {
+			FRA_rol_stability = 0
+		}
+		set_variable = {
+			FRA_rol_resist = 0
+		}
+		set_variable = {
+			FRA_rol_cg = 0
+		}
+	}
+}
+
+FRA_disruption_level_one_up = {
+	set_temp_variable = {
+		temp_FRA_change_to_disruption = 1
+	}
+	FRA_change_to_disruption_level = yes
 }
