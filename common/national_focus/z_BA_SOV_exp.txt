@@ -1,56 +1,5 @@
 ﻿#신 외교중점
 	#집단안보정책
-shared_focus = {
-	id = SOVEX_second_western_offensive
-	icon = GFX_focus_CHL_union_of_hispanic_republics
-	
-
-	
-	allow_branch = {
-		has_country_flag = BA_SOV_new_diplomatic_thesis_flag
-		NOT = { has_completed_focus = SOV_beaten_but_not_defeated }
-	}
-	mutually_exclusive = {
-	}
-	prerequisite = {
-		focus = SOV_policy_of_collective_security
-	}
-	x = -1
-	y = 1
-
-	cost = 5
-
-	relative_position_id = SOV_policy_of_collective_security
-
-	ai_will_do = {
-	}
-
-	available = {
-		POL = {
-			OR = {
-				exists = no
-				has_capitulated = yes
-				is_subject_of = ROOT
-				is_in_faction_with = ROOT
-			}
-		}
-	}
-
-	bypass = {
-	}
-
-	cancel_if_invalid = yes
-	continue_if_invalid = no
-	available_if_capitulated = no
-
-	completion_reward = {
-		add_political_power = 100
-		add_popularity = {
-			ideology = communism
-			popularity = 0.10
-		}
-	}
-}
 shared_focus = { #반키보토스 정책
 	id = SOVEX_anti_kivotos_policies
 	icon = GFX_focus_generic_red_flags
@@ -64,7 +13,7 @@ shared_focus = { #반키보토스 정책
 	prerequisite = {
 		focus = SOV_policy_of_collective_security
 	}
-	x = 1
+	x = 0
 	y = 1
 
 	cost = 5
@@ -121,10 +70,9 @@ shared_focus = { #이탈리아와의 전략 동맹
 	mutually_exclusive = {
 	}
 	prerequisite = { focus = SOVEX_anti_kivotos_policies }
-	prerequisite = { focus = SOVEX_second_western_offensive}
 	relative_position_id = SOVEX_anti_kivotos_policies
 	
-	x = -1
+	x = 0
 	y = 1
 	
 
@@ -535,6 +483,463 @@ shared_focus = { #전쟁해군 압박
 		}
 	}
 }
+
+	#발트 안보 이하 중점도를 갈음
+shared_focus = { #발트 무력 시위
+	id = SOVEX_armed_protest_on_baltic
+	icon = GFX_SOV_claims_in_baltic_ccp_2d_sov_compatibility
+	
+	allow_branch = {
+		has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+	}
+	prerequisite = { focus = SOV_baltic_security }
+	x = -1
+	y = 1
+	relative_position_id = SOV_baltic_security
+	cost = 5
+	mutually_exclusive = {
+		focus = SOVEX_operation_on_black_sea
+	}
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+
+	bypass = {
+		NOT = {
+			country_exists = EST
+			country_exists = LAT
+			country_exists = LIT
+		}
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 191
+						state = 784
+						state = 809
+						state = 810
+						state = 813
+						state = 814
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		country_event = BA_sov_event.6
+		LIT = {
+			country_event = BA_sov_event.6
+		}
+		LAT = {
+			country_event = BA_sov_event.6
+		}
+		EST = {
+			country_event = BA_sov_event.6
+		}
+	}
+}
+shared_focus = { #흑해에서의 작전
+	id = SOVEX_operation_on_black_sea
+	icon = GFX_focus_generic_black_sea_focus
+	
+	prerequisite = { focus = SOV_baltic_security }
+	x = 2
+	y = 0
+	relative_position_id = SOVEX_armed_protest_on_baltic
+	cost = 5
+
+	allow_branch = {
+		has_country_flag = BA_SOV_new_diplomatic_thesis_flag
+	} 
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+	mutually_exclusive = {
+		focus = SOVEX_armed_protest_on_baltic
+	}
+
+	bypass = {
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+		hidden_effect = {
+			SOV = {
+				add_ai_strategy = {
+					type = naval_invasion_focus
+					value = 50
+				}
+			}
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 971
+						state = 77
+						state = 347
+						state = 354
+						state = 355
+						state = 356
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		country_event = BA_sov_event.7
+		ROM = {
+			country_event = BA_sov_event.7
+		}
+		TUR = {
+			country_event = BA_sov_event.7
+		}
+	}
+}
+shared_focus = { #헬싱키 밀약
+	id = SOVEX_Helsinki_secret_treaty
+	icon = GFX_focus_invite_finland
+	
+	prerequisite = { focus = SOVEX_armed_protest_on_baltic focus = SOVEX_operation_on_black_sea }
+	x = 0
+	y = 1
+	relative_position_id = SOVEX_armed_protest_on_baltic
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+
+	bypass = {
+		OR = {
+			has_full_control_of_state = 146
+			is_in_faction_with = FIN
+			has_country_flag = FIN_finno_soviet_pact_flag
+		}
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #'신성동맹' 타도
+	id = SOVEX_overthrow_the_Holy_League
+	icon = GFX_SOV_claims_on_poland_ccp_2d_sov_compatibility
+	
+	prerequisite = { focus = SOVEX_armed_protest_on_baltic focus = SOVEX_operation_on_black_sea }
+	x = 2
+	y = 1
+	relative_position_id = SOVEX_armed_protest_on_baltic
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+
+	bypass = {
+		POL = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject_of = ROOT
+				is_in_faction_with = ROOT
+			}
+		}
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #치욕의 날
+	id = SOVEX_day_of_shame
+	icon = GFX_focus_GER_end_european_communism
+	
+	prerequisite = { focus = SOVEX_overthrow_the_Holy_League }
+	x = 2
+	y = 1
+	relative_position_id = SOVEX_overthrow_the_Holy_League
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	mutually_exclusive = {
+		focus = SOVEX_eastern_bloc
+	}
+	
+
+	bypass = {
+
+	}
+
+	available = {
+		custom_trigger_tooltip = {
+			tooltip = BA_pol_win_polsovwar
+			has_global_flag = sov_pol_war_superevent_trigger_flag
+			NOT = {
+				has_war_with = SOV
+			}
+			is_puppet = no
+		}
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #서기국 권한 축소
+	id = SOVEX_reduce_authority_of_secretariat
+	icon = GFX_focus_PER_communist_afghanistan_intervention
+	
+	prerequisite = { focus = SOVEX_day_of_shame }
+	x = -1
+	y = 1
+	relative_position_id = SOVEX_day_of_shame
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+
+	bypass = {
+
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #붉은 복수
+	id = SOVEX_red_revenge
+	icon = GFX_focus_AFG_royal_guard
+	
+	prerequisite = { focus = SOVEX_day_of_shame}
+	x = 0
+	y = 2
+	relative_position_id = SOVEX_day_of_shame
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+	bypass = {
+
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #'동구권'
+	id = SOVEX_eastern_bloc
+	icon = GFX_focus_GER_the_eastern_border
+	
+	prerequisite = { focus = SOVEX_overthrow_the_Holy_League }
+	x = -2
+	y = 1
+	relative_position_id = SOVEX_overthrow_the_Holy_League
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	mutually_exclusive = {
+		focus = SOVEX_day_of_shame 
+	}
+	
+
+	bypass = {
+
+	}
+
+	available = {
+		POL = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject_of = ROOT
+				is_in_faction_with = ROOT
+			}
+		}
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+shared_focus = { #북부 공세
+	id = SOVEX_red_scandinavia
+	icon = GFX_SOV_control_scandinavia_ccp_2d_sov_compatibility
+	
+	prerequisite = { focus = SOVEX_eastern_bloc }
+	x = -1
+	y = 1
+	relative_position_id = SOVEX_eastern_bloc
+	cost = 5
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+
+	bypass = {
+
+	}
+
+	available = {
+		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
+		is_subject = no
+	}
+	
+	search_filters = {}
+
+	completion_reward = {
+	}
+}
+
+shared_focus = { #제2차 서부 공세 
+	id = SOVEX_second_western_offensive
+	icon = GFX_focus_CHL_union_of_hispanic_republics
+	
+	mutually_exclusive = {
+	}
+	prerequisite = {
+		focus = SOVEX_eastern_bloc
+	}
+	x = 1
+	y = 1
+
+	cost = 5
+
+	relative_position_id = SOVEX_eastern_bloc
+
+	ai_will_do = {
+	}
+
+	available = {
+		POL = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject_of = ROOT
+				is_in_faction_with = ROOT
+			}
+		}
+	}
+
+	bypass = {
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = no
+
+	completion_reward = {
+		add_political_power = 100
+		add_popularity = {
+			ideology = communism
+			popularity = 0.10
+		}
+	}
+}
+
 
 
 
