@@ -8782,6 +8782,27 @@ country_event = { # 문화투쟁, 랜덤한 주에 '저항하는 교회' 변동�
 		}
 	}
 }
+country_event = { # 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
+	id = trinity_system_events.3
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = TRN_improving_JTF
+			}
+			complete_national_focus = {
+				focus = TRN_improving_JTF
+				use_side_message = yes
+				originator_name = TRN_Kenzaki_Tsurugi
+			}
+			clr_country_flag = TRN_improving_JTF_in_progress_flag
+		}
+	}
+}
 
 ########################## 시작
 country_event = { # 티파티 통제
@@ -9173,7 +9194,13 @@ country_event = { # 정의실현부 정치의원
 
 	option = {
 		name = trinity_events.15.a
-
+		add_political_power = -25
+		add_command_power = -10
+		set_country_flag = { flag = TRN_improving_JTF_in_progress_flag days = 141 value = 1 }
+		hidden_effect = { 
+			activate_shine_on_focus = TRN_improving_JTF
+			country_event = { id = trinity_system_events.1 days = 140 }
+		}
     	}
 }
 country_event = { # 상투스 분파의 운명

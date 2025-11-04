@@ -8046,6 +8046,9 @@ focus_tree = {
 			}
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = TRN_Hanekawa_Hasumi_political_advisor
+			hidden_effect = { 
+				country_event = { id = trinity_events.15 days = 70 random_days = 70 }
+			}
 		}
 	}
 	
@@ -8086,6 +8089,33 @@ focus_tree = {
 			activate_targeted_decision = { target = TRM decision = TRN_honor_utilize_the_church_authority }
 			hidden_effect = {
 				country_event = { id = trinity_honor_events.9 days = 70 random_days = 70 }
+			}
+			IF = {
+				limit = { has_country_flag = TRN_kulturkampf_activetion_flag }
+				random_list = {
+					1 = {
+						add_to_variable = { 
+							TRN_Kulturkampf_display_value = 1
+							tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
+						}
+						clamp_variable = {
+							var = TRN_Kulturkampf_display_value
+							min = 0
+							max = 100
+						}
+					}
+					1 = {
+						add_to_variable = { 
+							TRN_Kulturkampf_display_value = 5
+							tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
+						}
+						clamp_variable = {
+							var = TRN_Kulturkampf_display_value
+							min = 0
+							max = 100
+						}
+					}
+				}
 			}
 		}
 	}
@@ -8280,6 +8310,33 @@ focus_tree = {
 					trait = TRM_defender_of_faith
 				}
 			}
+			IF = {
+				limit = { has_country_flag = TRN_kulturkampf_activetion_flag }
+				random_list = {
+					1 = {
+						add_to_variable = { 
+							TRN_Kulturkampf_display_value = 1
+							tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
+						}
+						clamp_variable = {
+							var = TRN_Kulturkampf_display_value
+							min = 0
+							max = 100
+						}
+					}
+					1 = {
+						add_to_variable = { 
+							TRN_Kulturkampf_display_value = 5
+							tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
+						}
+						clamp_variable = {
+							var = TRN_Kulturkampf_display_value
+							min = 0
+							max = 100
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -8435,6 +8492,7 @@ focus_tree = {
 					unit_leader_event = { id = trinity_flavor_events.41 days = 15 } # 알프레드 후겐베르크의 평론
 				}
 				country_event = { id = trinity_flavor_events.42 days = 50 random_days = 50 } 
+				country_event = { id = trinity_events.56 days = 15 random_days = 70}
 			}
 			custom_effect_tooltip = {
 				localization_key = TRN_denazification_tt
@@ -8477,7 +8535,7 @@ focus_tree = {
 			}
 			else = {
 				add_to_variable = {
-					nagisa_faction_C = 2
+					nagisa_faction_C = 4
 					tooltip = nagisa_faction_C_tt
 				}
 				add_to_variable = {
@@ -8496,11 +8554,12 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 사회문제 해결
+	focus = { # 사회 문제 해결
 		id = TRN_solving_social_problems
 		icon = GFX_focus_TRN_solving_social_problems
 		prerequisite = { focus = TRN_fate_of_german_culture }
-		x = -1
+		prerequisite = { focus = TRN_take_over_the_church }
+		x = 1
 		y = 1
 		relative_position_id = TRN_fate_of_german_culture
 		cost = 6
@@ -8605,6 +8664,30 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = TRN_
+		icon = GFX_focus_GER_strengthen_the_proletarian_international
+		prerequisite = { 
+			focus = TRN_limit_german_party
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_limit_german_party
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 100
+		}
+	}
+
 	focus = { #
 		id = TRN_new_law_for_germany_party
 		icon = GFX_focus_BRA_reach_out_to_military_dem
@@ -8627,18 +8710,20 @@ focus_tree = {
 		completion_reward = {
 			set_temp_variable = { TRN_Honor_change = -5 }
 			TRN_add_Honor = yes
+
+			add_ideas = TRN_controlled_party_ns
 		}
 	}
 
-	focus = { # 충성하는 정당들
+	focus = {
 		id = TRN_new_political_order
 		icon = GFX_focus_GER_strengthen_the_proletarian_international
 		prerequisite = { 
-			focus = TRN_limit_german_party
+			focus = TRN_new_law_for_germany_party
 		}
 		x = 0
 		y = 2
-		relative_position_id = TRN_limit_german_party
+		relative_position_id = TRN_new_law_for_germany_party
 		cost = 5
 
 		available = {
@@ -8682,11 +8767,11 @@ focus_tree = {
 		id = TRN_absorb_the_reichsbanner_schwarz_rot_gold
 		icon = GFX_focus_TRN_absorb_the_reichsbanner_schwarz_rot_gold
 		prerequisite = { 
-			focus = TRN_new_law_for_germany_party
+			focus = TRN_limit_german_party
 		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_new_law_for_germany_party
+		x = -1
+		y = 1
+		relative_position_id = TRN_limit_german_party
 		cost = 5
 
 		available = {
@@ -8709,9 +8794,9 @@ focus_tree = {
 			focus = TRN_contact_SPD
 			focus = TRN_limit_german_party 
 		}
-		x = -1
+		x = 1
 		y = 1
-		relative_position_id = TRN_limit_german_party
+		relative_position_id = TRN_contact_SPD
 		cost = 5
 
 		available = {
@@ -8741,6 +8826,7 @@ focus_tree = {
 					DATA = trinity_social_ploblem_events.5.t
 				}
 			}
+			
 		}
 	}
 
@@ -8778,7 +8864,7 @@ focus_tree = {
 		icon = GFX_focus_generic_workers
 		prerequisite = { focus = TRN_take_over_the_church }
 		prerequisite = { focus = TRN_fate_of_german_culture }
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = TRN_take_over_the_church
 		cost = 5
