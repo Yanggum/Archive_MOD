@@ -12273,3 +12273,230 @@ eden_treaty_negotiation_ALT_cat = {
 
 	
 
+
+TRN_united_gehenna_decisions_cat = {
+	
+	TRN_gehenna_puppet_leader_host = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 1 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_host_tt
+		}
+	}
+	
+	TRN_gehenna_puppet_leader_iori = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 2 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_iori_tt
+		}
+	}
+	
+	TRN_gehenna_puppet_leader_sena = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 3 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_sena_tt
+		}
+	}
+
+	TRN_gehenna_puppet_leader_integration_target = {
+		icon = GFX_decision_Gehenna_Emblem
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var > 0 }
+		}
+
+		fire_only_once = no
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 70
+		days_re_enable = 180
+
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 1 } # 나기사
+				}
+				FROM = {
+					add_compliance = 5
+					add_resistance = -5
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 2 } # 이오리
+				}
+				FROM = {
+					add_resistance = -7
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 3 } # 세나
+				}
+				FROM = {
+					add_compliance = 7
+				}
+			}
+		}
+	}
+
+	TRN_united_gehenna_decisions_integration_complete = {
+		icon = GFX_decision_trinity_city
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		fire_only_once = no
+		available = {
+			FROM = {
+				is_controlled_by = ROOT
+				compliance > 50
+			}
+			political_power_daily > 0
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 30
+		
+		modifier = {
+			political_power_cost = 0.25
+		}
+
+		remove_effect = {
+			FROM = {
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	TRN_united_gehenna_decisions_remove_nsdap = {
+		icon = GFX_decision_generic_arrest
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+				is_controlled_by = ROOT
+				OR = {
+					has_dynamic_modifier = { modifier = GEH_state_government } 
+					has_dynamic_modifier = { modifier = GEH_ucantusefactory_2 } 
+					has_dynamic_modifier = { modifier = GEH_ucantusefactory } 
+				}
+			}
+		}
+
+		fire_only_once = no
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 70
+
+		remove_effect = {
+			remove_dynamic_modifier = {
+				modifier = GEH_ucantusefactory
+			}
+			remove_dynamic_modifier = {
+				modifier = GEH_ucantusefactory_2
+			}
+			remove_dynamic_modifier = {
+				modifier = GEH_state_government
+			}
+		}
+	}
+}
