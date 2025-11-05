@@ -9,7 +9,7 @@ focus_tree = {
 	} 
 	inlay_window = {
 		id = fra_inner_circle_inlay_window
-		position = { x = 2000 y = 1280 }
+		position = { x = 1500 y = 1280 }
 	}
 	continuous_focus_position = {
 		x = 1500
@@ -576,7 +576,7 @@ focus_tree = {
 		id = FRA_focus_arm_1
 		icon = GFX_goal_fra_endex
 		cost = 2
-		x = 22
+		x = 24
 		y = 1
 		relative_position_id = FRA_focus.1
 		ai_will_do = {
@@ -2911,19 +2911,29 @@ focus_tree = {
 		#군사지도자 자리
 	focus = { #조국의 영도
 		id = FRA_leading_of_fatherland
-		cost = 1
-		x = 30
-		y = 6
+		cost = 5
+		prerequisite = {
+			focus = FRA_focus.1
+		}
+		x = 33
+		y = 7
 		icon = GFX_focus_generic_industrialists
 		completion_reward = {
-			add_political_power = 5
+			add_political_power = 100
+			hidden_effect = {
+				country_event = {
+					id = FRA_inner_circle_petain.1
+					days = 25
+				}
+			}
 		}
 	}
 	focus = { #베르됭의 사자
 		id = FRA_petain_focus_0
-		cost = 1
-		x = -1
+		cost = 10
+		x = 0
 		y = 1
+		text_icon = GER_inner_circle_focus_style
 		relative_position_id = FRA_leading_of_fatherland
 		icon = {
 		    trigger = {
@@ -2945,21 +2955,39 @@ focus_tree = {
 		    }
 		    value = GFX_goal_FRA_nomoremangmyung_anime
         }
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_petain_focus_0
+				}
+				set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = FRA_military_conference
+						FLAG_DAYS = [?progress_flag_FRA_petain_focus_0:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = FRA_military_conference
+						FOCUS = FRA_leading_of_fatherland
+					}
+					always = no
+				}
+			}
+		}
 		prerequisite = {
 			focus = FRA_leading_of_fatherland
 		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
-			}
-		}
 		completion_reward = {
-			hidden_effect = {
-				country_event = {
-					id = FRA_hidden.1
-					days = 3
-				}
+			FRA_military_conference = {
+				unit_leader_event = FRA_pet.1
 			}
 		}
 	}
@@ -2977,7 +3005,7 @@ focus_tree = {
 		available = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
+					has_country_flag = progress_flag_FRA_petain_focus_1
 				}
 				set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -2985,7 +3013,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_inner_circle_focus_in_progress_tt
 						CHARACTER = FRA_military_conference
-						FLAG_DAYS = [?FRA_employ_philippe_petain_in_progress_flag:days]
+						FLAG_DAYS = [?progress_flag_FRA_petain_focus_1:days]
 					}
 					always = no 
 				}
@@ -2995,7 +3023,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 						CHARACTER = FRA_military_conference
-						FOCUS = FRA_petain_focus_0
+						FOCUS = FRA_leading_of_fatherland
 					}
 					always = no
 				}
@@ -3021,8 +3049,7 @@ focus_tree = {
 		available = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-					has_completed_focus = FRA_petain_focus_1
+					has_country_flag = progress_flag_FRA_petain_focus_2
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -3030,7 +3057,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_inner_circle_focus_in_progress_tt
 						CHARACTER = FRA_military_conference
-						FLAG_DAYS = [?FRA_employ_philippe_petain_in_progress_flag:days]
+						FLAG_DAYS = [?progress_flag_FRA_petain_focus_2:days]
 					}
 					always = no 
 				}
@@ -3040,7 +3067,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 						CHARACTER = FRA_military_conference
-						FOCUS = FRA_petain_focus_0
+						FOCUS = FRA_leading_of_fatherland
 					}
 					always = no
 				}
@@ -3066,8 +3093,7 @@ focus_tree = {
 		available = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-					has_completed_focus = FRA_petain_focus_2
+					has_country_flag = progress_flag_FRA_petain_focus_3
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -3075,7 +3101,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_inner_circle_focus_in_progress_tt
 						CHARACTER = FRA_military_conference
-						FLAG_DAYS = [?FRA_employ_philippe_petain_in_progress_flag:days]
+						FLAG_DAYS = [?progress_flag_FRA_petain_focus_3:days]
 					}
 					always = no 
 				}
@@ -3085,7 +3111,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 						CHARACTER = FRA_military_conference
-						FOCUS = FRA_petain_focus_0
+						FOCUS = FRA_leading_of_fatherland
 					}
 					always = no
 				}
@@ -3111,8 +3137,7 @@ focus_tree = {
 		available = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-					has_completed_focus = FRA_petain_focus_3
+					has_country_flag = progress_flag_FRA_petain_focus_4
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -3120,7 +3145,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_inner_circle_focus_in_progress_tt
 						CHARACTER = FRA_military_conference
-						FLAG_DAYS = [?FRA_employ_philippe_petain_in_progress_flag:days]
+						FLAG_DAYS = [?progress_flag_FRA_petain_focus_4:days]
 					}
 					always = no 
 				}
@@ -3130,7 +3155,7 @@ focus_tree = {
 					tooltip = {
 						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 						CHARACTER = FRA_military_conference
-						FOCUS = FRA_petain_focus_0
+						FOCUS = FRA_leading_of_fatherland
 					}
 					always = no
 				}
@@ -3142,68 +3167,318 @@ focus_tree = {
 		}
 	}
 
-		#정치지도자 자리
-		
-	focus = { #피에르 라발
-		id = FRA_laval_focus_0
-		cost = 1
-		x = 1
+	focus = { #
+		id = FRA_charles_de_gaulle_focus_0
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = -7
 		y = 1
 		relative_position_id = FRA_leading_of_fatherland
-		icon = GFX_focus_generic_treaty
-		prerequisite = { 
+		prerequisite = {
 			focus = FRA_leading_of_fatherland
 		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
-			}
-		}
-		completion_reward = {
-		}
-	}
-	focus = { #반공 태세 강화
-		id = FRA_laval_focus_1
-		cost = 20
-		x = 0
-		y = 3
-		relative_position_id = FRA_laval_focus_0
-		icon = GFX_focus_ger_bulwark_against_bolshevism
-		text_icon = GER_inner_circle_focus_style
-		prerequisite = { 
-			focus = FRA_laval_focus_0
+		mutually_exclusive = {
+			focus = FRA_maurice_gamelin_focus_0
 		}
 		available = {
-			custom_override_tooltip = {
-				tooltip = {
-					localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-					CHARACTER = FRA_pierre_laval
-					FOCUS = FRA_laval_focus_0
-				}
-				always = no
-			}
 		}
 		completion_reward = {
 		}
 	}
 
+	focus = { #
+		id = FRA_charles_de_gaulle_focus_1
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_charles_de_gaulle_focus_0
+		prerequisite = {
+			focus = FRA_charles_de_gaulle_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_de_gaulle_focus_2
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_charles_de_gaulle_focus_1
+		prerequisite = {
+			focus = FRA_charles_de_gaulle_focus_1
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_maurice_gamelin_focus_0
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = -9
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+			focus = FRA_charles_de_gaulle_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_maurice_gamelin_focus_1
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_maurice_gamelin_focus_0
+		prerequisite = {
+			focus = FRA_maurice_gamelin_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_maurice_gamelin_focus_2
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_maurice_gamelin_focus_1
+		prerequisite = {
+			focus = FRA_maurice_gamelin_focus_1
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_de_gaulle_maurice_gamelin_focus_3
+		icon = GFX_focus_GER_ascension_of_goring
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = FRA_maurice_gamelin_focus_2
+		prerequisite = {
+			focus = FRA_maurice_gamelin_focus_2
+			focus = FRA_charles_de_gaulle_focus_2
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_maxime_weygand_focus_0
+		icon = GFX_focus_GER_ascension_of_todt
+		cost = 5
+		x = -3
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_nogues_focus_0
+		icon = GFX_focus_GER_ascension_of_speer
+		cost = 5
+		x = -5
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_maurras_focus_0
+		icon = GFX_focus_GER_party_chancellor_bormann
+		cost = 5
+		x = 3
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+			focus = FRA_francois_de_la_roque_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_maurras_focus_1
+		icon = GFX_focus_GER_optimize_reich_labour_service
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_charles_maurras_focus_0
+		prerequisite = {
+			focus = FRA_charles_maurras_focus_0
+		}
+		mutually_exclusive = {
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_maurras_focus_2
+		icon = GFX_focus_GER_glorify_party_rallies
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_charles_maurras_focus_1
+		prerequisite = {
+			focus = FRA_charles_maurras_focus_1
+		}
+		mutually_exclusive = {
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_charles_maurras_focus_3
+		icon = GFX_focus_GER_total_control_over_domestic_affairs
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_charles_maurras_focus_2
+		prerequisite = {
+			focus = FRA_charles_maurras_focus_2
+		}
+		mutually_exclusive = {
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_francois_de_la_roque_focus_0
+		icon = GFX_focus_GER_ascension_of_goebbels
+		cost = 5
+		x = 5
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		prerequisite = {
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+			focus = FRA_charles_maurras_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_francois_de_la_roque_focus_1
+		icon = GFX_focus_GER_reich_ministry_of_public_enlightenment
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_francois_de_la_roque_focus_0
+		prerequisite = {
+			focus = FRA_francois_de_la_roque_focus_0
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_francois_de_la_roque_focus_2
+		icon = GFX_focus_GER_fund_the_film_department
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_francois_de_la_roque_focus_1
+		prerequisite = {
+			focus = FRA_francois_de_la_roque_focus_1
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+	focus = { #
+		id = FRA_francois_de_la_roque_focus_3
+		icon = GFX_focus_GER_propaganda_master
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = FRA_francois_de_la_roque_focus_2
+		prerequisite = {
+			focus = FRA_francois_de_la_roque_focus_2
+		}
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+
+		#정치지도자 자리
+
 	#프랑수아 다를랑
 	focus = { #행정가 제독
 		id = FRA_darlan_focus_0
-		cost = 1
-		x = 1
+		cost = 5
+		x = 7
 		y = 1
 		relative_position_id = FRA_leading_of_fatherland
 		icon = GFX_focus_generic_naval_discipline
 		prerequisite = {
 			focus = FRA_leading_of_fatherland
 		}
+		mutually_exclusive = {
+			focus = FRA_laval_focus_0
+		}
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
-			}
 		}
 		completion_reward = {
 			hidden_effect = {
@@ -3212,16 +3487,94 @@ focus_tree = {
 					days = 3
 				}
 			}
+			FRA_pierre_laval = {
+				unit_leader_event = FRA_pet.3
+			}
 		}
 	}
 	focus = { #본토 산업 이전 지원
-		id = FRA_darlan_focus_1
+		id = FRA_darlan_and_laval_focus_1
 		cost = 20
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = FRA_darlan_focus_0
 		text_icon = GER_inner_circle_focus_style
 		icon = GFX_focus_generic_military_industry
+		prerequisite = {
+			focus = FRA_darlan_focus_0
+			focus = FRA_laval_focus_0
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_darlan_and_laval_focus_1
+				}
+				set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				if = { #HESS working on it
+					limit = {
+						check_variable = { FRA_first_cabinet_prime_minister = 2 }
+					}
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_francois_darlan
+							FLAG_DAYS = [?progress_flag_FRA_darlan_and_laval_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #BORMANN working on it
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_pierre_laval
+							FLAG_DAYS = [?progress_flag_FRA_darlan_and_laval_focus_1:days]
+						}
+						always = no 
+					}
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_multiple_tt
+						CHARACTER = FRA_francois_darlan
+						FOCUS = FRA_darlan_focus_0
+						CHARACTER_2 = FRA_pierre_laval
+						FOCUS_2 = FRA_laval_focus_0
+					}
+					always = no
+				}
+			}
+		}
+		completion_reward = {
+			if = { #HESS working on it
+				limit = {
+					check_variable = { FRA_first_cabinet_prime_minister = 2 }
+				}
+				FRA_francois_darlan = {
+					unit_leader_event = FRA_dar.2
+				}
+			}
+			else = { #BORMANN working on it
+				FRA_pierre_laval = {
+					unit_leader_event = FRA_dar.2
+				}
+			}
+		}
+	}
+	focus = { #해상 패권 전략
+		id = FRA_darlan_focus_2
+		cost = 20
+		x = -1
+		y = 1
+		relative_position_id = FRA_darlan_and_laval_focus_1
+		text_icon = GER_inner_circle_focus_style
+		icon = GFX_focus_generic_africa_naval
+		prerequisite = {
+			focus = FRA_darlan_and_laval_focus_1
+		}
 		prerequisite = {
 			focus = FRA_darlan_focus_0
 		}
@@ -3229,52 +3582,6 @@ focus_tree = {
 			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
 				limit = {
 					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
-					has_completed_focus = FRA_darlan_focus_0
-				}
-				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
-				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_inner_circle_focus_in_progress_tt
-						CHARACTER = FRA_francois_darlan 
-						FLAG_DAYS = [?FRA_employ_francois_darlan_in_progress_flag:days]
-					}
-					always = no 
-				}
-			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-						CHARACTER = FRA_francois_darlan
-						FOCUS = FRA_darlan_focus_0
-					}
-					always = no
-				}
-			}
-		}
-		completion_reward = {
-			FRA_francois_darlan = {
-				unit_leader_event = FRA_dar.2
-			}
-		}
-	}
-	focus = { #해상 패권 전략
-		id = FRA_darlan_focus_2
-		cost = 20
-		x = 1
-		y = 1
-		relative_position_id = FRA_darlan_focus_1
-		text_icon = GER_inner_circle_focus_style
-		icon = GFX_focus_generic_africa_naval
-		prerequisite = {
-			focus = FRA_darlan_focus_1
-		}
-		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
-				limit = {
-					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
-					has_completed_focus = FRA_darlan_focus_1
 				}
 				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
 				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
@@ -3307,7 +3614,7 @@ focus_tree = {
 	focus = { #산악을 넘어
 		id = FRA_darlan_focus_3
 		cost = 20
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = FRA_darlan_focus_2
 		text_icon = GER_inner_circle_focus_style
@@ -3349,6 +3656,209 @@ focus_tree = {
 			}
 		}
 	}
+		
+	focus = { #피에르 라발
+		id = FRA_laval_focus_0
+		cost = 5
+		x = 9
+		y = 1
+		relative_position_id = FRA_leading_of_fatherland
+		icon = GFX_focus_generic_treaty
+		prerequisite = { 
+			focus = FRA_leading_of_fatherland
+		}
+		mutually_exclusive = {
+			focus = FRA_darlan_focus_0
+		}
+		available = {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				hidden_trigger = {
+					NOT = { has_country_flag = FRA_was_ascended_flag_1 } #Flag to prevent AI from taking the focus again after advisor has been replaced}
+				}
+			}
+			
+			has_government = neutrality
+			NOT = {
+				has_country_leader = {
+					ruling_only = yes
+					character = FRA_pierre_laval
+				}
+			}
+
+			if = {
+				limit = {
+					has_country_flag = FRA_inner_circle_event_pending_flag
+				}
+				NOT = { has_country_flag = FRA_inner_circle_event_pending_flag }
+			}
+
+			NOT = {
+				has_country_flag = {
+					flag = FRA_inner_circle_cd_flag
+					days < 175
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = FRA_inner_circle_cd_flag
+				}
+				custom_trigger_tooltip = {
+					tooltip = FRA_inner_circle_cd_days_tt
+					NOT = {	has_country_flag = FRA_inner_circle_cd_flag }
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = FRA_ascension_of_character_tt
+				CHARACTER = FRA_pierre_laval
+			}
+			show_ideas_tooltip = inner_circle_FRA_idea_1_one
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = {
+				localization_key = GER_ascension_of_character_focus_tt
+				CHARACTER = FRA_pierre_laval
+			}
+
+			if = { #Just to make it easy to debug stuff for development
+				limit = {
+					OR = {
+						check_variable = { FRA_ascended_advisor_1 = 1 }
+						check_variable = { FRA_ascended_advisor_2 = 1 }
+						check_variable = { FRA_ascended_advisor_3 = 1 }
+					}
+				}
+				log = "Advisor was already there. STOP CHEATING!"
+			}
+			else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+				limit = {
+					check_variable = { FRA_ascended_advisor_1 = 0 compare = not_equals }
+					check_variable = { FRA_ascended_advisor_2 = 0 compare = not_equals }
+					check_variable = { FRA_ascended_advisor_3 = 0 compare = not_equals }
+				}
+				hidden_effect = {
+					set_variable = { FRA_ascending_advisor = 1 }
+					country_event = FRA_inner_circle.01
+				}
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+				custom_effect_tooltip = {
+					localization_key = FRA_event_to_replace_ascended_advisor_tt
+					EVENT = FRA_inner_circle.01.t
+					CHARACTER = FRA_pierre_laval
+				}
+			}
+			else = {
+				hidden_effect = {
+					add_ideas = inner_circle_FRA_prime_minister_1
+				}
+				if = {
+					limit = {
+						check_variable = { FRA_ascended_advisor_1 = 0 }
+					}
+					set_variable = { FRA_ascended_advisor_1 = 1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { FRA_ascended_advisor_2 = 0 }
+					}
+					set_variable = { FRA_ascended_advisor_2 = 1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { FRA_ascended_advisor_3 = 0 }
+					}
+					set_variable = { FRA_ascended_advisor_3 = 1 }
+				}
+			}
+
+			hidden_effect = {
+				hidden_effect = {
+					add_ideas = inner_circle_FRA_idea_1_one
+				}
+				country_event = { id = FRA_inner_circle_pierre_laval.1 days = 75 random_days = 25 }
+
+				set_country_flag = {
+					flag = FRA_inner_circle_cd_flag
+					days = 175
+					value = 1
+				}
+
+				set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+					flag = FRA_was_ascended_flag_1
+					days = 1500 # Clear after ~4 years 
+					value = 1
+				}
+			}
+		}
+	}
+	focus = { #반공 태세 강화
+		id = FRA_laval_focus_1
+		cost = 20
+		x = 0
+		y = 3
+		relative_position_id = FRA_laval_focus_0
+		icon = GFX_focus_ger_bulwark_against_bolshevism
+		text_icon = GER_inner_circle_focus_style
+		prerequisite = { 
+			focus = FRA_laval_focus_0
+		}
+		prerequisite = {
+			focus = FRA_darlan_and_laval_focus_1
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_laval_focus_1
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = FRA_pierre_laval 
+						FLAG_DAYS = [?progress_flag_FRA_laval_focus_1:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = FRA_pierre_laval
+						FOCUS = FRA_laval_focus_0
+					}
+					always = no
+				}
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_1_one
+					add_idea = inner_circle_FRA_idea_1_two
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_1_one
+					add_idea = inner_circle_FRA_idea_1_two_no_aat
+				}
+			}
+		}
+	}
+
+
+
 	focus = {	
 		#지중해를 바라보며
 		id = FRA_focus_12

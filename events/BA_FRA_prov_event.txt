@@ -5,6 +5,10 @@ add_namespace = FRM_event
 add_namespace = FRA_hidden
 add_namespace = FRA_disruption_event
 add_namespace = FRA_strike_event
+add_namespace = FRA_inner_circle
+add_namespace = FRA_inner_circle_petain
+add_namespace = FRA_inner_circle_pierre_laval
+add_namespace = FRA_inner_circle_darlan
 
 country_event = {
 	#작은 공 - 1
@@ -4722,9 +4726,6 @@ country_event = {
 				id = FRA_prov_event.6
 				days = 5
 			}
-			add_to_variable = {
-				FRA_ascended_advisor_1 = 1
-			}
 			country_event = {
 				id = FRA_prov_event.86
 				days = 100
@@ -4774,11 +4775,6 @@ country_event = {
 		}
 	}
 	option = {
-		hidden_effect = {
-			FRA_military_conference = {
-				unit_leader_event = FRA_pet.1
-			}
-		}
 		name = FRA_prov_event.120.a
 		set_politics = {
 			ruling_party = neutrality
@@ -4797,7 +4793,6 @@ country_event = {
             news_event = { id = BA_news.66 hours = 3 }
 			set_country_flag = FRA_exile_is_over
 			mark_focus_tree_layout_dirty = yes
-			unlock_national_focus = FRA_leading_of_fatherland
 		}
 	}
 }
@@ -5832,16 +5827,11 @@ unit_leader_event = {
 		name = FRA_pet.2.a
 		add_stability = 0.02
 		add_war_support = -0.02
-		hidden_effect = {
-			FRA_pierre_laval = {
-				unit_leader_event =  FRA_pet.3
-			}
-		}
 	}
 }
 
 unit_leader_event = {
-	#피에르 라발의 도피 (쫄튀)
+	#피에르 라발의 도피 (다를랑 임명시)
 	id = FRA_pet.3
 	title = FRA_pet.3.t
 	desc = FRA_pet.3.d
@@ -5851,37 +5841,6 @@ unit_leader_event = {
 		name = FRA_pet.3.a
 		FRA_pierre_laval = {
 			set_nationality = MIL
-		}
-	}
-	after = {
-		if = {
-			limit = {
-				original_tag = FRA
-			}
-			add_to_variable = {
-				FRA_ascended_advisor_1 = -1
-			}
-		}
-		hidden_effect = {
-			mark_focus_tree_layout_dirty = yes
-			unlock_national_focus = FRA_leading_of_fatherland
-			FRA = {
-				FRA_francois_darlan = {
-					unit_leader_event = {
-						id = FRA_dar.1
-						days = 10
-					}
-				}
-			}
-
-			MIL = {
-				FRA_pierre_laval = {
-					unit_leader_event = {
-						id = FRA_pet.30
-						days = 2
-					}
-				}
-			}
 		}
 	}
 }
@@ -6004,16 +5963,6 @@ unit_leader_event = {
 	hidden = no
 	option = {
 		name = FRA_dar.1.a
-		add_to_variable = {
-			FRA_ascended_advisor_1 = 2
-		}
-		hidden_effect = {
-			add_ideas = FRA_darlan_prime_minister
-			mark_focus_tree_layout_dirty = yes
-			complete_national_focus = FRA_darlan_focus_0
-		}
-		custom_effect_tooltip = FRA_appointed_by_prime_minister_tt
-		show_ideas_tooltip = FRA_darlan_prime_minister
 	}
 }
 unit_leader_event = {
@@ -6025,6 +5974,17 @@ unit_leader_event = {
 	hidden = no
 	option = {
 		name = FRA_dar.2.a
+		random_owned_state = {
+			limit = {
+				infrastructure > 1
+				is_on_continent = africa
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+			}
+		}
 		random_owned_state = {
 			limit = {
 				infrastructure > 1
@@ -7019,8 +6979,143 @@ country_event = { # 공장 노획
 	}
 }
 
+
+# New Character replaces an Ascended Advisor
+country_event = {
+	id = FRA_inner_circle.01
+	title = FRA_inner_circle.01.t
+	desc = FRA_inner_circle.01.desc
+	picture = "[GetAscendingAdvisorPortrait]"
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = FRA_inner_circle_event_pending_flag
+		}
+	}
+
+	option = { #Replace Ascended Advisor 1
+		name = FRA_inner_circle.01.a
+
+		ai_chance = {
+			base = 1
+			modifier = { 
+				factor = 100
+			}
+		}
+		
+		FRA_remove_replaced_inner_circle_1_effects = yes
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		set_variable = { FRA_ascended_advisor_1 = FRA_ascending_advisor }
+		FRA_add_replacing_inner_circle_effects = yes
+
+		hidden_effect = {
+			#Cleaning vars / flags / etc
+			clear_variable = FRA_ascending_advisor
+			clr_country_flag = FRA_inner_circle_event_pending_flag
+		}
+	}
+
+	option = { #Replace Ascended Advisor 2
+		name = FRA_inner_circle.01.b
+
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 100
+			}
+		}
+
+		FRA_remove_replaced_inner_circle_2_effects = yes
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		set_variable = { FRA_ascended_advisor_2 = FRA_ascending_advisor }
+		FRA_add_replacing_inner_circle_effects = yes
+
+		hidden_effect = {
+			#Cleaning vars / flags / etc
+			clear_variable = FRA_ascending_advisor
+			clr_country_flag = FRA_inner_circle_event_pending_flag
+		}
+	}
+
+	option = { #Replace Ascended Advisor 3
+		name = FRA_inner_circle.01.c
+
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 100
+			}
+		}
+
+		FRA_remove_replaced_inner_circle_3_effects = yes
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		set_variable = { FRA_ascended_advisor_3 = FRA_ascending_advisor }
+		FRA_add_replacing_inner_circle_effects = yes
+
+		hidden_effect = {
+			#Cleaning vars / flags / etc
+			clear_variable = FRA_ascending_advisor
+			clr_country_flag = FRA_inner_circle_event_pending_flag
+		}
+	}
+
+	option = { # Abort - Ditch this advisor
+		name = GER_inner_circle.01.d
+
+		ai_chance = { #AI "knows" what its doing (pffff)
+			base = 0
+		}
+
+		if = {
+			limit = {
+				check_variable = { FRA_ascending_advisor = 1 }
+			}
+			uncomplete_national_focus = {
+				focus = FRA_laval_focus_0
+				uncomplete_children = no
+				refund_political_power = yes
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = { FRA_ascending_advisor = 2 }
+			}
+			uncomplete_national_focus = {
+				focus = FRA_darlan_focus_0
+				uncomplete_children = no
+				refund_political_power = yes
+			}
+		}
+		else = {
+			log = "Something went terribly wrong with your nazis (no wonder)"
+		}
+
+		hidden_effect = {
+			#Cleaning vars / flags / etc
+			clear_variable = FRA_ascending_advisor
+
+			clr_country_flag = FRA_inner_circle_cd_flag
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clear_variable = FRA_ascending_advisor
+			clr_country_flag = FRA_inner_circle_event_pending_flag
+		}
+	}
+}
+
 country_event = { #페텡 중점 자동시작
-	id = FRA_hidden.1
+	id = FRA_inner_circle_petain.1
 
 	hidden = yes
 	is_triggered_only = yes
@@ -7029,73 +7124,48 @@ country_event = { #페텡 중점 자동시작
 	immediate = {
 		if = {
 			limit = {
-				has_completed_focus = FRA_petain_focus_0
+				NOT = { has_completed_focus = FRA_petain_focus_0 }
+				NOT = { has_shine_effect_on_focus = FRA_petain_focus_0 }
+			}
+			activate_shine_on_focus = FRA_petain_focus_0
+			set_country_flag = { flag = progress_flag_FRA_petain_focus_0 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_petain.2 days = 70 }
+		}
+		else_if = {
+			limit = {
 				NOT = { has_completed_focus = FRA_petain_focus_1 }
 				NOT = { has_shine_effect_on_focus = FRA_petain_focus_1 }
 			}
 			activate_shine_on_focus = FRA_petain_focus_1
-			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 69 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 70 }
+			set_country_flag = { flag = progress_flag_FRA_petain_focus_1 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_petain.2 days = 70 }
 		}
 		else_if = {
 			limit = {
-				has_completed_focus = FRA_petain_focus_1
 				NOT = { has_completed_focus = FRA_petain_focus_2 }
 				NOT = { has_shine_effect_on_focus = FRA_petain_focus_2 }
 			}
 			activate_shine_on_focus = FRA_petain_focus_2
-			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
+			set_country_flag = { flag = progress_flag_FRA_petain_focus_2 days = 139 value = 1 }
+			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
 		}
 		else_if = {
 			limit = {
-				has_completed_focus = FRA_petain_focus_2
 				NOT = { has_completed_focus = FRA_petain_focus_3 }
 				NOT = { has_shine_effect_on_focus = FRA_petain_focus_3 }
 			}
 			activate_shine_on_focus = FRA_petain_focus_3
-			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
+			set_country_flag = { flag = progress_flag_FRA_petain_focus_3 days = 139 value = 1 }
+			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
 		}
 		else_if = {
 			limit = {
-				has_completed_focus = FRA_petain_focus_3
 				NOT = { has_completed_focus = FRA_petain_focus_4 }
 				NOT = { has_shine_effect_on_focus = FRA_petain_focus_4 }
 			}
 			activate_shine_on_focus = FRA_petain_focus_4
-			set_country_flag = { flag = FRA_employ_philippe_petain_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
-		}
-		else_if = {
-			limit = {
-				has_completed_focus = FRA_darlan_focus_0
-				NOT = { has_completed_focus = FRA_darlan_focus_1 }
-				NOT = { has_shine_effect_on_focus = FRA_darlan_focus_1 }
-			}
-			activate_shine_on_focus = FRA_darlan_focus_1
-			set_country_flag = { flag = FRA_employ_francois_darlan_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
-		}
-		else_if = {
-			limit = {
-				has_completed_focus = FRA_darlan_focus_1
-				NOT = { has_completed_focus = FRA_darlan_focus_2 }
-				NOT = { has_shine_effect_on_focus = FRA_darlan_focus_2 }
-			}
-			activate_shine_on_focus = FRA_darlan_focus_2
-			set_country_flag = { flag = FRA_employ_francois_darlan_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
-		}
-		else_if = {
-			limit = {
-				has_completed_focus = FRA_darlan_focus_2
-				NOT = { has_completed_focus = FRA_darlan_focus_3 }
-				NOT = { has_shine_effect_on_focus = FRA_darlan_focus_3 }
-			}
-			activate_shine_on_focus = FRA_darlan_focus_3
-			set_country_flag = { flag = FRA_employ_francois_darlan_in_progress_flag days = 139 value = 1 }
-			country_event = { id = FRA_hidden.2 days = 140 }
+			set_country_flag = { flag = progress_flag_FRA_petain_focus_4 days = 139 value = 1 }
+			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
 		}
 		else = { #Debug logs
 			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot start new focus"
@@ -7105,7 +7175,7 @@ country_event = { #페텡 중점 자동시작
 
 # GOEBBELS - Complete Focus
 country_event = {
-	id = FRA_hidden.2
+	id = FRA_inner_circle_petain.2
 
 	hidden = yes
 	is_triggered_only = yes
@@ -7114,25 +7184,31 @@ country_event = {
 	immediate = {
 		if = {
 			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_0
+			}
+			complete_national_focus = {
+				focus = FRA_petain_focus_0
+				use_side_message = yes
+				originator_name = FRA_military_conference
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_0
+			country_event = { id = FRA_inner_circle_petain.1 days = 5 }
+		}
+		else_if = {
+			limit = {
 				has_shine_effect_on_focus = FRA_petain_focus_1
-				NOT = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-				}
 			}
 			complete_national_focus = {
 				focus = FRA_petain_focus_1
 				use_side_message = yes
 				originator_name = FRA_military_conference
 			}
-			clr_country_flag = FRA_employ_philippe_petain_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
+			clr_country_flag = progress_flag_FRA_petain_focus_1
+			country_event = { id = FRA_inner_circle_petain.1 days = 5 }
 		}
 		else_if = {
 			limit = {
 				has_shine_effect_on_focus = FRA_petain_focus_2
-				NOT = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-				}
 			}
 			complete_national_focus = {
 				focus = FRA_petain_focus_2
@@ -7140,14 +7216,11 @@ country_event = {
 				originator_name = FRA_military_conference
 			}
 			clr_country_flag = FRA_employ_philippe_petain_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
+			country_event = { id = FRA_inner_circle_petain.1 days = 5 }
 		}
 		else_if = {
 			limit = {
 				has_shine_effect_on_focus = FRA_petain_focus_3
-				NOT = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-				}
 			}
 			complete_national_focus = {
 				focus = FRA_petain_focus_3
@@ -7155,14 +7228,11 @@ country_event = {
 				originator_name = FRA_military_conference
 			}
 			clr_country_flag = FRA_employ_philippe_petain_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
+			country_event = { id = FRA_inner_circle_petain.1 days = 5 }
 		}
 		else_if = {
 			limit = {
 				has_shine_effect_on_focus = FRA_petain_focus_4
-				NOT = {
-					has_country_flag = FRA_employ_philippe_petain_in_progress_flag
-				}
 			}
 			complete_national_focus = {
 				focus = FRA_petain_focus_4
@@ -7170,55 +7240,83 @@ country_event = {
 				originator_name = FRA_military_conference
 			}
 			clr_country_flag = FRA_employ_philippe_petain_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
-		}
-		else_if = {
-			limit = {
-				has_shine_effect_on_focus = FRA_darlan_focus_1
-				NOT = {
-					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
-				}
-			}
-			complete_national_focus = {
-				focus = FRA_darlan_focus_1
-				use_side_message = yes
-				originator_name = FRA_francois_darlan
-			}
-			clr_country_flag = FRA_employ_francois_darlan_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
-		}
-		else_if = {
-			limit = {
-				has_shine_effect_on_focus = FRA_darlan_focus_2
-				NOT = {
-					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
-				}
-			}
-			complete_national_focus = {
-				focus = FRA_darlan_focus_2
-				use_side_message = yes
-				originator_name = FRA_francois_darlan
-			}
-			clr_country_flag = FRA_employ_francois_darlan_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
-		}
-		else_if = {
-			limit = {
-				has_shine_effect_on_focus = FRA_darlan_focus_3
-				NOT = {
-					has_country_flag = FRA_employ_francois_darlan_in_progress_flag
-				}
-			}
-			complete_national_focus = {
-				focus = FRA_darlan_focus_3
-				use_side_message = yes
-				originator_name = FRA_francois_darlan
-			}
-			clr_country_flag = FRA_employ_francois_darlan_in_progress_flag
-			country_event = { id = FRA_hidden.1 days = 5 }
+			country_event = { id = FRA_inner_circle_petain.1 days = 5 }
 		}
 		else = { #Debug logs
 			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot complete focus"
+		}
+	}
+}
+
+country_event = { #피에르 라발 중점 자동시작
+	id = FRA_inner_circle_pierre_laval.1
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+		has_completed_focus = FRA_laval_focus_0
+		OR = {
+			check_variable = { FRA_ascended_advisor_1 = 1 }
+			check_variable = { FRA_ascended_advisor_2 = 1 }
+			check_variable = { FRA_ascended_advisor_3 = 1 }
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_completed_focus = FRA_laval_focus_0
+				NOT = { has_completed_focus = FRA_darlan_and_laval_focus_1 }
+				NOT = { has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1 }
+			}
+			activate_shine_on_focus = FRA_darlan_and_laval_focus_1
+			set_country_flag = { flag = progress_flag_FRA_darlan_and_laval_focus_1 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_pierre_laval.2 days = 70 }
+			set_variable = { FRA_first_cabinet_prime_minister = 1 } # 얘가 시작함
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_laval_focus_1 }
+			}
+			activate_shine_on_focus = FRA_laval_focus_1
+			set_country_flag = { flag = progress_flag_FRA_laval_focus_1 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_pierre_laval.2 days = 70 }
+		}
+	}
+}
+
+# GOEBBELS - Complete Focus
+country_event = {
+	id = FRA_inner_circle_pierre_laval.2
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1
+				check_variable = { FRA_first_cabinet_prime_minister = 1 } # 얘가 시작함
+			}
+			complete_national_focus = {
+				focus = FRA_darlan_and_laval_focus_1
+				use_side_message = yes
+				originator_name = FRA_pierre_laval
+			}
+			clr_country_flag = progress_flag_FRA_darlan_and_laval_focus_1
+			country_event = { id = FRA_inner_circle_pierre_laval.1 days = 5 }
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_laval_focus_1
+			}
+			complete_national_focus = {
+				focus = FRA_laval_focus_1
+				use_side_message = yes
+				originator_name = FRA_pierre_laval
+			}
+			clr_country_flag = progress_flag_FRA_laval_focus_1
+			country_event = { id = FRA_inner_circle_pierre_laval.1 days = 5 }
 		}
 	}
 }
