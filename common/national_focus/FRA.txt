@@ -3501,7 +3501,7 @@ focus_tree = {
 					hidden_effect = {
 						add_ideas = inner_circle_FRA_idea_2_one
 					}
-					country_event = { id = FRA_inner_circle_pierre_laval.1 days = 75 random_days = 25 }
+					country_event = { id = FRA_inner_circle_francois_darlan.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
 						flag = FRA_inner_circle_cd_flag
@@ -4009,7 +4009,7 @@ focus_tree = {
 					hidden_effect = {
 						add_ideas = inner_circle_FRA_idea_4_one
 					}
-					country_event = { id = FRA_inner_circle_pierre_laval.1 days = 75 random_days = 25 }
+					country_event = { id = FRA_inner_circle_charles_maurras.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
 						flag = FRA_inner_circle_cd_flag
@@ -4059,6 +4059,10 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_4_one
+					add_idea = inner_circle_FRA_idea_4_two
+				}
 			}
 		}
 
@@ -4094,8 +4098,127 @@ focus_tree = {
 				focus = FRA_charles_maurras_focus_0
 			}
 			available = {
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					hidden_trigger = {
+						NOT = { has_country_flag = FRA_was_ascended_flag_1 } #Flag to prevent AI from taking the focus again after advisor has been replaced}
+					}
+				}
+				
+				has_government = neutrality
+				NOT = {
+					has_country_leader = {
+						ruling_only = yes
+						character = FRA_francois_de_la_rocque
+					}
+				}
+
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_event_pending_flag
+					}
+					NOT = { has_country_flag = FRA_inner_circle_event_pending_flag }
+				}
+
+				NOT = {
+					has_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days < 175
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_cd_flag
+					}
+					custom_trigger_tooltip = {
+						tooltip = FRA_inner_circle_cd_days_tt
+						NOT = {	has_country_flag = FRA_inner_circle_cd_flag }
+					}
+				}
 			}
 			completion_reward = {
+				custom_effect_tooltip = {
+					localization_key = FRA_ascension_of_character_tt
+					CHARACTER = FRA_francois_de_la_rocque
+				}
+				show_ideas_tooltip = inner_circle_FRA_idea_3_one
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+
+				custom_effect_tooltip = {
+		                  localization_key = GER_ascension_of_character_focus_tt
+		                  CHARACTER = FRA_francois_de_la_rocque
+		              }
+
+				if = { #Just to make it easy to debug stuff for development
+					limit = {
+						OR = {
+							check_variable = { FRA_ascended_advisor_1 = 3 }
+							check_variable = { FRA_ascended_advisor_2 = 3 }
+							check_variable = { FRA_ascended_advisor_3 = 3 }
+						}
+					}
+					log = "Advisor was already there. STOP CHEATING!"
+				}
+				else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+					limit = {
+						check_variable = { FRA_ascended_advisor_1 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_2 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_3 = 0 compare = not_equals }
+					}
+					hidden_effect = {
+						set_variable = { FRA_ascending_advisor = 3 }
+						country_event = FRA_inner_circle.01
+					}
+
+					custom_effect_tooltip = generic_skip_one_line_tt
+					custom_effect_tooltip = {
+						localization_key = FRA_event_to_replace_ascended_advisor_tt
+						EVENT = FRA_inner_circle.01.t
+						CHARACTER = FRA_francois_de_la_rocque
+					}
+				}
+				else = {
+					if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_1 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_1 = 3 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_2 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_2 = 3 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_3 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_3 = 3 }
+					}
+				}
+
+				hidden_effect = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_3_one
+					}
+					country_event = { id = FRA_inner_circle_francois_de_la_rocque.1 days = 75 random_days = 25 }
+
+					set_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days = 175
+						value = 1
+					}
+
+					set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+						flag = FRA_was_ascended_flag_1
+						days = 1500 # Clear after ~4 years
+						value = 1
+					}
+				}
 			}
 		}
 
@@ -4128,6 +4251,10 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_3_one
+					add_idea = inner_circle_FRA_idea_3_two
+				}
 			}
 		}
 

@@ -11,18 +11,11 @@ FRA_debug_effect3 = {
 
 FRA_change_to_disruption_mission_time = {
 	# temp_FRA_change_to_mission_time
-	custom_effect_tooltip = {
-		localization_key = BA_mission_edit_time_bad_tt
-		mission = FRA_african_rage_mission
-		day = "[?temp_FRA_change_to_mission_time]"
-	}
+	custom_effect_tooltip = BA_mission_edit_time_bad_tt
 	add_to_variable = {
 		var_FRA_african_rage_mission = temp_FRA_change_to_mission_time
 	}
-	add_days_mission_timeout = {
-		mission = FRA_african_rage_mission
-		days = temp_FRA_change_to_mission_time
-	}
+	activate_mission = FRA_african_rage_mission
 }
 
 FRA_change_to_disruption_level = {
@@ -139,7 +132,7 @@ FRA_change_to_disruption_level = {
 		set_variable = {
 			FRA_rol_cg = -0.02
 		}
-		country_event = FRA_prov_event.118
+		log = "FRA_prov_event.118 missing - skipped"
 	}
 	else_if = {
 		limit = {
@@ -165,7 +158,7 @@ FRA_change_to_disruption_level = {
 		set_variable = {
 			FRA_rol_cg = -0.02
 		}
-		country_event = FRA_strike_event.5
+		country_event = { id = FRA_strike_event.5 }
 	}
 	else_if = {
 		limit = {
@@ -1117,9 +1110,33 @@ FRA_add_effects_francois_darlan = {
 }
 
 FRA_add_effects_francois_de_la_rocque = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_francois_de_la_rocque_focus_2
+		}
+		add_ideas = inner_circle_FRA_idea_3_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_francois_de_la_rocque_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_3_one
+	}
 }
 
 FRA_add_effects_charles_maurras = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_charles_maurras_focus_2
+		}
+		add_ideas = inner_circle_FRA_idea_4_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_charles_maurras_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_4_one
+	}
 }
 
 FRA_add_effects_maxime_weygand = {
@@ -1316,9 +1333,86 @@ FRA_remove_effects_francois_darlan = {
 }
 
 FRA_remove_effects_francois_de_la_rocque = {
+	if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_3_one
+		}
+		remove_ideas = inner_circle_FRA_idea_3_one
+	}
+	else_if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_3_two
+		}
+		remove_ideas = inner_circle_FRA_idea_3_two
+	}
+	else = {
+		log = "NOTHING TO REMOVE FROM TODT"
+	}
+
+	#Uncomplete Ascension focus so that he can be picked later on
+	uncomplete_national_focus = {
+		focus = FRA_francois_de_la_rocque_focus_0
+		uncomplete_children = no
+		refund_political_power = no
+	}
+
+	if = { # REMOVE FROM ASCENDED ADVISOR SLOT
+		limit = {
+			check_variable = { FRA_ascended_advisor_1 = 3 }
+		}
+		set_variable = { FRA_ascended_advisor_1 = 0 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { FRA_ascended_advisor_2 = 3 }
+		}
+		set_variable = { FRA_ascended_advisor_2 = 0 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { FRA_ascended_advisor_3 = 3 }
+		}
+		set_variable = { FRA_ascended_advisor_3 = 0 }
+	}
 }
 
 FRA_remove_effects_charles_maurras = {
+	if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_4_one
+		}
+		remove_ideas = inner_circle_FRA_idea_4_one
+	}
+	else_if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_4_two
+		}
+		remove_ideas = inner_circle_FRA_idea_4_two
+	}
+	else = {
+		log = "NOTHING TO REMOVE FROM TODT"
+	}
+
+	# Uncomplete Ascension focus so that he can be picked later on
+	uncomplete_national_focus = {
+		focus = FRA_charles_maurras_focus_0
+		uncomplete_children = no
+		refund_political_power = no
+	}
+
+	# REMOVE FROM ASCENDED ADVISOR SLOT
+	if = {
+		limit = { check_variable = { FRA_ascended_advisor_1 = 4 } }
+		set_variable = { FRA_ascended_advisor_1 = 0 }
+	}
+	else_if = {
+		limit = { check_variable = { FRA_ascended_advisor_2 = 4 } }
+		set_variable = { FRA_ascended_advisor_2 = 0 }
+	}
+	else_if = {
+		limit = { check_variable = { FRA_ascended_advisor_3 = 4 } }
+		set_variable = { FRA_ascended_advisor_3 = 0 }
+	}
 }
 
 FRA_remove_effects_maxime_weygand = {
