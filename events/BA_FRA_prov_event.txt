@@ -8,7 +8,7 @@ add_namespace = FRA_strike_event
 add_namespace = FRA_inner_circle
 add_namespace = FRA_inner_circle_petain
 add_namespace = FRA_inner_circle_pierre_laval
-add_namespace = FRA_inner_circle_darlan
+add_namespace = FRA_inner_circle_francois_darlan
 
 country_event = {
 	#작은 공 - 1
@@ -7264,7 +7264,6 @@ country_event = { #피에르 라발 중점 자동시작
 	immediate = {
 		if = {
 			limit = {
-				has_completed_focus = FRA_laval_focus_0
 				NOT = { has_completed_focus = FRA_darlan_and_laval_focus_1 }
 				NOT = { has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1 }
 			}
@@ -7317,6 +7316,98 @@ country_event = {
 			}
 			clr_country_flag = progress_flag_FRA_laval_focus_1
 			country_event = { id = FRA_inner_circle_pierre_laval.1 days = 5 }
+		}
+	}
+}
+
+country_event = { #피에르 라발 중점 자동시작
+	id = FRA_inner_circle_francois_darlan.1
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+		has_completed_focus = FRA_darlan_focus_0
+		OR = {
+			check_variable = { FRA_ascended_advisor_1 = 2 }
+			check_variable = { FRA_ascended_advisor_2 = 2 }
+			check_variable = { FRA_ascended_advisor_3 = 2 }
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_darlan_and_laval_focus_1 }
+				NOT = { has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1 }
+			}
+			activate_shine_on_focus = FRA_darlan_and_laval_focus_1
+			set_country_flag = { flag = progress_flag_FRA_darlan_and_laval_focus_1 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_francois_darlan.2 days = 70 }
+			set_variable = { FRA_first_cabinet_prime_minister = 2 } # 얘가 시작함
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_darlan_focus_2 }
+			}
+			activate_shine_on_focus = FRA_darlan_focus_2
+			set_country_flag = { flag = progress_flag_FRA_darlan_focus_2 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_francois_darlan.2 days = 70 }
+		}
+		else_if = {
+			limit = {
+				NOT = { has_completed_focus = FRA_darlan_focus_3 }
+			}
+			activate_shine_on_focus = FRA_darlan_focus_3
+			set_country_flag = { flag = progress_flag_FRA_darlan_focus_3 days = 69 value = 1 }
+			country_event = { id = FRA_inner_circle_francois_darlan.2 days = 70 }
+		}
+	}
+}
+
+# GOEBBELS - Complete Focus
+country_event = {
+	id = FRA_inner_circle_francois_darlan.2
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1
+				check_variable = { FRA_first_cabinet_prime_minister = 2 } # 얘가 시작함
+			}
+			complete_national_focus = {
+				focus = FRA_darlan_and_laval_focus_1
+				use_side_message = yes
+				originator_name = FRA_pierre_laval
+			}
+			clr_country_flag = progress_flag_FRA_darlan_and_laval_focus_1
+			country_event = { id = FRA_inner_circle_francois_darlan.1 days = 5 }
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_darlan_focus_2
+			}
+			complete_national_focus = {
+				focus = FRA_darlan_focus_2
+				use_side_message = yes
+				originator_name = FRA_pierre_laval
+			}
+			clr_country_flag = progress_flag_FRA_darlan_focus_2
+			country_event = { id = FRA_inner_circle_francois_darlan.1 days = 5 }
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_darlan_focus_3
+			}
+			complete_national_focus = {
+				focus = FRA_darlan_focus_3
+				use_side_message = yes
+				originator_name = FRA_pierre_laval
+			}
+			clr_country_flag = progress_flag_FRA_darlan_focus_3
+			country_event = { id = FRA_inner_circle_francois_darlan.1 days = 5 }
 		}
 	}
 }

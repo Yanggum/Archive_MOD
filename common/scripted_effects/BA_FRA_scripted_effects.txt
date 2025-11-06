@@ -1080,9 +1080,40 @@ FRA_remove_replaced_inner_circle_3_effects = {
 
 # 1분기 - 망명 직후
 FRA_add_effects_pierre_laval = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_laval_focus_1
+			has_dlc = "Arms Against Tyranny"
+		}
+		add_ideas = inner_circle_FRA_idea_1_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_laval_focus_1
+		}
+		add_ideas = inner_circle_FRA_idea_1_two_no_aat
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_laval_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_1_one
+	}
 }
 
 FRA_add_effects_francois_darlan = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_darlan_focus_2
+		}
+		add_ideas = inner_circle_FRA_idea_2_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_darlan_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_2_one
+	}
 }
 
 FRA_add_effects_francois_de_la_roque = {
@@ -1164,9 +1195,9 @@ FRA_remove_effects_pierre_laval = {
 	}
 	else_if = {
 		limit = {
-			has_idea = inner_circle_FRA_idea_2_two
+			has_idea = inner_circle_FRA_idea_1_two
 		}
-		remove_ideas = inner_circle_FRA_idea_2_two
+		remove_ideas = inner_circle_FRA_idea_1_two
 	}
 	else = {
 		log = "NOTHING TO REMOVE FROM TODT"
@@ -1217,6 +1248,71 @@ FRA_remove_effects_pierre_laval = {
 }
 
 FRA_remove_effects_francois_darlan = {
+	if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_2_one
+		}
+		remove_ideas = inner_circle_FRA_idea_2_one
+	}
+	else_if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_2_two
+		}
+		remove_ideas = inner_circle_FRA_idea_2_two
+	}
+	else = {
+		log = "NOTHING TO REMOVE FROM TODT"
+	}
+
+	if = { #STOP ANY FOCUS IN-PROGRESS (WITH SHINY EFFECT)
+		limit = {
+			has_shine_effect_on_focus = FRA_darlan_and_laval_focus_1
+			check_variable = { FRA_first_cabinet_prime_minister = 1 }
+		}
+		deactivate_shine_on_focus = FRA_darlan_and_laval_focus_1
+		clr_country_flag = progress_flag_FRA_darlan_and_laval_focus_1
+		set_variable = { FRA_first_cabinet_prime_minister = 0 }
+	}
+	else_if = {
+		limit = {
+			has_shine_effect_on_focus = FRA_darlan_focus_2
+		}
+		deactivate_shine_on_focus = FRA_darlan_focus_2
+		clr_country_flag = progress_flag_FRA_darlan_focus_2
+	}
+	else_if = {
+		limit = {
+			has_shine_effect_on_focus = FRA_darlan_focus_3
+		}
+		deactivate_shine_on_focus = FRA_darlan_focus_3
+		clr_country_flag = progress_flag_FRA_darlan_focus_3
+	}
+
+	#Uncomplete Ascension focus so that he can be picked later on
+	uncomplete_national_focus = {
+		focus = FRA_darlan_focus_0
+		uncomplete_children = no
+		refund_political_power = no
+	}
+
+	if = { # REMOVE TODT FROM ASCENDED ADVISOR
+		limit = {
+			check_variable = { FRA_ascended_advisor_1 = 2 }
+		}
+		set_variable = { FRA_ascended_advisor_1 = 0 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { FRA_ascended_advisor_2 = 2 }
+		}
+		set_variable = { FRA_ascended_advisor_2 = 0 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { FRA_ascended_advisor_3 = 2 }
+		}
+		set_variable = { FRA_ascended_advisor_3 = 0 }
+	}
 }
 
 FRA_remove_effects_francois_de_la_roque = {
