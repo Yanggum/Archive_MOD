@@ -14023,6 +14023,28 @@ country_event = { # 사자가 되어주세요
 	}
 }
 
+country_event = { # 게헨나 중앙구의 승전 결산
+	id = trinity_events_nagisa.24
+	title = trinity_events_nagisa.24.t
+	desc = trinity_events_nagisa.24.desc
+	picture = GFX_report_event_gem_makoto_ibuki
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.24.a 
+		effect_tooltip = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+			}
+			add_political_power = 100
+		}
+	}
+}
+
 country_event = { # 믿음은 굳건하여라
 	id = trinity_events_nagisa.25
 	title = trinity_events_nagisa.25.t
@@ -14477,6 +14499,195 @@ country_event = { # 임시로효과만
 			}
 		}
 	}
+}
+
+country_event = { # 우리를 총학생회장으로 인정하는 [FROM.GetName]
+	id = trinity_events_nagisa_diplomacy.15
+	title = trinity_events_nagisa_diplomacy.15.t
+	desc = trinity_events_nagisa_diplomacy.15.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.15.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.16 hours = 12 }
+		}
+	}
+
+	option = { #  AI는 선택하지 않음
+		name = trinity_events_nagisa_diplomacy.15.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.17 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.16
+	title = trinity_events_nagisa_diplomacy.16.t
+	desc = trinity_events_nagisa_diplomacy.16.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.16.a
+		ai_chance = {
+			base = 100
+		}
+		add_to_faction = HEU
+		set_global_flag = HEU_TRM_faction
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 거부
+	id = trinity_events_nagisa_diplomacy.17
+	title = trinity_events_nagisa_diplomacy.17.t
+	desc = trinity_events_nagisa_diplomacy.17.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.a
+		ai_chance = {
+			base = 0
+		}
+		every_other_country = {
+			limit = {
+				any_controlled_state = {
+					OR = {
+						is_core_of = HEU
+					}
+				}
+			}
+			display_individual_scopes = yes
+			ROOT = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.b
+		ai_chance = {
+			base = 10
+		}
+		every_other_country = {
+			limit = {
+				any_controlled_state = {
+					OR = {
+						is_core_of = SHE
+						is_core_of = COU
+						is_core_of = KSP
+						is_core_of = HEU
+					}
+				}
+			}
+			display_individual_scopes = yes
+			ROOT = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.c
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+country_event = { # 우리를 총학생회장으로 인정하는 [FROM.GetName]
+	id = trinity_events_nagisa_diplomacy.18
+	title = trinity_events_nagisa_diplomacy.18.t
+	desc = trinity_events_nagisa_diplomacy.18.desc
+	picture = GFX_report_event_generic_door
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.18.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			puppet = ROOT
+			country_event = { id = trinity_events_nagisa_diplomacy.19 hours = 12 }
+		}
+	}
+
+	option = { # 
+		name = trinity_events_nagisa_diplomacy.18.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.20 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.19
+	title = trinity_events_nagisa_diplomacy.19.t
+	desc = trinity_events_nagisa_diplomacy.19.desc
+	picture = GFX_report_event_generic_door
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.19.a
+		ai_chance = {
+			base = 100
+		}
+		effect_tooltip = {
+			puppet = FROM
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 거부
+	id = trinity_events_nagisa_diplomacy.20
+	title = trinity_events_nagisa_diplomacy.20.t
+	desc = trinity_events_nagisa_diplomacy.20.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.20.a
+		ai_chance = {
+			base = 10
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = WHY
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.20.b
+		ai_chance = {
+			base = 0
+		}
+	}
+
 }
 
 country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상

@@ -9935,6 +9935,7 @@ focus_tree = {
 			hidden_effect = {
 				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.1 } }
 			}
+			remove_ideas = TRM_anti_gehenna_idea
 		}
 	}
 
@@ -10137,6 +10138,11 @@ focus_tree = {
 			custom_effect_tooltip = TRN_union_of_two_academies_tt
 		}
 	}
+
+	###
+	### 에덴 결전 이후
+	###
+
 	focus = {
 		id = TRN_eden_system_establishment
 		icon = GFX_goal_TRN_nagisa_gyehek
@@ -10174,6 +10180,13 @@ focus_tree = {
 			is_faction_leader = yes
 		}
 
+		bypass_effect = {
+			hidden_effect = { 
+				news_event = { id = trinity_news_events.11 } 
+				set_global_flag = TRINITY_WON_THE_GEHENNA
+			}
+		}
+
 		ai_will_do = {
 
 		}
@@ -10189,6 +10202,1113 @@ focus_tree = {
 			}
 			hidden_effect = { 
 				news_event = { id = trinity_news_events.11 } 
+				set_global_flag = TRINITY_WON_THE_GEHENNA
+			}
+		}
+	}
+	
+	focus = { # 
+		id = TRN_right_of_the_victor
+		icon = GFX_goal_hmmngshinso_broken
+		x = 0
+		y = 2
+		cost = 7
+
+		relative_position_id = TRN_eden_system_establishment
+		prerequisite = { focus = TRN_eden_system_establishment }
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			has_war = no
+		}
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+			}
+			add_political_power = 100
+			country_event = { id = trinity_events_nagisa.24 }
+		}
+	}
+
+	focus = {
+		id = TRN_controlling_madness
+		icon = GFX_goal_TRN_have_with_dongaris
+		x = -1
+		y = 1
+		cost = 5
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		completion_reward = {
+			country_event = { id = TRM_event.368 hours = 8 }
+		}
+	}
+	
+	focus = { # 
+		id = TRN_declaration_of_crusade_towards_the_west
+		icon = GFX_focus_TRN_destiny_of_trinity
+		x = 0
+		y = 2
+		cost = 2
+
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_ideas = TRN_trinity_crusade_1_ns
+		}
+	}
+
+	focus = {
+		id = TRN_war_against_cou
+		icon = GFX_focus_attack_COU
+		x = -2
+		y = 1
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		prerequisite = { focus = TRN_declaration_of_crusade_towards_the_west }
+
+		cost = 5
+
+		available = {
+			OR = {
+				country_exists = COU
+				country_exists = SHE
+				country_exists = KSP
+				country_exists = HEU
+			}
+			NOT = { has_war_with = COU }
+			NOT = { has_war_with = SHE }
+			NOT = { has_war_with = KSP }
+			NOT = { has_war_with = HEU }
+			is_puppet = no
+		}
+
+		mutually_exclusive = { focus = TRN_recognition_of_cou }
+		mutually_exclusive = { focus = TRN_recognition_of_bry_as_cou }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = COU
+				has_war_with = SHE
+				has_war_with = KSP
+				has_war_with = HEU
+				AND = {
+					NOT = { country_exists = COU }
+					NOT = { country_exists = SHE }
+					NOT = { country_exists = KSP }
+					NOT = { country_exists = HEU }
+				}
+			}
+		}
+
+		bypass_effect = {
+			add_war_support = 0.05
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			add_named_threat = {
+				threat = 5
+				name = TRN_defiance_of_COU
+			}
+			
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						OR = {
+							is_core_of = SHE
+							is_core_of = COU
+							is_core_of = KSP
+							is_core_of = HEU
+						}
+					}
+				}
+				add_opinion_modifier = { target = ROOT modifier = existential_threat }
+			}
+			custom_effect_tooltip = tooltip_white_line
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						OR = {
+							is_core_of = SHE
+							is_core_of = COU
+							is_core_of = KSP
+							is_core_of = HEU
+						}
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_recognition_of_cou
+		icon = GFX_focus_chi_mission_to_the_COU
+		x = 0
+		y = 1
+
+		cost = 5
+
+		available = {
+			OR = {
+				country_exists = COU
+				country_exists = SHE
+				country_exists = KSP
+				country_exists = HEU
+			}
+			NOT = { has_war_with = COU }
+			NOT = { has_war_with = SHE }
+			NOT = { has_war_with = KSP }
+			NOT = { has_war_with = HEU }
+		}
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		prerequisite = { focus = TRN_declaration_of_crusade_towards_the_west }
+
+		mutually_exclusive = { focus = TRN_war_against_cou }
+		mutually_exclusive = { focus = TRN_recognition_of_bry_as_cou }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			add_named_threat = {
+				threat = -5
+				name = TRN_recognize_the_regime_but_dont_follow_it
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_recognition_of_bry_as_cou
+		icon = GFX_goal_HEU_war_industry
+		x = 2
+		y = 1
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		prerequisite = { focus = TRN_declaration_of_crusade_towards_the_west }
+
+		cost = 5
+
+		available = {
+			country_exists = HEU
+			is_faction_leader = yes
+			HEU = {
+				has_completed_focus = HEU_general_student_council_aru
+			}
+			NOT = { has_war_with = HEU }
+		}
+
+		mutually_exclusive = { focus = TRN_war_against_cou }
+		mutually_exclusive = { focus = TRN_recognition_of_cou }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			
+			HEU = {
+				country_event = { id = trinity_events_nagisa_diplomacy.15 hours = 12 }
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_stopping_kaisers_hegemony
+		icon = GFX_focus_attack_KAI
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 5
+
+		available = {
+			NOT = { has_non_aggression_pact_with = KAI }
+			has_army_manpower = { size > 750000 }
+			has_deployed_air_force_size = { size > 1999 }
+			OR = {
+				has_navy_size = { size > 49 }
+				is_neighbor_of = KAI
+			}
+			country_exists = KAI
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_recognition_of_bry_as_cou 
+			focus = TRN_recognition_of_cou
+			focus = TRN_war_against_cou
+		}
+
+		ai_will_do = {
+
+		}
+		bypass = {
+			has_war_with = KAI
+		}
+		completion_reward = {
+			if = {
+				limit = { country_exists = KAI }
+				create_wargoal = {
+					target = KAI
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+	
+	focus = { # 
+		id = TRN_crusade_against_mil
+		icon = GFX_focus_attack_MIL
+		x = -1
+		y = 3
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+
+		cost = 5
+
+		available = {
+			NOT = { has_non_aggression_pact_with = MIL }
+			has_army_manpower = { size > 1500000 }
+			has_deployed_air_force_size = { size > 1999 }
+			country_exists = MIL
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_recognition_of_bry_as_cou 
+			focus = TRN_recognition_of_cou
+			focus = TRN_war_against_cou
+		}
+
+		mutually_exclusive = { focus = TRN_peaceful_exchange_with_mil }
+
+		ai_will_do = {
+
+		}
+		
+		bypass = {
+			OR = {
+				has_war_with = MIL
+				NOT = { country_exists = MIL }
+				MIL = { is_in_faction_with = ROOT }
+				MIL = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = MIL }
+				create_wargoal = {
+					target = MIL
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { # 
+		id = TRN_peaceful_exchange_with_mil
+		icon = GFX_focus_chi_mission_to_the_MIL
+		x = 1
+		y = 3
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+
+		cost = 5
+
+		available = {
+
+		}
+		
+
+		prerequisite = { 
+			focus = TRN_recognition_of_bry_as_cou 
+			focus = TRN_recognition_of_cou
+			focus = TRN_war_against_cou
+		}
+
+		mutually_exclusive = { focus = TRN_crusade_against_mil }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_named_threat = {
+				threat = -5
+				name = TRN_curtain_across_kivotos
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_preparation_for_the_poland_crusade
+		icon = GFX_focus_generic_attack_poland
+		x = -4
+		y = 4
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_crusade_against_mil 
+			focus = TRN_peaceful_exchange_with_mil
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = POL
+				NOT = { country_exists = POL }
+				POL = { is_in_faction_with = ROOT }
+				POL = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = POL }
+				create_wargoal = {
+					target = POL
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_preparation_for_the_switzerland_crusade
+		icon = GFX_focus_attack_switzerland
+		x = -2
+		y = 4
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_crusade_against_mil 
+			focus = TRN_peaceful_exchange_with_mil
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = SWI
+				NOT = { country_exists = SWI }
+				SWI = { is_in_faction_with = ROOT }
+				SWI = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = SWI }
+				create_wargoal = {
+					target = SWI
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_preparation_for_the_switzerland_crusade
+		icon = GFX_focus_attack_switzerland
+		x = -2
+		y = 4
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_crusade_against_mil 
+			focus = TRN_peaceful_exchange_with_mil
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = SWI
+				NOT = { country_exists = SWI }
+				SWI = { is_in_faction_with = ROOT }
+				SWI = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = SWI }
+				create_wargoal = {
+					target = SWI
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_march_to_the_vatican
+		icon = GFX_focus_attack_italy
+		x = -3
+		y = 5
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_preparation_for_the_switzerland_crusade 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = ITA
+				NOT = { country_exists = ITA }
+				ITA = { is_in_faction_with = ROOT }
+				ITA = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = ITA }
+				create_wargoal = {
+					target = ITA
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_march_to_the_true_rome
+		icon = GFX_focus_SOV_third_rome
+		x = -1
+		y = 6
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+			2 = { owns_or_subject_of = yes }
+		}
+
+		prerequisite = { 
+			focus = TRN_preparation_for_the_switzerland_crusade 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = TRN_trinity_crusade_1_ns
+				add_idea = TRN_trinity_crusade_2_ns
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_wild_hunt_protection_proposal
+		icon = GFX_focus_GRE_a_land_of_mountains
+
+		x = 0
+		y = 4
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_crusade_against_mil 
+			focus = TRN_peaceful_exchange_with_mil
+		}
+		
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+			WHY = {
+				country_event = { id = trinity_events_nagisa_diplomacy.18 hours = 12 }
+			}
+		}
+	}
+
+	focus = { 
+		id = TRN_preparation_for_the_eastern_crusade
+		icon = GFX_focus_generic_winter_warfare
+		x = 4
+		y = 4
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = TRN_crusade_against_mil 
+			focus = TRN_peaceful_exchange_with_mil
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			every_army_leader = {
+				limit = {
+					skill > 1
+				}
+		    		random_select_amount = 3
+				add_max_trait = 1
+				add_unit_leader_trait = winter_expert
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_eastern_crusade_for_russia
+		icon = GFX_focus_eng_expose_the_belly_of_the_bear
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_preparation_for_the_eastern_crusade
+		cost = 6
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+			country_exists = SOV
+		}
+
+		prerequisite = { 
+			focus = TRN_preparation_for_the_eastern_crusade
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		will_lead_to_war_with = SOV
+
+		completion_reward = {
+			reverse_add_opinion_modifier = {
+				target = SOV
+				modifier = existential_threat
+			}
+			add_timed_idea = {
+				idea = TRN_idea_destruction_of_soviet_hegemony_ns
+				days = 110
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SOV
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_anti_soviet_resistance_nagisa
+		icon = GFX_goal_POL_Russian_committee
+		x = -1
+		y = 1
+		relative_position_id = TRN_eastern_crusade_for_russia
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_war_with = SOV
+		}
+
+		prerequisite = { 
+			focus = TRN_eastern_crusade_for_russia
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_ideas = TRN_idea_anti_soviet_resistance_ns
+		}
+	}
+
+	focus = { #
+		id = TRN_ukrainian_unrest_nagisa
+		icon = GFX_focus_POL_ukrainian_army
+		x = 1
+		y = 1
+		relative_position_id = TRN_eastern_crusade_for_russia
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_war_with = SOV
+		}
+
+		prerequisite = { 
+			focus = TRN_eastern_crusade_for_russia 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			SOV = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SWI_suspicious_preparations
+				}
+			}
+			every_state = {
+				limit = {
+					BA_ukraine_west_is = yes
+				}
+				display_individual_scopes = yes
+				add_dynamic_modifier = {
+					modifier = TRM_ukrainian_modifier_us
+					scope = TRM
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_belarusian_volunteer_corps_nagisa
+		icon = GFX_focus_POL_ruthenian
+		x = -3
+		y = 1
+		relative_position_id = TRN_eastern_crusade_for_russia
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_war_with = SOV
+		}
+		
+		prerequisite = { 
+			focus = TRN_eastern_crusade_for_russia 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			SOV = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SWI_suspicious_preparations
+				}
+			}
+			every_state = {
+				limit = {
+					BA_belarus_is = yes
+				}
+				display_individual_scopes = yes
+				add_dynamic_modifier = {
+					modifier = TRM_belarusian_modifier_us
+					scope = TRM
+				}
+			}
+		}
+	}
+	
+	focus = { #
+		id = TRN_iberian_reconquista
+		icon = GFX_focus_attack_Iberian
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_wild_hunt_protection_proposal
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			OR = {
+				AND = {
+					country_exists = SPR
+					SPR = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = POR
+					POR = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = CAT
+					CAT = { NOT = { is_in_faction_with = ROOT } }
+				}
+			}
+		}
+
+		prerequisite = { 
+			focus = TRN_wild_hunt_protection_proposal
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					AND = {
+						country_exists = SPR
+						SPR = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = SPR
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = POR
+						POR = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = POR
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = CAT
+						CAT = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = CAT
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+	
+	focus = { #
+		id = TRN_becoming_the_goddess
+		icon = GFX_focus_attack_canada
+		x = 0
+		y = 3
+
+		relative_position_id = TRN_wild_hunt_protection_proposal
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			OR = {
+				AND = {
+					country_exists = USA
+					USA = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = CAN
+					CAN = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = MEX
+					MEX = { NOT = { is_in_faction_with = ROOT } }
+				}
+			}
+		}
+
+		prerequisite = { 
+			focus = TRN_iberian_reconquista
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					AND = {
+						country_exists = USA
+						USA = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = USA
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = CAN
+						CAN = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = CAN
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = MEX
+						MEX = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = MEX
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+	
+	focus = { # 
+		id = TRN_crusade_proposal_plana
+		icon = GFX_focus_GEI_arona
+		x = 3
+		y = 1
+		cost = 7
+
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		mutually_exclusive = { focus = TRN_crusade_proposal_malkuth }
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			country_exists = GEI
+			GEI = {
+				has_country_leader_with_trait = GEI_notion_of_incomprehensibility 
+			}
+			is_puppet = no
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = GEI }
+		}
+	}
+	
+	focus = { #COOPERATION
+		id = TRN_chroma_navy
+		icon = GFX_focus_ARG_study_the_battle_of_the_river_plate
+
+		prerequisite = { focus = TRN_crusade_proposal_plana }
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_crusade_proposal_plana
+		cost = 5
+
+		available = {
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		search_filters = { }
+
+		completion_reward = { 
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+		}
+	}
+	
+	focus = { # 
+		id = TRN_crusade_proposal_malkuth
+		icon = GFX_focus_GEI_tablet
+		x = 5
+		y = 1
+		cost = 7
+
+		mutually_exclusive = { focus = TRN_crusade_proposal_plana }
+
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			country_exists = GEI
+			GEI = {
+				has_country_leader_with_trait = GEI_the_presence_of_heteromorphs_decagramaton
+			}
+			is_puppet = no
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = GEI }
+		}
+	}
+	
+	focus = { #COOPERATION
+		id = TRN_decagrammaton_army
+		icon = GFX_focus_GEI_mystery_weave
+
+		prerequisite = { focus = TRN_crusade_proposal_malkuth }
+		x = 0
+		y = 1
+
+		relative_position_id = TRN_crusade_proposal_malkuth
+		cost = 5
+
+		available = {
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		search_filters = { }
+
+		completion_reward = { 
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
 			}
 		}
 	}
@@ -10332,6 +11452,69 @@ focus_tree = {
 		}
 
 		completion_reward = {
+		}
+	}
+
+	focus = {
+		id = TRN_start_of_new_constitution_discussion
+		icon = GFX_goal_HEU_luxembourg_education_reform
+		
+		prerequisite = { 
+			focus = TRN_safeguarding_the_ideal_of_factional_democracy
+			focus = TRN_iron_woman
+		}
+
+		x = 0
+		y = 4
+
+		relative_position_id = TRN_successor_to_the_first_trinity
+
+		cost = 6
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_start_of_new_constitution_discussion_tt
+		}
+	}
+
+	focus = {
+		id = TRN_end_of_new_constitution_discussion
+		icon = GFX_focus_TRN_eden_accord
+		
+		prerequisite = { 
+			focus = TRN_start_of_new_constitution_discussion
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_start_of_new_constitution_discussion
+
+		cost = 5
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_end_of_new_constitution_discussion_trigger
+				count_triggers = {
+					amount = 6 # 다른 정치 중점 6개 이상 열면 헌법 완성
+					has_completed_focus = TRN_start_of_new_constitution_discussion
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_end_of_new_constitution_discussion_tt
 		}
 	}
 
