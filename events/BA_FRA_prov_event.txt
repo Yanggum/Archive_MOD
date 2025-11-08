@@ -1207,33 +1207,23 @@ country_event = { #서아프리카 해방
 
 
 country_event = {
-	#확산되는 저항 (미사용)
+	#북아프리카 경제의 전망
 	id = FRA_prov_event.4
 	title = FRA_prov_event.4.t
 	desc = FRA_prov_event.4.d
-	fire_only_once = no
+	fire_only_once = yes
 	is_triggered_only = yes
 	hidden = no
-	picture = GFX_report_event_DEN_resistance
+	picture = GFX_report_event_albanian_partisans
 	option = {
-		set_temp_variable = { temp_FRA_change_to_disruption = 1 }
-		FRA_change_to_disruption_level = yes
-		add_popularity = {
-			ideology = var:current_party_ideology_group
-			popularity = -0.01
-		}
-		every_state = {
-			limit = {
-				is_owned_by = FRA
-				NOT = {
-					is_core_of = FRA
-				}
-				is_on_continent = africa
-				has_resistance = yes
-			}
-			add_resistance = 10
-		}
 		name = FRA_prov_event.4.a
+		459 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+			}
+		}
 	}
 }
 
@@ -1937,39 +1927,24 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
+	#본토에서의 실패
 	id = FRA_prov_event.28
 	title = FRA_prov_event.28.t
 	desc = FRA_prov_event.28.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	hidden = no
+	picture = GFX_report_event_NOR_quisling_speech
 	option = {
 		name = FRA_prov_event.28.a
-		hidden_effect = {
-			complete_national_focus = FRA_focus_resist_1
-			country_event = {
-				id = FRA_prov_event.61
-				days = 15
-			}
-		}
-		459 = {
-			set_demilitarized_zone = yes
-			damage_building = {
-				type = industrial_complex
-				damage = 0.5
-			}
-			damage_building = {
-				type = infrastructure
-				damage = 0.5
-			}
-		}
-		add_ideas = FRA_resist_strike
 		every_state = {
 			limit = {
 				is_owned_by = FRA
+				NOT = {
+					is_core_of = FRA
+				}
 			}
-			add_resistance = 5
+			add_resistance = 1
 		}
 	}
 }
@@ -2046,7 +2021,7 @@ country_event = {
 }
 
 country_event = {
-	#귀환 후 채권 상환 
+	#안 씀
 	id = FRA_prov_event.33
 	title = FRA_prov_event.33.t
 	desc = FRA_prov_event.33.d
@@ -2055,13 +2030,7 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.33.a
-		remove_dynamic_modifier = {
-			modifier = FRA_national_defense_bond
-		}
 		clr_country_flag = FRA_defense_bond_no_flag
-		multiply_variable = {
-			FRA_national_defense_bond_political_power_variable = 350
-		}
 		country_event = {
 			id = FRA_prov_event.123
 			days = 3
@@ -4836,7 +4805,7 @@ country_event = {
 	}
 }
 
-country_event = {
+country_event = { #안 씀
 	#채권 지불
 	id = FRA_prov_event.123
 	title = FRA_prov_event.123.t
@@ -4845,11 +4814,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = FRA_prov_event.123.a
-		add_timed_idea = {
-			idea = FRA_bill_mefo
-			days = FRA_national_defense_bond_political_power_variable
-		}
-		remove_mission = FRA_update_defense_bond
 	}
 }
 
