@@ -2911,7 +2911,8 @@ focus_tree = {
 	#<국가원수 자리>
 		focus = { #조국의 영도
 			id = FRA_leading_of_fatherland
-			cost = 2
+			text_icon = fixed_focus_style
+			cost = 5
 			prerequisite = {
 				focus = FRA_focus.1
 			}
@@ -2920,6 +2921,11 @@ focus_tree = {
 			icon = GFX_focus_generic_industrialists
 			completion_reward = {
 				add_political_power = 100
+
+				custom_effect_tooltip = {
+					localization_key = GER_ascension_of_character_focus_tt
+					CHARACTER = FRA_philippe_petain
+				}
 				hidden_effect = {
 					country_event = {
 						id = FRA_inner_circle_petain.1
@@ -3033,6 +3039,7 @@ focus_tree = {
 				FRA_philippe_petain = {
 					unit_leader_event = FRA_pet.6
 				}
+				add_ideas = FRA_revolution_nationale
 			}
 		}
 		focus = { #노동
@@ -3077,6 +3084,10 @@ focus_tree = {
 				FRA_philippe_petain = {
 					unit_leader_event = FRA_pet.7
 				}
+				swap_ideas = {
+					remove_idea = FRA_revolution_nationale
+					add_idea = FRA_revolution_nationale_1
+				}
 			}
 		}
 		focus = { #가족
@@ -3120,6 +3131,18 @@ focus_tree = {
 			completion_reward = {
 				FRA_philippe_petain = {
 					unit_leader_event = FRA_pet.8
+				}
+				swap_ideas = {
+					remove_idea = FRA_revolution_nationale_1
+					add_idea = FRA_revolution_nationale_2
+				}
+				custom_effect_tooltip = FRA_pet.8_tt
+				if = {
+					limit = {
+						check_variable = { FRA_disruption_level > 0 }
+					}
+					set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+					FRA_change_to_disruption_level = yes
 				}
 			}
 		}
@@ -3410,6 +3433,7 @@ focus_tree = {
 					remove_idea = inner_circle_FRA_idea_5_one
 					add_idea = inner_circle_FRA_idea_5_two
 				}
+				add_manpower = 12000
 			}
 		}
 
@@ -3522,6 +3546,7 @@ focus_tree = {
 					remove_idea = inner_circle_FRA_idea_6_one
 					add_idea = inner_circle_FRA_idea_6_two
 				}
+				add_manpower = 12000
 			}
 		}
 	#</식민총독 자리>
@@ -4193,6 +4218,10 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_4_one
+					add_idea = inner_circle_FRA_idea_4_two
+				}
 			}
 		}
 
@@ -4211,9 +4240,11 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
-				swap_ideas = {
-					remove_idea = inner_circle_FRA_idea_4_one
-					add_idea = inner_circle_FRA_idea_4_two
+				add_ideas = idea_FRA_charles_maurras_focus_2
+				add_war_support = 0.05
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
 				}
 			}
 		}
@@ -4233,6 +4264,10 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_4_two
+					add_idea = inner_circle_FRA_idea_4_three
+				}
 			}
 		}
 
@@ -4377,28 +4412,12 @@ focus_tree = {
 		focus = { #
 			id = FRA_francois_de_la_rocque_focus_1
 			icon = GFX_focus_GER_reich_ministry_of_public_enlightenment
-			cost = 5
+			cost = 10
 			x = 0
 			y = 3
 			relative_position_id = FRA_francois_de_la_rocque_focus_0
 			prerequisite = {
 				focus = FRA_francois_de_la_rocque_focus_0
-			}
-			available = {
-			}
-			completion_reward = {
-			}
-		}
-
-		focus = { #
-			id = FRA_francois_de_la_rocque_focus_2
-			icon = GFX_focus_GER_fund_the_film_department
-			cost = 5
-			x = 0
-			y = 3
-			relative_position_id = FRA_francois_de_la_rocque_focus_1
-			prerequisite = {
-				focus = FRA_francois_de_la_rocque_focus_1
 			}
 			available = {
 			}
@@ -4411,9 +4430,31 @@ focus_tree = {
 		}
 
 		focus = { #
+			id = FRA_francois_de_la_rocque_focus_2
+			icon = GFX_focus_GER_fund_the_film_department
+			cost = 20
+			x = 0
+			y = 3
+			relative_position_id = FRA_francois_de_la_rocque_focus_1
+			prerequisite = {
+				focus = FRA_francois_de_la_rocque_focus_1
+			}
+			available = {
+			}
+			completion_reward = {
+				add_ideas = idea_FRA_francois_de_la_rocque_focus_2
+				add_war_support = 0.05
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+			}
+		}
+
+		focus = { #
 			id = FRA_francois_de_la_rocque_focus_3
 			icon = GFX_focus_GER_propaganda_master
-			cost = 5
+			cost = 20
 			x = 0
 			y = 3
 			relative_position_id = FRA_francois_de_la_rocque_focus_2
@@ -4423,6 +4464,10 @@ focus_tree = {
 			available = {
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_3_two
+					add_idea = inner_circle_FRA_idea_3_three
+				}
 			}
 		}
 	#</사상지도자 자리>
@@ -4433,19 +4478,53 @@ focus_tree = {
 	# 그러나 하나도 안 찍으면 그냥 약하게 나옴
 	#<국가원수 자리>
 		focus = { #책임론과 퇴임
-			id = FRA_head_of_state_charles_de_gaulle
+			id = FRA_resolution_to_oust_philippe_petain
 			icon = GFX_focus_generic_industrialists
-			cost = 2
+			text_icon = fixed_focus_style
+			cost = 5
 			relative_position_id = FRA_leading_of_fatherland
 			prerequisite = {
 				focus = FRA_petain_focus_3
+			}
+			prerequisite = {
 				focus = FRA_maurice_gamelin_focus_2
+				focus = FRA_charles_de_gaulle_focus_2
 			}
 			mutually_exclusive = {
 				focus = FRA_head_of_state_maurice_gamelin
 			}
-			x = -2
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_one_change_tt
+					always = no
+				}
+			}
+			x = 0
 			y = 5
+			completion_reward = {
+				add_political_power = 100
+			}
+		}
+		focus = { #책임론과 퇴임
+			id = FRA_head_of_state_charles_de_gaulle
+			icon = GFX_focus_generic_industrialists
+			text_icon = fixed_focus_style
+			cost = 5
+			relative_position_id = FRA_resolution_to_oust_philippe_petain
+			prerequisite = {
+				focus = FRA_resolution_to_oust_philippe_petain
+			}
+			mutually_exclusive = {
+				focus = FRA_head_of_state_maurice_gamelin
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_one_next_change_tt
+					always = no
+				}
+			}
+			x = -2
+			y = 1
 			completion_reward = {
 				add_political_power = 100
 				#hidden_effect = {
@@ -4459,17 +4538,23 @@ focus_tree = {
 		focus = { #책임론과 퇴임
 			id = FRA_head_of_state_maurice_gamelin
 			icon = GFX_focus_generic_industrialists
-			cost = 2
-			relative_position_id = FRA_leading_of_fatherland
+			text_icon = fixed_focus_style
+			cost = 5
+			relative_position_id = FRA_resolution_to_oust_philippe_petain
 			prerequisite = {
-				focus = FRA_petain_focus_3
-				focus = FRA_charles_de_gaulle_focus_2
+				focus = FRA_resolution_to_oust_philippe_petain
 			}
 			mutually_exclusive = {
 				focus = FRA_head_of_state_charles_de_gaulle
 			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_one_next_change_tt
+					always = no
+				}
+			}
 			x = 2
-			y = 5
+			y = 1
 			completion_reward = {
 				add_political_power = 100
 				#hidden_effect = {
@@ -4484,13 +4569,13 @@ focus_tree = {
 			id = FRA_establishment_of_national_cabinet
 			icon = GFX_focus_generic_industrialists
 			cost = 2
-			relative_position_id = FRA_leading_of_fatherland
+			relative_position_id = FRA_resolution_to_oust_philippe_petain
 			prerequisite = {
 				focus = FRA_head_of_state_charles_de_gaulle
 				focus = FRA_head_of_state_maurice_gamelin
 			}
 			x = -6
-			y = 6
+			y = 2
 			completion_reward = {
 				add_political_power = 100
 				#hidden_effect = {
@@ -4844,7 +4929,8 @@ focus_tree = {
 		focus = { #국가혁명
 			id = FRA_national_revolutionary_committee_regime_overthrow
 			icon = GFX_focus_generic_industrialists
-			cost = 2
+			text_icon = fixed_focus_style
+			cost = 5
 			relative_position_id = FRA_leading_of_fatherland
 			prerequisite = {
 				focus = FRA_charles_de_gaulle_focus_5
@@ -4855,6 +4941,12 @@ focus_tree = {
 				focus = FRA_francois_de_la_rocque_focus_3
 			}
 			mutually_exclusive = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_two_change_tt
+					always = no
+				}
 			}
 			x = 0
 			y = 11
@@ -4873,6 +4965,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_maurras_focus_4
 			icon = GFX_focus_generic_industrialists
+			text_icon = fixed_focus_style
 			cost = 5
 			x = -3
 			y = 1
@@ -4884,6 +4977,10 @@ focus_tree = {
 				focus = FRA_francois_de_la_rocque_focus_4
 			}
 			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_two_next_change_tt
+					always = no
+				}
 			}
 			completion_reward = {
 			}
@@ -4965,6 +5062,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_francois_de_la_rocque_focus_4
 			icon = GFX_focus_generic_industrialists
+			text_icon = fixed_focus_style
 			cost = 5
 			x = 3
 			y = 1
@@ -4975,9 +5073,11 @@ focus_tree = {
 			mutually_exclusive = {
 				focus = FRA_charles_maurras_focus_4
 			}
-			mutually_exclusive = {
-			}
 			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_two_next_change_tt
+					always = no
+				}
 			}
 			completion_reward = {
 			}
