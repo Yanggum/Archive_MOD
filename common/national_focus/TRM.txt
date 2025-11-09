@@ -7624,6 +7624,9 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_popularity = { ideology = fascism popularity = 0.06 }
+			hidden_effect = {
+				country_event = { id = trinity_flavor_events.46 }
+			}
 		}
 	}
 	focus = {
@@ -8893,36 +8896,11 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 트리니티의 운명
-		id = TRN_destiny_of_trinity
-		icon = GFX_focus_TRN_destiny_of_trinity
-		prerequisite = { focus = TRN_magdeburg_trials }
-		prerequisite = { focus = TRN_reduce_authority_of_pandemonium_society }
-		x = 0
-		y = 4
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 6
-
-		available = {
-			has_stability > 0.70
-			OR = {
-				has_completed_focus = TRN_codification_of_regime
-				has_completed_focus = TRN_supreme_leader
-			}
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
 	focus = { # 신성통치령
 		id = TRN_divine_mandate
 		icon = GFX_goal_TRN_domination
-		x = -2
+		prerequisite = { focus = TRN_Integrity_of_Trinity }
+		x = 1
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 5
@@ -8930,7 +8908,6 @@ focus_tree = {
 		available = {
 			is_puppet = no
 		}
-		prerequisite = { focus = TRN_Integrity_of_Trinity }
 
 		ai_will_do = {
 
@@ -8980,7 +8957,7 @@ focus_tree = {
 		id = TRN_supreme_leader
 		icon = GFX_goal_TRN_Messiah
 		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = 5
+		x = 7
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
@@ -10664,54 +10641,6 @@ focus_tree = {
 	}
 
 	focus = { 
-		id = TRN_preparation_for_the_switzerland_crusade
-		icon = GFX_focus_attack_switzerland
-		x = -2
-		y = 4
-
-		relative_position_id = TRN_declaration_of_crusade_towards_the_west
-		cost = 6
-
-		bypass = {
-
-		}
-
-		available = {
-			is_puppet = no
-		}
-
-		prerequisite = { 
-			focus = TRN_crusade_against_mil 
-			focus = TRN_peaceful_exchange_with_mil
-		}
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-
-		bypass = {
-			OR = {
-				has_war_with = SWI
-				NOT = { country_exists = SWI }
-				SWI = { is_in_faction_with = ROOT }
-				SWI = { is_puppet_of = ROOT }
-			}
-		}
-
-		completion_reward = {
-			if = {
-				limit = { country_exists = SWI }
-				create_wargoal = {
-					target = SWI
-					type = topple_government
-				}
-			}
-		}
-	}
-
-	focus = { 
 		id = TRN_march_to_the_vatican
 		icon = GFX_focus_attack_italy
 		x = -3
@@ -10729,7 +10658,7 @@ focus_tree = {
 		}
 
 		prerequisite = { 
-			focus = TRN_preparation_for_the_switzerland_crusade 
+			focus = TRN_preparation_for_the_switzerland_crusade
 		}
 
 		mutually_exclusive = {  }
@@ -10777,7 +10706,7 @@ focus_tree = {
 		}
 
 		prerequisite = { 
-			focus = TRN_preparation_for_the_switzerland_crusade 
+			focus = TRN_preparation_for_the_switzerland_crusade
 		}
 
 		mutually_exclusive = {  }
@@ -12462,6 +12391,164 @@ focus_tree = {
 	### 에덴 결전 이후
 	###
 
+	focus = { # 우리만의 '에덴 조약'
+		id = TRN_union_with_gehenna
+		icon = GFX_focus_TRM_united_law
+		prerequisite = { focus = TRN_Integrity_of_Trinity }
+		x = -2
+		y = 2
+		relative_position_id = TRN_Integrity_of_Trinity
+		cost = 5
+
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				add_dynamic_modifier = {
+					modifier = TRN_gehenna_resistance_movement
+					days = 1095
+				}
+			}
+			every_controlled_state = {
+				limit = { is_core_of = GEM }
+				add_core_of = TRM
+			}
+			hidden_effect = {
+				country_event = { id = trinity_flavor_events.39 days = 05 }
+			}
+		}
+	}
+
+	focus = { # 마그데부르크 군사재판
+		id = TRN_magdeburg_trials
+		icon = GFX_focus_generic_industrialists
+		prerequisite = { focus = TRN_union_with_gehenna }
+		x = -1
+		y = 1
+		relative_position_id = TRN_union_with_gehenna
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+			NOT = { country_exists = GEM }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 
+		id = TRN_reduce_authority_of_pandemonium_society
+		icon = GFX_focus_generic_pandemonium_society
+		prerequisite = { focus = TRN_union_with_gehenna }
+		x = 1
+		y = 1
+		relative_position_id = TRN_union_with_gehenna
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+			NOT = { country_exists = GEM }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_forcibly_disband_HSD
+		icon = GFX_goal_GEH_hot_spring
+		prerequisite = { focus = TRN_Integrity_of_Trinity }
+		x = -1
+		y = 1
+		relative_position_id = TRN_Integrity_of_Trinity
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRN_forcibly_disband_GRS
+		icon = GFX_goal_GEH_gourmet_research_society
+		prerequisite = { focus = TRN_Integrity_of_Trinity }
+		x = -3
+		y = 1
+		relative_position_id = TRN_Integrity_of_Trinity
+		cost = 5
+
+		available = {
+			has_global_flag = TRINITY_WON_THE_GEHENNA
+			NOT = { country_exists = GEH }
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 트리니티의 운명
+		id = TRN_destiny_of_trinity
+		icon = GFX_focus_TRN_destiny_of_trinity
+		prerequisite = { focus = TRN_magdeburg_trials }
+		prerequisite = { focus = TRN_reduce_authority_of_pandemonium_society }
+		x = 0
+		y = 2
+		relative_position_id = TRN_union_with_gehenna
+		cost = 6
+
+		available = {
+			has_stability > 0.70
+			OR = {
+				has_completed_focus = TRN_codification_of_regime
+				has_completed_focus = TRN_supreme_leader
+			}
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
 	focus = { # 총학생회에 대한 도전
 		id = TRN_defiance_of_COU
 		icon = GFX_focus_attack_COU
@@ -12525,6 +12612,7 @@ focus_tree = {
 	focus = { # 총학생회에 대한 도전
 		id = TRN_recognize_the_regime_but_dont_follow_it
 		icon = GFX_focus_chi_mission_to_the_COU
+		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 1
 		y = 1
 		relative_position_id = TRN_destiny_of_trinity
@@ -12534,7 +12622,6 @@ focus_tree = {
 			has_completed_focus = TRN_Integrity_of_Trinity
 			has_government = fascism
 		}
-		prerequisite = { focus = TRN_destiny_of_trinity }
 		mutually_exclusive = { focus = TRN_defiance_of_COU }
 
 		ai_will_do = {
@@ -12553,6 +12640,10 @@ focus_tree = {
 	focus = { # 
 		id = TRN_extinguish_the_flame
 		icon = GFX_focus_attack_MIL
+		prerequisite = { 
+			focus = TRN_defiance_of_COU 
+			focus = TRN_recognize_the_regime_but_dont_follow_it
+		}
 		x = -1
 		y = 3
 		relative_position_id = TRN_destiny_of_trinity
@@ -12564,10 +12655,6 @@ focus_tree = {
 			has_army_manpower = { size > 1500000 }
 			has_deployed_air_force_size = { size > 1999 }
 			country_exists = MIL
-		}
-		prerequisite = { 
-			focus = TRN_defiance_of_COU 
-			focus = TRN_recognize_the_regime_but_dont_follow_it
 		}
 		mutually_exclusive = { focus = TRN_curtain_across_kivotos }
 
@@ -12591,6 +12678,7 @@ focus_tree = {
 	focus = { # 
 		id = TRN_curtain_across_kivotos
 		icon = GFX_focus_SWE_refuge_from_war
+		prerequisite = { focus = TRN_recognize_the_regime_but_dont_follow_it }
 		x = 1
 		y = 3
 		relative_position_id = TRN_destiny_of_trinity
@@ -12598,9 +12686,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = {
-			focus = TRN_recognize_the_regime_but_dont_follow_it
 		}
 		mutually_exclusive = { focus = TRN_extinguish_the_flame }
 
@@ -12618,6 +12703,10 @@ focus_tree = {
 	focus = { #
 		id = TRN_invasion_kaiser
 		icon = GFX_focus_attack_KAI
+		prerequisite = { 
+			focus = TRN_defiance_of_COU 
+			focus = TRN_recognize_the_regime_but_dont_follow_it
+		}
 		x = 0
 		y = 2
 		relative_position_id = TRN_destiny_of_trinity
@@ -12633,11 +12722,6 @@ focus_tree = {
 				is_neighbor_of = KAI
 			}
 			country_exists = KAI
-		}
-		prerequisite = { 
-			focus = TRN_defiance_of_COU 
-			focus = TRN_recognize_the_regime_but_dont_follow_it
-
 		}
 
 		ai_will_do = {
@@ -12743,6 +12827,7 @@ focus_tree = {
 	focus = { # 덴마크 요구
 		id = TRN_denmark_or_war
 		icon = GFX_goal_TRM_We_Need_Denmark_Milk
+		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
 		x = -1
 		y = 1
 		offset = {
@@ -12762,9 +12847,6 @@ focus_tree = {
 				is_neighbor_of = DEN
 			}
 		}
-		prerequisite = { 
-			focus = TRN_northern_kivotos_diplomacy
-		}
 		mutually_exclusive = {
 			focus = TRN_use_of_nordic_association
 		}
@@ -12780,6 +12862,7 @@ focus_tree = {
 	focus = { # 노르드 협회 이용
 		id = TRN_use_of_nordic_association
 		icon = GFX_focus_generic_scandinavia_flags
+		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
 		x = 2
 		y = 1
 		relative_position_id = TRN_northern_kivotos_diplomacy
@@ -12791,9 +12874,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_northern_kivotos_diplomacy
 		}
 		mutually_exclusive = {
 			focus = TRN_denmark_or_war
@@ -12810,6 +12890,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_threat_from_the_east
 		icon = GFX_focus_SWE_the_beast_stirs
+		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = -4
 		y = 1
 		relative_position_id = TRN_destiny_of_trinity
@@ -12822,9 +12903,6 @@ focus_tree = {
 		available = {
 			has_completed_focus = TRN_Integrity_of_Trinity
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_destiny_of_trinity 
 		}
 		mutually_exclusive = {  }
 
@@ -12844,6 +12922,7 @@ focus_tree = {
 	focus = { 
 		id = TRN_winter_warfare
 		icon = GFX_focus_generic_winter_warfare
+		prerequisite = { focus = TRN_threat_from_the_east }
 		x = 0
 		y = 1
 		relative_position_id = TRN_threat_from_the_east
@@ -12855,9 +12934,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_threat_from_the_east
 		}
 		mutually_exclusive = {  }
 
@@ -12892,7 +12968,7 @@ focus_tree = {
 			has_government = fascism
 		}
 		prerequisite = { 
-			focus = TRN_winter_warfare
+			focus = TRN_threat_from_the_east
 		}
 		prerequisite = {
 			focus = TRN_defiance_of_COU
@@ -12923,6 +12999,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_ukrainian_unrest
 		icon = GFX_focus_POL_ukrainian_army
+		prerequisite = { focus = TRN_destruction_of_soviet_hegemony }
 		x = -3
 		y = 1
 		relative_position_id = TRN_destruction_of_soviet_hegemony
@@ -12935,9 +13012,6 @@ focus_tree = {
 		available = {
 			has_government = fascism
 			has_war_with = SOV
-		}
-		prerequisite = { 
-			focus = TRN_destruction_of_soviet_hegemony 
 		}
 		mutually_exclusive = {  }
 
@@ -12967,6 +13041,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_belarusian_volunteer_corps
 		icon = GFX_focus_POL_ruthenian
+		prerequisite = { focus = TRN_destruction_of_soviet_hegemony }
 		x = -2
 		y = 2
 		relative_position_id = TRN_destruction_of_soviet_hegemony
@@ -12979,9 +13054,6 @@ focus_tree = {
 		available = {
 			has_government = fascism
 			has_war_with = SOV
-		}
-		prerequisite = { 
-			focus = TRN_destruction_of_soviet_hegemony 
 		}
 		mutually_exclusive = {  }
 
@@ -13009,8 +13081,56 @@ focus_tree = {
 	}
 
 	focus = { #
+		id = TRN_baltic_unrest
+		icon = GFX_focus_generic_baltic_entente
+		prerequisite = { focus = TRN_destruction_of_soviet_hegemony }
+		x = 1
+		y = 1
+		relative_position_id = TRN_destruction_of_soviet_hegemony
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_government = fascism
+			has_war_with = SOV
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			SOV = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SWI_suspicious_preparations
+				}
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = LIT
+						is_core_of = LAT
+						is_core_of = EST
+					}
+					is_owned_by = SOV
+				}
+				display_individual_scopes = yes
+				add_dynamic_modifier = {
+					modifier = TRM_ukrainian_modifier_us
+					scope = TRM
+				}
+			}
+		}
+	}
+
+	focus = { #
 		id = TRN_eastern_divine_mandate
 		icon = GFX_focus_TRN_divine_mandate_russia
+		prerequisite = { focus = TRN_destruction_of_soviet_hegemony }
 		x = 0
 		y = 2
 		relative_position_id = TRN_destruction_of_soviet_hegemony
@@ -13022,9 +13142,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_destruction_of_soviet_hegemony
 		}
 		mutually_exclusive = {  }
 
@@ -13071,6 +13188,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_TrinityMikaDiplomacyItalyAttack
 		icon = GFX_focus_ITA_cavalry_charge
+		prerequisite = { focus = TRN_destiny_of_trinity }
 		x = 5
 		y = 1
 		relative_position_id = TRN_destiny_of_trinity
@@ -13082,9 +13200,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_destiny_of_trinity 
 		}
 		mutually_exclusive = {  }
 
@@ -13099,6 +13214,10 @@ focus_tree = {
 	focus = { #
 		id = TRN_TrinityMikaDiplomacyAttackSwiss
 		icon = GFX_focus_attack_switzerland
+		prerequisite = {
+			focus = TRN_defiance_of_COU
+			focus = TRN_recognize_the_regime_but_dont_follow_it
+		}
 		x = -2
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack
@@ -13110,10 +13229,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = {
-			focus = TRN_defiance_of_COU
-			focus = TRN_recognize_the_regime_but_dont_follow_it
 		}
 		mutually_exclusive = {  }
 
@@ -13128,6 +13243,10 @@ focus_tree = {
 	focus = { #
 		id = TRN_TrinityMikaDiplomacyItalyAttack_2
 		icon = GFX_focus_attack_italy
+		prerequisite = {
+			focus = TRN_defiance_of_COU
+			focus = TRN_recognize_the_regime_but_dont_follow_it
+		}
 		x = 0
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack
@@ -13143,9 +13262,31 @@ focus_tree = {
 		prerequisite = { 
 			focus = TRN_TrinityMikaDiplomacyItalyAttack 
 		}
-		prerequisite = {
-			focus = TRN_defiance_of_COU
-			focus = TRN_recognize_the_regime_but_dont_follow_it
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
+		id = TRN_TrinityMikaDiplomacyItalyAttack_6
+		icon = GFX_focus_generic_vatican_state
+		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_2 }
+		x = 1
+		y = 1
+		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_2
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_government = fascism
 		}
 		mutually_exclusive = {  }
 
@@ -13215,6 +13356,7 @@ focus_tree = {
 	focus = { #
 		id = TRN_TrinityMikaDiplomacySpainAttack
 		icon = GFX_focus_attack_Iberian
+		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
 		x = 1
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
@@ -13226,9 +13368,6 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-		}
-		prerequisite = { 
-			focus = TRN_TrinityMikaDiplomacyItalyAttack_3
 		}
 		mutually_exclusive = {  }
 
@@ -13243,6 +13382,7 @@ focus_tree = {
 	focus = { # 발칸 외교
 		id = TRN_balkan_dip
 		icon = GFX_focus_TRN_balkan_dip
+		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
 		x = 3
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
@@ -13252,9 +13392,6 @@ focus_tree = {
 			is_subject = no
 		}
 
-		prerequisite = { 
-			focus = TRN_TrinityMikaDiplomacyItalyAttack_3
-		}
 
 		ai_will_do = {
 
@@ -14040,138 +14177,6 @@ focus_tree = {
 			}
         		custom_effect_tooltip = tooltip_white_line
 			air_experience = 15
-		}
-	}
-
-	focus = { # 우리만의 '에덴 조약'
-		id = TRN_union_with_gehenna
-		icon = GFX_focus_TRM_united_law
-		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = -0
-		y = 2
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 5
-
-		available = {
-
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			every_controlled_state = {
-				limit = {
-					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
-				}
-				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
-				add_dynamic_modifier = {
-					modifier = TRN_gehenna_resistance_movement
-					days = 1095
-				}
-			}
-			every_controlled_state = {
-				limit = { is_core_of = GEM }
-				add_core_of = TRM
-			}
-			hidden_effect = {
-				country_event = { id = trinity_flavor_events.39 days = 05 }
-			}
-		}
-	}
-
-	focus = { # 마그데부르크 군사재판
-		id = TRN_magdeburg_trials
-		icon = GFX_focus_generic_industrialists
-		prerequisite = { focus = TRN_union_with_gehenna }
-		x = -1
-		y = 1
-		relative_position_id = TRN_union_with_gehenna
-		cost = 5
-
-		available = {
-			has_global_flag = TRINITY_WON_THE_GEHENNA
-			NOT = { country_exists = GEH }
-			NOT = { country_exists = GEM }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { # 
-		id = TRN_reduce_authority_of_pandemonium_society
-		icon = GFX_focus_generic_pandemonium_society
-		prerequisite = { focus = TRN_union_with_gehenna }
-		x = 1
-		y = 1
-		relative_position_id = TRN_union_with_gehenna
-		cost = 5
-
-		available = {
-			has_global_flag = TRINITY_WON_THE_GEHENNA
-			NOT = { country_exists = GEH }
-			NOT = { country_exists = GEM }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = {
-		id = TRN_forcibly_disband_HSD
-		icon = GFX_goal_GEH_hot_spring
-		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = -4
-		y = 1
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 5
-
-		available = {
-			has_global_flag = TRINITY_WON_THE_GEHENNA
-			NOT = { country_exists = GEH }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = {
-		id = TRN_forcibly_disband_GRS
-		icon = GFX_goal_GEH_gourmet_research_society
-		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = -6
-		y = 1
-		relative_position_id = TRN_Integrity_of_Trinity
-		cost = 5
-
-		available = {
-			has_global_flag = TRINITY_WON_THE_GEHENNA
-			NOT = { country_exists = GEH }
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-
 		}
 	}
 }
