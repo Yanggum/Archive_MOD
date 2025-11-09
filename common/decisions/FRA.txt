@@ -3207,7 +3207,7 @@ FRA_vichy_france = {
 }
 FRA_manage_strike_cat = {
 	FRA_strike_going_bad_mission = { #확산하는 파업
-		days_mission_timeout = 20
+		days_mission_timeout = 15
 		available = {
 			always = no
 		}
@@ -3243,14 +3243,14 @@ FRA_manage_strike_cat = {
 					limit = {
 						has_idea = FRA_general_strike_1
 					}
-					country_event = FRA_prov_event.132
+					country_event = FRA_strike_event.4
 				}
 			}
 		}
 	}
 	FRA_PPNA_activation = { #인민당의 활동
 		icon = GFX_decision_SWI_consolidate_council_power
-		days_mission_timeout = 60
+		days_mission_timeout = 30
 		available = {
 			OR = {
 				NOT = {	has_country_flag = FRA_in_general_strike }
@@ -3265,245 +3265,176 @@ FRA_manage_strike_cat = {
 			activate_mission = FRA_PPNA_activation
 		}
 	}
-	FRA_press_social-economicly = { #사회경제적 압박
-		icon = GFX_decision_hol_attract_foreign_investors
-		state_target = yes
-		on_map_mode = map_only
-		target_array = controlled_states
-		target_trigger = {
-			FROM = {
-				OR = {
-					state = 459
-					state = 460
-					state = 461
-					state = 458
-				}
-				NOT = {
-					has_state_flag = FRA_strike_break_down
-				}
-			}
-		}
+	FRA_use_violence = { #경찰력 투입
+		icon = GFX_decision_generic_police_action
 		ai_will_do = {
 			base = 9999
 		}
 		available = {
 			NOT = {
-				FROM = {
-					has_state_flag = FRA_made_move_for_strike
-				}
+				has_country_flag = FRA_made_move_for_strike
 			}
 		}
 		visible = {
 			has_country_flag = FRA_in_general_strike
 		}
 		remove_effect = {
-			FROM = {
-				clr_state_flag = FRA_made_move_for_strike
-				random_list = {
-					3 = {
-						add_to_variable = {
-							var = FRA_CGT_org
-							value = -5
-							tooltip = FRA_FRA_CGT_org_tt
-						}
-					}
-					1 = {
-						add_to_variable = {
-							var = FRA_CGT_org
-							value = -10
-							tooltip = FRA_FRA_CGT_org_tt
-						}
-					}
-				}
-			}
-			FROM = {
-				if = {
-					limit = {
-						check_variable = {
-							var = FRA_CGT_org
-							compare = less_than_or_equals
-							value = 0
-						}
-					}
-					set_state_flag = FRA_strike_break_down
-					FRA = {
-						country_event = FRA_prov_event.94
-					}
-				}
-			}
-		}
-		complete_effect = {
-			FROM = {
-				set_state_flag = FRA_made_move_for_strike
-			}
-		}
-		days_remove = 15
-		days_re_enable = 5
-		cost = 5
-	}
-	FRA_make_them_fight = { #분열 책동
-		icon = GFX_decision_generic_political_discourse
-		state_target = yes
-		on_map_mode = map_only
-		target_array = controlled_states
-		target_trigger = {
-			FROM = {
-				OR = {
-					state = 459
-					state = 460
-					state = 461
-					state = 458
-				}
-				NOT = {
-					has_state_flag = FRA_strike_break_down
-				}
-			}
-		}
-		ai_will_do = {
-			base = 9999
-		}
-		available = {
-			NOT = {
-				FROM = {
-					has_state_flag = FRA_made_move_for_strike
-				}
-			}
-		}
-		visible = {
-			has_country_flag = FRA_in_general_strike
-		}
-		remove_effect = {
-			FROM = {
-				clr_state_flag = FRA_made_move_for_strike
-				random_list = {
-					3 = {
-						add_to_variable = {
-							var = FRA_CGT_org
-							value = -10
-							tooltip = FRA_FRA_CGT_org_tt
-						}
-					}
-					1 = {
-					}
-				}
-			}
-			FROM = {
-				if = {
-					limit = {
-						check_variable = {
-							var = FRA_CGT_org
-							compare = less_than_or_equals
-							value = 0
-						}
-					}
-					set_state_flag = FRA_strike_break_down
-					FRA = {
-						country_event = FRA_prov_event.94
-					}
-				}
-			}
-		}
-		complete_effect = {
-			FROM = {
-				set_state_flag = FRA_made_move_for_strike
-			}
-		}
-		days_remove = 30
-		days_re_enable = 5
-		cost = 15
-	}
-	FRA_use_violence = { #폭력적 진압
-		icon = GFX_decision_generic_reorganize_irregulars
-		state_target = yes
-		on_map_mode = map_only
-		target_array = controlled_states
-		target_trigger = {
-			FROM = {
-				OR = {
-					state = 459
-					state = 460
-					state = 461
-					state = 458
-				}
-				NOT = {
-					has_state_flag = FRA_strike_break_down
-				}
-			}
-		}
-		ai_will_do = {
-			base = 9999
-		}
-		available = {
-			NOT = {
-				FROM = {
-					has_state_flag = FRA_made_move_for_strike
-				}
-			}
-		}
-		visible = {
-			has_country_flag = FRA_in_general_strike
-		}
-		remove_effect = {
-			FROM = {
-				clr_state_flag = FRA_made_move_for_strike
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = -20
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
+			clr_country_flag = FRA_made_move_for_strike
 			random_list = {
+				1 = {
+					add_to_variable = {
+						var = FRA_CGT_org
+						value = -15
+						tooltip = FRA_FRA_CGT_org_tt
+					}
+				}
 				3 = {
-					set_temp_variable = { temp_FRA_change_to_disruption = 1 }
-					FRA_change_to_disruption_level = yes
+					add_to_variable = {
+						var = FRA_CGT_org
+						value = -10
+						tooltip = FRA_FRA_CGT_org_tt
+					}
 				}
 				1 = {
-
+					add_to_variable = {
+						var = FRA_CGT_org
+						value = -5
+						tooltip = FRA_FRA_CGT_org_tt
+					}
 				}
 			}
-			FROM = {
-				if = {
-					limit = {
-						check_variable = {
-							var = FRA_CGT_org
-							compare = less_than_or_equals
-							value = 0
-						}
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_CGT_org
+						compare = less_than_or_equals
+						value = 0
 					}
-					set_state_flag = FRA_strike_break_down
-					FRA = {
-						country_event = FRA_prov_event.94
-					}
+				}
+				set_country_flag = FRA_general_strike_over
+				FRA = {
+					country_event = FRA_prov_event.94
 				}
 			}
 		}
 		complete_effect = {
-			FROM = {
-				set_state_flag = FRA_made_move_for_strike
+			set_country_flag = FRA_made_move_for_strike
+		}
+		days_remove = 5
+		days_re_enable = 20
+		cost = 15
+	}
+	FRA_divide_plan = { #분열 책동
+		icon = GFX_decision_eng_propaganda_campaigns
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			NOT = {
+				has_country_flag = FRA_made_move_for_strike
 			}
 		}
-		days_remove = 20
-		days_re_enable = 5
+		visible = {
+			has_completed_focus = FRA_focus_garrison_9
+		}
+		remove_effect = {
+			clr_country_flag = FRA_made_move_for_strike
+			random_list = {
+				2 = {
+					add_to_variable = {
+						var = FRA_CGT_org
+						value = -15
+						tooltip = FRA_FRA_CGT_org_tt
+					}
+				}
+				2 = {
+					add_to_variable = {
+						var = FRA_CGT_org
+						value = -10
+						tooltip = FRA_FRA_CGT_org_tt
+					}
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_CGT_org
+						compare = less_than_or_equals
+						value = 0
+					}
+				}
+				set_country_flag = FRA_general_strike_over
+				FRA = {
+					country_event = FRA_prov_event.94
+				}
+			}
+		}
+		complete_effect = {
+			set_country_flag = FRA_made_move_for_strike
+		}
+		days_remove = 5
+		days_re_enable = 20
 		cost = 15
+	}
+	FRA_crush_strike = { #자경대 동원
+		icon = GFX_decision_generic_military
+		ai_will_do = {
+			base = 9999
+		}
+		available = {
+			NOT = {
+				has_country_flag = FRA_made_move_for_strike
+			}
+		}
+		visible = {
+			has_completed_focus = FRA_focus_garrison_5
+		}
+		remove_effect = {
+			clr_country_flag = FRA_made_move_for_strike
+			add_to_variable = {
+				var = FRA_CGT_org
+				value = -35
+				tooltip = FRA_FRA_CGT_org_tt
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_CGT_org
+						compare = less_than_or_equals
+						value = 0
+					}
+				}
+				set_country_flag = FRA_general_strike_over
+				FRA = {
+					country_event = FRA_prov_event.94
+				}
+			}
+			add_stability = -0.03
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.03
+			}
+			459 = {
+				add_manpower = -200
+				damage_building = {
+					type = industrial_complex
+					damage = 0.2
+				}
+				damage_building = {
+					type = infrastructure
+					damage = 0.2
+				}
+			}
+		}
+		complete_effect = {
+			set_country_flag = FRA_made_move_for_strike
+		}
+		days_remove = 30
+		days_re_enable = 20
+		cost = 30
 	}
 	FRA_find_PPNA = { #접점 조사
 		icon = GFX_decision_SWI_expand_covert_operations
-		state_target = yes
-		target_array = controlled_states
-		on_map_mode = decision_view_only
-		target_trigger = {
-			FROM = {
-				OR = {
-					state = 459
-					state = 460
-					state = 461
-					state = 458
-				}
-				NOT = {
-					has_state_flag = FRA_found_PPNA
-				}
-			}
-		}
 		ai_will_do = {
 			base = 9999
 		}
@@ -3511,48 +3442,69 @@ FRA_manage_strike_cat = {
 			has_country_flag = FRA_in_general_strike
 		}
 		remove_effect = {
-			FROM = {
-				random_list = {
-					2 = {
-						add_to_variable = {
-							var = FRA_ppna_search
-							value = 5
-							tooltip = FRA_FRA_ppna_search_tt
-						}
-					}
-					1 = {
-						add_to_variable = {
-							var = FRA_ppna_search
-							value = 10
-							tooltip = FRA_FRA_ppna_search_tt
-						}
-					}
-					1 = {
-						add_to_variable = {
-							var = FRA_ppna_search
-							value = 15
-							tooltip = FRA_FRA_ppna_search_tt
-						}
+			random_list = {
+				2 = {
+					add_to_variable = {
+						var = FRA_ppna_search
+						value = 5
+						tooltip = FRA_FRA_ppna_search_tt
 					}
 				}
-				if = {
-					limit = {
-						check_variable = {
-							var = FRA_ppna_search
-							compare = greater_than_or_equals
-							value = 100
-						}
+				1 = {
+					add_to_variable = {
+						var = FRA_ppna_search
+						value = 10
+						tooltip = FRA_FRA_ppna_search_tt
 					}
-					set_state_flag = FRA_found_PPNA
-					FRA = {
-						country_event = FRA_prov_event.29
+				}
+				1 = {
+					add_to_variable = {
+						var = FRA_ppna_search
+						value = 15
+						tooltip = FRA_FRA_ppna_search_tt
 					}
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_ppna_search
+						compare = greater_than_or_equals
+						value = 100
+					}
+				}
+				set_country_flag = FRA_found_PPNA
+				FRA = {
+					country_event = FRA_prov_event.29
 				}
 			}
 		}
 		days_remove = 15
 		days_re_enable = 5
 		cost = 5
+	}
+	FRA_nego_with_strike = { #협상
+		icon = GFX_decision_eng_trade_unions_support
+		ai_will_do = {
+			base = 9999
+		}
+		visible = {
+			has_completed_focus = FRA_focus_garrison_2
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_nego_with_strike_tt
+				check_variable = {
+					var = FRA_CGT_org
+					value = 50
+					compare = less_than_or_equals
+				}
+			}
+		}
+		remove_effect = {
+			country_event = FRA_prov_event.33
+		}
+		cost = 100
 	}
 	FRA_sweep_away_ppna = { #일망타진
 		icon = GFX_decision_generic_assassination
@@ -3566,51 +3518,11 @@ FRA_manage_strike_cat = {
 			base = 9999
 		}
 		available = {
-			458 = {
-				has_state_flag = FRA_found_PPNA
-			}
-			459 = {
-				has_state_flag = FRA_found_PPNA
-			}
-			460 = {
-				has_state_flag = FRA_found_PPNA
-			}
-			461 = {
-				has_state_flag = FRA_found_PPNA
-			}
+			has_country_flag = FRA_found_PPNA
 		}
 		remove_effect = {
 			remove_mission = FRA_PPNA_activation
 			set_country_flag = FRA_sweep_away_ppna_flag
-		}
-	}
-	FRA_final_promise = { #마지막 약속
-		icon = GFX_decision_hol_exchange_intelligence_data
-		fire_only_once = yes
-		cost = 30
-		visible = {
-			458 = {
-				has_state_flag = FRA_strike_break_down
-			}
-			459 = {
-				has_state_flag = FRA_strike_break_down
-			}
-			460 = {
-				has_state_flag = FRA_strike_break_down
-			}
-			461 = {
-				has_state_flag = FRA_strike_break_down
-			}
-		}
-		ai_will_do = {
-			base = 9999
-		}
-		complete_effect = {
-			remove_ideas = FRA_general_strike_4
-			hidden_effect = {
-				complete_national_focus = FRA_focus_12
-				mark_focus_tree_layout_dirty = yes
-			}
 		}
 	}
 }

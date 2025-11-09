@@ -142,6 +142,12 @@ focus_tree = {
 		}
 		completion_reward = {
 			upgrade_economy_law = yes
+			hidden_effect = {
+				country_event = {
+					id = FRA_disruption_event.5
+					days = 25
+				}
+			}
 		}
 	}
 	focus = {
@@ -2620,7 +2626,7 @@ focus_tree = {
 			focus = FRA_focus.1
 		}
 		completion_reward = {
-			custom_effect_tooltip = CHL_skip_one_line_tt
+			add_ideas = FRA_manage_garrison
 			army_experience = 10
 			add_tech_bonus = {
 				category = military_police_tech
@@ -2642,31 +2648,60 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#이해와 조정
-		id = FRA_focus_garrison_1
-		icon = GFX_goal_generic_neutrality_focus
+		#자치의 원칙
+		id = FRA_focus_principle_of_autonomy
+		icon = GFX_focus_RAJ_provincial_autonomy
 		cost = 4
-		x = -2
+		x = -4
 		y = 1
 		available = {
-			has_country_flag = GAEBALJUNG
 		}
 		relative_position_id = FRA_focus_garrison_0
 		prerequisite = {
 			focus = FRA_focus_garrison_0
 		}
+		available = {
+			has_country_flag = FRA_in_general_strike
+		}
 		mutually_exclusive = {
 			focus = FRA_focus_garrison_2
+			focus = FRA_focus_garrison_1
 		}
 		completion_reward = {
-			if = {
-				limit = {
-					check_variable = { FRA_disruption_level > 0 }
-				}
-				set_temp_variable = { temp_FRA_change_to_disruption = -1 }
-				FRA_change_to_disruption_level = yes
+			custom_effect_tooltip = FRA_focus_principle_of_autonomy_tt
+			swap_ideas = {
+				remove_idea = FRA_manage_garrison
+				add_idea = FRA_rights_of_settlers
 			}
+		}
+	}
+	focus = {
+		#이해관계 조정
+		id = FRA_focus_garrison_1
+		icon = GFX_goal_generic_neutrality_focus
+		cost = 4
+		x = -1
+		y = 1
+		available = {
+		}
+		relative_position_id = FRA_focus_garrison_0
+		prerequisite = {
+			focus = FRA_focus_garrison_0
+		}
+		available = {
+			has_country_flag = FRA_in_general_strike
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_garrison_2
+			focus = FRA_focus_principle_of_autonomy
+		}
+		completion_reward = {
+			custom_effect_tooltip = FRA_focus_garrison_1_tt
 			custom_effect_tooltip = CHL_skip_one_line_tt
+			swap_ideas = {
+				remove_idea = FRA_manage_garrison
+				add_idea = FRA_adjustment_of_interests 
+			}
 		}
 	}
 	focus = {
@@ -2680,28 +2715,30 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_garrison_0
 		}
+		available = {
+			has_country_flag = FRA_in_general_strike
+		}
 		mutually_exclusive = {
 			focus = FRA_focus_garrison_1
-		}
+			focus = FRA_focus_principle_of_autonomy
+		} 
 		completion_reward = {
-			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
-			FRA_change_to_disruption_level = yes
-			custom_effect_tooltip = CHL_skip_one_line_tt
-			add_ideas = FRA_soothing
-		}
-	}
-	focus = {
-		#정착민의 정치적 대표권
-		id = FRA_focus_garrison_3
-		icon = GFX_focus_PER_stage_mass_protests
-		cost = 4
-		x = -3
-		y = 1
-		relative_position_id = FRA_focus_garrison_1
-		prerequisite = {
-			focus = FRA_focus_garrison_1
-		}
-		completion_reward = {
+			custom_effect_tooltip = FRA_focus_garrison_2_tt
+			swap_ideas = {
+				remove_idea = FRA_manage_garrison
+				add_idea = FRA_soothing
+			}
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -10
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			unlock_decision_tooltip = FRA_nego_with_strike
 		}
 	}
 	focus = {
@@ -2709,16 +2746,45 @@ focus_tree = {
 		id = FRA_focus_garrison_4
 		icon = GFX_focus_RAJ_war_taxes
 		cost = 4
-		x = -1
+		x = -4
 		y = 1
 		relative_position_id = FRA_focus_garrison_1
 		prerequisite = {
-			focus = FRA_focus_garrison_1
-		}
-		mutually_exclusive = {
-			focus = FRA_focus_garrison_7
+			focus = FRA_focus_principle_of_autonomy
 		}
 		completion_reward = {
+			add_timed_idea = {
+				idea = FRA_tax_benefition
+				days = 720
+			}
+		}
+	}
+	focus = {
+		#정착민의 정치적 대표권
+		id = FRA_focus_garrison_3
+		icon = GFX_focus_PER_stage_mass_protests
+		cost = 4
+		x = -2
+		y = 1
+		relative_position_id = FRA_focus_garrison_1
+		prerequisite = {
+			focus = FRA_focus_principle_of_autonomy
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -5
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			swap_ideas = {
+				remove_idea = FRA_rights_of_settlers
+				add_idea = FRA_rights_of_settlers_1
+			}
 		}
 	}
 	focus = {
@@ -2728,26 +2794,46 @@ focus_tree = {
 		cost = 4
 		x = -1
 		y = 1
-		relative_position_id = FRA_focus_garrison_4
+		relative_position_id = FRA_focus_garrison_3
 		prerequisite = {
-			focus = FRA_focus_garrison_4
+			focus = FRA_focus_garrison_3
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -5
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			unlock_decision_tooltip = FRA_crush_strike
 		}
 	}
 	focus = {
-		#보건위생 프로젝트
+		#파업방지법
 		id = FRA_focus_garrison_6
-		icon = GFX_focus_generic_bad_medical
+		icon = GFX_focus_AUS_lawmaking_leniency
 		cost = 4
 		x = 1
 		y = 1
-		relative_position_id = FRA_focus_garrison_4
+		relative_position_id = FRA_focus_garrison_3
 		prerequisite = {
-			focus = FRA_focus_garrison_4
+			focus = FRA_focus_garrison_3
 			focus = FRA_focus_garrison_7
 		}
+		available = {
+			has_country_flag = FRA_general_strike_over
+		}
 		completion_reward = {
+			set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+			FRA_change_to_disruption_level = yes
+			add_timed_idea = {
+				idea = FRA_anti_strike_act
+				days = 560
+			}
 		}
 	}
 	focus = {
@@ -2755,22 +2841,73 @@ focus_tree = {
 		id = FRA_focus_garrison_7
 		icon = GFX_focus_BRA_repeale_national_security_law
 		cost = 4
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = FRA_focus_garrison_1
 		prerequisite = {
 			focus = FRA_focus_garrison_1
 		}
-		mutually_exclusive = {
-			focus = FRA_focus_garrison_4
-		}
 		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_disruption_level > 0 }
+				}
+				set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+				FRA_change_to_disruption_level = yes
+				custom_effect_tooltip = FRA_resistance_of_locals_down_1 
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -5
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
 		}
 	}
 	focus = {
-		#원주민법 개선
+		#원주민법 개혁
 		id = FRA_focus_garrison_8
 		icon = GFX_focus_PER_university_of_isfahan
+		cost = 4
+		x = 2
+		y = 1
+		relative_position_id = FRA_focus_garrison_1
+		prerequisite = {
+			focus = FRA_focus_garrison_1
+			focus = FRA_focus_garrison_2
+			focus = FRA_focus_principle_of_autonomy
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = FRA_ALG_aftermath
+				days = 240
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -15
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			country_event = {
+				id = FRA_prov_event.5
+				days = 3
+			}
+		}
+	}
+	focus = {
+		#현지 엘리트 양성
+		id = FRA_focus_garrison_9
+		icon = GFX_focus_AFG_promote_the_counter_elite
 		cost = 4
 		x = 0
 		y = 2
@@ -2779,24 +2916,31 @@ focus_tree = {
 			focus = FRA_focus_garrison_7
 		}
 		completion_reward = {
-		}
-	}
-	focus = {
-		#현지 엘리트 양성
-		id = FRA_focus_garrison_9
-		icon = GFX_focus_AFG_promote_the_counter_elite
-		cost = 4
-		x = 3
-		y = 1
-		relative_position_id = FRA_focus_garrison_1
-		prerequisite = {
-			focus = FRA_focus_garrison_1
-			focus = FRA_focus_garrison_2
-		}
-		completion_reward = {
+			if = {
+				limit = {
+					check_variable = { FRA_disruption_level > 0 }
+				}
+				set_temp_variable = { temp_FRA_change_to_disruption = -1 }
+				FRA_change_to_disruption_level = yes
+				custom_effect_tooltip = FRA_resistance_of_locals_down_1 
+			}
 			custom_effect_tooltip = CHL_skip_one_line_tt
-			mark_focus_tree_layout_dirty = yes
-			add_ideas = FRA_colonial_elite
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -5
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			swap_ideas = {
+				remove_idea = FRA_adjustment_of_interests
+				add_idea = FRA_adjustment_of_interests_1
+			}
+			unlock_decision_tooltip = FRA_divide_plan
 		}
 	}
 	focus = {
@@ -2806,9 +2950,9 @@ focus_tree = {
 		cost = 4
 		x = -1
 		y = 1
-		relative_position_id = FRA_focus_garrison_9
+		relative_position_id = FRA_focus_garrison_8
 		prerequisite = {
-			focus = FRA_focus_garrison_9
+			focus = FRA_focus_garrison_8
 		}
 		completion_reward = {
 			add_research_slot = 1
@@ -2821,10 +2965,10 @@ focus_tree = {
 		cost = 4
 		x = 0
 		y = 2
-		relative_position_id = FRA_focus_garrison_9
+		relative_position_id = FRA_focus_garrison_8
 		prerequisite = {
-			focus = FRA_focus_garrison_9
-		}
+			focus = FRA_focus_garrison_8
+ 		}
 		completion_reward = {
 			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
 			FRA_change_to_disruption_level = yes
@@ -2880,6 +3024,16 @@ focus_tree = {
 					add_idea = FRA_soothing_labor 
 				}
 			}
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -15
+					tooltip = FRA_FRA_CGT_org_tt
+				}
+			}
 		}
 	}
 	focus = {
@@ -2907,6 +3061,16 @@ focus_tree = {
 				swap_ideas = {
 					remove_idea = FRA_soothing
 					add_idea = FRA_soothing_poorhouse
+				}
+			}
+			if = {
+				limit = {
+					NOT ={has_country_flag = FRA_general_strike_over}
+				}
+				add_to_variable = {
+					var = FRA_CGT_org
+					value = -15
+					tooltip = FRA_FRA_CGT_org_tt
 				}
 			}
 		}

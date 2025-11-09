@@ -40,6 +40,14 @@ country_event = {
 		name = FRA_disruption_event.2.a
 		460 = {
 			add_manpower = -21
+			damage_building = {
+				type = infrastructure
+				damage = 0.5
+			}
+			damage_building = {
+				type = industrial_complex
+				damage = 0.5
+			}
 		}
 	}
 }
@@ -155,7 +163,7 @@ country_event = {
 }
 
 country_event = {
-	#북아프리카 인민당
+	#북아프리카 인민당 (OTL: 알제리 인민당)
 	id = FRA_disruption_event.8
 	title = FRA_disruption_event.8.t
 	desc = FRA_disruption_event.8.d
@@ -272,38 +280,6 @@ country_event = {
 		}
 		hidden_effect = {
 			news_event = FRA_prov_event.44
-			458 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			459 = {
-				set_variable = { #알제
-					FRA_CGT_org = 120
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			460 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
-			461 = {
-				set_variable = {
-					FRA_CGT_org = 100
-				}
-				set_variable = {
-					FRA_ppna_search = 0
-				}
-			}
 			unlock_decision_category_tooltip = FRA_manage_strike_cat
 			activate_mission = FRA_PPNA_activation
 		}
@@ -311,12 +287,22 @@ country_event = {
 }
 
 country_event = {
-	#메이데이
+	#파업 전야
 	id = FRA_strike_event.5
 	title = FRA_strike_event.5.t
 	desc = FRA_strike_event.5.d
 	is_triggered_only = yes
 	picture = GFX_report_event_communists_in_riga
+	immediate = {
+		hidden_effect = {
+			set_variable = {
+				FRA_CGT_org = 100
+			}
+			set_variable = {
+				FRA_ppna_search = 0
+			}
+		}
+	}
 	option = {
 		add_ideas = FRA_general_strike_4
 		activate_mission = FRA_strike_going_bad_mission
@@ -1228,18 +1214,16 @@ country_event = {
 }
 
 country_event = {
-	#안 씀 / 스페인 내전시 격발
+	#원주민법 개혁
 	id = FRA_prov_event.5
 	title = FRA_prov_event.5.t
 	desc = FRA_prov_event.5.d
 	fire_only_once = yes
-	hidden = yes
-	hidden = no
+	is_triggered_only = yes
+	picture = GFX_report_event_molotov_ribbentrop_stalin_pact
 	option = {
 		name = FRA_prov_event.5.a
-		hidden_effect = {
-			#complete_national_focus = FRA_focus_spain_civilwar
-		}
+		add_stability = 0.06
 	}
 }
 
@@ -2021,7 +2005,7 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
+	#협상 (총파업)
 	id = FRA_prov_event.33
 	title = FRA_prov_event.33.t
 	desc = FRA_prov_event.33.d
@@ -2030,12 +2014,7 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.33.a
-		clr_country_flag = FRA_defense_bond_no_flag
-		country_event = {
-			id = FRA_prov_event.123
-			days = 3
-		}
-		set_country_flag = FRA_defense_bond_never_flag
+		country_event = FRA_prov_event.94
 	}
 }
 
@@ -2508,81 +2487,28 @@ country_event = {
 	title = FRA_prov_event.50.t
 	desc = FRA_prov_event.50.d
 	is_triggered_only = yes
-	picture = GFX_report_event_communists_cheer
+	picture = GFX_report_event_communists_in_riga
 	option = {
 		name = FRA_prov_event.50.a
-		459 = {
-			if = {
-				limit = {
-					has_state_flag = FRA_found_PPNA
-				}
+		random_list = {
+			2 = {
 				add_to_variable = {
 					var = FRA_CGT_org
 					value = 5
 					tooltip = FRA_FRA_CGT_org_tt
 				}
 			}
-			else = {
+			3 = {
 				add_to_variable = {
 					var = FRA_CGT_org
 					value = 10
 					tooltip = FRA_FRA_CGT_org_tt
 				}
 			}
-		}
-		460 = {
-			if = {
-				limit = {
-					has_state_flag = FRA_found_PPNA
-				}
+			2 = {
 				add_to_variable = {
 					var = FRA_CGT_org
-					value = 5
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
-			else = {
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = 10
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
-		}
-		461 = {
-			if = {
-				limit = {
-					has_state_flag = FRA_found_PPNA
-				}
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = 5
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
-			else = {
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = 10
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
-		}
-		458 = {
-			if = {
-				limit = {
-					has_state_flag = FRA_found_PPNA
-				}
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = 5
-					tooltip = FRA_FRA_CGT_org_tt
-				}
-			}
-			else = {
-				add_to_variable = {
-					var = FRA_CGT_org
-					value = 10
+					value = 15
 					tooltip = FRA_FRA_CGT_org_tt
 				}
 			}
@@ -3732,49 +3658,15 @@ country_event = {
 	title = FRA_prov_event.94.t
 	desc = FRA_prov_event.94.d
 	is_triggered_only = yes
-	fire_only_once = no
+	fire_only_once = yes
 	picture = GFX_report_event_AUS_military_march
 	option = {
 		name = FRA_prov_event.94.a
-		if = {
-			limit = {
-				has_idea = FRA_general_strike_0
-			}
-			swap_ideas = {
-				remove_idea = FRA_general_strike_0
-				add_idea = FRA_general_strike_1
-			}
-		}
-		else_if = {
-			limit = {
-				has_idea = FRA_general_strike_1
-			}
-			swap_ideas = {
-				remove_idea = FRA_general_strike_1
-				add_idea = FRA_general_strike_2
-			}
-		}
-		else_if = {
-			limit = {
-				has_idea = FRA_general_strike_2
-			}
-			swap_ideas = {
-				remove_idea = FRA_general_strike_2
-				add_idea = FRA_general_strike_3
-			}
-		}
-		else_if = {
-			limit = {
-				has_idea = FRA_general_strike_3
-			}
-			swap_ideas = {
-				remove_idea = FRA_general_strike_3
-				add_idea = FRA_general_strike_4
-			}
-		}
-		else = {
-			remove_ideas = FRA_general_strike_4
-		}
+		remove_ideas = FRA_general_strike_4
+		set_country_flag = FRA_general_strike_over
+		clear_variable = FRA_CGT_org
+		clear_variable = FRA_ppna_search
+		clr_country_flag = FRA_in_general_strike
 	}
 }
 
@@ -4703,17 +4595,13 @@ country_event = {
 				id = FRA_disruption_event.4
 				days = 350
 			}
-			country_event = { #저항도 이벤트 - 도시화
-				id = FRA_disruption_event.5
-				days = 410
-			}
 			country_event = { #저항도 이벤트 - 실업
 				id = FRA_disruption_event.9
-				days = 540
+				days = 410
 			}
 			country_event = { #저항도 이벤트 - 땅
 				id = FRA_disruption_event.6
-				days = 785
+				days = 540
 			}
             if = {
                 limit = {
