@@ -10230,6 +10230,62 @@ focus_tree = {
 			country_event = { id = TRM_event.368 hours = 8 }
 		}
 	}
+
+	focus = {
+		id = TRN_five_clan_republic
+		icon = GFX_ARI_arius_prussian_federation
+		x = -3
+		y = 1
+		cost = 5
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+		mutually_exclusive = { focus = TRN_arius_inquisition }
+
+		available = {
+			ARI = {
+				exists = no
+			}
+			85 = { is_fully_controlled_by = TRM }
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_five_clan_republic_tt
+			set_country_flag = nagisa_faction_I_flag
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.02
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_arius_inquisition
+		icon = GFX_focus_TRN_necessary_revenge
+		x = -5
+		y = 1
+		cost = 5
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+		mutually_exclusive = { focus = TRN_five_clan_republic }
+
+		available = {
+			ARI = {
+				exists = no
+			}
+			85 = { is_fully_controlled_by = TRM }
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_arius_inquisition_tt
+			set_temp_variable = {
+				TRN_arius_temp_var = nagisa_faction_I # 임시 변수에 국가인민당 변수를 옮김
+			}
+			divide_temp_variable = { TRN_arius_temp_var = 2 } # 그 변수를 반으로 나누고
+			round_temp_variable = TRN_arius_temp_var # 소숫점 반올림
+			subtract_from_variable = { nagisa_faction_I = TRN_arius_temp_var } # 그 숫자를 국가인민당 변수에서 감소
+			add_to_variable = { nagisa_faction_A = TRN_arius_temp_var } # 한 뒤 필리우스로 옮김
+		}
+	}
 	
 	focus = { # 
 		id = TRN_declaration_of_crusade_towards_the_west
@@ -10540,7 +10596,13 @@ focus_tree = {
 		ai_will_do = {
 
 		}
+
+		select_effect = {
+			country_event = { id = trinity_events_nagisa_diplomacy.21 }
+		}
+
 		completion_reward = {
+			country_event = { id = trinity_events_nagisa_diplomacy.26 }
 			add_named_threat = {
 				threat = -5
 				name = TRN_curtain_across_kivotos

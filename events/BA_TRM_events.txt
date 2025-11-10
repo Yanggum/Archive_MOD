@@ -14692,6 +14692,763 @@ country_event = { # [FROM.GetName]의 제안 거부
 
 }
 
+country_event = { # Code: BOX - 사절단 준비
+	id = trinity_events_nagisa_diplomacy.21
+	title = trinity_events_nagisa_diplomacy.21.t
+	desc = trinity_events_nagisa_diplomacy.21.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_dokidoki
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.a
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 0 # 냐기냐기
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.b
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 1 # 이 치카
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.c
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 2 # 구호
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.d
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 3 # 뭐야 아마우인가
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.22 days = 5 }
+	}
+}
+
+country_event = { # Code: BOX - 1일차
+	id = trinity_events_nagisa_diplomacy.22
+	title = trinity_events_nagisa_diplomacy.22.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_code_box_momoi
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.22.a # 방아쇠를 당긴다
+		ai_chance = {
+			base = 25
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.22.b # 인내한다
+		ai_chance = {
+			base = 75
+		}
+		add_stability = 0.01
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.23 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 4일차
+	id = trinity_events_nagisa_diplomacy.23
+	title = trinity_events_nagisa_diplomacy.23.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_nagisa_kirifuji_gun_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.23.a # 일대 다 교전으로 오토마톤들을 제압한다.
+		ai_chance = {
+			base = 25
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_attack = 1
+						add_trait = {
+							trait = trait_engineer
+						} 
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 3
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_attack = 1
+						add_trait = {
+							trait = trait_engineer
+						} 
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 3
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.23.b # 삼거리에서 코유키와 다른 방향으로 달려, 오토마톤들을 교란시킨다.
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_planning = 1
+			}
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.24 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 7일차
+	id = trinity_events_nagisa_diplomacy.24
+	title = trinity_events_nagisa_diplomacy.24.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_code_box_arginine_box
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.24.a # 레이를 향해 돌진한다
+		ai_chance = {
+			base = 0
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_logistics = 1
+						add_trait = {
+							trait = commando
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 7
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = commando
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_logistics = 1
+						add_trait = {
+							trait = commando
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 7
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.24.b # 안전한 다른 통로를 찾아본다
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_logistics = 1
+			}
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.25 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 폐막식
+	id = trinity_events_nagisa_diplomacy.25
+	title = trinity_events_nagisa_diplomacy.25.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_nagisa_kirifuji_gun_2
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.25.a # 악어의 공격으로부터 [MIL.GetLeader]를 몸으로 감싼다.
+		ai_chance = {
+			base = 0
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 90
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = front_line_general
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = urban_assault_specialist
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 90
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.25.b # 측면에서 악어를 공격해 제압하려고 노력한다.
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+	}
+}
+
+country_event = { # Code: BOX - 트리니티로
+	id = trinity_events_nagisa_diplomacy.26
+	title = trinity_events_nagisa_diplomacy.26.t
+	desc = trinity_events_nagisa_diplomacy.26.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.26.a
+		effect_tooltip = {
+			add_named_threat = {
+				threat = -5
+				name = TRN_curtain_across_kivotos
+			}
+		}
+	}
+}
+
 country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
 	id = trinity_events_nagisa_diplomacy.31
 	title = trinity_events_nagisa_diplomacy.1.t
@@ -14873,6 +15630,22 @@ country_event = { # 에덴 조약 성공
 
 }
 
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.999
+	title = trinity_events_nagisa_diplomacy.999.t
+	desc = trinity_events_nagisa_diplomacy.21.desc.nagisa
+	picture = GFX_report_event_TRM_nagisa_kirifuji_dokidoki
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.a
+		ai_chance = {
+			base = 100
+		}
+		set_cosmetic_tag = TRM_trinity_commonwealth
+	}
+}
 country_event = { # 에덴 조약 성공
 	id = trinity_events_nagisa_diplomacy.40
 	title = trinity_events_nagisa_diplomacy.8.t
