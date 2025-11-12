@@ -9187,7 +9187,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			add_stability = 0.05
+			add_to_variable = {
+				nagisa_faction_D = -2
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_E = 2
+				tooltip = nagisa_faction_E_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -9218,6 +9227,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_to_variable = {
+				nagisa_faction_D = 3
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -3
+				tooltip = nagisa_faction_C_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -10070,7 +10088,6 @@ focus_tree = {
 	focus = {
 		id = TRN_union_of_two_academies
 		icon = GFX_focus_GEH_expulsion_of_pandemonium
-		text_icon = GER_inner_circle_focus_style
 
 		prerequisite = { focus = TRN_start_of_the_eden_treaty_negotiations }
 
@@ -10082,30 +10099,17 @@ focus_tree = {
 		cost = 10
 
 		available = {
-			NOT = { country_exists = GEM }
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
-				limit = {
-					has_country_flag = TRN_union_of_two_academies_in_progress_flag
-				}
-				set_temp_variable = { temp_focus_days = 5 } #For tooltip purposes
-				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-						CHARACTER = TRN_Kirifuji_Nagisa
-						FLAG_DAYS = [?TRN_union_of_two_academies_in_progress_flag:days]
+			AND = {
+				country_exists = GEH
+				GEM = {
+					OR = {
+						exists = no
+						is_subject_of = ROOT
 					}
-					always = no 
 				}
-			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
-						CHARACTER = TRN_Kirifuji_Nagisa
-						FOCUS = TRN_start_of_the_eden_treaty_negotiations
-					}
-					always = no
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+				NOT = {
+					has_war_with = GEH
 				}
 			}
 		}
@@ -10120,6 +10124,9 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_union_of_two_academies_tt
+			hidden_effect = {
+				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.12 } }
+			}
 		}
 	}
 
@@ -10180,6 +10187,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			unlock_decision_category_tooltip = TRN_united_gehenna_decisions_cat
 			create_faction = eden_pact
 			set_rule = {
 				can_create_factions = yes
@@ -10187,6 +10195,19 @@ focus_tree = {
 			hidden_effect = { 
 				news_event = { id = trinity_news_events.11 } 
 				set_global_flag = TRINITY_WON_THE_GEHENNA
+			}
+			GEH = {
+				every_character = {
+					limit = {
+						OR = {
+							is_character = GEH_hina
+							is_character = GEH_swimsuit_hina
+							is_character = GEH_robot_hina
+							is_character = GEH_dkzh
+						}
+					}
+					set_nationality = ROOT
+				}
 			}
 		}
 	}
@@ -10215,8 +10236,89 @@ focus_tree = {
 				}
 				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
 			}
-			add_political_power = 100
 			country_event = { id = trinity_events_nagisa.24 }
+			
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = TRN_right_of_the_victor_tt
+			if = {
+				limit = {
+					GEM = {
+						has_country_leader = {
+							character = GEH_akzhxh
+							ruling_only = yes
+						}
+					}
+				}
+				custom_effect_tooltip = TRN_right_of_the_victor_makoto_tt
+				army_experience = 20
+				add_doctrine_cost_reduction = {
+					name = TRN_right_of_the_victor
+					cost_reduction = 0.5
+					uses = 1
+					category = land_doctrine
+				}
+			}
+			else_if = {
+				limit = {
+					GEM = {
+						has_country_leader = {
+							character = GEH_satsuki
+							ruling_only = yes
+						}
+					}
+				}
+				custom_effect_tooltip = TRN_right_of_the_victor_satsuki_tt
+           		add_stability = 0.05
+			}
+			else_if = {
+				limit = {
+					GEM = {
+						has_country_leader = {
+							character = GEH_dlfhgk
+							ruling_only = yes
+						}
+					}
+				}
+				custom_effect_tooltip = TRN_right_of_the_victor_iroha_tt
+				add_tech_bonus = {
+					name = TRN_right_of_the_victor
+					bonus = 0.5
+					uses = 1
+					category = cat_mechanized_equipment
+				}
+			}
+			else_if = {
+				limit = {
+					GEM = {
+						has_country_leader = {
+							character = GEH_motomiya_chiaki
+							ruling_only = yes
+						}
+					}
+				}
+				custom_effect_tooltip = TRN_right_of_the_victor_chiaki_tt
+				add_one_random_military_factory = yes
+				add_one_random_military_factory = yes
+			}
+			else_if = {
+				limit = {
+					GEM = {
+						has_country_leader = {
+							character = GEH_dlqnzl
+							ruling_only = yes
+						}
+					}
+				}
+				custom_effect_tooltip = TRN_right_of_the_victor_ibuki_tt
+				add_popularity = {
+					ideology = ROOT
+					popularity = 0.10
+				}
+			}
+			else = {
+				custom_effect_tooltip = TRN_right_of_the_victor_generic_tt
+				add_political_power = 100
+			}
 		}
 	}
 
@@ -10230,7 +10332,87 @@ focus_tree = {
 		prerequisite = { focus = TRN_right_of_the_victor }
 
 		completion_reward = {
-			country_event = { id = TRM_event.368 hours = 8 }
+			country_event = { id = trinity_events_nagisa.31 }
+		}
+	}
+
+	focus = {
+		id = TRN_the_route_of_the_sun
+		icon = GFX_goal_GEH_diplomacy_focus
+		x = 1
+		y = 1
+		cost = 5
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		available = {
+			if = { 
+				limit = { has_global_flag = GEH_BTBOTS_END_flag }
+				has_global_flag = GEH_BTBOTS_END_NEXT_flag
+			}
+			has_dynamic_modifier = {
+				modifier = TRN_german_new_culture_order_modifier
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_the_route_of_the_sun_tt
+			if = {
+				limit = {
+					GEH = {
+						has_completed_focus = GEH_ako_route_focus
+					}
+				}
+				custom_effect_tooltip = TRN_the_route_of_the_sun_ako_tt
+				GEH_dkzh = {
+					set_character_name = GEH_ako_sorasaki
+					set_character_flag = GEH_hina_bride
+				}
+				add_to_variable = {
+					TRN_new_culture_order_research_speed_factor = 0.03
+					tooltip = research_speed_factor_tt
+				}
+			}
+			else_if = {
+				limit = {
+					GEH = {
+						has_completed_focus = GEH_iori_route_focus
+					}
+				}
+				custom_effect_tooltip = TRN_the_route_of_the_sun_iori_tt
+				add_to_variable = {
+					TRN_new_culture_order_experience_loss_factor = -0.05
+					tooltip = experience_loss_factor_tt
+				}
+			}
+			else_if = {
+				limit = {
+					GEH = {
+						has_completed_focus = GEH_hina_route_focus
+					}
+				}
+				custom_effect_tooltip = TRN_the_route_of_the_sun_hina_tt
+				custom_effect_tooltip = TRN_german_new_culture_order_modifier_change
+				add_to_variable = {
+					TRN_new_culture_order_experience_gain_army_factor = 0.1
+					tooltip = experience_gain_army_factor_tt
+				}
+			}
+			else = {
+				custom_effect_tooltip = TRN_the_route_of_the_sun_generic_tt
+				add_to_variable = {
+					TRN_new_culture_order_experience_gain_army_factor = 0.03
+					tooltip = experience_gain_army_factor_tt
+				}
+				add_to_variable = {
+					TRN_new_culture_order_experience_loss_factor = -0.02
+					tooltip = experience_loss_factor_tt
+				}
+				add_to_variable = {
+					TRN_new_culture_order_research_speed_factor = 0.01
+					tooltip = research_speed_factor_tt
+				}
+			}
 		}
 	}
 
@@ -10254,6 +10436,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = TRN_five_clan_republic_tt
 			set_country_flag = nagisa_faction_I_flag
+			set_country_flag = nagisa_faction_I_arius_flag
 			add_popularity = {
 				ideology = fascism
 				popularity = 0.02
@@ -10280,6 +10463,7 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_arius_inquisition_tt
+			set_country_flag = nagisa_faction_I_arius_flag
 			set_temp_variable = {
 				TRN_arius_temp_var = nagisa_faction_I # 임시 변수에 국가인민당 변수를 옮김
 			}
@@ -11192,6 +11376,49 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = { 
+		id = TRN_two_church_unity
+		icon = GFX_focus_SOV_panslavic_nationalism
+		x = 4
+		y = 7
+
+		relative_position_id = TRN_declaration_of_crusade_towards_the_west
+		cost = 8
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+			2 = { owns_or_subject_of = yes }
+			219 = { owns_or_subject_of = yes }
+		}
+
+		prerequisite = { 
+			focus = TRN_eastern_crusade_for_russia
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			remove_trait = {
+				character = TRN_Utazumi_Sakurako
+				slot = political_advisor
+				trait = TRM_Abbess
+			}
+			add_trait = {
+				character = TRN_Utazumi_Sakurako
+				slot = political_advisor
+				trait = TRM_abbess_for_all_europa
+			}
+		}
+	}
 	
 	focus = { # 
 		id = TRN_crusade_proposal_plana
@@ -11414,6 +11641,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_rule = { CAN_DECLARE_WAR_ON_SAME_IDEOLOGY = yes }
+			set_rule = { can_only_justify_war_on_threat_country = no }
+			set_rule = { can_join_opposite_factions = yes }    
 		}
 	}
 
@@ -11892,6 +12122,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			country_event = { id = trinity_events_nagisa.29 }
 			add_war_support = 0.1
 			add_to_variable = {
 				nagisa_faction_J = -2
@@ -11998,7 +12229,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_german_cultural_revolution
-		icon = GFX_focus_TRN_fate_of_small_club
+		icon = GFX_focus_TRN_student_solidarity_no_icon
 		
 		prerequisite = { 
 			focus = TRN_realistic_approach

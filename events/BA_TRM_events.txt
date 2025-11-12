@@ -13751,22 +13751,18 @@ country_event = { # 호스트의 권한
 
 	is_triggered_only = yes
 
-	option = { #  
+	option = {
 		name = trinity_events_nagisa.11.a
-		set_country_flag = trn_nagisa_autocracy_flag # 호스트 권한 확대 -> 비동맹으로 탈선하기 위한 조건
-		set_country_leader_ideology = technocracy 
-		swap_ruler_traits = {
-			remove = TRN_noble_duty
-			add = TRN_nagisa_constitution_autocracy
-		}
-	}
-
-	option = { #  
-		name = trinity_events_nagisa.11.b
-		set_country_flag = trn_nagisa_democracy_flag
-		swap_ruler_traits = {
-			remove = TRN_noble_duty
-			add = TRN_nagisa_constitution_democracy
+		meta_effect = {
+			text = {
+				set_politics = {
+					ruling_party = democratic
+					last_election = "[CURRENT_DATE]"
+					election_frequency = 36
+					elections_allowed = yes
+				}
+			}
+			CURRENT_DATE = "[?global.date.GetDateStringNoHour]"
 		}
 	}
 }
@@ -14069,6 +14065,102 @@ country_event = { # 믿음은 굳건하여라
 	option = { 
 		name = trinity_events_nagisa.25.a 
 		add_stability = 0.1
+	}
+}
+
+country_event = { # 게헨나 학생회장 키리후지 나기사
+	id = trinity_events_nagisa.26
+	title = trinity_events_nagisa.26.t
+	desc = trinity_events_nagisa.26.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.26.a 
+
+	}
+}
+
+country_event = { # 게헨나 학생회장 시로미 이오리
+	id = trinity_events_nagisa.27
+	title = trinity_events_nagisa.27.t
+	desc = trinity_events_nagisa.27.desc
+	picture = GFX_report_event_iori_shiromi_generic_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.27.a 
+
+	}
+}
+
+country_event = { # 게헨나 학생회장 히무로 세나
+	id = trinity_events_nagisa.28
+	title = trinity_events_nagisa.28.t
+	desc = trinity_events_nagisa.28.desc
+	picture = GFX_event_Himuro_Sena
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.28.a 
+
+	}
+}
+
+country_event = { # 나기사-하스미 회동
+	id = trinity_events_nagisa.29
+	title = trinity_events_nagisa.29.t
+	desc = trinity_events_nagisa.29.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_2
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_leader = {
+			ruling_only = yes
+			character = TRN_Kirifuji_Nagisa
+		}
+	}
+
+	option = { 
+		name = trinity_events_nagisa.29.a 
+
+	}
+}
+
+country_event = { # 미식연구회는 미치지 않았다
+	id = trinity_events_nagisa.31
+	title = trinity_events_nagisa.31.t
+	desc = trinity_events_nagisa.31.desc
+	picture = GFX_report_event_gehenna_haruna
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.31.a
+		ai_chance = {
+			base = 0
+		}
+		add_stability = -0.05
+		custom_effect_tooltip = trinity_events_nagisa_31_a_tt
+		TRN_Aomori_Mine = {
+			add_trait = {
+				trait = trait_reckless
+			}
+			add_attack = 2
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.31.b
+		ai_chance = {
+			base = 1
+		}
+		custom_effect_tooltip = trinity_events_nagisa_31_b_tt
+		add_stability = 0.01
 	}
 }
 
@@ -14403,51 +14495,25 @@ country_event = { # 에덴 조약 성공
 	desc = trinity_events_nagisa_diplomacy.12.desc
 	picture = GFX_report_event_generic_trinity_logo
 
-	fire_only_once = yes
-	is_triggered_only = no
-	
-	trigger = {
-		original_tag = TRM
-        TRM = {
-            count_triggers = {
-                amount = 3
-                controls_state = 59
-                controls_state = 56
-                controls_state = 57
-                controls_state = 55
-                controls_state = 51
-                controls_state = 1022
-                controls_state = 1025
-                controls_state = 42
-                controls_state = 50
-                controls_state = 54
-                controls_state = 53
-                controls_state = 52
-                controls_state = 8
-            	}
-        	}
-		GEM = {
-			exists = no
-		}
-		GEH = {
-			exists = yes
-		}
-		has_completed_focus = TRN_start_of_the_eden_treaty_negotiations
-	}
-
-	mean_time_to_happen = { 
-		days = 5
-	}
+	is_triggered_only = yes
 
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.12.a
 		ai_chance = {
 			base = 100
 		}
-		hidden_effect = {
-			activate_shine_on_focus = TRN_union_of_two_academies
-			set_country_flag = { flag = TRN_union_of_two_academies_in_progress_flag days = 70 value = 1 }
-			GEH = { country_event = { id = trinity_events_nagisa_diplomacy.13 days = 70 } }
+		custom_effect_tooltip = GAME_OVER_TT
+		every_state = {
+			limit = {
+				is_controlled_by = GEH 
+			}
+			add_core_of = TRM
+		}
+		TRM = {
+			annex_country = {
+				target = ROOT
+			}
+			country_event = { id = trinity_events_nagisa_diplomacy.13 }
 		}
 	}
 
@@ -14456,11 +14522,14 @@ country_event = { # 에덴 조약 성공
 		ai_chance = {
 			base = 0
 		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.14 }
+		}
 	}
 
 }
 
-country_event = { # 임시로효과만
+country_event = { #
 	id = trinity_events_nagisa_diplomacy.13
 	title = trinity_events_nagisa_diplomacy.13.t
 	desc = trinity_events_nagisa_diplomacy.13.desc
@@ -14473,29 +14542,21 @@ country_event = { # 임시로효과만
 		ai_chance = {
 			base = 100
 		}
-		custom_effect_tooltip = GAME_OVER_TT
-		TRM = {
-			clr_country_flag = TRN_union_of_two_academies_in_progress_flag
-			annex_country = {
-				target = ROOT
-			}
-		}
 	}
+}
 
-	option = { # 
-		name = trinity_events_nagisa_diplomacy.13.b
+country_event = { #
+	id = trinity_events_nagisa_diplomacy.14
+	title = trinity_events_nagisa_diplomacy.14.t
+	desc = trinity_events_nagisa_diplomacy.14.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.14.a
 		ai_chance = {
-			base = 0
-		}
-	}
-
-	after = {
-		FROM = {
-			complete_national_focus = {
-				focus = TRN_union_of_two_academies
-				use_side_message = yes
-				originator_name = TRN_Kirifuji_Nagisa
-			}
+			base = 100
 		}
 	}
 }
@@ -15671,4 +15732,37 @@ country_event = { # 에덴 조약 성공
 		}
 	}
 
+}
+
+country_event = { # [GetYear]년 콘클라베
+	id = trinity_events_nagisa_election.1
+	title = trinity_events_nagisa_election.1.t
+
+	desc = {
+		text = trinity_events_nagisa_election.1.desc.phase_1
+		trigger = {
+			NOT = { has_completed_focus = TRN_right_of_the_victor }
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_election.1.desc.phase_2
+		trigger = {
+			has_completed_focus = TRN_right_of_the_victor
+		}
+	}
+
+	trigger = {
+		original_tag = TRM
+		has_completed_focus = TRN_nagisa_constitution_discussion
+	}
+
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_election.1.a
+		add_political_power = 25
+	}
 }
