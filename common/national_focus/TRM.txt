@@ -7629,7 +7629,7 @@ focus_tree = {
 			custom_effect_tooltip = tooltip_effect_upon_focus_completion
 			add_popularity = { ideology = fascism popularity = 0.06 }
 			hidden_effect = {
-				country_event = { id = trinity_flavor_events.46 }
+				country_event = { id = trinity_events.57 hours = 05 }
 			}
 		}
 	}
@@ -8097,33 +8097,6 @@ focus_tree = {
 			hidden_effect = {
 				country_event = { id = trinity_honor_events.9 days = 70 random_days = 70 }
 			}
-			IF = {
-				limit = { has_country_flag = TRN_kulturkampf_activetion_flag }
-				random_list = {
-					1 = {
-						add_to_variable = { 
-							TRN_Kulturkampf_display_value = 1
-							tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
-						}
-						clamp_variable = {
-							var = TRN_Kulturkampf_display_value
-							min = 0
-							max = 100
-						}
-					}
-					1 = {
-						add_to_variable = { 
-							TRN_Kulturkampf_display_value = 5
-							tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
-						}
-						clamp_variable = {
-							var = TRN_Kulturkampf_display_value
-							min = 0
-							max = 100
-						}
-					}
-				}
-			}
 		}
 	}
 	
@@ -8315,33 +8288,6 @@ focus_tree = {
 					character = TRN_Utazumi_Sakurako
 					slot = political_advisor
 					trait = TRM_defender_of_faith
-				}
-			}
-			IF = {
-				limit = { has_country_flag = TRN_kulturkampf_activetion_flag }
-				random_list = {
-					1 = {
-						add_to_variable = { 
-							TRN_Kulturkampf_display_value = 1
-							tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
-						}
-						clamp_variable = {
-							var = TRN_Kulturkampf_display_value
-							min = 0
-							max = 100
-						}
-					}
-					1 = {
-						add_to_variable = { 
-							TRN_Kulturkampf_display_value = 5
-							tooltip = TRN_Kulturkampf_display_value_increase_mika_2_tt
-						}
-						clamp_variable = {
-							var = TRN_Kulturkampf_display_value
-							min = 0
-							max = 100
-						}
-					}
 				}
 			}
 		}
@@ -8649,9 +8595,7 @@ focus_tree = {
 				nagisa_faction_I = -4
 				tooltip = nagisa_faction_I_tt
 			}
-			hidden_effect = {
-
-			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -8773,6 +8717,15 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			add_to_variable = {
+				nagisa_faction_C = 2
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_G = -2
+				tooltip = nagisa_faction_G_tt
+			}
+			TRM_nagisa_faction_modified = yes
 
 		}
 	}
@@ -8832,20 +8785,13 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
-			#custom_trigger_tooltip = {
-			#	tooltip = TRN_kulturkampf_activetion_tt
-			#	has_country_flag = TRN_kulturkampf_activetion_flag	
-			#}
 		}
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-			custom_effect_tooltip = TRN_take_over_the_church_tt
-			hidden_effect = { 
-				country_event = { id = trinity_kulturkampf_events.1 days = 14 random_days = 14  }
-			}
+			country_event = trinity_events.29
 		}
 	}
 
@@ -12515,6 +12461,27 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = TRN_arius_tactic
+		icon = GFX_focus_ARI_arius_mob
+		prerequisite = { focus = TRN_annex_the_bandit_states }
+		x = 0
+		y = 1
+		relative_position_id = TRN_annex_the_bandit_states
+		cost = 5
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
 	###
 	### 키보토스, 게헨나랑 전쟁 분기
 	###
@@ -14496,7 +14463,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			effect_tooltip = { add_ideas = TRN_trinity_navy_ns_fake }
+			hidden_effect = {
+				add_dynamic_modifier = { modifier = TRN_navy_ns }
+			}
 		}
 	}
 
@@ -14516,7 +14486,51 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			if = {
+				limit = { NOT = { has_tech = marines } }
+				set_technology = { marines = 1 }
+			}
+			add_tech_bonus = {
+				name = TRN_creation_of_marine_corps
+				bonus = 1
+				uses = 1
+				category = marine_tech
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Trinity Marine Division"
+					LINE_1 = { localization_key = line_battalion_tt NAME = marine ICON = GFX_unit_marine_icon_small COUNT = 10 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = recon ICON = GFX_unit_recon_icon_small }
+					SUPPORT_2 = { localization_key = support_battalion_tt NAME = engineer ICON = GFX_unit_engineer_icon_small }
+					SUPPORT_3 = { localization_key = support_battalion_tt NAME = artillery ICON = GFX_unit_artillery_icon_small }
+				}
+				if = {
+					limit = { has_template = "Trinity Marine Division" }
+					delete_unit_template_and_units = { division_template = "Trinity Marine Division" disband = yes } #꼼수 ㄴ
+				}
+				division_template = {
+					name = "Trinity Marine Division"
+					division_names_group = TRM_INF_01
+					regiments = {
+						marine = { x = 0 y = 0 }
+						marine = { x = 0 y = 1 }
+						marine = { x = 0 y = 2 }
+						marine = { x = 0 y = 3 }
+						marine = { x = 1 y = 0 }
+						marine = { x = 1 y = 1 }
+						marine = { x = 1 y = 2 }
+						marine = { x = 1 y = 3 }
+						marine = { x = 2 y = 0 }
+						marine = { x = 2 y = 1 }
+					}
+					support = {
+						recon = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						artillery = { x = 0 y = 2 }
+					}
+				}
+			}
 		}
 	}
 
@@ -14536,12 +14550,23 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+			add_one_random_dockyard = yes
+			custom_effect_tooltip = tooltip_white_line
+			random_owned_controlled_state = {
+				prioritize = { 763 }
+				limit = {
+					is_core_of = ROOT
+					can_construct_building = naval_facility
+				}
+				construct_building_in_random_province = { naval_facility = 1 }
+			}
 		}
 	}
 
 	focus = {
-		id = TRN_conquer_the_beach
+		id = TRN_establish_the_naval_command
 		icon = GFX_focus_generic_naval_invasion
 		prerequisite = { 
 			focus = TRN_creation_of_marine_corps
@@ -14559,18 +14584,50 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			navy_experience = 25
+			add_command_power = 25
+			if = {
+				limit = { has_dlc_aat = yes }
+				add_doctrine_cost_reduction = {
+					name = TRN_establish_the_naval_command
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_marines_doctrine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = TRN_establish_the_naval_command
+					bonus = 1
+					uses = 1
+					category = marine_tech
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = {
+				TRN_navy_ns_navy_max_range_factor = 0.1
+				tooltip = navy_max_range_factor_tt
+			}
+			add_to_variable = {
+				TRN_navy_ns_naval_doctrine_cost_factor = -0.1
+				tooltip = naval_doctrine_cost_factor_tt
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_05
+		id = TRN_giant_ship_plan
 		icon = GFX_focus_generic_air_carrier
-		prerequisite = { focus = TRN_conquer_the_beach }
+		prerequisite = { focus = TRN_establish_the_naval_command }
 		mutually_exclusive = { focus = TRN_navy_focus_09 }
 		x = -2
 		y = 1
-		relative_position_id = TRN_conquer_the_beach
+		relative_position_id = TRN_establish_the_naval_command
 		cost = 5
 		available = {
 
@@ -14587,10 +14644,10 @@ focus_tree = {
 	focus = {
 		id = TRN_navy_focus_06
 		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_05 }
+		prerequisite = { focus = TRN_giant_ship_plan }
 		x = 0
 		y = 1
-		relative_position_id = TRN_navy_focus_05
+		relative_position_id = TRN_giant_ship_plan
 		cost = 5
 		available = {
 
@@ -14647,11 +14704,11 @@ focus_tree = {
 	focus = {
 		id = TRN_navy_focus_09
 		icon = GFX_focus_generic_trade_interdiction
-		prerequisite = { focus = TRN_conquer_the_beach }
-		mutually_exclusive = { focus = TRN_navy_focus_05 }
+		prerequisite = { focus = TRN_establish_the_naval_command }
+		mutually_exclusive = { focus = TRN_giant_ship_plan }
 		x = 2
 		y = 1
-		relative_position_id = TRN_conquer_the_beach
+		relative_position_id = TRN_establish_the_naval_command
 		cost = 5
 		available = {
 
@@ -14730,11 +14787,11 @@ focus_tree = {
 		icon = GFX_focus_POL_develop_polish_shipbuilding
 		prerequisite = { 
 			focus = TRN_navy_focus_09
-			focus = TRN_navy_focus_05
+			focus = TRN_giant_ship_plan
 		}
 		x = 0
 		y = 2
-		relative_position_id = TRN_conquer_the_beach
+		relative_position_id = TRN_establish_the_naval_command
 		cost = 5
 		available = {
 

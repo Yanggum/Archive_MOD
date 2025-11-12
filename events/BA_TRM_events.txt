@@ -8726,7 +8726,9 @@ country_event = { # 리워크 중인 중점과 새로운 사건을 불러옵니�
 		name = trinity_system_events.0.a
     	}
 }
-country_event = { # 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
+# 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
+# 이벤트 ID는 trinity_honor_events.9 입니다.
+country_event = { 
 	id = trinity_system_events.1
 
 	is_triggered_only = yes
@@ -8747,43 +8749,10 @@ country_event = { # 명예, 사쿠라코 이너서클 중점 완료를 위해 �
 		}
 	}
 }
-country_event = { # 문화투쟁, 랜덤한 주에 '저항하는 교회' 변동치를 부여하기 위해 사용 됩니다.
+ # 명예, 츠루기 이너서클 중점 완료를 위해 사용됩니다.
+ # 이벤트 ID는  trinity_events.15  입니다.
+country_event = {
 	id = trinity_system_events.2
-	hidden = yes
-	is_triggered_only = yes
-
-	trigger = {
-		tag = TRM
-		has_country_flag = TRN_kulturkampf_activetion_flag
-		any_state = {
-			is_core_of = TRM
-			OR = {
-				has_dynamic_modifier = { modifier = GEK_protestant_state }
-				has_dynamic_modifier = { modifier = GEK_catholic_state }
-			}
-		}
-	}
-
-	immediate = {
-		random_owned_state = {
-			limit = {
-				is_core_of = ROOT
-				OR = {
-					has_dynamic_modifier = { modifier = GEK_protestant_state }
-					has_dynamic_modifier = { modifier = GEK_catholic_state }
-				}
-			}
-			save_global_event_target_as = TRN_church_in_resistance_state
-			state_event = { id = trinity_kulturkampf_events.5 trigger_for = controller }
-		}
-
-		hidden_effect = {
-			country_event = { id = trinity_system_events.2 days = 35 random_days = 35 }
-		}
-	}
-}
-country_event = { # 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
-	id = trinity_system_events.3
 
 	is_triggered_only = yes
 
@@ -9199,7 +9168,7 @@ country_event = { # 정의실현부 정치의원
 		set_country_flag = { flag = TRN_improving_JTF_in_progress_flag days = 141 value = 1 }
 		hidden_effect = { 
 			activate_shine_on_focus = TRN_improving_JTF
-			country_event = { id = trinity_system_events.1 days = 140 }
+			country_event = { id = trinity_system_events.2 days = 140 }
 		}
     	}
 }
@@ -9720,13 +9689,7 @@ country_event = { # 종교 갈등
 
 	option = {
 		name = trinity_events.29.a
-		ai_chance = { 
-			base = 10
-		}
-		unlock_decision_tooltip = TRN_infiltrate_church_unlock_tt_deicision
-		unlock_decision_tooltip = TRN_asset_seizure_decision
-		unlock_decision_tooltip = TRN_arrest_bonhoeffer_decision
-		add_political_power = 120
+		
     	}
 }
 country_event = { # 여성 인권에 대한 논의
@@ -11104,125 +11067,35 @@ country_event = { # 명예 - 시스터후드의 선교 활동
 		add_political_power = 35
 	}
 }
-
-country_event = { # 저항하는 교회
-	id = trinity_kulturkampf_events.1
-	title = trinity_kulturkampf_events.1.t
-	desc = trinity_kulturkampf_events.1.desc
-	picture = GFX_report_event_dietrich_bonhoeffer
-
-	is_triggered_only = yes
-	fire_only_once = no
-
-	immediate = {
-		hidden_effect = {
-			country_event = { id = trinity_kulturkampf_events.4 days = 35 }
-			country_event = { id = trinity_system_events.2 days = 50 random_days = 15 }
-		}
-	}
-
-	option = { # 
-		name = trinity_kulturkampf_events.1.a
-		set_country_flag = TRN_kulturkampf_activetion_flag
-		unlock_decision_category_tooltip = TRN_Kulturkampf_cat
-		activate_mission = TRN_bonhoeffer_activation_decision
-		country_event = { id = trinity_events.29 } # 문화 투쟁
-		hidden_effect = {
-			add_dynamic_modifier = { modifier = TRN_church_in_resistance_ns }
-		}
-	}
-}
-
-country_event = { # 디트리히 본회퍼
-	id = trinity_kulturkampf_events.2
-	title = trinity_kulturkampf_events.2.t
-	desc = trinity_kulturkampf_events.2.desc
-	picture = GFX_report_event_dietrich_bonhoeffer
+country_event = { # 명예 - 시스터후드의 선교 활동
+	id = trinity_honor_events.10
+	title = trinity_honor_events.9.t
+	desc = trinity_honor_events.9.desc
+	picture = GFX_report_event_generic_terrace
 
 	is_triggered_only = yes
 	fire_only_once = no
 
 	option = { # 
-		name = trinity_kulturkampf_events.2.a
-		
-	}
-	after = {
-		hidden_effect = {
-			country_event = { id = trinity_kulturkampf_events.3 days = 5 }
+		name = trinity_honor_events.9.a
+		add_stability = -0.02
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.05
 		}
+		set_country_flag = { flag = TRN_jewel_of_the_trinity_faith_in_progress_flag days = 141 value = 1 }
+		hidden_effect = { 
+			activate_shine_on_focus = TRN_jewel_of_the_trinity_faith
+			country_event = { id = trinity_system_events.1 days = 140 }
+		} 
+		effect_tooltip = { unlock_national_focus = TRN_jewel_of_the_trinity_faith }
+	}
+
+	option = { #
+		name = trinity_honor_events.9.b
+		add_political_power = 35
 	}
 }
-
-country_event = { # 디트리히 본회퍼의 마지막 편지
-	id = trinity_kulturkampf_events.3
-	title = trinity_kulturkampf_events.3.t
-	desc = {
-		text = trinity_kulturkampf_events.3.desc
-		trigger = { has_country_flag = TRN_bonhoeffer_is_arrest }
-	}
-	desc = {
-		text = trinity_kulturkampf_events.3_2.desc
-		trigger = { NOT = { has_country_flag = TRN_bonhoeffer_is_arrest} }
-	}
-	
-	picture = GFX_report_event_dietrich_bonhoeffer
-
-	is_triggered_only = yes
-	fire_only_once = no
-
-	option = { # 
-		name = trinity_kulturkampf_events.3.a
-
-	}
-}
-
-country_event = { # 고백교회
-	id = trinity_kulturkampf_events.4
-	title = trinity_kulturkampf_events.4.t
-	desc = trinity_kulturkampf_events.4.desc
-	picture = GFX_report_event_dietrich_bonhoeffer
-
-	is_triggered_only = yes
-	fire_only_once = no
-
-	immediate = {
-		hidden_effect = {
-			custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
-			add_to_variable = { TRN_Kulturkampf_display_value = -5 }
-			clamp_variable = {
-				var = TRN_Kulturkampf_display_value
-				min = 0
-				max = 100
-			}
-		}
-	}
-
-	option = { # 
-		name = trinity_kulturkampf_events.4.a
-		custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
-		
-	}
-}
-
-country_event = { # FROM주의 저항
-	id = trinity_kulturkampf_events.5
-	title = trinity_kulturkampf_events.5.t
-	desc = trinity_kulturkampf_events.5.desc
-	picture = GFX_report_event_generic_germany_father
-
-	is_triggered_only = yes
-	fire_only_once = no
-
-	option = { # 
-		name = trinity_kulturkampf_events.5.a
-		unlock_decision_tooltip = { decision = TRN_church_in_resistance_decision show_effect_tooltip = yes }
-		event_target:TRN_church_in_resistance_state = {
-			set_state_flag = trinity_church_in_resistance_state_flag
-		}
-	}
-}
-
-
 
 
 news_event = { # 세이아 피습 사건
