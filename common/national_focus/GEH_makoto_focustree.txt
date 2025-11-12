@@ -13490,6 +13490,9 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_focus_ended_1_A
 			}
+			mutually_exclusive = {
+				focus = GEM_gehenna_liberalism_forced_implantation
+			}
 			available = {
 			}
 			search_filters = {
@@ -13551,21 +13554,109 @@ focus_tree = {
 			}
 		}
 		focus = {
+			id = GEM_gehenna_liberalism_forced_implantation
+			icon = GFX_goal_hmmngshinso_broken
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_focus_ended_1_A
+			}
+			mutually_exclusive = {
+				focus = GEM_mini_gehenna_academy
+			}
+			available = {
+				set_temp_variable = {
+					temp_GEM_makoto_system_var = 7
+				}
+				custom_trigger_tooltip = {
+					tooltip = GEM_makoto_system_temp_trigger_upper
+					check_variable = {
+						var = GEM_makoto_system_var
+						value = var:temp_GEM_makoto_system_var
+						compare = greater_than_or_equals
+					}
+					#check_variable = {
+					#	var = GEM_makoto_system_var
+					#	value = var:temp_GEM_makoto_system_var
+					#	compare = less_than
+					#}
+				}
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = -3
+			y = 1
+			relative_position_id = GEM_focus_ended_1_A
+			completion_reward = {
+				add_country_leader_trait = GEM_gehennaism_trait
+				country_event = GEM_makoto_story.15
+			}
+		}
+		focus = {
+			id = GEM_cultural_hegemony_rule
+			icon = GFX_goal_HEU_gehenna
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_gehenna_liberalism_forced_implantation
+			}
+			available = {
+				OR = {
+					TRM = {
+						exists = no
+					}
+					TRM = {
+						is_subject_of = ROOT
+					}
+					TRK = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+					}
+					owns_state = 64
+				}
+				OR = {
+					GEH = {
+						exists = no
+					}
+					GEH = {
+						is_subject_of = ROOT
+					}
+					owns_state = 52
+				}
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 0
+			y = 2
+			relative_position_id = GEM_gehenna_liberalism_forced_implantation
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = GEH_nazism_4_idea
+					add_idea = GEH_nazism_5_idea
+				}
+			}
+		}
+		focus = {
 			id = GEM_hanuma_makoto_constitution
 			icon = GFX_focus_LAT_suspend_constitution_of_latvia
 			cost = 5.00
 			prerequisite = {
 				focus = GEM_broader_german
+				focus = GEM_cultural_hegemony_rule
 			}
 			prerequisite = {
 				focus = GEM_successor_of_fuehrer_station
+			}
+			mutually_exclusive = {
+				focus = GEM_back_to_1933
 			}
 			available = {
 			}
 			search_filters = {
 				FOCUS_FILTER_STABILITY
 			}
-			x = 1
+			x = -1
 			y = 1
 			relative_position_id = GEM_broader_german
 			completion_reward = {
@@ -13585,6 +13676,58 @@ focus_tree = {
 				custom_effect_tooltip = enter_tt
 				set_cosmetic_tag = GEM_german_makoto
 				country_event = GEM_makoto_story.6
+			}
+		}
+		focus = {
+			id = GEM_back_to_1933
+			icon = GFX_goal_generic_parliament2
+			cost = 5.00
+			prerequisite = {
+				focus = GEM_broader_german
+				focus = GEM_cultural_hegemony_rule
+			}
+			prerequisite = {
+				focus = GEM_successor_of_fuehrer_station
+			}
+			mutually_exclusive = {
+				focus = GEM_hanuma_makoto_constitution
+			}
+			available = {
+				set_temp_variable = {
+					temp_GEM_makoto_system_var = 6
+				}
+				custom_trigger_tooltip = {
+					tooltip = GEM_makoto_system_temp_trigger_lower
+					#check_variable = {
+					#	var = GEM_makoto_system_var
+					#	value = var:temp_GEM_makoto_system_var
+					#	compare = greater_than_or_equals
+					#}
+					check_variable = {
+						var = GEM_makoto_system_var
+						value = var:temp_GEM_makoto_system_var
+						compare = less_than
+					}
+				}
+			}
+			search_filters = {
+				FOCUS_FILTER_STABILITY
+			}
+			x = 1
+			y = 1
+			relative_position_id = GEM_broader_german
+			completion_reward = {
+				custom_effect_tooltip = GEM_perpetual_war_state_tt
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_arms_factory_factor = 0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_industrial_capacity_factory = 0.05
+					tooltip = industrial_capacity_factory_tt
+				}
+				custom_effect_tooltip = enter_tt
+				country_event = GEM_makoto_story.14
 			}
 		}
 	# /독일국 사츠키
