@@ -4777,7 +4777,7 @@ focus_tree = {
 					modifier = GEK_ari_religion
 				}
 					add_dynamic_modifier = {
-						modifier = GEK_trm_christianity_state
+						modifier = TRN_christianity_state
 					}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -7629,7 +7629,11 @@ focus_tree = {
 			custom_effect_tooltip = tooltip_effect_upon_focus_completion
 			add_popularity = { ideology = fascism popularity = 0.06 }
 			hidden_effect = {
-				country_event = { id = trinity_events.57 hours = 05 }
+				country_event = { id = trinity_events.57 }
+				add_timed_idea = {
+					idea = TRN_sisterhood_missionary_work_ns
+					days = 730
+				}
 			}
 		}
 	}
@@ -8520,7 +8524,6 @@ focus_tree = {
 		id = TRN_contact_SPD
 		icon = GFX_focus_TRN_contact_SPD
 		prerequisite = { focus = TRN_denazification }
-		prerequisite = { focus = TRN_second_trintiy }
 		x = -2
 		y = 1
 		relative_position_id = TRN_denazification
@@ -8562,7 +8565,6 @@ focus_tree = {
 		id = TRN_limit_german_party
 		icon = GFX_focus_ITA_banda_carita
 		prerequisite = { focus = TRN_denazification }
-		prerequisite = { focus = TRN_second_trintiy }
 		x = 0
 		y = 1
 		relative_position_id = TRN_denazification
@@ -8670,6 +8672,11 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			add_political_power = 100
+
+			swap_ideas = {
+				add_idea = TRN_controlled_party_2_ns
+				remove_idea = TRN_controlled_party_ns
+			}
 		}
 	}
 
@@ -8792,6 +8799,19 @@ focus_tree = {
 		}
 		completion_reward = {
 			country_event = trinity_events.29
+			if = {
+				limit = { has_idea = TRN_sisterhood_missionary_work_ns }
+				modify_timed_idea = {
+					idea = TRN_sisterhood_missionary_work_ns
+					days = 365
+				}
+			}
+			else = {
+				add_timed_idea = {
+					idea = TRN_sisterhood_missionary_work_ns
+					days = 365
+				}
+			}
 		}
 	}
 
@@ -12169,6 +12189,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = nagisa_faction_D_join
 			set_country_flag = nagisa_faction_D_flag
+			TRM_nagisa_faction_modified = yes
 			country_event = { id = trinity_events_nagisa.22 }
 		}
 	}
@@ -12455,7 +12476,7 @@ focus_tree = {
 					hidden_effect = {
 						remove_dynamic_modifier = { modifier = GEK_ari_religion }
 					}
-					add_dynamic_modifier = { modifier = GEK_trm_christianity_state }
+					add_dynamic_modifier = { modifier = TRN_christianity_state }
 				}
 			}
 		}
@@ -14467,6 +14488,13 @@ focus_tree = {
 			hidden_effect = {
 				add_dynamic_modifier = { modifier = TRN_navy_ns }
 			}
+
+			if = {
+				limit = {
+					has_dlc_mtg = no
+				}
+				custom_effect_tooltip = TRN_control_of_baltic_sea_tt
+			}
 		}
 	}
 
@@ -14474,7 +14502,7 @@ focus_tree = {
 		id = TRN_creation_of_marine_corps
 		icon = GFX_goal_generic_amphibious_assault
 		prerequisite = { focus = TRN_control_of_baltic_sea }
-		x = 0
+		x = -2
 		y = 1
 		relative_position_id = TRN_control_of_baltic_sea
 		cost = 5
@@ -14538,7 +14566,7 @@ focus_tree = {
 		id = TRN_expand_naval_facilities
 		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = TRN_control_of_baltic_sea }
-		x = -2
+		x = 0
 		y = 1
 		relative_position_id = TRN_control_of_baltic_sea
 		cost = 5
@@ -14574,7 +14602,7 @@ focus_tree = {
 		}
 		x = -1
 		y = 1
-		relative_position_id = TRN_creation_of_marine_corps
+		relative_position_id = TRN_expand_naval_facilities
 		cost = 5
 		available = {
 
@@ -14609,10 +14637,6 @@ focus_tree = {
 				DYNMOD = TRN_navy_ns
 			}
 			add_to_variable = {
-				TRN_navy_ns_navy_max_range_factor = 0.1
-				tooltip = navy_max_range_factor_tt
-			}
-			add_to_variable = {
 				TRN_navy_ns_naval_doctrine_cost_factor = -0.1
 				tooltip = naval_doctrine_cost_factor_tt
 			}
@@ -14624,26 +14648,77 @@ focus_tree = {
 		id = TRN_giant_ship_plan
 		icon = GFX_focus_generic_air_carrier
 		prerequisite = { focus = TRN_establish_the_naval_command }
-		mutually_exclusive = { focus = TRN_navy_focus_09 }
 		x = -2
 		y = 1
 		relative_position_id = TRN_establish_the_naval_command
 		cost = 5
 		available = {
-
+			OR = {
+				has_full_control_of_state = 56
+				has_full_control_of_state = 59
+				has_full_control_of_state = 58
+			}
+			OR = {
+				NOT = { has_completed_focus = TRN_trade_interdiction }
+				AND = {
+					has_completed_focus = TRN_submarine_warfare
+					has_completed_focus = TRN_armored_assault_fleet
+				}
+			}
 		}
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
-
+			add_doctrine_cost_reduction = {
+				name = TRN_giant_ship_plan
+				cost_reduction = 0.25
+				uses = 3
+				category = fleet_in_being_tree
+			}
+			add_tech_bonus = {
+				name = TRN_giant_ship_plan
+				bonus = 0.5
+				uses = 1
+				category = bc_tech
+			}
+			add_tech_bonus = {
+				name = TRN_giant_ship_plan
+				bonus = 1.0
+				uses = 1
+				category = cv_tech
+			}
+			if = {
+				limit = {
+					NOT = { has_tech = basic_ship_hull_heavy }
+				}
+				set_technology = {
+					basic_ship_hull_heavy = 1
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_tech = basic_medium_battery }
+				}
+				set_technology = {
+					basic_medium_battery = 1
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_tech = basic_heavy_battery }
+				}
+				set_technology = {
+					basic_heavy_battery = 1
+				}
+			}
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_06
-		icon = GFX_focus_TRN_navy
+		id = TRN_high_seas_fleet
+		icon = GFX_focus_generic_north_atlantic_fleet
 		prerequisite = { focus = TRN_giant_ship_plan }
 		x = 0
 		y = 1
@@ -14657,17 +14732,105 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					62 = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+				62 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+			create_equipment_variant = {
+				name = "Angel Class"				
+				name_group = ENG_BB_HISTORICAL
+				type = ship_hull_heavy_2
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_2
+					fixed_ship_anti_air_slot = ship_anti_air_1
+					fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+					fixed_ship_radar_slot = empty
+					fixed_ship_engine_slot = heavy_ship_engine_2
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_2
+					front_1_custom_slot = ship_anti_air_1
+					mid_1_custom_slot = ship_airplane_launcher_1
+					mid_2_custom_slot = ship_secondaries_1
+					rear_1_custom_slot = ship_heavy_battery_2
+				}
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_2
+					creator = "TRM"
+				}
+				name = "Sariel"
+				requested_factories = 1
+				progress = 0.3
+				amount = 1
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_2
+					creator = "TRM"
+				}
+				name = "Zadkiel"
+				requested_factories = 1
+				progress = 0.15
+				amount = 1
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_defense_factor = 0.05
+				tooltip = naval_defense_factor_tt
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_hit_chance = 0.05
+				tooltip = naval_hit_chance_tt
+			}
+			add_to_variable = { 
+				TRN_navy_ns_screening_efficiency = 0.1
+				tooltip = screening_efficiency_tt
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_07
-		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_06 }
+		id = TRN_construct_aircraft_carriers
+		icon = GFX_focus_GER_graf_zeppelin
+		prerequisite = { focus = TRN_high_seas_fleet }
 		x = -1
 		y = 1
-		relative_position_id = TRN_navy_focus_06
+		relative_position_id = TRN_high_seas_fleet
 		cost = 5
 		available = {
 
@@ -14677,17 +14840,157 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+			if = {
+				limit = {
+					NOT = { has_tech = early_ship_hull_carrier }
+				}
+				set_technology = { early_ship_hull_carrier = 1}
+				create_equipment_variant = {
+					name = "archangels Class"				
+					name_group = ENG_CV_HISTORICAL
+					type = ship_hull_carrier_conversion_ca
+					modules = {
+						fixed_ship_deck_slot_1 = ship_deck_space
+						fixed_ship_deck_slot_2 = ship_deck_space
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_engine_slot = cruiser_ship_engine_2
+						fixed_ship_secondaries_slot = empty
+					}
+				}
+				add_equipment_production = { 
+					equipment = {
+						type = ship_hull_carrier_conversion_ca
+						creator = "TRM"
+						version_name = "archangels Class"
+					}
+					name = "Michael"
+					requested_factories = 1
+					progress = 0.3
+					amount = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_carrier
+					NOT = { has_tech = basic_ship_hull_carrier }
+				}
+				set_technology = { basic_ship_hull_carrier = 1 }
+				create_equipment_variant = {
+					name = "archangels Class"				
+					name_group = ENG_CV_HISTORICAL
+					type = ship_hull_carrier_1
+					modules = {
+						fixed_ship_deck_slot_1 = ship_deck_space
+						fixed_ship_deck_slot_2 = ship_deck_space
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_engine_slot = carrier_ship_engine_3
+						fixed_ship_secondaries_slot = empty
+						front_1_custom_slot = ship_deck_space
+					}
+				}		
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_carrier_1
+						creator = "TRM"
+						version_name = "archangels Class"
+					}
+					name = "Michael"
+					requested_factories = 1
+					progress = 0.3
+					amount = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = early_ship_hull_carrier
+					has_tech = basic_ship_hull_carrier
+					NOT = { has_tech = improved_ship_hull_carrier }
+				}
+				set_technology = { improved_ship_hull_carrier = 1 }
+				create_equipment_variant = {
+					name = "archangels Class"				
+					name_group = ENG_CV_HISTORICAL
+					type = ship_hull_carrier_2
+					modules = {
+						fixed_ship_deck_slot_1 = ship_deck_space
+						fixed_ship_deck_slot_2 = ship_deck_space
+						fixed_ship_anti_air_slot = ship_anti_air_2
+						fixed_ship_engine_slot = carrier_ship_engine_2
+						fixed_ship_secondaries_slot = empty
+						front_1_custom_slot = ship_deck_space
+						mid_1_custom_slot = ship_deck_space
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_carrier_2
+						creator = "TRM"
+						version_name = "archangels Class"
+					}
+					name = "Michael"
+					requested_factories = 1
+					progress = 0.3
+					amount = 1
+				}
+			}
+			else_if = {
+				limit = {
+					has_tech = improved_ship_hull_carrier
+				}
+				create_equipment_variant = {
+					name = "archangels Class"				
+					name_group = ENG_CV_HISTORICAL
+					type = ship_hull_carrier_2
+					modules = {
+						fixed_ship_deck_slot_1 = ship_deck_space
+						fixed_ship_deck_slot_2 = ship_deck_space
+						fixed_ship_anti_air_slot = ship_anti_air_2
+						fixed_ship_engine_slot = carrier_ship_engine_2
+						fixed_ship_secondaries_slot = empty
+						front_1_custom_slot = ship_deck_space
+						mid_1_custom_slot = ship_deck_space
+					}
+				}
+				add_equipment_production = {
+					equipment = {
+						type = ship_hull_carrier_2
+						creator = "TRM"
+						version_name = "archangels Class"
+					}
+					name = "Michael"
+					requested_factories = 1
+					progress = 0.3
+					amount = 1
+				}
+			}
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_08
-		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_06 }
+		id = TRN_battleship_construction
+		icon = GFX_focus_generic_navy_battleship2
+		prerequisite = { focus = TRN_high_seas_fleet }
 		x = 1
 		y = 1
-		relative_position_id = TRN_navy_focus_06
+		relative_position_id = TRN_high_seas_fleet
 		cost = 5
 		available = {
 
@@ -14698,19 +15001,100 @@ focus_tree = {
 
 		completion_reward = {
 
+			random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+
+			add_tech_bonus = {
+				name = TRN_battleship_construction
+				bonus = 0.5
+				uses = 1
+				category = bb_tech
+			}
+			custom_effect_tooltip = tooltip_white_line
+			create_equipment_variant = {
+				name = "Angel Class"				
+				name_group = ENG_BB_HISTORICAL
+				type = ship_hull_heavy_3
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_3
+					fixed_ship_anti_air_slot = ship_anti_air_1
+					fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+					fixed_ship_radar_slot = ship_radar_1
+					fixed_ship_engine_slot = heavy_ship_engine_2
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_2
+					front_1_custom_slot = ship_anti_air_1
+					mid_1_custom_slot = ship_airplane_launcher_1
+					mid_2_custom_slot = ship_secondaries_1
+					mid_3_custom_slot = ship_anti_air_1
+					rear_1_custom_slot = ship_heavy_battery_3
+				}
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_3
+					creator = "TRM"
+				}
+				name = "Remiel"
+				requested_factories = 1
+				progress = 0.2
+				amount = 1
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_3
+					creator = "TRM"
+				}
+				name = "Raguel"
+				requested_factories = 1
+				progress = 0.1
+				amount = 1
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_heavy_gun_hit_chance_factor = 0.05
+				tooltip = naval_heavy_gun_hit_chance_factor_tt
+			}
+
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_09
+		id = TRN_trade_interdiction
 		icon = GFX_focus_generic_trade_interdiction
 		prerequisite = { focus = TRN_establish_the_naval_command }
-		mutually_exclusive = { focus = TRN_giant_ship_plan }
 		x = 2
 		y = 1
 		relative_position_id = TRN_establish_the_naval_command
 		cost = 5
 		available = {
+			OR = {
+				NOT = { has_completed_focus = TRN_giant_ship_plan }
+				AND = {
+					has_completed_focus = TRN_construct_aircraft_carriers
+					has_completed_focus = TRN_battleship_construction
+				}
+			}
 
 		}
 		ai_will_do = {
@@ -14718,17 +15102,45 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_doctrine_cost_reduction = {
+				name = GER_trade_interdiction
+				cost_reduction = 0.25
+				uses = 2
+				category = trade_interdiction_tree	
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_defense_factor = 0.05
+				tooltip = naval_defense_factor_tt
+			}
+			add_to_variable = { 
+				TRN_navy_ns_screening_without_screens = 0.1
+				tooltip = screening_without_screens_tt
+			}
+			custom_effect_tooltip = GER_submarine_max_speed_small_tt
+			hidden_effect = {
+				add_equipment_bonus = {
+					name = TRN_trade_interdiction
+					bonus = {
+						ship_hull_submarine = {
+							naval_speed = 0.05 #WARNING! If you change this value, you need to update GER_submarine_max_speed_small_tt
+						}
+					}
+				}
+			}
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_10
-		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_09 }
+		id = TRN_cruiser_warfare
+		icon = GFX_focus_generic_cruiser2
+		prerequisite = { focus = TRN_trade_interdiction }
 		x = 0
 		y = 1
-		relative_position_id = TRN_navy_focus_09
+		relative_position_id = TRN_trade_interdiction
 		cost = 5
 		available = {
 
@@ -14738,17 +15150,55 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = GER_cruiser_warfare
+				bonus = 0.5
+				uses = 1
+				category = cl_tech
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = { 
+				TRN_navy_ns_convoy_raiding_efficiency_factor = 0.05
+				tooltip = convoy_raiding_efficiency_factor_tt
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_light_gun_hit_chance_factor = 0.05
+				tooltip = naval_light_gun_hit_chance_factor_tt
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_11
-		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_10 }
+		id = TRN_armored_assault_fleet
+		icon = GFX_focus_GER_panzerschiff
+		prerequisite = { focus = TRN_cruiser_warfare }
 		x = 1
 		y = 1
-		relative_position_id = TRN_navy_focus_10
+		relative_position_id = TRN_cruiser_warfare
 		cost = 5
 		available = {
 
@@ -14758,17 +15208,35 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = TRN_armored_assault_fleet
+				bonus = 0.5
+				uses = 1
+				category = ca_tech
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_light_gun_hit_chance_factor = 0.05
+				tooltip = naval_light_gun_hit_chance_factor_tt
+			}
+			add_to_variable = { 
+				TRN_navy_ns_naval_heavy_gun_hit_chance_factor = 0.05
+				tooltip = naval_heavy_gun_hit_chance_factor_tt
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_12
-		icon = GFX_focus_TRN_navy
-		prerequisite = { focus = TRN_navy_focus_09 }
+		id = TRN_submarine_warfare
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = TRN_trade_interdiction }
 		x = -1
 		y = 2
-		relative_position_id = TRN_navy_focus_09
+		relative_position_id = TRN_trade_interdiction
 		cost = 5
 		available = {
 
@@ -14779,14 +15247,38 @@ focus_tree = {
 
 		completion_reward = {
 
+			add_tech_bonus = {
+				name = TRN_submarine_warfare
+				bonus = 1.0
+				uses = 1
+				category = ss_tech
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+
 		}
 	}
 
 	focus = {
-		id = TRN_navy_focus_13
+		id = TRN_improve_ship_industry
 		icon = GFX_focus_POL_develop_polish_shipbuilding
 		prerequisite = { 
-			focus = TRN_navy_focus_09
+			focus = TRN_trade_interdiction
 			focus = TRN_giant_ship_plan
 		}
 		x = 0
@@ -14801,7 +15293,66 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_navy_ns
+			}
+			add_to_variable = {
+				TRN_navy_ns_navy_max_range_factor = 0.1
+				tooltip = navy_max_range_factor_tt
+			}
 		}
 	}
 
