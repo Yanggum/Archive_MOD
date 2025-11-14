@@ -506,6 +506,265 @@ country_event = { # 하누마 마코토 - 오리진
 	}
 }
 
+unit_leader_event = { # 하누마 마코토 - 오리진
+	id = GEM_makoto_story.20
+	title = GEM_makoto_story.20.t
+	desc = GEM_makoto_story.20.desc
+	picture = GFX_report_event_generic_door
+	
+    is_triggered_only = yes
+	fire_only_once = no
+	
+	immediate = {
+		set_variable = {
+			var_GEM_next_leader_trait = 0
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 1
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_1 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 2
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_2 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 4
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_3 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 8
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_4 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 16
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = Eden_eden_unification_war_trait_5 }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 32
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEM_rising_star }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 64
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEM_supreme_commander_armed_forces }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 128
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEM_supreme_commander_armed_forces }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 256
+			}
+		}
+		if = {
+			limit = { has_country_leader_with_trait = GEM_supreme_leader }
+			add_to_variable = {
+				var_GEM_next_leader_trait = 512
+			}
+		}
+	}
+	
+	option = { 
+		name = GEM_makoto_story.20.a
+		trigger = {
+			has_character = GEH_kirara
+		}
+		add_stability = 0.05
+		GEH_kirara = {
+			add_country_leader_role = {
+				country_leader = {
+					expire = "1990.1.1"
+					ideology = makotoism_B1
+					traits = {
+						GEM_friendly_B1
+					}
+				}
+				promote_leader = yes
+			}
+		}
+		set_country_leader_ideology = makotoism_B1
+		custom_effect_tooltip = {
+			localization_key = A_ideology_swap_tt
+			ideology = makotoism_B1
+		}
+	}
+	
+	option = { 
+		name = GEM_makoto_story.20.b
+		trigger = {
+			has_character = GEM_oberste_heeresleitung_character
+		}
+
+		add_war_support = 0.01
+		
+		GEM_oberste_heeresleitung_character = {
+			add_country_leader_role = {
+				country_leader = {
+					expire = "1990.1.1"
+					ideology = makotoism_B1
+					traits = {
+						GEM_oberste_heeresleitung_trait				
+					}
+				}
+				promote_leader = yes
+			}
+		}
+		set_country_leader_ideology = makotoism_B1
+		custom_effect_tooltip = {
+			localization_key = A_ideology_swap_tt
+			ideology = makotoism_B1
+		}
+	}
+	
+	option = { 
+		name = GEM_makoto_story.20.c
+		trigger = {
+			has_character = GEH_dlfhgk
+		}
+		add_stability = 0.01
+
+		promote_character = GEH_dlfhgk
+		set_country_leader_ideology = makotoism_B1
+		custom_effect_tooltip = {
+			localization_key = A_ideology_swap_tt
+			ideology = makotoism_B1
+		}
+	}
+	after = {
+		set_temp_variable = {
+			var_GEM_next_leader_trait_temp = var_GEM_next_leader_trait
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 511
+				}
+			}
+			add_country_leader_trait = GEM_supreme_leader
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 512
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 255
+				}
+			}
+			add_country_leader_trait = GEM_supreme_commander_armed_forces
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 256
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 127
+				}
+			}
+			add_country_leader_trait = GEM_loyalty_of_wehrmacht
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 128
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 63
+				}
+			}
+			add_country_leader_trait = GEM_next_rising_star
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 64
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 31
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_5
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 32
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 15
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_4
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 16
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 7
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_3
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 8
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 3
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_2
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 4
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 1
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait_1
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 2
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var_GEM_next_leader_trait_temp > 0
+				}
+			}
+			add_country_leader_trait = Eden_eden_unification_war_trait
+			subtract_from_temp_variable = {
+				var_GEM_next_leader_trait_temp = 1
+			}
+		}
+		clear_variable = var_GEM_next_leader_trait
+	}
+}
+
 country_event = { # 코교쿠 사츠키 - 오리진
 	id = GEM_satsuki_story.1
 	title = GEM_satsuki_story.1.t
