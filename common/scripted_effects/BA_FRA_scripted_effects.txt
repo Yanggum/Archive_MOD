@@ -768,7 +768,7 @@ FRA_remove_replaced_inner_circle_2_effects = {
 			# 2분기 - 군부 쇄신
 			limit = {
 				check_variable = {
-					FRA_ascended_advisor_2FRA_ascended_advisor_2 = 9
+					FRA_ascended_advisor_2 = 9
 				}
 			}
 			FRA_remove_effects_henri_giraud = yes
@@ -776,7 +776,7 @@ FRA_remove_replaced_inner_circle_2_effects = {
 		else_if = {
 			limit = {
 				check_variable = {
-					FRA_ascended_advisor_2FRA_ascended_advisor_2 = 10
+					FRA_ascended_advisor_2 = 10
 				}
 			}
 			FRA_remove_effects_alphonse_juin = yes
@@ -1121,9 +1121,33 @@ FRA_add_effects_charles_nogues = {
 }
 
 FRA_add_effects_charles_de_gaulle = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_charles_de_gaulle_focus_2
+		}
+		add_ideas = inner_circle_FRA_idea_7_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_charles_de_gaulle_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_7_one
+	}
 }
 
 FRA_add_effects_maurice_gamelin = {
+	if = {
+		limit = {
+			has_completed_focus = FRA_maurice_gamelin_focus_2
+		}
+		add_ideas = inner_circle_FRA_idea_8_two
+	}
+	else_if = {
+		limit = {
+			has_completed_focus = FRA_maurice_gamelin_focus_0
+		}
+		add_ideas = inner_circle_FRA_idea_8_one
+	}
 }
 
 # 2분기 - 군부 쇄신
@@ -1443,9 +1467,59 @@ FRA_remove_effects_charles_nogues = {
 }
 
 FRA_remove_effects_charles_de_gaulle = {
+	if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_7_one
+		}
+		remove_ideas = inner_circle_FRA_idea_7_one
+	}
+	else_if = {
+		limit = {
+			has_idea = inner_circle_FRA_idea_7_two
+		}
+		remove_ideas = inner_circle_FRA_idea_7_two
+	}
+	else = {
+		log = "NOTHING TO REMOVE FROM DE_GAULLE"
+	}
+
+	# Uncomplete Ascension focus so that he can be picked later on
+	uncomplete_national_focus = {
+		focus = FRA_charles_de_gaulle_focus_0
+		uncomplete_children = no
+		refund_political_power = no
+	}
+
+	# REMOVE FROM ASCENDED ADVISOR SLOT
+	if = { limit = { check_variable = { FRA_ascended_advisor_1 = 7 } } set_variable = { FRA_ascended_advisor_1 = 0 } }
+	else_if = { limit = { check_variable = { FRA_ascended_advisor_2 = 7 } } set_variable = { FRA_ascended_advisor_2 = 0 } }
+	else_if = { limit = { check_variable = { FRA_ascended_advisor_3 = 7 } } set_variable = { FRA_ascended_advisor_3 = 0 } }
 }
 
 FRA_remove_effects_maurice_gamelin = {
+	if = {
+		limit = { has_idea = inner_circle_FRA_idea_8_one }
+		remove_ideas = inner_circle_FRA_idea_8_one
+	}
+	else_if = {
+		limit = { has_idea = inner_circle_FRA_idea_8_two }
+		remove_ideas = inner_circle_FRA_idea_8_two
+	}
+	else = {
+		log = "NOTHING TO REMOVE FROM GAMELIN"
+	}
+
+	# Uncomplete Ascension focus so that he can be picked later on
+	uncomplete_national_focus = {
+		focus = FRA_maurice_gamelin_focus_0
+		uncomplete_children = no
+		refund_political_power = no
+	}
+
+	# REMOVE FROM ASCENDED ADVISOR SLOT
+	if = { limit = { check_variable = { FRA_ascended_advisor_1 = 8 } } set_variable = { FRA_ascended_advisor_1 = 0 } }
+	else_if = { limit = { check_variable = { FRA_ascended_advisor_2 = 8 } } set_variable = { FRA_ascended_advisor_2 = 0 } }
+	else_if = { limit = { check_variable = { FRA_ascended_advisor_3 = 8 } } set_variable = { FRA_ascended_advisor_3 = 0 } }
 }
 
 # 2분기 - 군부 쇄신

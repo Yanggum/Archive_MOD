@@ -3372,8 +3372,127 @@ focus_tree = {
 				focus = FRA_maurice_gamelin_focus_0
 			}
 			available = {
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					hidden_trigger = {
+						NOT = { has_country_flag = FRA_was_ascended_flag_1 } #Flag to prevent AI from taking the focus again after advisor has been replaced}
+					}
+				}
+				
+				has_government = neutrality
+				NOT = {
+					has_country_leader = {
+						ruling_only = yes
+						character = FRA_charles_de_gaulle
+					}
+				}
+
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_event_pending_flag
+					}
+					NOT = { has_country_flag = FRA_inner_circle_event_pending_flag }
+				}
+
+				NOT = {
+					has_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days < 175
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_cd_flag
+					}
+					custom_trigger_tooltip = {
+						tooltip = FRA_inner_circle_cd_days_tt
+						NOT = {	has_country_flag = FRA_inner_circle_cd_flag }
+					}
+				}
 			}
 			completion_reward = {
+				custom_effect_tooltip = {
+					localization_key = FRA_ascension_of_character_tt
+					CHARACTER = FRA_charles_de_gaulle
+				}
+				show_ideas_tooltip = inner_circle_FRA_idea_7_one
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+
+				custom_effect_tooltip = {
+					localization_key = GER_ascension_of_character_focus_tt
+					CHARACTER = FRA_charles_de_gaulle
+				}
+
+				if = { #Just to make it easy to debug stuff for development
+					limit = {
+						OR = {
+							check_variable = { FRA_ascended_advisor_1 = 7 }
+							check_variable = { FRA_ascended_advisor_2 = 7 }
+							check_variable = { FRA_ascended_advisor_3 = 7 }
+						}
+					}
+					log = "Advisor was already there. STOP CHEATING!"
+				}
+				else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+					limit = {
+						check_variable = { FRA_ascended_advisor_1 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_2 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_3 = 0 compare = not_equals }
+					}
+					hidden_effect = {
+						set_variable = { FRA_ascending_advisor = 7 }
+						country_event = FRA_inner_circle.01
+					}
+
+					custom_effect_tooltip = generic_skip_one_line_tt
+					custom_effect_tooltip = {
+						localization_key = FRA_event_to_replace_ascended_advisor_tt
+						EVENT = FRA_inner_circle.01.t
+						CHARACTER = FRA_charles_de_gaulle
+					}
+				}
+				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_7_one
+					}
+					if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_1 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_1 = 7 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_2 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_2 = 7 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_3 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_3 = 7 }
+					}
+				}
+
+				hidden_effect = {
+					country_event = { id = FRA_inner_circle_charles_de_gaulle.1 days = 75 random_days = 25 }
+
+					set_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days = 175
+						value = 1
+					}
+
+					set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+						flag = FRA_was_ascended_flag_1
+						days = 1500 # Clear after ~4 years 
+						value = 1
+					}
+				}
 			}
 		}
 
@@ -3389,6 +3508,31 @@ focus_tree = {
 				focus = FRA_charles_de_gaulle_focus_0
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_de_gaulle_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_de_gaulle
+							FLAG_DAYS = [?progress_flag_FRA_charles_de_gaulle_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_de_gaulle
+							FOCUS = FRA_charles_de_gaulle_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 			}
@@ -3409,8 +3553,37 @@ focus_tree = {
 				focus = FRA_charles_de_gaulle_maurice_gamelin_focus_2
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_de_gaulle_focus_2
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_de_gaulle
+							FLAG_DAYS = [?progress_flag_FRA_charles_de_gaulle_focus_2:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_de_gaulle
+							FOCUS = FRA_charles_de_gaulle_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_7_one
+					add_idea = inner_circle_FRA_idea_7_two
+				}
 			}
 		}
 
@@ -3428,8 +3601,127 @@ focus_tree = {
 				focus = FRA_charles_de_gaulle_focus_0
 			}
 			available = {
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					hidden_trigger = {
+						NOT = { has_country_flag = FRA_was_ascended_flag_1 } #Flag to prevent AI from taking the focus again after advisor has been replaced}
+					}
+				}
+				
+				has_government = neutrality
+				NOT = {
+					has_country_leader = {
+						ruling_only = yes
+						character = FRA_maurice_gamelin
+					}
+				}
+
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_event_pending_flag
+					}
+					NOT = { has_country_flag = FRA_inner_circle_event_pending_flag }
+				}
+
+				NOT = {
+					has_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days < 175
+					}
+				}
+				if = {
+					limit = {
+						has_country_flag = FRA_inner_circle_cd_flag
+					}
+					custom_trigger_tooltip = {
+						tooltip = FRA_inner_circle_cd_days_tt
+						NOT = {	has_country_flag = FRA_inner_circle_cd_flag }
+					}
+				}
 			}
 			completion_reward = {
+				custom_effect_tooltip = {
+					localization_key = FRA_ascension_of_character_tt
+					CHARACTER = FRA_maurice_gamelin
+				}
+				show_ideas_tooltip = inner_circle_FRA_idea_8_one
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+
+				custom_effect_tooltip = {
+					localization_key = GER_ascension_of_character_focus_tt
+					CHARACTER = FRA_maurice_gamelin
+				}
+
+				if = { #Just to make it easy to debug stuff for development
+					limit = {
+						OR = {
+							check_variable = { FRA_ascended_advisor_1 = 8 }
+							check_variable = { FRA_ascended_advisor_2 = 8 }
+							check_variable = { FRA_ascended_advisor_3 = 8 }
+						}
+					}
+					log = "Advisor was already there. STOP CHEATING!"
+				}
+				else_if = { # ASCENDED ADVISORS FULL - NEED TO REPLACE SOMEONE
+					limit = {
+						check_variable = { FRA_ascended_advisor_1 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_2 = 0 compare = not_equals }
+						check_variable = { FRA_ascended_advisor_3 = 0 compare = not_equals }
+					}
+					hidden_effect = {
+						set_variable = { FRA_ascending_advisor = 8 }
+						country_event = FRA_inner_circle.01
+					}
+
+					custom_effect_tooltip = generic_skip_one_line_tt
+					custom_effect_tooltip = {
+						localization_key = FRA_event_to_replace_ascended_advisor_tt
+						EVENT = FRA_inner_circle.01.t
+						CHARACTER = FRA_maurice_gamelin
+					}
+				}
+				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_8_one
+					}
+					if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_1 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_1 = 8 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_2 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_2 = 8 }
+					}
+					else_if = {
+						limit = {
+							check_variable = { FRA_ascended_advisor_3 = 0 }
+						}
+						set_variable = { FRA_ascended_advisor_3 = 8 }
+					}
+				}
+
+				hidden_effect = {
+					country_event = { id = FRA_inner_circle_maurice_gamelin.1 days = 75 random_days = 25 }
+
+					set_country_flag = {
+						flag = FRA_inner_circle_cd_flag
+						days = 175
+						value = 1
+					}
+
+					set_country_flag = { #Flag to prevent AI from taking the focus again after advisor has been replaced
+						flag = FRA_was_ascended_flag_1
+						days = 1500 # Clear after ~4 years 
+						value = 1
+					}
+				}
 			}
 		}
 
@@ -3445,6 +3737,31 @@ focus_tree = {
 				focus = FRA_maurice_gamelin_focus_0
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_maurice_gamelin_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_maurice_gamelin
+							FLAG_DAYS = [?progress_flag_FRA_maurice_gamelin_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_maurice_gamelin
+							FOCUS = FRA_maurice_gamelin_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 			}
@@ -3465,8 +3782,37 @@ focus_tree = {
 				focus = FRA_charles_de_gaulle_maurice_gamelin_focus_2
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_maurice_gamelin_focus_2
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_maurice_gamelin
+							FLAG_DAYS = [?progress_flag_FRA_maurice_gamelin_focus_2:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_maurice_gamelin
+							FOCUS = FRA_maurice_gamelin_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = inner_circle_FRA_idea_8_one
+					add_idea = inner_circle_FRA_idea_8_two
+				}
 			}
 		}
 
@@ -3483,6 +3829,48 @@ focus_tree = {
 				focus = FRA_charles_de_gaulle_focus_1
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_de_gaulle_maurice_gamelin_focus_2
+					}
+					set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					if = { #HESS working on it
+						limit = {
+							check_variable = { FRA_charles_de_gaulle_maurice_gamelin_focus_2_minister = 7 }
+						}
+						custom_override_tooltip = {
+							tooltip = {
+								localization_key = GER_inner_circle_focus_in_progress_tt
+								CHARACTER = FRA_charles_de_gaulle
+								FLAG_DAYS = [?progress_flag_FRA_charles_de_gaulle_maurice_gamelin_focus_2:days]
+							}
+							always = no 
+						}
+					}
+					else = { #BORMANN working on it
+						custom_override_tooltip = {
+							tooltip = {
+								localization_key = GER_inner_circle_focus_in_progress_tt
+								CHARACTER = FRA_maurice_gamelin
+								FLAG_DAYS = [?progress_flag_FRA_charles_de_gaulle_maurice_gamelin_focus_2:days]
+							}
+							always = no 
+						}
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_multiple_tt
+							CHARACTER = FRA_maurice_gamelin
+							FOCUS = FRA_maurice_gamelin_focus_0
+							CHARACTER_2 = FRA_charles_de_gaulle
+							FOCUS_2 = FRA_charles_de_gaulle_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 			}
@@ -3547,6 +3935,7 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = { add_ideas = inner_circle_FRA_idea_5_one }
 					if = {
 						limit = { check_variable = { FRA_ascended_advisor_1 = 0 } }
 						set_variable = { FRA_ascended_advisor_1 = 5 }
@@ -3562,7 +3951,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = { add_ideas = inner_circle_FRA_idea_5_one }
 					country_event = { id = FRA_inner_circle_maxime_weygand.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -3593,6 +3981,31 @@ focus_tree = {
 			mutually_exclusive = {
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_maxime_weygand_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 40 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_maxime_weygand
+							FLAG_DAYS = [?progress_flag_FRA_maxime_weygand_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_maxime_weygand
+							FOCUS = FRA_maxime_weygand_focus_1
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
@@ -3660,6 +4073,7 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = { add_ideas = inner_circle_FRA_idea_6_one }
 					if = {
 						limit = { check_variable = { FRA_ascended_advisor_1 = 0 } }
 						set_variable = { FRA_ascended_advisor_1 = 6 }
@@ -3675,7 +4089,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = { add_ideas = inner_circle_FRA_idea_6_one }
 					country_event = { id = FRA_inner_circle_charles_nogues.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -3706,6 +4119,31 @@ focus_tree = {
 			mutually_exclusive = {
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_nogues_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 40 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_nogues
+							FLAG_DAYS = [?progress_flag_FRA_charles_nogues_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_nogues
+							FOCUS = FRA_charles_nogues_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
@@ -3820,6 +4258,9 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_2_one
+					}
 					if = {
 						limit = {
 							check_variable = { FRA_ascended_advisor_1 = 0 }
@@ -3841,9 +4282,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = {
-						add_ideas = inner_circle_FRA_idea_2_one
-					}
 					country_event = { id = FRA_inner_circle_francois_darlan.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -4129,6 +4567,9 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_1_one
+					}
 					if = {
 						limit = {
 							check_variable = { FRA_ascended_advisor_1 = 0 }
@@ -4150,9 +4591,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = {
-						add_ideas = inner_circle_FRA_idea_1_one
-					}
 					country_event = { id = FRA_inner_circle_pierre_laval.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -4328,6 +4766,9 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_4_one
+					}
 					if = {
 						limit = {
 							check_variable = { FRA_ascended_advisor_1 = 0 }
@@ -4349,9 +4790,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = {
-						add_ideas = inner_circle_FRA_idea_4_one
-					}
 					country_event = { id = FRA_inner_circle_charles_maurras.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -4382,6 +4820,31 @@ focus_tree = {
 			mutually_exclusive = {
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_maurras_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_maurras 
+							FLAG_DAYS = [?progress_flag_FRA_charles_maurras_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_maurras
+							FOCUS = FRA_charles_maurras_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
@@ -4402,8 +4865,34 @@ focus_tree = {
 				focus = FRA_charles_maurras_focus_1
 			}
 			mutually_exclusive = {
+				focus = FRA_francois_de_la_rocque_focus_2
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_maurras_focus_2
+					}
+					set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_maurras
+							FLAG_DAYS = [?progress_flag_FRA_charles_maurras_focus_2:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_maurras
+							FOCUS = FRA_charles_maurras_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				add_ideas = idea_FRA_charles_maurras_focus_2
@@ -4424,10 +4913,36 @@ focus_tree = {
 			relative_position_id = FRA_charles_maurras_focus_2
 			prerequisite = {
 				focus = FRA_charles_maurras_focus_2
+				focus = FRA_francois_de_la_rocque_focus_2
 			}
 			mutually_exclusive = {
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_charles_maurras_focus_3
+					}
+					set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_charles_maurras
+							FLAG_DAYS = [?progress_flag_FRA_charles_maurras_focus_3:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_charles_maurras
+							FOCUS = FRA_charles_maurras_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
@@ -4534,6 +5049,9 @@ focus_tree = {
 					}
 				}
 				else = {
+					hidden_effect = {
+						add_ideas = inner_circle_FRA_idea_3_one
+					}
 					if = {
 						limit = {
 							check_variable = { FRA_ascended_advisor_1 = 0 }
@@ -4555,9 +5073,6 @@ focus_tree = {
 				}
 
 				hidden_effect = {
-					hidden_effect = {
-						add_ideas = inner_circle_FRA_idea_3_one
-					}
 					country_event = { id = FRA_inner_circle_francois_de_la_rocque.1 days = 75 random_days = 25 }
 
 					set_country_flag = {
@@ -4586,6 +5101,31 @@ focus_tree = {
 				focus = FRA_francois_de_la_rocque_focus_0
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_francois_de_la_rocque_focus_1
+					}
+					set_temp_variable = { temp_focus_days = 10 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FLAG_DAYS = [?progress_flag_FRA_francois_de_la_rocque_focus_1:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FOCUS = FRA_francois_de_la_rocque_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
@@ -4605,7 +5145,35 @@ focus_tree = {
 			prerequisite = {
 				focus = FRA_francois_de_la_rocque_focus_1
 			}
+			mutually_exclusive = {
+				focus = FRA_charles_maurras_focus_2
+			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_francois_de_la_rocque_focus_2
+					}
+					set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FLAG_DAYS = [?progress_flag_FRA_francois_de_la_rocque_focus_2:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FOCUS = FRA_francois_de_la_rocque_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				add_ideas = idea_FRA_francois_de_la_rocque_focus_2
@@ -4625,9 +5193,35 @@ focus_tree = {
 			y = 3
 			relative_position_id = FRA_francois_de_la_rocque_focus_2
 			prerequisite = {
+				focus = FRA_charles_maurras_focus_2
 				focus = FRA_francois_de_la_rocque_focus_2
 			}
 			available = {
+				if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+					limit = {
+						has_country_flag = progress_flag_FRA_francois_de_la_rocque_focus_3
+					}
+					set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+					multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_inner_circle_focus_in_progress_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FLAG_DAYS = [?progress_flag_FRA_francois_de_la_rocque_focus_3:days]
+						}
+						always = no 
+					}
+				}
+				else = { #NOT BEEN WORKED ON (Just Explain)
+					custom_override_tooltip = {
+						tooltip = {
+							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+							CHARACTER = FRA_francois_de_la_rocque
+							FOCUS = FRA_francois_de_la_rocque_focus_0
+						}
+						always = no
+					}
+				}
 			}
 			completion_reward = {
 				swap_ideas = {
