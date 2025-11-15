@@ -12343,3 +12343,546 @@ TRN_united_gehenna_decisions_cat = {
 		}
 	}
 }
+TRM_nagisa_constitution_cat = {
+	
+	TRM_nagisa_constitution_kivotos_pan_human_rights = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.05
+				tooltip = army_morale_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_guarantee_of_beastmen_rights = {
+		icon = GFX_decision_generic_civil_support
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_freedom_of_religion = {
+		icon = GFX_decision_generic_research
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_freedom_of_religions_trigger_tt
+				OR = {
+					has_completed_focus = TRN_two_church_unity
+					has_completed_focus = TRN_five_clan_republic
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_danger_law_tt
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+		}
+	}
+	
+	TRM_nagisa_constitution_designation_of_state_religion = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.03
+				tooltip = army_morale_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_establishment_of_consultative_council = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_trigger_tt
+				OR = {
+					AND = {
+						has_government = democratic
+						has_country_flag = trn_nagisa_religion_moderate_flag
+						has_completed_focus = TRN_idealistic_approach
+					}
+					AND = {
+						has_government = democratic
+						GEH_dkzh = {
+							is_political_advisor = yes
+						}
+						OR = {
+							GEH = { has_completed_focus = GEH_ako_route_focus }
+							GEH = { has_completed_focus = GEH_main_route_focus }
+						}
+						has_completed_focus = TRN_start_of_the_eden_treaty_negotiations
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+					}
+					AND = {
+						any_country = {
+							NOT = { original_tag = TRM }
+							is_in_faction_with = TRM
+							is_major = yes
+							Kivotos_tag = no
+							has_government = democratic
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_OR_anti_democracy_holy_war_tt
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+				}
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+				}
+			}
+			NOT = { has_country_flag = TRM_nagisa_constitution_flag }
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_danger_law_tt
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+			set_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = -0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_production_lack_of_resource_penalty = -0.1
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_production_factory_max_efficiency_factor = 0.1
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_anti_democracy_holy_war = {
+		icon = GFX_decision_generic_break_treaty
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_OR_anti_democracy_holy_war_tt
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+				}
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.1
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_strengthening_federalism = {
+		icon = GFX_decision_generic_political_rally
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_strengthening_federalism_trigger_tt
+				OR = {
+					AND = {
+						has_government = democratic
+					}
+					AND = {
+						count_triggers = {
+							amount = 3
+							owns_state = 8 # 룩셈부르크 대공국
+							owns_state = 7 # 키보토스 총학생회
+							owns_state = 9 # 백귀야행 연합학원
+							owns_state = 4 # 산해경 고급중학교
+							owns_state = 69 # 아비도스 고등학교
+							owns_state = 16 # 밀레니엄 사이언스 스쿨
+							owns_state = 1043 # 와일드헌트 예술학원
+							owns_state = 141 # 붉은겨울 연방학원
+						}
+					}
+				}
+			}
+			
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_production_lack_of_resource_penalty = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_prohibition_of_the_death_penalty = {
+		icon = GFX_decision_generic_police_action
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.02
+				tooltip = army_morale_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.02
+				tooltip = political_power_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_guarantee_of_social_basic_rights = {
+		icon = GFX_decision_generic_scorched_earth
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.03
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_reflection_on_past_history = {
+		icon = GFX_decision_TRN_Sakurako_Halo
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_reflection_on_past_history_trigger_tt
+				OR = {
+					has_war_with = GEI
+					has_completed_focus = TRN_two_church_unity
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+		}
+	}
+}
