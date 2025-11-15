@@ -9414,6 +9414,7 @@ focus_tree = {
 						large = GFX_portrait_GEH_hanuma_makoto_A_portrait
 					}
 				}
+				set_country_flag = GEM_nord_hinnom_civilization_flag
 			}
 		}
 		focus = {
@@ -9541,6 +9542,97 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_nord_hinnom_civilization
 			completion_reward = {
+				if = {
+					limit = {
+						NOT = { has_tech = atomic_research }
+					}
+					add_tech_bonus = {
+						name = GEM_omnipotence
+						bonus = 1.0
+						ahead_reduction = 2
+						technology = atomic_research
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = { is_special_project_completed = sp:sp_nuclear_reactor }
+					}
+					add_breakthrough_progress = {
+						specialization = specialization_nuclear
+						value = 0.75
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = nuclear_reactor
+					}
+					random_owned_controlled_state = {
+						limit = {
+							nuclear_reactor < 1
+						}
+
+						prioritize = { 55 }
+						add_building_construction = {
+							type = nuclear_reactor
+							level = 1
+							instant_build = yes
+						}
+					}
+					add_breakthrough_progress = {
+						specialization = specialization_nuclear
+						value = 0.5
+					}
+				}
+				else = {
+					random_owned_controlled_state = {
+						limit = {
+							nuclear_reactor_heavy_water < 1
+						}
+
+						prioritize = { 55 }
+						add_building_construction = {
+							type = nuclear_reactor_heavy_water
+							level = 1
+							instant_build = yes
+						}
+					}
+					add_breakthrough_progress = {
+						specialization = specialization_nuclear
+						value = 0.5
+					}
+				}			
+				random_owned_controlled_state = {
+					prioritize = { 55 }
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 55 }
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
 			}
 		}
 		focus = {
@@ -9558,6 +9650,78 @@ focus_tree = {
 			y = 2
 			relative_position_id = GEM_omnipotence
 			completion_reward = {
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = {
+					localization_key = tooltip_BA_has_completed_focus_dyeff
+					focus = GEM_successor_of_thunder_god_myth
+				}
+				if = {
+					limit = {
+						any_character = {
+							has_trait = b_dkagmrdmlchdxhd_lb2
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = b_dkagmrdmlchdxhd_lb2
+						}
+						swap_country_leader_traits = {
+							remove = b_dkagmrdmlchdxhd_lb2
+							add = b_dkagmrdmlchdxhd_lb4
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = b_dkagmrdmlchdxhd_lb2
+									add = b_dkagmrdmlchdxhd_lb4
+								}
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = {
+					localization_key = tooltip_BA_has_completed_focus_dyeff
+					focus = GEM_fuhrer_successor
+				}
+				if = {
+					limit = {
+						any_character = {
+							has_trait = b_dkagmrdmlchdxhd_rb2
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = b_dkagmrdmlchdxhd_rb2
+						}
+						swap_country_leader_traits = {
+							remove = b_dkagmrdmlchdxhd_rb2
+							add = b_dkagmrdmlchdxhd_rb4
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = b_dkagmrdmlchdxhd_rb2
+									add = b_dkagmrdmlchdxhd_rb4
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		focus = {
@@ -9588,6 +9752,10 @@ focus_tree = {
 					}
 				}
 				is_subject = no
+				has_country_flag = {
+					flag = GEM_nord_hinnom_civilization_flag
+					days > 180
+				}
 			}
 			search_filters = {
 			}
@@ -9689,6 +9857,7 @@ focus_tree = {
 					election_frequency = 48
 				}
 				custom_effect_tooltip = enter_tt
+				add_political_power = 120
 				add_popularity = {
 					ideology = neutrality
 					popularity = 0.10
@@ -9706,7 +9875,82 @@ focus_tree = {
 					popularity = 0.10
 				}
 				custom_effect_tooltip = enter_tt
-				add_political_power = 120
+				custom_effect_tooltip = {
+					localization_key = tooltip_BA_has_completed_focus_dyeff
+					focus = GEM_successor_of_thunder_god_myth
+				}
+				if = {
+					limit = {
+						any_character = {
+							has_trait = b_dkagmrdmlchdxhd_lb2
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = b_dkagmrdmlchdxhd_lb2
+						}
+						swap_country_leader_traits = {
+							remove = b_dkagmrdmlchdxhd_lb2
+							add = b_dkagmrdmlchdxhd_lb3
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = b_dkagmrdmlchdxhd_lb2
+									add = b_dkagmrdmlchdxhd_lb3
+								}
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = {
+					localization_key = tooltip_BA_has_completed_focus_dyeff
+					focus = GEM_fuhrer_successor
+				}
+				if = {
+					limit = {
+						any_character = {
+							has_trait = b_dkagmrdmlchdxhd_rb2
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = b_dkagmrdmlchdxhd_rb2
+						}
+						swap_country_leader_traits = {
+							remove = b_dkagmrdmlchdxhd_rb2
+							add = b_dkagmrdmlchdxhd_rb3
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = b_dkagmrdmlchdxhd_rb2
+									add = b_dkagmrdmlchdxhd_rb3
+								}
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = enter_tt
+
+				set_country_leader_description = {
+					desc = GEH_makoto_liberal_director_desc
+				}
 			}
 		}
 # 마코토 후속중점/
