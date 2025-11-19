@@ -11642,7 +11642,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			add_ideas = TRN_first_but_reworked_1_ns
+			add_to_variable = {
+				nagisa_faction_A = 4
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -4
+				tooltip = nagisa_faction_C_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -11670,7 +11679,37 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			if = {
+				limit = {
+					has_idea = TRN_first_but_reworked_1_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_first_but_reworked_1_ns
+					add_idea = TRN_first_but_reworked_2_ns
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = TRN_first_but_reworked_2_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_first_but_reworked_2_ns
+					add_idea = TRN_first_but_reworked_3_ns
+				}
+			}
+			else = {
+				effect_tooltip = {
+					add_ideas = TRN_first_but_reworked_3_ns
+				}
+			}
+			add_to_variable = {
+				nagisa_faction_F = 2
+				tooltip = nagisa_faction_F_tt
+			}
+			add_to_variable = {
+				nagisa_faction_A = -2
+				tooltip = nagisa_faction_A_tt
+			}
 		}
 	}
 
@@ -11799,7 +11838,37 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			if = {
+				limit = {
+					has_idea = TRN_first_but_reworked_1_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_first_but_reworked_1_ns
+					add_idea = TRN_first_but_reworked_2_ns
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = TRN_first_but_reworked_2_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_first_but_reworked_2_ns
+					add_idea = TRN_first_but_reworked_3_ns
+				}
+			}
+			else = {
+				effect_tooltip = {
+					add_ideas = TRN_first_but_reworked_3_ns
+				}
+			}
+			add_to_variable = {
+				nagisa_faction_F = 1
+				tooltip = nagisa_faction_F_tt
+			}
+			add_to_variable = {
+				nagisa_faction_A = -1
+				tooltip = nagisa_faction_A_tt
+			}
 		}
 	}
 
@@ -11819,7 +11888,7 @@ focus_tree = {
 		cost = 5
 
 		available = {
-			
+
 		}
 
 		ai_will_do = {
@@ -11872,6 +11941,30 @@ focus_tree = {
 				limit = {NOT = { has_country_flag = TRM_nagisa_constitution_designation_of_state_religion_flag }  }
 				custom_effect_tooltip = TRN_faith_for_all_default_tt
 			}
+			else = {
+				custom_effect_tooltip = available_political_advisor
+				add_trait = {
+					character = TRN_Iochi_Mari
+					slot = political_advisor
+					trait = TRM_mari_pop_idol
+				}		
+				hidden_effect = {
+					IF = {
+						limit = {
+							NOT = {
+								has_idea = TRN_Iochi_Mari
+							}
+							amount_taken_ideas = {
+								amount < 3
+								slots = {
+									political_advisor
+								}
+							}
+						}
+						add_ideas = TRN_Iochi_Mari
+					}
+				}
+			}
 		}
 	}
 
@@ -11899,7 +11992,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			add_to_variable = {
+				nagisa_faction_A = 4
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -2
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -2
+				tooltip = nagisa_faction_B_tt
+			}
+			TRM_nagisa_faction_modified = yes
 		}
 	}
 
@@ -11948,6 +12053,21 @@ focus_tree = {
 				limit = { NOT = { has_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag }  }
 				custom_effect_tooltip = TRN_opening_the_old_library_default_tt
 			}
+			else = {
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+				add_to_variable = {
+					nagisa_faction_A = 2
+					tooltip = nagisa_faction_A_tt
+				}
+				add_to_variable = {
+					nagisa_faction_C = -2
+					tooltip = nagisa_faction_C_tt
+				}
+				TRM_nagisa_faction_modified = yes
+			}
 		}
 	}
 
@@ -11975,7 +12095,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			if = {
+				limit = {	
+					TRN_Kyoyama_Kazusa = {
+						is_political_advisor = yes # 쿄야마 카즈사가 조언가일 때 효과가 좋아짐
+					}
+				}
+				add_ideas = TRN_new_and_free_trininy_culture_rock_ns
+			}
+			else = {
+				add_ideas = TRN_new_and_free_trininy_culture_generic_ns
+			}
 		}
 	}
 
@@ -12184,6 +12314,10 @@ focus_tree = {
 
 		available = {
 			has_country_flag = TRM_nagisa_constitution_guarantee_of_social_basic_rights_flag
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.25
+			}	
 		}
 
 		allow_branch = {
@@ -12203,7 +12337,22 @@ focus_tree = {
 				custom_effect_tooltip = TRN_rich_man_and_the_eye_of_a_needle_default_tt
 			}
 			else = {
+				TRM_nagisa_bop_low_decrease_effect = yes
+				custom_effect_tooltip = enter_tt
 				custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+				add_to_variable = {
+					TRM_nagisa_constitution_consumer_goods_factor = -0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					nagisa_faction_D = 2
+					tooltip = nagisa_faction_D_tt
+				}
+				add_to_variable = {
+					nagisa_faction_G = -2
+					tooltip = nagisa_faction_G_tt
+				}
+				TRM_nagisa_faction_modified = yes
 			}
 		}
 	}
@@ -12224,7 +12373,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
-			
+			has_completed_focus = TRN_end_of_new_constitution_discussion
 		}
 
 		ai_will_do = {
@@ -12233,6 +12382,10 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_consumer_goods_factor = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
 		}
 	}
 
@@ -12252,7 +12405,7 @@ focus_tree = {
 		cost = 4
 
 		available = {
-			
+			has_completed_focus = TRN_end_of_new_constitution_discussion
 		}
 
 		ai_will_do = {
@@ -12261,6 +12414,14 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_production_speed_industrial_complex_factor = 0.05
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_drift_defence_factor = 0.05
+				tooltip = drift_defence_factor_tt
+			}
 		}
 	}
 
@@ -12284,7 +12445,11 @@ focus_tree = {
 		cost = 5
 
 		available = {
-			
+			has_completed_focus = TRN_end_of_new_constitution_discussion
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value > 0.5
+			}	
 		}
 
 		ai_will_do = {
@@ -12292,7 +12457,34 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			TRM_nagisa_bop_high_decrease_effect = yes
+			custom_effect_tooltip = enter_tt
 			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_non_core_manpower = 0.045
+				tooltip = non_core_manpower_tt
+			}
+			add_to_variable = {
+				nagisa_faction_F = 2
+				tooltip = nagisa_faction_F_tt
+			}
+			add_to_variable = {
+				nagisa_faction_A = -2
+				tooltip = nagisa_faction_A_tt
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = TRN_affirmative_action_tt
+			hidden_effect = {
+				create_corps_commander = {
+					traits = { BA_robot_general }
+					portrait_path = GFX_Portrait_BlueArchive_MIL_Generic_3
+					skill = 1
+					attack_skill = 1
+					defense_skill = 1
+					planning_skill = 1
+					logistics_skill = 1
+				}
+			}
 		}
 	}
 
@@ -12363,7 +12555,7 @@ focus_tree = {
 					has_completed_focus = TRN_guarantee_of_freedom_of_the_press
 					has_completed_focus = TRN_birth_of_trinity_pan_nationalism
 					has_completed_focus = TRN_meeting_with_mika
-					has_completed_focus = TRN_faith_for_all_open
+					has_completed_focus = TRN_faith_for_all
 					has_completed_focus = TRN_infinite_trust_and_faith
 					has_completed_focus = TRN_opening_the_old_library
 					has_completed_focus = TRN_new_and_free_trininy_culture

@@ -6803,6 +6803,7 @@ focus_tree = {
 			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_ETHNIC_CONFLICT
 		}
 		x = 2
 		y = 1
@@ -6810,6 +6811,7 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.10
 			add_country_leader_trait = GEH_chairman_of_the_people
+			GEH_german_nationalism_issue_down_effect = yes
 		}
 	}
 	focus = {
@@ -11588,6 +11590,9 @@ focus_tree = {
 			}
 			x = -1
 			y = 3
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
 			relative_position_id = GEM_focus_ended_3O_endfocus
 			completion_reward = {
 				set_country_flag = GEM_federal_basic_law_enactment_flag
@@ -12777,6 +12782,11 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_opinion_manipulation_and_secretariat_revolution
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_industrial_capacity_factory = 0.05
+					tooltip = industrial_capacity_factory_tt
+				}
 			}
 		}
 		focus = {
@@ -12790,6 +12800,46 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_focus_ended_4O_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_max_efficiency_factor = 0.02
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_stability = -0.05
+				add_war_support = -0.05
+				random_owned_controlled_state = {
+					prioritize = { 55 }
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 59 }
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
 			}
 		}
 		focus = {
@@ -12803,6 +12853,32 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_practical_technocratic_network
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.02
+					tooltip = production_factory_efficiency_gain_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_max_efficiency_factor = 0.02
+					tooltip = production_factory_max_efficiency_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_research_speed_factor = 0.05
+					tooltip = research_speed_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_tech_bonus = {
+					name = GEM_pioneer_of_innovation
+					bonus = 0.5
+					uses = 2
+					category = industry
+				}
+				add_tech_bonus = {
+					name = GEM_pioneer_of_innovation
+					bonus = 0.5
+					uses = 1
+					category = electronics
+				}
 			}
 		}
 		focus = {
@@ -12816,6 +12892,19 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_focus_ended_4O_endfocus
 			completion_reward = {
+				unlock_decision_tooltip = {
+					decision = GEM_chiaki_system_decision_11
+					show_modifiers = yes
+				}
+				unlock_decision_tooltip = {
+					decision = GEM_chiaki_system_decision_12
+					show_modifiers = yes
+				}
+				unlock_decision_tooltip = {
+					decision = GEM_chiaki_system_decision_13
+					show_modifiers = yes
+				}
+				set_country_flag = GEM_propaganda_propaganda_propaganda_flag
 			}
 		}
 		focus = {
@@ -12827,8 +12916,12 @@ focus_tree = {
 			}
 			x = -1
 			y = 1
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
 			relative_position_id = GEM_propaganda_propaganda_propaganda
 			completion_reward = {
+				GEH_german_nationalism_issue_down_effect = yes
 			}
 		}
 		focus = {
@@ -12838,10 +12931,30 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_propaganda_propaganda_propaganda
 			}
+			available = {
+				has_country_flag = {
+					flag = GEM_propaganda_propaganda_propaganda_flag
+					days > 120
+				}
+			}
 			x = 2
 			y = 1
 			relative_position_id = GEM_propaganda_propaganda_propaganda
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_drift_defence_factor = 0.05
+					tooltip = drift_defence_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor = 0.05
+					tooltip = opinion_gain_monthly_same_ideology_factor_tt
+				}
+				set_country_flag = GEM_trend_leading_flag
 			}
 		}
 		focus = {
@@ -12851,10 +12964,31 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_trend_leading
 			}
+			available = {
+				has_country_flag = {
+					flag = GEM_trend_leading_flag
+					days > 120
+				}
+			}
 			x = 0
 			y = 1
 			relative_position_id = GEM_trend_leading
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_drift_defence_factor = 0.05
+					tooltip = drift_defence_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor = 0.25
+					tooltip = opinion_gain_monthly_same_ideology_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_trade_laws_cost_factor = -0.25
+					tooltip = trade_laws_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 20
 			}
 		}
 		focus = {
@@ -12874,6 +13008,18 @@ focus_tree = {
 			y = 3
 			relative_position_id = GEM_focus_ended_4O_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_global_building_slots_factor = 0.05
+					tooltip = global_building_slots_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_industrial_complex_factor = 0.05
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 70
+				add_stability = -0.05
 			}
 		}
 		focus = {
@@ -12890,6 +13036,30 @@ focus_tree = {
 			y = 3
 			relative_position_id = GEM_focus_ended_4O_endfocus
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_stability_factor = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_political_advisor_cost_factor = -0.05
+					tooltip = political_advisor_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_army_chief_cost_factor = -0.05
+					tooltip = army_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_navy_chief_cost_factor = -0.05
+					tooltip = navy_chief_cost_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_air_chief_cost_factor = -0.05
+					tooltip = air_chief_cost_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				add_political_power = 45
+				add_stability = 0.05
 			}
 		}
 		focus = {
@@ -12903,6 +13073,37 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_corporate_tax_deduction
 			completion_reward = {
+				if = {
+					limit = {
+						any_character = {
+							has_trait = GEH_motomiya_chiaki_trait
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = GEH_motomiya_chiaki_trait
+						}
+						swap_country_leader_traits = {
+							remove = GEH_motomiya_chiaki_trait
+							add = GEH_motomiya_chiaki_trait_OL1
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = GEH_motomiya_chiaki_trait
+									add = GEH_motomiya_chiaki_trait_OL1
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		focus = {
@@ -12916,6 +13117,37 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_populist_leader
 			completion_reward = {
+				if = {
+					limit = {
+						any_character = {
+							has_trait = GEH_motomiya_chiaki_trait
+						}
+					}
+					random_character = {
+						limit = {
+							has_trait = GEH_motomiya_chiaki_trait
+						}
+						swap_country_leader_traits = {
+							remove = GEH_motomiya_chiaki_trait
+							add = GEH_motomiya_chiaki_trait_OR1
+						}
+					}
+				}
+				else = {
+					effect_tooltip = {
+						random_character = {
+							limit = {
+								is_country_leader = yes
+							}
+							effect_tooltip = {
+								swap_country_leader_traits = {
+									remove = GEH_motomiya_chiaki_trait
+									add = GEH_motomiya_chiaki_trait_OR1
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	# /치아키 후속중점 독일국
