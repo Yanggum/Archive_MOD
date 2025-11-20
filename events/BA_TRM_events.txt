@@ -8845,6 +8845,10 @@ country_event = { # 바시스 스콜라 시위
 			nagisa_faction_A = -1
 			tooltip = nagisa_faction_A_tt
 		}
+		add_to_variable = {
+			nagisa_faction_c = 1
+			tooltip = nagisa_faction_C_tt
+		}
 		TRM_nagisa_faction_modified = yes
        
     	}
@@ -9185,8 +9189,13 @@ country_event = { # 상투스 분파의 운명
 		name = trinity_events.16.a
 		set_temp_variable = { TRN_Honor_change = -3 }
 		TRN_add_Honor = yes
+
+		set_party_name = {
+			ideology = communism
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
+		}
 		add_popularity = { ideology = communism popularity = -0.06 }
-		BA_ban_communism_effect = yes
 		add_to_variable = {
 			nagisa_faction_B = -10
 			tooltip = nagisa_faction_B_tt
@@ -9221,13 +9230,19 @@ country_event = { # 필리우스 분파의 운명
 		ai_chance = {
 			base = 100
 		}
-		add_popularity = { ideology = neutrality popularity = -0.02 }
+		add_popularity = { ideology = neutrality popularity = -0.04 }
 		add_stability = 0.02
     	}
 
     after = {
 		hidden_effect = { 
 			country_event = { id = trinity_flavor_events.32 days = 14 } 
+		}
+
+		set_party_name = {
+			ideology = neutrality
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
 		}
 		
 		custom_effect_tooltip = tooltip_white_line
@@ -9238,7 +9253,6 @@ country_event = { # 필리우스 분파의 운명
 		hidden_effect = {
 			TRN_Kirifuji_Nagisa = { set_character_flag = TRN_nagisa_in_jail }
 		}
-		BA_ban_neutrality_effect = yes
 		add_to_variable = {
 			nagisa_faction_A = -10
 			tooltip = nagisa_faction_A_tt
@@ -9263,7 +9277,13 @@ country_event = { # 파테르 분파 내부의 불충
 			tooltip = nagisa_faction_C_tt
 		}
 		
-		BA_ban_democratic_effect = yes
+		add_popularity = { ideology = fascism popularity = 0.06 }
+
+		set_party_name = {
+			ideology = democratic
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
+		}
 		set_politics = { ruling_party = fascism elections_allowed = no }
 		effect_tooltip = {
 			add_country_leader_role = {
@@ -9757,8 +9777,8 @@ country_event = { # 독일 문화의 운명
 			base = 2
 			modifier = {
 				OR = {
-					TRN_very_low_honor = yes
-					TRN_low_honor = yes
+					TRN_Mika_has_very_low_honor_trigger = yes
+					TRN_Mika_has_low_honor_trigger = yes
 				}
 				add = 1000
 			}
@@ -9963,19 +9983,8 @@ country_event = { # 소규모 동아리들의 운명
 
 	option = { 
 		name = trinity_events.37.a
-		add_political_power = 75
-		add_stability = -0.03
+		add_stability = -0.02
 	}
-
-	option = { 
-		name = trinity_events.37.b
-		add_political_power = -45
-		add_stability = 0.05
-    	}
-
-    after = {
-		hidden_effect = { country_event = { id = trinity_flavor_events.20 days = 25} }
-    	}
 }
 country_event = { # 우리만의 자본가
 	id = trinity_events.38
@@ -10281,52 +10290,7 @@ country_event = { # 중앙구에서 대규모 시위
 
 	option = {
 		name = trinity_events.45.a
-		trigger = {
-			has_country_leader = {
-				ruling_only = yes
-				character = TRN_Misono_Mika
-			}
-		}
-	}
-
-	option = {
-		name = trinity_events.45.b
-		trigger = {
-			has_country_leader = {
-				ruling_only = yes
-				character = TRN_Kirifuji_Nagisa
-			}
-		}
-	}
-
-	option = {
-		name = trinity_events.45.c
-		trigger = {
-			NOT = { has_country_leader = { character = TRN_Misono_Mika } }
-			NOT = { has_country_leader = { character = TRN_Kirifuji_Nagisa } }
-		}
-	}
-	after = {
-		add_war_support = -0.05
-		custom_effect_tooltip = TRM_increase_decreasing_conscription_factor_tt
-		add_to_variable = { TRM_monthly_conscription_factor_increase = -0.005 }
-		set_variable = {
-			TRN_Mika_social_problem_days = 35
-			tooltip = TRN_Mika_social_problem_days_tt
-		}
-		hidden_effect = {
-			add_days_mission_timeout = {
-				mission = TRN_Mika_social_problem
-				days = -12
-			}
-			news_event = { id = trinity_news_events.6 hours = 04 }
-			country_event = { id = trinity_social_ploblem_events.1 days = 15 }
-		}
-		custom_effect_tooltip = TRM_change_pro_german_propaganda_to_trinity_social_issues_tt
-		hidden_effect = {
-			remove_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
-			add_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
-		}
+		add_stability = -0.02
 	}
 }
 country_event = { # 아리우스용
@@ -10445,17 +10409,9 @@ country_event = { # 탈나치화 운동
 			idea = TRN_denazification_ns
 			days = 730
 		}
-		custom_effect_tooltip = {
-			localization_key = TRN_denazification_tt
-			DECISION_NAME = TRN_Mika_social_problem
-			EVENT_0 = {
-				localization_key = COLOR_YELLOW
-				DATA = trinity_social_ploblem_events.12.t
-			}
-		}
     	}
 }
-country_event = { # 사민당과 접촉
+country_event = { # 흑적금 국기단 해산
 	id = trinity_events.52
 	title = trinity_events.52.t
 	desc = trinity_events.52.desc
@@ -10464,15 +10420,16 @@ country_event = { # 사민당과 접촉
 	is_triggered_only = yes
  	fire_only_once = no
 
-	option = { 
-		name = trinity_events.52.a
-		custom_effect_tooltip = TRN_trinity_contact_SPD_tooltip
-    	}
-    	after = {
-		hidden_effect = { 
-			country_event = { id = trinity_events.53 days = 07 }
+	immediate = {
+		hidden_effect = {
+			set_temp_variable = { TRN_Honor_change = -10 }
+			TRN_add_Honor = yes
 		}
 	}
+
+	option = { 
+		name = trinity_events.52.a
+    	}
 }
 country_event = { # 사민당과 접촉
 	id = trinity_events.53
@@ -10894,23 +10851,43 @@ country_event = { # 명예 - 구호기사단 무인 병동에서의 강도 사�
 	id = trinity_honor_events.1
 	title = trinity_honor_events.1.t
 	desc = trinity_honor_events.1.desc
-	picture = GFX_report_event_generic_trinity_building
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
 
 
-	option = { # 도와준다
+	option = { # 구호기사단에게 장비를 제공하는건 어때?
 		name = trinity_honor_events.1.a
-		set_temp_variable = { TRN_Honor_change = 3 }
+		set_temp_variable = { TRN_Honor_change = 12 }
+		TRN_add_Honor = yes
+
+		add_political_power = -90
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = -150
+		}
+		add_timed_idea = {
+			idea = TRN_supported_remedial_knights_ns
+			days = 70 
+		}
+	}
+
+	option = { # 정의실현부를 불러 도와준다.
+		name = trinity_honor_events.1.b
+		set_temp_variable = { TRN_Honor_change = 6 }
 		TRN_add_Honor = yes
 
 		add_political_power = -30
+		add_timed_idea = {
+			idea = TRN_busy_JTF_ns
+			days = 70
+		}
 	}
 
 	option = { # 안 도와준다.
-		name = trinity_honor_events.1.b
-		set_temp_variable = { TRN_Honor_change = -3 }
+		name = trinity_honor_events.1.c
+		set_temp_variable = { TRN_Honor_change = -6 }
 		TRN_add_Honor = yes
 	}
 }
@@ -10918,7 +10895,7 @@ country_event = { # 명예 - 츠루기의 과잉 진압
 	id = trinity_honor_events.2
 	title = trinity_honor_events.2.t
 	desc = trinity_honor_events.2.desc
-	picture = GFX_report_event_generic_trinity_building
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
@@ -10957,7 +10934,7 @@ country_event = { # 명예 - 혼자 티파티
 	id = trinity_honor_events.4
 	title = trinity_honor_events.4.t
 	desc = trinity_honor_events.4.desc
-	picture = GFX_report_event_TRN_mika_2
+	picture = GFX_report_event_TRN_mika_4
 	
 	is_triggered_only = yes
 	fire_only_once = no
@@ -10973,7 +10950,7 @@ country_event = { # 명예 - 독서하기
 	id = trinity_honor_events.5
 	title = trinity_honor_events.5.t
 	desc = trinity_honor_events.5.desc
-	picture = GFX_report_event_generic_terrace
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
@@ -10988,7 +10965,7 @@ country_event = { # 딸기 난동
 	id = trinity_honor_events.6
 	title = trinity_honor_events.6.t
 	desc = trinity_honor_events.6.desc
-	picture = GFX_report_event_generic_trinity_market
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
@@ -11013,7 +10990,7 @@ country_event = { # 명예 - 히스테리
 	id = trinity_honor_events.7
 	title = trinity_honor_events.7.t
 	desc = trinity_honor_events.7.desc
-	picture = GFX_report_event_generic_venice
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
@@ -11029,7 +11006,7 @@ country_event = { # 명예 - 고립감
 	id = trinity_honor_events.8
 	title = trinity_honor_events.8.t
 	desc = trinity_honor_events.8.desc
-	picture = GFX_report_event_generic_terrace
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
@@ -11044,13 +11021,15 @@ country_event = { # 명예 - 시스터후드의 선교 활동
 	id = trinity_honor_events.9
 	title = trinity_honor_events.9.t
 	desc = trinity_honor_events.9.desc
-	picture = GFX_report_event_generic_terrace
+	picture = GFX_report_event_TRN_mika_4
 
 	is_triggered_only = yes
 	fire_only_once = no
 
 	option = { # 
 		name = trinity_honor_events.9.a
+		set_temp_variable = { TRN_Honor_change = 10 }
+		TRN_add_Honor = yes
 		add_stability = -0.02
 		add_popularity = {
 			ideology = ROOT
@@ -11066,35 +11045,8 @@ country_event = { # 명예 - 시스터후드의 선교 활동
 
 	option = { #
 		name = trinity_honor_events.9.b
-		add_political_power = 35
-	}
-}
-country_event = { # 명예 - 시스터후드의 선교 활동
-	id = trinity_honor_events.10
-	title = trinity_honor_events.9.t
-	desc = trinity_honor_events.9.desc
-	picture = GFX_report_event_generic_terrace
-
-	is_triggered_only = yes
-	fire_only_once = no
-
-	option = { # 
-		name = trinity_honor_events.9.a
-		add_stability = -0.02
-		add_popularity = {
-			ideology = ROOT
-			popularity = -0.05
-		}
-		set_country_flag = { flag = TRN_jewel_of_the_trinity_faith_in_progress_flag days = 141 value = 1 }
-		hidden_effect = { 
-			activate_shine_on_focus = TRN_jewel_of_the_trinity_faith
-			country_event = { id = trinity_system_events.1 days = 140 }
-		} 
-		effect_tooltip = { unlock_national_focus = TRN_jewel_of_the_trinity_faith }
-	}
-
-	option = { #
-		name = trinity_honor_events.9.b
+		set_temp_variable = { TRN_Honor_change = -10 }
+		TRN_add_Honor = yes
 		add_political_power = 35
 	}
 }
@@ -12075,8 +12027,8 @@ country_event = { # 부작용
 		name = trinity_flavor_events.16.c
 		trigger = {
 			OR = {
-				TRN_high_honor = yes
-				TRN_very_high_honor = yes
+				TRN_Mika_has_high_honor_trigger = yes
+				TRN_Mika_has_very_high_honor_trigger = yes
 			}
 		}
 		custom_effect_tooltip = TRN_your_honor_is_high
@@ -12090,8 +12042,8 @@ country_event = { # 부작용
 		name = trinity_flavor_events.16.d
 		trigger = {
 			OR = {
-				TRN_low_honor = yes
-				TRN_very_low_honor = yes
+				TRN_Mika_has_very_low_honor_trigger = yes
+				TRN_Mika_has_low_honor_trigger = yes
 			}
 		}
 		custom_effect_tooltip = TRN_your_honor_is_low
@@ -12675,6 +12627,36 @@ country_event = { #
 			value = -0.15
 		}
 		mark_focus_tree_layout_dirty = yes
+	}
+}
+
+country_event = { # 히후미
+	id = trinity_flavor_events.46
+	title = trinity_flavor_events.46.t
+	desc = trinity_flavor_events.46.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.46.a
+
+	}
+}
+
+unit_leader_event = { # 고마워해 하는 미네.
+	id = trinity_flavor_events.47
+	title = trinity_flavor_events.47.t
+	desc = trinity_flavor_events.47.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.47.a
+
 	}
 }
 
