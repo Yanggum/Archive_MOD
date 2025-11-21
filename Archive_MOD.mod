@@ -15,9 +15,6 @@ tags={
 	"Ideologies"
 	"Military"
 }
-dependencies={
-	"Korean Language"
-}
 user_dir="BlueArchive"
 version="0.7.4"
 picture="thumbnail.png"
