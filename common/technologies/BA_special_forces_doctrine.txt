@@ -1,0 +1,498 @@
+technologies = {
+
+    ###Hako
+
+	special_forces_cavalry = {
+		doctrine_name = "CAVALRY_DOCTRINE"
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+
+		#xor = { special_forces_marines special_forces_paratroopers special_forces_mountaineers }
+
+		force_use_small_tech_layout = yes
+		category_special_forces = {
+			max_organisation = 5
+			soft_attack = 0.05
+		}
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		halo_special_forces = {
+			supply_consumption = -0.02
+			soft_attack = 0.1
+		}
+		
+		allow = { 
+			AND = {
+				has_tech = kivotos_halo_special_forces 
+				can_unlock_new_special_forces_tree = yes
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 0 }
+		}
+
+		path = {
+			leads_to_tech = plain_cavalry
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = desert_cavalry
+			research_cost_coeff = 1
+		}
+		on_research_complete = {
+			remove_potential_special_forces_tree = yes
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		ai_will_do = {
+			factor = 10
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+
+	plain_cavalry = {
+		
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+
+		force_use_small_tech_layout = yes
+		xor = { desert_cavalry }
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = -1 y = 2 }
+		}
+		path = {
+			leads_to_tech = military_police_cavalry
+			research_cost_coeff = 1
+		}
+		halo_recon = {
+			Urban = {
+				attack = 0.15
+				defence = 0.10
+				movement = 0.10
+			}
+			fort = {
+				attack = 0.15
+				defence = 0.10
+			}
+		}
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	desert_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+
+		force_use_small_tech_layout = yes
+		xor = { plain_cavalry }
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 1 y = 2 }
+		}
+		
+		path = {
+			leads_to_tech = military_police_cavalry
+			research_cost_coeff = 1
+		}
+		halo_recon = {
+			Marsh = {
+				attack = 0.05
+				defence = 0.10
+				movement = 0.25
+			}
+			river = {
+				attack = 0.10
+				defence = 0.05
+				movement = 0.25
+			}
+		}
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	military_police_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		path = {
+			leads_to_tech = cavalry_sniper
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = fearless_cavalry
+			research_cost_coeff = 1
+		}
+		special_forces_cap = 0.06
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		
+		category_halo_special_forces = {		
+			initiative = 0.01
+		}
+		unit_halo_recon_design_cost_factor = -1
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 4 }
+		}
+		
+		categories = {
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	cavalry_sniper = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		
+		paratrooper_weight_factor = -0.5
+		special_forces_no_supply_grace = 24
+		path = {
+			leads_to_tech = artillery_support_cavalry
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 1 y = 6 }
+		}
+		xor = { fearless_cavalry }
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	fearless_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		naval_invasion_planning_bonus_speed = 0.25
+		naval_invasion_capacity = 10
+		path = {
+			leads_to_tech = artillery_support_cavalry
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = -1 y = 6 }
+		}
+		xor = { cavalry_sniper }
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	artillery_support_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		halo_special_forces = {
+			defense = 0.1
+			max_organisation = 10
+		}
+		special_forces_cap = 0.06
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		path = {
+			leads_to_tech = agressive_cavalry
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = organized_cavalry
+			research_cost_coeff = 1
+		}
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 8 }
+		}
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+			special_forces_doctrine
+			cat_halo_doctrine
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	organized_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		halo_special_forces = {
+			soft_attack = 0.1
+		}
+		on_research_complete = {
+			custom_effect_tooltip = kivotos_halo_special_forces_add6_tt
+			set_variable = { BA_halo_special_forces_cap_edit_var = 6 }
+			BA_halo_special_forces_cap_edit_effect = yes
+		}
+		special_forces_cap = 0.06
+		special_forces_training_time_factor = -0.20
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 1 y = 10 }
+		}
+		xor = { agressive_cavalry }
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+	
+	agressive_cavalry = {
+
+		research_cost = 2.5
+		xp_research_type = army
+		xp_boost_cost = 75
+		xp_research_bonus = 2.00
+		
+		force_use_small_tech_layout = yes
+		halo_special_forces = {
+			soft_attack = 0.2
+			breakthrough = 0.2
+			max_organisation = 10
+		}
+		#on_research_complete = {
+		#	custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
+		#	set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
+		#	BA_halo_special_forces_cap_edit_effect = yes
+		#}
+		special_forces_training_time_factor = 0.20
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = -1 y = 10 }
+		}
+		xor = { organized_cavalry }
+		
+		allow = { 
+			AND = {
+				has_equipment = {
+   					kivotos_infantry_equipment > 49
+				}
+			}
+		}
+		on_research_complete = {
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = -50
+			}
+		}
+		
+		categories = {
+		}
+		
+		ai_will_do = {
+			factor = 20
+		}
+		
+		ai_research_weights = {
+			#infantry_weapons = 1.5
+		}
+	}
+}
