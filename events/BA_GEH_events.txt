@@ -41,6 +41,8 @@ add_namespace = GEH_news
 add_namespace = TRM_auto_conference
 #선도부-판데모니움 소사이어티 두 나라에 동시에 발생하는 공동 이벤트
 add_namespace = GEH.GEM.shared_event
+# 풍기 이벤트
+add_namespace = GEH_discipline_system_event
 
 
 #The Yalta Conference
@@ -57,13 +59,15 @@ country_event = {
 		NOT = { has_country_flag = GEH_unified_gehenna_flag }
 		OR = {
 			original_tag = GEM
-			original_tag = HEU
+			AND = {
+				NOT = { country_exists = GEM }
+				original_tag = HEU
+			}
 		}
 		TRM = {
 			surrender_progress > 0.4
 			has_government = fascism
 		}
-		is_faction_leader = yes
 		any_state = {
 			is_core_of = TRM
 			controller = {
@@ -159,7 +163,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
-		name = germany.119.a
+		name = TRM_auto_conference.101.a
 		custom_effect_tooltip = TRM_auto_conference_1_division_tt
 			5 = { set_state_flag = TRM_auto_conference_1 }
 			60 = { set_state_flag = TRM_auto_conference_1 }
@@ -176,7 +180,7 @@ country_event = {
 			762 = { set_state_flag = TRM_auto_conference_1 }
 			763 = { set_state_flag = TRM_auto_conference_1 }
 			807 = { set_state_flag = TRM_auto_conference_1 }
-			1039 = { set_state_flag = TRM_auto_conference_1 }
+			1069 = { set_state_flag = TRM_auto_conference_1 }
 		
 		hidden_effect = {
 			#news_event = { days = 1 id = news.236 }
@@ -186,9 +190,102 @@ country_event = {
 	}
 
 	option = {
-		name = germany.119.b
+		name = TRM_auto_conference.101.b
 		ai_chance = {
 			base = 0
+		}
+	}
+}
+
+country_event = {
+	id = TRM_auto_conference.102
+	title = TRM_auto_conference.102.t
+	desc = TRM_auto_conference.102.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = TRM_auto_conference.102.a
+	}
+}
+
+country_event = { # 풍기 감소주기 증가
+	id = GEH_discipline_system_event.1
+	title = GEH_discipline_system_event.1.t
+	desc = GEH_discipline_system_event.1.desc
+	picture = GFX_report_event_iori_shiromi_generic_3
+	
+	trigger = {
+		original_tag = GEH
+		has_country_flag = GEH_unified_gehenna_flag
+		NOT = { has_country_flag = GEH_discipline_system_event_1_flag }
+	}
+
+	immediate = {
+		set_country_flag = GEH_discipline_system_event_1_flag
+	}
+
+	fire_only_once = yes
+	
+	option = { 
+		name = GEH_discipline_system_event.1.a
+		custom_effect_tooltip = GEH_discipline_system_event_tt
+		add_to_variable = {
+			var:GEH_discipline_system_weak_discipline_day_value = 25
+		}
+		add_days_mission_timeout = {
+			mission = GEH_discipline_system_weak_discipline
+			days = 25
+		}
+	}
+}
+
+country_event = { # 풍기 감소주기 증가
+	id = GEH_discipline_system_event.2
+	title = GEH_discipline_system_event.2.t
+	desc = GEH_discipline_system_event.2.desc
+	picture = GFX_report_event_iori_shiromi_generic_3
+	
+	trigger = {
+		original_tag = GEH
+		NOT = { has_country_flag = GEH_discipline_system_event_2_flag }
+		OR = {
+			TRM = {
+				exists = no
+			}
+			TRM = {
+				is_subject_of = ROOT
+			}
+			TRM = {
+				is_in_faction_with = ROOT
+			}
+			TRK = {
+				exists = yes
+				is_subject = no
+				is_in_faction = no
+			}
+			owns_state = 64
+		}
+	}
+
+	immediate = {
+		set_country_flag = GEH_discipline_system_event_2_flag
+	}
+
+	fire_only_once = yes
+	
+	option = { 
+		name = GEH_discipline_system_event.2.a
+		custom_effect_tooltip = GEH_discipline_system_event_tt
+		add_to_variable = {
+			var:GEH_discipline_system_weak_discipline_day_value = 25
+		}
+		add_days_mission_timeout = {
+			mission = GEH_discipline_system_weak_discipline
+			days = 25
 		}
 	}
 }
@@ -281,12 +378,15 @@ country_event = { # 히나 은퇴 루트 - 이오리 성공, 아코 탈락!
 				}
 			}
 		}
-		promote_character = GEH_kurodate_haruna
+		if = {
+			limit = { has_character = GEH_kurodate_haruna }
+			promote_character = GEH_kurodate_haruna
 
-		set_portraits = {
-			character = GEH_kurodate_haruna
-			civilian = {
-				large = GFX_GEH_Haruna_New_Portrait
+			set_portraits = {
+				character = GEH_kurodate_haruna
+				civilian = {
+					large = GFX_GEH_Haruna_New_Portrait
+				}
 			}
 		}
 
@@ -309,7 +409,10 @@ country_event = { # 히나 은퇴 루트 - 이오리 성공, 아코 탈락!
 				}
 			}
 		}
-		promote_character = GEH_kinugawa_kasumi
+		if = {
+			limit = { has_character = GEH_kinugawa_kasumi }
+			promote_character = GEH_kinugawa_kasumi
+		}
 
 		country_event = GEH_normal_story_event.5
 	}
@@ -418,7 +521,10 @@ country_event = { # 히나 은퇴 루트 - 게헨나 샛별부
 				set_nationality = ROOT
 			}
 		}
-		promote_character = GEH_kirara
+		if = {
+			limit = { has_character = GEH_kirara }
+			promote_character = GEH_kirara
+		}
 		set_party_name = {
 			ideology = democratic
 			long_name = GEH_student_council_A_party_long
@@ -448,7 +554,10 @@ country_event = { # 히나 은퇴 루트 - 게헨나 샛별부
 				set_nationality = ROOT
 			}
 		}
-		promote_character = GEH_gndnzk
+		if = {
+			limit = { has_character = GEH_gndnzk }
+			promote_character = GEH_gndnzk
+		}
 		set_party_name = {
 			ideology = democratic
 			long_name = GEH_student_council_B_party_long
@@ -600,7 +709,10 @@ country_event = { # 천상의 혁명 루트 - 세인트 게헨나 학원
 				set_nationality = ROOT
 			}
 		}
-		promote_character = GEH_hatami_ericha
+		if = {
+			limit = { has_character = GEH_hatami_ericha }
+			promote_character = GEH_hatami_ericha
+		}
 	}
 	option = { 
 		name = GEH_celestial_revolution_event.5.b
@@ -616,7 +728,10 @@ country_event = { # 천상의 혁명 루트 - 세인트 게헨나 학원
 				}
 			}
 		}
-		promote_character = GEH_chinatsu
+		if = {
+			limit = { has_character = GEH_chinatsu }
+			promote_character = GEH_chinatsu
+		}
 	}
 	option = { 
 		name = GEH_celestial_revolution_event.5.c
@@ -642,7 +757,10 @@ country_event = { # 천상의 혁명 루트 - 세인트 게헨나 학원
 				set_nationality = ROOT
 			}
 		}
-		promote_character = GEH_gndnzk
+		if = {
+			limit = { has_character = GEH_gndnzk }
+			promote_character = GEH_gndnzk
+		}
 	}
 }
 
@@ -2685,7 +2803,6 @@ country_event = { #유리조노 세이아의 죽음
 
 	option = { 
 		name = GEH.flavor_event.26.a 
-		TRM = { country_event = { id = GEH.flavor_event.27 } }
 	}
 }
 
@@ -3056,7 +3173,7 @@ country_event = { #
 
 		if = {
 			limit = {
-				NOT = { has_completed_focus = GEH_Army_focus_7 }
+				NOT = { has_completed_focus = GEH_NEXT_Army_focus_1 }
 			}
 			add_to_variable = {
 				geh_discipline_var = -3
@@ -3901,7 +4018,7 @@ country_event = { #경찰국가 계획
 	title = GEH.event.1029.t
 
 	desc = {
-		text = GEH.event.1029.iroha
+		text = GEH.event.1029.desc.iroha
 		trigger = { 
 			has_country_leader = {
 				ruling_only = yes
@@ -3911,7 +4028,7 @@ country_event = { #경찰국가 계획
 	}
 
 	desc = {
-		text = GEH.event.1029.kayoko
+		text = GEH.event.1029.desc.kayoko
 		trigger = { 
 			has_country_leader = {
 				ruling_only = yes

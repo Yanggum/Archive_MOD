@@ -8,7 +8,7 @@ on_actions = {
 						option = Trinity_TeaParty_swimsuit_Portrait_Rule_ON
 					}
 				}
-				TRM = { country_event = trnfla.9999 }
+				TRM = { country_event = trinity_flavor_events.9999 }
 			}
 		}
 		effect = {
@@ -16,40 +16,37 @@ on_actions = {
 				limit = {
 					TRM = { has_focus_tree = Trinity_focus }
 				}
+				TRM = { TRN_init_rework_setting_effect = yes }
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					any_country = { has_idea = TRN_poland_trinity_border_dispute_ns }
+				}
 				TRM = {
-					add_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
-					country_event = { id = trnfla.36 hours = 01 }
-					country_event = { id = trinity.6 days = 02 }
-					country_event = { id = trnfla.29 days = 04 }
+					add_opinion_modifier = {
+						target = POL
+						modifier = TRN_poland_trinity_border_dispute_modifier
+					}
+				}
+				POL = {
+					add_opinion_modifier = {
+						target = TRM
+						modifier = TRN_poland_trinity_border_dispute_modifier
+					}
 				}
 			}
 		}
 	}
 	on_war = {
 		effect = {
-			if = { #트리니티가 "TRM_war_preparations" 중점을 완료 했고 전쟁을 선포했을때
-				limit = {
-					original_tag = GER
-					NOT = { has_country_flag = GER_has_war_preparations_flag }
-					OR = {
-						has_completed_focus = GER_prepare_for_the_next_naval_blockade
-						has_completed_focus = GER_war_preparations
-					}
-				}
-				add_timed_idea = {
-					idea = GER_strengthened_supply_lines_ns
-					days = 730
-				}
-				set_country_flag = GER_has_war_preparations_flag
-			}
-		}
-		effect = {
 			if = { # 트리니티가 "TRM_war_preparations" 중점을 완료 했고 전쟁을 선포했을때
 				limit = {
 					original_tag = TRM
 					TRM = { 
 						OR = {
-							has_completed_focus = TRM_war_preparations 
+							has_completed_focus = TRM_war_preparations
 							AND = {
 								has_completed_focus = TRM_Expand_the_Logistics_Corps
 								has_focus_tree = Trinity_focus
@@ -134,11 +131,11 @@ on_actions = {
 				limit = {
 					FROM = { tag = TRM }
 					ROOT = { 
-						skill > 2 
+						skill > 2
 						has_trait = trait_TRN_lack_of_experience 
 					}
 				}
-				unit_leader_event = trnfla.38
+				unit_leader_event = trinity_flavor_events.38
 			}
 		}
 	}
@@ -161,5 +158,33 @@ on_actions = {
 		#		}
 		#	}
 		#}
+	}
+	on_weekly_TRM = {
+		effect = {
+			IF = {
+				limit = {
+					has_completed_focus = TRN_unprovable_problem
+				}
+				IF = {
+					limit = {
+						has_country_leader = {
+							character = TRN_Kirifuji_Nagisa
+							ruling_only = yes
+						}
+						TRN_Kirifuji_Nagisa = { has_trait = TRN_nagisa_1_off }
+						check_variable = { nagisa_faction_A > 49 } 
+					}
+					remove_country_leader_trait = TRN_nagisa_1_off
+					add_country_leader_trait = TRN_nagisa_1_on
+				}
+			}
+
+		}
+	}
+
+	on_new_term_election = { 
+		random_events = { 
+			100 = trinity_events_nagisa_election.1
+		} 
 	}
 }

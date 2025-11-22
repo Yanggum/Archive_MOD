@@ -17,12 +17,9 @@ tags={
 	"Ideologies"
 	"Military"
 }
-dependencies={
-	"Korean Language"
-}
 user_dir="BlueArchive"
-version="0.7.4"
+version="0.7.5"
 picture="thumbnail.png"
-supported_version="1.16.*"
+supported_version="1.17.*"
 path="mod/Archive_MOD"
 remote_file_id="2927583473"

@@ -1,43 +1,50 @@
 ﻿add_namespace = CAM_event
-
+add_namespace = IDC_event
 country_event = {
-    id = CAM_event.1
-    title = CAM_event.1.t
-    desc = CAM_event.1.d
-    picture = GFX_report_event_spr_anarchist_uprising2
-    is_triggered_only = yes
-
-    option = {
-        ai_chance = {
-            base = 100
-        }
-        
-        name = khmer_krom_integration_requirements_event_yes
-
-        1038 = { set_demilitarized_zone = no }
-        
-        1038 = { transfer_state_to = CAM }    
-
-        CAM = { country_event = { id = CAM_event.3 hours = 6 } }
-}
-
-    option = {
-        ai_chance = {
-            base = 0
-        }
-        
-        name = khmer_krom_integration_requirements_events_no
-
-        1038 = { set_demilitarized_zone = no }
-
-        CAM = {
-            create_wargoal = {
-                target = 1038.owner
-                type = take_state
-            }
-        }
-        CAM = { country_event = { id = CAM_event.4 hours = 6 } }
-    }
+	id = CAM_event.1
+	title = CAM_event.1.t
+	desc = CAM_event.1.d
+	picture = GFX_report_event_spr_anarchist_uprising2
+	is_triggered_only = yes
+	option = {
+		ai_chance = {
+			base = 100
+		}
+		name = khmer_krom_integration_requirements_event_yes
+		1038 = {
+			set_demilitarized_zone = no
+		}
+		1038 = {
+			transfer_state_to = CAM
+		}
+		CAM = {
+			country_event = {
+				id = CAM_event.3
+				hours = 6
+			}
+		}
+	}
+	option = {
+		ai_chance = {
+			base = 0
+		}
+		name = khmer_krom_integration_requirements_events_no
+		1038 = {
+			set_demilitarized_zone = no
+		}
+		CAM = {
+			create_wargoal = {
+				target = 1038.owner
+				type = take_state
+			}
+		}
+		CAM = {
+			country_event = {
+				id = CAM_event.4
+				hours = 6
+			}
+		}
+	}
 }
 
 country_event = {
@@ -48,75 +55,221 @@ country_event = {
 	is_triggered_only = yes
 	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
-    option = {
-        name = CAM_event.2.a
-        activate_mission = FRA_end_war_timer_CAM
-        CAM = {
-            add_timed_idea = {
-		    idea = VIN_indochina_war_idea
-		    days = 180
-	        }
-            declare_war_on = {
-                target = FRA
-                type = liberate_wargoal
-            }
-        }
-        CAM = { country_event = { id = CAM_event.6 hours = 6 } }
+	option = {
+		name = CAM_event.2.a
+		activate_mission = FRA_end_war_timer_CAM
+		CAM = {
+			add_timed_idea = {
+				idea = VIN_indochina_war_idea
+				days = 180
+			}
+			declare_war_on = {
+				target = VIN
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = LAO
+				type = annex_everything
+			}
+			CAM = {
+				country_event = {
+					id = CAM_event.6
+					hours = 6
+				}
+			}
+		}
 	}
-    option = {
-        name = CAM_event.2.b
-        CAM = { country_event = { id = CAM_event.5 hours = 6 } }
-    }
+	option = {
+		name = CAM_event.2.b
+		CAM = {
+			country_event = {
+				id = CAM_event.5
+				hours = 6
+			}
+		}
+	}
 }
 
 country_event = {
-    id = CAM_event.3
-    title = CAM_event.3.t
+	id = CAM_event.3
+	title = CAM_event.3.t
 	desc = CAM_event.3.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
 	option = {
-        name = CAM_event.3.a
-    }
+		name = CAM_event.3.a
+	}
 }
 
 country_event = {
-    id = CAM_event.4
-    title = CAM_event.4.t
+	id = CAM_event.4
+	title = CAM_event.4.t
 	desc = CAM_event.4.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
 	option = {
-        name = CAM_event.4.a
-    }
+		name = CAM_event.4.a
+	}
 }
 
 country_event = {
-    id = CAM_event.5
-    title = CAM_event.5.t
+	id = CAM_event.5
+	title = CAM_event.5.t
 	desc = CAM_event.5.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
 	option = {
-        name = CAM_event.5.a
-    }
+		name = CAM_event.5.a
+	}
 }
 
 country_event = {
-    id = CAM_event.6
-    title = CAM_event.6.t
+	id = CAM_event.6
+	title = CAM_event.6.t
 	desc = CAM_event.6.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	picture = GFX_report_event_spr_anarchist_uprising2
 	hidden = no
 	option = {
-        name = CAM_event.6.a
+		name = CAM_event.6.a
+	}
+}
+
+country_event = {
+	id = CAM_event.10
+	title = CAM_event.10.t
+	desc = CAM_event.10.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_army
+	hidden = no
+    trigger = {
+        is_subject_of = FRA
     }
+	option = {
+		name = CAM_event.10.a
+		if = {
+			limit = {
+				has_character = CAM_henri_louis_marie_richomme
+			}
+			CAM_henri_louis_marie_richomme = {
+				retire = yes
+			}
+		}
+		add_country_leader_role = {
+			character = CAM_leon_thibaudeau
+			country_leader = {
+				ideology = oligarchism
+				traits = {
+					CAM_leon_thibaudeau_trait
+				}
+				expire = "1953.3.1"
+			}
+			promote_leader = yes
+		}
+	}
+}
+
+# Congolese Nationalists Approach us for aid - event for SOV or GER
+country_event = {
+	id = IDC_event.1
+	title = IDC_event.1.t
+	desc = IDC_event.1.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	fire_only_once = yes
+	# By all means
+	option = {
+		name = IDC_event.1.a
+		ai_chance = {
+			factor = 95
+		}
+		FROM = {
+			country_event = {
+				id = IDC_event.2
+				hours = 12
+				random_hours = 24
+			}
+		}
+	}
+	# There is no reason to intervene 
+	option = {
+		name = IDC_event.1.b
+		ai_chance = {
+			factor = 0.001
+		}
+		FROM = {
+			country_event = {
+				id = IDC_event.3
+				hours = 12
+				random_hours = 24
+			}
+		}
+	}
+}
+
+# [FROM.GetNameDefCap] decides to aid us - event for COG
+country_event = {
+	id = IDC_event.2
+	title = IDC_event.2.t
+	desc = IDC_event.2.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	fire_only_once = yes
+	# Perfect
+	option = {
+		name = IDC_event.2.a
+		ai_chance = {
+			factor = 100
+		}
+		add_war_support = 0.05
+		hidden_effect = {
+			IF = {
+				limit = {
+					has_completed_focus = IDC_securing_soviet_aid
+				}
+				set_country_flag = IDC_will_get_soviet_aid_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_completed_focus = IDC_securing_chinese_aid
+				}
+				set_country_flag = IDC_will_get_chinese_aid_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_completed_focus = IDC_securing_japanese_aid
+				}
+				set_country_flag = IDC_will_get_japanese_aid_flag
+			}
+			FROM = {
+				set_country_flag = supporter_of_IDC_independence_flag
+			}
+		}
+	}
+}
+
+# FROM.GetName decides not to aid us - event for COG
+country_event = {
+	id = IDC_event.3
+	title = IDC_event.3.t
+	desc = IDC_event.3.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	fire_only_once = yes
+	# A real shame
+	option = {
+		name = IDC_event.3.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 75
+	}
 }

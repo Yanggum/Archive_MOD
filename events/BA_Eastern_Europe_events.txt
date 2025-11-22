@@ -1,5 +1,5 @@
 add_namespace = BA_pol_event
-country_event = {
+country_event = { #바다의 사이 개념
 	id = BA_pol_event.1
 	title = BA_pol_event.1.t
 	desc = BA_pol_event.1.d
@@ -19,6 +19,10 @@ country_event = {
 		}
 		set_variable = {
 			POL_solidarity_trump_var = 0
+		}
+		clamp_variable = {
+			var = POL_solidarity_var
+			max = 120
 		}
 		name = BA_pol_event.1.a
 		complete_national_focus = POL_the_between_the_seas_concept
@@ -501,178 +505,210 @@ country_event = {
 	}
 }
 country_event = {
-	#화폐 통합 하실?
+	#동계 훈련
 	id = BA_pol_event.13
 	title = BA_pol_event.13.t
 	desc = BA_pol_event.13.d
 	is_triggered_only = yes
+	picture = GFX_report_event_gre_winter_soldiers_celebrating
 	option = { #ㅇㅋ
-		name = BA_pol_event.12.a
-		add_political_power = -30
-		swap_ideas = {
-			remove_idea = POL_economic_cooperation_1
-			add_idea = POL_economic_cooperation_2
+		name = BA_pol_event.13.a
+		army_experience = 5
+		custom_effect_tooltip = FIN_winter_warfare_battalion_tt
+
+		hidden_effect = {
+			set_technology = {
+				winter_logistics_support_tech = 1
+				popup = no
+			}
 		}
-	}
-	option = { #ㄴㄴ
-		name = BA_pol_event.12.a
-		ai_chance = {
-			base = 0
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_vef
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_vef
+				add_idea = POL_intermarium_military_cooperation_vef_winter
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_fabric
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_fabric
+				add_idea = POL_intermarium_military_cooperation_fabric_winter
+			}
+		}
+		else = {
+			add_ideas = POL_intermarium_military_cooperation_winter	
 		}
 	}
 }
 country_event = {
-	#국민들이 폴란드에 통합되길 원하다
+	#폴란드의 노르웨이 조선업 투자
 	id = BA_pol_event.14
 	title = BA_pol_event.14.t
 	desc = BA_pol_event.14.d
-	trigger = {
-		NOT = {
-			has_country_flag = BA_POL_I_WANT_IN_POL
-		}
-		has_idea = POL_desire_of_unity_1
-		has_war_support > 0.99
-		has_stability > 0.99
-		is_ally_with = POL
-		is_neighbor_of = POL
-		NOT = {
-			tag = POL
-		}
-	}
 	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			set_country_flag = BA_POL_I_WANT_IN_POL
-		}
-	}
-	option = { #국민투표를 실시하자
+	picture = GFX_report_event_merchant_ship_01
+	option = { #아이좋아요
 		name = BA_pol_event.14.a
-		random_list = {
-			6 = {
-				country_event = {
-					id = BA_pol_event.15
-					days = 5
+		NOR = {
+			random_owned_state = {
+				limit = {
+					is_coastal = yes
 				}
-			}
-			4 = {
-				country_event = {
-					id = BA_pol_event.16
-					days = 5
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
 				}
-			}
-		}
-	}
-	option = { #ㄴㄴ
-		name = BA_pol_event.14.b
-		ai_chance = {
-			base = 0
-		}
-		add_stability = -0.1
-		hidden_effect = {
-			country_event = {
-				id = BA_pol_event.17
-				days = 200
 			}
 		}
 	}
 }
 country_event = {
-	#국민투표 성공
+	#스웨덴의 목재 공급
 	id = BA_pol_event.15
 	title = BA_pol_event.15.t
 	desc = BA_pol_event.15.d
 	is_triggered_only = yes
+	picture = GFX_report_event_SWE_pajala_bombed_building
 	option = { #굿
 		name = BA_pol_event.15.a
-		POL = {
-			country_event = {
-				id = BA_pol_event.18
-				days = 10
+		if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_winter
 			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_winter
+				add_idea = POL_intermarium_military_cooperation_wood
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_vef_winter
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_vef_winter
+				add_idea = POL_intermarium_military_cooperation_vef_wood
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_fabric_winter
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_fabric_winter
+				add_idea = POL_intermarium_military_cooperation_fabric_wood
+			}
+		}
+		else = {
+			add_ideas = POL_intermarium_military_cooperation_wood
 		}
 	}
 }
 country_event = {
-	#국민투표 실패
+	#VEF와의 제휴
 	id = BA_pol_event.16
 	title = BA_pol_event.16.t
 	desc = BA_pol_event.16.d
+	picture = GFX_report_event_generic_research_lab
 	is_triggered_only = yes
-	option = { #ㄲㅂ
+	option = { #굿
 		name = BA_pol_event.16.a
-		hidden_effect = {
-			country_event = {
-				id = BA_pol_event.17
-				days = 200
+		if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_winter
 			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_winter
+				add_idea = POL_intermarium_military_cooperation_vef_winter
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_wood
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_wood
+				add_idea = POL_intermarium_military_cooperation_vef_wood
+			}
+		}
+		else = {
+			add_ideas = POL_intermarium_military_cooperation_vef
 		}
 	}
 }
 country_event = {
-	#플래그지우는이벤트
+	#리투아니아 방직 산업
 	id = BA_pol_event.17
 	title = BA_pol_event.17.t
 	desc = BA_pol_event.17.d
 	is_triggered_only = yes
+	picture = GFX_report_event_bul_boris_tour
 	option = {
-		clr_country_flag = BA_POL_I_WANT_IN_POL
+		name = BA_pol_event.17.a
+		if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_winter
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_winter
+				add_idea = POL_intermarium_military_cooperation_fabric_winter
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_wood
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_wood
+				add_idea = POL_intermarium_military_cooperation_fabric_wood
+			}
+		}
+		else_if = {
+			limit = {
+				has_idea = POL_intermarium_military_cooperation_vef
+			}
+			swap_ideas = {
+				remove_idea = POL_intermarium_military_cooperation_vef
+				add_idea = POL_intermarium_military_cooperation_fabric
+			}
+		}
+		else = {
+			add_ideas = POL_intermarium_military_cooperation_vef
+		}
 	}
 }
 country_event = {
-	#폴란드야 통합하자
+	#셰일 오일 채굴
 	id = BA_pol_event.18
 	title = BA_pol_event.18.t
 	desc = BA_pol_event.18.d
 	is_triggered_only = yes
-	option = { #ㅇㅋ
+	picture = GFX_report_event_tur_industry
+	option = { 
 		name = BA_pol_event.18.a
-		FROM = {
-			every_owned_state = {
-				limit = {
-					is_core_of = FROM
-				}
-				add_core_of = POL
-			}
-		}
-		annex_country = {
-			target = FROM
-			transfer_troops = yes
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = POL_intermarium
-				}
-			}
-			set_cosmetic_tag = POL_intermarium
-		}
-		ai_chance = {
-			base = 0
-			modifier = {
-				has_country_flag = POL_intermarium_expand
-				add = 10
-			}
-		}
-	}
-	option = { #ㄴㄴ
-		name = BA_pol_event.18.b
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_country_flag = POL_intermarium_expand
-				add = -10
+		813 = {
+			add_resource = {
+				type = oil
+				amount = 3
 			}
 		}
 	}
 }
 country_event = {
-	#거절당한 통합
+	#지속되는 전쟁 격발 이벤트
+	hidden = yes
 	id = BA_pol_event.19
 	title = BA_pol_event.19.t
 	desc = BA_pol_event.19.d
 	is_triggered_only = yes
 	option = { #ㄲㅂ
-		add_stability = -0.1
+		activate_mission = POL_sov_war_mission
 	}
 }
 country_event = {
@@ -704,7 +740,7 @@ country_event = {
 			transfer_state_to = GEA
 			add_core_of = GEA
 		}
-		1039 = {
+		1069 = {
 			transfer_state_to = GEA
 			add_core_of = GEA
 		}
@@ -738,7 +774,7 @@ country_event = {
 		64 = {
 			transfer_state_to = TRM
 		}
-		1039 = {
+		1069 = {
 			transfer_state_to = TRM
 		}
 		POL = {
@@ -769,7 +805,7 @@ country_event = {
 			transfer_state_to = PRE
 			add_core_of = PRE
 		}
-		1039 = {
+		1069 = {
 			transfer_state_to = PRE
 			add_core_of = PRE
 		}
@@ -878,12 +914,6 @@ country_event = {
 		}
 		188 = {
 			transfer_state_to = POL
-			if = {
-				limit = {
-					POL = {has_cosmetic_tag = POL_intermarium}
-				}
-				add_core_of = POL
-			}
 		}
 		country_event = {
 			id = BA_pol_event.22
@@ -923,7 +953,7 @@ country_event = {
 			}
 			create_country_leader = {
 				name = TRN_tmwmal
-				picture = "gfx/leaders/TRN/TRN_Morizuki_Suzumi_Portrait.tga"
+				picture = "gfx/leaders/TRN/Portrait_TRN_Morizuki_Suzumi.tga"
 				ideology = oligarchism
 			}
 		}
@@ -2550,6 +2580,19 @@ country_event = { #르부프 선언
 		add_political_power = 5
 	}
 }
+country_event = { #루마니아-인테르마리움 자원 협정
+	id = BA_pol_event.47
+	title = BA_pol_event.47.t
+	desc = BA_pol_event.47.d
+	picture = GFX_report_event_canada_treaty
+	is_triggered_only = yes
+	option = { #아이조아요
+		name = BA_pol_event.47.a
+	}
+	option = { #ㄴㄴ
+		name = BA_pol_event.47.b
+	}
+}
 
 
 add_namespace = BA_intermarium_solidarity_event
@@ -3176,6 +3219,166 @@ country_event = { #붉은해군의 압박
 		add_timed_idea = {
 			idea = BA_SOV_supporting_kriegsmarine
 			days = 1095
+		}
+	}
+}
+country_event = { #발트 무력 시위
+	id = BA_sov_event.6
+	title = BA_sov_event.6.t
+	desc = BA_sov_event.6.d
+	is_triggered_only = yes
+	picture = GFX_report_event_gre_militaristic_march
+	immediate = {
+		hidden_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 191
+						state = 784
+						state = 809
+						state = 810
+						state = 813
+						state = 814
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+	}
+	option = {
+		name = BA_sov_event.6.a
+		trigger = {
+			original_tag = SOV
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 191
+						state = 784
+						state = 809
+						state = 810
+						state = 813
+						state = 814
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+	}
+	option = {
+		name = BA_sov_event.6.b
+		trigger = {
+			NOT = {
+				original_tag = SOV
+			}
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 191
+						state = 784
+						state = 809
+						state = 810
+						state = 813
+						state = 814
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+	}
+}
+country_event = { #흑해 무력 시위
+	id = BA_sov_event.7
+	title = BA_sov_event.7.t
+	desc = BA_sov_event.7.d
+	is_triggered_only = yes
+	picture = GFX_report_event_ast_navy
+	immediate = {
+		hidden_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 971
+						state = 77
+						state = 347
+						state = 354
+						state = 355
+						state = 356
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+	}
+	option = {
+		name = BA_sov_event.6.a
+		trigger = {
+			original_tag = SOV
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 971
+						state = 77
+						state = 347
+						state = 354
+						state = 355
+						state = 356
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
+		}
+	}
+	option = {
+		name = BA_sov_event.6.b
+		trigger = {
+			NOT = {
+				original_tag = SOV
+			}
+		}
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 971
+						state = 77
+						state = 347
+						state = 354
+						state = 355
+						state = 356
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = BA_SOV_armed_protest_modifier
+					scope = SOV
+					days = 1080
+				}
+			}
 		}
 	}
 }

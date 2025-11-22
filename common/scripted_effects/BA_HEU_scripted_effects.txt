@@ -148,6 +148,124 @@ HEU_memorial_setting = {
 	}
 }
 
+HEU_revolt_setting = {
+	clamp_variable = {
+		var = HEU_faction_angry_mutsuki
+		min = 0
+		max = 100
+	}
+	clamp_variable = {
+		var = HEU_faction_angry_kayoko
+		min = 0
+		max = 100
+	}
+}
+
+HEU_mental_setting = {
+	clamp_variable = {
+		var = aru_mental_trauma_var
+		min = 0
+		max = 1
+	}
+	# 프레임 효과 적용
+	if = {
+		limit = {
+			check_variable = {
+				aru_mental_trauma_var > 0.74
+			}
+		}
+		set_variable = {
+			var = aru_mental_trauma_frame
+			value = 4
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				aru_mental_trauma_var > 0.49
+			}
+		}
+		set_variable = {
+			var = aru_mental_trauma_frame
+			value = 3
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				aru_mental_trauma_var > 0.24
+			}
+		}
+		set_variable = {
+			var = aru_mental_trauma_frame
+			value = 2
+		}
+	}
+	else = {
+		set_variable = {
+			var = aru_mental_trauma_frame
+			value = 1
+		}
+	}
+	# 무츠키 지도자 트레잇
+	hidden_effect = {
+		if = {
+			limit = {
+				NOT = {
+					has_completed_focus = HEU_germany_union # 엔딩 이후에 생기면 안 됨
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						aru_mental_trauma_var > 0.74
+					}
+				}
+				HEU_ancmzl = {
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_1
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_2
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_3
+					add_country_leader_trait = HEU_mutsuki_mental_trait_4
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						aru_mental_trauma_var > 0.49
+					}
+				}
+				HEU_ancmzl = {
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_1
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_2
+					add_country_leader_trait = HEU_mutsuki_mental_trait_3
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_4
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						aru_mental_trauma_var > 0.24
+					}
+				}
+				HEU_ancmzl = {
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_1
+					add_country_leader_trait = HEU_mutsuki_mental_trait_2
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_3
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_4
+				}
+			}
+			else = {
+				HEU_ancmzl = {
+					add_country_leader_trait = HEU_mutsuki_mental_trait_1
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_2
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_3
+					remove_country_leader_trait = HEU_mutsuki_mental_trait_4
+				}
+			}
+		}
+	}
+}
+
 HEU_create_militia_template = {
 	if = {
 		limit = { NOT = { has_template = "Benriya Germanische Befreiungsarmee" } }
@@ -250,14 +368,14 @@ HEU_parties_modifier_effect = {
 		value = 0.2
 	}
 
-	set_variable = {
-		var = HEU_right_and_left_party_stability_factor
-		value = HEU_right_party_stability_factor
-	}
-	subtract_from_variable = {
-		var = HEU_right_and_left_party_stability_factor
-		value = HEU_left_party_stability_factor
-	}
+	#set_variable = {
+	#	var = HEU_right_and_left_party_stability_factor
+	#	value = HEU_right_party_stability_factor
+	#}
+	#subtract_from_variable = {
+	#	var = HEU_right_and_left_party_stability_factor
+	#	value = HEU_left_party_stability_factor
+	#}
 }
 
 # 흥신소 정당 조정

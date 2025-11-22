@@ -1,0 +1,120 @@
+##########################################################################################
+
+### ###  ###  ##  #    ##   ##  #   #     ###   ##   ## ### ###      ###  #  # #   ###  ## 
+ #  #  # #   #  # #   #  # #     # #      #  # #  # #   #   #  #     #  # #  # #   #   #   
+ #  #  # ##  #  # #   #  # # ##   #       ###  ####  #  ##  #  #     ###  #  # #   ##   #  
+ #  #  # #   #  # #   #  # #  #   #       #  # #  #   # #   #  #     #  # #  # #   #     # 
+### ###  ###  ##  ###  ##   ##    #       ###  #  # ##  ### ###      #  #  ##  ### ### ## 
+
+########################################################################################## 
+
+
+#######################################################
+
+#   #  ##  ###      ###  ### #    ##  ### ###  ##  #  #     
+#   # #  # #  #     #  # #   #   #  #  #   #  #  # ## #     
+# # # #### ###      ###  ##  #   ####  #   #  #  # # ##     
+# # # #  # #  #     #  # #   #   #  #  #   #  #  # #  #     
+ # #  #  # #  #     #  # ### ### #  #  #  ###  ##  #  #
+
+ ######################################################     
+
+########################################################
+
+ ##  ###  ##   ##  ###   ##  ###  #  # ###  ##   ##  #   
+#    #   #  # #    #  # #  # #  # #  #  #  #  # #  # #   
+# ## ##  #  # # ## ###  #### ###  ####  #  #    #### #   
+#  # #   #  # #  # #  # #  # #    #  #  #  #  # #  # #   
+ ##  ###  ##   ##  #  # #  # #    #  # ###  ##  #  # ###
+
+######################################################## 
+
+
+BA_joining_rule_gehenna_only = {
+	type = joining_rules
+	visible = {
+		OR = {
+			original_tag = GEM
+			original_tag = GEH
+			original_tag = HEU
+		}
+	}
+	can_remove = {
+		faction_manifest_fulfillment > 0.95
+	}
+	ai_will_do = {
+		base = 0
+	}
+
+	modifier = {
+		army_core_defence_factor = 0.05
+		stability_factor = 0.05
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = BA_has_gehenna_capital_state_tt
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+	}
+}
+
+BA_joining_rule_kivotos_only = {
+	type = joining_rules
+	visible = {
+		kivotos_tag = yes
+	}
+	can_remove = {
+		faction_manifest_fulfillment > 0.95
+	}
+	ai_will_do = {
+		base = 0
+	}
+
+	modifier = {
+		army_core_defence_factor = 0.05
+		stability_factor = 0.05
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = Kivotos_tag_tt
+			kivotos_tag = yes
+		}
+	}
+}
+
+BA_joining_rule_non_kivotos_only = {
+	type = joining_rules
+	visible = {
+		kivotos_tag = no
+	}
+	can_remove = {
+		faction_manifest_fulfillment > 0.95
+	}
+	ai_will_do = {
+		base = 0
+	}
+
+	modifier = {
+		army_core_defence_factor = 0.05
+		stability_factor = 0.05
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = Kivotos_tag_tt_NOT
+			NOT = { Kivotos_tag = yes }
+			is_subject = yes # 괴뢰국은 제외
+			has_cosmetic_tag = HEU_luxembourg # 비키보토스화 국가 제외
+			has_cosmetic_tag = HEU_luxembourg_benriya
+			has_cosmetic_tag = HEU_west_germanic_union
+			has_cosmetic_tag = HEU_germanic_union
+			has_cosmetic_tag = KAI_british_corporation
+		}
+	}
+}

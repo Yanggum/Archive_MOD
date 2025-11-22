@@ -1,3 +1,5 @@
+#!gfx:interface\BA_goals.gfx
+
 focus_tree = {
 	id = polish_focus
 	
@@ -13855,179 +13857,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = { #BAmod original 스칸디나비아 반공 전선
-		id = POL_scandinavian_anti_communist_front
-		icon = GFX_focus_generic_pan_scandinavism
-		prerequisite = {
-			focus = POL_finno_polish_pact
-		}
-		available = {
-			has_country_flag = GAEBALJUNG
-			OR = {
-				DEN = {
-					exists = yes
-					is_in_faction = no
-					NOT = {
-						has_government = communism
-					}
-					has_war = no
-					is_subject = no
-				}
-				FN1 = {
-					exists = yes
-					is_in_faction = no
-					NOT = {
-						has_government = communism
-					}
-					has_war = no
-					is_subject = no
-				}
-				SWE = {
-					exists = yes
-					is_in_faction = no
-					NOT = {
-						has_government = communism
-					}
-					has_war = no
-					is_subject = no
-				}
-				FN3 = {
-					exists = yes
-					is_in_faction = no
-					NOT = {
-						has_government = communism
-					}
-					has_war = no
-					is_subject = no
-				}
-			}
-		}
-		bypass = {
-		}
-		x = 0
-		y = 2
-		relative_position_id = POL_finno_polish_pact
-		cost = 5
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-			if = {
-				limit = {
-					DEN = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				DEN = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FN1 = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				FN1 = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-			if = {
-				limit = {
-					NOR = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				NOR = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FN2 = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				FN2 = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-			if = {
-				limit = {
-					SWE = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				SWE = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					FN3 = {
-						exists = yes
-						is_in_faction = no
-						NOT = {
-							has_government = communism
-						}
-						has_war = no
-						is_subject = no
-					}
-				}
-				FN3 = {
-					country_event = {
-						id = poland.16
-						days = 1
-					}
-				}
-			}
-		}
-	}
 	focus = { #흑해
 		id = POL_the_mediterranean
 		icon = GFX_focus_generic_black_sea_focus
@@ -14056,6 +13885,12 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 30
+			hidden_effect = {
+				news_event = {
+					id = BA_news.154
+					hours = 60
+				}
+			}
 			if = {
 				limit = {
 					ROM = {
@@ -14142,8 +13977,8 @@ focus_tree = {
 		id = POL_inter_2
 		icon = GFX_focus_BEL_koningshooikt_wavre_line
 		cost = 5
-		relative_position_id = POL_the_mediterranean
-		x = 1
+		relative_position_id = POL_inter_1
+		x = -1
 		y = 1
 		available = {
 			is_puppet = no
@@ -14153,7 +13988,10 @@ focus_tree = {
 			factor = 10
 		}
 		prerequisite = {
-			focus = POL_the_mediterranean
+			focus = POL_inter_1
+		}
+		prerequisite = {
+			focus = POL_the_between_the_seas_concept
 		}
 		completion_reward = {
 			set_variable = {
@@ -14181,7 +14019,7 @@ focus_tree = {
 		available = {
 			is_faction_leader = yes
 		}
-		x = 0
+		x = 2
 		y = 2
 		relative_position_id = POL_inter_2
 		cost = 4
@@ -14230,14 +14068,14 @@ focus_tree = {
 	focus = { #벨라루스 의용대
 		id = POL_austro_hungarian_alliance
 		text = POL_hungarian_alliance
-		icon = GFX_focus_POL_belarus_army
+		icon = GFX_focus_POL_ruthenian
 		prerequisite = {
 			focus = POL_inter_2
 		}
 		available = {
 			is_faction_leader = yes
 		}
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = POL_inter_2
 		cost = 4
@@ -14300,7 +14138,7 @@ focus_tree = {
 		}
 		bypass = {
 		}
-		x = 3
+		x = 1
 		y = 1
 		relative_position_id = POL_inter_2
 		cost = 4
@@ -14394,29 +14232,7 @@ focus_tree = {
 	focus = { #러시아 인민해방위원회 / 러시아 민중전선
 		id = POL_invite_greece
 		dynamic = yes
-		icon = {
-			trigger = {
-				SOV = {
-					OR = {
-						has_government = democratic
-						has_government = communism
-					}
-				}
-			}
-			value = GFX_focus_SOV_the_true_tsars
-		}
-		icon = {
-			trigger = {
-				SOV = {
-					OR = {
-						has_government = neutrality
-						has_government = fascism
-					}
-				}
-			}
-			value = GFX_focus_spr_the_anti_fascist_workers_revolution
-		}
-		dynamic = yes
+		icon = GFX_goal_POL_Russian_committee
 		prerequisite = {
 			focus = POL_protect_yugoslavia
 		}
@@ -14587,6 +14403,10 @@ focus_tree = {
 					id = BA_pol_event.46
 					days = 2
 				}
+				news_event = {
+					id = BA_news.156
+					days = 4
+				}
 			}
 			#unlock_decision_tooltip = POL_diplomatic_mission_to_ITA
 		}
@@ -14650,7 +14470,7 @@ focus_tree = {
 		id = POL_italian_alliance
 		icon = GFX_focus_PER_bolster_the_caspian
 		prerequisite = {
-			focus = POL_control_the_bosporus
+			focus = POL_inter_1
 		}
 		available = {
 			is_faction_leader = yes
@@ -14665,9 +14485,9 @@ focus_tree = {
 				}
 			}
 		}
-		x = -1
+		x = 1
 		y = 1
-		relative_position_id = POL_control_the_bosporus
+		relative_position_id = POL_inter_1
 		cost = 5
 		ai_will_do = {
 			factor = 10
@@ -14692,57 +14512,6 @@ focus_tree = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					check_variable = {
-						var = POL_cooperation_focus
-						compare = less_than_or_equals
-						value = 2
-					}
-				}
-				custom_effect_tooltip = POL_the_caspian_sea_tt
-				hidden_effect = {
-					set_variable = {
-						POL_cooperation_focus_caspian_sea_var = 0
-					}
-					add_to_variable = {
-						POL_cooperation_focus = 1
-					}
-					if = {
-						limit = {
-							check_variable = {
-								var = POL_cooperation_focus
-								compare = equals
-								value = 1
-							}
-						}
-						set_country_flag = {
-							flag = POL_cooperation_focus_caspian_sea_flag
-							value = 1
-						}
-					}
-					else_if = {
-						limit = {
-							check_variable = {
-								var = POL_cooperation_focus
-								compare = equals
-								value = 2
-							}
-						}
-						set_country_flag = {
-							flag = POL_cooperation_focus_caspian_sea_flag
-							value = 2
-						}
-					}
-					else = {
-						set_country_flag = {
-							flag = POL_cooperation_focus_caspian_sea_flag
-							value = 3
-						}
-					}
-					mark_focus_tree_layout_dirty = yes
-				}
-			}
 		}
 	}
 	focus = {
@@ -14763,872 +14532,6 @@ focus_tree = {
 			custom_effect_tooltip = POL_inter_1_tt 
 			unlock_decision_tooltip = POL_together_store
 			unlock_decision_tooltip = POL_together_trump
-		}
-	}
-	focus = {
-		#비어있는 동맹 의제  - 1
-		id = POL_cooperation_empty_1
-		text = POL_cooperation_empty
-		icon = GFX_goal_generic_alliance
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = -1
-		y = 1 
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		available = {
-			always = no
-		}
-		allow_branch = {
-			check_variable = {
-				var = POL_cooperation_focus
-				compare = equals
-				value = 0
-			}
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#비어있는 동맹 의제  - 2
-		id = POL_cooperation_empty_2
-		text = POL_cooperation_empty
-		icon = GFX_goal_generic_alliance
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 2
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		available = {
-			always = no
-		}
-		allow_branch = {
-			check_variable = {
-				var = POL_cooperation_focus
-				compare = less_than_or_equals
-				value = 1
-			}
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#비어있는 동맹 의제  - 3
-		id = POL_cooperation_empty_3
-		text = POL_cooperation_empty
-		icon = GFX_goal_generic_alliance
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 1
-		y = 1 
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			check_variable = {
-				var = POL_cooperation_focus
-				compare = less_than_or_equals
-				value = 2
-			}
-		}
-		available = {
-			always = no
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#동계 훈련
-		id = POL_inter_north_1
-		icon = GFX_focus_generic_winter_warfare
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_north_sea_flag
-			check_variable = {
-				POL_cooperation_focus_north_sea_var = 0
-			}
-		}
-		available = {
-			is_ally_with = FIN
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_north_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#해군 협력
-		id = POL_inter_north_2
-		icon = GFX_focus_BRA_german_submarine_development
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_north_sea_flag
-			check_variable = {
-				POL_cooperation_focus_north_sea_var = 1
-			}
-		}
-		available = {
-			is_ally_with = GEK
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_north_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#목재 공급처
-		id = POL_inter_north_3
-		icon = GFX_focus_CHL_expand_the_forestry
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_north_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_north_sea_flag
-			check_variable = {
-				POL_cooperation_focus_north_sea_var = 2
-			}
-		}
-		available = {
-			is_ally_with = SWE
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#VEF 군수 제휴
-		id = POL_inter_baltic_1
-		icon = GFX_focus_generic_radio_communication
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_baltic_sea_flag
-			check_variable = {
-				POL_cooperation_focus_baltic_sea_var = 0
-			}
-		}
-		available = {
-			is_ally_with = LAT
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_baltic_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#셰일 오일 공급
-		id = POL_inter_baltic_2
-		icon = GFX_SOV_oil_production_ccp_2d_sov_compatibility
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_baltic_sea_flag
-			check_variable = {
-				POL_cooperation_focus_baltic_sea_var = 1
-			}
-		}
-		available = {
-			is_ally_with = EST
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_baltic_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#섬유 산업 협력
-		id = POL_inter_baltic_3
-		icon = GFX_focus_CHL_enlarge_the_textile_industries
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_baltic_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_baltic_sea_flag
-			check_variable = {
-				POL_cooperation_focus_baltic_sea_var = 2
-			}
-		}
-		available = {
-			is_ally_with = LIT
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#석유 공급처
-		id = POL_inter_black_1
-		icon = GFX_focus_PER_increase_oil_sales
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_black_sea_flag
-			check_variable = {
-				POL_cooperation_focus_black_sea_var = 0
-			}
-		}
-		available = {
-			is_ally_with = ROM
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_black_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#광산업 투자
-		id = POL_inter_black_2
-		icon = GFX_focus_generic_coal_mining
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_black_sea_flag
-			check_variable = {
-				POL_cooperation_focus_black_sea_var = 1
-			}
-		}
-		available = {
-			is_ally_with = TUR
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_black_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#흑해 카자크 봉기
-		id = POL_inter_black_3
-		icon = GFX_focus_URG_turmoil_of_paso_morlan
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_black_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_black_sea_flag
-			check_variable = {
-				POL_cooperation_focus_black_sea_var = 2
-			}
-		}
-		available = {
-			has_war_with = SOV
-			234 = {
-				is_controlled_by_ROOT_or_ally = yes
-			}
-		}
-		completion_reward = {
-		}
-	}
-	focus = {
-		#산업화 지원
-		id = POL_inter_caspian_1
-		icon = GFX_focus_GER_factories_for_resources
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_caspian_sea_flag
-			check_variable = {
-				POL_cooperation_focus_caspian_sea_var = 0
-			}
-		}
-		available = {
-			is_ally_with = PER
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_caspian_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#석유 시추에 투자
-		id = POL_inter_caspian_2
-		icon = GFX_focus_PER_nationalize_oil_fields
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_caspian_sea_flag
-			check_variable = {
-				POL_cooperation_focus_caspian_sea_var = 1
-			}
-		}
-		available = {
-			is_ally_with = PER
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_to_variable = {
-					POL_cooperation_focus_caspian_sea_var = 1
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
-		#제국의 무덤 포섭
-		id = POL_inter_caspian_3
-		icon = GFX_focus_generic_befriend_afghanistan
-		cost = 5
-		relative_position_id = POL_inter_1
-		x = 0
-		y = 0
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 1
-				}
-			}
-			x = -1
-			y = 1
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 2
-				}
-			}
-			x = 0
-			y = 2
-		}
-		offset = {
-			trigger = {
-				has_country_flag = {
-					flag = POL_cooperation_focus_caspian_sea_flag
-					value = 3
-				}
-			}
-			x = 1
-			y = 1
-		}
-		text_icon = NORDIC_focus_style
-		prerequisite = {
-			focus = POL_the_between_the_seas_concept
-		}
-		prerequisite = {
-			focus = POL_inter_1
-		}
-		ai_will_do = {
-			factor = 10
-		}
-		allow_branch = {
-			has_country_flag = POL_cooperation_focus_caspian_sea_flag
-			check_variable = {
-				POL_cooperation_focus_caspian_sea_var = 2
-			}
-		}
-		available = {
-		}
-		completion_reward = {
 		}
 	}
 	################
@@ -16956,7 +15859,7 @@ focus_tree = {
 				name = POL_a_cruiser_navy
 				bonus = 1.0
 				uses = 1
-				category = cl_tech
+				category = ca_tech
 			}
 			#1x50% research bonus to Light Cruisers
 		}
@@ -17074,12 +15977,6 @@ focus_tree = {
 					name = POL_strike_force
 					bonus = 0.75
 					uses = 2
-					category = cl_tech
-				}
-				add_tech_bonus = {
-					name = POL_strike_force
-					bonus = 1.0
-					uses = 1
 					category = ca_tech
 				}
 			}
@@ -17088,7 +15985,7 @@ focus_tree = {
 					name = POL_strike_force
 					bonus = 1.0
 					uses = 2
-					category = cl_tech
+					category = ca_tech
 				}
 			}
 			#1x50% research bonus to Light Cruisers & 1x50% bonus to Heavy Cruisers
@@ -17640,7 +16537,6 @@ focus_tree = {
 						level = 1
 					}
 				}
-				add_ideas = POL_economic_cooperation
 			}
 			unlock_decision_tooltip = POL_single_market
 			unlock_decision_tooltip = POL_integrated_currency
@@ -17696,7 +16592,6 @@ focus_tree = {
 						level = 1
 					}
 				}
-				add_ideas = POL_army_cooperation
 			}
 		}
 	}
@@ -17747,7 +16642,7 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			add_ideas = POL_dont_discriminate
+
 		}
 	}
 	focus = {
@@ -17797,7 +16692,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#밸라루스 초대
+		#벨라루스 초대
 		id = POL_inter_20
 		icon = GFX_focus_POL_belarus_army
 		relative_position_id = POL_the_between_the_seas_concept
@@ -17840,10 +16735,6 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = POL_dont_discriminate
-				add_idea = POL_multi_culture
-			}
 			unlock_decision_category_tooltip = POL_reinforce_intermarium
 		}
 	}
@@ -18125,7 +17016,6 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-            add_ideas = POL_multi_culture
 			UKR = { 
 				add_opinion_modifier = {
 					target = POL
@@ -18800,7 +17690,6 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			add_ideas = POL_war_mobil
 			upgrade_economy_law = yes 
 		}
 	}
@@ -18856,10 +17745,6 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = POL_war_mobil
-				add_idea = POL_war_mobil_1
-			} 
 		}
 	}
 	focus = {
@@ -18877,10 +17762,6 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = POL_war_mobil_1
-				add_idea = POL_war_mobil_2
-			}  
 		}
 	}
 	focus = {

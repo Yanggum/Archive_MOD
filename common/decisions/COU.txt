@@ -493,6 +493,282 @@ COU_nation_moving_forward = {
 
 ##총학생회 공용 디시전 
 COU_decision_the_student_council = {
+    ##debug 
+	COU_mission_debug = {
+	    
+		#icon = generic_ap
+		
+		visible = { is_debug = yes }
+
+		available = {
+			 is_debug = yes 
+		}
+
+		ai_will_do = { 
+			base = 0
+		}
+		
+		fire_only_once = no
+
+		cost = 0
+		
+		complete_effect = { 
+		     add_to_variable = { global.cou_apcost = 40 }
+			 activate_mission = COU_check_the_missions_1
+			 ##ap코스트는 그냥 addtovariable
+			 set_country_flag = COU_added_HW3
+			  set_country_flag = COU_added_HW4
+			   set_country_flag = COU_DEFAULT_NOHW3
+			 set_variable = { COU_mission_morebigger_indus_goal = 2 }
+			 set_variable = { COU_mission_morebigger_doc = ROOT.num_of_naval_factories }
+			 add_to_variable = { COU_mission_morebigger_doc = COU_mission_morebigger_indus_goal }
+			 #add_to_variable = { COU_mission_morebigger_doc = -1 } 
+		}
+	}
+	##
+    #-> 미션 활성화됨: 역시 1 2 3로 나누어 체크함 
+	COU_check_the_missions_1 = {
+
+		 icon = generic_political_address
+
+		 allowed = { 
+		    original_tag = COU
+		    always = no
+		 }
+		
+		 available = { 
+		    if = {
+			    limit = { has_country_flag = COU_added_HW1 } #만일 민공 미션이 활성화되었을 경우 
+			    custom_trigger_tooltip = {
+				    tooltip = COU_mission_morebigger_indus_trigger_tt #고마워요 두체 
+				    num_of_civilian_factories > ROOT.COU_mission_morebigger_indus
+			    }
+			}
+			
+			if = {
+			    limit = { has_country_flag = COU_added_HW2 } #만일 군공 미션이 활성화되었을 경우 
+			    custom_trigger_tooltip = {
+				    tooltip = COU_mission_morebigger_arms_trigger_tt #고마워요 두체 
+				    num_of_military_factories > ROOT.COU_mission_morebigger_arms
+			    }
+			}
+			
+			if = {
+			    limit = { has_country_flag = COU_added_HW3 } #만일 조선소 미션이 활성화되었을 경우 
+			    custom_trigger_tooltip = {
+				    tooltip = COU_mission_morebigger_doc_trigger_tt #고마워요 두체 
+				    num_of_naval_factories > ROOT.COU_mission_morebigger_doc
+			    }
+			}
+		 }
+		
+		 days_mission_timeout = 360
+		
+		 cancel_if_not_visible = yes
+		 is_good = no #Tooltip purposes
+		 selectable_mission = no
+				
+		 activation = { always = no }
+		
+		 timeout_effect = {
+		      
+		 }
+	}
+	
+	COU_check_the_missions_2 = {
+
+		 icon = generic_political_address
+
+		 allowed = { 
+		    original_tag = COU
+		    always = no
+		 }
+		
+		 available = { 
+			 NOT = { always = yes }
+		 }
+		
+		 days_mission_timeout = 360
+		
+		 is_good = no
+				
+		 activation = { always = no }
+		
+		 timeout_effect = {
+		      
+		 }
+	}
+	
+	COU_check_the_missions_3 = {
+
+		 icon = generic_political_address
+
+		 allowed = { 
+		    original_tag = COU
+		    always = no
+		 }
+		
+		 available = { 
+			 NOT = { always = yes }
+		 }
+		
+		 days_mission_timeout = 360
+		
+		 is_good = no
+				
+		 activation = { always = no }
+		
+		 timeout_effect = {
+		      
+		 }
+	}
+	
+	##AP포인트 사용하기 
+	COU_mission_special_serina = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 19 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 19 }
+		}
+		custom_cost_text = COU_apcost_4
+		
+		complete_effect = { 
+			 add_to_variable = { global.cou_apcost = -20 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	COU_mission_defence = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 39 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 39 }
+		}
+		custom_cost_text = COU_apcost_1
+		
+		complete_effect = { 
+			add_to_variable = { global.cou_apcost = -40 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	COU_mission_battle_with_gangs = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 39 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 39 }
+		}
+		custom_cost_text = COU_apcost_1
+		
+		complete_effect = { 
+			add_to_variable = { global.cou_apcost = -40 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	COU_mission_tactical_challenge = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 39 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 39 }
+		}
+		custom_cost_text = COU_apcost_1
+		
+		complete_effect = { 
+			add_to_variable = { global.cou_apcost = -40 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	COU_mission_joint_firing_drill = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 79 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 79 }
+		}
+		custom_cost_text = COU_apcost_2
+		
+		complete_effect = { 
+			add_to_variable = { global.cou_apcost = -80 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	COU_mission_gsp_science_competition = {
+	    
+		icon = generic_ap
+
+		available = {
+		    check_variable = { global.cou_apcost > 99 }
+		}
+		
+		fire_only_once = no
+
+		custom_cost_trigger = {
+			check_variable = { global.cou_apcost > 99 }
+		}
+		custom_cost_text = COU_apcost_5
+		
+		complete_effect = { 
+			 add_to_variable = { global.cou_apcost = -100 }
+		}
+		
+		ai_will_do = { 
+			base = 0
+		}
+	}
+	
+	##
     COU_the_srt_problem = {
 		icon = srt_icon
 		allowed = {
@@ -551,7 +827,8 @@ COU_decision_the_student_council = {
 		 }
 		
 		 available = { 
-			 NOT = { always = yes }
+			 #NOT = { always = yes }
+			 always = no ##좀 많이 건들자
 		 }
 		
 		 days_mission_timeout = 100
@@ -604,243 +881,7 @@ COU_decision_the_student_council = {
 		 }
 	}
 	
-	##스케줄 티켓 보충 
-	COU_regain_schedule_ticket = {
-
-		 icon = icon_schedule_ticke
-
-		 allowed = { 
-		    original_tag = COU
-		    always = no
-		 }
-		
-		 available = { 
-			 NOT = { always = yes }
-		 }
-		
-		 days_mission_timeout = 90
-		
-		 is_good = no
-				
-		 activation = { always = no }
-		
-		 timeout_effect = {
-		      if = {
-			     limit = {
-				     OR = {
-			        	check_variable = { global.cou_schedule_point = 6 }
-				        check_variable = { global.cou_schedule_point < 6 }
-			         }
-			     }
-				 add_to_variable = { global.cou_schedule_point = 1 }
-				 custom_effect_tooltip = COU_tooltip_gain_one_schedule_ticket
-			 }
-			 hidden_effect = { activate_mission = COU_regain_schedule_ticket }
-		 }
-	}
-	
-	##스케줄 티켓 컨텐츠 
-	COU_mission_the_aoi = {
-	    
-		icon = icon_schedule_ticke
-
-		available = {
-			 check_variable = { global.cou_schedule_point > 0 }
-			 NOT = { has_country_flag = COU_flag_mission_clearing }
-		}
-
-		ai_will_do = { 
-			base = 10
-		}
-		
-		fire_only_once = no
-
-		days_remove = 30
-
-		custom_cost_trigger = {
-			check_variable = { global.cou_schedule_point > 0 }
-		}
-
-		custom_cost_text = aru_schedule_1
-		
-		modifier = {
-		     consumer_goods_expected_value = 0.05
-			 industrial_capacity_dockyard = 0.05
-             industrial_capacity_factory = 0.05
-             production_factory_efficiency_gain_factor = 0.05
-		}
-		
-		complete_effect = { 
-		     set_country_flag = COU_flag_mission_clearing
-			 add_to_variable = { global.cou_schedule_point = -1 }
-		}
-
-		remove_effect = {
-			 clr_country_flag = COU_flag_mission_clearing
-		}
-	}
-	
-	COU_mission_the_momoka = {
-	    
-		icon = icon_schedule_ticke
-
-		available = {
-			 check_variable = { global.cou_schedule_point > 0 }
-			 NOT = { has_country_flag = COU_flag_mission_clearing }
-		}
-
-		ai_will_do = { 
-			base = 10
-		}
-		
-		fire_only_once = no
-
-		days_remove = 30
-
-		custom_cost_trigger = {
-			check_variable = { global.cou_schedule_point > 0 }
-		}
-
-		custom_cost_text = aru_schedule_1
-		
-		modifier = {
-		     production_speed_arms_factory_factor = -0.05
-			 production_speed_industrial_complex_factor = 0.05
-			 production_speed_infrastructure_factor = 0.05
-			 production_speed_rail_way_factor = 0.05
-		}
-		
-		complete_effect = { 
-		     set_country_flag = COU_flag_mission_clearing
-			 add_to_variable = { global.cou_schedule_point = -1 }
-		}
-
-		remove_effect = {
-			 clr_country_flag = COU_flag_mission_clearing
-		}
-	}
-	
-	COU_mission_the_ayumu = {
-	    
-		icon = icon_schedule_ticke
-
-		available = {
-			 check_variable = { global.cou_schedule_point > 0 }
-			 NOT = { has_country_flag = COU_flag_mission_clearing }
-		}
-
-		ai_will_do = { 
-			base = 10
-		}
-		
-		fire_only_once = no
-
-		days_remove = 30
-
-		custom_cost_trigger = {
-			check_variable = { global.cou_schedule_point > 0 }
-		}
-
-		custom_cost_text = aru_schedule_1
-		
-		modifier = {
-		     political_power_factor =  0.1
-			 drift_defence_factor = 0.15
-			 political_advisor_cost_factor = -0.15
-			 economy_cost_factor = 0.15
-		}
-		
-		complete_effect = { 
-		     set_country_flag = COU_flag_mission_clearing
-			 add_to_variable = { global.cou_schedule_point = -1 }
-		}
-
-		remove_effect = {
-			 clr_country_flag = COU_flag_mission_clearing
-		}
-	}
-	
-	COU_mission_the_kaya = {
-	    
-		icon = icon_schedule_ticke
-
-		available = {
-			 check_variable = { global.cou_schedule_point > 0 }
-			 NOT = { has_country_flag = COU_flag_mission_clearing }
-		}
-
-		ai_will_do = { 
-			base = 10
-		}
-		
-		fire_only_once = no
-
-		days_remove = 30
-
-		custom_cost_trigger = {
-			check_variable = { global.cou_schedule_point > 0 }
-		}
-
-		custom_cost_text = aru_schedule_1
-		
-		modifier = {
-		     experience_gain_army = 0.01
-			 experience_gain_navy = 0.01
-			 experience_gain_air = 0.01
-			 conscription = 0.03
-			 stability_factor = -0.05
-			 war_support_factor = 0.1
-		}
-		
-		complete_effect = { 
-		     set_country_flag = COU_flag_mission_clearing
-			 add_to_variable = { global.cou_schedule_point = -1 }
-		}
-
-		remove_effect = {
-			 clr_country_flag = COU_flag_mission_clearing
-		}
-	}
-	
-	COU_mission_the_jaine = {
-	    
-		icon = icon_schedule_ticke
-
-		available = {
-			 check_variable = { global.cou_schedule_point > 0 }
-			 NOT = { has_country_flag = COU_flag_mission_clearing }
-		}
-
-		ai_will_do = { 
-			base = 10
-		}
-		
-		fire_only_once = no
-
-		days_remove = 30
-
-		custom_cost_trigger = {
-			check_variable = { global.cou_schedule_point > 0 }
-		}
-
-		custom_cost_text = aru_schedule_1
-		
-		modifier = {
-		     stability_factor = 0.1
-			 war_support_factor = -0.05
-			 army_org_factor = 0.05
-			 training_time_factor = -0.15
-		}
-		
-		complete_effect = { 
-		     set_country_flag = COU_flag_mission_clearing
-			 add_to_variable = { global.cou_schedule_point = -1 }
-		}
-
-		remove_effect = {
-			 clr_country_flag = COU_flag_mission_clearing
-		}
-	}
+	##
 }
 
 

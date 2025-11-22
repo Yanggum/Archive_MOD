@@ -35,7 +35,7 @@ BLM_skeban_idea = {
     line_change_production_efficiency_factor = BLM_MAIN_line_change_production_efficiency_factor # 생산 효율 유지
 	industrial_capacity_factory = BLM_MAIN_industrial_capacity_factory # 공장 생산량
     consumer_goods_factor = BLM_MAIN_consumer_goods_factor # 소비재
-	production_lack_of_resource_penalty_factor = GEH_PL_production_lack_of_resource_penalty_factor #자원 부족 불이익
+	production_lack_of_resource_penalty_factor = BLM_MAIN_production_lack_of_resource_penalty_factor #자원 부족 불이익
     local_building_slots_factor = BLM_MAIN_local_building_slots_factor # 주의 최대 공장
 
 	stability_factor = BLM_MAIN_stability_factor #안정도
@@ -81,7 +81,7 @@ BLM_gang_idea = {
     line_change_production_efficiency_factor = BLM_MAIN_line_change_production_efficiency_factor # 생산 효율 유지
 	industrial_capacity_factory = BLM_MAIN_industrial_capacity_factory # 공장 생산량
     consumer_goods_factor = BLM_MAIN_consumer_goods_factor # 소비재
-	production_lack_of_resource_penalty_factor = GEH_PL_production_lack_of_resource_penalty_factor #자원 부족 불이익
+	production_lack_of_resource_penalty_factor = BLM_MAIN_production_lack_of_resource_penalty_factor #자원 부족 불이익
     local_building_slots_factor = BLM_MAIN_local_building_slots_factor # 주의 최대 공장
 
 	stability_factor = BLM_MAIN_stability_factor #안정도
@@ -152,7 +152,7 @@ COU_emergency_measures_committee = { #키보토스 비상대책위원회
 COU_the_dead_flower = { #꺾인 튤립 
 	enable = { always = yes }
 
-	icon = GFX_idea_COU_the_dead_flower
+	icon = GFX_idea_generic_democratic_opposition
 	
 	remove_trigger = { 
 	}
@@ -670,13 +670,20 @@ GEM_pandemonium_modifier = { #판데모니움 소사이어티
 
 	#FUTURE
 	political_power_factor = GEM_pandemonium_modifier_political_power_factor 
-	consumer_goods_factor = GEM_pandemonium_modifier_good_consumer_goods_factor
+	consumer_goods_factor = GEM_pandemonium_modifier_consumer_goods_factor
 	drift_defence_factor = GEM_pandemonium_modifier_drift_defence_factor
+	stability_factor = GEM_pandemonium_modifier_stability_factor
+	party_popularity_stability_factor = GEM_pandemonium_modifier_party_popularity_stability_factor
 
 	economy_cost_factor = GEM_pandemonium_modifier_economy_cost_factor
 	trade_laws_cost_factor = GEM_pandemonium_modifier_trade_laws_cost_factor 
 	mobilization_laws_cost_factor = GEM_pandemonium_modifier_mobilization_laws_cost_factor
 	political_advisor_cost_factor = GEM_pandemonium_modifier_political_advisor_cost_factor 
+
+	production_factory_start_efficiency_factor = GEM_pandemonium_modifier_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_pandemonium_modifier_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_pandemonium_modifier_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_pandemonium_modifier_production_lack_of_resource_penalty_factor
 	
 	production_speed_buildings_factor = GEM_pandemonium_modifier_production_speed_buildings_factor 
 	global_building_slots_factor = GEM_pandemonium_modifier_global_building_slots_factor
@@ -688,7 +695,7 @@ GEM_pandemonium_modifier = { #판데모니움 소사이어티
 	conscription = GEM_pandemonium_modifier_conscription
 	conscription_factor = GEM_pandemonium_modifier_conscription_factor
 
-	max_surrender_limit_offset = GEM_pandemonium_modifier_max_surrender_limit_offset
+	surrender_limit = GEM_pandemonium_modifier_surrender_limit
 	operative_slot = GEM_pandemonium_modifier_operative_slot
 }
 
@@ -1931,14 +1938,19 @@ TRM_industries_dynamic = {
 	production_speed_arms_factory_factor = TRM_industries_dynamic_production_speed_arms_factory_factor
 	production_speed_industrial_complex_factor = TRM_industries_dynamic_production_speed_industrial_complex_factor
 	production_speed_buildings_factor = TRM_industries_dynamic_production_speed_buildings_factor
-    industrial_capacity_factory = TRM_industrial_capacity_factory_factor
+    	industrial_capacity_factory = TRM_industrial_capacity_factory_factor
 	industrial_capacity_dockyard = TRM_industrial_capacity_dockyard
 	production_factory_efficiency_gain_factor = TRM_industries_dynamic_production_factory_efficiency_gain_factor #생산 효율 증가
 	production_factory_max_efficiency_factor  = TRM_industries_dynamic_production_factory_max_efficiency_factor #생산 효율 한도
 	production_factory_start_efficiency_factor = TRM_industries_dynamic_production_factory_start_efficiency_factor #시작 생산 효율
 	production_lack_of_resource_penalty_factor = TRM_industries_dynamic_production_lack_of_resource_penalty_factor #자원부족 패널티
 	local_resources_factor = TRM_industries_dynamic_local_resources_factor # 현지 자원 변동치
-    conversion_cost_civ_to_mil_factor = TRM_industries_dynamic_conversion_cost_civ_to_mil_factor # 민간공장에서 군수공장으로 전환하는 비용
+    	conversion_cost_civ_to_mil_factor = TRM_industries_dynamic_conversion_cost_civ_to_mil_factor # 민간공장에서 군수공장으로 전환하는 비용
+	
+	industry_air_damage_factor = TRM_industries_dynamic_industry_air_damage_factor
+
+	out_of_supply_factor = TRM_industries_dynamic_out_of_supply_factor
+	supply_node_range = TRM_industries_dynamic_supply_node_range
 
 }
 TRM_develop_the_heer_modifier = { # 트리니티 육군
@@ -1948,51 +1960,38 @@ TRM_develop_the_heer_modifier = { # 트리니티 육군
 	# 정치 중점
 	unit_leader_as_advisor_cp_cost_factor = TRM_army_unit_leader_as_advisor_cp_cost_factor
 
-    # 중앙 지휘 체계
-    planning_speed = TRM_army_planning_speed
-    max_planning_factor = TRM_army_max_planning_factor
-    max_planning = TRM_army_max_planning
-
-    army_infantry_attack_factor = TRM_army_army_infantry_attack_factor
-    army_infantry_defence_factor = TRM_army_infantry_defence_factor
-    army_org_factor  = TRM_army_army_org_factor
-    army_morale_factor = TRM_army_army_morale_factor
-    army_attack_speed_factor = TRM_army_army_attack_speed_factor
-    
-    terrain_penalty_reduction = TRM_army_terrain_penalty_reduction
-
+    	# 중앙 지휘 체계
+    	planning_speed = TRM_army_planning_speed
+    	max_planning_factor = TRM_army_max_planning_factor
+    	max_planning = TRM_army_max_planning
+    	army_infantry_attack_factor = TRM_army_army_infantry_attack_factor
+    	army_infantry_defence_factor = TRM_army_infantry_defence_factor
+    	army_org_factor  = TRM_army_army_org_factor
+    	army_morale_factor = TRM_army_army_morale_factor
+    	army_attack_speed_factor = TRM_army_army_attack_speed_factor
+    	terrain_penalty_reduction = TRM_army_terrain_penalty_reduction
 	out_of_supply_factor = TRM_army_out_of_supply_factor
 	supply_node_range = TRM_army_supply_node_range
-
-    initiative_factor = TRM_army_initiative_factor
+    	initiative_factor = TRM_army_initiative_factor
 	intel_from_combat_factor = TRM_army_intel_from_combat_factor
 	recon_factor_while_entrenched = TRM_army_recon_factor_while_entrenched
 
-    # 비대칭 전술
-    land_reinforce_rate = TRM_army_land_reinforce_rate
-
-    experience_gain_army_factor = TRM_army_experience_gain_army_factor #0.05
+    	# 비대칭 전술
+    	land_reinforce_rate = TRM_army_land_reinforce_rate
+    	experience_gain_army_factor = TRM_army_experience_gain_army_factor #0.05
 	experience_loss_factor = TRM_army_experience_loss_factor # -0.1
 	special_forces_cap = TRM_army_special_forces_cap # 0.15
-
-    army_artillery_attack_factor = TRM_army_artillery_attack_factor
-    army_artillery_defence_factor = TRM_army_artillery_defence_factor
-
-    army_attack_factor = TRM_army_attack_factor
+    	army_artillery_attack_factor = TRM_army_artillery_attack_factor
+    	army_artillery_defence_factor = TRM_army_artillery_defence_factor
+    	army_attack_factor = TRM_army_attack_factor
 	army_defence_factor = TRM_army_defence_factor
-
-    max_dig_in = TRM_army_max_dig_in # 5
+    	max_dig_in = TRM_army_max_dig_in # 5
 	dig_in_speed_factor = TRM_army_dig_in_speed_factor # 0.1
 	cas_damage_reduction = TRM_army_cas_damage_reduction # 0.1 
-
-    breakthrough_factor = TRM_army_breakthrough_factor
-
+    	breakthrough_factor = TRM_army_breakthrough_factor
 	coordination_bonus = TRM_army_coordination_bonus
 	max_command_power = TRM_army_max_command_power
-	#army_attack_against_minor_factor = TRM_heer_army_attack_against_minor
-	#army_attack_against_major_factor = TRM_heer_army_attack_against_major
 }
-
 TRM_VVS = { #트리니티 공군
 
     icon = GFX_idea_TRM_Trinity_air_force
@@ -2016,12 +2015,87 @@ TRM_VVS = { #트리니티 공군
 	air_night_penalty = TRM_VVS_air_night_penalty
 	air_strategic_bomber_night_penalty = TRM_VVS_air_strategic_bomber_night_penalty
 }
-
 TRM_navy = { #트리니티 해군
 
     icon = GFX_idea_TRM_Trinity_navy
 
 	naval_has_potf_in_combat_attack = TRM_NAVY_naval_has_potf_in_combat_attack
+}
+
+# 트리니티 산업
+TRN_industry_ns = {
+	enable = { always = yes }
+	icon = GFX_idea_TRM_industries_ns
+
+	# 시작시
+	consumer_goods_factor = TRN_industry_ns_consumer_goods_factor
+	production_speed_buildings_factor = TRN_industry_ns_production_speed_buildings_factor
+	production_speed_industrial_complex_factor = TRN_industry_ns_production_speed_industrial_complex_factor
+	production_speed_arms_factory_factor = TRN_industry_ns_production_speed_arms_factory_factor
+	industrial_capacity_factory = TRN_industry_ns_industrial_capacity_factory
+	production_factory_efficiency_gain_factor = TRN_industry_ns_production_factory_efficiency_gain_factor
+	conversion_cost_civ_to_mil_factor = TRN_industry_ns_conversion_cost_civ_to_mil_factor
+	custom_modifier_tooltip = TRN_industry_ns_industry_research_bonus
+
+	# 중점으로 얻는 효과들
+	industrial_capacity_dockyard = TRN_industry_ns_industrial_capacity_dockyard
+	production_factory_start_efficiency_factor = TRN_industry_ns_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = TRN_industry_ns_production_factory_max_efficiency_factor
+	industry_air_damage_factor = TRN_industry_ns_industry_air_damage_factor
+}
+TRN_army_ns = { # 트리니티 지상군
+	icon = GFX_idea_TRM_Trinity_Grande_Armee
+	
+	#시작시
+	planning_speed  = TRN_army_ns_planning_speed
+	army_org_factor = TRN_army_ns_army_org_factor
+	army_attack_factor = TRN_army_ns_army_attack_factor
+	experience_gain_army_factor = TRN_army_ns_experience_gain_army_factor
+	experience_gain_artillery_combat_factor = TRN_army_ns_experience_gain_artillery_combat_factor
+
+	# 중점으로 얻는 효과들
+	max_planning_factor = TRN_army_ns_max_planning_factor
+	army_defence_factor = TRN_army_ns_army_defence_factor
+	army_attack_speed_factor = TRN_army_ns_army_attack_speed_factor
+	army_artillery_attack_factor = TRN_army_ns_army_artillery_attack_factor
+	army_artillery_defence_factor = TRN_army_ns_army_artillery_defence_factor
+	breakthrough_factor = TRN_army_ns_breakthrough_factor
+	org_loss_when_moving = TRN_army_ns_org_loss_when_moving
+	initiative_factor = TRN_army_ns_initiative_factor
+	intel_from_combat_factor = TRN_army_ns_intel_from_combat_factor
+	recon_factor_while_entrenched = TRN_army_ns_recon_factor_while_entrenched
+	combat_width_factor = TRN_army_ns_combat_width_factor
+	army_armor_attack_factor = TRN_army_ns_army_armor_attack_factor
+	motorized_attack_factor = TRN_army_ns_motorized_attack_factor
+	mechanized_attack_factor = TRN_army_ns_mechanized_attack_factor
+	coordination_bonus = TRN_army_ns_coordination_bonus
+	supply_node_range = TRN_army_ns_supply_node_range
+	out_of_supply_factor = TRN_army_ns_out_of_supply_factor
+}
+TRN_navy_ns = { # 트리니티 해군
+	icon = GFX_idea_TRM_Trinity_navy
+	
+	#시작시
+	naval_has_potf_in_combat_attack = TRN_navy_ns_naval_has_potf_in_combat_attack # 0.1
+	experience_gain_navy_factor = TRN_navy_ns_experience_gain_navy_factor # 0.1
+	naval_doctrine_cost_factor = TRN_navy_ns_naval_doctrine_cost_factor # 0.1
+	navy_leader_cost_factor = TRN_navy_ns_navy_leader_cost_factor # -0.1
+	navy_max_range_factor = TRN_navy_ns_navy_max_range_factor # -0.15
+
+	#
+	custom_modifier_tooltip = TRN_military_modifier_tt #Bonuses applied via hidden NS or tech 
+	naval_defense_factor = TRN_navy_ns_naval_defense_factor
+	naval_hit_chance = TRN_navy_ns_naval_hit_chance
+	screening_efficiency = TRN_navy_ns_screening_efficiency
+	naval_heavy_gun_hit_chance_factor = TRN_navy_ns_naval_heavy_gun_hit_chance_factor
+	convoy_raiding_efficiency_factor = TRN_navy_ns_convoy_raiding_efficiency_factor
+	screening_without_screens = TRN_navy_ns_screening_without_screens
+	naval_light_gun_hit_chance_factor = TRN_navy_ns_naval_light_gun_hit_chance_factor
+}
+
+TRN_airforce_ns = {
+    	icon = GFX_idea_TRM_Trinity_air_force
+
 }
 
 #카이저 코퍼레이션
@@ -2128,6 +2202,10 @@ ARI_anarchism_society = { #아나키즘 사회
 	conscription = ARI_anarch_state_conscription
 	drift_defence_factor = ARI_anarch_state_drift_defence_factor
 }
+POL_intermarium_military_cooperation_modifier = { #인테르마리움 방위협력
+	icon = GFX_idea_tur_coordinated_balkan_armed_forces
+	
+}
 POL_trump_eat = { #공동군사기금 
 	enable = {
 		has_war_with = SOV
@@ -2136,18 +2214,6 @@ POL_trump_eat = { #공동군사기금
 	military_factory_donations = POL.POL_solidarity_trump_var
 	icon = GFX_idea_GER_economy_of_conquest
 	custom_modifier_tooltip = POL_trump_eat_tt
-}
-FRA_national_defense_bond = { #국방공채
-	enable = {
-		always = yes
-	}
-	icon = GFX_idea_ger_mefo_bills
-	political_power_cost = FRA_national_defense_bond_political_power_variable
-	consumer_goods_factor = -0.2
-	production_speed_infrastructure_factor = 0.1
-	production_speed_dockyard_factor = 0.1
-	production_speed_arms_factory_factor = 0.1
-	production_speed_industrial_complex_factor =  0.1
 }
 FRA_future_tech_modifier = { #미래 기술
 	enable = {
@@ -2455,7 +2521,7 @@ ABY_army_dynamic_modifier_real = {
 	enable = {
 		always = yes
 	}
-	icon = ABY_abydos_army
+	icon = GFX_idea_ABY_abydos_army
 	
 	custom_modifier_tooltip = ABY_scripted_army_name
 	custom_modifier_tooltip = ABY_scripted_halo_name
@@ -2531,10 +2597,19 @@ ABY_army_dynamic_modifier = {
 	air_mission_xp_gain_factor = ABY_var_air_mission_xp_gain_factor
 	air_night_penalty = ABY_var_air_night_penalty
 }
+ABY_mobilization_dynamic_modifier = {
+	enable = {
+		always = yes
+	}
+	war_support_factor = ABY_var_debuff_factor
+	surrender_limit = ABY_var_debuff_factor
+	industrial_capacity_factory = ABY_var_debuff_factor
+}
 ABY_two_dynamic_modifier = {
 	enable = {
 		always = yes
 	}
+	icon = GFX_idea_ABY_abydos_army
 
 	custom_modifier_tooltip = ABY_tt_getsokku_now
 
@@ -2551,11 +2626,44 @@ ABY_two_dynamic_modifier = {
 	political_power_cost = ABY_var_political_power_cost
 	compliance_gain =ABY_var_compliance_gain
 	resistance_target_on_our_occupied_states = ABY_var_resistance_target_on_our_occupied_states
+	non_core_manpower = ABY_var_non_core_manpower
 	industrial_capacity_factory = ABY_var_industrial_capacity_factory
 	production_speed_buildings_factor = ABY_var_production_speed_buildings_factor
 
-	custom_modifier_tooltip = ABY_tt_two_world_conflict
+	custom_modifier_tooltip = ABY_tt_getsokku_now
 
+}
+ABY_dynamic_modifier_ethics = {
+	enable = {
+		always = yes
+	}
+	resistance_target = ABY_var_ethics_resistance_target
+	compliance_growth = ABY_var_ethics_compliance_growth
+	resistance_growth = ABY_var_ethics_resistance_growth
+
+	production_factory_max_efficiency_factor = ABY_var_ethics_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = ABY_var_ethics_production_factory_efficiency_gain_factor
+	consumer_goods_factor = ABY_var_ethics_consumer_goods_factor
+
+	non_core_manpower = ABY_var_ethics_non_core_manpower
+	research_speed_factor = ABY_var_ethics_research_speed_factor
+	industrial_capacity_factory = ABY_var_ethics_industrial_capacity_factory
+
+	local_resources_factor = ABY_var_ethics_local_resources_factor
+	production_speed_buildings_factor = ABY_var_ethics_production_speed_buildings_factor
+	war_support_factor = ABY_var_ethics_war_support_factor
+
+	offensive_war_stability_factor = ABY_var_ethics_offensive_war_stability_factor
+	defensive_war_stability_factor = ABY_var_ethics_defensive_war_stability_factor
+	production_factory_start_efficiency_factor = ABY_var_ethics_production_factory_start_efficiency_factor
+
+	conscription_factor = ABY_var_ethics_conscription_factor
+	party_popularity_stability_factor = ABY_var_ethics_party_popularity_stability_factor
+	political_power_cost = ABY_var_ethics_political_power_cost
+
+	stability_factor = ABY_var_ethics_stability_factor
+	political_power_factor = ABY_var_ethics_political_power_factor
+	drift_defence_factor = ABY_var_ethics_drift_defence_factor
 }
 ABY_two_dynamic_modifier_over = {
 	enable = {
@@ -3122,7 +3230,7 @@ ENG_Reconstruction_committee_idea = { # 브리튼 재건 회의
 }
 TRM_appeasement_germany_modifier = { #독일 유화정책
 	enable = { always = yes }
-	icon = GFX_idea_TRN_social_problem_ns
+	icon = GFX_idea_TRN_social_problem_01_ns
 	custom_modifier_tooltip = TRM_pro_german_propaganda_conscription_factor_tt
 	conscription_factor = TRM_pro_german_propaganda_conscription_factor
 	conscription = TRM_pro_german_propaganda_conscription
@@ -3155,7 +3263,7 @@ TRM_appeasement_germany_modifier = { #독일 유화정책
 }
 TRM_pro_german_propaganda_modifier = { #친독주의 프로파간다
 	enable = { always = yes }
-	icon = GFX_idea_TRN_social_problem_ns
+	icon = GFX_idea_TRN_social_problem_02_ns
 	custom_modifier_tooltip = TRM_pro_german_propaganda_conscription_factor_tt
 	conscription_factor = TRM_pro_german_propaganda_conscription_factor
 	conscription = TRM_pro_german_propaganda_conscription
@@ -3188,7 +3296,7 @@ TRM_pro_german_propaganda_modifier = { #친독주의 프로파간다
 }
 TRM_trinity_social_issues_modifier = { #트리니티 사회문제
 	enable = { always = yes }
-	icon = GFX_idea_TRN_social_problem_ns
+	icon = GFX_idea_TRN_social_problem_03_ns
 	custom_modifier_tooltip = TRM_pro_german_propaganda_conscription_factor_tt
 	conscription_factor = TRM_pro_german_propaganda_conscription_factor
 	conscription = TRM_pro_german_propaganda_conscription
@@ -3235,6 +3343,24 @@ TRN_Trinity_New_Culture_modifier = { # 신 - 트리니티 문화
 	conscription_factor = TRN_TNC_modifier_conscription_factor
 
 	research_speed_factor = TRN_TNC_modifier_research_speed_factor
+}
+TRN_german_new_culture_order_modifier = { # 독일의 새로운 문화적 질서 
+	icon = GFX_idea_GEH_prefect_team_culture # 아이콘 만들기 전까지 임시
+
+	industry_repair_factor = new_culture_order_industry_repair_factor
+	political_advisor_cost_factor = new_culture_order_political_advisor_cost_factor
+	economy_cost_factor = new_culture_order_economy_cost_factor
+	mobilization_laws_cost_factor = new_culture_order_mobilization_laws_cost_factor
+	trade_laws_cost_factor = new_culture_order_trade_laws_cost_factor
+	production_speed_buildings_factor = TRN_new_culture_order_production_speed_buildings_factor
+	global_building_slots_factor = TRN_new_culture_order_global_building_slots_factor
+	stability_factor = TRN_new_culture_order_stability_factor
+	experience_gain_army_factor = TRN_new_culture_order_experience_gain_army_factor
+	experience_loss_factor = TRN_new_culture_order_experience_loss_factor
+	monthly_population = TRN_new_culture_order_monthly_population
+	weekly_casualties_war_support = TRN_new_culture_order_weekly_casualties_war_support
+	conscription_factor = TRN_new_culture_order_conscription_factor
+	research_speed_factor = TRN_new_culture_order_research_speed_factor
 }
 
 SPR_spanish_army_dynamic_modifier = { # NATIONAL SPIRIT
@@ -3359,4 +3485,415 @@ SPR_spanish_navy_dynamic_modifier = { # NATIONAL SPIRIT
 
 	# SP Stuff (Gotterdammerung)
 	sp_naval_ice_carrier_speed_factor = SPR_rm_sp_naval_ice_carrier_speed_factor
+}
+
+# The Force Publique
+IDC_tirailleurs = {
+	enable = { always = yes }
+	icon = GFX_idea_AFG_adopt_nufus
+	army_leader_cost_factor = IDC_tirailleurs_army_leader_cost_factor
+	acclimatization_hot_climate_gain_factor = IDC_tirailleurs_acclimatization_hot_climate_gain_factor
+	command_power_gain_mult = IDC_tirailleurs_command_power_gain_mult
+	max_command_power = IDC_tirailleurs_max_command_power
+	army_core_attack_factor = IDC_tirailleurs_army_core_attack_factor
+	army_core_defence_factor = IDC_tirailleurs_army_core_defence_factor
+	equipment_capture_factor = IDC_tirailleurs_equipment_capture_factor
+	supply_consumption_factor = IDC_tirailleurs_supply_consumption_factor
+	resistance_target = IDC_tirailleurs_resistance_target
+	autonomy_gain = IDC_tirailleurs_autonomy_gain
+	conscription_factor = IDC_tirailleurs_conscription_factor
+	army_attack_factor = IDC_tirailleurs_army_attack_factor
+	army_defence_factor = IDC_tirailleurs_army_defence_factor
+	conscription = IDC_tirailleurs_conscription
+	air_training_xp_gain_factor = IDC_tirailleurs_air_training_xp_gain_factor
+	production_speed_air_base_factor = IDC_tirailleurs_production_speed_air_base_factor
+	experience_loss_factor = IDC_tirailleurs_experience_loss_factor
+	army_morale_factor = IDC_tirailleurs_army_morale_factor
+	experience_gain_navy = IDC_tirailleurs_experience_gain_navy
+	spotting_chance = IDC_tirailleurs_spotting_chance
+	experience_gain_air = IDC_tirailleurs_experience_gain_air
+	experience_gain_army = IDC_tirailleurs_experience_gain_army
+	recon_factor = IDC_tirailleurs_recon_factor
+	ground_attack_factor = IDC_tirailleurs_ground_attack_factor
+	industrial_capacity_factory = IDC_tirailleurs_industrial_capacity_factory
+	army_org_factor = IDC_tirailleurs_army_org_factor
+	non_core_manpower = IDC_tirailleurs_non_core_manpower
+	cas_damage_reduction = IDC_tirailleurs_cas_damage_reduction
+	dig_in_speed_factor = IDC_tirailleurs_dig_in_speed_factor
+	training_time_factor = IDC_tirailleurs_training_time_factor
+}
+
+# The Force Publique
+IDC_amry_modifier = {
+	enable = { always = yes }
+	icon = GFX_idea_PLACEHOLDER_idea_icon
+	army_leader_cost_factor = IDC_amry_modifier_army_leader_cost_factor
+	acclimatization_hot_climate_gain_factor = IDC_amry_modifier_acclimatization_hot_climate_gain_factor
+	command_power_gain_mult = IDC_amry_modifier_command_power_gain_mult
+	max_command_power = IDC_amry_modifier_max_command_power
+	army_core_attack_factor = IDC_amry_modifier_army_core_attack_factor
+	army_core_defence_factor = IDC_amry_modifier_army_core_defence_factor
+	equipment_capture_factor = IDC_amry_modifier_equipment_capture_factor
+	supply_consumption_factor = IDC_amry_modifier_supply_consumption_factor
+	resistance_target = IDC_amry_modifier_resistance_target
+	autonomy_gain = IDC_amry_modifier_autonomy_gain
+	conscription_factor = IDC_amry_modifier_conscription_factor
+	army_attack_factor = IDC_amry_modifier_army_attack_factor
+	army_defence_factor = IDC_amry_modifier_army_defence_factor
+	conscription = IDC_amry_modifier_conscription
+	air_training_xp_gain_factor = IDC_amry_modifier_air_training_xp_gain_factor
+	production_speed_air_base_factor = IDC_amry_modifier_production_speed_air_base_factor
+	experience_loss_factor = IDC_amry_modifier_experience_loss_factor
+	army_morale_factor = IDC_amry_modifier_army_morale_factor
+	experience_gain_navy = IDC_amry_modifier_experience_gain_navy
+	spotting_chance = IDC_amry_modifier_spotting_chance
+	experience_gain_air = IDC_amry_modifier_experience_gain_air
+	experience_gain_army = IDC_amry_modifier_experience_gain_army
+	recon_factor = IDC_amry_modifier_recon_factor
+	ground_attack_factor = IDC_amry_modifier_ground_attack_factor
+	industrial_capacity_factory = IDC_amry_modifier_industrial_capacity_factory
+	army_org_factor = IDC_amry_modifier_army_org_factor
+	non_core_manpower = IDC_amry_modifier_non_core_manpower
+	cas_damage_reduction = IDC_amry_modifier_cas_damage_reduction
+	dig_in_speed_factor = IDC_amry_modifier_dig_in_speed_factor
+	training_time_factor = IDC_amry_modifier_training_time_factor
+}
+
+GEM_perpetual_war_state = { #영속전쟁국가
+	enable = { always = yes }
+
+	icon = GFX_idea_GEM_perpetual_war_state
+	
+	political_power_factor = GEM_ENDMOD_political_power_factor
+	consumer_goods_factor = GEM_ENDMOD_consumer_goods_factor
+	production_speed_buildings_factor = GEM_ENDMOD_production_speed_buildings_factor
+	stability_factor = GEM_ENDMOD_stability_factor
+	war_support_factor = GEM_ENDMOD_war_support_factor
+	research_speed_factor = GEM_ENDMOD_research_speed_factor
+	global_building_slots_factor = GEM_ENDMOD_global_building_slots_factor
+    conscription = GEM_ENDMOD_conscription
+	conscription_factor = GEM_ENDMOD_conscription_factor
+	
+	army_morale_factor = GEM_ENDMOD_army_morale_factor
+	mobilization_speed = GEM_ENDMOD_mobilization_speed
+	army_core_defence_factor = GEM_ENDMOD_army_core_defence_factor
+	land_reinforce_rate = GEM_ENDMOD_land_reinforce_rate
+	minimum_training_level = GEM_ENDMOD_minimum_training_level	
+	training_time_factor = GEM_ENDMOD_training_time_factor
+	
+	industrial_capacity_factory = GEM_ENDMOD_industrial_capacity_factory
+	production_speed_arms_factory_factor = GEM_ENDMOD_production_speed_arms_factory_factor
+	production_speed_industrial_complex_factor = GEM_ENDMOD_production_speed_industrial_complex_factor
+
+	production_factory_start_efficiency_factor = GEM_ENDMOD_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_ENDMOD_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_ENDMOD_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_ENDMOD_production_lack_of_resource_penalty_factor
+
+	industry_repair_factor = GEM_ENDMOD_industry_repair_factor
+
+	political_advisor_cost_factor = GEM_ENDMOD_political_advisor_cost_factor
+	economy_cost_factor = GEM_ENDMOD_economy_cost_factor
+	mobilization_laws_cost_factor = GEM_ENDMOD_mobilization_laws_cost_factor
+	trade_laws_cost_factor = GEM_ENDMOD_trade_laws_cost_factor
+
+	army_chief_cost_factor = GEM_ENDMOD_army_chief_cost_factor
+	navy_chief_cost_factor = GEM_ENDMOD_navy_chief_cost_factor
+	air_chief_cost_factor = GEM_ENDMOD_air_chief_cost_factor
+
+	drift_defence_factor = GEM_ENDMOD_drift_defence_factor
+	democratic_drift = GEM_ENDMOD_democratic_drift
+	communism_drift = GEM_ENDMOD_communism_drift
+	neutrality_drift = GEM_ENDMOD_neutrality_drift
+	fascism_drift = GEM_ENDMOD_fascism_drift
+
+	surrender_limit = GEM_ENDMOD_surrender_limit
+
+	communism_acceptance = GEM_ENDMOD_communism_acceptance
+	democratic_acceptance = GEM_ENDMOD_democratic_acceptance
+	fascism_acceptance = GEM_ENDMOD_fascism_acceptance
+	neutrality_acceptance = GEM_ENDMOD_neutrality_acceptance
+
+	justify_war_goal_time = GEM_ENDMOD_justify_war_goal_time
+	generate_wargoal_tension = GEM_ENDMOD_generate_wargoal_tension
+	opinion_gain_monthly_same_ideology_factor = GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor
+
+	non_core_manpower = GEM_ENDMOD_non_core_manpower
+	monthly_population = GEM_ENDMOD_monthly_population
+	weekly_manpower = GEM_ENDMOD_weekly_manpower
+}
+
+
+GEM_peaceful_nation = { #'평화로운' 나라
+	enable = { always = yes }
+
+	icon = GFX_idea_GEM_peaceful_nation
+	
+	political_power_factor = GEM_ENDMOD_political_power_factor
+	consumer_goods_factor = GEM_ENDMOD_consumer_goods_factor
+	production_speed_buildings_factor = GEM_ENDMOD_production_speed_buildings_factor
+	stability_factor = GEM_ENDMOD_stability_factor
+	war_support_factor = GEM_ENDMOD_war_support_factor
+	research_speed_factor = GEM_ENDMOD_research_speed_factor
+	global_building_slots_factor = GEM_ENDMOD_global_building_slots_factor
+    conscription = GEM_ENDMOD_conscription
+	conscription_factor = GEM_ENDMOD_conscription_factor
+	
+	army_morale_factor = GEM_ENDMOD_army_morale_factor
+	mobilization_speed = GEM_ENDMOD_mobilization_speed
+	army_core_defence_factor = GEM_ENDMOD_army_core_defence_factor
+	land_reinforce_rate = GEM_ENDMOD_land_reinforce_rate
+	minimum_training_level = GEM_ENDMOD_minimum_training_level	
+	training_time_factor = GEM_ENDMOD_training_time_factor
+	
+	industrial_capacity_factory = GEM_ENDMOD_industrial_capacity_factory
+	production_speed_arms_factory_factor = GEM_ENDMOD_production_speed_arms_factory_factor
+	production_speed_industrial_complex_factor = GEM_ENDMOD_production_speed_industrial_complex_factor
+
+	production_factory_start_efficiency_factor = GEM_ENDMOD_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_ENDMOD_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_ENDMOD_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_ENDMOD_production_lack_of_resource_penalty_factor
+
+	industry_repair_factor = GEM_ENDMOD_industry_repair_factor
+
+	political_advisor_cost_factor = GEM_ENDMOD_political_advisor_cost_factor
+	economy_cost_factor = GEM_ENDMOD_economy_cost_factor
+	mobilization_laws_cost_factor = GEM_ENDMOD_mobilization_laws_cost_factor
+	trade_laws_cost_factor = GEM_ENDMOD_trade_laws_cost_factor
+
+	army_chief_cost_factor = GEM_ENDMOD_army_chief_cost_factor
+	navy_chief_cost_factor = GEM_ENDMOD_navy_chief_cost_factor
+	air_chief_cost_factor = GEM_ENDMOD_air_chief_cost_factor
+
+	drift_defence_factor = GEM_ENDMOD_drift_defence_factor
+	democratic_drift = GEM_ENDMOD_democratic_drift
+	communism_drift = GEM_ENDMOD_communism_drift
+	neutrality_drift = GEM_ENDMOD_neutrality_drift
+	fascism_drift = GEM_ENDMOD_fascism_drift
+
+	surrender_limit = GEM_ENDMOD_surrender_limit
+
+	communism_acceptance = GEM_ENDMOD_communism_acceptance
+	democratic_acceptance = GEM_ENDMOD_democratic_acceptance
+	fascism_acceptance = GEM_ENDMOD_fascism_acceptance
+	neutrality_acceptance = GEM_ENDMOD_neutrality_acceptance
+
+	justify_war_goal_time = GEM_ENDMOD_justify_war_goal_time
+	generate_wargoal_tension = GEM_ENDMOD_generate_wargoal_tension
+	opinion_gain_monthly_same_ideology_factor = GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor
+
+	non_core_manpower = GEM_ENDMOD_non_core_manpower
+	monthly_population = GEM_ENDMOD_monthly_population
+	weekly_manpower = GEM_ENDMOD_weekly_manpower
+}
+
+GEM_peaceful_nation_B = { #평화로운 '나라'
+	enable = { always = yes }
+
+	icon = GFX_idea_GEM_peaceful_nation_B
+	
+	political_power_factor = GEM_ENDMOD_political_power_factor
+	consumer_goods_factor = GEM_ENDMOD_consumer_goods_factor
+	production_speed_buildings_factor = GEM_ENDMOD_production_speed_buildings_factor
+	stability_factor = GEM_ENDMOD_stability_factor
+	war_support_factor = GEM_ENDMOD_war_support_factor
+	research_speed_factor = GEM_ENDMOD_research_speed_factor
+	global_building_slots_factor = GEM_ENDMOD_global_building_slots_factor
+    conscription = GEM_ENDMOD_conscription
+	conscription_factor = GEM_ENDMOD_conscription_factor
+	
+	army_morale_factor = GEM_ENDMOD_army_morale_factor
+	mobilization_speed = GEM_ENDMOD_mobilization_speed
+	army_core_defence_factor = GEM_ENDMOD_army_core_defence_factor
+	land_reinforce_rate = GEM_ENDMOD_land_reinforce_rate
+	minimum_training_level = GEM_ENDMOD_minimum_training_level	
+	training_time_factor = GEM_ENDMOD_training_time_factor
+	
+	industrial_capacity_factory = GEM_ENDMOD_industrial_capacity_factory
+	production_speed_arms_factory_factor = GEM_ENDMOD_production_speed_arms_factory_factor
+	production_speed_industrial_complex_factor = GEM_ENDMOD_production_speed_industrial_complex_factor
+
+	production_factory_start_efficiency_factor = GEM_ENDMOD_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_ENDMOD_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_ENDMOD_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_ENDMOD_production_lack_of_resource_penalty_factor
+
+	industry_repair_factor = GEM_ENDMOD_industry_repair_factor
+
+	political_advisor_cost_factor = GEM_ENDMOD_political_advisor_cost_factor
+	economy_cost_factor = GEM_ENDMOD_economy_cost_factor
+	mobilization_laws_cost_factor = GEM_ENDMOD_mobilization_laws_cost_factor
+	trade_laws_cost_factor = GEM_ENDMOD_trade_laws_cost_factor
+
+	army_chief_cost_factor = GEM_ENDMOD_army_chief_cost_factor
+	navy_chief_cost_factor = GEM_ENDMOD_navy_chief_cost_factor
+	air_chief_cost_factor = GEM_ENDMOD_air_chief_cost_factor
+
+	drift_defence_factor = GEM_ENDMOD_drift_defence_factor
+	democratic_drift = GEM_ENDMOD_democratic_drift
+	communism_drift = GEM_ENDMOD_communism_drift
+	neutrality_drift = GEM_ENDMOD_neutrality_drift
+	fascism_drift = GEM_ENDMOD_fascism_drift
+
+	surrender_limit = GEM_ENDMOD_surrender_limit
+
+	communism_acceptance = GEM_ENDMOD_communism_acceptance
+	democratic_acceptance = GEM_ENDMOD_democratic_acceptance
+	fascism_acceptance = GEM_ENDMOD_fascism_acceptance
+	neutrality_acceptance = GEM_ENDMOD_neutrality_acceptance
+
+	justify_war_goal_time = GEM_ENDMOD_justify_war_goal_time
+	generate_wargoal_tension = GEM_ENDMOD_generate_wargoal_tension
+	opinion_gain_monthly_same_ideology_factor = GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor
+
+	non_core_manpower = GEM_ENDMOD_non_core_manpower
+	monthly_population = GEM_ENDMOD_monthly_population
+	weekly_manpower = GEM_ENDMOD_weekly_manpower
+}
+
+GEM_unionism = { #연방주의
+	enable = { always = yes }
+
+	icon = GFX_idea_GEM_unionism
+	
+	political_power_factor = GEM_ENDMOD_political_power_factor
+	consumer_goods_factor = GEM_ENDMOD_consumer_goods_factor
+	production_speed_buildings_factor = GEM_ENDMOD_production_speed_buildings_factor
+	stability_factor = GEM_ENDMOD_stability_factor
+	war_support_factor = GEM_ENDMOD_war_support_factor
+	research_speed_factor = GEM_ENDMOD_research_speed_factor
+	global_building_slots_factor = GEM_ENDMOD_global_building_slots_factor
+    conscription = GEM_ENDMOD_conscription
+	conscription_factor = GEM_ENDMOD_conscription_factor
+	
+	army_morale_factor = GEM_ENDMOD_army_morale_factor
+	mobilization_speed = GEM_ENDMOD_mobilization_speed
+	army_core_defence_factor = GEM_ENDMOD_army_core_defence_factor
+	land_reinforce_rate = GEM_ENDMOD_land_reinforce_rate
+	minimum_training_level = GEM_ENDMOD_minimum_training_level	
+	training_time_factor = GEM_ENDMOD_training_time_factor
+	
+	industrial_capacity_factory = GEM_ENDMOD_industrial_capacity_factory
+	production_speed_arms_factory_factor = GEM_ENDMOD_production_speed_arms_factory_factor
+	production_speed_industrial_complex_factor = GEM_ENDMOD_production_speed_industrial_complex_factor
+
+	production_factory_start_efficiency_factor = GEM_ENDMOD_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_ENDMOD_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_ENDMOD_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_ENDMOD_production_lack_of_resource_penalty_factor
+
+	industry_repair_factor = GEM_ENDMOD_industry_repair_factor
+
+	political_advisor_cost_factor = GEM_ENDMOD_political_advisor_cost_factor
+	economy_cost_factor = GEM_ENDMOD_economy_cost_factor
+	mobilization_laws_cost_factor = GEM_ENDMOD_mobilization_laws_cost_factor
+	trade_laws_cost_factor = GEM_ENDMOD_trade_laws_cost_factor
+
+	army_chief_cost_factor = GEM_ENDMOD_army_chief_cost_factor
+	navy_chief_cost_factor = GEM_ENDMOD_navy_chief_cost_factor
+	air_chief_cost_factor = GEM_ENDMOD_air_chief_cost_factor
+
+	drift_defence_factor = GEM_ENDMOD_drift_defence_factor
+	democratic_drift = GEM_ENDMOD_democratic_drift
+	communism_drift = GEM_ENDMOD_communism_drift
+	neutrality_drift = GEM_ENDMOD_neutrality_drift
+	fascism_drift = GEM_ENDMOD_fascism_drift
+
+	surrender_limit = GEM_ENDMOD_surrender_limit
+
+	communism_acceptance = GEM_ENDMOD_communism_acceptance
+	democratic_acceptance = GEM_ENDMOD_democratic_acceptance
+	fascism_acceptance = GEM_ENDMOD_fascism_acceptance
+	neutrality_acceptance = GEM_ENDMOD_neutrality_acceptance
+
+	justify_war_goal_time = GEM_ENDMOD_justify_war_goal_time
+	generate_wargoal_tension = GEM_ENDMOD_generate_wargoal_tension
+	opinion_gain_monthly_same_ideology_factor = GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor
+
+	non_core_manpower = GEM_ENDMOD_non_core_manpower
+	monthly_population = GEM_ENDMOD_monthly_population
+	weekly_manpower = GEM_ENDMOD_weekly_manpower
+}
+
+GEM_ruler_behind_the_curtain_modifed = { #사츠키
+	enable = { always = yes }
+
+	political_power_cost = GEM_ruler_behind_the_curtain_modifed_political_power_cost
+	command_power_gain = GEM_ruler_behind_the_curtain_modifed_command_power_gain
+	mobilization_speed = GEM_ruler_behind_the_curtain_modifed_mobilization_speed
+	land_reinforce_rate = GEM_ruler_behind_the_curtain_modifed_land_reinforce_rate
+	war_support_factor = GEM_ruler_behind_the_curtain_modifed_war_support_factor
+	trade_laws_cost_factor = GEM_ruler_behind_the_curtain_modifed_trade_laws_cost_factor
+	mobilization_laws_cost_factor = GEM_ruler_behind_the_curtain_modifed_mobilization_laws_cost_factor
+	justify_war_goal_time = GEM_ruler_behind_the_curtain_modifed_justify_war_goal_time
+	resistance_target = GEM_ruler_behind_the_curtain_modifed_resistance_target
+	production_lack_of_resource_penalty_factor = GEM_ruler_behind_the_curtain_modifed_production_lack_of_resource_penalty_factor
+
+	stability_factor = GEM_ruler_behind_the_curtain_modifed_stability_factor
+	army_core_defence_factor = GEM_ruler_behind_the_curtain_modifed_army_core_defence_factor
+}
+
+GEM_new_administration = { #신행정부
+	enable = { always = yes }
+
+	icon = GFX_idea_GEM_new_administration
+	
+	political_power_factor = GEM_ENDMOD_political_power_factor
+	consumer_goods_factor = GEM_ENDMOD_consumer_goods_factor
+	production_speed_buildings_factor = GEM_ENDMOD_production_speed_buildings_factor
+	stability_factor = GEM_ENDMOD_stability_factor
+	war_support_factor = GEM_ENDMOD_war_support_factor
+	research_speed_factor = GEM_ENDMOD_research_speed_factor
+	global_building_slots_factor = GEM_ENDMOD_global_building_slots_factor
+    conscription = GEM_ENDMOD_conscription
+	conscription_factor = GEM_ENDMOD_conscription_factor
+	
+	army_morale_factor = GEM_ENDMOD_army_morale_factor
+	mobilization_speed = GEM_ENDMOD_mobilization_speed
+	army_core_defence_factor = GEM_ENDMOD_army_core_defence_factor
+	land_reinforce_rate = GEM_ENDMOD_land_reinforce_rate
+	minimum_training_level = GEM_ENDMOD_minimum_training_level	
+	training_time_factor = GEM_ENDMOD_training_time_factor
+	
+	industrial_capacity_factory = GEM_ENDMOD_industrial_capacity_factory
+	production_speed_arms_factory_factor = GEM_ENDMOD_production_speed_arms_factory_factor
+	production_speed_industrial_complex_factor = GEM_ENDMOD_production_speed_industrial_complex_factor
+
+	production_factory_start_efficiency_factor = GEM_ENDMOD_production_factory_start_efficiency_factor
+	production_factory_max_efficiency_factor = GEM_ENDMOD_production_factory_max_efficiency_factor
+	production_factory_efficiency_gain_factor = GEM_ENDMOD_production_factory_efficiency_gain_factor
+	production_lack_of_resource_penalty_factor = GEM_ENDMOD_production_lack_of_resource_penalty_factor
+
+	industry_repair_factor = GEM_ENDMOD_industry_repair_factor
+
+	political_advisor_cost_factor = GEM_ENDMOD_political_advisor_cost_factor
+	economy_cost_factor = GEM_ENDMOD_economy_cost_factor
+	mobilization_laws_cost_factor = GEM_ENDMOD_mobilization_laws_cost_factor
+	trade_laws_cost_factor = GEM_ENDMOD_trade_laws_cost_factor
+
+	army_chief_cost_factor = GEM_ENDMOD_army_chief_cost_factor
+	navy_chief_cost_factor = GEM_ENDMOD_navy_chief_cost_factor
+	air_chief_cost_factor = GEM_ENDMOD_air_chief_cost_factor
+
+	drift_defence_factor = GEM_ENDMOD_drift_defence_factor
+	democratic_drift = GEM_ENDMOD_democratic_drift
+	communism_drift = GEM_ENDMOD_communism_drift
+	neutrality_drift = GEM_ENDMOD_neutrality_drift
+	fascism_drift = GEM_ENDMOD_fascism_drift
+
+	surrender_limit = GEM_ENDMOD_surrender_limit
+
+	communism_acceptance = GEM_ENDMOD_communism_acceptance
+	democratic_acceptance = GEM_ENDMOD_democratic_acceptance
+	fascism_acceptance = GEM_ENDMOD_fascism_acceptance
+	neutrality_acceptance = GEM_ENDMOD_neutrality_acceptance
+
+	justify_war_goal_time = GEM_ENDMOD_justify_war_goal_time
+	generate_wargoal_tension = GEM_ENDMOD_generate_wargoal_tension
+	opinion_gain_monthly_same_ideology_factor = GEM_ENDMOD_opinion_gain_monthly_same_ideology_factor
+
+	non_core_manpower = GEM_ENDMOD_non_core_manpower
+	monthly_population = GEM_ENDMOD_monthly_population
+	weekly_manpower = GEM_ENDMOD_weekly_manpower
 }

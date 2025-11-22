@@ -176,6 +176,351 @@ GEM_satsuki_department_categories = {
 	}
 }
 
+GEM_antinazi_preemptive_strike = {
+	GEH_preparations_for_operation_longsword_breaking_operation = { # Mission for SOV (or SOV + ENG) to prepare the invasion of Iran
+		priority = 50
+
+		icon = hol_draw_up_staff_plans
+
+		allowed = {
+		}
+
+		available =  {
+			hidden_trigger = { always = no }
+		}
+
+		activation = {
+			always = no
+		}
+
+		cancel_trigger = {
+			OR = {
+				is_subject = yes
+				NOT = { country_exists = GEM }
+				is_in_faction_with = GEM
+			}
+		}
+
+		cancel_effect = {
+		}
+
+		is_good = yes
+
+		war_with_on_timeout = GEM
+
+		days_mission_timeout = 30
+
+		timeout_effect = {
+			diplomatic_relation = {
+				country = GEM
+				relation = military_access
+				active = no
+			}
+			diplomatic_relation = {
+				country = GEM
+				relation = docking_rights
+				active = no
+			}
+			diplomatic_relation = {
+				country = GEM
+				relation = non_aggression_pact
+				active = no
+			}
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+		}
+	}
+	GEH_preparations_for_operation_longsword_breaking_operation_member = { # Mission for SOV (or SOV + ENG) to prepare the invasion of Iran
+		name = GEH_preparations_for_operation_longsword_breaking_operation
+
+		priority = 50
+
+		icon = hol_draw_up_staff_plans
+
+		allowed = {
+		}
+
+		available =  {
+			hidden_trigger = { always = no }
+		}
+
+		activation = {
+			always = no
+		}
+
+		cancel_trigger = {
+			OR = {
+				is_subject = yes
+				NOT = { country_exists = GEM }
+				is_in_faction_with = GEM
+			}
+		}
+
+		cancel_effect = {
+		}
+
+		is_good = yes
+
+		war_with_on_timeout = GEM
+
+		days_mission_timeout = 30
+
+		timeout_effect = {
+			diplomatic_relation = {
+				country = GEM
+				relation = military_access
+				active = no
+			}
+			diplomatic_relation = {
+				country = GEM
+				relation = docking_rights
+				active = no
+			}
+			diplomatic_relation = {
+				country = GEM
+				relation = non_aggression_pact
+				active = no
+			}
+			effect_tooltip = {
+				GEH = {
+					declare_war_on = {
+						target = GEM
+						type = annex_everything
+					}
+				}
+			}
+			random_country = {
+				limit = { has_country_flag = GEH_antinazi_fac_leader_flag }
+				ROOT = {
+					add_to_war = {
+						targeted_alliance = PREV
+						enemy = GEM
+						hostility_reason = asked_to_join
+					}
+				}
+			}
+		}
+	}
+}
+
+GEH_state_stress_category = {
+	GEM_motion_of_no_confidence_against_leader = {
+		priority = 50
+
+		icon = GFX_decision_SWI_dismiss_council
+
+		ai_will_do = {
+			base = 0
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		available = {
+			has_government = fascism
+			power_balance_value = {
+				id = GEH_state_stress
+				value < 0.1
+			}
+			OR = {
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_akzhxh
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_satsuki
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_dlfhgk
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_motomiya_chiaki
+				}
+			}
+			NOT = {
+				has_completed_focus = GEH_armageddon
+				has_completed_focus = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+				has_completed_focus = GEM_gehenna_nation_founding
+				has_completed_focus = GEM_opinion_manipulation_and_secretariat_revolution
+				has_completed_focus = GEM_school_rules_revision
+			}
+		}
+
+		visible = {
+			OR = {
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_akzhxh
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_satsuki
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_dlfhgk
+				}
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_motomiya_chiaki
+				}
+			}
+		}
+
+		cost = GEM_motion_of_no_confidence_dec_cost
+
+		complete_effect = {
+			custom_effect_tooltip = GEM_balance_of_power_event_chairman_ouster_tt
+			hidden_effect = {
+				GEM_balance_of_power_event_chairman_ouster = yes
+			}
+		}
+	}
+
+	GEM_appeal_to_the_geh_spirit = {
+		priority = 39
+
+		icon = GFX_decision_generic_civil_support
+
+		ai_will_do = {
+			base = 0.5
+			modifier = {
+				factor = 10
+				OR = {
+					has_stability < 0.2
+					power_balance_value = {
+						id = GEH_state_stress
+						value < -0.5
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = { GEM_appeal_to_the_geh_spirit_dec_cost > 200 }
+				has_political_power < 400
+			}
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		available = {
+			has_war = yes
+		}
+
+		visible = {
+
+		}
+
+		days_re_enable = 360
+
+		days_remove = 180
+
+		cost = GEM_appeal_to_the_geh_spirit_dec_cost
+
+		modifier = {
+			mobilization_speed = 0.35
+		}
+
+		complete_effect = {
+			GEM_bop_very_high_increase_effect = yes
+
+			#Increase cost
+			multiply_variable = { GEM_appeal_to_the_geh_spirit_dec_cost = GEM_bop_decision_cost_multiplier }
+			custom_effect_tooltip = GEM_appeal_to_the_geh_spirit_cost_increase_tt
+		}
+	}
+
+	GEM_entice_the_masses = {
+		priority = 38
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		ai_will_do = {
+			base = 0.5
+			modifier = {
+				factor = 0
+				check_variable = { GEM_entice_the_masses_dec_cost > 200 }
+				has_political_power < 400
+			}
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		available = {
+			
+		}
+
+		visible = {
+
+		}
+
+		days_re_enable = 360
+
+		cost = GEM_entice_the_masses_dec_cost
+
+		complete_effect = {
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.1
+			}
+			GEM_bop_medium_increase_effect = yes
+
+			#Increase cost
+			multiply_variable = { GEM_entice_the_masses_dec_cost = GEM_bop_decision_cost_multiplier }
+			custom_effect_tooltip = GEM_entice_the_masses_cost_increase_tt
+		}
+	}
+
+	GEM_organize_the_opposition = {
+		priority = 30
+
+		icon = GFX_decision_generic_political_discourse
+
+		ai_will_do = {
+			base = 0
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		available = {
+			has_war = no
+		}
+
+		visible = {
+
+		}
+
+		days_re_enable = 360
+
+		cost = GEM_organize_the_opposition_dec_cost
+
+		complete_effect = {
+			GEM_bop_high_decrease_effect = yes
+
+			add_popularity = {
+				ideology = ROOT
+				popularity = -0.05
+			}
+
+			#Increase cost
+			multiply_variable = { GEM_organize_the_opposition_dec_cost = GEM_bop_decision_cost_multiplier }
+			custom_effect_tooltip = GEM_organize_the_opposition_cost_increase_tt
+		}
+	}
+}
+
 GEH_nego_wehrmacht_decisions = {
 	GEH_nego_wehrmacht_debug = {
 		icon = GFX_decision_category_power_struggle
@@ -4840,7 +5185,7 @@ GEM_state_government_takeover_categorie = {
 			political_power_daily > 0
 		}
 		cost = 5
-		days_remove = 24
+		days_remove = var:value_GEM_state_government_takeover?70
 		modifier = {
 			political_power_cost = 0.35
 		}
@@ -4868,6 +5213,7 @@ GEM_gehenna_national_reconquest = {
 
 		visible = {
 			has_global_flag = GEA_negotiating_independence
+			NOT = { has_completed_focus = GEM_a_republic_of_two_peoples }
 		}
 
 		available = {
@@ -4875,6 +5221,20 @@ GEM_gehenna_national_reconquest = {
 			controls_state = 58
 			controls_state = 59
 			controls_state = 56
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = GEH_federal_unification_flag
+					}
+				}
+				OR = {
+					has_completed_focus = GEH_armageddon
+					has_completed_focus = GEM_gehenna_academy_is_a_school_where_everyone_is_happy_right
+					has_completed_focus = GEM_gehenna_nation_founding
+					has_completed_focus = GEM_opinion_manipulation_and_secretariat_revolution
+					has_completed_focus = GEM_school_rules_revision
+				}
+			}
 		}
 
 		complete_effect = {
@@ -4883,6 +5243,2987 @@ GEM_gehenna_national_reconquest = {
 			add_state_core = 59
 			add_state_core = 56
 			complete_national_focus = GEM_a_republic_of_two_peoples
+		}
+	}
+}
+
+GEM_gehenna_national_reconquest_orign = {
+	GEM_gehenna_national_reconquest_HEU = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_luxembourg_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			OR = {
+				has_completed_focus = GEM_outer_gehenna_unification
+				has_completed_focus = GEM_unification_of_all_gehenna_states
+			}
+			any_state = {
+				BA_luxembourg_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_luxembourg_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					BA_luxembourg_is = yes
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
+	GEM_gehenna_national_reconquest_AUS = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_sha_core_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			OR = {
+				has_completed_focus = GEM_south_germany_unification
+				has_completed_focus = GEM_new_knot
+			}
+			any_state = {
+				BA_sha_core_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_sha_core_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					BA_sha_core_is = yes
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
+	GEM_gehenna_national_reconquest_SHA = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+			highlight_states_trigger = {
+				BA_sha_core_is = yes
+			}
+		}
+
+		ai_will_do = { base = 4000 }
+
+		allowed = { }
+
+		visible = {
+			has_completed_focus = GEM_restore_german_federal_territories
+			any_state = {
+				BA_sha_core_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_sha_core_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = { BA_sha_core_is = yes }
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	GEM_gehenna_national_reconquest_CZE = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+			highlight_states_trigger = {
+				BA_cze_core_is = yes
+			}
+		}
+
+		ai_will_do = { base = 4000 }
+
+		allowed = { }
+
+		visible = {
+			has_completed_focus = GEM_restore_german_federal_territories
+			any_state = {
+				BA_cze_core_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_cze_core_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = { BA_cze_core_is = yes }
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	GEM_gehenna_national_reconquest_SLV = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+			highlight_states_trigger = {
+				BA_slovenia_is = yes
+			}
+		}
+
+		ai_will_do = { base = 4000 }
+
+		allowed = { }
+
+		visible = {
+			has_completed_focus = GEM_restore_german_federal_territories
+			any_state = {
+				BA_slovenia_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_slovenia_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = { BA_slovenia_is = yes }
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	GEM_gehenna_national_reconquest_TIR = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+			highlight_states_trigger = {
+				BA_south_tirol_is = yes
+			}
+		}
+
+		ai_will_do = { base = 4000 }
+
+		allowed = { }
+
+		visible = {
+			has_completed_focus = GEM_restore_german_federal_territories
+			any_state = {
+				BA_south_tirol_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_south_tirol_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = { BA_south_tirol_is = yes }
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	GEM_gehenna_national_reconquest_IST = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		highlight_states = {
+			highlight_states_trigger = {
+				BA_litorale_istria_is = yes
+			}
+		}
+
+		ai_will_do = { base = 4000 }
+
+		allowed = { }
+
+		visible = {
+			has_completed_focus = GEM_restore_german_federal_territories
+			any_state = {
+				BA_litorale_istria_is = yes
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		available = {
+			BA_litorale_istria_controll = yes
+		}
+
+		complete_effect = {
+			every_state = {
+				limit = { BA_litorale_istria_is = yes }
+				add_core_of = ROOT
+			}
+		}
+	}
+
+}
+
+GEM_gehenna_national_reform = {
+	GEM_thule_radiance_1 = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_thule_radiance
+		}
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		available = {
+		}
+
+		modifier = {
+			political_power_cost = 0.01
+		}
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			add_stability = -0.05
+			add_war_support = 0.05
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+		}
+	}
+	GEM_thule_radiance_2 = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_thule_radiance
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		days_remove = 120
+
+		modifier = {
+			industrial_capacity_dockyard = -0.05
+			industrial_capacity_factory = -0.05
+		}
+
+		available = {
+		}
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+	GEM_aryan_spirit_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_1 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_1 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_aryan_spirit
+			check_variable = {
+				GEM_aryan_spirit_1 < 3
+			}
+		}
+
+		cost = 25
+
+		days_remove = 120
+
+		modifier = {
+		}
+
+		available = {
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_aryan_spirit_1 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+		}
+	}
+	GEM_aryan_spirit_2 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_20
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_2 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_21
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_2 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_22
+			trigger = {
+				check_variable = {
+					GEM_aryan_spirit_2 > 1
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_aryan_spirit
+			check_variable = {
+				GEM_aryan_spirit_2 < 2
+			}
+		}
+
+		cost = 25
+
+		days_remove = 70
+
+		modifier = {
+			production_speed_buildings_factor = -0.01
+		}
+
+		available = {
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_aryan_spirit_2 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_production_speed_arms_factory_factor = 0.05
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_industry_repair_factor = 0.05
+				tooltip = industry_repair_factor_tt
+			}
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+	}
+	GEM_provable_issue_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_20
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_21
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_22
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_1 > 1
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_provable_issue
+			check_variable = {
+				GEM_provable_issue_1 < 2
+			}
+		}
+
+		cost = 25
+
+		days_remove = 115
+
+		modifier = {
+		}
+
+		available = {
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_provable_issue_1 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_conscription_factor = 0.03
+				tooltip = conscription_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_stability = 0.05
+		}
+	}
+	GEM_provable_issue_2 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_2 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_2 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_2 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_provable_issue_2 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_provable_issue
+			check_variable = {
+				GEM_provable_issue_2 < 3
+			}
+		}
+
+		cost = 25
+
+		days_remove = 35
+
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_provable_issue_2 = 1
+			}
+		}
+
+		remove_effect = {
+			add_stability = 0.05
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 5
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+	}
+	GEM_choir_1 = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_choir
+		}
+
+		fire_only_once = yes
+
+		cost = 100
+
+		days_remove = 50
+
+		modifier = {
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_non_core_manpower = 0.075
+				tooltip = non_core_manpower_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_weekly_manpower = 100
+				tooltip = weekly_manpower_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_monthly_population = 0.25
+				tooltip = monthly_population_tt
+			}
+		}
+	}
+	GEM_choir_2 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_choir_2 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_choir_2 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_choir_2 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_choir_2 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_choir
+			check_variable = {
+				GEM_choir_2 < 3
+			}
+		}
+
+		cost = 50
+
+		days_remove = 35
+
+		modifier = {
+			stability_weekly = 0.005
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_choir_2 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_stability_factor = 0.02
+				tooltip = stability_factor_tt
+			}
+		}
+	}
+	GEM_veil_politics_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_1 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_1 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_veil_politics
+			check_variable = {
+				GEM_veil_politics_1 < 3
+			}
+		}
+
+		cost = 75
+
+		days_remove = 120
+
+		modifier = {
+			stability_weekly = 0.005
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_veil_politics_1 = 1
+			}
+		}
+	}
+	GEM_veil_politics_2 = {
+		icon = GFX_decision_Gehenna_Emblem
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_veil_politics
+		}
+
+		fire_only_once = yes
+
+		cost = 100
+
+		days_remove = 100
+
+		available = {
+			has_stability < 0.30
+		}
+
+		modifier = {
+			political_power_cost = 0.05
+			consumer_goods_factor = 0.05
+		}
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			add_stability = 0.30
+		}
+	}
+	GEM_veil_politics_3 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_20
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_3 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_21
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_3 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_22
+			trigger = {
+				check_variable = {
+					GEM_veil_politics_3 > 1
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_veil_politics
+			check_variable = {
+				GEM_veil_politics_3 < 2
+			}
+		}
+
+		cost = 25
+
+		days_remove = 65
+
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+
+		available = {
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_veil_politics_3 = 1
+			}
+		}
+
+		remove_effect = {
+			random_owned_controlled_state = {
+				prioritize = { 55 }
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	GEM_maybe_hypnosis_was_never_needed_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_maybe_hypnosis_was_never_needed_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_maybe_hypnosis_was_never_needed_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_maybe_hypnosis_was_never_needed_1 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_maybe_hypnosis_was_never_needed_1 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_maybe_hypnosis_was_never_needed
+			check_variable = {
+				GEM_maybe_hypnosis_was_never_needed_1 < 3
+			}
+		}
+
+		cost = 15
+
+		days_remove = 80
+
+		modifier = {
+			political_power_cost = 0.05
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_maybe_hypnosis_was_never_needed_1 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_army_morale_factor = 0.05
+				tooltip = army_morale_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+		}
+	}
+	GEM_but_now_it_is_too_late_to_turn_back_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_but_now_it_is_too_late_to_turn_back_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_but_now_it_is_too_late_to_turn_back_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_but_now_it_is_too_late_to_turn_back_1 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_but_now_it_is_too_late_to_turn_back_1 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_but_now_it_is_too_late_to_turn_back
+			check_variable = {
+				GEM_but_now_it_is_too_late_to_turn_back_1 < 3
+			}
+		}
+
+		cost = 15
+
+		days_remove = 80
+
+		modifier = {
+			political_power_cost = 0.05
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_but_now_it_is_too_late_to_turn_back_1 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_efficiency_gain_factor = -0.01
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_speed_arms_factory_factor = 0.05
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_factory_max_efficiency_factor = 0.03
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+	GEM_diligent_gehenna_citizen_1 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_1 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_1 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_1 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_1 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_diligent_gehenna_citizen
+			check_variable = {
+				GEM_diligent_gehenna_citizen_1 < 3
+			}
+		}
+
+		cost = 15
+
+		days_remove = 80
+
+		modifier = {
+			political_power_cost = 0.05
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_diligent_gehenna_citizen_1 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_industry_repair_factor = 0.05
+				tooltip = industry_repair_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_lack_of_resource_penalty_factor = -0.01
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_surrender_limit = 0.02
+				tooltip = surrender_limit_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_monthly_population = 0.05
+				tooltip = monthly_population_tt
+			}
+		}
+	}
+	GEM_diligent_gehenna_citizen_2 = {
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_30
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_2 < 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_31
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_2 = 1
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_32
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_2 = 2
+				}
+			}
+		}
+		icon = {
+			key = GFX_decision_Gehenna_Emblem_33
+			trigger = {
+				check_variable = {
+					GEM_diligent_gehenna_citizen_2 > 2
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+			original_tag = GEM
+		}
+
+		visible = {
+			has_completed_focus = GEM_diligent_gehenna_citizen
+			check_variable = {
+				GEM_diligent_gehenna_citizen_2 < 3
+			}
+		}
+
+		cost = 15
+
+		days_remove = 80
+
+		modifier = {
+			political_power_cost = 0.05
+		}
+
+		available = {
+			
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				GEM_diligent_gehenna_citizen_2 = 1
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEM_peaceful_nation_tt
+			add_to_variable = {
+				GEM_ENDMOD_industrial_capacity_factory = 0.02
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				GEM_ENDMOD_production_speed_arms_factory_factor = 0.02
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+		}
+	}
+}
+
+GEM_establishment_of_reichskommissariat = {
+	GEM_establishment_of_reichskommissariat_GM1 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_poland_little_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM1 }
+		}
+
+		available = {
+			is_subject = no
+			BA_poland_little_controll = yes
+		}
+
+		complete_effect = {
+			10 = {
+				transfer_state_to = GM1
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM1
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM1
+				set_state_controller_to = GM1
+				add_claim_by = GM1
+				add_compliance = 25
+			}
+			GM1 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM2 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_estonia_is = yes
+					BA_lithuania_is = yes
+					BA_latvia_is = yes
+					BA_belarus_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM2 }
+		}
+
+		available = {
+			is_subject = no
+			BA_estonia_controll = yes
+			BA_lithuania_controll = yes
+			BA_latvia_controll = yes
+			BA_belarus_controll = yes
+		}
+
+		complete_effect = {
+			808 = {
+				transfer_state_to = GM2
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM2
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM2
+				set_state_controller_to = GM2
+				add_claim_by = GM2
+				add_compliance = 25
+			}
+			GM2 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+
+	GEM_establishment_of_reichskommissariat_GM3 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 94
+
+		fire_only_once = yes
+
+
+		visible = {
+			NOT = { country_exists = GM3 }
+		}
+
+		available = {
+			is_subject = no
+			BA_russia_moscow_controll = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_russia_moscow_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			219 = {
+				transfer_state_to = GM3
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM3
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM3
+				set_state_controller_to = GM3
+				add_claim_by = GM3
+				add_compliance = 25
+			}
+			GM3 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = GER
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = GER
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+			
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM4 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_spain_is = yes
+					BA_portugal_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM4 }
+		}
+
+		available = {
+			is_subject = no
+			BA_spain_controll = yes
+			BA_portugal_controll = yes
+		}
+
+		complete_effect = {
+			41 = {
+				transfer_state_to = GM4
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_spain_is = yes
+						BA_portugal_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM4
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_spain_is = yes
+						BA_portugal_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM4
+				set_state_controller_to = GM4
+				add_claim_by = GM4
+				add_compliance = 25
+			}
+			GM4 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM5 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_ukraine_93_is = yes
+					BA_ukraine_soviet_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM5 }
+		}
+
+		available = {
+			is_subject = no
+			BA_ukraine_93_controll = yes
+			BA_ukraine_soviet_controll = yes
+		}
+
+		complete_effect = {
+			202 = {
+				transfer_state_to = GM5
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM5
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM5
+				set_state_controller_to = GM5
+				add_claim_by = GM5
+				add_compliance = 25
+			}
+			GM5 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM6 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_wildhunt_is = yes
+					BA_catalonia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM6 }
+		}
+
+		available = {
+			is_subject = no
+			BA_wildhunt_controll = yes
+			BA_catalonia_controll = yes
+		}
+
+		complete_effect = {
+			1043 = {
+				transfer_state_to = GM6
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM6
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM6
+				set_state_controller_to = GM6
+				add_claim_by = GM6
+				add_compliance = 25
+			}
+			GM6 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM7 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_bohemia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM7 }
+		}
+
+		available = {
+			is_subject = no
+			BA_bohemia_controll = yes
+		}
+
+		complete_effect = {
+			9 = {
+				transfer_state_to = GM7
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM7
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM7
+				set_state_controller_to = GM7
+				add_claim_by = GM7
+				add_compliance = 25
+			}
+			GM7 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+}
+
+GEM_establishment_of_reichskommissariat_altA = {
+
+	GEM_establishment_of_reichskommissariat_GM1_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_poland_little_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM1 }
+		}
+
+		available = {
+			is_subject = no
+			BA_poland_little_controll = yes
+		}
+
+		complete_effect = {
+			10 = {
+				transfer_state_to = GM1
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM1
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM1
+				set_state_controller_to = GM1
+				add_claim_by = GM1
+				add_compliance = 25
+			}
+			GM1 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM2_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_estonia_is = yes
+					BA_lithuania_is = yes
+					BA_latvia_is = yes
+					BA_belarus_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM2 }
+		}
+
+		available = {
+			is_subject = no
+			BA_estonia_controll = yes
+			BA_lithuania_controll = yes
+			BA_latvia_controll = yes
+			BA_belarus_controll = yes
+		}
+
+		complete_effect = {
+			808 = {
+				transfer_state_to = GM2
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM2
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM2
+				set_state_controller_to = GM2
+				add_claim_by = GM2
+				add_compliance = 25
+			}
+			GM2 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM3_altA = {
+
+		icon = ger_reichskommissariats
+
+		priority = 94
+
+		fire_only_once = yes
+
+
+		visible = {
+			NOT = { country_exists = GM3 }
+		}
+
+		available = {
+			is_subject = no
+			BA_russia_moscow_controll = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_russia_moscow_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			219 = {
+				transfer_state_to = GM3
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM3
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM3
+				set_state_controller_to = GM3
+				add_claim_by = GM3
+				add_compliance = 25
+			}
+			GM3 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = GER
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = GER
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+			
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM4_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_spain_is = yes
+					BA_portugal_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM4 }
+		}
+
+		available = {
+			is_subject = no
+			BA_spain_controll = yes
+			BA_portugal_controll = yes
+		}
+
+		complete_effect = {
+			41 = {
+				transfer_state_to = GM4
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_spain_is = yes
+						BA_portugal_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM4
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_spain_is = yes
+						BA_portugal_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM4
+				set_state_controller_to = GM4
+				add_claim_by = GM4
+				add_compliance = 25
+			}
+			GM4 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM5_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_ukraine_93_is = yes
+					BA_ukraine_soviet_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM5 }
+		}
+
+		available = {
+			is_subject = no
+			BA_ukraine_93_controll = yes
+			BA_ukraine_soviet_controll = yes
+		}
+
+		complete_effect = {
+			202 = {
+				transfer_state_to = GM5
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM5
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM5
+				set_state_controller_to = GM5
+				add_claim_by = GM5
+				add_compliance = 25
+			}
+			GM5 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM6_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_wildhunt_is = yes
+					BA_catalonia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM6 }
+		}
+
+		available = {
+			is_subject = no
+			BA_wildhunt_controll = yes
+			BA_catalonia_controll = yes
+		}
+
+		complete_effect = {
+			1043 = {
+				transfer_state_to = GM6
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM6
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_wildhunt_is = yes
+						BA_catalonia_is = yes
+					}
+					NOT = {
+						state = 1043
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM6
+				set_state_controller_to = GM6
+				add_claim_by = GM6
+				add_compliance = 25
+			}
+			GM6 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM7_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_bohemia_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM7 }
+		}
+
+		available = {
+			is_subject = no
+			BA_bohemia_controll = yes
+		}
+
+		complete_effect = {
+			9 = {
+				transfer_state_to = GM7
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM7
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_bohemia_is = yes
+					}
+					NOT = {
+						state = 9
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM7
+				set_state_controller_to = GM7
+				add_claim_by = GM7
+				add_compliance = 25
+			}
+			GM7 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM8_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_millennium_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM8 }
+		}
+
+		available = {
+			is_subject = no
+			BA_millennium_control = yes
+		}
+
+		complete_effect = {
+			16 = {
+				transfer_state_to = GM8
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_millennium_is = yes
+					}
+					NOT = {
+						state = 16
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM8
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_millennium_is = yes
+					}
+					NOT = {
+						state = 16
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM8
+				set_state_controller_to = GM8
+				add_claim_by = GM8
+				add_compliance = 25
+			}
+			GM8 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
+		}
+	}
+	GEM_establishment_of_reichskommissariat_GM9_altA = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_cou_belgium_is = yes
+					BA_ksp_belgium_west_is = yes
+					BA_cou_france_is = yes
+					BA_ksp_france_is = yes
+					BA_cou_netherlands_is = yes
+					BA_she_netherlands_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = GM9 }
+		}
+
+		available = {
+			is_subject = no
+			BA_cou_belgium_control = yes
+			BA_ksp_belgium_west_control = yes
+			BA_cou_france_control = yes
+			BA_ksp_france_control = yes
+			BA_cou_netherlands_control = yes
+			BA_she_netherlands_control = yes
+		}
+
+		complete_effect = {
+			7 = {
+				transfer_state_to = GM9
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_cou_belgium_is = yes
+						BA_ksp_belgium_west_is = yes
+						BA_cou_france_is = yes
+						BA_ksp_france_is = yes
+						BA_cou_netherlands_is = yes
+						BA_she_netherlands_is = yes
+					}
+					NOT = {
+						state = 7
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = GM9
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_cou_belgium_is = yes
+						BA_ksp_belgium_west_is = yes
+						BA_cou_france_is = yes
+						BA_ksp_france_is = yes
+						BA_cou_netherlands_is = yes
+						BA_she_netherlands_is = yes
+					}
+					NOT = {
+						state = 7
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = GM9
+				set_state_controller_to = GM9
+				add_claim_by = GM9
+				add_compliance = 25
+			}
+			GM9 = {
+				hidden_effect = {
+					set_cosmetic_tag = GM_altA
+				}
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				save_global_event_target_as = GEM_puppet_target
+			}
+			ROOT = {
+				country_event = GEM_puppet_events.1
+			}
 		}
 	}
 }
@@ -4979,11 +8320,821 @@ political_actions = {
 					has_war_with = GEH
 					has_completed_focus = GEM_deutsches_reich
 					has_completed_focus = GEM_a_republic_of_two_peoples
-					has_completed_focus = GEM_gehenna_identity
-					has_completed_focus = GEM_pandemonium_expansion
+					has_completed_focus = GEM_victory_from_trinity
+					GEH = { has_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag }
 				}
 				add = 400
 			}
+		}
+	}
+
+    GEH_GEM_armistice = {
+        priority = 200
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			OR = {
+				original_tag = GEH
+				original_tag = GEM
+			}
+		}
+
+		visible = {
+			any_country = {
+				has_war_with = ROOT
+				is_major = yes
+				any_country = {
+					NOT = { tag = ROOT }
+					OR = {
+						original_tag = GEM
+						original_tag = GEH
+					}
+					has_war_with = PREV
+				}
+			}
+			any_country = {
+				has_war_with = ROOT
+				OR = {
+					original_tag = GEM
+					original_tag = GEH
+				}
+			}
+		}
+		
+		available = {
+			is_subject = no
+			NOT = {
+				GEH = { has_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag }
+			}
+		}
+
+		cost = 0
+
+		complete_effect = {
+			custom_effect_tooltip = GEH_GEM_armistice_tt
+			set_country_flag = GEH_GEM_armistice_flag
+			if = {
+				limit = {
+					any_country = {
+						NOT = { tag = ROOT }
+						has_country_flag = GEH_GEM_armistice_flag
+						has_war_with = ROOT
+					}
+				}
+				country_event = GEH_event.22
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+    }
+
+    GEH_GEM__war_with_TRM = {
+        priority = 210
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			OR = {
+				original_tag = GEH
+				original_tag = GEM
+			}
+		}
+
+		visible = {
+			any_country = {
+				NOT = { tag = ROOT }
+				OR = {
+					original_tag = GEM
+					original_tag = GEH
+				}
+				has_war_with = TRM
+				NOT = { has_war_with = ROOT }
+			}
+		}
+
+		available = {
+			NOT = { has_war_with = TRM }
+			NOT = {
+				GEH = { has_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag }
+			}
+		}
+		
+		cost = 50
+
+		war_with_on_complete = TRM
+
+		complete_effect = {
+			random_enemy_country = {
+				limit = {
+					tag = TRM
+					any_enemy_country = {
+						NOT = { tag = ROOT }
+						OR = {
+							original_tag = GEM
+							original_tag = GEH
+						}
+						NOT = { has_war_with = ROOT }
+					}
+				}
+				ROOT = {
+					declare_war_on = {
+						target = PREV
+						type = puppet_wargoal_focus
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+    }
+}
+
+GEM_makoto_system_decision = {
+	GEM_makoto_system_decision_1 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_one_flag }
+		}
+		available = {
+			has_completed_focus = GEH_subjugation
+			controls_state = 909
+			controls_state = 58
+			controls_state = 59
+			controls_state = 56
+			NOT = {
+				has_decision = GEM_makoto_system_decision_1
+				has_decision = GEM_makoto_system_decision_2
+				has_decision = GEM_makoto_system_decision_3
+			}
+		}
+		cost = 0
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_one_flag
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_makoto_system_decision_2 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_one_flag }
+		}
+		available = {
+			has_completed_focus = GEM_union_state
+			NOT = {
+				has_decision = GEM_makoto_system_decision_1
+				has_decision = GEM_makoto_system_decision_2
+				has_decision = GEM_makoto_system_decision_3
+			}
+		}
+		cost = 0
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_one_flag
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_makoto_system_decision_3 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_one_flag }
+		}
+		available = {
+			has_completed_focus = GEM_german_wehrmacht
+			NOT = {
+				has_decision = GEM_makoto_system_decision_1
+				has_decision = GEM_makoto_system_decision_2
+				has_decision = GEM_makoto_system_decision_3
+			}
+		}
+		cost = 0
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_one_flag
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_makoto_system_decision_4 = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_two_flag }
+		}
+		available = {
+			NOT = {
+				has_decision = GEM_makoto_system_decision_4
+				has_decision = GEM_makoto_system_decision_5
+			}
+		}
+		days_remove = 180
+		cost = 100
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_two_flag
+		}
+		modifier = {
+			experience_gain_army = 0.25
+			war_support_weekly = 0.005
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_makoto_system_decision_5 = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_two_flag }
+		}
+		available = {
+			NOT = {
+				has_decision = GEM_makoto_system_decision_4
+				has_decision = GEM_makoto_system_decision_5
+			}
+		}
+		days_remove = 180
+		cost = 100
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_two_flag
+		}
+		modifier = {
+			stability_weekly = 0.001
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_makoto_system_decision_6 = {
+		icon = GFX_decision_generic_brainwash
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			NOT = { has_country_flag = GEM_makoto_system_decision_three_flag }
+		}
+		available = {
+			NOT = {
+				has_decision = GEM_makoto_system_decision_6
+			}
+			has_country_flag = GEH_unified_gehenna_flag
+		}
+		days_remove = 15
+		cost = 25
+		complete_effect = {
+			add_to_variable = {
+				GEM_makoto_system_up = 1
+				tooltip = GEM_makoto_system_up
+			}
+			set_country_flag = GEM_makoto_system_decision_three_flag
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+}
+
+GEM_chiaki_system_decision = {
+	GEM_chiaki_system_decision_1 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 100
+		days_remove = 100
+		modifier = {
+			production_factory_efficiency_gain_factor = -0.05
+			production_factory_max_efficiency_factor = -0.05
+			stability_weekly = 0.001
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_1
+				days = 100
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 5
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_2 = {
+		icon = GFX_decision_generic_research
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 10
+		days_remove = 70
+		modifier = {
+			war_support_factor = 0.05
+			production_speed_buildings_factor = 0.02
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_2
+				days = 70
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 2
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_3 = {
+		icon = GFX_decision_generic_research
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 10
+		days_remove = 70
+		modifier = {
+			production_factory_efficiency_gain_factor = 0.02
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_3
+				days = 70
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 2
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_4 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = GEM_chiaki_system_decision_4?5
+		days_remove = 120
+		modifier = {
+			political_power_cost = 0.01
+			consumer_goods_factor = -0.15
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_4
+				days = 120
+				value = 1
+			}
+			custom_effect_tooltip = GEM_chiaki_system_decision_costup_tt
+			add_to_variable = {
+				GEM_chiaki_system_decision_4 = 15
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 3
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_5 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+			has_defensive_war = yes
+		}
+		cost = 30
+		days_remove = 240
+		days_re_enable = 120
+		modifier = {
+			mobilization_speed = 0.15
+			army_core_defence_factor = 0.10
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_5
+				days = 240
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 5
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_6 = {
+		icon = GFX_decision_generic_research
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 5
+		days_remove = 45
+		days_re_enable = 30
+		modifier = {
+			production_lack_of_resource_penalty_factor = -0.02
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_6
+				days = 45
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 1
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_7 = {
+		icon = GFX_decision_generic_research
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 5
+		days_remove = 45
+		days_re_enable = 30
+		modifier = {
+			stability_factor = 0.05
+			weekly_manpower = 50
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_7
+				days = 45
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 1
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_8 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = GEM_chiaki_system_decision_8?5
+		days_remove = 65
+		days_re_enable = 30
+		modifier = {
+			stability_factor = 0.05
+			weekly_manpower = 50
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_8
+				days = 45
+				value = 1
+			}
+			custom_effect_tooltip = GEM_chiaki_system_decision_costup_tt
+			add_to_variable = {
+				GEM_chiaki_system_decision_8 = 5
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 3
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_9 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+		}
+		cost = 15
+		days_remove = 200
+		days_re_enable = 240
+		modifier = {
+			war_support_factor = 0.05
+			weekly_manpower = 250
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_9
+				days = 45
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 3
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_10 = {
+		icon = GFX_decision_SWI_no_elected_president
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+		}
+		available = {
+			surrender_progress > 0.01
+		}
+		cost = 65
+		days_remove = 280
+		days_re_enable = 120
+		modifier = {
+			war_support_factor = 0.10
+			war_support_weekly = 0.001
+			conscription_factor = 0.01
+			mobilization_speed = 0.25
+			army_core_defence_factor = 0.05
+			army_core_attack_factor = 0.05
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_10
+				days = 45
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 7
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_11 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+		}
+		available = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+		}
+		cost = 20
+		days_remove = 95
+		days_re_enable = 40
+		modifier = {
+			monthly_population = 0.15
+			production_factory_efficiency_gain_factor = 0.02
+			production_speed_buildings_factor = 0.05
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_11
+				days = 95
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 5
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_12 = {
+		icon = GFX_decision_generic_research
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+		}
+		available = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+		}
+		cost = 10
+		days_remove = 55
+		days_re_enable = 15
+		modifier = {
+			political_power_gain = 0.05
+			conscription_factor = 0.05
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_12
+				days = 55
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 2
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_13 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+		}
+		available = {
+			has_completed_focus = GEM_propaganda_propaganda_propaganda
+			has_stability < 0.80
+		}
+		cost = 15
+		days_remove = 75
+		days_re_enable = 75
+		modifier = {
+			stability_factor = 0.15
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_13
+				days = 75
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 4
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_14 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			has_completed_focus = GEM_corporate_tax_deduction
+		}
+		available = {
+			has_completed_focus = GEM_corporate_tax_deduction
+		}
+		cost = 15
+		days_remove = 85
+		days_re_enable = 25
+		modifier = {
+			stability_factor = -0.05
+			research_speed_factor = 0.05
+			production_factory_efficiency_gain_factor = 0.02
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_14
+				days = 85
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 4
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
+		}
+	}
+	GEM_chiaki_system_decision_15 = {
+		icon = GFX_decision_generic_speech
+		allowed = {
+			original_tag = GEM
+		}
+		visible = {
+			has_completed_focus = GEM_populist_leader
+		}
+		available = {
+			has_completed_focus = GEM_populist_leader
+		}
+		cost = 15
+		days_remove = 85
+		days_re_enable = 25
+		modifier = {
+			stability_factor = -0.05
+			consumer_goods_factor = 0.15
+			stability_weekly = 0.002
+			party_popularity_stability_factor = 0.05
+		}
+		complete_effect = {
+			set_country_flag = {
+				flag = flag_GEM_chiaki_system_decision_14
+				days = 85
+				value = 1
+			}
+			set_temp_variable = {
+				GEM_chiaki_system_temp_var = 4
+				tooltip = GEM_chiaki_system_var_tt
+			}
+			GEM_chiaki_system_modify_effect = yes
+		}
+		ai_will_do = {
+			base = 400
 		}
 	}
 }

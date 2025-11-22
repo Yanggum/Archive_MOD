@@ -1,10 +1,38 @@
 ideas = {
 	hidden_ideas = {
+	}
+	hidden_ideas = {
 		GEH_WE_NEED_MANY_SADAN = {
 			picture = generic_victors_of_ww1
 			allowed = { always = no }
 			modifier = {
 				ai_desired_divisions_factor = 50
+			}
+		}
+        
+		gem_club_problem_decision_gourmet_research_society_idea_END = {
+			name = GEM_gourmet_research_society_dynamic
+			allowed = { always = no }
+			allowed_civil_war = { always = no } 
+
+			cancel = { NOT = { has_country_flag = club_problem_gourmet_research_society_owner_flag } }
+
+			modifier = {
+				stability_factor = 0.02
+				conscription_factor = 0.10
+			}
+		}
+        
+		gem_club_problem_decision_hot_spring_department_idea_END = {
+			name = GEM_hot_spring_department_dynamic
+			allowed = { always = no }
+			allowed_civil_war = { always = no } 
+
+			cancel = { NOT = { has_country_flag = club_problem_hot_spring_department_owner_flag } }
+
+			modifier = {
+				stability_factor = 0.02
+				production_speed_buildings_factor = 0.10
 			}
 		}
         
@@ -79,6 +107,131 @@ ideas = {
 		}
 	}
 	country = {
+		#REICHSKOMMISSARIATS
+		idea_GEM_puppet_leader_a = {
+			
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = triumphant_will
+
+			modifier = {
+				local_resources_factor = 0.25
+				industrial_capacity_factory = 0.1
+				production_speed_buildings_factor = 0.1
+				production_lack_of_resource_penalty_factor = -0.1
+				autonomy_gain_global_factor = -0.1
+				weekly_manpower = 200
+				resistance_damage_to_garrison = -0.1
+				overlord_trade_cost_factor = -0.05
+			}
+
+			targeted_modifier = {
+				tag = GEM
+				cic_to_target_factor = 0.2
+				mic_to_target_factor = 0.15
+			}
+		}
+
+		idea_GEM_governor_general_b = {
+
+			name = idea_GEM_puppet_leader_a
+			
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = triumphant_will
+
+			modifier = {
+				compliance_growth = 0.1
+				local_resources_factor = 0.2
+				industrial_capacity_factory = 0.1
+				production_speed_buildings_factor = 0.05
+				production_lack_of_resource_penalty_factor = -0.15
+				autonomy_gain_global_factor = -0.05
+				weekly_manpower = 250
+				resistance_target = -0.1
+				overlord_trade_cost_factor = -0.05
+			}
+
+			targeted_modifier = {
+				tag = GEM
+				cic_to_target_factor = 0.1
+				mic_to_target_factor = 0.1
+			}
+		}
+		idea_GEM_cross_the_strait = {
+			
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = generic_naval_invade_britain
+
+			modifier = {
+				marines_special_forces_contribution_factor = -0.25
+				paratroopers_special_forces_contribution_factor = -0.25
+				naval_invasion_prep_speed = 0.25
+				shore_bombardment_bonus = 0.25
+				naval_invasion_penalty = -0.15
+				air_strategic_bomber_bombing_factor = 0.1
+			}
+
+			targeted_modifier = {
+				tag = KAI
+				attack_bonus_against = 0.05
+			}
+			targeted_modifier = {
+				tag = GEI
+				attack_bonus_against = 0.05
+			}
+			targeted_modifier = {
+				tag = ENG
+				attack_bonus_against = 0.05
+			}
+		}
+		idea_GEM_manifest_destiny = {
+			
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			removal_cost = -1
+
+			picture = GEM_GOAT
+
+			modifier = {
+				industrial_capacity_dockyard = 0.10
+				justify_war_goal_time = -0.15
+				justify_war_goal_when_in_major_war_time = -0.05
+				generate_wargoal_tension = -0.15
+				non_core_manpower = 0.01
+			}
+		}
 		
 		BA_a_divided_academy = { #분열된 학원
 			picture = tfv_can_conscription_crisis
@@ -109,6 +262,50 @@ ideas = {
 			modifier = {
 				surrender_limit = -0.10
 				custom_modifier_tooltip = kivotos_halo_remove6_tt
+			}
+		}
+
+		idea_GEM_secret_leadership_and_popular_suffrage = {
+
+			picture = generic_spy_intel
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via event
+			}
+
+			allowed_civil_war = {
+				has_government = fascism
+			}
+
+			modifier = {
+				stability_factor = 0.05
+				party_popularity_stability_factor = -0.05
+				production_factory_efficiency_gain_factor = 0.05
+				production_factory_max_efficiency_factor = 0.05
+				local_building_slots_factor = 0.05
+			}
+		}
+
+		idea_GEM_anti_state_activist_arrest = {
+
+			picture = generic_spy_intel
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via event
+			}
+
+			allowed_civil_war = {
+				has_government = fascism
+			}
+
+			modifier = {
+				industrial_capacity_dockyard = -0.10
+				industrial_capacity_factory = -0.10
+				stability_weekly = 0.003
 			}
 		}
 
@@ -1186,7 +1383,7 @@ ideas = {
 			
 			modifier = {
 				stability_factor = -0.10
-				war_support_factor = 0.20
+				war_support_factor = 0.10
 				war_stability_factor = 0.10
 				fascism_drift = 0.01
 			}
@@ -1200,7 +1397,8 @@ ideas = {
 			
 			modifier = {
 				stability_factor = -0.05
-				war_support_factor = 0.05
+				war_support_factor = 0.10
+				offensive_war_stability_factor = 0.05
 				war_stability_factor = 0.10
 				fascism_drift = 0.02
 			}
@@ -1213,8 +1411,8 @@ ideas = {
 			allowed_civil_war = { always = yes 	} 
 			
 			modifier = {
-				stability_factor = -0.05
-				war_support_factor = 0.10
+				war_support_factor = 0.15
+				offensive_war_stability_factor = 0.05
 				war_stability_factor = 0.10
 				fascism_drift = 0.02
 			}
@@ -1229,6 +1427,7 @@ ideas = {
 				stability_factor = 0.05
 				justify_war_goal_time = -0.75
 				generate_wargoal_tension = -0.75
+				offensive_war_stability_factor = 0.05
 				war_support_factor = 0.15
 				war_support_weekly_factor = 0.001
 				war_stability_factor = 0.10
@@ -1256,6 +1455,376 @@ ideas = {
 			}
 		}
 
+		GEH_nazism_5_idea = { # 제4제국 : 다민족 국가
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				stability_factor = 0.10
+				justify_war_goal_time = -0.25
+				generate_wargoal_tension = -0.25
+				offensive_war_stability_factor = 0.05
+				war_support_factor = 0.10
+				war_support_weekly_factor = 0.001
+				war_stability_factor = 0.10
+				fascism_drift = 0.05
+				compliance_gain = 0.05
+				production_factory_efficiency_gain_factor = 0.05
+				army_core_attack_factor = 0.05
+				army_core_defence_factor = 0.05
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_6_idea = { # 제4제국 : 새로운 독일 민족
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				stability_factor = 0.05
+				justify_war_goal_time = -0.75
+				generate_wargoal_tension = -0.75
+				war_support_factor = 0.15
+				war_support_weekly_factor = 0.001
+				war_stability_factor = 0.10
+				fascism_drift = 0.05
+				conscription_factor = 0.15
+				offensive_war_stability_factor = 0.10
+				experience_gain_army_factor = 0.10
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_A41_idea = { # 제4제국 : 재정의된 독일 민족 (치아키)
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				stability_factor = 0.05
+				justify_war_goal_time = -0.25
+				generate_wargoal_tension = -0.50
+				offensive_war_stability_factor = 0.05
+				war_support_factor = 0.10
+				war_support_weekly_factor = 0.001
+				war_stability_factor = 0.05
+				fascism_drift = 0.05
+				global_building_slots_factor = 0.05
+				industrial_capacity_dockyard = 0.05
+				industrial_capacity_factory = 0.05
+				production_factory_max_efficiency_factor = 0.05
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_A42_idea = { # 제4제국 : 초게르만주의 (치아키)
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	}
+			
+			modifier = {
+				stability_factor = 0.05
+				justify_war_goal_time = -0.75
+				generate_wargoal_tension = -0.75
+				war_support_factor = 0.15
+				war_support_weekly_factor = 0.001
+				war_stability_factor = 0.10
+				fascism_drift = 0.05
+				conscription_factor = 0.15
+				offensive_war_stability_factor = 0.10
+				experience_gain_army_factor = 0.10
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEM_rolling_the_dice_idea_deff = {
+
+			picture = ENG_the_war_to_end_all_wars
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				stability_factor = -0.15
+				custom_modifier_tooltip = GEM_rolling_the_dice_idea_deff_tt
+			}
+		}
+
+		GEM_hasrant_idea_deff = {
+
+			picture = ENG_the_war_to_end_all_wars
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				civilian_factory_use = 3
+				custom_modifier_tooltip = GEM_hasrant_idea_deff_tt
+			}
+		}
+
+		GEM_two_nations_one_state_idea_deff = {
+
+			picture = ENG_the_war_to_end_all_wars
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				political_power_factor = -0.15
+				custom_modifier_tooltip = GEM_two_nations_one_state_idea_deff_tt
+			}
+		}
+
+		GEM_two_nations_one_state_idea = {
+
+			picture = ger_revive_the_kaiserreich
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				stability_factor = -0.05
+				non_core_manpower = 0.02
+				surrender_limit = 0.05
+				modifier_army_sub_unit_halo_militia_attack_factor = 0.05
+				army_infantry_attack_factor = 0.05
+			}
+		}
+
+		GEM_build_all_german_memorial_idea = {
+
+			picture = generic_army_problems
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				consumer_goods_factor = 0.15
+				custom_modifier_tooltip = GEM_build_all_german_memorial_idea_tt
+			}
+		}
+
+		GEM_build_all_german_memorial_buff_idea = {
+
+			picture = ger_revive_the_kaiserreich
+
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			modifier = {
+				stability_factor = 0.05
+				war_stability_factor = -0.02
+				non_core_manpower = 0.02
+				compliance_gain = 0.05
+			}
+		}
+
+		GEH_nazism_alt_idea = { # 두 파벌 정치
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.05
+				stability_factor = -0.10
+				war_support_factor = 0.10
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.10
+				navy_chief_cost_factor = -0.10
+				air_chief_cost_factor = -0.10
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_1_idea = { # 두 파벌 정치
+			name = GEH_nazism_alt_idea
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.10
+				stability_factor = -0.10
+				war_support_factor = 0.10
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.10
+				navy_chief_cost_factor = -0.10
+				air_chief_cost_factor = -0.10
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_1_B_1_idea = { # 두 세계의 국가
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.10
+				stability_factor = -0.10
+				war_support_factor = 0.10
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.10
+				navy_chief_cost_factor = -0.10
+				air_chief_cost_factor = -0.10
+				conscription_factor = 0.05
+				compliance_gain = 0.03
+				industrial_capacity_dockyard = 0.05
+				industrial_capacity_factory = 0.05
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_1_B_2_idea = { # 파벌 연립
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.05
+				stability_factor = -0.05
+				war_support_factor = 0.05
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.10
+				navy_chief_cost_factor = -0.10
+				air_chief_cost_factor = -0.10
+				party_popularity_stability_factor = 0.05
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_2_B_2_idea = { # 두 세계의 국가
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.05
+				war_support_factor = 0.05
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.10
+				navy_chief_cost_factor = -0.10
+				air_chief_cost_factor = -0.10
+				party_popularity_stability_factor = 0.05
+				defensive_war_stability_factor = 0.10
+				command_power_gain_mult = 0.15
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_2_idea = { # 두 파벌 정치
+			name = GEH_nazism_alt_idea
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.10
+				stability_factor = -0.10
+				war_support_factor = 0.10
+				war_stability_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.15
+				navy_chief_cost_factor = -0.15
+				air_chief_cost_factor = -0.15
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
+		GEH_nazism_alt_3_idea = { # 두 파벌 정치
+			picture = generic_fascism_rising
+			allowed = { always = no }
+			allowed_civil_war = { always = yes 	} 
+			
+			modifier = {
+				political_power_gain = 0.10
+				stability_factor = -0.05
+				war_support_factor = 0.10
+				war_stability_factor = 0.10
+				resistance_target_on_our_occupied_states = 0.25
+				production_factory_max_efficiency_factor = 0.05
+				army_chief_cost_factor = -0.15
+				navy_chief_cost_factor = -0.15
+				air_chief_cost_factor = -0.15
+				compliance_gain = 0.05
+				industrial_capacity_dockyard = 0.05
+				industrial_capacity_factory = 0.05
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+
 		GEH_prussian_idea = { # 프로이센 군국주의
 			picture = generic_manpower_bonus
 			allowed = { always = no }
@@ -1274,7 +1843,7 @@ ideas = {
 			} 
 			
 			modifier = {
-				political_power_factor = -0.15
+				political_power_factor = -0.05
 				stability_factor = -0.15
 				conscription = 0.02
 			}
@@ -1289,7 +1858,7 @@ ideas = {
 			} 
 			
 			modifier = {
-				political_power_factor = -0.15
+				political_power_factor = -0.05
 				stability_factor = -0.10
 				conscription_factor = 0.10
 				conscription = 0.02
@@ -1313,10 +1882,23 @@ ideas = {
 				industrial_capacity_dockyard = 0.05
 				industrial_capacity_factory = 0.05
 			}
+		}
+
+		GEH_schutzstaffel_alt_idea = { # 슈츠슈타펠
+			name = GEH_schutzstaffel_idea
+			picture = generic_secret_police
+			allowed = { always = no }
+			allowed_civil_war = {
+				has_government = fascism
+			} 
 			
-			targeted_modifier = {
-				tag = GEM
-				attack_bonus_against = 0.10
+			modifier = {
+				stability_factor = -0.05
+				conscription_factor = 0.05
+				conscription = 0.01
+				production_factory_efficiency_gain_factor = 0.05
+				industrial_capacity_dockyard = 0.05
+				industrial_capacity_factory = 0.05
 			}
 		}
 
@@ -1793,6 +2375,7 @@ ideas = {
 			removal_cost = -1
 
 			modifier = {
+				experience_gain_army = 0.10
 				political_power_gain = 0.5
 				party_popularity_stability_factor = -0.15
 				consumer_goods_factor = -0.15
@@ -2661,6 +3244,7 @@ ideas = {
 				production_speed_arms_factory_factor = 0.1
 				consumer_goods_factor = -0.05
 				stability_factor = -0.20
+				power_balance_daily = -0.001
 			}
 		}
 		GEH_dismantle_maginot = { #
@@ -3109,6 +3693,33 @@ ideas = {
 				intelligence_agency_defense = 0.2
 				ENEMY_OPERATIVE_CAPTURE_CHANCE_FACTOR = 0.05
 				agency_upgrade_time = 1
+			}
+		}
+		
+		GEH_harmonism_federation = {
+			removal_cost = -1
+
+			picture = GEH_harmonism_federation
+				
+			allowed = {
+				original_tag = GEH
+			}
+
+			allowed_civil_war = {
+				has_government = fascism
+			}
+
+			available = {
+
+			}
+					
+			modifier = {
+				party_popularity_stability_factor = 0.05
+				fascism_drift = 0.01
+				industrial_capacity_factory = 0.10
+				industrial_capacity_dockyard = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				local_resources_factor = 0.05
 			}
 		}
 		
@@ -3764,6 +4375,515 @@ ideas = {
 			}
 			
 			traits = { energy_supply_company }
+		}
+		
+		GEH_tank_designer = {
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_organic_industry_strengthening
+						has_completed_focus = GEAC_gehenna_artillery
+					}
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_organic_industry_strengthening
+					has_completed_focus = GEAC_gehenna_artillery
+				}
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = -0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.05
+				production_speed_arms_factory_factor = 0.10
+			}
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_1 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_gehenna_artillery
+						has_completed_focus = GEAC_hot_spring_industry_expansion
+					}
+					has_completed_focus = GEAC_organic_industry_strengthening
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_gehenna_artillery
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+				has_completed_focus = GEAC_organic_industry_strengthening
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = 0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				production_speed_arms_factory_factor = 0.10
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_2 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_organic_industry_strengthening
+						has_completed_focus = GEAC_hot_spring_industry_expansion
+					}
+					has_completed_focus = GEAC_gehenna_artillery
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_organic_industry_strengthening
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+				has_completed_focus = GEAC_gehenna_artillery
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = -0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.05
+				production_speed_arms_factory_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				artillery_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_air = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_1_2 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_hot_spring_industry_expansion
+					}
+					has_completed_focus = GEAC_organic_industry_strengthening
+					has_completed_focus = GEAC_gehenna_artillery
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+				has_completed_focus = GEAC_organic_industry_strengthening
+				has_completed_focus = GEAC_gehenna_artillery
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = 0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				production_speed_arms_factory_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.10
+					instant = yes
+				}
+				artillery_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_air = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_3 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_gehenna_artillery
+						has_completed_focus = GEAC_organic_industry_strengthening
+					}
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_gehenna_artillery
+					has_completed_focus = GEAC_organic_industry_strengthening
+				}
+				has_completed_focus = GEAC_hot_spring_industry_expansion
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = -0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.05
+				production_speed_arms_factory_factor = 0.10
+				production_speed_industrial_complex_factor = 0.10
+				production_speed_infrastructure_factor = 0.10
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_1_3 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_gehenna_artillery
+					}
+					has_completed_focus = GEAC_organic_industry_strengthening
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_gehenna_artillery
+				}
+				has_completed_focus = GEAC_organic_industry_strengthening
+				has_completed_focus = GEAC_hot_spring_industry_expansion
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = 0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				production_speed_arms_factory_factor = 0.10
+				production_speed_industrial_complex_factor = 0.10
+				production_speed_infrastructure_factor = 0.10
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_2_3 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					NOT = {
+						has_completed_focus = GEAC_organic_industry_strengthening
+					}
+					has_completed_focus = GEAC_gehenna_artillery
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+			}
+
+			visible = {
+				NOT = {
+					has_completed_focus = GEAC_organic_industry_strengthening
+				}
+				has_completed_focus = GEAC_gehenna_artillery
+				has_completed_focus = GEAC_hot_spring_industry_expansion
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = -0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.05
+				production_speed_arms_factory_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				production_speed_industrial_complex_factor = 0.10
+				production_speed_infrastructure_factor = 0.10
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				artillery_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_air = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEH_tank_designer_1_2_3 = {
+
+			name = GEH_tank_designer
+
+			picture = GEH_tank_designer
+			
+			allowed = {
+				OR = { 
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = HEU
+				}
+			}
+			
+			available = {
+				GEAC_basic_available_trigger = yes
+				hidden_trigger = {
+					has_completed_focus = GEAC_organic_industry_strengthening
+					has_completed_focus = GEAC_gehenna_artillery
+					has_completed_focus = GEAC_hot_spring_industry_expansion
+				}
+			}
+
+			visible = {
+				has_completed_focus = GEAC_organic_industry_strengthening
+				has_completed_focus = GEAC_gehenna_artillery
+				has_completed_focus = GEAC_hot_spring_industry_expansion
+			}
+			
+			cost = 150
+			removal_cost = 10
+			
+			research_bonus = {
+				industry = 0.05
+			}
+			
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				production_speed_arms_factory_factor = 0.10
+				production_factory_max_efficiency_factor = 0.05
+				production_speed_industrial_complex_factor = 0.10
+				production_speed_infrastructure_factor = 0.10
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.10
+					instant = yes
+				}
+				artillery_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_air = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+				anti_tank_equipment = {
+					build_cost_ic = -0.05
+					instant = yes
+				}
+			}
+
+			traits = { GEH_designer }
+			
+			ai_will_do = {
+				factor = 1
+			}
 		}
 	}
 }

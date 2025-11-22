@@ -1,0 +1,136 @@
+IDC_surrender_of_france = { #surrender_of_france
+	IDC_break_the_law = {
+		icon = GFX_decision_hol_war_on_pacifism
+		
+		available = {
+			has_country_flag = has_IDC_independence_war_starter
+			VIN = {
+				OR = {
+					AND = {
+						exists = no
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						has_capitulated = yes
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						is_subject = no
+						any_core_state = {
+							is_controlled_by = PREV
+						}
+					}
+				}
+			}
+			LAO = {
+				OR = {
+					AND = {
+						exists = no
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						has_capitulated = yes
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						is_subject = no
+						any_core_state = {
+							is_controlled_by = PREV
+						}
+					}
+				}
+			}
+			CAM = {
+				OR = {
+					AND = {
+						exists = no
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						has_capitulated = yes
+						any_core_state = {
+							is_controlled_by = ROOT
+						}
+					}
+					AND = {
+						is_subject = no
+						any_core_state = {
+							is_controlled_by = PREV
+						}
+					}
+				}
+			}
+		}
+		ai_will_do = {
+            factor = 400
+        }
+		days_remove = IDC_break_the_law_cost_var
+		cancel_trigger = {
+			OR = {
+				VIN = {
+					any_core_state = {
+						is_controlled_by = FRA
+					}
+				}
+				LAO = {
+					any_core_state = {
+						is_controlled_by = FRA
+					}
+				}
+				CAM = {
+					any_core_state = {
+						is_controlled_by = FRA
+					}
+				}
+			}
+		}
+		cancel_effect = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			clr_global_flag = IDC_independence_war_ongoing
+			set_global_flag = IDC_independence_war_onended
+			if = {
+				limit = {
+					CAM = { controls_state = 1038 }
+				}
+				CAM = { transfer_state = 1038 }
+			}
+			else_if = {
+				limit = {
+					VIN = { controls_state = 1038 }
+				}
+				VIN = { transfer_state = 1038 }
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_country_flag = has_IDC_independence_war_starter
+						has_country_flag = has_IDC_independence_war_controller
+					}
+					has_war_with = FRA
+				}
+				FRA = {
+					white_peace = PREV
+					if = {
+						limit = { is_in_faction = yes }
+						every_allied_country = {
+							white_peace = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}

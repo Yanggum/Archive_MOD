@@ -1621,7 +1621,7 @@ focus_tree = {
 		completion_reward = {
 			# Tripoli - Tobruk
 			build_railway = {
-				path = { 1149 4194 7209 9980 1118 1041 4047 10046 10117 12088 4057 1198 1127 4120 11954 10123 12094 4151 1204 7082 91027 1130 }
+				path = { 1149 4194 7209 9980 1118 1041 4047 10046 10117 12088 4057 1198 1127 4120 11954 10123 12094 4151 1204 7082 9992 1130 }
 			}
 
 			custom_effect_tooltip = ITA_libyan_railway_state_modifier_tt
@@ -3894,11 +3894,17 @@ focus_tree = {
 
 			army_experience = 25
 
+			add_mastery= {
+				amount = 150
+				grand_doctrine = grand_battleplan
+				track = infantry
+			}
+
 			add_doctrine_cost_reduction = {
 				name = ITA_preserve_army_traditions
-				cost_reduction = 0.75
+				cost_reduction = 0.5
 				uses = 1
-				category = cat_grand_battle_plan
+				category = land_doctrine
 			}
 		}
 	}
@@ -4161,11 +4167,19 @@ focus_tree = {
 			custom_effect_tooltip = available_chief_of_army
 			show_ideas_tooltip = ITA_alberto_pariani
 
+
+			add_mastery_bonus = {
+				name = ITA_a_bandits_war
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_mobile_warfare
+				track = infantry
+			}
 			add_doctrine_cost_reduction = {
 				name = ITA_a_bandits_war
-				cost_reduction = 0.5
-				uses = 2
-				category = cat_mobile_warfare
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
 			}
 
 			add_tech_bonus = {
@@ -4198,9 +4212,12 @@ focus_tree = {
 					limit = {
 						is_ai = yes
 					}
-					set_technology = {
-						trench_warfare = 0
-						mobile_warfare = 1
+					if = {
+						limit = {
+							has_doctrine = grand_battleplan
+						}
+
+						set_grand_doctrine = new_mobile_warfare
 					}
 				}
 			}
@@ -4310,12 +4327,6 @@ focus_tree = {
 			custom_effect_tooltip = ITA_superesercito_re_tt
 
 			army_experience = 50
-			#if = {
-			#	limit = {
-			#		has_dlc = "No Step Back"
-			#	}
-			#	custom_effect_tooltip = "TODO_Manu: Cost reduction for Army spirits. Code Support"
-			#}
 
 			#Update NS icon
 			ITA_improve_regio_esercito_dm_effect = yes
@@ -4440,7 +4451,7 @@ focus_tree = {
 
 			division_template = { 
 				name = "Reggimento Bersaglieri" 
-				division_names_group = ITA_INF_01 #TODO_Manu: Namelist: 1º,2º... Reggimento Bersaglieri
+				division_names_group = ITA_INF_01
 				regiments = { 
 					bicycle_battalion = { x = 0 y = 0 }
 					bicycle_battalion = { x = 0 y = 1 }
@@ -5214,12 +5225,6 @@ focus_tree = {
 			custom_effect_tooltip = ITA_superaereo_ra_tt
 
 			air_experience = 50
-			#if = {
-			#	limit = {
-			#		has_dlc = "No Step Back"
-			#	}
-			#	custom_effect_tooltip = "TODO_Manu: Cost reduction for Airforce spirits. Code support"
-			#}
 
 			#Update NS icon
 			ITA_improve_regia_aeronautica_dm_effect = yes
@@ -5763,11 +5768,21 @@ focus_tree = {
 				}
 			}
 			else = {
+
+
+
+				add_mastery_bonus = {
+					name = ITA_intensify_torpedo_manufacturing
+					bonus = 0.1
+					days = 180
+					grand_doctrine = new_convoy_raiding
+					track = submarines
+				}
 				add_doctrine_cost_reduction = {
 					name = ITA_intensify_torpedo_manufacturing
 					cost_reduction = 0.5
-					uses = 2
-					category = cat_trade_interdiction
+					uses = 1
+					category = naval_doctrine
 				}
 			}
 		}
@@ -6267,12 +6282,6 @@ focus_tree = {
 			custom_effect_tooltip = ITA_supermarina_rm_tt
 
 			navy_experience = 50
-			#if = {
-			#	limit = {
-			#		has_dlc = "No Step Back"
-			#	}
-			#	custom_effect_tooltip = "TODO_Manu: Cost reduction for Navy spirits. Code support"
-			#}
 
 			#Update NS icon
 			ITA_improve_regia_marina_dm_effect = yes
@@ -6676,8 +6685,6 @@ focus_tree = {
 			show_unit_leaders_tooltip = ITA_junio_valerio_borghese
 
 			unlock_decision_tooltip = ITA_human_torpedo_raid
-
-			#TODO_Manu: Nice to have -> New Operation for damaging enemy ships docked in nearby docks with human torpedoes
 		}
 	}
 
@@ -6707,18 +6714,26 @@ focus_tree = {
 
 			navy_experience = 25
 
+			add_mastery_bonus = {
+				name = ITA_incrociatori_leggeri
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_convoy_raiding
+				track = screens
+			}
+
 			add_doctrine_cost_reduction = {
 				name = ITA_incrociatori_leggeri
-				cost_reduction = 0.75
-				uses = 2
-				category = cat_trade_interdiction
+				cost_reduction = 0.5
+				uses = 1
+				category = naval_doctrine
 			}
 
 			add_tech_bonus = {
 				name = ITA_incrociatori_leggeri
 				bonus = 1
 				uses = 1
-				category = cl_tech
+				category = ca_tech
 			}
 
 			#Update NS icon
@@ -6752,11 +6767,20 @@ focus_tree = {
 
 			navy_experience = 25
 
+
+			add_mastery_bonus = {
+				name = ITA_incrociatori_pesanti
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_fleet_in_being
+				track = capital_ships
+			}
+
 			add_doctrine_cost_reduction = {
 				name = ITA_incrociatori_pesanti
-				cost_reduction = 0.75
-				uses = 2
-				category = cat_fleet_in_being
+				cost_reduction = 0.50
+				uses = 1
+				category = naval_doctrine
 			}
 
 			add_tech_bonus = {
@@ -6847,12 +6871,15 @@ focus_tree = {
 
 		completion_reward = {
 			navy_experience = 15
-			add_doctrine_cost_reduction = {
+
+			add_mastery_bonus = {
 				name = ITA_cruiser_submarines
-				cost_reduction = 0.5
-				uses = 1
-				category = trade_interdiction_tree
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_convoy_raiding
+				track = submarines
 			}
+			
 
 			add_tech_bonus = {
 				name = ITA_cruiser_submarines
@@ -6903,12 +6930,15 @@ focus_tree = {
 
 		completion_reward = {
 			navy_experience = 15
-			add_doctrine_cost_reduction = {
+
+			add_mastery_bonus = {
 				name = ITA_midget_submarines
-				cost_reduction = 0.5
-				uses = 1
-				category = trade_interdiction_tree
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_convoy_raiding
+				track = submarines
 			}
+			
 
 			add_tech_bonus = {
 				name = ITA_midget_submarines
@@ -6982,11 +7012,20 @@ focus_tree = {
 
 		completion_reward = {
 			navy_experience = 15
+
+			add_mastery_bonus = {
+				name = ITA_cacciatorpediniere_di_scorta
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_base_strike
+				track = screens
+			}
+
 			add_doctrine_cost_reduction = {
 				name = ITA_cacciatorpediniere_di_scorta
-				cost_reduction = 0.50
-				uses = 2
-				category = convoy_defense_tree
+				cost_reduction = 0.25
+				uses = 1
+				category = naval_doctrine
 			}
 
 			add_tech_bonus = {
@@ -7031,7 +7070,7 @@ focus_tree = {
 					create_equipment_variant = {
 						name = "Comandanti Medaglie d'Oro Class"
 						type = ship_hull_light_3
-						name_group = ITA_DD_HISTORICAL #TODO_Manu: Name List
+						name_group = ITA_DD_HISTORICAL
 						parent_version = 0
 						allow_without_tech = yes #Makes no difference since focus requires appropriate tech (above), but it improves tooltip
 						modules = {
@@ -7114,8 +7153,16 @@ focus_tree = {
 		relative_position_id = ITA_incrociatori_leggeri
 		cost = 5
 		available = {
-			has_tech = improved_depth_charges
-			has_tech = sonar
+			IF = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+				has_tech = improved_depth_charges
+				has_tech = sonar
+			}
+			ELSE = {
+				has_tech = basic_destroyer
+			}
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_NAVY_XP FOCUS_FILTER_RESEARCH}
@@ -7168,7 +7215,7 @@ focus_tree = {
 					create_equipment_variant = {
 						name = "Gabbiano Class"
 						type = ship_hull_light_1
-						name_group = ITA_DD_HISTORICAL #TODO_Manu: Name List
+						name_group = ITA_DD_HISTORICAL
 						parent_version = 0
 						allow_without_tech = yes #Makes no difference since ITA already has tech, but in order to keep it consistent
 						modules = {
@@ -7274,11 +7321,19 @@ focus_tree = {
 
 		completion_reward = {
 			navy_experience = 15
+
+			add_mastery_bonus = {
+				name = ITA_navi_da_battaglia
+				bonus = 0.2
+				days = 180
+				grand_doctrine = new_fleet_in_being
+				track = capital_ships
+			}
 			add_doctrine_cost_reduction = {
 				name = ITA_navi_da_battaglia
-				cost_reduction = 0.50
-				uses = 2
-				category = fleet_in_being_tree
+				cost_reduction = 0.25
+				uses = 1
+				category = naval_doctrine
 			}
 
 			add_tech_bonus = {
@@ -7529,7 +7584,7 @@ focus_tree = {
 				create_equipment_variant = {
 					name = "Conte di Savoia Class - Converted Liner"
 					type = ship_hull_carrier_conversion_ca
-					name_group = ITA_CV_HISTORICAL #TODO_Manu: Namelist (Conte di Savoia, Rex, Neptunia, Oceania, Conte Rosso, Conte Grande, Saturnia, Vulcania, Conte Biancamo, Duilio, Conte verde, Giulio Cesare, Colombo, Tel Aviv) Excluded Roma (Aquila) and Augustus (Sparviero)
+					name_group = ITA_CV_HISTORICAL
 					parent_version = 0
 					allow_without_tech = yes #Makes no difference since focus grants appropriate tech (above), but it improves tooltip
 					modules = {
@@ -7829,7 +7884,7 @@ focus_tree = {
 						create_equipment_variant = {
 							name = "Costanzo Ciano Class"
 							type = ship_hull_cruiser_2
-							name_group = ITA_CL_HISTORICAL #TODO_Manu: Namelist (Conte di Savoia, Rex, Neptunia, Oceania, Conte Rosso, Conte Grande, Saturnia, Vulcania, Conte Biancamo, Duilio, Conte verde, Giulio Cesare, Colombo, Tel Aviv) Excluded Roma (Aquila) and Augustus (Sparviero)
+							name_group = ITA_CL_HISTORICAL
 							parent_version = 0
 							allow_without_tech = yes #Makes no difference since focus requires appropriate tech (above), but it improves tooltip
 							modules = {
@@ -7852,7 +7907,7 @@ focus_tree = {
 						create_equipment_variant = {
 							name = "Costanzo Ciano Class"
 							type = ship_hull_cruiser_2
-							name_group = ITA_CL_HISTORICAL #TODO_Manu: Namelist (Conte di Savoia, Rex, Neptunia, Oceania, Conte Rosso, Conte Grande, Saturnia, Vulcania, Conte Biancamo, Duilio, Conte verde, Giulio Cesare, Colombo, Tel Aviv) Excluded Roma (Aquila) and Augustus (Sparviero)
+							name_group = ITA_CL_HISTORICAL
 							parent_version = 0
 							allow_without_tech = yes #Makes no difference since focus requires appropriate tech (above), but it improves tooltip
 							modules = {
@@ -8174,7 +8229,7 @@ focus_tree = {
 				}
 			}
 
-			custom_effect_tooltip = ITA_flotta_d_evasione_dockyards_tt #TODO_Manu: Dynamic tooltip
+			custom_effect_tooltip = ITA_flotta_d_evasione_dockyards_tt
 		}
 	}
 
@@ -9718,13 +9773,8 @@ focus_tree = {
 		search_filters = {}
 
 		completion_reward = {
-			#TODO_Manu: Need to do something here because it is super redundant with everything else
-
 			custom_effect_tooltip = form_greater_italy_tt
 
-			#TODO_Manu: What if Italian allies/subjects control these?
-
-			#TODO_Manu: Re-arrange script so that tooltips are clearer
 			#CLAIMS IN TUNISIA
 			if = {
 				limit = {
@@ -10474,31 +10524,6 @@ focus_tree = {
 		completion_reward = {
 			add_to_variable = { ITA_re_non_core_manpower = 0.15 }
 			custom_effect_tooltip = ITA_a_colonial_empire_re_tt
-
-		#TODO_Manu: Really need code support for something like this
-#			create_wargoal = {
-#				type = take_state_focus
-#				target = FRA
-#				generator = { FRA.core_states }
-#			}
-#
-#			create_wargoal = {
-#				type = take_state_focus
-#				target = FRA
-#				generator = { ROOT.ITA_array_of_states }
-#			}
-#
-#			create_wargoal = {
-#				type = take_state_focus
-#				target = FRA
-#				generator = {
-#					all_states = yes
-#					limit_to_claimed_by_root = yes
-#					limit_to_cores_by_root = yes
-#					limit_to_cored_by_target = yes
-#					limit_to_non_cored_by_target = yes
-#				}
-#			}
 
 			custom_effect_tooltip = ITA_a_colonial_empire_claims_tt
 			every_state = {
@@ -12948,29 +12973,18 @@ focus_tree = {
 				days = 1095
 			}
 			
-			IF = {
-				limit = {
-					NOT = {
-						has_tech = atomic_research
-					}
-				}
-				add_tech_bonus = {
-					name = ITA_new_forms_of_weaponry
-					bonus = 0.5 # was 1
-					uses = 1
-					category = nuclear
-				}
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.75
-				}
+			add_breakthrough_progress = {
+				specialization = specialization_nuclear
+				value = 1
 			}
-			ELSE = {
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 1
-				}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = {
+				localization_key = available_scientist_one_line_tt
+				CHARACTER = ITA_enrico_fermi
 			}
+			
 		}
 	}
 
@@ -13405,7 +13419,7 @@ focus_tree = {
 
 			division_template = { 
 				name = "Reggimento Corazzieri" 
-				division_names_group = ITA_INF_01 #TODO_Manu
+				division_names_group = ITA_INF_01
 
 				regiments = { 
 					cavalry = { x = 0 y = 0 }
@@ -13723,6 +13737,7 @@ focus_tree = {
 		id = ITA_mare_nostrum_bba
 		icon = GFX_focus_ITA_mare_nostrum
 		prerequisite = { focus = ITA_setting_course focus = ITA_strengthen_the_regime focus = ITA_blackshirt_loyalty }
+		
 		#/BA_MOD_FIX
 			mutually_exclusive = {
 				focus = ITA_towards_a_greater_italy
@@ -13765,17 +13780,33 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
 
 		completion_reward = {
-			if = {
+
+			IF = {
 				limit = {
 					NOT = { has_rule = can_create_factions }
 				}
 				set_rule = { can_create_factions = yes }
 			}
-			if = {
+
+			IF = {
 				limit = {
 					is_in_faction = no
 				}
-				create_faction = "italy_empire_faction"
+				create_faction_from_template = faction_template_italy_empire_faction
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			ELSE_IF = {
+				limit = {
+					is_faction_leader = yes
+				}
+				set_faction_name = italy_empire_faction 
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					set_faction_manifest = faction_manifest_pax_romana
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 
 			unlock_decision_tooltip = form_roman_empire
@@ -14389,14 +14420,21 @@ focus_tree = {
 					has_completed_focus = ITA_deus_vult
 					is_faction_leader = no
 				}
-				create_faction = ITA_papal_faction 
+				create_faction_from_template = {
+					template = faction_template_ITA_italian_league
+					name = ITA_papal_faction
+					icon = GFX_faction_logo_generic_7
+				}
 			}
 			IF = {
 				limit = {
 					has_completed_focus = ITA_mare_nostrum_bba
 					is_faction_leader = no
 				}
-				create_faction = ITA_roman_faction
+				create_faction_from_template = {
+					template = faction_template_italy_empire_faction
+					name = ITA_roman_faction
+				}
 			}
 		}
 	}
@@ -14860,7 +14898,7 @@ focus_tree = {
 
 
 
-
+# BA_MOD_FIX (all focus)
 
 ########  #######  ########  ######## ####  ######   ##    ##    ########   #######  ##       #### ######## ####  ######   ######     ########  ####  ######   ##     ## ######## 
 ##       ##     ## ##     ## ##        ##  ##    ##  ###   ##    ##     ## ##     ## ##        ##     ##     ##  ##    ## ##    ##    ##     ##  ##  ##    ##  ##     ##    ##    
@@ -17027,9 +17065,7 @@ focus = {
 	}
 }
 
-##############################
-
-######  #### ##     ## #### ##          ##      ##    ###    ########         ######   #######          ########  ######## ##       ##       ####  ######   ######## ########  ######## ##    ## ######## 
+ ######  #### ##     ## #### ##          ##      ##    ###    ########         ######   #######          ########  ######## ##       ##       ####  ######   ######## ########  ######## ##    ## ######## 
 ##    ##  ##  ##     ##  ##  ##          ##  ##  ##   ## ##   ##     ##       ##    ## ##     ##         ##     ## ##       ##       ##        ##  ##    ##  ##       ##     ## ##       ###   ##    ##    
 ##        ##  ##     ##  ##  ##          ##  ##  ##  ##   ##  ##     ##       ##       ##     ##         ##     ## ##       ##       ##        ##  ##        ##       ##     ## ##       ####  ##    ##    
 ##        ##  ##     ##  ##  ##          ##  ##  ## ##     ## ########        ##       ##     ## ####### ########  ######   ##       ##        ##  ##   #### ######   ########  ######   ## ## ##    ##    
@@ -17214,7 +17250,7 @@ focus = {
 				}
 				division_template = { 
 					name = "Divisione Partigiana" 
-					division_names_group = ITA_INF_01 #TODO_Manu: New Namelist
+					division_names_group = ITA_INF_01
 					template_counter = 65
 					is_locked = yes
 					override_model = ITA_militia_alt_0_entity
@@ -17390,7 +17426,7 @@ focus = {
 
 			division_template = { 
 				name = "Divisione di Carabinieri" 
-				division_names_group = ITA_INF_01 #TODO_Manu: Namelist
+				division_names_group = ITA_INF_01
 				template_counter = 3
 
 				regiments = { 
@@ -17778,7 +17814,7 @@ focus = {
 		}
 	}
 
-############################################
+
 
  ######  #### ##     ## #### ##          ##      ##    ###    ########        ########    ###     ######   ######  ####  ######  ######## 
 ##    ##  ##  ##     ##  ##  ##          ##  ##  ##   ## ##   ##     ##       ##         ## ##   ##    ## ##    ##  ##  ##    ##    ##    
@@ -19321,8 +19357,6 @@ focus = {
 			else = {
 				add_ideas = ITA_gruppi_di_difesa_della_donna_ns_no_lar
 			}
-
-			#TODO_Manu: Unlocks generation of female generals, admirals, aces, etc. Could add more female generals
 		}
 	}
 
@@ -20331,7 +20365,12 @@ focus = {
 		search_filters = {}
 
 		completion_reward = {
-			create_faction = ITA_united_socialist_front
+
+			create_faction_from_template = {
+				template = faction_template_POR_popular_front_bloc
+				name = ITA_united_socialist_front
+				icon = GFX_faction_icon_generic_communist
+			}
 
 			custom_effect_tooltip = ITA_defend_the_land_invite_tt
 			if = {
@@ -20932,6 +20971,16 @@ focus = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
+			hidden_effect = {	#Fix character being on the civil war side that lost
+                every_possible_country = {
+                    limit = { has_character = ITA_enrico_fermi }
+                    random_character = {
+                        limit = { is_character = ITA_enrico_fermi }
+                        set_nationality = ROOT
+                    }
+                }
+            }
+
 			custom_effect_tooltip = {
 				localization_key = available_scientist_one_line_tt
 				CHARACTER = ITA_enrico_fermi
@@ -21110,7 +21159,13 @@ focus = {
 		search_filters = {FOCUS_FILTER_POLITICAL}
 
 		completion_reward = {
-			create_faction = ITA_free_states_of_europe
+
+			create_faction_from_template = {
+				template = faction_template_european_unity
+				name = ITA_free_states_of_europe
+				icon = GFX_faction_logo_generic_12
+			}
+
 			add_political_power = 50
 			custom_effect_tooltip = ITA_italia_libera_invite_tt
 			if = {
@@ -22054,12 +22109,27 @@ focus = {
 		relative_position_id = ITA_new_colonial_policies
 		cost = 10
 		available = {
+			OR = {
+				is_faction_leader = yes
+				is_in_faction = no
+			}
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
 		completion_reward = {
-			create_faction = ITA_italian_confederation
+			
+			IF = {
+				limit = {
+					is_in_faction = no
+				}
+				create_faction_from_template = {
+					template = faction_template_european_unity
+					name = ITA_italian_confederation
+					icon = GFX_faction_logo_generic_12
+				}
+			}
+			
 			add_ideas = ITA_italian_confederation_leader
 
 			if = {

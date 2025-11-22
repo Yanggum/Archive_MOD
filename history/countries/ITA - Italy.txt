@@ -123,7 +123,6 @@ if = {
 ################ BOP ##################
 #######################################
 
-#set_variable = { ITA_cores_lost_for_modifiers = 0 } #TODO_Manu: This will be killed once there is code support for has_bop_modifier or something like that
 set_variable = { ITA_bop_take_over_ministry_cost = 50 }
 set_variable = { ITA_bop_resign_ministry_cost = 15 }
 set_variable = { ITA_bop_liturgical_reforms_cd = 365 }
@@ -224,7 +223,7 @@ set_variable = { ITA_military_industry_dm_industrial_capacity_dockyard = 0 }
 set_variable = { ITA_military_industry_air_equipment_upgrade_xp_cost = 0 }
 
 add_dynamic_modifier = { modifier = ITA_military_industry_dynamic_modifier }
-add_ideas = ITA_hidden_research_penalties_ns #TODO_Manu: Hidden NS to apply research penalties as part of the Military Industry Dynamic Modifier. Delete when code support is in
+add_ideas = ITA_hidden_research_penalties_ns # Hidden NS to apply research penalties as part of the Military Industry Dynamic Modifier.
 
 
 #REGIO ESERCITO
@@ -365,12 +364,14 @@ set_technology = {
 	motorised_infantry = 1
 	gw_artillery = 1
 	interwar_antiair = 1
-	trench_warfare = 1
-	fleet_in_being = 1
 	fuel_silos = 1
 	fuel_refining = 1
 	basic_train = 1
 }
+
+set_grand_doctrine = grand_battleplan
+set_grand_doctrine = new_fleet_in_being
+
 if = {
 	limit = {
 		has_dlc = "La Resistance"
@@ -427,7 +428,7 @@ if = {
 		basic_battery = 1
 		basic_cruiser_armor_scheme = 1
 		basic_heavy_battery = 1
-		basic_medium_battery = 1
+		#basic_medium_battery = 1
 		basic_light_battery = 1
 		basic_heavy_armor_scheme = 1
 		early_ship_hull_submarine = 1
@@ -440,7 +441,7 @@ if = {
 		basic_ship_hull_heavy = 1
 		mtg_transport = 1
 		coastal_defense_ships = 1
-		improved_airplane_launcher = 1
+		#improved_airplane_launcher = 1
 	}
 	set_naval_oob = "ITA_1936_naval_mtg"
 }
@@ -623,18 +624,11 @@ if = {
 		support_weapons2 = 1
 		tech_recon = 1
 
-		#doctrines
-		grand_battle_plan = 1
-		prepared_defense = 1
-		battlefleet_concentration = 1
-		submarine_operations = 1
-		
 		#Air
-		force_rotation = 1
-		fighter_baiting = 1
-		low_echelon_support = 1
-		dispersed_fighting = 1
-
+		#force_rotation = 1
+		#fighter_baiting = 1
+		#low_echelon_support = 1
+		#dispersed_fighting = 1
 
 		#electronics
 		electronic_mechanical_engineering = 1
@@ -657,6 +651,15 @@ if = {
 		concentrated_industry2 = 1
 		concentrated_industry3 = 1
 	}
+
+set_grand_doctrine = grand_battleplan
+set_grand_doctrine = new_fleet_in_being
+set_grand_doctrine = new_operational_integrity	
+set_sub_doctrine = defensive_postures
+add_mastery = {
+    amount = 100
+    sub_doctrine = defensive_postures
+}
 	
 	complete_special_project = {
 		project = sp:sp_air_radar
@@ -724,7 +727,7 @@ if = {
 			has_dlc = "Man the Guns"
 		}
 		set_technology = {
-			improved_airplane_launcher = 1
+			#improved_airplane_launcher = 1
 			
 		}
 		set_naval_oob = "ITA_1939_naval_mtg"
@@ -878,7 +881,7 @@ recruit_character = ITA_curio_bernardis
 ##### MISSIOLINIS - TRIGGER EVENTS #####
 ########################################
 
-### IF NOT BBA, trigger the first Missiolini from here #TODO_Manu: PLEASE CHECK IF THIS ACTUALLY WORKS (character has just been recruited)
+### IF NOT BBA, trigger the first Missiolini from here
 if = {
 	limit = {
 		NOT = { has_dlc = "By Blood Alone" }
@@ -887,7 +890,7 @@ if = {
 }
 
 ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.11 days = 185 random_days = 5 } } # JUN 36 - Conquer Ethiopia  - DEC 36 - (170 days)
-#ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.21 days = 370 random_days = 5 } } # JAN 37 - Pacify Ethiopia - DEC 39 - (720 days) #TODO_Manu: This is now triggered after war with MTTH
+#ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.21 days = 370 random_days = 5 } } # JAN 37 - Pacify Ethiopia - DEC 39 - (720 days) #MM: This is now triggered after war with MTTH
 ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.31 days = 370 random_days = 5 } } # JAN 37 - Industrialization - DEC 37 - (350 days)
 ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.41 days = 735 random_days = 5 } } # JAN 38 - Increase Army - DEC 38 (350 days)
 ITA_benito_mussolini = { unit_leader_event = { id = BBA_italy_missiolinis.00 days = 1105 random_days = 5 } } # JAN 39 - Random mission dispatcher (350 days) - This event auto-triggers itself every 6 months

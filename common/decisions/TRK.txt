@@ -1,0 +1,63 @@
+
+TRK_eden_collapse_decision_category = {
+	
+	TRK_eden_collapse_decision = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 4000 # 반드시 찍는다
+		}
+
+		allowed = {
+			NOT = { tag = TRK }
+			NOT = { tag = GEH }
+			NOT = { tag = HEU }
+			NOT = { tag = GEM }
+		}
+
+		visible = {
+			AND = {
+				OR = {	
+					# 룩셈부르크가 병합되었거나 괴뢰국
+					NOT = { country_exists = HEU }
+					HEU = { is_puppet_of = ROOT }
+				}
+				OR = {	
+					# 게헨나 선도부가 병합되었거나 괴뢰국
+					NOT = { country_exists = GEH }
+					GEH = { is_puppet_of = ROOT }
+				}
+				OR = {	
+					# 게헨나 판데모니움 소사이어티가 병합되었거나 괴뢰국
+					NOT = { country_exists = GEM }
+					GEM = { is_puppet_of = ROOT }
+				}
+			}
+			# 위 조건이 충족된 상태(AND)로 에덴 관리기구가 존재
+			country_exists = TRK
+			# 게헨나 중앙구 또는 남구를 점령한 국가에게 보임
+			OR = {
+				owns_state = 55
+				owns_state = 52
+			}
+		}
+
+		available = {
+			is_subject = no
+			TRK = { is_subject = no }
+			NOT = { has_war_with = TRK }
+			# 게헨나 중앙구와 남구 점령국가가 병합 가능
+			owns_state = 55
+			owns_state = 52
+		}
+
+		complete_effect = {
+			annex_country = {
+				target = TRK # 에덴 관리기구 죽임
+			}
+		}
+	}
+
+}

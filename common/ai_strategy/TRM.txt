@@ -68,17 +68,126 @@ KPDNSD_raids_store_some_equipment = {
 		value = 20
 	}
 }
-TRM_fight_RED = {
+
+# 아리우스와 전쟁 중이라면 아리우스를 먼저 분쇄 함
+TRN_crush_arius = {
+	allowed = {
+		original_tag = GER
+	}
+	enable = {
+		has_war_with = ARI
+		ARI = { has_capitulated = no }
+	}
+	abort_when_not_enabled = yes
+
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = ARI
+		value = 100
+	}
+	ai_strategy = {
+		type = front_control
+		tag = ARI
+		priority = 100
+		ordertype = front
+		execution_type = rush_weak
+		execute_order = yes
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = POL
+		value = -20
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = GEM
+		value = -20
+	}
+}
+
+# 트리니티가 게헨나랑 싸우고 있으면 POL SOV ABY HYA ARI 한테 전선 배치를 뒤져도 안 함
+TRM_less_focus_on_east_country = {
 	allowed = {
 		original_tag = TRM
 	}
 	enable = {
-		has_war_with = RED
+		GEM = {
+			has_capitulated = no
+			OR = {
+				is_faction_leader = yes
+				is_in_faction = yes
+			}
+		}
+		NOT = {
+			GEM = { surrender_progress > 0.59 }
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = POL
+		value = -100
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = SOV
+		value = -100
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = ABY
+		value = -100
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = HYA
+		value = -100
+	}
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = ARI
+		value = -10
+	}
+}
+
+# 만마전에게 패배하고 장비가 부족할 경우 공격을 중단하세요
+TRM_stop_attack_if_you_surrender_progress_over_25 = {
+	allowed = {
+		original_tag = TRM
+	}
+	enable = {
+		surrender_progress > 0.24
+		stockpile_ratio = { archetype = infantry_equipment ratio < 0.1 }
+		GEM = {
+			has_war_with = ROOT
+			has_capitulated = no
+			surrender_progress < 0.1
+		}
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		tag = GEM
+		priority = 150
+		ordertype = front
+		execute_order = no
 	}
 	ai_strategy = {
-		type = naval_invasion_focus
-		value = 99
-	}abort = { always = no }
+		type = front_control
+		tag = GEH
+		priority = 150
+		ordertype = front
+		execute_order = no
+	}
 }
 
 # 정보기관 개선에 공장 낭비 안함
@@ -172,13 +281,13 @@ TRM_you_should_be_prepared_for_war = {
     	}
 }
 
-# 1937년 부터 1942년까지 군수 공장 건설 비율이 대폭 상승함
+# 1938년 부터 1942년까지 군수 공장 건설 비율이 대폭 상승함
 TRM_industry_we_are_the_baddies = {
 	allowed = {
 		original_tag = TRM
 	}
 	enable = {
-		date > 1937.5.1
+		date > 1938.3.1
 	}
 	abort ={
 		date > 1942.1.1
@@ -206,8 +315,7 @@ TRM_industry_we_are_the_baddies = {
 	}
 }
 
-
-# 트리니티 AI는 다음과 같은 지정된 값으로 병력 배치를 합니다.
+# 트리니티 AI는 다음과 같은 지정된 비율로 공장 배치를 합니다.
 TRM_unit_production = {
 	allowed = {
 		original_tag = TRM
@@ -264,7 +372,7 @@ TRM_unit_production = {
 	ai_strategy = {
 		type = role_ratio
 		id = armor
-		value = 40 
+		value = 20
 	}
 
 	ai_strategy = {
@@ -374,60 +482,87 @@ TRM_unit_production = {
 
 }
 
+# 트리니티 편제 디자인
 TRM_template_design = {
-	allowed = {
-		original_tag = TRM
-	}
+	allowed = { tag = TRM }
 	enable = {
-		date < 1940.1.1
+		date < 1938.1.1
+		num_of_military_factories > 24
 	}
-	abort = {
-		date > 1940.1.1
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = template_prio
+		id = motorized
+		value = 20
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = 10
 	}
 
 	ai_strategy = {
 		type = template_prio
 		id = infantry
-		value = 20
+		value = 70
 	}
-
-	ai_strategy = {
-		type = template_prio
-		id = artillery
-		value = 20
+}
+TRM_LATE_template_design_industrial_country = {
+	allowed = { tag = TRM }
+	enable = {
+		date > 1940.1.1
+		num_of_military_factories > 24
 	}
+	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = template_prio
 		id = motorized
-		value = -50
+		value = 10
 	}
 
 	ai_strategy = {
 		type = template_prio
-		id = cavalry
-		value = -100
+		id = mechanized
+		value = 20
 	}
 
 	ai_strategy = {
 		type = template_prio
-		id = light_armor
+		id = medium_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = modern_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = infantry
 		value = 30
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = heavy_armor
-		value = -50
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = paratroopers
-		value = -50
 	}
 }
 
+TRM_division_upgrades_are_very_important = {
+	allowed = { tag = TRM }
+	enable = {
+		has_war = yes
+	}
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = land_xp_spend_priority
+		id = division_template
+		value = 100
+	}
+}
+
+# 스위스 치지마세요
 TRM_dont_die_in_mountains = {
 	allowed = {
 		original_tag = TRM
@@ -455,247 +590,9 @@ TRM_dont_die_in_mountains = {
 	}
 }
 
-TRM_anti_armor = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		ai_wants_divisions > 5 #Decreasing the amount of motorized the AI wants
-
-		any_enemy_country = {
-			ROOT = {
-				estimated_intel_max_armor = {
-					tag = PREV
-					value > 25
-				}
-			}
-		}
-	}
-	abort = {
-		ai_wants_divisions < 6 #Decreasing the amount of motorized the AI wants
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = motorized
-		value = 15
-	}
-}
-
-TRM_armored_production = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		date > 1938.8.1
-		ai_wants_divisions > 10 #Decreasing the amount of tanks the AI wants
-	}
-	abort = {
-		OR = {
-			ai_wants_divisions < 10 #Decreasing the amount of tanks the AI wants
-		}
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 2
-	}
-}
-
-TRM_halt_light_armor_production_in_transitioning = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		has_template_majority_unit = medium_armor
-		OR = {
-			has_equipment = { light_tank_chassis > 600 }
-			date > 1938.8.1
-		}
-	}
-	abort = {
-		always = no  # once we start we never go back to light armor
-	}
-
-	ai_strategy = {
-		type = equipment_variant_production_factor
-		id = light_tank_chassis
-		value = -100
-	}
-	
-	ai_strategy = {
-		type = equipment_variant_production_factor
-		id = medium_tank_chassis
-		value = 50
-	}
-	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = artillery
-		value = -50 #downprio this for some more tanks
-	}
-	
-}
-
-TRM_stockpile_less_early_game = {
-	allowed = {
-		original_tag = TRM
-	}
-
-	enable = {
-		date < 1940.1.1
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = equipment_stockpile_surplus_ratio
-		value = -20 # reduce while we build up in case of CZE or Austria issues
-	}
-}
-
-TRM_highered_armored_production = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		num_of_military_factories > 59
-	}
-	abort = {
-		num_of_military_factories < 60
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 2
-	}
-}
-
-TRM_dont_waste_xp_until_medium_armor = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		always = yes
-	}
-	abort = {
-		has_template_majority_unit = medium_armor
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = paratrooper
-		value = -100
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = mountaineers
-		value = -100
-	}
-}
-
-TRM_super_boost_light_for_med_armor = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		OR = {
-			has_tech = basic_medium_tank
-			has_tech = basic_medium_tank_chassis
-		}
-		NOT = { has_template_ai_majority_unit = medium_armor }
-	}
-
-	abort = {
-		has_template_ai_majority_unit = medium_armor
-	}
-
-	# lets do changes more often during this period too
-	ai_strategy = {
-		type = land_xp_spend_priority
-		id = division_template
-		value = 100
-	}
-
-	# this is gateway
-	ai_strategy = {
-		type = template_prio
-		id = light_armor
-		value = 100
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = medium_armor
-		value = 150
-	}
-
-	# Germany is set up to change their SS division into medium armor.
-	ai_strategy = {
-		type = template_prio
-		id = motorized
-		value = 200
-	}
-}
-
-TRM_super_boost_light_for_modern_armor = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		OR = {
-			has_tech = main_battle_tank
-			has_tech = main_battle_tank_chassis
-		}
-		NOT = { has_template_ai_majority_unit = modern_armor }
-	}
-
-	abort = {
-		has_template_ai_majority_unit = modern_armor
-	}
-
-	# lets do changes more often during this period too
-	ai_strategy = {
-		type = land_xp_spend_priority
-		id = division_template
-		value = 100
-	}
-
-	# this is gateway
-	ai_strategy = {
-		type = template_prio
-		id = medium_armor
-		value = 100
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = modern_armor
-		value = 150
-	}
-}
-
-TRM_how_about_some_more_transport_planes = {
-	allowed = {
-		original_tag = TRM
-	}
-	enable = {
-		num_of_military_factories > 50
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = equipment_production_min_factories
-		id = air_transport
-		value = 1
-	}
-}
-
 TRM_war_gehenna_clique = {
     enable = {
-        NOT = { original_tag = TRM }
+        	NOT = { original_tag = TRM }
 		original_tag = GEM
     }
     enable_reverse = {
@@ -706,11 +603,11 @@ TRM_war_gehenna_clique = {
 			}
 		}
     }
-    reversed = yes
-    abort_when_not_enabled = yes
-    ai_strategy = {
-        type = conquer
-        id = TRM
-        value = 500
-    }
+    	reversed = yes
+    	abort_when_not_enabled = yes
+    	ai_strategy = {
+        	type = conquer
+        	id = TRM
+        	value = 500
+    		}
 }

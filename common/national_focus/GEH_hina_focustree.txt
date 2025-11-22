@@ -17,7 +17,6 @@ focus_tree = {
 
 	shared_focus = GEH_unified_gehenna
 	shared_focus = GEAC_unified_but_divided_gehenna_academy
-    shared_focus = BA_new_world_technology
 	shared_focus = Eden_formation_of_alliance_treaty_organization
 
 
@@ -1866,6 +1865,10 @@ focus_tree = {
 				limit = { has_global_flag = GEH_BTBOTS_END_flag }
 				has_global_flag = GEH_BTBOTS_END_NEXT_flag
 			}
+			country_exists = GEM
+		}
+		bypass = {
+			NOT = { country_exists = GEM }
 		}
         prerequisite = {
             focus = GEH_systemic_militarization
@@ -3275,6 +3278,9 @@ focus_tree = {
 					GEM =  { is_in_faction = no }
 				}
 			}
+			NOT = { 
+				has_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag
+			}
 			if = { 
 				limit = { has_global_flag = GEH_BTBOTS_END_flag }
 				has_global_flag = GEH_BTBOTS_END_NEXT_flag
@@ -3463,7 +3469,7 @@ focus_tree = {
 
 			if = {
 				limit = {
-					NOT = { has_completed_focus = GEH_Army_focus_7 }
+					NOT = { has_completed_focus = GEH_NEXT_Army_focus_1 }
 				}
 				add_to_variable = {
 					geh_discipline_var = -4
@@ -3552,7 +3558,7 @@ focus_tree = {
 
 			if = {
 				limit = {
-					NOT = { has_completed_focus = GEH_Army_focus_7 }
+					NOT = { has_completed_focus = GEH_NEXT_Army_focus_1 }
 				}
 				add_to_variable = {
 					geh_discipline_var = -3
@@ -4077,6 +4083,7 @@ focus_tree = {
 				    add_idea = limited_exports
 			    }
 		    }
+			add_political_power = 120
 		}
 	}
     focus = {
@@ -4110,8 +4117,41 @@ focus_tree = {
 		completion_reward = {
 			GEH_PL_tooltip = yes
             add_to_variable = {
-				GEH_PL_consumer_goods_factor = -0.02
+				GEH_PL_consumer_goods_factor = -0.05
 				tooltip = consumer_goods_factor_tt
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}	
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}	
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}	
 			}
 		}
 	}
@@ -4151,7 +4191,7 @@ focus_tree = {
 				tooltip = production_factory_efficiency_gain_factor_tt
 			}
             add_to_variable = {
-				GEH_PL_consumer_goods_factor = -0.03
+				GEH_PL_consumer_goods_factor = -0.05
 				tooltip = consumer_goods_factor_tt
 			}
 			add_tech_bonus = {
@@ -4255,6 +4295,28 @@ focus_tree = {
 				GEH_PL_local_building_slots_factor = 0.10
 				tooltip = MODIFIER_LOCAL_BUILDING_SLOTS_FACTOR_tt
 			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}	
+			}
 		}
 	}
     focus = {
@@ -4327,6 +4389,7 @@ focus_tree = {
 				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
 				BA_halo_infantry_cap_edit_effect = yes
 			}
+			add_political_power = 120
 		}
 	}
     focus = {
@@ -5010,7 +5073,7 @@ focus_tree = {
     focus = {
 		id = GEH_prefect_DNVP_focus_3
 		icon = GFX_goal_GEH_gloy_of_gehenna
-		cost = 10
+		cost = 5
 		x = 1
 		y = 3
         prerequisite = {
@@ -5079,12 +5142,6 @@ focus_tree = {
 				uses = 2
 				category = land_doctrine
 			}
-
-			set_country_flag = GEH_end_discipline
-			set_variable = {
-				geh_discipline_var = 100
-			}
-			geh_discipline_system_setting_effect = yes
 			
 			hidden_effect = {
 				news_event = { id = GEH_news.1 }
@@ -5129,6 +5186,12 @@ focus_tree = {
             }
 			custom_effect_tooltip = enter_tt
             GEH_popular_support_up_effect = yes
+
+			set_country_flag = GEH_end_discipline
+			set_variable = {
+				geh_discipline_var = 100
+			}
+			geh_discipline_system_setting_effect = yes
         }
 	}
     focus = {
@@ -5155,6 +5218,9 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = GEK_geh_correct_plan_tt
 				check_variable = { num_equipment_in_armies_k@infantry_equipment > 9 }
+			}
+			NOT = { 
+				has_country_flag = trinity_gehenna_eden_treaty_negotiation_join_flag
 			}
 		}
 
@@ -5760,6 +5826,11 @@ focus_tree = {
                 modifier = GEH_Chinatsu_idea
             }
         }
+		bypass = {
+			has_dynamic_modifier = {
+				modifier = GEH_NEO_OEO_idea
+			}
+		}
         prerequisite = {
             focus = GEH_Trinity_war
         }
@@ -5986,7 +6057,7 @@ focus_tree = {
 				controls_state = 762
 				controls_state = 763
 				controls_state = 807
-				controls_state = 1039
+				controls_state = 1069
 			}
 		}
         prerequisite = {
@@ -6019,7 +6090,7 @@ focus_tree = {
 						state = 67
 						state = 68
 						state = 763
-						state = 1039
+						state = 1069
 					}
 					NOT = { is_core_of = ROOT }
 					resistance > 0
@@ -6055,7 +6126,7 @@ focus_tree = {
 							state = 807
 							
 							state = 85
-							state = 1039
+							state = 1069
 						}
 					}
 				}
@@ -6105,9 +6176,9 @@ focus_tree = {
 				controls_state = 58
 				controls_state = 59
 				controls_state = 909
-				controls_state = 1022
+				controls_state = 1052
 				controls_state = 978
-				controls_state = 1025
+				controls_state = 1055
 			}
 		}
         prerequisite = {
@@ -6147,8 +6218,8 @@ focus_tree = {
 						state = 763
 						state = 807
 						state = 909
-						state = 1022
-						state = 1025
+						state = 1052
+						state = 1055
 						state = 978
 					}
 					NOT = { is_core_of = ROOT }
@@ -6179,12 +6250,12 @@ focus_tree = {
 							state = 58
 							state = 59
 							state = 909
-							state = 1022
+							state = 1052
 							state = 978
-							state = 1025
+							state = 1055
 
 							state = 28
-							state = 1023
+							state = 1053
 							state = 8
 						}
 					}
@@ -6585,12 +6656,12 @@ focus_tree = {
 				tooltip = production_speed_arms_factory_factor_tt
 			}
 			army_experience = 25
-		    add_tech_bonus = {
-			    name = GEH_prefect_team_priority
-			    bonus = 0.25
-			    uses = 2
-    			category = land_doctrine
-		    }
+		    add_doctrine_cost_reduction = {
+				name = GEH_prefect_team_priority
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
 			random_controlled_state = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -9305,7 +9376,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_indefinite_extension_of_emergency_powers
-		icon = GFX_focus_ARG_keep_it_in_the_party
+		icon = GFX_focus_GEH_indefinite_extension_of_emergency_powers
 		cost = 5
 
 		relative_position_id = GEH_last_focus_effect_c_rout
@@ -9440,7 +9511,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_investigation_of_shirokami_ioris_war_crimes
-		icon = GFX_focus_focus_fra_fascist_threat
+		icon = GFX_focus_GEH_investigation_of_shirokami_ioris_war_crimes
 		cost = 5
 
 		relative_position_id = GEH_last_focus_effect_c_rout
@@ -9508,7 +9579,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_national_defense_commissioner_sorasaki_hina
-		icon = GFX_focus_ETH_ecole_militaire_haile_selassie_1er
+		icon = GFX_focus_GEH_national_defense_commissioner_sorasaki_hina
 		cost = 5
 
 		relative_position_id = GEH_indefinite_extension_of_emergency_powers
@@ -9541,7 +9612,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_departure_with_a_sigh
-		icon = GFX_focus_AUS_raid_military_storages
+		icon = GFX_focus_GEH_departure_with_a_sigh
 		cost = 5
 
 		relative_position_id = GEH_national_defense_commissioner_sorasaki_hina
@@ -9614,7 +9685,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_our_new_supporters
-		icon = GFX_focus_hol_war_on_pacifism
+		icon = GFX_focus_GEH_our_new_supporters
 		cost = 5
 
 		relative_position_id = GEH_german_equality_conscription
@@ -9655,7 +9726,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_universalism_charter
-		icon = GFX_focus_prc_agrarian_socialism
+		icon = GFX_focus_GEH_universalism_charter
 		cost = 5
 
 		relative_position_id = GEH_departure_with_a_sigh
@@ -9706,7 +9777,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_execution_unit_temporary_sanctions
-		icon = GFX_focus_RAJ_a_private_military
+		icon = GFX_focus_GEH_execution_unit_temporary_sanctions
 		cost = 5
 
 		relative_position_id = GEH_investigation_of_shirokami_ioris_war_crimes
@@ -9745,7 +9816,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_restoration_of_planning_department_authority
-		icon = GFX_focus_AUS_lawmaking_leniency
+		icon = GFX_focus_GEH_restoration_of_planning_department_authority
 		cost = 5
 
 		relative_position_id = GEH_execution_unit_temporary_sanctions
@@ -9782,7 +9853,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_restoration_of_medical_department_authority
-		icon = GFX_focus_generic_field_hostpital
+		icon = GFX_focus_GEH_restoration_of_medical_department_authority
 		cost = 5
 
 		relative_position_id = GEH_investigation_of_shirokami_ioris_war_crimes
@@ -9819,7 +9890,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_gehenna_prefect_team_revival
-		icon = GFX_goal_Prefect_Team_muster
+		icon = GFX_focus_GEH_gehenna_prefect_team_revival
 		cost = 5
 
 		relative_position_id = GEH_restoration_of_medical_department_authority
@@ -9857,7 +9928,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_cornerstone_of_a_defense_nation
-		icon = GFX_focus_SWE_defense_act
+		icon = GFX_focus_GEH_cornerstone_of_a_defense_nation
 		cost = 5
 
 		relative_position_id = GEH_gehenna_prefect_team_revival
@@ -10252,6 +10323,7 @@ focus_tree = {
 			set_country_leader_description = {
 				desc = GEH_hina_c_route_ending_base_leader_desc
 			}
+			add_ideas = GEH_harmonism_federation
 		}
 	}
 # 이오리 중점 최종장 끝/
@@ -11284,7 +11356,7 @@ focus_tree = {
 				type = annex_everything
 			}
 			hidden_effect = { 
-				news_event = { id = trinitynews.5 hours = 01 } 
+				news_event = { id = trinity_news_events.5 hours = 01 } 
 			}
 		}
 	}
@@ -12572,7 +12644,7 @@ focus_tree = {
 
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_indiscriminate_prosecution
-		icon = GFX_focus_AUS_womens_education_initiative
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_indiscriminate_prosecution
 		cost = 3
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -12705,7 +12777,7 @@ focus_tree = {
 
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_rebel_attack
-		icon = GFX_focus_IRQ_attempted_assasination_of_sidqi
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_rebel_attack
 		cost = 3
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -12755,7 +12827,7 @@ focus_tree = {
 
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution
-		icon = GFX_focus_SWE_attack_landsorganisationen
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution
 		cost = 3
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -12829,7 +12901,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
-		icon = GFX_focus_spr_crush_the_revolution
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_communist
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution
@@ -12872,7 +12944,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
-		icon = GFX_focus_spr_the_anti_fascist_workers_revolution
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_you_are_a_nazist
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_cultural_revolution
@@ -13006,7 +13078,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
-		icon = GFX_goal_HEU_hina
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_sorasakism
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -13069,7 +13141,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_gehenna_commune
-		icon = GFX_focus_ARG_no_gods_no_masters
+		icon = GFX_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_gehenna_commune
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -13186,7 +13258,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_religious_ecstasy
-		icon = GFX_focus_CHL_invite_french_aristocracy
+		icon = GFX_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_religious_ecstasy
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -13248,7 +13320,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_second_order_state
-		icon = GFX_focus_SOV_penal_battalions
+		icon = GFX_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_second_order_state
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -14478,7 +14550,6 @@ focus_tree = {
 		y = 2
 
 		available = {
-			fascism > 0.80
 		}
 		
         prerequisite = {
@@ -14528,7 +14599,6 @@ focus_tree = {
 		y = 2
 
 		available = {
-			fascism > 0.80
 		}
 		
         prerequisite = {
@@ -17904,18 +17974,6 @@ focus_tree = {
 				cost_reduction = 0.25
 				uses = 2
 				category = cat_base_strike
-			}
-
-			hidden_effect = {
-				if = {
-					limit = {
-						is_ai = yes
-					}
-					set_technology = {
-						trade_interdiction = 0
-						base_strike = 1
-					}
-				}
 			}
 		}
 	}

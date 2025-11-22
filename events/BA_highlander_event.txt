@@ -1,0 +1,1720 @@
+
+add_namespace = Highlander
+
+country_event = { #.0도 작동함? // 투자 점수 주작 용
+	id = Highlander.0
+	title = Highlander.0.t
+	desc = Highlander.0.d
+	hidden = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #굿
+		name = Highlander.3.a
+		add_to_variable = {
+			BA_highlander_invest = 2
+		}
+    }
+	option = { #굿
+		name = Highlander.3.a
+		add_to_variable = {
+			BA_highlander_invest = 4
+		}
+    }
+	option = { #굿
+		name = Highlander.3.a
+		add_to_variable = {
+			BA_highlander_invest = 6
+		}
+    }
+}
+country_event = { #기반시설 건설
+	id = Highlander.1
+	title = Highlander.1.t
+	desc = Highlander.1.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #굿
+		name = Highlander.3.a
+		random_owned_controlled_state = {
+			limit = {
+				infrastructure < 5
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+			}
+		}
+    }
+}
+country_event = { #철도 버프 이벤트를 위한 히든 이벤트
+	id = Highlander.2
+	title = Highlander.2.t
+	desc = Highlander.2.d
+	is_triggered_only = yes
+	hidden = yes
+	option = { 
+		name = Highlander.2.a
+		random_list = {
+			### 철로 활용 중점 채택
+			4 = {
+				country_event = Highlander_upgrade.6 #철도전
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_focus_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = greater_than
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_focus_flag_railroad_battle
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_railroad_battle
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = 1
+						}
+					}
+				}
+			}
+			4 = {
+				country_event = Highlander_upgrade.7 #열차 보급
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_focus_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = greater_than
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_focus_flag_train_supply
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_train_supply
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = 1
+						}
+					}
+				}
+			}
+			4 = {
+				country_event = Highlander_upgrade.8 #거점 운용
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_focus_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = greater_than
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_focus_flag_hub_operation
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_hub_operation
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = 1
+						}
+					}
+				}
+			}
+			4 = {
+				country_event = Highlander_upgrade.9 #철도와 산업
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_focus_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = greater_than
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_focus_flag_rail_and_industry
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_rail_and_industry
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = 1
+						}
+					}
+				}
+			}
+			4 = {
+				country_event = Highlander_upgrade.10 #우리의 철로
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_focus_available
+						value = 1
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = greater_than
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_focus_flag_our_rail
+							value = 1
+						}
+					}
+				}
+			}
+			### 철로 사업 채택
+			3 = { 
+				country_event = Highlander_upgrade.1 #선로 재작업
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_business_flag_rework_railroad
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_rework_railroad
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_rework_railroad
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_rework_railroad
+							value = 2
+						}
+					}
+				}
+			}
+			3 = { 
+				country_event = Highlander_upgrade.2 #철도허브 설치
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 2
+						}
+					}
+				}
+			}
+			3 = { 
+				country_event = Highlander_upgrade.3 #교통 건설
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 2
+						}
+					}
+				}
+			}
+			3 = { 
+				country_event = Highlander_upgrade.4 #적극적 투자
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 2
+						}
+					}
+				}
+			}
+			3 = { 
+				country_event = Highlander_upgrade.5 #하이랜더 제휴
+				modifier = {
+					factor = 0
+					check_variable = {
+						var = BA_highlander_business_available
+						value = 0
+						compare = less_than_or_equals
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = -1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 2
+						}
+					}
+				}
+			}
+			### /철로 사업 채택
+			### 철로 사업의 결과들
+			20 = { #철도 개선 - for '선로 재작업'
+				modifier = {
+					factor = 0
+					OR = {
+						NOT = { has_idea = BA_railway_gauge_issue }
+						NOT = {
+							has_country_flag = {
+								flag = Highlander_business_flag_rework_railroad
+								value = 0
+							}
+							has_country_flag = {
+								flag = Highlander_business_flag_rework_railroad
+								value = 1
+							}
+							has_country_flag = {
+								flag = Highlander_business_flag_rework_railroad
+								value = 2
+							}
+						}
+					}
+				}
+				country_event = Highlander.9
+			}
+			2 = { #철도허브 추가 설치 - for '철도허브 설치'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_hub_construction
+							value = 2
+						}
+					}
+				}
+				country_event = Highlander.20
+				
+			}
+			2 = { #철도 건설 - for '교통 건설'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 2
+						}
+					}
+				}
+				country_event = Highlander.3
+			}
+			2 = { #기반시설 건설 - for '교통 건설'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_transportation_building
+							value = 2
+						}
+					}
+				}
+				country_event = Highlander.1
+			}
+			3 = { #추가적인 투자 - for '적극적 투자'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_investment
+							value = 2
+						}
+					}
+				}
+				country_event = Highlander.13
+			}
+			1 = { #아오바 - for '하이랜더 제휴'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 2
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_utsumi_aoba
+					}
+				}
+				country_event = Highlander.14
+			}
+			1 = { #노조미 - for '하이랜더 제휴'
+				modifier = {
+					factor = 0
+					NOT = {
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 0
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 1
+						}
+						has_country_flag = {
+							flag = Highlander_business_flag_partnership
+							value = 2
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_tachibana_nozomi
+					}
+				}
+				country_event = Highlander.7
+				
+			}
+			### /철로 사업의 결과들
+			1 = { #무료 민간 열차
+				country_event = Highlander.4
+			}
+			1 = { #생산 효율
+				country_event = Highlander.5
+			}
+			1 = { #정상운행
+				country_event = Highlander.6
+			}
+			1 = { #열차 소동
+				country_event = Highlander.16
+			}
+			1 = { #학생파견
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_HTA_student_HG
+					}
+				}
+				country_event = Highlander.17
+			}
+			1 = { #학생파견
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_HTA_student_MG
+					}
+				}
+				country_event = Highlander.18
+			}
+			1 = { #학생파견
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0
+					any_country = {
+						has_idea = BA_HTA_student_SG
+					}
+				}
+				country_event = Highlander.19
+			}
+			1 = { #주식 매각
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0.1
+					is_ai = yes
+				}
+				country_event = Highlander.10
+			}
+			1 = { #지분 매각
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0.1
+					is_ai = yes
+				}
+				country_event = Highlander.11
+			}
+			1 = { #철도 불황
+				modifier = {
+					factor = 0
+					check_variable = {
+						BA_highlander_invest < 15
+					}
+				}
+				modifier = {
+					factor = 0.1
+					is_ai = yes
+				}
+				country_event = Highlander.12
+			}
+		}
+    }
+}
+country_event = { #철도 건설
+	id = Highlander.3
+	title = Highlander.3.t
+	desc = Highlander.3.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		random_owned_controlled_state = {
+			limit = {
+				is_on_continent = europe
+				is_core_of = ROOT
+			}
+			ROOT.capital_scope = {
+				ROOT = {
+					build_railway = {
+						start_state = PREV
+						target_state = PREV.PREV
+					}
+				}
+			}
+		}
+		build_railway = {
+			start_state = 12
+			target_state = 1
+		}
+	}
+}
+country_event = { #무료 민간 열차
+	id = Highlander.4
+	title = Highlander.4.t
+	desc = Highlander.4.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_equipment_to_stockpile = {
+			type = train_equipment
+			amount = 3
+		}
+	}
+}
+country_event = { #산업-철도 연계 (생산 효율 성장+)
+	id = Highlander.5
+	title = Highlander.5.t
+	desc = Highlander.5.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_highlander_buff_production
+			days = 90
+		}
+	}
+}
+country_event = { #정상 운행
+	id = Highlander.6
+	title = Highlander.6.t
+	desc = Highlander.6.d
+	picture = GFX_report_event_generic_train
+	is_triggered_only = yes
+	option = {
+		name = Highlander.6.a
+		add_political_power = 1
+		add_stability = 0.01
+		add_war_support = 0.01
+	}
+}
+country_event = { #노조미
+	id = Highlander.7
+	title = Highlander.7.t
+	desc = Highlander.7.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_trains
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_tachibana_nozomi
+			days = 120
+		}
+	}
+}
+country_event = { #최대 투자국 변경
+	id = Highlander.8
+	title = Highlander.8.t
+	desc = Highlander.8.d
+	is_triggered_only = yes
+	hidden = yes
+	option = {
+		country_event = { id = Highlander.8 days = 10}
+		name = Highlander.8.a
+		if = {
+			limit = {
+				BA_highlander_COU_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = COU
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_MIL_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = MIL
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_KAI_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = KAI
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_KSP_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = KSP
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_SHE_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = SHE
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_HEU_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = HEU
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_GEH_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = GEH
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_GEM_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = GEM
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_SHA_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = SHA
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_ABY_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = ABY
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_HYA_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = HYA
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_TRM_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = TRM
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_ARI_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = ARI
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_RED_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = RED
+			}
+		}
+		else_if = {
+			limit = {
+				BA_highlander_WHY_is_best_invester = yes
+			}
+			set_variable = {
+				var:global.highlander_best_invester = WHY
+			}
+		}
+	}
+}
+country_event = { #철로 사업: 선로 재작업
+	id = Highlander.9
+	title = Highlander.9.t
+	desc = Highlander.9.d
+	picture = GFX_report_event_generic_train
+	is_triggered_only = yes
+	option = {
+		name = Highlander.3.a
+		modify_timed_idea = {
+			idea = BA_railway_gauge_issue
+			days = -240
+		}
+	}
+}
+country_event = { #주식 매각
+	id = Highlander.10
+	title = Highlander.10.t
+	desc = Highlander.10.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.10.a
+		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -1
+		}
+	}
+}
+country_event = { #지분 매각
+	id = Highlander.11
+	title = Highlander.11.t
+	desc = Highlander.11.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.10.a
+		custom_effect_tooltip = BA_highlander_invest_small_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -1
+		}
+		add_political_power = 15
+	}
+}
+country_event = { #철도 불황
+	id = Highlander.12
+	title = Highlander.12.t
+	desc = Highlander.12.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.12.a
+		custom_effect_tooltip = BA_highlander_invest_big_negative_tt
+		add_to_variable = {
+			BA_highlander_invest = -2
+		}
+	}
+}
+country_event = { #추가적인 투자
+	id = Highlander.13
+	title = Highlander.13.t
+	desc = Highlander.13.d
+	picture = GFX_report_event_generic_train
+	is_triggered_only = yes
+	option = {
+		name = Highlander.13.a
+		custom_effect_tooltip = BA_highlander_invest_small_tt
+		add_to_variable = {
+			BA_highlander_invest = 2
+		}
+	}
+}
+country_event = { #아오바
+	id = Highlander.14
+	title = Highlander.7.t
+	desc = Highlander.14.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_utsumi_aoba
+			days = 120
+		}
+	}
+}
+country_event = { #궤간
+	id = Highlander.15
+	title = Highlander.15.t
+	desc = Highlander.15.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #표준궤
+		name = Highlander.15.a
+		set_country_flag = BA_railroad_standard_gauge
+		every_neighbor_country = {
+			limit = {
+				exists = yes
+				NOT = {
+					has_war_with = PREV
+				}
+				Kivotos_tag = no
+				has_country_flag = BA_railroad_standard_gauge
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_standard_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+	option = { #협궤
+		name = Highlander.15.b
+		trigger = {
+			has_idea = BA_highlander_academy_generic
+		}
+		set_country_flag = BA_railroad_narrow_gauge
+		every_neighbor_country = {
+			limit = {
+				exists = yes
+				NOT = {
+					has_war_with = PREV
+				}
+				Kivotos_tag = no
+				has_country_flag = BA_railroad_narrow_gauge
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_narrow_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+		custom_effect_tooltip = Highlander.15.b_tt
+		custom_effect_tooltip = BA_highlander_invest_big_tt
+		add_to_variable = {
+			BA_highlander_invest = 4
+		}
+	}
+	option = { #이베리아 궤간을 쓰자
+		name = Highlander.15.c
+		set_country_flag = BA_railroad_iberian_gauge
+		trigger = {
+			any_neighbor_country = {
+				has_country_flag = BA_railroad_iberian_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				OR = {
+					original_tag = SPR
+					original_tag = POR
+					AND = {
+						is_neighbor_of = PREV
+						NOT = {
+							has_war_with = PREV
+						}
+						Kivotos_tag = no
+						has_country_flag = BA_railroad_iberian_gauge
+					}
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_iberian_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+	option = { #광궤를 쓰자
+		name = Highlander.15.e
+		set_country_flag = BA_railroad_broad_gauge
+		trigger = {
+			any_neighbor_country = {
+				has_country_flag = BA_railroad_broad_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				OR = {
+					original_tag = SOV
+					original_tag = LIT
+					original_tag = LAT
+					original_tag = EST
+					AND = {
+						is_neighbor_of = PREV
+						NOT = {
+							has_war_with = PREV
+						}
+						Kivotos_tag = no
+						has_country_flag = BA_railroad_broad_gauge
+					}
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		every_other_country = {
+			limit = {
+				exists = yes
+				capital_scope = {is_on_continent = europe}
+				Kivotos_tag = yes
+				has_country_flag = BA_railroad_broad_gauge
+				NOT = {
+					has_war_with = PREV
+				}
+			}
+			add_opinion_modifier = {
+				target = PREV
+				modifier = BA_interchangeable_gauge
+			}
+		}
+		set_country_flag = BA_can_remove_isolation_flag
+		custom_effect_tooltip = BA_factoriesof_new_world_tt
+	}
+}
+country_event = { #열차 소동
+	id = Highlander.16
+	title = Highlander.16.t
+	desc = Highlander.16.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.16.a
+		random_owned_controlled_state = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = Highlander_hub
+				}
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 0.2
+			}
+		}
+		add_stability = -0.01
+	}
+}
+country_event = { #하이랜더 학생 파견
+	id = Highlander.17
+	title = Highlander.17.t
+	desc = Highlander.17.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_HTA_student_HG
+			days = 90
+		}
+	}
+}
+country_event = { #하이랜더 학생 파견
+	id = Highlander.18
+	title = Highlander.17.t
+	desc = Highlander.17.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_HTA_student_MG
+			days = 90
+		}
+	}
+}
+country_event = { #하이랜더 학생 파견
+	id = Highlander.19
+	title = Highlander.17.t
+	desc = Highlander.17.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_timed_idea = {
+			idea = BA_HTA_student_SG
+			days = 90
+		}
+	}
+}
+country_event = { #허브 추가 설치
+	id = Highlander.20
+	title = Highlander.20.t
+	desc = Highlander.20.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = {
+		name = Highlander.3.a
+		add_to_variable = {
+			BA_highlander_hub_available = 1
+		}
+		custom_effect_tooltip = Highlander.20_tt
+	}
+}
+
+
+add_namespace = Highlander_upgrade
+
+country_event = { #철로 사업: 선로 재작업
+	id = Highlander_upgrade.1
+	title = Highlander_upgrade.1.t
+	desc = Highlander_upgrade.1.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.1_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_rework_railroad
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_business_flag_rework_railroad
+			value = -1
+		}
+	}
+}
+country_event = { #철로 사업: 철도허브 설치
+	id = Highlander_upgrade.2
+	title = Highlander_upgrade.2.t
+	desc = Highlander_upgrade.2.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.2_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_hub_construction
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_hub_construction
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_hub_construction
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+		add_to_variable = {
+			BA_highlander_hub_available = 2
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_business_flag_hub_construction
+			value = -1
+		}
+	}
+}
+country_event = { #철로 사업: 교통 건설
+	id = Highlander_upgrade.3
+	title = Highlander_upgrade.3.t
+	desc = Highlander_upgrade.3.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.3_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_transportation_building
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_transportation_building
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_transportation_building
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_business_flag_transportation_building
+			value = -1
+		}
+	}
+}
+country_event = { #철로 사업: 적극적 투자
+	id = Highlander_upgrade.4
+	title = Highlander_upgrade.4.t
+	desc = Highlander_upgrade.4.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.4_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_investment
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_investment
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_investment
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_business_flag_investment
+			value = -1
+		}
+	}
+}
+country_event = { #철로 사업: 하이랜더 제휴
+	id = Highlander_upgrade.5
+	title = Highlander_upgrade.5.t
+	desc = Highlander_upgrade.5.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.5_tt
+		trigger = {
+			check_variable = {
+				var = BA_highlander_business_available
+				value = 0
+				compare = greater_than
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 3
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_partnership
+				value = 0
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_business_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_business_flag_partnership
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_business_flag_partnership
+				value = 2
+			}
+		}
+		add_to_variable = {
+			BA_highlander_business_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_business_flag_partnership
+			value = -1
+		}
+	}
+}
+
+country_event = { #철로 활용 중점: 철도전
+	id = Highlander_upgrade.6
+	title = Highlander_upgrade.6.t
+	desc = Highlander_upgrade.6.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.6_tt
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_focus_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_focus_flag_railroad_battle
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_focus_flag_railroad_battle
+				value = 1
+			}
+		}
+		add_to_variable = {
+			BA_highlander_focus_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_focus_flag_railroad_battle
+			value = -1
+		}
+	}
+}
+country_event = { #철로 활용 중점: 열차 보급
+	id = Highlander_upgrade.7
+	title = Highlander_upgrade.7.t
+	desc = Highlander_upgrade.7.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.7_tt
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_focus_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_focus_flag_train_supply
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_focus_flag_train_supply
+				value = 1
+			}
+		}
+		add_to_variable = {
+			BA_highlander_focus_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_focus_flag_train_supply
+			value = -1
+		}
+	}
+}
+country_event = { #철로 활용 중점: 거점 운용
+	id = Highlander_upgrade.8
+	title = Highlander_upgrade.8.t
+	desc = Highlander_upgrade.8.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.8_tt
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_focus_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_focus_flag_hub_operation
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_focus_flag_hub_operation
+				value = 1
+			}
+		}
+		add_to_variable = {
+			BA_highlander_focus_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_focus_flag_hub_operation
+			value = -1
+		}
+	}
+}
+country_event = { #철로 활용 중점: 철도와 산업
+	id = Highlander_upgrade.9
+	title = Highlander_upgrade.9.t
+	desc = Highlander_upgrade.9.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.9_tt
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_focus_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_focus_flag_rail_and_industry
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_focus_flag_rail_and_industry
+				value = 1
+			}
+		}
+		add_to_variable = {
+			BA_highlander_focus_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_focus_flag_rail_and_industry
+			value = -1
+		}
+	}
+}
+country_event = { #철로 활용 중점: 우리의 철로
+	id = Highlander_upgrade.10
+	title = Highlander_upgrade.10.t
+	desc = Highlander_upgrade.10.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+	option = { #채택
+		name = Highlander_upgrade.1.a
+		custom_effect_tooltip = Highlander_upgrade.10_tt
+		if = {
+			limit = {
+				check_variable = {
+					var = BA_highlander_focus_available
+					value = 2
+					compare = equals
+				}
+			}
+			set_country_flag = {
+				flag = Highlander_focus_flag_our_rail
+				value = 1
+			}
+		}
+		else = {
+			set_country_flag = {
+				flag = Highlander_focus_flag_our_rail
+				value = 1
+			}
+		}
+		add_to_variable = {
+			BA_highlander_focus_available = -1
+		}
+	}
+	option = {
+		name = Highlander_upgrade.1.b
+		set_country_flag = {
+			flag = Highlander_focus_flag_our_rail
+			value = -1
+		}
+	}
+}

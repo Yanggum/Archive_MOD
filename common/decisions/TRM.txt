@@ -2217,7 +2217,7 @@ TRN_country_collapse_decisions = {
 					controls_state = 62
 					controls_state = 63
 					controls_state = 64
-					controls_state = 1039
+					controls_state = 1069
 					controls_state = 65
 					controls_state = 66
 					controls_state = 67
@@ -2235,7 +2235,7 @@ TRN_country_collapse_decisions = {
 					controls_state = 62
 					controls_state = 63
 					controls_state = 64
-					controls_state = 1039
+					controls_state = 1069
 					controls_state = 65
 					controls_state = 66
 					controls_state = 67
@@ -2460,12 +2460,12 @@ TRN_country_collapse_decisions = {
 	TRM_resistance_emerging_to_the_surface = {
 		priority = 200
 		icon = GFX_decision_generic_prepare_civil_war
-    	available = {
+    		available = {
 			has_country_flag = {
 				flag = TRM_resistance_emerging_to_the_surface_flag
 				days > 120
 			}
-    	}
+    		}
 
 		cancel_trigger = {
 			has_global_flag = TRN_collapse_event_proceeding_flag
@@ -2530,9 +2530,9 @@ TRN_country_collapse_decisions = {
 	}
 	TRM_rural_unrest = {
 		icon = GFX_decision_generic_scorched_earth
-    	available = {
+    		available = {
 			NOT = { has_active_mission = TRM_resistance_emerging_to_the_surface }
-    	}
+    		}
 
 		cancel_trigger = {
 			has_global_flag = TRN_collapse_event_proceeding_flag
@@ -2587,9 +2587,9 @@ TRN_country_collapse_decisions = {
 	}
 	TRM_german_nationalist_unrest = {
 		icon = GFX_decision_eng_propaganda_campaigns
-    	available = {
+    		available = {
 			NOT = { has_active_mission = TRM_resistance_emerging_to_the_surface }
-    	}
+    		}
 
 		cancel_trigger = {
 			has_global_flag = TRN_collapse_event_proceeding_flag
@@ -2621,9 +2621,9 @@ TRN_country_collapse_decisions = {
 	}
 	TRM_increase_in_student_dissatisfaction = {
 		icon = GFX_decision_eng_puppet_usa
-    	available = {
+    		available = {
 			NOT = { has_active_mission = TRM_resistance_emerging_to_the_surface }
-    	}
+    		}
 
 		cancel_trigger = {
 			has_global_flag = TRN_collapse_event_proceeding_flag
@@ -2824,7 +2824,7 @@ TRN_country_collapse_decisions = {
 	}
 	TRM_calm_storm = {
 		icon = GFX_decision_generic_break_treaty
-    	available = {
+    		available = {
 			if = {
 				limit = {
 					any_country = {
@@ -2859,7 +2859,7 @@ TRN_country_collapse_decisions = {
 					}
 				}
 			}
-    	}
+    		}
 		
 		activation = {
 			always = no
@@ -3038,6 +3038,7 @@ TRN_internal_factions_categories = {
 					check_variable = { TRM_internal_factions_slot_three_var = TRN_opp_auto_var }
 				}
 			}
+			NOT = { has_country_flag = TRN_delete_power_flag }
 		}
 		
 		timeout_effect = {
@@ -4764,15 +4765,6 @@ TRN_after_war_decisions = {
 				min = 25
 			}
 			custom_effect_tooltip = TRM_GehennaResistance_Random_Event_tt
-			if = {
-				limit = { 
-					has_focus_tree = Trinity_focus
-					NOT = { has_country_flag = TRN_actived_club_ns } 
-				}
-				add_ideas = TRN_gehenna_clup_resistance_ns
-				country_event = { id = trinity.43 days = 01 }
-				set_country_flag = TRN_actived_club_ns
-			}
 			hidden_effect = {
 				random_list = {
 					1 = { # 다치는 이벤트
@@ -5671,7 +5663,10 @@ TRN_Trinity_divine_mandate_cat = {
            		}
         	}
 		visible = {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			IF = {
+				limit = { has_focus_tree = Trinity_focus }
+				has_completed_focus = TRN_eastern_divine_mandate
+			}
 		}
 		
 		cost = 25
@@ -5694,7 +5689,7 @@ TRN_Trinity_divine_mandate_cat = {
 			TRN_UKR_divine_mandate_trigger = yes
 			IF = {
 				limit = { has_focus_tree = Trinity_focus }
-				has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+				has_completed_focus = TRN_eastern_divine_mandate
 			}
 		}
 		highlight_states = {
@@ -5703,7 +5698,10 @@ TRN_Trinity_divine_mandate_cat = {
 			}
 		}
 		visible = {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			IF = {
+				limit = { has_focus_tree = Trinity_focus }
+				has_completed_focus = TRN_eastern_divine_mandate
+			}
 		}
 		
 		cost = 25
@@ -5717,6 +5715,51 @@ TRN_Trinity_divine_mandate_cat = {
 		}
 	}
 
+	TRN_ukraine_divine_mandate_expand = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = { }
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = TRN_Divine_Mandate_Trigger_tt
+				80 = { is_controlled_by_ROOT_or_subject = yes }
+				78 = { is_controlled_by_ROOT_or_subject = yes }
+				766 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+        	}
+		visible = {
+			TR5 = {
+				exists = yes
+				is_puppet_of = TRM
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 80
+				state = 78
+				state = 766
+			}
+		}
+
+		ai_will_do = { factor = 999 }
+
+		fire_only_once = yes
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 80
+						state = 78
+						state = 766
+					}
+				}
+				transfer_state_to = TR5
+			}
+		}
+	}
+
     	TRN_Belarus_Divine_Mandate = {
 		icon = GFX_decision_Trinity_Emblem
 		allowed = { }
@@ -5726,7 +5769,7 @@ TRN_Trinity_divine_mandate_cat = {
 			TRN_BLR_divine_mandate_trigger = yes
 			IF = {
 				limit = { has_focus_tree = Trinity_focus }
-				has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+				has_completed_focus = TRN_eastern_divine_mandate
 			}
 		}
         	highlight_states = {
@@ -5735,7 +5778,10 @@ TRN_Trinity_divine_mandate_cat = {
             	}
         	}
 		visible = {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			IF = {
+				limit = { has_focus_tree = Trinity_focus }
+				has_completed_focus = TRN_eastern_divine_mandate
+			}
 		}
 		cost = 25
 		ai_will_do = { factor = 30 }
@@ -5755,7 +5801,7 @@ TRN_Trinity_divine_mandate_cat = {
 			TRN_SOV_divine_mandate_trigger = yes
 			IF = {
 				limit = { has_focus_tree = Trinity_focus }
-				has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+				has_completed_focus = TRN_eastern_divine_mandate
 			}
         	}
         	highlight_states = {
@@ -5764,7 +5810,10 @@ TRN_Trinity_divine_mandate_cat = {
 			}
      		}
 		visible = {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			IF = {
+				limit = { has_focus_tree = Trinity_focus }
+				has_completed_focus = TRN_eastern_divine_mandate
+			}
 		}
 		cost = 25
 
@@ -5801,7 +5850,6 @@ TRN_Trinity_divine_mandate_cat = {
 				TRN_SOV_divine_mandate_expand_highlight_trigger = yes
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5816,6 +5864,7 @@ TRN_Trinity_divine_mandate_cat = {
 	}
 
 	TRN_Russia_divine_mandate_expand_2 = {
+		name = TRN_Russia_divine_mandate_expand
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = { }
 		available = {
@@ -5841,7 +5890,6 @@ TRN_Trinity_divine_mandate_cat = {
 				state = 213
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5860,6 +5908,36 @@ TRN_Trinity_divine_mandate_cat = {
 			}
 		}
 	}
+	TRN_Russia_divine_mandate_expand_3 = {
+		name = TRN_Russia_divine_mandate_expand
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = { }
+		available = {
+			has_war = no
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = TRN_Divine_Mandate_Trigger_tt
+				146 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+        	}
+		visible = {
+			TR6 = {
+				exists = yes
+				is_puppet_of = TRM
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = { state = 146 }
+		}
+
+		ai_will_do = { factor = 999 }
+
+		fire_only_once = yes
+
+		complete_effect = {
+			TR6 = { transfer_state = 146 }
+		}
+	}
 
 	TRN_KAPKAS_HOLY_MANDATE = {
 		icon = GFX_decision_Trinity_Emblem
@@ -5867,7 +5945,7 @@ TRN_Trinity_divine_mandate_cat = {
 		available = {
 			has_war = no
 			TRN_South_Russia_divine_mandate_trigger = yes
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			has_completed_focus = TRN_eastern_divine_mandate
       	}
 		
       	highlight_states = {
@@ -5877,7 +5955,7 @@ TRN_Trinity_divine_mandate_cat = {
         	}
 		
 		visible = {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack_4
+			has_completed_focus = TRN_eastern_divine_mandate
 		}
 		
 		cost = 25
@@ -5914,7 +5992,6 @@ TRN_Trinity_divine_mandate_cat = {
 				TRN_South_Russia_divine_mandate_highlight_expand_trigger = yes
 			}
 		}
-		cost = 25
 
 		ai_will_do = { factor = 999 }
 
@@ -5925,6 +6002,132 @@ TRN_Trinity_divine_mandate_cat = {
 				limit = { TRN_South_Russia_divine_mandate_highlight_expand_trigger = yes }
 				transfer_state_to = TR7
 			}
+		}
+	}
+
+	TRN_support_east_divine_mandate = {
+		allowed = { tag = TRM }
+
+		days_re_enable = 90
+
+		cost = 30
+
+		available = {
+			OR = {
+				country_exists = TR3
+				country_exists = TR4
+				country_exists = TR5
+				country_exists = TR6
+				country_exists = TR7
+			}
+			has_manpower > 15000
+		}
+
+		visible = {
+			OR = {
+				country_exists = TR3
+				country_exists = TR4
+				country_exists = TR5
+				country_exists = TR6
+				country_exists = TR7
+			}
+		}
+
+		complete_effect = {
+			# ==== TR3 ====
+			IF = {
+				limit = { country_exists = TR3 }
+				add_manpower = -2500
+				TR3 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR3
+						NOT = { is_core_of = TR3 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR4 ====
+			IF = {
+				limit = { country_exists = TR4 }
+				add_manpower = -2500
+				TR4 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR4
+						NOT = { is_core_of = TR4 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR5 ====
+			IF = {
+				limit = { country_exists = TR5 }
+				add_manpower = -2500
+				TR5 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR5
+						NOT = { is_core_of = TR5 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR6 ====
+			IF = {
+				limit = { country_exists = TR6 }
+				add_manpower = -2500
+				TR6 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR6
+						NOT = { is_core_of = TR6 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			# ==== TR7 ====
+			IF = {
+				limit = { country_exists = TR7 }
+				add_manpower = -2500
+				TR7 = {
+					add_manpower = 2500
+					army_experience = 15
+				}
+				every_state = {
+					limit = {
+						is_controlled_by = TR7
+						NOT = { is_core_of = TR7 }
+					}
+					add_resistance = -3
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "90"
+			}
+		}
+
+		ai_will_do = {
+			base = 5
 		}
 	}
 
@@ -5978,7 +6181,7 @@ TRN_Trinity_divine_mandate_cat = {
 			}
 		}
 		visible = {
-			TRC = { 
+			TR8 = { 
 				is_puppet_of =  TRM
 				exists = yes
 			}
@@ -5990,7 +6193,7 @@ TRN_Trinity_divine_mandate_cat = {
 		complete_effect = {
 			every_state = {
 				limit = { TRN_Millennium_divine_mandate_expand_01_highlight_trigger = yes }
-				transfer_state_to = TRC
+				transfer_state_to = TR8
 			}
 		}
 	}
@@ -6306,7 +6509,6 @@ TRN_Trinity_divine_mandate_cat = {
                 tooltip = TRN_Divine_Mandate_Trigger_tt
 				102 = { is_owned_or_subject_trigger = yes }
                 853 = { is_owned_or_subject_trigger = yes }
-                1017 = { is_owned_or_subject_trigger = yes }
                 103 = { is_owned_or_subject_trigger = yes }
                 163 = { is_owned_or_subject_trigger = yes }
                 109 = { is_owned_or_subject_trigger = yes }
@@ -6318,7 +6520,7 @@ TRN_Trinity_divine_mandate_cat = {
                 154 = { is_owned_or_subject_trigger = yes }
                 45 = { is_owned_or_subject_trigger = yes }
                 76 = { is_owned_or_subject_trigger = yes }
-                1044 = { is_owned_or_subject_trigger = yes }
+                1017 = { is_owned_or_subject_trigger = yes }
                 73 = { is_owned_or_subject_trigger = yes }
                 83 = { is_owned_or_subject_trigger = yes }
                 84 = { is_owned_or_subject_trigger = yes }
@@ -6361,7 +6563,6 @@ TRN_Trinity_divine_mandate_cat = {
             highlight_state_targets = {
                 state = 102
                 state = 853
-                state = 1017
                 state = 103
                 state = 163
                 state = 109
@@ -6373,7 +6574,7 @@ TRN_Trinity_divine_mandate_cat = {
                 state = 154
                 state = 45
                 state = 76
-				state = 1044
+				state = 1017
                 state = 73
                 state = 83
                 state = 84
@@ -7039,7 +7240,6 @@ political_actions = {
 		allowed = { always = no } #activated by effect
 
 		cost = 0
-		days_remove = 35
 		modifier = {
 
 		}
@@ -7056,100 +7256,7 @@ political_actions = {
 
 }
 debug_decisions = {
-    TRM_auto_event_TRM_Event_16 = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-            ROOT = {
-                country_event = TRM_event.16
-            }
-		}
-    }
-    TRM_auto_complete_focus_newfocus27 = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-            complete_national_focus = TRM_newfocus_28
-            complete_national_focus = TRM_newfocus_26
-            complete_national_focus = TRM_newfocus_27
-		}
-    }
-    TRM_auto_complete_focus_TRM_naechi = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-            complete_national_focus = TRM_naechi
-		}
-    }
-    TRM_auto_complete_focus_after_war = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-            country_event = TRM_event.15
-		}
-    }
-    TRM_auto_complete_focus_TRM_domination = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-            complete_national_focus = TRM_domination
-		}
-    }
-    TRM_auto_focus_last = {
-		priority = 80
-		allowed = {
-			always = yes
-		}
-
-		visible = {
-			is_ai = no
-			is_debug = yes
-            tag = TRM
-		}
-		complete_effect = {
-			
-		}
-    }
+	
 }
 TRN_Mika_honor_decision_cat = {
 
@@ -7165,38 +7272,32 @@ TRN_Mika_honor_decision_cat = {
 		is_good = no
 		fixed_random_seed = no
 		selectable_mission = no
-		days_mission_timeout = 70
+		days_mission_timeout = 140
 
 		activation = {
 			has_country_flag = TRN_mika_honor_activate
 		}
-
+		
 		timeout_effect = {
 			activate_mission = TRN_Mika_honor_loop_decision
-			custom_effect_tooltip = TRN_Mika_honor_loop_decision_tt
-			hidden_effect = {
-				random_list = {
-					1 = {
-						modifier = {
-							add = -0.5
-						}
-						country_event = { id = trnhonor.3 }
-					}
-					1 = {
-						country_event = { id = trnhonor.4 }
-					}
-					1 = {
-						modifier = {
-							add = -0.5
-						}
-						country_event = { id = trnhonor.5 }
-					}
-					1 = {
-						country_event = { id = trnhonor.7 }
-					}
-					1 = {
-						country_event = { id = trnhonor.8 }
-					}
+			#custom_effect_tooltip = TRN_Mika_honor_loop_decision_tt
+			# 임시 땜빵용
+			random_list = {
+				1 = {
+					set_temp_variable = { TRN_Honor_change = 3 }
+					TRN_add_Honor = yes
+				}
+				1 = {
+					set_temp_variable = { TRN_Honor_change = 6 }
+					TRN_add_Honor = yes
+				}
+				1 = {
+					set_temp_variable = { TRN_Honor_change = 9 }
+					TRN_add_Honor = yes
+				}
+				1 = {
+					set_temp_variable = { TRN_Honor_change = -6 }
+					TRN_add_Honor = yes
 				}
 			}
 		}
@@ -7225,9 +7326,9 @@ TRN_Mika_honor_decision_cat = {
 			add_war_support = -0.02
 
        		add_power_balance_value = {
-       		    id = TRM_power_balance
-       		    value = -0.02
-       		    tooltip_side = TRM_tirinty_socialism
+       		    	id = TRM_power_balance
+       		    	value = -0.02
+       		    	tooltip_side = TRM_tirinty_socialism
        		}
 		}
 	}
@@ -7257,9 +7358,9 @@ TRN_Mika_honor_decision_cat = {
 			}
 
        		add_power_balance_value = {
-       		    id = TRM_power_balance
-       		    value = -0.02
-       		    tooltip_side = TRM_tirinty_socialism
+       		    	id = TRM_power_balance
+       		    	value = -0.02
+       		    	tooltip_side = TRM_tirinty_socialism
        		}
 		}
 	}
@@ -7308,9 +7409,9 @@ TRN_Mika_honor_decision_cat = {
 				}
 
        			add_power_balance_value = {
-       			    id = TRM_power_balance
-       			    value = 0.02
-       			    tooltip_side = TRN_trinity_militarism
+       			    	id = TRM_power_balance
+       			    	value = 0.02
+       			    	tooltip_side = TRN_trinity_militarism
        			}
 			}
 		}
@@ -7406,32 +7507,6 @@ TRN_Mika_honor_decision_cat = {
 		}
 	}
 
-	TRN_honor_sovereign_dictatorship = {
-		icon = GFX_decision_generic_speech
-
-		allowed = { always = no } #activated by effect
-
-		cost = 10
-		days_remove = 70
-		modifier = {
-			stability_weekly = -0.007
-			political_power_factor = 0.05
-			power_balance_weekly = 0.002
-			industrial_capacity_factory = 0.05
-		}
-
-		ai_will_do = { base = 0 }
-
-		complete_effect = {
-
-       		add_power_balance_value = {
-       		    id = TRM_power_balance
-       		    value = 0.05
-       		    tooltip_side = TRM_tirinty_nazism
-       		}
-		}
-	}
-
 	TRN_honor_protection_of_the_Jewish_community = {
 		icon = GFX_decision_hol_exchange_intelligence_data
 
@@ -7513,7 +7588,7 @@ TRN_economic_evelopment_department = {
 		priority = 999
 		icon = GFX_decision_generic_merge_plant_materiel
 
-		allowed = { always = no } #activated by effect
+		allowed = { tag = TRM }
 
 		visible = {
 			has_full_control_of_state = FROM
@@ -7523,13 +7598,27 @@ TRN_economic_evelopment_department = {
 			}
 			has_government = fascism
 		}
+		available = {
+			has_full_control_of_state = FROM
+			has_completed_focus = TRN_ministry_of_industrial_development
+		}
 
 		cost = 25
 		fire_only_once = yes
 		state_target = yes
 
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 66
+					state = 67
+					state = 762
+				}
+			}	
+		}
+
 		ai_will_do = {
-			factor = 20
+			factor = 4
 			modifier = {
 				factor = 0
 				has_political_power < 250
@@ -7538,56 +7627,6 @@ TRN_economic_evelopment_department = {
 		remove_effect = {
 			FROM = {
 				add_dynamic_modifier = { modifier = TRM_industrial_region_state }
-			}
-		}
-	}
-	
-	
-	TRN_ammo_factory_decision  = {
-		priority = 100
-		icon = GFX_decision_generic_factory
-
-		ai_will_do = { 
-			base = 40 
-			modifier = {
-				arms_factory < 50
-				add = 100
-			}
-		}
-		allowed = { original_tag = TRM }
-
-		visible = { }
-
-		available = { }
-
-		cost = 35
-		days_remove = 70
-		fire_only_once = yes
-
-		modifier = {
-
-		}
-
-		complete_effect = {
-
-		}
-
-		remove_effect = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}	
 			}
 		}
 	}
@@ -7649,9 +7688,9 @@ TRN_economic_evelopment_department = {
 		}
 	}
 	
-	TRN_design_bureau_and_arsenal_expansion  = {
+	TRN_garden_city_movement  = {
 		priority = 100
-		icon = GFX_decision_gre_investment_decisions
+		icon = GFX_decision_trinity_city
 
 		ai_will_do = { 
 			base = 3
@@ -7659,18 +7698,18 @@ TRN_economic_evelopment_department = {
 		allowed = { original_tag = TRM }
 
 		visible = {
-			NOT = { has_country_flag = TRN_design_bureau_and_arsenal_expansion_completed }
+			
 		}
 
 		available = { }
 
-		cost = 35
-		days_remove = 70
+		cost = 49
+		days_remove = 49
 
 		fire_only_once = yes
 
 		modifier = {
-			consumer_goods_factor = 0.1
+
 		}
 
 		complete_effect = {
@@ -7678,23 +7717,30 @@ TRN_economic_evelopment_department = {
 		}
 
 		remove_effect = {
-			set_country_flag = TRN_design_bureau_and_arsenal_expansion_completed
-			mio:TRM_royal_arsenal_organization = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.25
-				add_mio_research_bonus = 0.05
-			}
-			mio:TRM_infantry_equipment_organization = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.25
-				add_mio_research_bonus = 0.05
+			add_political_power = 50
+			add_stability = 0.05
+			64 = { add_dynamic_modifier = { modifier = TRN_city_of_heaven } }
+			every_core_state = {
+				display_individual_scopes = yes
+				limit = {
+					is_owned_and_controlled_by = ROOT
+					OR = {
+						state = 64
+						state = 1069
+						state = 63
+						state = 64
+						state = 62
+					}
+					NOT = { state = 64 } #Ile de France
+				}
+				BA_increase_state_category_by_one_level = yes
 			}
 		}
 	}
 	
-	TRN_takeover_of_german_tank_factories  = {
+	TRN_embrace_chain_production  = {
 		priority = 100
-		icon = GFX_decision_gre_investment_decisions
+		icon = GFX_decision_generic_industry
 
 		ai_will_do = { 
 			base = 3
@@ -7707,13 +7753,13 @@ TRN_economic_evelopment_department = {
 
 		available = { }
 
-		cost = 35
-		days_remove = 70
+		cost = 49
+		days_remove = 49
 
 		fire_only_once = yes
 
 		modifier = {
-			consumer_goods_factor = 0.1
+
 		}
 
 		complete_effect = {
@@ -7721,42 +7767,106 @@ TRN_economic_evelopment_department = {
 		}
 
 		remove_effect = {
-			mio:TRM_royal_arsenal_organization = {
-				add_mio_size = 2
+			add_one_random_civilian_factory = yes
+			add_one_random_military_factory = yes
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_industry_ns
 			}
-			mio:TRM_vickers_armstrong_eng_organization = {
-				add_mio_size = 1
+			add_to_variable = {
+				TRN_industry_ns_industrial_capacity_factory = 0.03
+				tooltip = industrial_capacity_factory_tt
 			}
-			mio:TRM_motorized_mechanized_organization = {
-				add_mio_size = 1
-			}
+		}
+	}
+	
+	TRN_trade_controls  = {
+		priority = 100
+		icon = GFX_decision_eng_trade_unions_demand
 
-			army_experience = 25
-			
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = cat_medium_armor
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}	
-			}
+		ai_will_do = { 
+			base = 3
+		}
+		allowed = { original_tag = TRM }
 
+		visible = {
+			has_completed_focus = TRN_railway_improvement
+		}
+
+		available = {
+			has_completed_focus = TRN_railway_improvement
+		}
+
+		cost = 70
+
+		fire_only_once = yes
+
+		modifier = {
 
 		}
+
+		complete_effect = {
+			custom_effect_tooltip = BA_factoriesof_new_world_tt
+			set_country_flag = BA_can_remove_isolation_flag
+
+			if = {
+				limit = { has_idea = BA_isolation }
+				swap_ideas = {
+					remove_idea = BA_isolation
+					add_idea = limited_exports
+				}
+			}
+		}
+	}
+
+	TRN_Abydos_clearing_sand = {
+		priority = 999
+		icon = GFX_decision_Abydos_Emblem
+
+		allowed = { always = no } #activated by effect
+
+		available = {
+			FROM = { 
+				is_owned_and_controlled_by = ROOT 
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
+				is_owned_and_controlled_by = ROOT 
+			}
+		}
+
+		days_remove = 180
+		fire_only_once = yes
+		state_target = yes
+
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_political_power < 159
+			}
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			FROM = {
+				remove_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
+			}
+		}
+	}
+	TRN_Infrastructure_development_fake = {
+		name = TRN_Infrastructure_Development
+		allowed = { always = no }
+		visible = { always = no }
+		available = { hidden_trigger = { always = no } }
 	}
 	TRN_Infrastructure_Development = {
 		icon = GFX_decision_generic_trucks
@@ -7810,49 +7920,6 @@ TRN_economic_evelopment_department = {
 	}
 }
 TRN_economic_plan_cat = {
-
-	TRN_Abydos_clearing_sand = {
-		priority = 999
-		icon = GFX_decision_Abydos_Emblem
-
-		allowed = { always = no } #activated by effect
-
-		available = {
-			FROM = { 
-				is_owned_and_controlled_by = ROOT 
-			}
-		}
-
-		visible = {
-			FROM = {
-				has_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
-				is_owned_and_controlled_by = ROOT 
-			}
-		}
-
-		days_remove = 180
-		fire_only_once = yes
-		state_target = yes
-
-		modifier = {
-			consumer_goods_factor = 0.05
-		}
-
-		ai_will_do = {
-			factor = 20
-			modifier = {
-				factor = 0
-				has_political_power < 159
-			}
-		}
-		complete_effect = {
-		}
-		remove_effect = {
-			FROM = {
-				remove_dynamic_modifier = { modifier = ABY_abydos_sandstorm }
-			}
-		}
-	}
 
 	TRN_Opelwerk_Brandenburg = {
 		icon = GFX_decision_generic_motorized
@@ -8015,6 +8082,10 @@ TRN_economic_plan_cat = {
 					level = 1
 					instant_build = yes
 				}
+				add_resource = {
+					type = coal
+					amount = 15
+				}
 			}
 			62 = {
 				add_extra_state_shared_building_slots = 1
@@ -8028,7 +8099,6 @@ TRN_economic_plan_cat = {
 
 		available = {
 			FROM = { is_owned_and_controlled_by = ROOT }
-			61 = { is_owned_and_controlled_by = ROOT }
 			num_of_civilian_factories_available_for_projects > 1
 			NOT = {
 				has_country_flag = TRN_industry_deicision_active
@@ -8247,7 +8317,7 @@ TRN_economic_plan_cat = {
 		}
 
 		remove_effect = {
-			hidden_effect = { country_event = trnfla.21}
+			hidden_effect = { country_event = trinity_flavor_events.21}
 			FROM = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -8297,6 +8367,10 @@ TRN_economic_plan_cat = {
 					type = steel
 					amount = 5
 				}	
+				add_resource = {
+					type = coal
+					amount = 10
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -8354,7 +8428,6 @@ TRN_economic_plan_cat = {
 			}
 		}
 	}
-	
 	TRN_rebuilding_Landwehrkanal  = {
 		priority = 100
 		icon = GFX_decision_hol_drain_water_lines
@@ -8404,6 +8477,60 @@ TRN_economic_plan_cat = {
 					type = infrastructure
 					level = 1
 					instant_build = yes
+				}
+			}
+		}
+	}
+	TRN_schlesien_coal_mine = {
+		icon = GFX_decision_hol_inundate_water_lines
+
+		allowed = { always = no } #activated by effect
+
+		available = {
+			FROM = { is_owned_and_controlled_by = ROOT }
+			num_of_civilian_factories_available_for_projects > 4
+			NOT = {
+				has_country_flag = TRN_industry_deicision_active
+			}
+		}
+
+		cost = 40
+		days_remove = 70
+		fire_only_once = yes
+		state_target = yes
+
+		modifier = {
+			civilian_factory_use = 4
+		}
+
+		ai_will_do = {
+			base = 80
+			modifier = {
+				factor = 0
+				has_political_power < 159
+			}
+		}
+		
+		complete_effect = {
+			set_country_flag = {
+				flag = TRN_industry_deicision_active
+				value = 1
+				days = 70
+			}
+		}
+
+		remove_effect = {
+			add_to_variable = { TRN_completed_industrial_decisions = 1 }
+			FROM = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_resource = {
+					type = coal
+					amount = 15
 				}
 			}
 		}
@@ -8597,8 +8724,14 @@ TRN_trinity_world_cat = {
 		allowed = { }
 
 		available = {
+			HYA = { NOT = { has_completed_focus = HYA_focus_70 } }
 			NOT = { has_country_flag = TRN_no_longer_TRN_support_HYA_decision }
-			is_faction_leader = yes
+			if = { 
+				limit = {
+					check_variable = {TRN_support_HYA_var = 2 } 
+				} 
+				is_faction_leader = yes
+			}
 			hidden_trigger = {
 				FROM = { 
 					check_variable = { TRN_support_HYA_var < 3 } 
@@ -8610,7 +8743,6 @@ TRN_trinity_world_cat = {
 			FROM = { 
 				check_variable = { TRN_support_HYA_var < 3 } 
 			}
-			has_completed_focus = TRN_support_HYA
 		}
 		fire_only_once = no
 
@@ -8663,6 +8795,7 @@ TRN_trinity_world_cat = {
 		}
 	}
 	
+	#대소련 관련
 	TRN_influence_baltics_decision = {
 		priority = 1
 		icon = GFX_decision_SWI_expand_covert_operations 
@@ -8715,7 +8848,7 @@ TRN_trinity_world_cat = {
 		}
 
 		target_root_trigger =  {
-			has_completed_focus = TRN_TrinityMikaDiplomacySovietAttack
+			has_completed_focus = TRN_baltic_diplomancy
 			has_government = fascism
 		}
 
@@ -8747,6 +8880,7 @@ TRN_trinity_world_cat = {
 		}
 	}
 
+	#에덴전쟁 관련
 	TRN_create_pro_trinity_group = {
 		icon = GFX_decision_eng_propaganda_campaigns
 		allowed = { always = no }
@@ -8849,59 +8983,6 @@ TRN_trinity_world_cat = {
 			set_country_flag = TRN_create_pro_trinity_group_flag
 		}
 	}
-
-	TRN_invite_alliance = {
-		name = invite_country
-		icon = GFX_decision_SWI_support_humanitarian_efforts
-		allowed = { always = no } 
-
-		available = {
-			FROM = {
-				has_war = no 
-				NOT = { any_claim = yes } 
-				is_in_faction = no
-			}
-		}
-
-		visible = {
-			is_faction_leader = yes
-			FROM = {
-				exists = yes
-				is_subject = no
-				OR = {
-					is_in_faction = no
-					is_faction_leader = yes
-				}
-				NOT = { has_war_with = ROOT }
-				has_government = communism
-			}
-		}
-		cost = 10
-		fire_only_once = yes
-
-		ai_will_do = {
-			factor = 1000
-			modifier = {
-				factor = 0
-				FROM = { 
-					any_owned_state = { 
-						OR = {
-							is_claimed_by = ROOT
-							is_core_of = ROOT
-						}
-					} 
-				}
-			}
-			modifier = {
-				factor = 0
-				surrender_progress > 0.05
-			}
-		}
-		complete_effect = {
-
-		}
-	}
-
 }
 TRN_Mika_social_problem_cat = {
 	TRN_Mika_social_problem = {
@@ -8932,10 +9013,16 @@ TRN_Mika_social_problem_cat = {
 
 		available = {
 			has_country_flag = TRN_Mika_social_trinity_language_flag
-			has_completed_focus = TRN_fate_of_german_culture # 오직 미카 루트에서면 완료할 수 있는 중점입니다. 추후에 OR을 달아 수정해야 합니다.
-			NOT = {
-				country_exists = GEM
-				country_exists = GEH
+			
+			IF = {
+				limit = {
+					NOT = { has_completed_focus = TRN_unprovable_problem }
+				}
+				has_completed_focus = TRN_solving_social_problems
+				NOT = {
+					country_exists = GEM
+					country_exists = GEH
+				}
 			}
 		}
 		complete_effect = {
@@ -8970,7 +9057,7 @@ TRN_Mika_social_problem_cat = {
 					limit = { 
 						has_government = fascism
 					}
-					country_event = { id = trnfla.31 days = 70 }
+					country_event = { id = trinity_flavor_events.31 days = 70 }
 				}
 			}
 		}
@@ -9009,35 +9096,71 @@ TRN_Mika_social_problem_cat = {
 
 			custom_effect_tooltip = TRN_Mika_social_problem_tt
 
-			add_stability = -0.025
+			add_stability = -0.015
 			add_popularity = { ideology = ROOT popularity = -0.015 }
 
 			activate_mission = TRN_Mika_social_problem
-			hidden_effect = {
-				random_list = {
-					1 = {
-						country_event = { id = trnsocial.2 }
-					}
-					1 = {
-						country_event = { id = trnsocial.3 }
-					}
-					1 = {
-						country_event = { id = trnsocial.4 }
-					}
-					1 = {
-						country_event = { id = trnsocial.5 }
-					}
-					1 = {
-						country_event = { id = trnsocial.6 }
-					}
-					0 = {
-						modifier = {
-							has_country_flag = TRN_trinity_available_SPD_flag
-							add = 1
+			if = {
+				limit = { has_country_flag = TRN_social_causing_regional_conflict_decision_active }
+			}
+			else = {
+				#hidden_effect = {
+					random_list = {
+						1 = {
+							modifier = {
+								add = -1
+								has_completed_focus = TRN_dismantled_Nazi_organization
+							}
+							country_event = { id = trinity_social_ploblem_events.2 } # 노동자 파업
 						}
-						country_event = trnsocial.7
+						1 = {
+							modifier = {
+								add = -1
+								has_completed_focus = TRN_dismantled_Nazi_organization
+							}
+							country_event = { id = trinity_social_ploblem_events.4 } # 폴크스앰펭거
+						}
+						1 = {
+							modifier = {
+								add = -1
+								has_completed_focus = TRN_dismantled_Nazi_organization
+							}
+							country_event = { id = trinity_social_ploblem_events.5 } # 베어울프
+						}
+						1 = {
+							modifier = {
+								add = -1
+								has_completed_focus = TRN_dismantled_Nazi_organization
+							}
+							country_event = { id =  trinity_social_ploblem_events.12 } # 히틀러 유겐트
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.3 } # 관공서에 대한 폭탄 테러
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.6 } # 파괴된 트리니티 상징물
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.8 } # 저항하는 지휘자
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.9 } # 암살 미수 사건
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.10 } # 붉은 오케스트라
+						}
+						1 = {
+							country_event = { id = trinity_social_ploblem_events.11 } # 노동자들의 태업 문제
+						}
+						1 = {
+							modifier = {
+								has_completed_focus = TRN_absorb_the_reichsbanner_schwarz_rot_gold
+								add = -1
+							}
+							country_event = trinity_social_ploblem_events.7
+						}
 					}
-				}
+				#}
 			}
 		}
 		cancel_effect = {
@@ -9062,11 +9185,6 @@ TRN_Mika_social_problem_cat = {
 		fire_only_once = yes
 
 		cost = 15
-
-		modifier = {
-			stability_factor = -0.05
-			research_speed_factor = 0.03
-		}
 
 		ai_will_do = {
 			base = 5
@@ -9492,155 +9610,377 @@ TRN_Mika_social_problem_cat = {
 		}
 	}
 
-}
-TRN_Kulturkampf_cat = {
+	TRN_social_child_brainwashing_decision = {
+		icon = GFX_decision_generic_brainwash
 
-	TRN_bonhoeffer_activation_decision = {
-		priority = 999
-		icon = GFX_decision_icon_schedule_ticke
+		allowed = { always = no  } #activated by effect
 
-		allowed = { tag = TRM }
 		available = {
-			has_completed_focus = TRN_revolution_in_the_spirit
-			count_triggers = {
-				amount = 6
-				61 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				62 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				60 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				65 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				63 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				68 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				66 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				67 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				762 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				807 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
-				5 = { has_dynamic_modifier = { modifier = GEK_trm_christianity_state } }
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
 			}
+			
 		}
 
-		is_good = no
-		fixed_random_seed = no
-		selectable_mission = no
-		days_mission_timeout = 45
+		fire_only_once = yes
 
-		activation = {
-			has_completed_focus = TRN_take_over_the_church
-		}
+		cost = 35
 
-		timeout_effect = {
-			activate_mission = TRN_bonhoeffer_activation_decision
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var < 1 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -10 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 0 }
-					check_variable = { TRN_bonhoeffer_var < 7 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_2_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -5 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			if = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 6 }
-				}
-				custom_effect_tooltip = TRN_bonhoeffer_increase_influence_3_tt
-				add_to_variable = { TRN_Kulturkampf_display_value = -2 }
-				clamp_variable = {
-					var = TRN_Kulturkampf_display_value
-					min = 0
-					max = 100
-				}
-			}
-			add_to_variable = { TRN_bonhoeffer_var = 1 }
-		}
-		complete_effect = {
-			IF = {
-				limit = {
-					check_variable = { TRN_bonhoeffer_var > 0 }
-					check_variable = { TRN_bonhoeffer_var < 2 }
-				}
-				hidden_effect = {
-
-				}
-			}
-		}
-	}
-
-	TRN_fuking_your_ass = {
-		icon = GFX_decision_hol_attract_foreign_investors
-
-		allowed = { tag = TRM }
-
-		cost = 25
-		days_remove = 60
 		modifier = {
 
 		}
 
-		state_target = yes
-		target_trigger = {
-			FROM = {
-				has_state_flag = TRN_completed_infiltrate_state
-				OR = {
-					has_dynamic_modifier = { modifier = GEK_protestant_state }
-					has_dynamic_modifier = { modifier = GEK_catholic_state }
-				}
-            		is_controlled_by = ROOT
-        		}
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
 		}
 
-		ai_will_do = { base = 0 }
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+		}
+
+	}
+
+	TRN_social_causing_regional_conflict_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { tag = TRM }
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = no
+
+		days_remove = 105
+
+		days_re_enable = 1
+
+		cost = TRN_social_causing_regional_conflict_cost
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		available = {
+			has_completed_focus = TRN_solving_social_problems
+		}
+
+		visible = { 
+			has_completed_focus = TRN_solving_social_problems
+		}
 
 		complete_effect = {
+			set_country_flag = TRN_social_causing_regional_conflict_decision_active
+			custom_effect_tooltip = {
+				localization_key = TRN_social_causing_regional_conflict_decision_active_tt
+				DECISION = TRN_Mika_social_problem
+			}
+		}
+		remove_effect = {
+			clr_country_flag = TRN_social_causing_regional_conflict_decision_active
+			multiply_variable = { TRN_social_causing_regional_conflict_cost = 2 }
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable_and_cost_increase_tt
+				TIME = 90
+				COST = 2
+			}
+		}
+	}
+
+	TRN_social_edit_textbook_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.01
+				tooltip = conscription_factor_tt
+			}
+		}
+
+	}
+
+	TRN_ID_card_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		days_remove = 720
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			TRN_Social_Problem_effect = yes
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.015
+				tooltip = conscription_factor_tt
+			}
+		}
+	}
+
+	TRN_german_abolition_decision = {
+		icon = GFX_decision_generic_cctv
+
+		allowed = { always = no  } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		days_remove = 720
+
+		modifier = {
+
+		}
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.3 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.4 }
+			}
+			modifier = {
+				factor = 2
+				check_variable = { TRM_pro_german_propaganda_conscription_factor > 0.5 }
+			}
+			modifier = {
+				factor = 0
+				check_variable = { TRM_pro_german_propaganda_conscription_factor < 0.1 }
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				TRN_Mika_social_problem_days = 5
+				tooltip = TRN_Mika_social_problem_days_increase_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			TRN_Social_Problem_effect = yes
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = TRM_CF_modifier_tt
+			add_to_variable = {
+				TRM_pro_german_propaganda_conscription_factor = 0.015
+				tooltip = conscription_factor_tt
+			}
+		}
+	}
+
+	TRN_geographical_renaming_decision = {
+		icon = GFX_decision_generic_operation
+
+		allowed = { always = no } #activated by effect
+
+		available = {
+			OR = {
+				has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				has_dynamic_modifier = { modifier = TRM_pro_german_propaganda_modifier }
+				has_dynamic_modifier = { modifier = TRM_trinity_social_issues_modifier }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 35
+
+		days_remove = 180
+
+		modifier = {
+			political_power_factor = -0.05
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+
+		complete_effect = {
+			# 독일 
+			61 = { set_state_name = TRN_japanese_state_name_61 } # 메클렌부르크
+			62 = { set_state_name = TRN_japanese_state_name_62 } # 포어포메른
+			63 = { set_state_name = TRN_japanese_state_name_63 } # 힌터포메른
+			68 = { set_state_name = TRN_japanese_state_name_68 } # 노이마르크
+			60 = { set_state_name = TRN_japanese_state_name_60 } # 튀링겐
+			65 = { set_state_name = TRN_japanese_state_name_65 } # 작센
+			66 = { set_state_name = TRN_japanese_state_name_66 } # 니더슐레지엔
+			67 = { set_state_name = TRN_japanese_state_name_67 } # 오버슐레지엔
+			5 = { set_state_name = TRN_japanese_state_name_5 } # 에름란트-마주렌
+			763 = { set_state_name = TRN_japanese_state_name_763 } # 동프로이센
+
+			# 폴란드
+			762 = { set_state_name = TRN_japanese_state_name_762 } # 카토비체
+			86 = { set_state_name = TRN_japanese_state_name_86 } # 포즈난
+			807 = { set_state_name = TRN_japanese_state_name_807 } # 그다니아
+			
+			# 리투아니아
+			188 = { set_state_name = TRN_japanese_state_name_188 } # 메멜
 
 		}
 	}
-	
 
-	TRM_infiltrate_church = {
+	TRN_conversion_work_decision = {
+		icon = GFX_decision_trinity_emblem_02
 
-		allowed = {
-			original_tag = TRM
-		}
-
-		icon = eng_trade_unions_demand
-
-		ai_will_do = {
-			base = 40
-			modifier = {
-				factor = 3
-				has_political_power > 99
-			}
-		}
-		
 		state_target = yes
+
+		on_map_mode = map_only
+
 		target_trigger = {
 			FROM = {
-				OR = {
-					has_dynamic_modifier = { modifier = GEK_protestant_state }
-					has_dynamic_modifier = { modifier = GEK_catholic_state }
+				is_controlled_by = TRM
+				NOT = { 
+					has_dynamic_modifier = { modifier = TRN_christianity_state }
 				}
-            		is_controlled_by = ROOT
-        		}
-		}
-
-		target_root_trigger = {
-			has_completed_focus = TRN_take_over_the_church
+			}
 		}
 
 		available = {
@@ -9648,35 +9988,2960 @@ TRN_Kulturkampf_cat = {
 		}
 
 		visible = {
-
+			has_completed_focus = TRN_take_over_the_church
 		}
 
-		on_map_mode = map_and_decisions_view
+		days_remove = 210
 
 		cost = 30
 
-		days_remove = 120
-
 		complete_effect = {
-			add_to_variable = { 
-				TRN_Kulturkampf_display_value = 5
-				tooltip = TRN_Kulturkampf_display_value_increase_mika_tt
+			if = {
+				limit = {
+					has_idea = TRN_sisterhood_missionary_work_ns
+				}
+				custom_effect_tooltip = TRM_CF_modifier_tt
+				add_to_variable = {
+					TRM_pro_german_propaganda_conscription_factor = 0.007
+					tooltip = conscription_factor_tt
+				}
 			}
-			clamp_variable = {
-				var = TRN_Kulturkampf_display_value
-				min = 0
-				max = 100
+			else = {
+				custom_effect_tooltip = TRM_CF_modifier_tt
+				add_to_variable = {
+					TRM_pro_german_propaganda_conscription_factor = 0.005
+					tooltip = conscription_factor_tt
+				}
+			}
+
+		}
+	}
+}
+TRM_nagisa_balance_of_power_cat = {
+	
+	TRM_nagisa_bop_support_for_the_sisterhood_orphanage = {
+		icon = GFX_decision_trinity_city
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				has_political_power < 75
+				add = 0
+			}
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0.5
+				}	
 			}
 		}
+
+		cost = 25
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_medium_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_exposing_the_host_to_the_media = {
+		icon = GFX_decision_generic_nationalism
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_war = no
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				has_political_power < 100
+				add = 0
+			}
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0.5
+				}	
+			}
+		}
+
+		cost = 50
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_high_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_investing_budget_in_maintaining_security = {
+		icon = GFX_decision_TRN_justice
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_war = no
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 0 # CP를 너무 많이 써서, AI가 조절 못 할 것으로 보임
+		}
+
+		custom_cost_trigger = {
+			command_power > 24
+		}
+
+		custom_cost_text = decision_cost_CP_25
+
+		days_re_enable = 30
+
+		complete_effect = {
+			TRM_nagisa_bop_high_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_opening_a_social_gathering = {
+		icon = GFX_decision_generic_political_rally
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_government = democratic
+			num_of_civilian_factories > 1
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 4
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0
+				}	
+			}
+		}
+
+		days_remove = 14
+		days_re_enable = 60
+
+        modifier = { civilian_factory_use = 2 }
+
+		remove_effect = {
+			TRM_nagisa_bop_low_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_meeting_with_minor_factions = {
+		icon = GFX_decision_generic_political_address
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_government = democratic
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+
+		days_remove = 21
+		days_re_enable = 60
+
+        modifier = { 
+			political_power_factor = -0.15
+		}
+
+		remove_effect = {
+			TRM_nagisa_bop_low_increase_effect = yes
+		}
+
+		fire_only_once = no
+	}
+	
+	TRM_nagisa_bop_victory_eden = {
+		icon = GFX_decision_generic_political_address
+
+		available = {
+			power_balance_value = {
+				id = TRM_nagisa_power_balance
+				value < 1
+			}	
+			has_completed_focus = TRN_eden_system_establishment
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 100
+		}
+
+		cost = 35
+
+		complete_effect = {
+			country_event = { id = trinity_events_nagisa_faction.1 }
+		}
+
+		fire_only_once = yes
+	}
+
+}
+eden_treaty_negotiation_cat = {
+	eden_treaty_negotiation_debug_1 = {
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+	}
+	eden_treaty_negotiation_debug_2 = {
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+	}
+	eden_treaty_negotiation_debug_3 = {
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 100
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+	}
+	eden_treaty_negotiation_debug_4 = {
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 100
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+	}
+
+	## 게헨나 선도부 디시전
+
+	eden_treaty_negotiation_gehenna_propaganda = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_trinity = {
+		icon = GFX_decision_trinity_city
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 21
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_JTF = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 5
+		}
+
+		days_remove = 10
+		days_re_enable = 45
+
+		custom_cost_trigger = {
+			command_power > 24
+			#has_army_experience > 14
+		}
+
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "45"
+			}
+			hidden_effect = {
+				add_command_power = -25
+				#army_experience = -15
+			}
+		}
+	}
+
+	eden_treaty_negotiation_talk_hina = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 12
+			modifier = {
+				check_variable = { geh_discipline_var < 50 }
+				factor = 0.1
+			}
+		}
+
+		available = {
+			check_variable = { geh_discipline_var > 0 }
+		}
+
+		days_remove = 28
+		days_re_enable = 21
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			add_to_variable = {
+				geh_discipline_var = -10
+				tooltip = geh_discipline_system_tt
+			}
+			geh_discipline_system_setting_effect = yes
+		}
+	}
+
+	## 판데모니움 소사이어티 디시전
+
+	eden_treaty_negotiation_imperial_metrology = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 30
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_prefect_team_leader_hasumi = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 14
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_weekly_pandemonium = {
+		icon = GFX_decision_generic_cctv
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 20
+		days_re_enable = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "20"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+
+		modifier = {
+			consumer_goods_factor = 0.20
+		}
+	}
+
+	eden_treaty_negotiation_talk_makoto = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 8
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = GEH_state_stress
+					value < 0
+				}	
+			}
+		}
+
+		available = {
+			has_power_balance = {
+				id = GEH_state_stress
+			}
+		}
+
+		days_remove = 28
+		days_re_enable = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "20"
+			}
+			GEM_bop_medium_decrease_effect = yes
+		}
+	}
+
+	## 트리니티 디시전
+
+	eden_treaty_negotiation_trinity_propaganda = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_gehenna = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 21
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_prefect_team = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 5
+		}
+
+		days_remove = 10
+		days_re_enable = 30
+
+		custom_cost_trigger = {
+			command_power > 24
+			#has_army_experience > 14
+		}
+
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "30"
+			}
+			hidden_effect = {
+				add_command_power = -25
+				#army_experience = -15
+			}
+		}
+	}
+
+	eden_treaty_negotiation_talk_nagisa = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 8
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value < 0
+				}	
+			}
+		}
+
+		available = {
+			has_power_balance = {
+				id = TRM_nagisa_power_balance
+			}
+		}
+
+		days_remove = 28
+		days_re_enable = 30
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "30"
+			}
+			TRM_nagisa_bop_medium_decrease_effect = yes
+		}
+	}
+
+	## 파테르 분탕
+	
+	eden_treaty_negotiation_host = {
+		icon = GFX_decision_generic_nationalism
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
+		}
+
+		visible = {
+		}
+		
+		days_mission_timeout = 35
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_host
+			add_to_variable = {
+				global.eden_point_array^1 = 5
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+
+		complete_effect = {
+		}
+	}
+	
+	eden_treaty_negotiation_sardine_pie = {
+		icon = GFX_decision_generic_political_rally
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
+		}
+		
+		visible = {
+		}
+		
+		days_mission_timeout = 48
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_sardine_pie
+			add_to_variable = {
+				global.eden_point_array^1 = 5
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+
+		complete_effect = {
+		}
+	}
+	
+	eden_treaty_negotiation_angry_JTF = {
+		icon = GFX_decision_TRN_justice
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag }
+		}
+		
+		visible = {
+		}
+		
+		days_mission_timeout = 60
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_angry_JTF
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system = yes
+		}
+
+		complete_effect = {
+		}
+	}
+
+	eden_treaty_negotiation_remove_host = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_host
+			num_of_civilian_factories > 0
+		}
+
+		ai_will_do = {
+			base = 200
+		}
+
+		days_remove = 14
+
+        modifier = { civilian_factory_use = 1 }
+
+		remove_effect = {
+
+		}
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_host
+				days = 14
+			}
+		}
+	}
+
+	eden_treaty_negotiation_remove_sardine_pie = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_sardine_pie
+		}
+
+		ai_will_do = {
+			base = 200
+			modifier = {
+				has_political_power < 50
+				add = 0
+			}
+		}
+
+		cost = 10
+
+		days_remove = 14
+
+		remove_effect = {
+
+		}
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_sardine_pie
+				days = 14
+			}
+		}
+	}
+
+	eden_treaty_negotiation_remove_angry_JTF = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_angry_JTF
+			num_of_civilian_factories > 2
+		}
+
+		ai_will_do = {
+			base = 200
+		}
+
+		days_remove = 14
+
+        modifier = { civilian_factory_use = 3 }
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_angry_JTF
+				days = 14
+			}
+		}
+	}
+
+	## 짬통 디시전
+
+	eden_treaty_negotiation_generic_propaganda = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			OR = {
+				tag = TRM
+				tag = GEH
+				tag = GEM
+			}
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		days_remove = 21
+		days_re_enable = 21
+
+		cost = 15
+
+		remove_effect = {
+			if = {
+				limit = { tag = TRM } # 트리니티
+				if = {
+					limit = { has_country_flag = trn_nagisa_autocracy_flag } # 나기사 독재 키워드
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else = {
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+			}
+			else_if = {
+				limit = { tag = GEH } # 선도부
+				if = {
+					limit = { has_completed_focus = GEH_ako_route_focus } # 아코 루트 (민주주의)
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { has_completed_focus = GEH_main_route_focus } # 노멀 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { has_completed_focus = GEH_hina_route_focus } # 히나 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else = { # 이오리 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+			}
+			else_if = {
+				limit = { tag = GEM } # 판데모니엄 소사이어티
+				if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_dlfhgk
+						}
+					} # 이로하 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_dlqnzl
+						}
+					} # 이부키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_motomiya_chiaki
+						}
+					} # 치아키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_satsuki
+						}
+					} # 사츠키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else = { # 나치 집권 or 마코토
+					add_to_variable = {
+						global.eden_point_array^1 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+			}
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = eden_treaty_negotiation_generic_propaganda_tt
+		}
+	}
+}
+
+eden_treaty_negotiation_ALT_cat = {
+	eden_treaty_negotiation_debug_1_ALT = {
+		name = eden_treaty_negotiation_debug_1
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+	}
+	eden_treaty_negotiation_debug_2_ALT = {
+		name = eden_treaty_negotiation_debug_2
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+	}
+	eden_treaty_negotiation_debug_3_ALT = {
+		name = eden_treaty_negotiation_debug_3
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 100
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+	}
+	eden_treaty_negotiation_debug_4_ALT = {
+		name = eden_treaty_negotiation_debug_4
+		allowed = {
+			
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 100
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+	}
+
+	## 게헨나 선도부 디시전
+
+	eden_treaty_negotiation_gehenna_propaganda_ALT = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_trinity_ALT = {
+		icon = GFX_decision_trinity_city
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 21
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_JTF_ALT = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 5
+		}
+
+		days_remove = 10
+		days_re_enable = 45
+
+		custom_cost_trigger = {
+			command_power > 24
+			#has_army_experience > 14
+		}
+
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "45"
+			}
+			hidden_effect = {
+				add_command_power = -25
+				#army_experience = -15
+			}
+		}
+	}
+
+	eden_treaty_negotiation_talk_hina_ALT = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 12
+			modifier = {
+				check_variable = { geh_discipline_var < 50 }
+				factor = 0.1
+			}
+		}
+
+		available = {
+			check_variable = { geh_discipline_var > 0 }
+		}
+
+		days_remove = 28
+		days_re_enable = 21
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			add_to_variable = {
+				geh_discipline_var = -10
+				tooltip = geh_discipline_system_tt
+			}
+			geh_discipline_system_setting_effect = yes
+		}
+	}
+
+	## 판데모니움 소사이어티 디시전
+
+	eden_treaty_negotiation_imperial_metrology_ALT = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 30
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_prefect_team_leader_hasumi_ALT = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 14
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_weekly_pandemonium_ALT = {
+		icon = GFX_decision_generic_cctv
+		priority = 4
+
+		allowed = {
+			tag = GEM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 20
+		days_re_enable = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "20"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+
+		modifier = {
+			consumer_goods_factor = 0.20
+		}
+	}
+
+	eden_treaty_negotiation_talk_makoto_ALT = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = GEH
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 8
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = GEH_state_stress
+					value < 0
+				}	
+			}
+		}
+
+		available = {
+			has_power_balance = {
+				id = GEH_state_stress
+			}
+		}
+
+		days_remove = 28
+		days_re_enable = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^1 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "20"
+			}
+			GEM_bop_medium_decrease_effect = yes
+		}
+	}
+
+	## 트리니티 디시전
+
+	eden_treaty_negotiation_trinity_propaganda_ALT = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 14
+		days_re_enable = 14
+		cost = 20
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 5
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "14"
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_gehenna_ALT = {
+		icon = GFX_decision_Gehenna_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		days_remove = 18
+		days_re_enable = 21
+
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		custom_cost_text = decision_cost_CP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 10
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			hidden_effect = { 
+				add_command_power = -15 
+			}
+		}
+	}
+
+	eden_treaty_negotiation_pro_prefect_team_ALT = {
+		icon = GFX_decision_Prefect_team
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 5
+		}
+
+		days_remove = 10
+		days_re_enable = 30
+
+		custom_cost_trigger = {
+			command_power > 24
+			#has_army_experience > 14
+		}
+
+		custom_cost_text = decision_cost_CP_25 #_ArmXP_15
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "30"
+			}
+			hidden_effect = {
+				add_command_power = -25
+				#army_experience = -15
+			}
+		}
+	}
+
+	eden_treaty_negotiation_talk_nagisa_ALT = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 8
+			modifier = {
+				factor = 0.1 
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value < 0
+				}	
+			}
+		}
+
+		available = {
+			has_power_balance = {
+				id = TRM_nagisa_power_balance
+			}
+		}
+
+		days_remove = 28
+		days_re_enable = 30
+
+		remove_effect = {
+			add_to_variable = {
+				global.eden_point_array^0 = 15
+				tooltip = eden_point_array_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "30"
+			}
+			TRM_nagisa_bop_medium_decrease_effect = yes
+		}
+	}
+
+	## 조약의 장애물
+	
+	eden_treaty_negotiation_host_ALT = {
+		icon = GFX_decision_generic_nationalism
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag }
+		}
+
+		visible = {
+		}
+		
+		days_mission_timeout = 35
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_host_ALT
+			add_to_variable = {
+				global.eden_point_array^1 = 2
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+
+		complete_effect = {
+		}
+	}
+	
+	eden_treaty_negotiation_sardine_pie_ALT = {
+		icon = GFX_decision_generic_political_rally
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag }
+		}
+		
+		visible = {
+		}
+		
+		days_mission_timeout = 48
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_sardine_pie_ALT
+			add_to_variable = {
+				global.eden_point_array^1 = 3
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+
+		complete_effect = {
+		}
+	}
+	
+	eden_treaty_negotiation_angry_JTF_ALT = {
+		icon = GFX_decision_TRN_justice
+		priority = 5
+
+		allowed = {
+			tag = TRM
+		}
+
+    	available = {
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag }
+    	}
+
+		cancel_trigger = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+			}
+		}
+		
+		activation = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_success_flag }
+			NOT = { has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag }
+		}
+		
+		visible = {
+		}
+		
+		days_mission_timeout = 60
+
+		fire_only_once = no
+		is_good = no
+
+		modifier = {
+		}
+
+		cancel_effect = {
+		}
+
+		timeout_effect = {
+			activate_mission = eden_treaty_negotiation_angry_JTF_ALT
+			add_to_variable = {
+				global.eden_point_array^1 = 5
+				tooltip = eden_point_array_pater_tt
+			}
+			eden_treaty_negotiation_winner_check_system_ALT = yes
+		}
+
+		complete_effect = {
+		}
+	}
+
+	eden_treaty_negotiation_remove_angry_JTF_ALT = {
+		icon = GFX_decision_TRN_justice
+		priority = 4
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_active_mission = eden_treaty_negotiation_angry_JTF
+			num_of_civilian_factories > 2
+		}
+
+		ai_will_do = {
+			base = 200
+		}
+
+		days_remove = 14
+
+        modifier = { civilian_factory_use = 3 }
+		
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = eden_treaty_negotiation_angry_JTF
+				days = 14
+			}
+		}
+	}
+
+	## 짬통 디시전
+
+	eden_treaty_negotiation_generic_propaganda_ALT = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			OR = {
+				tag = TRM
+				tag = GEH
+				tag = GEM
+			}
+		}
+
+		visible = {
+			
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		days_remove = 21
+		days_re_enable = 21
+
+		cost = 15
+
+		remove_effect = {
+			if = {
+				limit = { tag = TRM } # 트리니티
+				if = {
+					limit = { has_country_flag = trn_nagisa_autocracy_flag } # 나기사 독재 키워드
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+				else = {
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+			}
+			else_if = {
+				limit = { tag = GEH } # 선도부
+				if = {
+					limit = { has_completed_focus = GEH_ako_route_focus } # 아코 루트 (민주주의)
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { has_completed_focus = GEH_main_route_focus } # 노멀 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else_if = {
+					limit = { has_completed_focus = GEH_hina_route_focus } # 히나 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+				else = { # 이오리 루트
+					add_to_variable = {
+						global.eden_point_array^0 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system = yes
+				}
+			}
+			else_if = {
+				limit = { tag = GEM } # 판데모니엄 소사이어티
+				if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_dlfhgk
+						}
+					} # 이로하 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_dlqnzl
+						}
+					} # 이부키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_motomiya_chiaki
+						}
+					} # 치아키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 15
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+				else_if = {
+					limit = { 
+						has_country_leader = {
+							ruling_only = yes # default = yes
+							character = GEH_satsuki
+						}
+					} # 사츠키 지도자
+					add_to_variable = {
+						global.eden_point_array^1 = 10
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+				else = { # 나치 집권 or 마코토
+					add_to_variable = {
+						global.eden_point_array^1 = 5
+						tooltip = eden_point_array_tt
+					}
+					eden_treaty_negotiation_winner_check_system_ALT = yes
+				}
+			}
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_re_enable
+				TIME = "21"
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = eden_treaty_negotiation_generic_propaganda_tt
+		}
+	}
+}
+
+	
+
+
+TRN_united_gehenna_decisions_cat = {
+	
+	TRN_gehenna_puppet_leader_host = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 1 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_host_tt
+		}
+	}
+	
+	TRN_gehenna_puppet_leader_iori = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 2 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_iori_tt
+		}
+	}
+	
+	TRN_gehenna_puppet_leader_sena = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 15
+
+		complete_effect = {
+			set_variable = { TRN_gehenna_puppet_leader_var = 3 }
+			custom_effect_tooltip = TRN_gehenna_puppet_leader_sena_tt
+		}
+	}
+
+	TRN_gehenna_puppet_leader_integration_target = {
+		icon = GFX_decision_Gehenna_Emblem
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			check_variable = { TRN_gehenna_puppet_leader_var > 0 }
+		}
+
+		fire_only_once = no
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 70
+		days_re_enable = 180
+
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 1 } # 나기사
+				}
+				FROM = {
+					add_compliance = 5
+					add_resistance = -5
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 2 } # 이오리
+				}
+				FROM = {
+					add_resistance = -7
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TRN_gehenna_puppet_leader_var = 3 } # 세나
+				}
+				FROM = {
+					add_compliance = 7
+				}
+			}
+		}
+	}
+
+	TRN_united_gehenna_decisions_integration_complete = {
+		icon = GFX_decision_trinity_city
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+			}
+		}
+
+		fire_only_once = no
+		available = {
+			FROM = {
+				is_controlled_by = ROOT
+				compliance > 50
+			}
+			political_power_daily > 0
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 30
+		
+		modifier = {
+			political_power_cost = 0.25
+		}
+
 		remove_effect = {
 			FROM = {
-				set_state_flag = TRN_completed_infiltrate_state
+				add_core_of = ROOT
+			}
+		}
+	}
+
+	TRN_united_gehenna_decisions_remove_nsdap = {
+		icon = GFX_decision_generic_arrest
+		state_target = yes
+		on_map_mode = map_and_decisions_view 
+		target_array = global.GEH_state_array
+
+		allowed = {
+			tag = TRM
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_core_of = ROOT }
+				is_controlled_by = ROOT
+				OR = {
+					has_dynamic_modifier = { modifier = GEH_state_government } 
+					has_dynamic_modifier = { modifier = GEH_ucantusefactory_2 } 
+					has_dynamic_modifier = { modifier = GEH_ucantusefactory } 
+				}
+			}
+		}
+
+		fire_only_once = no
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+			factor = 400
+		}
+
+		days_remove = 70
+
+		remove_effect = {
+			remove_dynamic_modifier = {
+				modifier = GEH_ucantusefactory
+			}
+			remove_dynamic_modifier = {
+				modifier = GEH_ucantusefactory_2
+			}
+			remove_dynamic_modifier = {
+				modifier = GEH_state_government
+			}
+		}
+	}
+}
+TRM_nagisa_constitution_cat = {
+	
+	TRM_nagisa_constitution_kivotos_pan_human_rights = {
+		icon = GFX_decision_generic_form_nation
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.05
+				tooltip = army_morale_factor_tt
 			}
 		}
 	}
 	
-}
+	TRM_nagisa_constitution_guarantee_of_beastmen_rights = {
+		icon = GFX_decision_generic_civil_support
+		priority = 3
 
+		allowed = {
+			tag = TRM
+		}
 
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+		}
+	}
 	
+	TRM_nagisa_constitution_freedom_of_religion = {
+		icon = GFX_decision_generic_research
+		priority = 3
 
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_freedom_of_religions_trigger_tt
+				OR = {
+					has_completed_focus = TRN_two_church_unity
+					has_completed_focus = TRN_five_clan_republic
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_danger_law_tt
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+		}
+	}
+	
+	TRM_nagisa_constitution_designation_of_state_religion = {
+		icon = GFX_decision_Trinity_Emblem
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+		
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.03
+				tooltip = army_morale_factor_tt
+			}
+			set_country_flag = TRM_nagisa_constitution_designation_of_state_religion_flag
+		}
+	}
+	
+	TRM_nagisa_constitution_establishment_of_consultative_council = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_trigger_tt
+				OR = {
+					AND = {
+						has_government = democratic
+						has_country_flag = trn_nagisa_religion_moderate_flag
+						has_completed_focus = TRN_idealistic_approach
+					}
+					AND = {
+						has_government = democratic
+						GEH_dkzh = {
+							is_political_advisor = yes
+						}
+						OR = {
+							GEH = { has_completed_focus = GEH_ako_route_focus }
+							GEH = { has_completed_focus = GEH_main_route_focus }
+						}
+						has_completed_focus = TRN_start_of_the_eden_treaty_negotiations
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+					}
+					AND = {
+						any_country = {
+							NOT = { original_tag = TRM }
+							is_in_faction_with = TRM
+							is_major = yes
+							Kivotos_tag = no
+							has_government = democratic
+						}
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_OR_anti_democracy_holy_war_tt
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+				}
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+				}
+			}
+			NOT = { has_country_flag = TRM_nagisa_constitution_flag }
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_danger_law_tt
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+			set_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = -0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_production_lack_of_resource_penalty = -0.1
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_production_factory_max_efficiency_factor = 0.1
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_anti_democracy_holy_war = {
+		icon = GFX_decision_generic_break_treaty
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_establishment_of_consultative_council_OR_anti_democracy_holy_war_tt
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_establishment_of_consultative_council_flag
+				}
+				NOT = {
+					has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.1
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_strengthening_federalism = {
+		icon = GFX_decision_generic_political_rally
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_strengthening_federalism_trigger_tt
+				OR = {
+					AND = {
+						has_government = democratic
+					}
+					AND = {
+						count_triggers = {
+							amount = 3
+							owns_state = 8 # 룩셈부르크 대공국
+							owns_state = 7 # 키보토스 총학생회
+							owns_state = 9 # 백귀야행 연합학원
+							owns_state = 4 # 산해경 고급중학교
+							owns_state = 69 # 아비도스 고등학교
+							owns_state = 16 # 밀레니엄 사이언스 스쿨
+							owns_state = 1043 # 와일드헌트 예술학원
+							owns_state = 141 # 붉은겨울 연방학원
+						}
+					}
+				}
+			}
+			
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_production_lack_of_resource_penalty = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_prohibition_of_the_death_penalty = {
+		icon = GFX_decision_generic_police_action
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_morale_factor = 0.02
+				tooltip = army_morale_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.02
+				tooltip = political_power_factor_tt
+			}
+		}
+	}
+	
+	TRM_nagisa_constitution_guarantee_of_social_basic_rights = {
+		icon = GFX_decision_generic_scorched_earth
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_political_power_factor = 0.03
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				TRM_nagisa_constitution_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			set_country_flag = TRM_nagisa_constitution_guarantee_of_social_basic_rights_flag
+		}
+	}
+	
+	TRM_nagisa_constitution_reflection_on_past_history = {
+		icon = GFX_decision_TRN_Sakurako_Halo
+		priority = 3
+
+		allowed = {
+			tag = TRM
+		}
+
+		visible = {
+
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRM_nagisa_constitution_reflection_on_past_history_trigger_tt
+				OR = {
+					has_war_with = GEI
+					has_completed_focus = TRN_two_church_unity
+				}
+			}
+			check_variable = { TRM_nagisa_constitution_in_progress_var = 0 }
+		}
+
+		ai_will_do = {
+			base = 20
+		}
+
+		cost = 30
+		days_remove = 56
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 1
+			}
+		}
+
+		remove_effect = {
+			set_variable = {
+				TRM_nagisa_constitution_in_progress_var = 0
+			}
+			custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+			add_to_variable = {
+				TRM_nagisa_constitution_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+			set_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag
+		}
+	}
+}

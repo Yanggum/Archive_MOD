@@ -1,8 +1,6 @@
 ﻿#!gfx:interface\BA_goals.gfx
-
 focus_tree = {
 	id = CAM_focus
-	
 	country = {
 		factor = 0
 		modifier = {
@@ -10,294 +8,174 @@ focus_tree = {
 			tag = CAM
 		}
 	}
-	
-#프랑스 괴뢰국 루트
-
+	#일반 크메르 제국 루트
 	focus = {
-		id = keep_under_fra
-		icon = GFX_focus_CZE_german_puppet
-		
-        x = 17
-		y = 0
-
-		cost = 10
-
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = return_khmer_empire }
-			}
+		id = CAM_nokor_reach
+		icon = GFX_CAM_nokor_reach
+		available = {
+			is_subject = no
 		}
-
-		mutually_exclusive = {
-        focus = return_khmer_empire
-		}
+		x = 38
+		y = 7
+		cost = 2
 		completion_reward = {
-			add_timed_idea = { 
-				idea = keep_under_fra_idea
-				days = 365
-			}
+			set_party_name = {
+					ideology = neutrality
+					long_name = CAM_neutrality_party_new
+					name = CAM_neutrality_party_new
+				}
+			set_variable = { IDC_break_the_law_cost_var = 180 }
+			custom_effect_tooltip = CAM_nokor_reach_tt
 		}
 	}
-
-#크메르 제국 루트
-
 	focus = {
 		id = return_khmer_empire
-		icon = GFX_focus_ETH_the-italo_ethiopian_empire
-		
-        x = 33
-		y = 0
-
+		icon = GFX_return_khmer_empire
+		x = -4
+		y = 1
 		cost = 10
-
-		allow_branch = {
-			IF = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = { has_completed_focus = keep_under_fra }
-			}
+		prerequisite = { focus = CAM_nokor_reach }
+		relative_position_id = CAM_nokor_reach
+		available = {
+			is_subject = no
+			communism < 0.4
+			democratic < 0.4
 		}
-
 		mutually_exclusive = {
-        focus = keep_under_fra
-		}
+			focus = khmer_fascist }
 		completion_reward = {
-			add_timed_idea = { 
+			add_timed_idea = {
 				idea = return_khmer_empire_idea
 				days = 365
 			}
 		}
 	}
-
 	focus = {
 		id = angkor_power_up
-		icon = GFX_focus_CHL_incorporate_machi_into_the_army
-
-		x = 31
+		icon = GFX_focus_secret_rearmament
+		x = 2
 		y = 1
-
 		cost = 5
-
 		prerequisite = {
-			focus = return_khmer_empire
+			focus = return_khmer_empire focus = khmer_fascist
 		}
-
+		relative_position_id = return_khmer_empire
 		completion_reward = {
 			add_ideas = angkor_power_up_idea
 		}
 	}
-	
-	focus = {
-		id = khmer_army_check
-		icon = GFX_focus_CHL_incorporate_machi_into_the_army
-
-		x = 30
-		y = 2
-
-		cost = 10
-
-		prerequisite = { focus = angkor_power_up }
-	}
-
-	focus = {
-		id = boost_industrialization
-		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
-
-		x = 35
-		y = 1
-
-		cost = 5
-
-		prerequisite = {
-			focus = return_khmer_empire
-		}
-
-		completion_reward = {
-			1036 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			1037 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}	
-
-			add_timed_idea = {
-				idea = boost_industrialization_idea
-				days = 730
-			}
-		}
-	}
-
-	focus = {
-		id = khmer_base_check
-		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
-
-		x = 36
-		y = 2
-
-		cost = 10
-
-		prerequisite = { focus = boost_industrialization }
-	}
-
-	focus = {
-		id = Aksar_khmer
-		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-
-		x = 38
-		y = 3
-
-		cost = 10
-
-		prerequisite = { focus = khmer_base_check }
-
-		completion_reward = {
-			remove_ideas = serious_level_of_illiteracy_idea
-		}
-	}
-
-	focus = {
-		id = Focus_on_Phnom_Penh
-		icon = GFX_focus_AFG_establish_darulaman
-
-		x = 9
-		y = 3
-
-		cost = 10
-
-		mutually_exclusive = {
-			focus = balanced_development
-		}
-
-		completion_reward = {
-			741 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = balanced_development
-		icon = GFX_SOV_autonomous_soviet_republics_ccp_2d_sov_compatibility
-
-		x = 11
-		y = 3
-
-		cost = 10
-
-		mutually_exclusive = {
-			focus = Focus_on_Phnom_Penh
-		}
-
-		completion_reward = {
-			1036 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			1037 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = Angkor_National_University_Laboratory
-		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-
-		x = 10
-		y = 4
-
-		cost = 10
-
-		prerequisite = {
-			focus = balanced_development
-			focus = Focus_on_Phnom_Penh
-		}
-
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-
 	focus = {
 		id = glorious_reminder
-		icon = GFX_focus_ETH_restore_the_empire_of_axum
-
-		x = 33
+		icon = GFX_glorious_reminder
+		x = 4
 		y = 1
-
 		cost = 5
-
+		relative_position_id = return_khmer_empire
 		prerequisite = {
-			focus = return_khmer_empire
+			focus = return_khmer_empire focus = khmer_fascist
 		}
-
 		completion_reward = {
 			add_ideas = glorious_reminder_idea
 		}
 	}
-
+	focus = {
+		id = boost_industrialization
+		icon = GFX_SOV_heavy_industry_ccp_2d_sov_compatibility
+		x = 6
+		y = 1
+		cost = 5
+		prerequisite = {
+			focus = return_khmer_empire focus = khmer_fascist
+		}
+		relative_position_id = return_khmer_empire
+		completion_reward = {
+			741 = {
+				add_extra_state_shared_building_slots = 10
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 5
+					instant_build = yes
+				}
+			}
+			1036 = {
+				add_extra_state_shared_building_slots = 6
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+			1037 = {
+				add_extra_state_shared_building_slots = 6
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+			add_timed_idea = {
+				idea = boost_industrialization_idea
+				days = 365
+			}
+		}
+	}
+	focus = {
+		id = Aksar_khmer
+		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
+		x = -1
+		y = 2
+		cost = 5
+		prerequisite = {
+			focus = boost_industrialization
+		}
+		relative_position_id = boost_industrialization
+		completion_reward = {
+			remove_ideas = serious_level_of_illiteracy_idea
+			add_ideas = CAM_the_educated_commoners_idea
+		}
+	}
+	focus = {
+		id = Angkor_National_University_Laboratory
+		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
+		x = 1
+		y = 2
+		cost = 10
+		relative_position_id = angkor_power_up
+		prerequisite = {
+			focus = angkor_power_up
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
 	focus = {
 		id = to_the_glory_of_khmer_empire
-		icon = GFX_SOV_consolidate_power_ccp_2d_sov_compatibility
-
-		x = 33
-		y = 2
-
-		cost = 10 
-
+		icon = GFX_to_the_glory_of_khmer_empire
+		x = -6
+		y = 1
+		relative_position_id = glorious_reminder
+		cost = 5
 		bypass = {
 			has_country_flag = CAM_free
 		}
-
+		prerequisite = {
+			focus = return_khmer_empire
+		}
 		prerequisite = {
 			focus = boost_industrialization
 		}
@@ -307,39 +185,78 @@ focus_tree = {
 		prerequisite = {
 			focus = angkor_power_up
 		}
+		mutually_exclusive = {
+			focus = khmer_fascist2 }
 		completion_reward = {
-			set_politics = { ruling_party = neutrality }
-			FRA = {
-			set_autonomy = {
-			target = CAM
-			autonomy_state = autonomy_free
-		}
-	}
-			drop_cosmetic_tag = yes
-			FRA = {
-				country_event = {
-				id = CAM_event.2
-				hours = 6
-				random_hours = 24
+			set_politics = {
+				ruling_party = neutrality
 			}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = CAM_khmer
 		}
-		set_cosmetic_tag = CAM_khmer
 	}
-}
-
 	focus = {
-		id = khmer_krom_integration_requirements
-		icon = GFX_SOV_annex_tannu_tuva_ccp_2d_sov_compatibility
-
-		x = 34
-		y = 4
-
+		id = khmer_empire_old_territory
+		icon = GFX_khmer_empire_old_territory
+		x = 0
+		y = 3
+		cost = 10
+		relative_position_id = glorious_reminder
+		prerequisite = {
+			focus = to_the_glory_of_khmer_empire focus = khmer_fascist2
+		}
+		completion_reward = {
+			set_country_flag = khmer_empire_old_territory_decision_flag
+			unlock_decision_tooltip = CAM_reannex_lanxang
+			unlock_decision_tooltip = CAM_pakse
+			unlock_decision_tooltip = CAM_isan
+			unlock_decision_tooltip = CAM_siam
+			unlock_decision_tooltip = CAM_lanna
+			unlock_decision_tooltip = CAM_north_malay
+			unlock_decision_tooltip = CAM_move_capital_angkor
+			unlock_decision_tooltip = Khmer_victory
+		}
+	}
+	focus = {
+		id = lanxang_reannex
+		icon = GFX_lanxang_reannex
+		x = -1
+		y = 1
 		cost = 5
-
 		prerequisite = {
 			focus = khmer_empire_old_territory
 		}
-		
+		relative_position_id = khmer_empire_old_territory
+		completion_reward = {
+			add_state_claim = 670
+			add_state_claim = 1031
+			create_wargoal = {
+				target = LAO
+				type = take_state
+				expire = 0
+			}
+			if = {
+				limit = {
+					controls_province = 1464
+					controls_state = 670
+				}
+				set_province_name = {
+					id = 1464
+					name = CAM_VICTORY_POINTS_1464
+				}
+			}
+		}
+	}
+	focus = {
+		id = khmer_krom_integration_requirements
+		icon = GFX_khmer_krom_integration_requirements
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = {
+			focus = khmer_empire_old_territory
+		}
+		relative_position_id = khmer_empire_old_territory
 		available = {
 			CAM = {
 				has_war = no
@@ -353,14 +270,16 @@ focus_tree = {
 						tag = VIN
 					}
 				}
-				
 			}
 		}
-
+		bypass = {
+			has_country_flag = Khmer_victory_flag
+		}
 		completion_reward = {
-			1038 = { add_core_of = CAM }
+			1038 = {
+				add_core_of = CAM
+			}
 			add_state_claim = 1038
-
 			if = {
 				limit = {
 					1038 = {
@@ -371,7 +290,6 @@ focus_tree = {
 						}
 					}
 				}
-
 				1038 = {
 					controller = {
 						country_event = {
@@ -382,434 +300,492 @@ focus_tree = {
 					}
 				}
 			}
-		if = {
-			limit = {
-				controls_province = 4401
-                controls_state = 1038
-        }
-			set_province_name = {
-				id = 4401
-				name = CAM_VICTORY_POINTS_4401
-			}
-				1038 = { set_state_name = CAM_STATE_1038 }
+			if = {
+				limit = {
+					controls_province = 4401
+					controls_state = 1038
+				}
+				set_province_name = {
+					id = 4401
+					name = CAM_VICTORY_POINTS_4401
+				}
+				1038 = {
+					set_state_name = CAM_STATE_1038
+				}
 			}
 		}
 	}
-
 	focus = {
-		id = lanxang_reannex
-		icon = GFX_focus_generic_annex_country
-
-		x = 32
-		y = 4
-
+		id = CAM_VIN_annex
+		icon = GFX_CAM_VIN_annex
+		x = -2
+		y = 2
+		relative_position_id = khmer_empire_old_territory
 		cost = 5
-
 		prerequisite = {
 			focus = khmer_empire_old_territory
 		}
-
+		available = {
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
+		}
 		completion_reward = {
-			add_state_claim = 670
 			create_wargoal = {
-				target = LAO
-                type = take_state
+				type = puppet_wargoal_focus
+				target = VIN
+				expire = 0
+			}
+		}
+	}
+	focus = {
+		id = siemreap
+		icon = GFX_siemreap
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = {
+			focus = lanxang_reannex
+		}
+		prerequisite = {
+			focus = khmer_krom_integration_requirements
+		}
+		relative_position_id = lanxang_reannex
+		completion_reward = {
+			add_state_claim = 868
+			add_state_claim = 289
+			add_state_claim = 724
+			create_wargoal = {
+				target = SIA
+				type = take_state
 				expire = 0
 			}
 			if = {
-			limit = {
-				controls_province = 1464
-                controls_state = 670
-        }
-			set_province_name = {
-				id = 1464
-				name = CAM_VICTORY_POINTS_1464
+				limit = {
+					controls_province = 10438
+					controls_state = 868
+				}
+				set_province_name = {
+					id = 10438
+					name = CAM_VICTORY_POINTS_10438
+				}
+			}
+			if = {
+				limit = {
+					controls_province = 7408
+					controls_state = 289
+				}
+				set_province_name = {
+					id = 7408
+					name = CAM_VICTORY_POINTS_7408
+				}
+			}
+			if = {
+				limit = {
+					controls_province = 7236
+					controls_state = 724
+				}
+				set_province_name = {
+					id = 7236
+					name = CAM_VICTORY_POINTS_7236
+				}
 			}
 		}
-		}
 	}
-
 	focus = {
-		id = khmer_empire_old_territory
-		icon = GFX_SOV_claims_on_poland_ccp_2d_sov_compatibility
-
-		x = 33
-		y = 3
-
-		cost = 10
-
+		id = CAM_YUN_annex
+		icon = GFX_CAM_YUN_annex
+		x = 2
+		y = 2
+		cost = 5
 		prerequisite = {
-			focus = to_the_glory_of_khmer_empire
+			focus = khmer_empire_old_territory
 		}
-
+		relative_position_id = khmer_empire_old_territory
+		available = {
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
+		}
 		completion_reward = {
-			set_country_flag = khmer_empire_old_territory_decision_flag
-			unlock_decision_tooltip = CAM_reannex_lanxang
-			unlock_decision_tooltip = CAM_isan
-			unlock_decision_tooltip = CAM_siam
-			unlock_decision_tooltip = CAM_north_malay
-			unlock_decision_tooltip = CAM_move_capital_angkor
-	}
-}
-
-focus = {
-	id = siemreap
-	icon = GFX_SOV_protect_the_white_sea_baltic_canal_ccp_2d_sov_compatibility
-
-	x = 33
-	y = 5
-
-	cost = 5
-
-	prerequisite = { focus = lanxang_reannex }
-	prerequisite = { focus = khmer_krom_integration_requirements }
-
-	completion_reward = {
-		add_state_claim = 868
-		add_state_claim = 289
-		add_state_claim = 724
-		create_wargoal = {
-			target = SIA
-			type = take_state
-			expire = 0
-		}
-		if = {
-			limit = {
-				controls_province = 10438
-                controls_state = 868
-        }
-			set_province_name = {
-				id = 10438
-				name = CAM_VICTORY_POINTS_10438
-			}
-		}
-		if = {
-			limit = {
-				controls_province = 7408
-                controls_state = 289
-        }
-			set_province_name = {
-				id = 7408
-				name = CAM_VICTORY_POINTS_7408
-			}
-		}
-		if = {
-			limit = {
-				controls_province = 7236
-                controls_state = 724
-        }
-			set_province_name = {
-				id = 7236
-				name = CAM_VICTORY_POINTS_7236
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = YUN
+				expire = 0
 			}
 		}
 	}
-}
-focus = {
-		id = khmer_external_threat
-		icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility
-
-		x = 33
-		y = 6
-
-		cost = 10
-
-		prerequisite = { focus = siemreap }
-
-		completion_reward = {}
-}
-focus = {
-	id = CAM_VIN_annex
-	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility 
-
-	x = 32
-	y = 7
-
-	cost = 5 
-	prerequisite = { focus = khmer_external_threat }
-
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = VIN
-			expire = 0
-		}
-	}
-}
-focus = {
-	id = CAM_BRM_annex
-	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility
-
-	x = 33
-	y = 8
-
-	cost = 5 
-	prerequisite = { focus = CAM_VIN_annex focus = CAM_YUN_annex }
-
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = BRM
-			expire = 0
-		}
-	}
-}
-focus = {
-	id = CAM_YUN_annex
-	icon = GFX_SOV_demand_balkan_submission_ccp_2d_sov_compatibility
-
-	x = 34
-	y = 7
-
-	cost = 5 
-	prerequisite = { focus = khmer_external_threat }
-
-	completion_reward = {
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = YUN
-			expire = 0
-		}
-	}
-}
-focus = {
-		id = CAM_army_effort
-		icon = GFX_goal_generic_allies_build_infantry
-		x = 20
-		y = 3
-		cost = 10
-
-		prerequisite = { focus = khmer_army_check }
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 25
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-
 	focus = {
-		id = CAM_aviation_effort
-		icon = GFX_goal_generic_build_airforce
-		x = 24
-		y = 3
+		id = CAM_BRM_annex
+		icon = GFX_CAM_BRM_annex
+		x = 2
+		y = 1
+		cost = 5
+		prerequisite = {
+			focus = CAM_VIN_annex
+			focus = CAM_YUN_annex
+		}
+		relative_position_id = CAM_VIN_annex
+		available = {
+			has_full_control_of_state = 868
+			has_full_control_of_state = 289
+			has_full_control_of_state = 724
+		}
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = BRM
+				expire = 0
+			}
+		}
+	}
+	#파시즘 크메르 제국 루트
+	focus = {
+		id = khmer_fascist
+		#icon = GFX_return_khmer_empire
+		x = 4
+		y = 1
 		cost = 10
-
-		prerequisite = { focus = khmer_army_check }
-		
-		search_filters = {   FOCUS_FILTER_RESEARCH }
-
-		available_if_capitulated = yes
-
-
-		complete_tooltip = {
-			air_experience = 25
-			if = { limit = { has_country_flag = aviation_effort_AB }
+		prerequisite = { focus = CAM_nokor_reach }
+		relative_position_id = CAM_nokor_reach
+		available = {
+			is_subject = no
+			communism < 0.4
+			democratic < 0.4
+		}
+		mutually_exclusive = {
+			focus = return_khmer_empire }
+		completion_reward = {
+			add_timed_idea = {
+				idea = khmer_fascist_idea
+				days = 365
+			}
+		}
+	}
+	focus = {
+		id = khmer_fascist2
+		#icon = GFX_return_khmer_empire
+		x = 2
+		y = 2
+		cost = 10
+		prerequisite = { focus = khmer_fascist }
+		prerequisite = {
+			focus = boost_industrialization
+		}
+		prerequisite = {
+			focus = glorious_reminder
+		}
+		prerequisite = {
+			focus = angkor_power_up
+		}
+		relative_position_id = khmer_fascist
+		available = {
+			is_subject = no
+			communism < 0.4
+			democratic < 0.4
+		}
+		mutually_exclusive = {
+			focus = to_the_glory_of_khmer_empire }
+		completion_reward = {
+				set_politics = {
+					ruling_party = fascism
+				}
+			drop_cosmetic_tag = yes
+			set_cosmetic_tag = CAM_khmer2
+		}
+	}
+	#########################################################################################################
+	# 프랑스 식민당국 중점도
+	#########################################################################################################
+	shared_focus = IDC_french_colonial_authorities
+	#########################################################################################################
+	# 밀리터리
+	#########################################################################################################
+	shared_focus = IDC_establish_the_anc
+	#########################################################################################################
+	# 경제
+	#########################################################################################################
+	#########################################################################################################
+	# 무장독립 중점도
+	#########################################################################################################
+	shared_focus = IDC_indochina_communist_party_contact
+	#프랑스 협상
+	focus = {
+		id = CAM_royal_negotiation
+		icon = GFX_focus_generic_monarchy_1
+		mutually_exclusive = {
+			focus = IDC_indochina_communist_party_contact
+		}
+		x = 43
+		y = 0
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 150
+					localization = CAM_royal_negotiation
+				}	
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.10
+			}
+		}
+	}
+	focus = {
+		id = CAM_formation_of_khmer_issarak
+		icon = GFX_focus_ETH_peacekeeping_forces
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = -3
+		y = 1
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			FRA = {
+				OR = {
+					surrender_progress > 0.1
+					has_capitulated = yes
+					ROOT = {
+						has_autonomy_state = autonomy_dominion
+					}
+				}
+			}
+		}
+		completion_reward = {
+			add_ideas = idea_CAM_formation_of_khmer_issarak
+		}
+	}
+	focus = {
+		id = CAM_royal_crusade_for_cambodian_independence
+		icon = GFX_focus_generic_monarchy_2
+		prerequisite = {
+			focus = CAM_formation_of_khmer_issarak
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = CAM_formation_of_khmer_issarak
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			add_ideas = idea_CAM_royal_crusade_for_cambodian_independence
+		}
+	}
+	focus = {
+		id = CAM_modernization_support
+		icon = GFX_focus_fra_devalue_the_franc
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 100
+					localization = CAM_modernization_support
+				}	
+			}
+			add_stability = 0.05
+			custom_effect_tooltip = generic_skip_one_line_tt
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = CAM_french_intellectual_recruitment
+		icon = GFX_focus_chi_reach_out_to_france
+		prerequisite = {
+			focus = CAM_modernization_support
+		}
+		mutually_exclusive = {
+		}
+		x = -1
+		y = 1
+		relative_position_id = CAM_modernization_support
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 150
+					localization = CAM_french_intellectual_recruitment
+				}	
+			}
+		}
+	}
+	focus = {
+		id = CAM_light_industry_investment
+		icon = GFX_focus_generic_modernize_industry
+		prerequisite = {
+			focus = CAM_modernization_support
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = CAM_modernization_support
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+		}
+		completion_reward = {
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				add_autonomy_score = { 
+					value = 100
+					localization = CAM_light_industry_investment
+				}	
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = air_base
+					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
-			}			
-			add_doctrine_cost_reduction = {
-				name = air_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}			
-		}
-
-		completion_reward = {
-			air_experience = 25
-
-			if = {
-				limit = {
-					capital_scope = {
-						NOT = {
-							free_building_slots = {
-								building = air_base
-								size > 1
-							}
-						}
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
-					add_building_construction = {
-						type = air_base
-						level = 2
-						instant_build = yes
-					}
-					ROOT = { set_country_flag = aviation_effort_AB }
-				}
-			}
-			if = {
-				limit = {
-					capital_scope = {
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
-				}
-				capital_scope = {
-					add_building_construction = {
-						type = air_base
-						level = 2
-						instant_build = yes
-					}
-					ROOT = { set_country_flag = aviation_effort_AB }
-				}
-			}
-			add_doctrine_cost_reduction = {
-				name = air_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
 			}
 		}
 	}
-
 	focus = {
-		id = CAM_naval_effort
-		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 28
-		y = 3
-		cost = 10
-		
-		prerequisite = { focus = khmer_army_check }
-
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		
-		available_if_capitulated = yes
-
-
+		id = CAM_infantry_command_transfer
+		icon = GFX_focus_generic_manpower
+		prerequisite = {
+			focus = CAM_royal_negotiation
+		}
+		mutually_exclusive = {
+		}
+		x = 1
+		y = 2
+		relative_position_id = CAM_royal_negotiation
+		cost = 5
 		available = {
-			any_state = {
-				is_coastal = yes
-				is_controlled_by = ROOT
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			NOT = {
+				has_global_flag = IDC_tirailleurs_reformed_flag
 			}
 		}
-
-		complete_tooltip = {
-			navy_experience = 25
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = dockyard
-				level = 3
-				instant_build = yes
-			}
-		}
-		
 		completion_reward = {
-			navy_experience = 25
-			if = {
-				limit = {
-					NOT = {
-						any_owned_state = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 2
-								include_locked = yes
-							}
-						}
-					}
-					any_owned_state = {
-						is_coastal = yes
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_coastal = yes
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-				set_country_flag = naval_effort_built
+			custom_effect_tooltip = modify_IDC_tirailleurs_tt
+			add_to_variable = {
+				IDC_tirailleurs_army_morale_factor = 0.1
+				tooltip = army_morale_factor_tt
 			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = naval_effort_built }
-					any_owned_state = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-				set_country_flag = naval_effort_built
+			add_to_variable = {
+				IDC_tirailleurs_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
 			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = naval_effort_built }
-					NOT = {
-						any_owned_state = {
-							free_building_slots = {
-								building = dockyard
-								size > 2
-								include_locked = yes
-							}
-						}
-					}
-				}
-				random_state = {
-					limit = {
-						controller = { tag = ROOT }
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-			}			
+		}
+	}
+	focus = {
+		id = CAM_foundation_of_future_cambodian_army
+		icon = GFX_focus_chi_army_reform
+		prerequisite = {
+			focus = CAM_infantry_command_transfer
+		}
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = CAM_infantry_command_transfer
+		cost = 5
+		available = {
+			any_country = {
+				original_tag = FRA
+				has_subject = ROOT
+			}
+			NOT = {
+				has_global_flag = IDC_tirailleurs_reformed_flag
+			}
+		}
+		completion_reward = {
+			army_experience = 25
+			add_tech_bonus = {
+				name = CAM_foundation_of_future_cambodian_army
+				bonus = 0.5
+				uses = 2
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = CAM_foundation_of_future_cambodian_army
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
 		}
 	}
 }

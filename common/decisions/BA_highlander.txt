@@ -1,6 +1,6 @@
 BA_highlander = { #하이랜더 철도학원
 	BA_invest_highlander = { #하이랜더 투자
-		days_remove = 90
+		days_remove = 60
 		available = {
 			NOT = {has_country_flag = BA_nationalized_highlander}
 		}
@@ -9,21 +9,50 @@ BA_highlander = { #하이랜더 철도학원
 				has_idea = BA_highlander_academy_generic
 			}
 		}
+		modifier = {
+			consumer_goods_factor = 0.05 #가난한 나라들을 위한 정상화
+		}
+		fixed_random_seed = no
 		icon = GFX_decision_highlander
-		complete_effect = {
-			country_event = Highlander.1
+		complete_effect = { 
+			effect_tooltip = {
+				random_list = {
+					1 = {
+						custom_effect_tooltip = BA_highlander_invest_small_tt
+					}
+					1 = {
+						custom_effect_tooltip = BA_highlander_invest_big_tt
+					}
+					1 = {
+						custom_effect_tooltip = BA_highlander_invest_enourmous_tt
+					}
+				}
+			}
+			hidden_effect = {
+				country_event = Highlander.0
+				if = {
+					limit = {
+						date < 1936.2.26
+					}
+					country_event = Highlander_upgrade.1
+				}
+			}
 		}
 		remove_effect = {
 			hidden_effect = {
 				country_event = {
 					id = Highlander.2
-					days = 3
-					random_days = 3
 				}
 				country_event = {
 					id = Highlander.8
 					days = 20
 				}
+			}
+			if = {
+				limit = {
+					has_country_flag = BA_highlander_auto_investment_flag
+				}
+				activate_decision = BA_invest_highlander
 			}
 		}
 		ai_will_do = {
@@ -39,7 +68,7 @@ BA_highlander = { #하이랜더 철도학원
 			### 이런 상황일 때엔 투자를 줄인다 ###
 			modifier = {
 				has_war = yes
-				# 전쟁 중에 소비재 10%~20% 쓰지 말자
+				# 전쟁 중에 소비재 쓰지 말자
 				factor = 0.5 
 			}
 			modifier = {
@@ -49,8 +78,8 @@ BA_highlander = { #하이랜더 철도학원
 			}
 			modifier = {
 				surrender_progress > 0.1
-				# 자기 나라가 박살나고 있을 때 소비재 수십 퍼센트 바치지 말자
-				factor = 0
+				# 자기 나라가 박살나고 있을 때 소비재 바치지 말자
+				factor = 0.1
 			}
 			modifier = {
 				OR = {
@@ -59,24 +88,18 @@ BA_highlander = { #하이랜더 철도학원
 				}
 				NOT = { has_country_flag = GEH_unified_gehenna_flag }
 				# 게헨나는 나라 토막나서 민공도 없는데 어디에 낭비하니
-				factor = 0 
+				add = -10
 			}
 			modifier = {
 				tag = HEU
 				NOT = { has_country_flag = GEH_unified_gehenna_flag }
 				NOT = { has_completed_focus = HEU_GSC_president_rikuhachima }
-				
 				# 룩셈부르크는 게헨나 정복 or 저지대 통합 이전에는 하이랜더 투자하지 않음
-				factor = 0 
-			}
-			modifier = {
-				num_of_civilian_factories < 10
-				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
-				factor = 0 
+				factor = 0.5 
 			}
 			modifier = {
 				num_of_civilian_factories < 25
-				# 민공 없을 때 소비재 수십퍼센트 쓰지 않기
+				# 민공 없을 때 소비재 쓰지 않기
 				factor = 0.1
 			}
 			modifier = {
@@ -107,7 +130,7 @@ BA_highlander = { #하이랜더 철도학원
 	BA_highlander_hide_list = { #목록 숨기기
 		icon = GFX_decision_generic_train
 		priority = -100
-		days_re_enable = 5
+		days_re_enable = 2
 		visible = {
 			has_idea = BA_highlander_academy_generic
 			NOT = {
@@ -121,7 +144,7 @@ BA_highlander = { #하이랜더 철도학원
 	BA_highlander_show_list = { #목록 보이기
 		icon = GFX_decision_generic_train
 		priority = -100
-		days_re_enable = 5
+		days_re_enable = 2
 		visible = {
 			has_idea = BA_highlander_academy_generic
 			has_country_flag = BA_highlander_hide_list_flag
@@ -130,154 +153,108 @@ BA_highlander = { #하이랜더 철도학원
 			clr_country_flag = BA_highlander_hide_list_flag
 		}
 	}
-	BA_nationalize_highlander = { #국내선로 국유화
-		cost = 50
-		fire_only_once = yes
-		days_remove = 15
-		visible = {
-			has_idea = BA_highlander_academy_generic
-		}
-		remove_effect = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-				}
-			}
-			custom_effect_tooltip = BA_nationalize_highlander_tt
-			if = {
-				limit = {
-					check_variable = {
-						BA_highlander_invest > 39
+	BA_highlander_hub_construction = { #철도허브 설치
+		icon = GFX_decision_generic_construction
+		priority = -100
+		days_remove = 60
+		on_map_mode = map_only
+		state_target = yes
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_dynamic_modifier = {
+						modifier = Highlander_hub
+						scope = ROOT
 					}
 				}
-				add_offsite_building = {
-					type = industrial_complex
-					level = 4
-				}
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						BA_highlander_invest > 29
-					}
-				}
-				add_offsite_building = {
-					type = industrial_complex
-					level = 3
-				}
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						BA_highlander_invest > 19
-					}
-				}
-				add_offsite_building = {
-					type = industrial_complex
-					level = 2
-				}
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						BA_highlander_invest > 9
-					}
-				}
-				add_offsite_building = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-			set_country_flag = BA_nationalized_highlander
-			multiply_variable = {
-				BA_highlander_invest = 0
 			}
 		}
 		ai_will_do = {
-			base = 0
-			modifier = {
-				has_government = communism
-				add = 1
+			base = 9999
+		}
+		visible = {
+			has_idea = BA_highlander_academy_generic
+			check_variable = {
+				var = BA_highlander_hub_available
+				value = 0
+				compare = greater_than
 			}
-			modifier = {
-				is_major = yes
-				add = -1
+		}
+		complete_effect = {
+			add_to_variable = {
+				BA_highlander_hub_available = -1
 			}
-			modifier = { # 트리니티가 파시즘 정부라면 하이랜더를 국유화 합니다.
-				tag = TRM
-				has_country_leader = { character = TRN_Misono_Mika }
-				add = 100
+		}
+		remove_effect = {
+			FROM = {
+				add_dynamic_modifier = {
+					modifier = Highlander_hub
+					scope = ROOT
+				}
+				set_state_flag = Highlander_hub_state_flag
 			}
-			modifier = {
-				OR = {
-					AND = {
-						tag = COU
-						BA_highlander_COU_is_best_invester = yes
-					}
-					AND = {
-						tag = SRT
-						BA_highlander_SRT_is_best_invester = yes
-					}
-					AND = {
-						tag = MIL
-						BA_highlander_MIL_is_best_invester = yes
-					}
-					AND = {
-						tag = KAI
-						BA_highlander_KAI_is_best_invester = yes
-					}
-					AND = {
-						tag = KSP
-						BA_highlander_KSP_is_best_invester = yes
-					}
-					AND = {
-						tag = SHE
-						BA_highlander_SHE_is_best_invester = yes
-					}
-					AND = {
-						tag = HEU
-						BA_highlander_HEU_is_best_invester = yes
-					}
-					AND = {
-						tag = GEH
-						BA_highlander_GEH_is_best_invester = yes
-					}
-					AND = {
-						tag = GEM
-						BA_highlander_GEM_is_best_invester = yes
-					}
-					AND = {
-						tag = SHA
-						BA_highlander_SHA_is_best_invester = yes
-					}
-					AND = {
-						tag = ABY
-						BA_highlander_ABY_is_best_invester = yes
-					}
-					AND = {
-						tag = HYA
-						BA_highlander_HYA_is_best_invester = yes
-					}
-					AND = {
-						tag = TRM
-						BA_highlander_TRM_is_best_invester = yes
-					}
-					AND = {
-						tag = ARI
-						BA_highlander_ARI_is_best_invester = yes
-					}
-					AND = {
-						tag = RED
-						BA_highlander_RED_is_best_invester = yes
+		}
+	}
+	BA_highlander_hub_eat = { #철도허브 장악
+		icon = GFX_decision_generic_construction
+		priority = -100
+		days_remove = 30
+		on_map_mode = map_only
+		state_target = yes
+		target_array = controlled_states
+		target_trigger = {
+			FROM = {
+				has_state_flag = Highlander_hub_state_flag
+				NOT = {
+					has_dynamic_modifier = {
+						modifier = Highlander_hub
+						scope = ROOT
 					}
 				}
-				add = -100
 			}
-		}	
-		icon = GFX_decision_generic_break_treaty
+		}
+		ai_will_do = {
+			base = 9999
+		}
+		visible = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			FROM = {
+				remove_dynamic_modifier = {
+					modifier = Highlander_hub
+				}
+				add_dynamic_modifier = {
+					modifier = Highlander_hub
+					scope = ROOT
+				}
+			}
+		}
+	}
+	BA_highlander_auto_investment_on = { #자동 재투자 켜기
+		icon = GFX_decision_SWI_dismiss_council
+		priority = -151
+		visible = {
+			NOT = {has_country_flag = BA_highlander_auto_investment_flag}
+			has_idea = BA_highlander_academy_generic
+		}
+		days_re_enable = 2
+		remove_effect = {
+			set_country_flag = BA_highlander_auto_investment_flag
+		}
+	}
+	BA_highlander_auto_investment_off = { #자동 재투자 켜기
+		icon = GFX_decision_SWI_dismiss_council
+		priority = -151
+		visible = {
+			has_country_flag = BA_highlander_auto_investment_flag
+			has_idea = BA_highlander_academy_generic
+		}
+		days_re_enable = 2
+		remove_effect = {
+			clr_country_flag = BA_highlander_auto_investment_flag
+		}
 	}
 }

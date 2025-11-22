@@ -41,7 +41,7 @@ Eden_mandate_establishment = {
 				64 = {
 					is_controlled_by_ROOT_or_subject = yes
 				}
-				1039 = {
+				1069 = {
 					is_controlled_by_ROOT_or_subject = yes
 				}
 				65 = {
@@ -72,7 +72,7 @@ Eden_mandate_establishment = {
 				state = 62
 				state = 63
 				state = 64
-				state = 1039
+				state = 1069
 				state = 65
 				state = 66
 				state = 67
@@ -126,7 +126,7 @@ Eden_mandate_establishment = {
 							state = 68
 							state = 86
 							state = 762
-							state = 1039
+							state = 1069
 						}
 						NOT = {
 							state = 64
@@ -153,7 +153,7 @@ Eden_mandate_establishment = {
 							state = 68
 							state = 86
 							state = 762
-							state = 1039
+							state = 1069
 						}
 						NOT = {
 							state = 64
@@ -2085,7 +2085,7 @@ GEH_discipline_system_category = {
 			NOT = { has_country_flag = GEH_end_discipline }
 		}
 
-		days_mission_timeout = 50
+		days_mission_timeout = var:GEH_discipline_system_weak_discipline_day_value?50
 
 		timeout_effect = {
 			if = {
@@ -3150,125 +3150,6 @@ GEH_military_power_category = {
 			}
 		}
 
-    }
-
-    GEH_GEM_armistice = {
-        priority = 200
-
-		icon = GFX_decision_eng_trade_unions_support
-
-		allowed = {
-			OR = {
-				original_tag = GEH
-				original_tag = GEM
-			}
-		}
-
-		visible = {
-			any_country = {
-				has_war_with = ROOT
-				is_major = yes
-				any_country = {
-					NOT = { tag = ROOT }
-					OR = {
-						original_tag = GEM
-						original_tag = GEH
-					}
-					has_war_with = PREV
-				}
-			}
-			any_country = {
-				has_war_with = ROOT
-				OR = {
-					original_tag = GEM
-					original_tag = GEH
-				}
-			}
-		}
-		
-		available = {
-			is_subject = no
-		}
-
-		cost = 0
-
-		complete_effect = {
-			custom_effect_tooltip = GEH_GEM_armistice_tt
-			set_country_flag = GEH_GEM_armistice_flag
-			if = {
-				limit = {
-					any_country = {
-						NOT = { tag = ROOT }
-						has_country_flag = GEH_GEM_armistice_flag
-						has_war_with = ROOT
-					}
-				}
-				country_event = GEH_event.22
-			}
-		}
-
-		ai_will_do = {
-			base = 4000
-		}
-    }
-
-    GEH_GEM__war_with_TRM = {
-        priority = 210
-
-		icon = GFX_decision_eng_trade_unions_support
-
-		allowed = {
-			OR = {
-				original_tag = GEH
-				original_tag = GEM
-			}
-		}
-
-		visible = {
-			any_country = {
-				NOT = { tag = ROOT }
-				OR = {
-					original_tag = GEM
-					original_tag = GEH
-				}
-				has_war_with = TRM
-				NOT = { has_war_with = ROOT }
-			}
-		}
-
-		available = {
-			NOT = { has_war_with = TRM }
-		}
-		
-		cost = 50
-
-		war_with_on_complete = TRM
-
-		complete_effect = {
-			random_enemy_country = {
-				limit = {
-					tag = TRM
-					any_enemy_country = {
-						NOT = { tag = ROOT }
-						OR = {
-							original_tag = GEM
-							original_tag = GEH
-						}
-						NOT = { has_war_with = ROOT }
-					}
-				}
-				ROOT = {
-					declare_war_on = {
-						target = PREV
-						type = puppet_wargoal_focus
-					}
-				}
-			}
-		}
-
-		ai_will_do = {
-			base = 4000
-		}
     }
 }
 
@@ -6553,4 +6434,1361 @@ GEH_hina_corruption_last_decision_category = {
 		}
 	}
 
+}
+
+GEH_luxembourg_negotiations_category = {
+
+    GEH_luxembourg_negotiations = {
+		icon = GFX_decision_Prefect_team
+
+		allowed = {
+			original_tag = GEH
+		}
+
+        fire_only_once = yes
+
+		visible = {
+			AND = {
+				country_exists = GEH
+				country_exists = HEU
+				NOT = { 
+					country_exists = GEM
+				}
+			}
+			### 선도부와 흥신소 둘만 남았을 때, 두 세력이 전쟁 또는 평화적으로 재통일하도록 하기 위한 코드
+		}
+
+		ai_will_do = {
+			base = 4000 # 선도부와 흥신소는 반드시 이것을 선택한다.
+		}
+
+        available = {
+			# 흥신소-선도부가 전쟁중이지 않아야 함
+			NOT = {
+				has_war_with = HEU 
+			}
+
+			# 트리니티 문제가 먼저 해결되어야 한다
+			NOT = {
+				country_exists = TRM 
+			}
+
+			# 둘 다 괴뢰국 아님
+			is_puppet = no
+			HEU = { is_puppet = no }
+
+			# 흥신소- 선도부가 인접함
+			is_neighbor_of = HEU
+
+			#HEU = {
+			#	owns_state = 55
+			#}
+			
+			# 흥신소가 반게헨나면 불가능
+			HEU = {
+				NOT = { has_completed_focus = HEU_watch_gehenna }
+			}
+        }
+		
+		cost = 0
+		days_remove = 14
+
+		complete_effect = {
+			custom_effect_tooltip = GEH_luxembourg_negotiations_tt
+			### 협상을 받아 줄 가능성이 높아짐
+			IF = {
+				limit = {	
+					### 소라사키 히나와 아마우 아코가 연애 중 = 68혁명의 이상 지지
+					has_country_flag = GEH_ako_route_ako_sorasaki_ending_flag
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 2 # 2점 상승
+				}
+			}
+			IF = {
+				limit = {	
+					### 히나 루트로 진입하지 않음 = 평화통일 이후에도 탄압받지 않을 것으로 예상
+					NOT = { has_completed_focus = GEH_hina_route_focus }
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 1 # 1점 상승
+				}
+			}
+			IF = {
+				limit = {	
+					### 소라사키 히나 또는 아마우 아코가 선도부장§ = 신뢰할 수 있는 지도자
+					OR = {
+						has_country_leader = {
+							character = GEH_hina # 히나 (진짜)
+							ruling_only = yes
+						}
+						has_country_leader = {
+							character = GEH_robot_hina # 히나 (가짜, 하지만 아루는 알지 못함)
+							ruling_only = yes
+						}
+						has_country_leader = {
+							character = GEH_dkzh # 아코
+							ruling_only = yes
+						}
+					}
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = 1 # 1점 상승
+				}
+			}
+
+			### 감소 조건
+			IF = {
+				limit = {	
+					### GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2 중점을 완료 = 신뢰하기 어려운 정부
+					has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -2 # 2점 하락
+				}
+			}
+			IF = {
+				limit = {	
+					### 룩셈부르크 국민들이 선도부를 경멸함
+					has_government = fascism
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -3 # 3점 하락
+				}
+			}
+			IF = {
+				limit = {	
+					### 룩셈부르크 의회가 우리를 반대함: §g선도부의 정통성이 나락, 약함 중 하나§!
+					OR = {
+						has_idea = GEH_popular_support_1
+						has_idea = GEH_popular_support_2
+					}
+				}
+				add_to_variable = {
+					global.luxembourg_negotiations_point = -1 # 1점 하락
+				}
+			}
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = GEH_luxembourg_negotiations_end_tt
+			hidden_effect = {
+				HEU = {
+					country_event = { id = HEU.diplomacy_event.4 }
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 1000
+		}
+    }
+
+}
+
+prefect_team_decolonisation_decision_category = {
+
+	prefect_team_decolonisation_decision_LP2 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_poland_little_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = LP2 }
+			BA_poland_little_controll = yes
+		}
+
+		available = {
+			is_subject = no
+			BA_poland_little_controll = yes
+		}
+
+		complete_effect = {
+			10 = {
+				transfer_state_to = LP2
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP2
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_poland_little_is = yes
+					NOT = {
+						state = 10
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP2
+				set_state_controller_to = LP2
+				add_claim_by = LP2
+				add_compliance = 25
+			}
+			LP2 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP2 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+		}
+	}
+	prefect_team_decolonisation_decision_LP7 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_estonia_is = yes
+					BA_lithuania_is = yes
+					BA_latvia_is = yes
+					BA_belarus_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = LP7 }
+			OR = {
+				BA_estonia_controll = yes
+				BA_lithuania_controll = yes
+				BA_latvia_controll = yes
+				BA_belarus_controll = yes
+			}
+		}
+
+		available = {
+			is_subject = no
+			BA_estonia_controll = yes
+			BA_lithuania_controll = yes
+			BA_latvia_controll = yes
+			BA_belarus_controll = yes
+		}
+
+		complete_effect = {
+			808 = {
+				transfer_state_to = LP7
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP7
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_estonia_is = yes
+						BA_lithuania_is = yes
+						BA_latvia_is = yes
+						BA_belarus_is = yes
+					}
+					NOT = {
+						state = 808
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP7
+				set_state_controller_to = LP7
+				add_claim_by = LP7
+				add_compliance = 25
+			}
+			LP7 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP7 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+		}
+	}
+
+	prefect_team_decolonisation_decision_LP5 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 94
+
+		fire_only_once = yes
+
+
+		visible = {
+			NOT = { country_exists = LP5 }
+			BA_russia_moscow_controll = yes
+		}
+
+		available = {
+			is_subject = no
+			BA_russia_moscow_controll = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_russia_moscow_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			219 = {
+				transfer_state_to = LP5
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP5
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_russia_moscow_is = yes
+					NOT = {
+						state = 219
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP5
+				set_state_controller_to = LP5
+				add_claim_by = LP5
+				add_compliance = 25
+			}
+			LP5 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = ROOT
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP5 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+			
+		}
+	}
+
+	prefect_team_decolonisation_decision_LP4 = {
+		icon = GFX_decision_ger_reichskommissariats
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+					BA_ukraine_93_is = yes
+					BA_ukraine_soviet_is = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 4000
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			NOT = { country_exists = LP4 }
+			OR = {
+				BA_ukraine_93_controll = yes
+				BA_ukraine_soviet_controll = yes
+			}
+		}
+
+		available = {
+			is_subject = no
+			BA_ukraine_93_controll = yes
+			BA_ukraine_soviet_controll = yes
+		}
+
+		complete_effect = {
+			202 = {
+				transfer_state_to = LP4
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP4
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					OR = {
+						BA_ukraine_93_is = yes
+						BA_ukraine_soviet_is = yes
+					}
+					NOT = {
+						state = 202
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP4
+				set_state_controller_to = LP4
+				add_claim_by = LP4
+				add_compliance = 25
+			}
+			LP4 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 50000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 5000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 500
+					producer = ROOT
+				}	
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP4 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+		}
+	}
+
+	prefect_team_decolonisation_decision_LP6 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 94
+
+		fire_only_once = yes
+
+		visible = {
+			NOT = { country_exists = LP6 }
+			BA_caucasus_control = yes
+		}
+
+		available = {
+			is_subject = no
+			BA_caucasus_control = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_caucasus_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			229 = {
+				transfer_state_to = LP6
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_caucasus_is = yes
+					NOT = {
+						state = 229
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP6
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_caucasus_is = yes
+					NOT = {
+						state = 229
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP6
+				set_state_controller_to = LP6
+				add_claim_by = LP6
+				add_compliance = 25
+			}
+			LP6 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = ROOT
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP6 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+		}
+	}
+
+	prefect_team_decolonisation_decision_LP1 = {
+
+		icon = ger_reichskommissariats
+
+		priority = 96
+
+		fire_only_once = yes
+
+		visible = {
+			NOT = { country_exists = LP1 }
+			BA_millennium_control = yes
+		}
+
+		available = {
+			is_subject = no
+			BA_millennium_control = yes
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				BA_millennium_is = yes
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				SOV = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 10
+				SOV = { exists = no }
+			}
+		}
+
+		complete_effect = {
+			16 = {
+				transfer_state_to = LP1
+				add_compliance = 10
+			}
+			every_state = {
+				limit = {
+					BA_millennium_is = yes
+					NOT = {
+						state = 16
+					}
+					OR = {
+						is_owned_by = ROOT
+						owner = { is_subject_of = ROOT }
+					}
+				}
+				transfer_state_to = LP1
+				add_compliance = 25
+			}
+			every_state = {	
+				limit = {
+					BA_caucasus_is = yes
+					NOT = {
+						state = 16
+					}
+					NOT = {
+						OR = {
+							is_owned_by = ROOT
+							any_country = {
+								is_subject_of = ROOT
+								owns_state = PREV
+							}
+						}
+					}
+				}
+				add_contested_owner = LP1
+				set_state_controller_to = LP1
+				add_claim_by = LP1
+				add_compliance = 25
+			}
+			LP1 = {
+				ROOT = {
+					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_gehennareichskommissariat
+					}
+				}
+				add_manpower = 80000
+				add_equipment_to_stockpile = { 
+					type = infantry_equipment
+					amount = 10000
+					producer = ROOT
+				}	
+				add_equipment_to_stockpile = { 
+					type = support_equipment
+					amount = 1000
+					producer = ROOT
+				}		
+				inherit_technology = ROOT
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_party_name = {
+					ideology = fascism
+					long_name = GEH_executive_department_long
+					name = GEH_executive_department
+				}
+				set_party_name = {
+					ideology = democratic
+					long_name = GEH_planning_department_long
+					name = GEH_planning_department
+				}
+				set_party_name = {
+					ideology = communism
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = GEH_neutrality_party_long
+					name = GEH_neutrality_party
+				}
+			}
+			IF = {
+				limit = {
+					has_completed_focus = GEH_ako_route_focus
+				}
+				LP1 = {
+					add_ideas = GEH_managed_democracy_union_idea
+				}
+			}
+		}
+	}
+
+	prefect_team_local_leader_decision_LP1 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP1
+			LP1 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP1
+			LP1 = {
+				has_country_leader = {
+					character = LP1_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 1 # LP1
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+	
+	prefect_team_local_leader_decision_LP2 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP2
+			LP2 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP2
+			LP2 = {
+				has_country_leader = {
+					character = LP2_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 2 # LP2
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+	
+	prefect_team_local_leader_decision_LP4 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP4
+			LP4 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP4
+			LP4 = {
+				has_country_leader = {
+					character = LP4_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 4 # LP4
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+	
+	prefect_team_local_leader_decision_LP5 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP5
+			LP5 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP5
+			LP5 = {
+				has_country_leader = {
+					character = LP5_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 5 # LP5
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+	
+	prefect_team_local_leader_decision_LP6 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP6
+			LP6 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP6
+			LP6 = {
+				has_country_leader = {
+					character = LP6_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 6 # LP6
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+	
+	
+	prefect_team_local_leader_decision_LP7 = {
+		icon = GFX_decision_eng_install_government
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			base = 40
+		}
+
+		allowed = {
+		}
+
+		visible = {
+			country_exists = LP7
+			LP7 = {
+				is_puppet_of = ROOT
+			}
+		}
+
+		available = {
+			is_subject = no
+			country_exists = LP7
+			LP7 = {
+				has_country_leader = {
+					character = LP7_gehenna_school_committee
+					ruling_only = yes
+				}
+			}
+			check_variable = { LPX_leader_event_var = 0 } # 
+		}
+
+		complete_effect = {
+			set_variable = {
+				LPX_leader_event_var = 7 # LP7
+			}
+			country_event = { id = LPX.leader_event.2 }
+		}
+	}
+
+	prefect_team_return_brittany = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		fire_only_once = yes
+
+		visible = {
+			country_exists = LP1
+			LP1 = { is_puppet_of = ROOT }
+		}
+
+		available = {
+			14 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				state = 14
+			}
+		}
+
+		ai_will_do = {
+			base = 25
+		}
+
+		complete_effect = {
+			every_state = {	
+				limit = {
+					state = 14
+				}
+				transfer_state_to = LP1
+				add_contested_owner = LP1
+				set_state_controller_to = LP1
+				add_claim_by = LP1
+				add_compliance = 25
+			}
+		}
+	}
+	prefect_team_return_polar = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		fire_only_once = yes
+
+		visible = {
+			country_exists = LP5
+			LP5 = { is_puppet_of = ROOT }
+		}
+
+		available = {
+			216 = { is_controlled_by_ROOT_or_subject = yes }
+			215 = { is_controlled_by_ROOT_or_subject = yes }
+			213 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+				state = 213
+				state = 215
+				state = 216
+
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 25
+		}
+
+		complete_effect = {
+			every_state = {	
+				limit = {
+					OR = {
+						state = 213
+						state = 215
+						state = 216
+					}
+				}
+				transfer_state_to = LP5
+				add_contested_owner = LP5
+				set_state_controller_to = LP5
+				add_claim_by = LP5
+				add_compliance = 25
+			}
+		}
+	}
+	prefect_team_return_mordovia = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		fire_only_once = yes
+
+		visible = {
+			country_exists = LP5
+			LP5 = { is_puppet_of = ROOT }
+		}
+
+		available = {
+			1034 = { is_controlled_by_ROOT_or_subject = yes }
+			256 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		highlight_states = {
+     		highlight_states_trigger = {
+				OR = {
+				state = 1034
+				state = 256
+
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 25
+		}
+
+		complete_effect = {
+			every_state = {	
+				limit = {
+					OR = {
+						state = 1034
+						state = 256
+					}
+				}
+				transfer_state_to = LP5
+				add_contested_owner = LP5
+				set_state_controller_to = LP5
+				add_claim_by = LP5
+				add_compliance = 25
+			}
+		}
+	}
+
+	prefect_team_elimination_of_stalingrad = {
+
+		icon = GFX_decision_generic_monarchy
+
+		fire_only_once = yes
+
+		visible = {
+			217 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		available = {
+			217 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		ai_will_do = {
+			base = 25
+		}
+
+		complete_effect = {
+			217 = { set_state_name = SOV_Volgograd }
+			set_province_name = {
+				id = 3529
+				name = SOV_Volgograd
+			}
+		}
+	}
+
+	prefect_team_elimination_of_leningrad = {
+
+		icon = GFX_decision_generic_monarchy
+
+		fire_only_once = yes
+
+		visible = {
+			195 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		available = {
+			195 = { is_controlled_by_ROOT_or_subject = yes }
+		}
+
+		ai_will_do = {
+			base = 25
+		}
+
+		complete_effect = {
+			set_province_name = {
+				id = 3151
+				name = SOV_StPetersburg
+			}
+			195 = { set_state_name = SOV_StPetersburg }
+		}
+	}
 }
