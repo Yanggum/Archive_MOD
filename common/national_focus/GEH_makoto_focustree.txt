@@ -1264,8 +1264,16 @@ focus_tree = {
 				}
 				GEM = {
 					set_rule = { can_create_factions = yes }
-					create_faction = GEH_Federation
+					create_faction_from_template = BA_faction_template_GEH_Federation
 				}
+			}
+			
+			if = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_faction_initiative = 1
+				custom_effect_tooltip = generic_skip_one_line_tt
 			}
 			GEH = {
 				country_event = generic.5
@@ -2404,6 +2412,43 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_ori_unified_gehenna
 		completion_reward = {
+			IF = {
+				limit = {
+					is_in_faction = no
+				}
+				create_faction_from_template = BA_faction_template_GEM_treaty_pact
+			}
+			ELSE_IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					set_faction_manifest = faction_manifest_strategic_resource_control
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+					add_faction_goal = faction_goal_secure_european_continent
+					add_faction_goal = faction_goal_resource_control
+					set_faction_rule = joining_rule_neighbors_only
+					set_faction_rule = faction_peace_rule_conquest_focus
+				}
+				set_faction_name = GEM_treaty_pact
+			}
+			ELSE_IF = { # If member of a faction but not faction leader
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_faction_initiative = 1
+			}
 			add_war_support = 0.1
 			every_other_country = {
 				limit = {
@@ -2460,20 +2505,49 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEM_perfect_team_disbanded
 		completion_reward = {
-			GEM = {
-				set_rule = { can_create_factions = yes }
-				if = {
-					limit = { is_faction_leader = yes }
-					set_faction_name = Axis
-					if = {
-						limit = { is_in_faction_with = GEH }
-						hidden_effect = {
-							GEH = { country_event = GEH_event.58 }
-						}
-					}
+			IF = {
+				limit = {
+					is_in_faction = no
 				}
-				else = {
-					create_faction = Axis
+				create_faction_from_template = faction_template_axis
+			}
+			ELSE_IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					set_faction_manifest = faction_manifest_strategic_resource_control
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+					add_faction_goal = faction_goal_secure_european_continent
+					add_faction_goal = faction_goal_resource_control
+					set_faction_rule = joining_rule_neighbors_only
+					set_faction_rule = joining_rule_non_communist
+					set_faction_rule = faction_peace_rule_conquest_focus
+				}
+				set_faction_name = Axis
+			}
+			ELSE_IF = { # If member of a faction but not faction leader
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_faction_initiative = 1
+			}
+
+			if = {
+				limit = { is_in_faction_with = GEH }
+				hidden_effect = {
+					GEH = { country_event = GEH_event.58 }
 				}
 			}
 			if = {
@@ -2773,13 +2847,44 @@ focus_tree = {
 			set_rule = {
 				can_create_factions = yes
 			}
-			set_country_flag = GEH_finding_ally_flag
-			if = {
+			IF = {
 				limit = {
 					is_in_faction = no
 				}
-				create_faction = GEH_central_europe
+				create_faction_from_template = BA_faction_template_GEM_central_europe
 			}
+			ELSE_IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					set_faction_manifest = faction_manifest_strategic_resource_control
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+					add_faction_goal = faction_goal_secure_european_continent
+					add_faction_goal = faction_goal_rule_the_waves
+					set_faction_rule = joining_rule_neighbors_only
+					set_faction_rule = faction_peace_rule_puppeting_focus
+				}
+				set_faction_name = GEH_central_europe
+			}
+			ELSE_IF = { # If member of a faction but not faction leader
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_faction_initiative = 1
+			}
+			set_country_flag = GEH_finding_ally_flag
 		}
 	}
 
