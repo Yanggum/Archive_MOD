@@ -7363,6 +7363,7 @@ focus_tree = {
 	focus = { # 관세 동맹은 몰랐지
 		id = TRN_establish_a_customs_union
 		icon = GFX_focus_GER_customs_union
+		prerequisite = { focus = TRN_ministry_of_industrial_development }
 		x = -5
 		y = 1
 		relative_position_id = TRN_ministry_of_industrial_development
@@ -7377,14 +7378,9 @@ focus_tree = {
 			}
 		}
 
-		prerequisite = { 
-			focus = TRN_ministry_of_industrial_development
-		}
-
 		ai_will_do = {
 
 		}
-
 
 		completion_reward = {
 			custom_effect_tooltip = all_faction_nembers_gain_event_tt
@@ -7771,11 +7767,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			create_faction_from_template = {
-				template = faction_template_TRN_trinity_world
-				name = eden_accord
-				icon = GFX_faction_icon_eden_accord
-			}
+			set_rule = { can_create_factions = yes }
+			create_faction_from_template = faction_template_TRN_trinity_world
 			hidden_effect = { news_event = trinity_news_events.4 }
 			add_named_threat = {
 				threat = 4
@@ -14568,6 +14561,32 @@ focus_tree = {
 	}
 
 	focus = { #
+		id = TRN_TrinityMikaDiplomacySpainAttack
+		icon = GFX_focus_attack_Iberian
+		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
+		x = 1
+		y = 1
+		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_government = fascism
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
 		id = TRN_TrinityMikaDiplomacyItalyAttack_4
 		icon = GFX_focus_TRN_divine_mandate_iberian
 		x = 0
@@ -14584,32 +14603,6 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = TRN_TrinityMikaDiplomacySpainAttack
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRN_TrinityMikaDiplomacySpainAttack
-		icon = GFX_focus_attack_Iberian
-		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
-		x = 1
-		y = 1
-		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			has_government = fascism
 		}
 		mutually_exclusive = {  }
 
@@ -15034,10 +15027,9 @@ focus_tree = {
 				name = TRN_germany_army_reform
 				cost_reduction = 0.5
 				uses = 1
-				category = cat_mobile_warfare
+				category = land_doctrine
 			}
 			army_experience = 15
-
 		}
 	}
 
@@ -15062,11 +15054,11 @@ focus_tree = {
 
 			custom_effect_tooltip = tooltip_white_line
 
-			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform_1
-				cost_reduction = 0.5
-				uses = 1
-				category = cat_mobile_warfare
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = armor
+				name = TRN_germany_army_reform
 			}
 			custom_effect_tooltip = available_theorist
 			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
@@ -15112,13 +15104,6 @@ focus_tree = {
 			army_experience = 15
 
 			custom_effect_tooltip = tooltip_white_line
-
-			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform_2
-				cost_reduction = 0.25
-				uses = 2
-				category = land_doctrine
-			}
 			add_trait = {
                     	character = TRN_Ajitani_Hifumi
                     	slot = high_command
@@ -15158,6 +15143,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = armor
+				name = TRN_germany_army_reform_2
+			}
 			add_tech_bonus = {
 				name = TRN_germany_army_reform_3
 				ahead_reduction = 1
@@ -15252,7 +15244,7 @@ focus_tree = {
 				name = TRN_trinity_army_reform
 				cost_reduction = 0.5
 				uses = 1
-				category = cat_grand_battle_plan
+				category = land_doctrine
 			}
 			army_experience = 15
 		}
@@ -15274,11 +15266,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = TRN_trinity_army_reform
-				cost_reduction = 0.5
-				uses = 1
-				category = cat_grand_battle_plan
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = infantry
+				name = TRN_small_attack_groups
 			}
 
 			army_experience = 15
@@ -15319,6 +15312,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = combat_support
+				name = TRN_retracing_the_mechanized_brigade_tragedy
+			}
 			army_experience = 35
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod 
@@ -15384,13 +15384,22 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			army_experience = 30
-			add_doctrine_cost_reduction = {
-				name = TRN_trinity_army_reform
-				cost_reduction = 0.5
-				uses = 1
-				category = cat_grand_battle_plan
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = infantry
+				name = TRN_thousand_blades
 			}
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = combat_support
+				name = TRN_thousand_blades
+			}
+			army_experience = 30
+
 			custom_effect_tooltip = tooltip_white_line
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod 

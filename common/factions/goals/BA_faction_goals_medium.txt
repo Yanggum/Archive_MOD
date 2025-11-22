@@ -1,0 +1,46 @@
+
+# Defense of Democracy
+faction_goal_TRN_defeat_gehenna = {
+	name = goal_TRN_defeat_gehenna_name
+	description = goal_TRN_defeat_gehenna_desc
+	category = medium_term
+	group = FOCUS_FILTER_ANNEXATION
+	allowed = {
+	}
+	visible = {
+		FROM = {
+			original_tag = TRM
+			has_government = fascism
+		}
+	}
+	completed = {
+		55 = { is_controlled_by_ROOT_or_ally = yes }
+		52 = { is_controlled_by_ROOT_or_ally = yes }
+		51 = { is_controlled_by_ROOT_or_ally = yes }
+		59 = { is_controlled_by_ROOT_or_ally = yes }
+	}
+	complete_effect = {
+		add_faction_power_projection = 100
+		custom_effect_tooltip = generic_skip_one_line_tt
+		custom_effect_tooltip = THE_FACTION_LEADER
+		add_faction_initiative = 1
+		every_collection_element = {
+			input = {
+				input = game:scope
+				operators =  { 
+					faction_members 
+				}
+				name = ALL_FACTION_MEMBERS
+			}
+			custom_effect_tooltip = ALL_FACTION_MEMBERS
+			army_experience = 50 
+		}
+	}
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 9 # Early game prio
+			date < 1941.1.1
+		}
+	}
+}
