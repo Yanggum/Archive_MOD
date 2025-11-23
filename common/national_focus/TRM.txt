@@ -10083,6 +10083,9 @@ focus_tree = {
 			hidden_effect = { 
 				news_event = { id = trinity_news_events.11 } 
 				set_global_flag = TRINITY_WON_THE_GEHENNA
+
+				country_event = { id = trinity_events_nagisa.32 days = 14 }
+				country_event = { id = trinity_events_nagisa.33 days = 28 }
 			}
 		}
 
@@ -10117,6 +10120,9 @@ focus_tree = {
 			hidden_effect = { 
 				news_event = { id = trinity_news_events.11 } 
 				set_global_flag = TRINITY_WON_THE_GEHENNA
+
+				country_event = { id = trinity_events_nagisa.32 days = 14 }
+				country_event = { id = trinity_events_nagisa.33 days = 28 }
 			}
 			GEH = {
 				every_character = {
@@ -10241,6 +10247,9 @@ focus_tree = {
 				custom_effect_tooltip = TRN_right_of_the_victor_generic_tt
 				add_political_power = 100
 			}
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.38 days = 14 }
+			}
 		}
 	}
 
@@ -10255,6 +10264,179 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = { id = trinity_events_nagisa.31 }
+		}
+	}
+
+	focus = {
+		id = TRN_red_winter_takane_hidden_focus
+		icon = GFX_focus_REDWINTER_finland
+		x = -2
+		y = 2
+		cost = 5
+
+		allow_branch = {
+			has_country_flag = TRN_red_winter_takane_hidden_flag
+		}
+
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		completion_reward = {
+			RED = {
+				every_character = {
+					limit = {
+						OR = {
+							is_character = RED_takane
+						}
+					}
+					set_nationality = ROOT
+				}
+			}
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa_diplomacy.28 }
+			}
+		}
+	}
+
+	## 외교 서브분기
+	focus = {
+		id = TRN_union_of_faith
+		icon = GFX_goal_TRN_Sovereign
+		x = 3
+		y = 1
+		cost = 5
+		relative_position_id = TRN_right_of_the_victor
+		prerequisite = { focus = TRN_right_of_the_victor }
+
+		available = {
+			is_in_faction = yes
+		}
+
+		completion_reward = {
+			IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+				}
+			}
+			ELSE = {
+				add_political_power = 150
+			}
+		}
+	}
+	
+	focus = {
+		id = TRN_disobedience_of_the_subjects
+		icon = GFX_focus_generic_advanced_military_studies
+		x = -1
+		y = 1
+		cost = 5
+		relative_position_id = TRN_union_of_faith
+		prerequisite = { focus = TRN_union_of_faith }
+
+		available = {
+			has_war = yes
+			any_core_state = {
+				NOT = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+		}
+
+		completion_reward = {				
+			custom_effect_tooltip = TRN_disobedience_of_the_subjects_tt
+			hidden_effect = {
+				delete_unit_template_and_units = {
+					division_template = "Trinity Home Guard"
+					disband = yes #if yes, will refund equipment/manpower.
+				}
+
+				division_template = {
+					name = "Trinity Home Guard"
+					#division_names_group = JAP_MIL_01
+					#override_model = JAP_militia_entity
+					role = garrison
+					template_counter = 113
+					is_locked = yes
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 1 y = 0 }
+						militia = { x = 1 y = 1 }
+					}
+					support = {
+					}
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
+	
+	focus = {
+		id = TRN_sending_missionaries_to_allies
+		icon = GFX_focus_ETH_re-convene_the_parliament
+		x = 1
+		y = 1
+		cost = 5
+		relative_position_id = TRN_union_of_faith
+		prerequisite = { focus = TRN_union_of_faith }
+
+		available = {
+			is_faction_leader = yes
+			any_country = {
+				is_ally_with = ROOT
+			}
+		}
+
+		completion_reward = {				
+			
+		}
+	}
+	
+	focus = {
+		id = TRN_trinity_loop_rail_line
+		icon = GFX_focus_generic_railroad
+		x = 3
+		y = 1
+		cost = 5
+		relative_position_id = TRN_union_of_faith
+		prerequisite = { focus = TRN_union_of_faith }
+
+		available = {
+			is_faction_leader = yes
+			any_country = {
+				is_ally_with = ROOT
+			}
+		}
+
+		completion_reward = {		
+			add_political_power = 75		
+			every_state = {
+				limit = {
+					is_controlled_by_ROOT_or_ally = yes
+					infrastructure < 3
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}	
+			}
 		}
 	}
 
@@ -10355,6 +10537,11 @@ focus_tree = {
 			85 = { is_fully_controlled_by = TRM }
 		}
 
+		select_effect = {
+			country_event = { id = trinity_events_nagisa.34 days = 14 }
+			country_event = { id = trinity_events_nagisa.36 days = 28 }
+		}
+
 		completion_reward = {
 			custom_effect_tooltip = TRN_five_clan_republic_tt
 			set_country_flag = nagisa_faction_I_flag
@@ -10362,6 +10549,10 @@ focus_tree = {
 			add_popularity = {
 				ideology = fascism
 				popularity = 0.02
+			}
+
+			hidden_effect = { 
+				country_event = { id = trinity_events_nagisa.37 }
 			}
 		}
 	}
@@ -10383,6 +10574,11 @@ focus_tree = {
 			85 = { is_fully_controlled_by = TRM }
 		}
 
+		select_effect = {
+			country_event = { id = trinity_events_nagisa.34 days = 14 }
+			country_event = { id = trinity_events_nagisa.35 days = 28 }
+		}
+
 		completion_reward = {
 			custom_effect_tooltip = TRN_arius_inquisition_tt
 			set_country_flag = nagisa_faction_I_arius_flag
@@ -10393,6 +10589,10 @@ focus_tree = {
 			round_temp_variable = TRN_arius_temp_var # 소숫점 반올림
 			subtract_from_variable = { nagisa_faction_I = TRN_arius_temp_var } # 그 숫자를 국가인민당 변수에서 감소
 			add_to_variable = { nagisa_faction_A = TRN_arius_temp_var } # 한 뒤 필리우스로 옮김
+			
+			hidden_effect = { 
+				country_event = { id = trinity_events_nagisa.37 }
+			}
 		}
 	}
 	
@@ -10712,9 +10912,16 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = { id = trinity_events_nagisa_diplomacy.26 }
-			add_named_threat = {
-				threat = -5
-				name = TRN_curtain_across_kivotos
+			
+			IF = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+					is_faction_leader = yes
+				}
+				add_faction_initiative = 1
+			}
+			else = {
+				add_war_support = 0.1
 			}
 		}
 	}
@@ -11345,7 +11552,7 @@ focus_tree = {
 	focus = { # 
 		id = TRN_crusade_proposal_plana
 		icon = GFX_focus_GEI_arona
-		x = 3
+		x = 8
 		y = 1
 		cost = 7
 
@@ -11404,7 +11611,7 @@ focus_tree = {
 	focus = { # 
 		id = TRN_crusade_proposal_malkuth
 		icon = GFX_focus_GEI_tablet
-		x = 5
+		x = 10
 		y = 1
 		cost = 7
 
@@ -11497,6 +11704,11 @@ focus_tree = {
 				remove_ideas = TRN_political_instability_ns
 			}
 			add_political_power = 100
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.15 days = 14 }
+				country_event = { id = trinity_events_nagisa.16 days = 42 }
+			}
 		}
 	}
 
@@ -11712,62 +11924,6 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_trinity_carnival_default_tt
-		}
-	}
-
-	focus = {
-		id = TRN_birth_of_trinity_pan_nationalism
-		icon = GFX_focus_TRN_kivotos_dip
-		
-		prerequisite = { 
-			focus = TRN_expansion_of_the_tea_party_scale
-		}
-
-		x = 1
-		y = 1
-
-		relative_position_id = TRN_expansion_of_the_tea_party_scale
-
-		cost = 6
-
-		available = {
-			
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			
-		}
-	}
-
-	focus = {
-		id = TRN_birth_of_trinity_pan_nationalism
-		icon = GFX_focus_GER_european_confederation
-		
-		prerequisite = { 
-			focus = TRN_expansion_of_the_tea_party_scale
-		}
-
-		x = 1
-		y = 1
-
-		relative_position_id = TRN_expansion_of_the_tea_party_scale
-
-		cost = 6
-
-		available = {
-			
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			
 		}
 	}
 
@@ -12131,6 +12287,66 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_nagisa_democratic_ending_tt
+			mark_focus_tree_layout_dirty = yes
+		}
+	}
+
+	focus = {
+		id = TRN_nagisa_democratic_ending_after
+		
+		# 누가 트리니티의 호스트인가? (민주 루트)
+		## 선거 결과를 변수로 저장(나중에 지도자가 또 바뀌더라도 중점이 유지되게)
+
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 0 } # 나기사(연임)
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 1 } # 히후미
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 2 } # 세이아
+			}
+		}
+		
+		prerequisite = { 
+			focus = TRN_end_of_new_constitution_discussion
+		}
+		
+		prerequisite = { 
+			focus = TRN_infinite_trust_and_faith
+		}
+
+		allow_branch = {
+			has_completed_focus = TRN_nagisa_democratic_ending
+		}
+
+		x = -4
+		y = 4
+
+		relative_position_id = TRN_safeguarding_the_ideal_of_factional_democracy
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
 		}
 	}
 
