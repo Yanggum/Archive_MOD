@@ -7077,10 +7077,10 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			country_event = trinity_events.40
 			hidden_effect = {
-				country_event = { id = trinity_events.40 days = 01 }
 				country_event = { id = trinity_flavor_events.5 days = 14 }
-				#country_event = { id = trinity_flavor_events.16 days = 30 }
+				country_event = { id = trinity_flavor_events.16 days = 30 random_days = 30 }
 			}
 			IF = {
 				limit = { has_completed_focus = TRN_confiscation_distribution_collectivization }
@@ -8402,7 +8402,7 @@ focus_tree = {
 		icon = GFX_focus_GER_subdue_the_wehrmacht
 		prerequisite = { focus = TRN_secret_meeting_with_Sisterhood }
 		prerequisite = { focus = TRN_necessary_revenge }
-		x = -5
+		x = -4
 		y = 1
 		relative_position_id = TRN_secret_meeting_with_Sisterhood
 		cost = 5
@@ -8435,77 +8435,11 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 독일 문화의 운명
-		id = TRN_fate_of_german_culture
-		icon = GFX_focus_TRN_fate_of_german_culture
-		prerequisite = { focus = TRN_denazification }
-		prerequisite = { focus = TRN_second_trintiy }
-		x = 1
-		y = 1
-		relative_position_id = TRN_denazification
-		cost = 5
-
-		available = {
-			has_government = fascism
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			add_to_variable = {
-				nagisa_faction_C = 4
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_J = -2
-				tooltip = nagisa_faction_J_tt
-			}
-			add_to_variable = {
-				nagisa_faction_H = -2
-				tooltip = nagisa_faction_H_tt
-			}
-			TRM_nagisa_faction_modified = yes
-
-			country_event = { id = trinity_events.31 } # 독일 문화의 운명
-		}
-	}
-
-	focus = { # 사회 문제 해결
-		id = TRN_solving_social_problems
-		icon = GFX_focus_TRN_solving_social_problems
-		prerequisite = { focus = TRN_fate_of_german_culture }
-		prerequisite = { focus = TRN_take_over_the_church }
-		x = 1
-		y = 1
-		relative_position_id = TRN_fate_of_german_culture
-		cost = 6
-
-		available = {
-			has_government = fascism
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-			set_variable = { TRN_social_causing_regional_conflict_cost = 70 }
-
-			add_stability = 0.05
-			country_event = { id = trinity_events.30 } # 여성 인권
-			activate_targeted_decision = { decision = TRN_social_causing_regional_conflict_decision target = TRM }
-			hidden_effect = { 
-				country_event = { id = trinity_flavor_events.43 days = 365 random_days = 180 }
-			}
-		}
-	}
-
 	focus = { # 정당 운동 
 		id = TRN_limit_german_party
 		icon = GFX_focus_ITA_banda_carita
 		prerequisite = { focus = TRN_denazification }
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = TRN_denazification
 		cost = 5
@@ -8535,29 +8469,6 @@ focus_tree = {
 				tooltip = nagisa_faction_I_tt
 			}
 			TRM_nagisa_faction_modified = yes
-		}
-	}
-
-	focus = {
-		id = TRN_expanding_censorship
-		icon = GFX_focus_ITA_comandante_diavolo
-		prerequisite = { 
-			focus = TRN_fate_of_german_culture
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_fate_of_german_culture
-		cost = 5
-
-		available = {
-			has_government = fascism
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			
 		}
 	}
 
@@ -8655,14 +8566,11 @@ focus_tree = {
 	focus = { # 나치 조직 해산
 		id = TRN_dismantled_Nazi_organization
 		icon = GFX_focus_GER_subdue_the_wehrmacht
-		prerequisite = { focus = TRN_limit_german_party }
-		prerequisite = { focus = TRN_fate_of_german_culture}
+		prerequisite = { focus = TRN_denazification }
 
-		text_icon = GER_inner_circle_focus_style
-
-		x = 1
+		x = 0
 		y = 1
-		relative_position_id = TRN_limit_german_party
+		relative_position_id = TRN_denazification
 		cost = 20
 
 		available = {
@@ -8722,12 +8630,103 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 사회 문제 해결
+		id = TRN_solving_social_problems
+		icon = GFX_focus_TRN_solving_social_problems
+		prerequisite = { focus = TRN_dismantled_Nazi_organization }
+		x = 1
+		y = 1
+		relative_position_id = TRN_dismantled_Nazi_organization
+		cost = 6
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+			set_variable = { TRN_social_causing_regional_conflict_cost = 70 }
+
+			add_stability = 0.05
+			activate_targeted_decision = { decision = TRN_social_causing_regional_conflict_decision target = TRM }
+			activate_targeted_decision = { decision = TRN_social_edit_textbook_decision target = TRM }
+			activate_targeted_decision = { decision = TRN_social_child_brainwashing_decision target = TRM }
+			activate_targeted_decision = { decision = TRN_social_child_brainwashing_decision target = TRM }
+			hidden_effect = { 
+				country_event = { id = trinity_flavor_events.43 days = 365 random_days = 180 }
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_expanding_censorship
+		icon = GFX_focus_ITA_comandante_diavolo
+		prerequisite = { 
+			focus = TRN_dismantled_Nazi_organization
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_dismantled_Nazi_organization
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			activate_targeted_decision = { decision = TRN_ID_card_decision target = TRM }
+		}
+	}
+
+	focus = { # 독일 문화의 운명
+		id = TRN_fate_of_german_culture
+		icon = GFX_focus_TRN_fate_of_german_culture
+		prerequisite = { focus = TRN_dismantled_Nazi_organization }
+		prerequisite = { focus = TRN_limit_german_party }
+		x = -1
+		y = 1
+		relative_position_id = TRN_dismantled_Nazi_organization
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_to_variable = {
+				nagisa_faction_C = 4
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_J = -2
+				tooltip = nagisa_faction_J_tt
+			}
+			add_to_variable = {
+				nagisa_faction_H = -2
+				tooltip = nagisa_faction_H_tt
+			}
+			TRM_nagisa_faction_modified = yes
+
+			country_event = { id = trinity_events.31 } # 독일 문화의 운명
+			hidden_effect = { country_event = { id = trinity_events.30 } }# 여성 인권 
+		}
+	}
+
 	focus = { # 교회 장악
 		id = TRN_take_over_the_church
 		icon = GFX_focus_TRN_take_over_the_church
 		prerequisite = { focus = TRN_denazification }
 		prerequisite = { focus = TRN_second_trintiy }
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = TRN_denazification
 		cost = 5
@@ -8761,9 +8760,8 @@ focus_tree = {
 		id = TRN_revolution_in_the_spirit
 		icon = GFX_focus_generic_workers
 		prerequisite = { focus = TRN_take_over_the_church }
-		prerequisite = { focus = TRN_fate_of_german_culture }
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = TRN_take_over_the_church
 		cost = 5
 
@@ -8775,8 +8773,6 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			activate_targeted_decision = { decision = TRN_social_edit_textbook_decision target = TRM }
-			activate_targeted_decision = { decision = TRN_social_child_brainwashing_decision target = TRM }
 		}
 	}
 
