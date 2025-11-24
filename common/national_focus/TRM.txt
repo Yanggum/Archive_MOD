@@ -6849,6 +6849,10 @@ focus_tree = {
 				activate_targeted_decision = { target = 68 decision = TRN_Infrastructure_Development } # 오스트마르크
 				activate_targeted_decision = { target = 86 decision = TRN_Infrastructure_Development } # 포즈난
 			}
+			reduce_focus_completion_cost = {
+				focus = TRN_military_factory_maintenance
+				cost = 105
+			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
@@ -14589,6 +14593,12 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			SOV = {
+				OR = {
+					exists = no
+					is_subject_of = TRM
+				}
+			}
 		}
 		mutually_exclusive = {  }
 
@@ -14981,10 +14991,11 @@ focus_tree = {
 		id = TRN_military_factory_maintenance
 		icon = GFX_focus_generic_reorient_production
 		prerequisite = { focus = TRN_increase_military_budget }
+		overlay = GFX_focus_fast_overlay_japan_clock
 		x = -1
 		y = 1
 		relative_position_id = TRN_increase_military_budget
-		cost = 5
+		cost = 20
 		available = {
 
 		}
@@ -15863,19 +15874,16 @@ focus_tree = {
 				has_full_control_of_state = 59
 				has_full_control_of_state = 58
 			}
-			OR = {
-				NOT = { has_completed_focus = TRN_trade_interdiction }
-				AND = {
-					has_completed_focus = TRN_submarine_warfare
-					has_completed_focus = TRN_armored_assault_fleet
-				}
-			}
 		}
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
+			reduce_focus_completion_cost = {
+				focus = TRN_trade_interdiction
+				cost = -70
+			}
 			add_doctrine_cost_reduction = {
 				name = TRN_giant_ship_plan
 				cost_reduction = 0.25
@@ -16037,6 +16045,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_completed_focus = TRN_construct_aircraft_carriers }
+				}
+				reduce_focus_completion_cost = {
+					focus = TRN_trade_interdiction
+					cost = 70
+				}
+			}
 			random_core_state = {
 				limit = {
 					is_fully_controlled_by = ROOT
@@ -16197,6 +16214,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_completed_focus = TRN_construct_aircraft_carriers }
+				}
+				reduce_focus_completion_cost = {
+					focus = TRN_trade_interdiction
+					cost = 70
+				}
+			}
 
 			random_owned_state = {
 				limit = {
@@ -16299,6 +16325,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			reduce_focus_completion_cost = {
+				focus = TRN_giant_ship_plan
+				cost = -70
+			}
 			add_doctrine_cost_reduction = {
 				name = GER_trade_interdiction
 				cost_reduction = 0.25
@@ -16405,6 +16435,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			reduce_focus_completion_cost = {
+				focus = TRN_giant_ship_plan
+				cost = 70
+			}
 			add_tech_bonus = {
 				name = TRN_armored_assault_fleet
 				bonus = 0.5
