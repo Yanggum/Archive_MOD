@@ -1,0 +1,115 @@
+#category = short_term medium_term or long_term
+# ROOT is faction leader, FROM is faction member who opens UI and views goals, completed/cancel/complete_effect do not have FROM scopes
+
+
+######################################################################
+
+###  ##   ##  ### ###  ##  #  #      ## ###  ###  ##  ### ### ###  ##  
+#   #  # #  #  #   #  #  # ## #     #   #  # #   #  #  #  #    #  #  # 
+##  #### #     #   #  #  # # ##      #  ###  ##  #     #  ##   #  #    
+#   #  # #  #  #   #  #  # #  #       # #    #   #  #  #  #    #  #  # 
+#   #  #  ##   #  ###  ##  #  #     ##  #    ###  ##  ### #   ###  ##  
+
+######################################################################
+
+faction_goal_no_trinity_in_gehenna = {
+	name = faction_goal_no_trinity_in_gehenna_name
+	description = faction_goal_no_trinity_in_gehenna_desc
+	category = long_term
+	group = FOCUS_FILTER_ANNEXATION
+	allowed = {
+		
+	}
+	visible = {
+		FROM = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+			}
+			any_enemy_country = {
+				original_tag = TRM
+			}
+		}
+		
+	}
+	completed = {
+		collection_size = {
+			input = {
+				input = collection:gehenna_potential_core_states
+				operators = {
+					limit = {
+						OR = {
+							controller = { is_in_faction_with = TRM }
+							is_controlled_by = TRM
+						}
+					}
+				}
+				name = COLLECTION_NO_TRINITY_IN_GEHENNA
+			}
+			value < 1
+		}
+	}
+	complete_effect = {
+		add_faction_power_projection = 100
+		every_collection_element = {
+			input = {
+				input = game:scope
+				operators =  { 
+					faction_members 
+					limit = {
+						faction_influence_ratio > 0.3
+					}
+				}
+				name = INFLUENCE_ABOVE_30_PERCENT
+			}
+			add_faction_influence_ratio = 0.1
+			add_faction_initiative = 1
+		}
+	}
+	ai_will_do = {
+		base = 10 # Do itttt!
+	}
+}
+
+# 일단 주석
+#faction_goal_true_eden_treaty = {
+#	name = faction_goal_true_eden_treaty_name
+#	description = faction_goal_true_eden_treaty_desc
+#	category = long_term
+#	group = FOCUS_FILTER_ANNEXATION
+#	allowed = {
+#		
+#	}
+#	visible = {
+#		FROM = {
+#			original_tag = TRM
+#			NOT = { is_in_faction_with = GEH }
+#			has_completed_focus = TRN_repromote_eden_treaty
+#			
+#			any_enemy_country = {
+#				original_tag = GEM
+#			}
+#		}
+#		
+#	}
+#	completed = {
+#		is_in_faction_with = GEH
+#	}
+#	complete_effect = {
+#		add_faction_power_projection = 100
+#		every_collection_element = {
+#			input = {
+#				input = game:scope
+#				operators =  { 
+#					faction_members 
+#				}
+#				name = ALL_FACTION_MEMBERS
+#			}
+#			custom_effect_tooltip = ALL_FACTION_MEMBERS
+#			add_war_support = 0.1
+#		}
+#	}
+#	ai_will_do = {
+#		base = 5
+#	}
+#}
