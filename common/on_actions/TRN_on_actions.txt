@@ -182,6 +182,344 @@ on_actions = {
 		}
 	}
 
+	on_monthly_TRM = {
+		effect = {
+			if = {
+				limit = {
+					TRM_misnono_mission_demands_ready = yes
+					check_variable = { TRM_num_of_pater_demands < 2 }
+				}
+				if = {
+					limit = {
+						has_war = no
+					}
+					set_variable = { TRM_combined_military_factories_and_dockyards = 0 }
+					add_to_variable = { TRM_combined_military_factories_and_dockyards = num_of_naval_factories }
+					add_to_variable = { TRM_combined_military_factories_and_dockyards = num_of_military_factories }
+					divide_variable = { TRM_combined_military_factories_and_dockyards = 2 }
+				}
+
+				random_list = {
+					10 = { # 파테르 분파의 무기 생산 확대 추진
+						modifier = { 
+							factor = 0
+							has_country_flag = TRM_misono_mission_demands_military_factories_flag
+						}
+						modifier = { 
+							factor = 2
+							num_of_military_factories < num_of_naval_factories
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+						
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_military_factories_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.1 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 징병법 개정 희망
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_conscription_law_change_flag
+								has_manpower > 249999
+								has_idea = scraping_the_barrel
+								has_war = no
+								AND = {
+									has_idea = all_adults_serve
+									surrender_progress > 0.15
+								}
+							}
+						}
+						modifier = {
+							factor = 1.5
+							NOT = {
+								has_idea = extensive_conscription
+								has_idea = service_by_requirement
+								has_idea = all_adults_serve
+								has_idea = scraping_the_barrel
+							}
+						}
+						modifier = {
+							factor = 0.5
+							has_idea = service_by_requirement
+							has_idea = all_adults_serve
+						}
+						modifier = {
+							factor = 3
+							OR = {
+								has_idea = disarmed_nation
+								has_idea = volunteer_only
+								has_idea = limited_conscription
+							}
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_conscription_law_change_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.2 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 지원 트럭 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_more_trucks_flag
+								has_equipment = {
+									motorized_equipment > 149
+								}
+							}
+						}
+						modifier = {
+							factor = 1.5
+							has_equipment = {
+								motorized_equipment < 100
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_more_trucks_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.3 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 전차 생산 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_more_tanks_flag
+								AND = {
+									NOT = { has_tech = basic_medium_tank_chassis }
+									has_equipment = {
+										light_tank_chassis > 949
+									}
+								}
+								AND = {
+									has_tech = basic_medium_tank_chassis
+									has_equipment = {
+										medium_tank_chassis > 249
+									}
+								}
+							}
+						}
+						modifier = {
+							factor = 1.5
+							has_equipment = {
+								motorized_equipment < 100
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_more_tanks_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.4 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 포 생산 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_more_artillery_flag
+								AND = {
+									NOT = { has_tech = basic_medium_tank_chassis }
+									has_equipment = {
+										light_tank_chassis > 949
+									}
+								}
+								AND = {
+									has_tech = basic_medium_tank_chassis
+									has_equipment = {
+										medium_tank_chassis > 249
+									}
+								}
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_more_artillery_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.5 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 조선소 생산 증대 추진
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_dockyards_flag
+								num_of_naval_factories > num_of_military_factories
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_dockyards_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.6 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 연료 비축 계획 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_more_oil_flag
+								num_of_naval_factories > num_of_military_factories
+								has_war = yes
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = no
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_more_oil_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.7 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 국내 산업 기반 확장 추진
+						modifier = { 
+							factor = 0
+							OR = {
+								has_war = yes
+								num_of_civilian_factories > TRM_combined_military_factories_and_dockyards
+							}
+						}
+						modifier = { 
+							factor = 2
+							num_of_civilian_factories < TRM_combined_military_factories_and_dockyards
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_tanks_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.8 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 공군 생산 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_plane_flag
+								AND = {
+									has_equipment = {
+										small_plane_airframe > 299
+									}
+								}
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_plane_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.9 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 신비 직조기 생산 요구
+						modifier = { 
+							factor = 0
+							OR = {
+								has_country_flag = TRM_misono_mission_demands_more_mystery_flag
+								has_equipment = {
+									kivotos_infantry_weapons > 299
+								}
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_demands_more_mystery_flag
+						country_event = { id = trinity_events_nagisa_misono_mission.10 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 참모총장 임명 요구 (육군)
+						modifier = { 
+							factor = 0
+							has_country_flag = TRM_misono_mission_army_demands_political_appointment
+						}
+						modifier = { 
+							factor = 0
+							amount_taken_ideas = {
+								amount > 0
+								slots = { army_chief }
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+						
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_army_demands_political_appointment
+						country_event = { id = trinity_events_nagisa_misono_mission.11 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 참모총장 임명 요구 (해군)
+						modifier = { 
+							factor = 0
+							has_country_flag = TRM_misono_mission_navy_demands_political_appointment
+						}
+						modifier = { 
+							factor = 0
+							amount_taken_ideas = {
+								amount > 0
+								slots = { navy_chief }
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+						
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_navy_demands_political_appointment
+						country_event = { id = trinity_events_nagisa_misono_mission.12 days = 5 random_days = 10 }
+					}
+					10 = { # 파테르 분파의 참모총장 임명 요구 (공군)
+						modifier = { 
+							factor = 0
+							has_country_flag = TRM_misono_mission_air_force_demands_political_appointment
+						}
+						modifier = { 
+							factor = 0
+							amount_taken_ideas = {
+								amount > 0
+								slots = { air_chief }
+							}
+						}
+						modifier = { 
+							factor = 2
+							has_war = yes
+						}
+						
+						TRM_pater_demand_activation_effects = yes
+
+						set_country_flag = TRM_misono_mission_air_force_demands_political_appointment
+						country_event = { id = trinity_events_nagisa_misono_mission.13 days = 5 random_days = 10 }
+					}
+				}
+			}
+		}
+	}
+
 	on_new_term_election = { 
 		random_events = { 
 			100 = trinity_events_nagisa_election.1
