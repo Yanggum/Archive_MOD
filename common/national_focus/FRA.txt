@@ -604,7 +604,14 @@ focus_tree = {
 			focus = FRA_focus.1
 		}
 		completion_reward = {
-			add_war_support = 0.05
+			swap_ideas = {
+				remove_idea = FRA_legacy_of_war
+				add_idea = FRA_legacy_of_war_1
+			}
+			country_event = {
+				id = FRA_prov_event.53
+				days = 5
+			}
 		}
 	}
 	focus = {
@@ -810,7 +817,7 @@ focus_tree = {
 		#해군 재규합
 		icon = GFX_goal_FRA_navy_reform
 		id = FRA_focus_arm_8
-		cost = 4
+		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_0
@@ -818,10 +825,12 @@ focus_tree = {
 			focus = FRA_focus_new_arm_0
 		}
 		completion_reward = {
-			navy_experience = 50
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.2
-				category = naval_doctrine
+			460 = {
+				add_building_construction = {
+					type = naval_headquarters
+					province = 12051
+					level = 1
+				}
 			}
 			if = {
 				limit = {
@@ -1964,7 +1973,7 @@ focus_tree = {
 	focus = {
 		#본토와의 접촉
 		id = FRA_focus_resistance_1
-		cost = 1
+		cost = 2
 		icon = GFX_goal_FRA_watch
 		x = 0
 		y = 1
@@ -1972,14 +1981,12 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus.1
 		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
-			}
-		}
 		completion_reward = {
 			add_political_power = 10
+			country_event = {
+				id = FRA_prov_event.100
+				days = 2
+			}
 		}
 	}
 	focus = {
@@ -2520,10 +2527,10 @@ focus_tree = {
 		}
 		completion_reward = {
 			MIL = {
-				country_event = {
-					id = FRA_prov_event.119
-					days = 1
-				}
+				#country_event = {
+				#	id = FRA_prov_event.119
+				#	days = 1
+				#}
 				effect_tooltip = {
 					MIL_Resistance_idea_up = yes
 				}
@@ -2629,11 +2636,9 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = FRA_manage_garrison
-			army_experience = 10
-			add_tech_bonus = {
-				category = military_police_tech
-				bonus = 0.85
-				uses = 1
+			custom_effect_tooltip = FRA_focus_garrison_0_tt
+			add_to_variable = {
+				FRA_can_put_military = 1
 			}
             every_state = {
                 limit = {
@@ -2641,9 +2646,14 @@ focus_tree = {
                         is_core_of = FRA
                     }
                     is_owned_by = FRA
+					has_resistance = yes
                 }
-                add_resistance = -5
+                add_resistance = -2
             }
+			country_event = {
+				id = FRA_prov_event.52
+				days = 2
+			}
 			custom_effect_tooltip = CHL_skip_one_line_tt
 			custom_effect_tooltip = FRA_new_propaganda
 			unlock_decision_tooltip = FRA_propaganda_4
