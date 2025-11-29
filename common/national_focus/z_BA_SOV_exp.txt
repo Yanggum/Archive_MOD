@@ -668,7 +668,7 @@ shared_focus = { #헬싱키 밀약
 	}
 }
 shared_focus = { #'신성동맹' 타도
-	id = SOVEX_overthrow_the_Holy_League
+	id = SOVEX_overthrow_the_Holy_League #검색해봤는데 holy league가 아니라 holy alliance였음
 	icon = GFX_SOV_claims_on_poland_ccp_2d_sov_compatibility
 	
 	prerequisite = { focus = SOVEX_armed_protest_on_baltic focus = SOVEX_operation_on_black_sea }
@@ -678,10 +678,10 @@ shared_focus = { #'신성동맹' 타도
 	cost = 5
 
 	ai_will_do = {
-		factor = 1
+		factor = 0
 		modifier = {
-			factor = 0
-			has_civil_war = yes
+			factor = 100
+			date > 1936.11.01
 		}	
 	}
 	
@@ -701,10 +701,24 @@ shared_focus = { #'신성동맹' 타도
 		NOT = { has_country_flag = SOV_paranoia_system_active_flag }
 		is_subject = no
 	}
-	
+	will_lead_to_war_with = POL
 	search_filters = {}
 
 	completion_reward = {
+		
+		declare_war_on = {
+			target = POL
+			type = annex_everything
+		}
+		custom_effect_tooltip = tooltip_white_line
+		add_ideas = BA_SOV_toward_warsaw
+		custom_effect_tooltip = BA_SOV_toward_warsaw_tt
+		hidden_effect = {
+			country_event = {
+				id = BA_sov_event.8
+				days = 180
+			}
+		}
 	}
 }
 shared_focus = { #치욕의 날
