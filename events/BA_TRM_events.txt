@@ -9452,38 +9452,26 @@ country_event = { # 연합전선의 부상
 
 	option = {
 		name = trinity_events.24.a
-		add_stability = 0.05
+		add_political_power = 25
     	}
 
 	option = {
 		name = trinity_events.24.b
+		add_political_power = -50
 		add_war_support = 0.05
     	}
 }
-country_event = { # 파테르 분파의 부상
+country_event = { # 누가 양떼를 이끌 것인가
 	id = trinity_events.25
 	title = trinity_events.25.t
 	desc = trinity_events.25.desc
-	picture = GFX_report_event_SWE_summer_government
+	picture = GFX_report_event_TRN_mika_4
 	
 	is_triggered_only = yes
 	fire_only_once = no
 
 	option = {
-		name = trinity_events.25.a
-		ai_chance = { base = 5 }
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = -0.15
-		}
-    	}
-
-	option = {
-		name = trinity_events.25.b
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = 0.15
-		}
+		name = trinity_events.25.a 
     	}
 }
 country_event = { # 대회의 끝
@@ -9563,22 +9551,15 @@ country_event = { # 트리니티 교육과정
 			id = TRM_power_balance
 			value = 0.05
 		}
-		#add_ideas = TRN_new_culture_militarism_ns
-		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
-		add_to_variable = {
-			TRN_TNC_modifier_stability_factor = -0.03
-			tooltip = stability_factor_tt
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
 		}
 		add_to_variable = {
-			TRN_TNC_modifier_experience_gain_army_factor = 0.1
-			tooltip = experience_gain_army_factor_tt
-		}
-		add_to_variable = {
-			TRN_TNC_modifier_experience_loss_factor = -0.1
-			tooltip = experience_loss_factor_tt
+			TRN_TNC_modifier_research_speed_factor = 0.07
+			tooltip = research_speed_factor_tt
 		}
 		custom_effect_tooltip = tooltip_white_line
-		custom_effect_tooltip = TRN_honor_spread_of_militarism_upgrade_tt
     	}
 
 	option = {
@@ -9586,23 +9567,19 @@ country_event = { # 트리니티 교육과정
 		ai_chance = { 
 			base = 10 
 		}
-		set_country_flag = TRN_new_culture_select_technologia
+		set_country_flag = TRN_new_culture_select_secularism
 		add_power_balance_value = {
 			id = TRM_power_balance
 			value = -0.05
 		}
-		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
 		add_to_variable = {
-			TRN_TNC_modifier_stability_factor = 0.06
+			TRN_TNC_modifier_stability_factor = 0.05
 			tooltip = stability_factor_tt
 		}
-		add_to_variable = {
-			TRN_TNC_modifier_research_speed_factor = 0.03
-			tooltip = research_speed_factor_tt
-		}
-		custom_effect_tooltip = tooltip_white_line
-		#add_ideas = TRN_new_culture_culture_technology_ns
-		activate_targeted_decision = { target = TRM decision = TRN_honor_new_curriculum_support }
     	}
 }
 
@@ -9633,11 +9610,10 @@ country_event = {
 
 	option = {
 		name = trinity_culture_events.2.a
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = -0.05
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
 		}
-
 		add_to_variable = {
 			TRN_TNC_modifier_production_speed_buildings_factor = 0.05
 			tooltip = production_speed_buildings_factor_tt
@@ -9646,18 +9622,25 @@ country_event = {
 			TRN_TNC_modifier_global_building_slots_factor = 0.15
 			tooltip = global_building_slots_factor_tt
 		}
+		add_to_variable = {
+			TRN_TNC_modifier_factory_energy_consumption = -0.1
+			tooltip = factory_energy_consumption_tt
+		}
 	}
 
 	option = {
 		name = trinity_culture_events.2.b
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = 0.05
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
 		}
-
 		add_to_variable = {
 			TRN_TNC_modifier_production_speed_buildings_factor = 0.1
 			tooltip = production_speed_buildings_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_global_building_slots_factor = 0.1
+			tooltip = global_building_slots_factor_tt
 		}
 	}
 }
@@ -9672,11 +9655,12 @@ country_event = {
 
 	option = {
 		name = trinity_culture_events.3.a 
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = 0.15
+		set_temp_variable = { TRN_Honor_change = 5 }
+		TRN_add_Honor = yes
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
 		}
-		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
 		add_to_variable = {
 			TRN_TNC_modifier_research_speed_factor = 0.05
 			tooltip = research_speed_factor_tt
@@ -9685,11 +9669,45 @@ country_event = {
 
 	option = {
 		name = trinity_culture_events.3.b
-		add_power_balance_value = {
-			id = TRM_power_balance
-			value = -0.05
+		set_temp_variable = { TRN_Honor_change = -10 }
+		TRN_add_Honor = yes
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
 		}
-		custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = 0.05
+			tooltip = stability_factor_tt
+		}
+	}
+}
+country_event = {
+	id = trinity_culture_events.4
+	title = trinity_culture_events.4.t
+	desc = trinity_culture_events.4.desc
+	picture = GFX_report_event_ITA_grand_council
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_culture_events.4.a
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_research_speed_factor = 0.05
+			tooltip = research_speed_factor_tt
+		}
+	}
+
+	option = {
+		name = trinity_culture_events.4.b
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
 		add_to_variable = {
 			TRN_TNC_modifier_stability_factor = 0.05
 			tooltip = stability_factor_tt
@@ -9774,10 +9792,6 @@ country_event = { # 독일 문화의 운명
 		}
 		# 근데 정상적인 게임에서 독일이 존재하진 않겠지..?
     	}
-	after = {
-		activate_targeted_decision = { target = TRM decision = TRN_german_abolition_decision }
-	}
-	
 }
 country_event = { # 학원의 목자
 	id = trinity_events.32
@@ -11772,7 +11786,7 @@ country_event = { # 보충수업부 편입하는 스토리 이벤트
 	id = trinity_flavor_events.4
 	title = TRM_work_clup
 	desc = trinity_flavor_events.4.desc
-	picture = GFX_trnfla_4
+	picture = GFX_report_event_generic_make_up_work_club
 
 	is_triggered_only = yes
 	
@@ -12605,6 +12619,21 @@ unit_leader_event = { # 고마워해 하는 미네.
 
 	option = {
 		name = trinity_flavor_events.47.a
+
+	}
+}
+
+country_event = { # 교육과정에서 채플 수업 빼면 사쿠라코가 미카한테 뭐라 함
+	id = trinity_flavor_events.48
+	title = trinity_flavor_events.48.t
+	desc = trinity_flavor_events.48.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.48.a
 
 	}
 }
