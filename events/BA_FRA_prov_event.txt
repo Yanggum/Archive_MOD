@@ -75,27 +75,27 @@ country_event = {
 		FRA_change_to_disruption_level = yes
 		custom_effect_tooltip = CHL_skip_one_line_tt
 		458 = {
+			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = FRA_ENA_activities
-				days = 365
 			}
 		}
 		459 = {
+			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = FRA_ENA_activities
-				days = 365
 			}
 		}
 		460 = {
+			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = FRA_ENA_activities
-				days = 365
 			}
 		}
 		461 = {
+			add_resistance = 10
 			add_dynamic_modifier = {
 				modifier = FRA_ENA_activities
-				days = 365
 			}
 		}
 	}
@@ -2674,19 +2674,39 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
-	#탈식민화 이후 인도차이나
+	#산악에서의 무장 반란
 	id = FRA_prov_event.54
 	title = FRA_prov_event.54.t
 	desc = FRA_prov_event.54.d
 	is_triggered_only = yes
-	fire_only_once = yes
 	hidden = no
+	fire_only_once = yes
+	picture = GFX_report_event_chinese_soldiers_mountain
 	option = {
 		name = FRA_prov_event.54.a
-		VIN = {
+		462 = {
+			add_resistance = 10
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities_on_mountain
+			}
 		}
-		add_political_power = 5
+		513 = {
+			add_resistance = 10
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities_on_mountain
+			}
+		}
+		665 = {
+			add_resistance = 10
+			add_dynamic_modifier = {
+				modifier = FRA_ENA_activities_on_mountain
+			}
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		set_temp_variable = {
+			temp_FRA_change_to_mission_time = -80
+		}
+		FRA_change_to_disruption_mission_time = yes
 	}
 }
 
@@ -2741,19 +2761,22 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
-	#앙리 선거 결과
+	#망명자들
 	id = FRA_prov_event.57
 	title = FRA_prov_event.57.t
 	desc = FRA_prov_event.57.d
 	is_triggered_only = yes
 	fire_only_once = yes
+	picture = GFX_report_event_SOV_purge_navy
 	option = {
+		add_stability = -0.05
 		name = FRA_prov_event.57.a
-	}
-	option = {
-		name = FRA_prov_event.57.b
-		add_ideas = leon_blum
+		459 = {
+			add_manpower = 6000
+		}
+		460 = {
+			add_manpower = 4000
+		}
 	}
 }
 
@@ -2827,35 +2850,102 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
-	#저항에 대한 대처
+	#식민지부의 역할
 	id = FRA_prov_event.61
 	title = FRA_prov_event.61.t
 	desc = FRA_prov_event.61.d
 	is_triggered_only = yes
 	fire_only_once = yes
-	option = {
+	picture = GFX_report_event_tur_politician_march
+	option = { #더 많은 권한을 줘라!
 		name = FRA_prov_event.61.a
-		add_political_power = -100
-		hidden_effect = {
-			country_event = {
-				id = FRA_prov_event.66
-				days = 15
-			}
-		}
 		custom_effect_tooltip = FRA_prov_event.61_tt
-	}
-	option = {
-		name = FRA_prov_event.61.b
-		add_war_support = -0.3
-		hidden_effect = {
-			country_event = {
-				id = FRA_prov_event.62
-				days = 10
+		every_owned_state = {
+			limit = {
+				is_controlled_by = FRA
+				OR = {
+					state = 557
+					state = 272
+					state = 780
+					state = 779
+					state = 899
+					state = 556
+					state = 778
+					state = 898
+					state = 781
+					state = 776
+					state = 777
+				}
 			}
+			add_compliance = 5
 		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
 		custom_effect_tooltip = FRA_prov_event.61_tt_1
+		every_owned_state = {
+			limit = {
+				is_controlled_by = FRA
+				OR = {
+					state = 774
+					state = 773
+					state = 660
+					state = 772
+					state = 539
+				}
+			}
+			add_compliance = 2
+		}
 	}
+	option = { #무장시켜라!
+		name = FRA_prov_event.61.b
+		custom_effect_tooltip = FRA_prov_event.61_tt
+		every_owned_state = {
+			limit = {
+				is_controlled_by = FRA
+				OR = {
+					state = 557
+					state = 272
+					state = 780
+					state = 779
+					state = 899
+					state = 556
+					state = 778
+					state = 898
+					state = 781
+					state = 776
+					state = 777
+				}
+			}
+			add_resistance = -5
+			add_compliance = 5
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		custom_effect_tooltip = FRA_prov_event.61_tt_1
+		every_owned_state = {
+			limit = {
+				is_controlled_by = FRA
+				OR = {
+					state = 774
+					state = 773
+					state = 660
+					state = 772
+					state = 539
+				}
+			}
+			add_resistance = -2
+			add_compliance = 2
+		}
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		set_temp_variable = { temp_FRA_change_to_disruption = 1 }
+		FRA_change_to_disruption_level = yes
+		custom_effect_tooltip = CHL_skip_one_line_tt
+		custom_effect_tooltip = FRA_focus_garrison_0_tt
+		add_to_variable = {
+			FRA_can_put_military = 1
+		}
+	}
+	#option = { #공산용 - 폐지해라
+	#	name = FRA_prov_event.61.c
+	#}
 }
 
 country_event = {
@@ -4280,7 +4370,7 @@ country_event = {
 }
 
 country_event = {
-	#약속하기
+	#안 씀
 	id = FRA_prov_event.114
 	title = FRA_prov_event.114.t
 	desc = FRA_prov_event.114.d
@@ -4324,7 +4414,7 @@ country_event = {
 }
 
 country_event = {
-	#약속 어쩔거
+	#안 씀
 	id = FRA_prov_event.115
 	title = FRA_prov_event.115.t
 	desc = FRA_prov_event.115.d
@@ -4649,7 +4739,7 @@ country_event = {
 }
 
 country_event = {
-	#ai 서브 루트
+	#안 씀
 	id = FRA_prov_event.116
 	title = FRA_prov_event.114.t
 	desc = FRA_prov_event.114.d
@@ -4710,6 +4800,10 @@ country_event = {
 				days = 5
 			}
 			country_event = {
+				id = FRA_prov_event.57
+				days = 20
+			}
+			country_event = {
 				id = FRA_prov_event.86
 				days = 100
 			}
@@ -4724,6 +4818,10 @@ country_event = {
 			country_event = { #저항도 이벤트 - 땅
 				id = FRA_disruption_event.6
 				days = 560
+			}
+			country_event = { #저항도 이벤트 - 산악 무장 반란
+				id = FRA_prov_event.54
+				days = 700
 			}
             if = {
                 limit = {
