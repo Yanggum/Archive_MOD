@@ -513,9 +513,11 @@ on_actions = {
 						has_idea = ENG_operation_exile_week
 					}
 					has_war_with = KAI
+					NOT = { has_global_flag = ENG_lose_global_flag }
 				}
 				ENG_lose_effect = yes
 				ENG_lose_effect_other_country = yes
+				set_global_flag = ENG_lose_global_flag
 			}
 			if = { #영국 망명 실패
 				limit = {
@@ -527,6 +529,7 @@ on_actions = {
 						}
 					}
 					has_war_with = KAI
+					NOT = { has_global_flag = ENG_lose_global_flag }
 				}
 				ENG = {
 					every_country = {
@@ -548,11 +551,13 @@ on_actions = {
 					add_ideas = ENG_exiled_royal_family
 				}
 				ENG_lose_effect_other_country = yes
+				set_global_flag = ENG_lose_global_flag
 			}
 			if = { #영국 승전
 				limit = {
 					TAG = KAI
 					has_war_with = ENG
+					NOT = { has_global_flag = ENG_win_global_flag }
 				}
 				ENG = {
 					annex_country = {
@@ -563,7 +568,14 @@ on_actions = {
 						division_template = "Home Guard"
 						disband = yes						#will refund equipment and manpower
 					}
+					country_event = ENG_ba.100
+					country_event = { id = ENG_ba.101 days = 20 }
 				}
+				#KAI = {
+				#	every_core_state = {
+				#		remove_core_of = KAI
+				#	}
+				#}
 				set_global_flag = ENG_win_global_flag
 			}
 			if = { #트리니티의 아리우스 자동합병

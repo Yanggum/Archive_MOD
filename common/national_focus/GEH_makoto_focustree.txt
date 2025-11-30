@@ -1343,6 +1343,7 @@ focus_tree = {
 				has_country_flag = GEH_unified_gehenna_flag
 			}
 		}
+		will_lead_to_war_with = GEH
 		x = 2
 		y = 2
 		relative_position_id = GEM_help_perfect_team
@@ -1353,6 +1354,26 @@ focus_tree = {
 					is_in_faction_with = GEH
 				}
 				remove_from_faction = GEH
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = GEH
+				value = -300
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = GEH
+				value = -1000
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = GEH
+				value = 500
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = GEH
+				value = 100
 			}
 			create_wargoal = {
 				target = GEH
@@ -2613,12 +2634,59 @@ focus_tree = {
 		will_lead_to_war_with = GEH
 		will_lead_to_war_with = HEU
 		completion_reward = {
+			add_ai_strategy = {
+				type = alliance
+				id = GEH
+				value = -300
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = GEH
+				value = -1000
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = GEH
+				value = 500
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = GEH
+				value = 100
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = HEU
+				value = -300
+			}
+			add_ai_strategy = {
+				type = befriend
+				id = HEU
+				value = -1000
+			}
+			add_ai_strategy = {
+				type = antagonize
+				id = HEU
+				value = 500
+			}
+			add_ai_strategy = {
+				type = conquer
+				id = HEU
+				value = 100
+			}
 			if = {
 				limit = {
 					is_faction_leader = yes
 					is_in_faction_with = HEU
 				}
 				remove_from_faction = HEU
+			}
+			if = {
+				limit = {
+					is_faction_leader = yes
+					is_in_faction_with = GEH
+				}
+				remove_from_faction = GEH
 			}
 			create_wargoal = {
 				target = HEU
@@ -14702,6 +14770,15 @@ focus_tree = {
 			y = 1
 			relative_position_id = GEM_nord_hinnom_civilization_4B
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_non_core_manpower = 0.005
+					tooltip = non_core_manpower_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_factory_efficiency_gain_factor = 0.05
+					tooltip = production_factory_efficiency_gain_factor_tt
+				}
 			}
 		}
 		focus = {
@@ -14881,10 +14958,37 @@ focus_tree = {
 				focus = GEM_deutsche_federation_declaration
 				focus = GEM_federation_of_three_peoples
 			}
+			available = {
+				52 = { is_owned_or_subject_trigger = yes }
+				8 = { is_owned_or_subject_trigger = yes }
+				64 = { is_owned_or_subject_trigger = yes }
+				16 = { is_owned_or_subject_trigger = yes }
+				7 = { is_owned_or_subject_trigger = yes }
+				35 = { is_owned_or_subject_trigger = yes }
+			}
 			x = 2
 			y = 1
+			search_filters = {
+				FOCUS_FILTER_ETHNIC_CONFLICT
+			}
 			relative_position_id = GEM_deutsche_federation_declaration
 			completion_reward = {
+				custom_effect_tooltip = GEM_new_administration_tt
+				add_to_variable = {
+					GEM_ENDMOD_consumer_goods_factor = -0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_industrial_complex_factor = 0.05
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+				add_to_variable = {
+					GEM_ENDMOD_production_speed_arms_factory_factor = 0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
+				custom_effect_tooltip = enter_tt
+				GEH_german_nationalism_issue_down_effect = yes
+				set_country_flag = GEM_advance_federation_flag
 			}
 		}
 		focus = {
@@ -14894,10 +14998,21 @@ focus_tree = {
 			prerequisite = {
 				focus = GEM_advance_federation
 			}
+			available = {
+				has_country_flag = {
+					flag = GEM_advance_federation_flag
+					days > 210
+				}
+			}
 			x = 0
 			y = 1
 			relative_position_id = GEM_advance_federation
 			completion_reward = {
+				add_country_leader_trait = GEM_horns_are_new_wings_chiaki
+				activate_targeted_decision = { decision = GEM_gehenna_national_reconquest_AUS target = GEM }
+				activate_targeted_decision = { decision = GEM_gehenna_national_reconquest_SUD target = GEM }
+				activate_targeted_decision = { decision = GEM_gehenna_national_reconquest_OOS target = GEM }
+				activate_targeted_decision = { decision = GEM_gehenna_national_reconquest_ALS target = GEM }
 			}
 		}
 		focus = {
@@ -22520,7 +22635,6 @@ focus_tree = {
 				focus = GEM_focus_ended_4_C
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = -1
 			y = 1
@@ -22618,7 +22732,6 @@ focus_tree = {
 				focus = GEM_put_down_the_camera
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 1
 			y = 1
@@ -22683,7 +22796,6 @@ focus_tree = {
 				focus = GEM_world_in_the_shutter
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 3
 			y = 1
@@ -22712,7 +22824,6 @@ focus_tree = {
 				focus = GEM_put_down_the_camera
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 0
 			y = 1
@@ -22769,7 +22880,6 @@ focus_tree = {
 				focus = GEM_chiaki_reform_C
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 0
 			y = 3
@@ -22806,7 +22916,6 @@ focus_tree = {
 				focus = GEM_manmajeon_chairmanship_separation_C
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 0
 			y = 2
@@ -22853,7 +22962,6 @@ focus_tree = {
 				focus = GEM_chiaki_reform_C
 			}
 			search_filters = {
-				FOCUS_FILTER_ETHNIC_CONFLICT
 			}
 			x = 2
 			y = 3
