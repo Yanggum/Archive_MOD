@@ -9108,7 +9108,7 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			add_to_variable = {
-				nagisa_faction_D = -2
+				nagisa_faction_A = -2
 				tooltip = nagisa_faction_A_tt
 			}
 			add_to_variable = {
@@ -9147,7 +9147,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_to_variable = {
-				nagisa_faction_D = 3
+				nagisa_faction_A = 3
 				tooltip = nagisa_faction_A_tt
 			}
 			add_to_variable = {
@@ -9378,6 +9378,10 @@ focus_tree = {
 			focus = TRN_affettuoso_looking_up_to_the_sora
 		}
 
+		allow_branch = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
+		}
+
 		completion_reward = {
 			add_intel = {
 				target = GEM
@@ -9385,6 +9389,7 @@ focus_tree = {
 				army_intel = 10
 			}
 			add_war_support = 0.05
+			custom_effect_tooltip = TRN_eventually_happen_effect_tt
 		}
 	}
 
@@ -9462,6 +9467,10 @@ focus_tree = {
 			focus = TRN_capriccioso_ruling_the_sora
 		}
 
+		allow_branch = {
+			NOT = { has_completed_focus = TRN_eventually_happen }
+		}
+
 		completion_reward = {
 			GEH = {
 				add_war_support = 0.1
@@ -9471,6 +9480,7 @@ focus_tree = {
 				}
 				geh_discipline_system_setting_effect = yes
 			}
+			custom_effect_tooltip = TRN_eventually_happen_effect_tt
 		}
 	}
 
@@ -9821,6 +9831,263 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRN_JTF_solidarity
+		icon = GFX_focus_TRN_kenzaki_tsurugi
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		x = -1
+		y = 1
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 4
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_pater_hate_naginagi_trigger_tt
+				OR = {
+					has_idea = TRN_pater_hate_naginagi_generic_ns
+					has_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+					has_idea = TRN_pater_hate_naginagi_pro_pater_ns
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		mutually_exclusive = {
+			focus = TRN_attack_pater
+		}
+
+		allow_branch = {
+			has_completed_focus = TRN_eventually_happen
+		}
+
+		completion_reward = {
+			TRN_Kenzaki_Tsurugi = {
+				add_trait = {
+					trait = TRM_attached_to_filius
+				}
+			}
+			add_to_variable = {
+				nagisa_faction_D = 2
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -2
+				tooltip = nagisa_faction_C_tt
+			}
+			TRM_nagisa_faction_modified = yes
+		}
+	}
+
+	focus = {
+		id = TRN_connection_to_vigilante
+		icon = GFX_goal_TRN_Take_it_easy
+		prerequisite = { focus = TRN_JTF_solidarity }
+		x = -1
+		y = 1
+
+		relative_position_id = TRN_JTF_solidarity
+
+		cost = 4
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_pater_hate_naginagi_trigger_tt
+				OR = {
+					has_idea = TRN_pater_hate_naginagi_generic_ns
+					has_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+					has_idea = TRN_pater_hate_naginagi_pro_pater_ns
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = TRN_connection_to_vigilante_ns
+				days = 365
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_attack_pater
+		icon = GFX_focus_TRN_necessary_revenge
+		prerequisite = { focus = TRN_repromote_eden_treaty }
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 4
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_pater_hate_naginagi_trigger_tt
+				OR = {
+					has_idea = TRN_pater_hate_naginagi_generic_ns
+					has_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+					has_idea = TRN_pater_hate_naginagi_pro_pater_ns
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		mutually_exclusive = {
+			focus = TRN_JTF_solidarity
+		}
+
+		allow_branch = {
+			has_completed_focus = TRN_eventually_happen
+		}
+
+		completion_reward = {
+			add_to_variable = {
+				nagisa_faction_D = 4
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -4
+				tooltip = nagisa_faction_C_tt
+			}
+			TRM_nagisa_faction_modified = yes
+			add_timed_idea = {
+				idea = TRN_attack_pater_ns
+				days = 365
+			}
+			custom_effect_tooltip = TRN_nagisa_and_mika_dangerous_tt
+		}
+	}
+
+	focus = {
+		id = TRN_attack_mika_misono
+		icon = GFX_goal_TRN_Suppressing_mika
+		prerequisite = { focus = TRN_attack_pater }
+		x = 1
+		y = 1
+
+		relative_position_id = TRN_attack_pater
+
+		cost = 4
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_pater_hate_naginagi_trigger_tt
+				OR = {
+					has_idea = TRN_pater_hate_naginagi_generic_ns
+					has_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+					has_idea = TRN_pater_hate_naginagi_pro_pater_ns
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = TRN_attack_pater_ns
+				}
+				modify_timed_idea = {
+					idea = TRN_attack_pater_ns
+					days = 180
+				}
+			}
+			else = {
+				add_timed_idea = {
+					idea = TRN_attack_pater_ns
+					days = 180
+				}
+			}
+			custom_effect_tooltip = TRN_nagisa_and_mika_very_dangerous_tt
+		}
+	}
+
+	focus = {
+		id = TRN_we_need_to_be_prepared
+		icon = GFX_focus_GEM_the_great_usurper
+
+		prerequisite = {
+			focus = TRN_JTF_solidarity
+			focus = TRN_attack_pater
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = TRN_repromote_eden_treaty
+
+		cost = 3
+
+		available = {
+			NOT = { has_completed_focus = TRN_eden_system_establishment }
+			GEH = { has_war_with = GEM }
+			NOT = { has_war_with = GEH }
+		}
+
+		bypass = {
+			OR = {
+				NOT = {
+					country_exists = GEM
+				}
+				NOT = {
+					country_exists = GEH
+				}
+			}
+		}
+
+		ai_will_do = {
+
+		}
+
+		select_effect = {
+			
+		}
+
+		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+			army_experience = 50
+			GEH = {
+				army_experience = 25
+				add_breakthrough_progress = {
+					specialization = specialization_land
+					value = 0.25
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = TRN_start_of_the_eden_treaty_negotiations
 		icon = GFX_focus_GEH_sword_defending_gehenna
 
@@ -9861,6 +10128,7 @@ focus_tree = {
 				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.1 } }
 			}
 			remove_ideas = TRM_anti_gehenna_idea
+			add_ideas = TRN_pater_hate_naginagi_generic_ns
 		}
 	}
 
@@ -9896,6 +10164,8 @@ focus_tree = {
 			hidden_effect = {
 				GEH = { country_event = { id = trinity_events_nagisa_diplomacy.31 } }
 			}
+			add_ideas = TRN_pater_hate_naginagi_generic_ns
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	focus = { # 예방 전쟁
@@ -10440,7 +10710,11 @@ focus_tree = {
 		}
 
 		completion_reward = {		
-			add_political_power = 75		
+			add_political_power = 75
+			add_timed_idea = {
+				idea = TRN_bureau_of_railways_ns
+				days = 1095 # 3년
+			}
 			every_state = {
 				limit = {
 					is_controlled_by_ROOT_or_ally = yes
@@ -11843,6 +12117,14 @@ focus_tree = {
 				tooltip = nagisa_faction_C_tt
 			}
 			TRM_nagisa_faction_modified = yes
+			custom_effect_tooltip = enter_tt
+			every_character = {
+				limit = {
+					has_trait = TRM_attached_to_filius
+				}
+				add_planning = 1
+				add_attack = 1
+			}
 		}
 	}
 
@@ -12271,7 +12553,10 @@ focus_tree = {
 		}
 
 		allow_branch = {
-			has_completed_focus = TRN_safeguarding_the_ideal_of_factional_democracy
+			OR = {
+				has_completed_focus = TRN_safeguarding_the_ideal_of_factional_democracy
+				has_completed_focus = TRN_iron_woman
+			}
 		}
 
 		ai_will_do = {
@@ -12280,6 +12565,8 @@ focus_tree = {
 
 		select_effect = {
 			set_variable = { TRM_mika_misono_sns_main_var = 11 }
+			country_event = { id = trinity_events_nagisa.39 days = 21 }
+			country_event = { id = trinity_events_nagisa.40 days = 35 }
 		}
 
 		completion_reward = {
@@ -12289,6 +12576,11 @@ focus_tree = {
 				}
 				clr_country_flag = TRM_misono_mission_on_flag
 				custom_effect_tooltip = TRM_misono_mission_flag_off_tt
+			}
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.41 }
+				country_event = { id = trinity_events_nagisa.42 days = 14 }
+				country_event = { id = trinity_events_nagisa.43 days = 28 }
 			}
 		}
 	}
@@ -12357,6 +12649,34 @@ focus_tree = {
 			}
 		}
 		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 3 } # 미네
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 4 } # 아코
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 5 } # 아츠코
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_TRN_cause_of_trinity
+			trigger = {
+				check_variable = { TRM_nagisa_kirifuji_after_host_var = 6 } # 타카네
+			}
+		}
+		
 		prerequisite = { 
 			focus = TRN_end_of_new_constitution_discussion
 		}
@@ -12385,7 +12705,45 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 0 } # 나기사(연임)
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 1 } # 히후미
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 2 } # 세이아
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 3 } # 미네
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 4 } # 아코
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 5 } # 아츠코
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { TRM_nagisa_kirifuji_after_host_var = 6 } # 타카네
+				}
+			}
+			else = {
+				# 버그
+				custom_effect_tooltip = TRN_nagisa_democratic_ending_after_bug_tt
+			}
 		}
 	}
 
@@ -12782,6 +13140,12 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = TRN_end_of_new_constitution_discussion_tt
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.44 }
+				add_dynamic_modifier = {
+					modifier = TRM_nagisa_constitution_modifier
+				}
+			}
 		}
 	}
 
