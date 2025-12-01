@@ -8708,6 +8708,81 @@ add_namespace = trinity_events_nagisa_misono_mission # 미션
 # TRMDIP 1 ~ 49  (구) 외교 이벤트
 # TRMDIP 50~ (신) 외교 이벤트
 ##
+country_event = {
+	id = trinity_system_events.10000
+	title = trinity_system_events.10000.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika"
+		name = trinity_system_events.1000.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_FILIUS_SECT } }
+			}
+		}
+		set_country_flag = TRN_Mika_ai
+		country_event = { id = trinity_system_events.10001 hours = 06 }
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Nagisa"
+		name = trinity_system_events.1000.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Nagisa_ai
+	}
+}
+country_event = {
+	id = trinity_system_events.10001
+	title = trinity_system_events.10001.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika high honor"
+		name = trinity_system_events.10001.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_high_honor_ai
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika low honor"
+		name = trinity_system_events.10001.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_low_honor_ai
+	}
+}
 country_event = { # 리워크 중인 중점과 새로운 사건을 불러옵니다.
 	id = trinity_system_events.0
 	title = trinity_system_events.0.t
@@ -8820,7 +8895,11 @@ country_event = { # 바시스 스콜라 시위
 	option = {
 		name = trinity_events.2.a
 		ai_chance = {
-			base = 100
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
 		}
 		set_temp_variable = { TRN_Honor_change = 1 }
 		TRN_add_Honor = yes
@@ -8837,7 +8916,11 @@ country_event = { # 바시스 스콜라 시위
 	option = {
 		name = trinity_events.2.b
 		ai_chance = {
-			base = 0
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
 		}
 		add_stability = -0.05
 		add_to_variable = {
@@ -9149,10 +9232,34 @@ country_event = { # 세이아 장례식
 
 	option = {
 		name = trinity_events.14.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
+		}
 		add_popularity = { 
 			ideology = communism 
 			popularity = 0.03
 		}
+    	}
+
+	option = {
+		name = trinity_events.14.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		add_popularity = { 
+			ideology = communism 
+			popularity = -0.03
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
+		TRN_add_Honor = yes
     	}
 }
 country_event = { # 정의실현부 정치의원
@@ -9201,6 +9308,7 @@ country_event = { # 상투스 분파의 운명
 		}
     	}
 	after = {
+		set_country_flag = banned_communism_flag
 		TRM_nagisa_faction_modified = yes
 	}
 }
@@ -9218,7 +9326,14 @@ country_event = { # 필리우스 분파의 운명
 		ai_chance = {
 			base = 0
 		}
-		set_temp_variable = { TRN_Honor_change = -3 }
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
 		TRN_add_Honor = yes
 		add_popularity = { ideology = neutrality popularity = -0.06 }
 		set_country_flag = TRN_Nagisa_is_imprisoned
@@ -9227,7 +9342,11 @@ country_event = { # 필리우스 분파의 운명
 	option = {
 		name = trinity_events.17.b
 		ai_chance = {
-			base = 100
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
 		}
 		add_popularity = { ideology = neutrality popularity = -0.04 }
 		add_stability = 0.02
@@ -9235,6 +9354,7 @@ country_event = { # 필리우스 분파의 운명
 
     after = {
 		hidden_effect = { 
+			set_country_flag = banned_neutrality_flag
 			country_event = { id = trinity_flavor_events.32 days = 14 } 
 		}
 
@@ -9311,6 +9431,7 @@ country_event = { # 파테르 분파 내부의 불충
     	}
 
 	after = { 
+		set_country_flag = banned_democratic_flag
 		TRM_nagisa_faction_modified = yes
 	}
 }
@@ -12305,7 +12426,7 @@ country_event = { #
 	id = trinity_flavor_events.34
 	title = trinity_flavor_events.34.t
 	desc = trinity_flavor_events.34.desc
-	picture = GFX_report_event_generic_beachside_sunset
+	picture = GFX_report_event_TRN_mika_5
 	
 	is_triggered_only = yes
 	fire_only_once = no
