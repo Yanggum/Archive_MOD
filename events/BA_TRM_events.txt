@@ -8708,6 +8708,81 @@ add_namespace = trinity_events_nagisa_misono_mission # 미션
 # TRMDIP 1 ~ 49  (구) 외교 이벤트
 # TRMDIP 50~ (신) 외교 이벤트
 ##
+country_event = {
+	id = trinity_system_events.10000
+	title = trinity_system_events.10000.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika"
+		name = trinity_system_events.1000.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_FILIUS_SECT } }
+			}
+		}
+		set_country_flag = TRN_Mika_ai
+		country_event = { id = trinity_system_events.10001 hours = 06 }
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Nagisa"
+		name = trinity_system_events.1000.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Nagisa_ai
+	}
+}
+country_event = {
+	id = trinity_system_events.10001
+	title = trinity_system_events.10001.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika high honor"
+		name = trinity_system_events.10001.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_high_honor_ai
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika low honor"
+		name = trinity_system_events.10001.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_low_honor_ai
+	}
+}
 country_event = { # 리워크 중인 중점과 새로운 사건을 불러옵니다.
 	id = trinity_system_events.0
 	title = trinity_system_events.0.t
@@ -8820,7 +8895,11 @@ country_event = { # 바시스 스콜라 시위
 	option = {
 		name = trinity_events.2.a
 		ai_chance = {
-			base = 100
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
 		}
 		set_temp_variable = { TRN_Honor_change = 1 }
 		TRN_add_Honor = yes
@@ -8837,7 +8916,11 @@ country_event = { # 바시스 스콜라 시위
 	option = {
 		name = trinity_events.2.b
 		ai_chance = {
-			base = 0
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
 		}
 		add_stability = -0.05
 		add_to_variable = {
@@ -9149,10 +9232,34 @@ country_event = { # 세이아 장례식
 
 	option = {
 		name = trinity_events.14.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
+		}
 		add_popularity = { 
 			ideology = communism 
 			popularity = 0.03
 		}
+    	}
+
+	option = {
+		name = trinity_events.14.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		add_popularity = { 
+			ideology = communism 
+			popularity = -0.03
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
+		TRN_add_Honor = yes
     	}
 }
 country_event = { # 정의실현부 정치의원
@@ -9201,6 +9308,7 @@ country_event = { # 상투스 분파의 운명
 		}
     	}
 	after = {
+		set_country_flag = banned_communism_flag
 		TRM_nagisa_faction_modified = yes
 	}
 }
@@ -9218,7 +9326,14 @@ country_event = { # 필리우스 분파의 운명
 		ai_chance = {
 			base = 0
 		}
-		set_temp_variable = { TRN_Honor_change = -3 }
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
 		TRN_add_Honor = yes
 		add_popularity = { ideology = neutrality popularity = -0.06 }
 		set_country_flag = TRN_Nagisa_is_imprisoned
@@ -9227,7 +9342,11 @@ country_event = { # 필리우스 분파의 운명
 	option = {
 		name = trinity_events.17.b
 		ai_chance = {
-			base = 100
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
 		}
 		add_popularity = { ideology = neutrality popularity = -0.04 }
 		add_stability = 0.02
@@ -9235,6 +9354,7 @@ country_event = { # 필리우스 분파의 운명
 
     after = {
 		hidden_effect = { 
+			set_country_flag = banned_neutrality_flag
 			country_event = { id = trinity_flavor_events.32 days = 14 } 
 		}
 
@@ -9311,6 +9431,7 @@ country_event = { # 파테르 분파 내부의 불충
     	}
 
 	after = { 
+		set_country_flag = banned_democratic_flag
 		TRM_nagisa_faction_modified = yes
 	}
 }
@@ -12305,7 +12426,7 @@ country_event = { #
 	id = trinity_flavor_events.34
 	title = trinity_flavor_events.34.t
 	desc = trinity_flavor_events.34.desc
-	picture = GFX_report_event_generic_beachside_sunset
+	picture = GFX_report_event_TRN_mika_5
 	
 	is_triggered_only = yes
 	fire_only_once = no
@@ -14048,6 +14169,268 @@ country_event = { # 게헨나 분파의 등장
 	}
 }
 
+country_event = { # 미네와 나기사의 독대
+	id = trinity_events_nagisa.39
+	title = trinity_events_nagisa.39.t
+	desc = trinity_events_nagisa.39.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.39.a 
+
+	}
+}
+
+country_event = { # 병상에서 깨어난 유리조노 세이아
+	id = trinity_events_nagisa.40
+	title = trinity_events_nagisa.40.t
+	desc = trinity_events_nagisa.40.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.40.a 
+
+	}
+}
+
+country_event = { # 세이아의 복귀
+	id = trinity_events_nagisa.41
+	title = trinity_events_nagisa.41.t
+	desc = trinity_events_nagisa.41.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.41.a 
+		custom_effect_tooltip = trinity_events_nagisa_41_a_tt
+		TRN_Yurizono_Seia = {
+			clr_character_flag = TRN_fake_death_flag
+			add_trait = {
+				trait = TRM_attached_to_filius
+			}
+		}
+	}
+}
+
+country_event = { # 세이아의 필리우스 가입에 대한 파테르의 항의
+	id = trinity_events_nagisa.42
+	title = trinity_events_nagisa.42.t
+	desc = trinity_events_nagisa.42.desc
+	picture = GFX_event_TRN_mika_event_picture
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.42.a 
+
+	}
+}
+
+country_event = { # 요한 분파의 정치 개입?
+	id = trinity_events_nagisa.43
+	title = trinity_events_nagisa.43.t
+	desc = trinity_events_nagisa.43.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		focus_progress = {
+			focus = TRN_nagisa_democratic_ending
+			progress < 0.1
+		}
+		has_government = democratic
+		check_variable = { nagisa_faction_A < 45 }
+	}
+
+	option = { 
+		name = trinity_events_nagisa.43.a 
+		custom_effect_tooltip = trinity_events_nagisa_43_a_tt
+		set_country_flag = TRN_mine_host_candidate_flag
+	}
+
+	option = { 
+		name = trinity_events_nagisa.43.b
+		add_political_power = 25
+	}
+}
+
+country_event = { # 나기사 헌법
+	id = trinity_events_nagisa.44
+	title = trinity_events_nagisa.44.t
+	desc = trinity_events_nagisa.44.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.44.a 
+
+	}
+}
+
+country_event = { # 미카와의 화해
+	id = trinity_events_nagisa.45
+	title = trinity_events_nagisa.45.t	
+
+	desc = {
+		text = trinity_events_nagisa.45.desc.seia
+		trigger = {
+			has_completed_focus = TRN_meeting_with_mine
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa.45.desc.generic
+		trigger = {
+			NOT = { has_completed_focus = TRN_meeting_with_mine }
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.45.a 
+
+	}
+}
+
+country_event = { # 필리우스-파테르 화해의 성공
+	id = trinity_events_nagisa.46
+	title = trinity_events_nagisa.46.t
+	desc = trinity_events_nagisa.46.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.46.a 
+
+	}
+}
+
+country_event = { # 필리우스-파테르 화해의 실패
+	id = trinity_events_nagisa.47
+	title = trinity_events_nagisa.47.t
+	desc = trinity_events_nagisa.47.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.47.a 
+
+	}
+}
+
+country_event = { # 미래 예지? 평행 우주?
+	id = trinity_events_nagisa.48
+	title = trinity_events_nagisa.48.t
+	desc = trinity_events_nagisa.48.desc
+
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.48.a 
+
+	}
+
+	option = { 
+		name = trinity_events_nagisa.48.b
+
+	}
+}
+
+country_event = { # 나기사의 연임? 아니면...
+	id = trinity_events_nagisa.49
+	title = trinity_events_nagisa.49.t
+	desc = trinity_events_nagisa.49.desc
+
+	picture = GFX_report_event_TRM_nagisa_kirifuji_worried
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.49.a 
+		custom_effect_tooltip = trinity_events_nagisa_49_a_tt
+	}
+}
+
+country_event = { # 세이아와의 대화
+	id = trinity_events_nagisa.50
+	title = trinity_events_nagisa.50.t
+	desc = trinity_events_nagisa.50.desc
+
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.50.a 
+		custom_effect_tooltip = trinity_events_nagisa_50_seia_tt
+	}
+}
+
+country_event = { # 감찰관실에서의 시간
+	id = trinity_events_nagisa.51
+	title = trinity_events_nagisa.51.t
+	desc = trinity_events_nagisa.51.desc
+
+	picture = GFX_report_event_TRM_ako_amau_tea_party
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.51.a 
+		custom_effect_tooltip = trinity_events_nagisa_51_ako_tt
+	}
+}
+
+country_event = { # 아리우스에서의 인연
+	id = trinity_events_nagisa.52
+	title = trinity_events_nagisa.52.t
+	desc = trinity_events_nagisa.52.desc
+
+	picture = GFX_report_event_generic_arius
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		has_completed_focus = TRN_five_clan_republic
+	}
+
+	option = { 
+		name = trinity_events_nagisa.52.a 
+		custom_effect_tooltip = trinity_events_nagisa_52_atsuko_tt
+	}
+}
+
+country_event = { # 그리고, 가장 소중한 너에게
+	id = trinity_events_nagisa.53
+	title = trinity_events_nagisa.53.t
+	desc = trinity_events_nagisa.53.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.53.a 
+		custom_effect_tooltip = trinity_events_nagisa_53_mika_tt
+	}
+}
+
 country_event = { # 나기사 BoP 테스트용
 	id = trinity_events_nagisa.10000
 	title = trinity_events_nagisa.10000.t
@@ -14229,9 +14612,13 @@ country_event = { # 에덴 조약 실패 (트리니티)
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.4.a
 		add_political_power = -100
-		add_stability = -0.1
 		hidden_effect = {
 			news_event = { id = trinity_news_events.10 hours = 4 } # 에덴 조약 실패 뉴스
+			remove_ideas = {
+				TRN_pater_hate_naginagi_generic_ns
+				TRN_pater_hate_naginagi_pro_gehenna_ns
+				TRN_pater_hate_naginagi_pro_pater_ns
+			} 
 		}
 	}
 
@@ -14248,7 +14635,6 @@ country_event = { # 에덴 조약 실패 (선도부)
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.4.a
 		add_political_power = -100
-		add_stability = -0.1
 	}
 
 }
@@ -14303,6 +14689,10 @@ country_event = { # 에덴 조약 성공
 		}
 		hidden_effect = {
 			news_event = { id = trinity_news_events.8 hours = 4 } # 에덴 조약 성공 뉴스
+			swap_ideas = {
+				remove_idea = TRN_pater_hate_naginagi_generic_ns
+				add_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+			}
 		}
 	}
 
@@ -15509,7 +15899,15 @@ country_event = { # 에덴 조약 실패 (트리니티)
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.4.a
 		add_political_power = -100
-		add_stability = -0.1
+		#add_stability = -0.1
+		hidden_effect = {
+			news_event = { id = trinity_news_events.10 hours = 4 } # 에덴 조약 실패 뉴스
+			remove_ideas = {
+				TRN_pater_hate_naginagi_generic_ns
+				TRN_pater_hate_naginagi_pro_gehenna_ns
+				TRN_pater_hate_naginagi_pro_pater_ns
+			} 
+		}
 	}
 
 }
@@ -15525,7 +15923,7 @@ country_event = { # 에덴 조약 실패 (선도부)
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.4.a
 		add_political_power = -5
-		add_stability = -0.05
+		#add_stability = -0.05
 	}
 
 }
@@ -15583,6 +15981,13 @@ country_event = { # 에덴 조약 성공
 					active = yes
 				}
 			}
+		}
+		hidden_effect = {
+			swap_ideas = {
+				remove_idea = TRN_pater_hate_naginagi_generic_ns
+				add_idea = TRN_pater_hate_naginagi_pro_pater_ns
+			}
+			news_event = { id = trinity_news_events.8 hours = 4 } # 에덴 조약 성공 뉴스
 		}
 	}
 
