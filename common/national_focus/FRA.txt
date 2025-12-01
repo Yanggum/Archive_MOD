@@ -609,8 +609,8 @@ focus_tree = {
 				add_idea = FRA_legacy_of_war_1
 			}
 			country_event = {
-				id = FRA_prov_event.53
-				days = 5
+				id = FRA_prov_event.62
+				days = 3
 			}
 		}
 	}
@@ -629,10 +629,13 @@ focus_tree = {
 			focus = FRA_focus_arm_3
 		}
 		completion_reward = {
-			army_experience = 50
+			swap_ideas = {
+				remove_idea = FRA_legacy_of_war_1
+				add_idea = FRA_mass_naval_invasion
+			}
 			add_doctrine_cost_reduction = {
 				cost_reduction = 0.5
-				category = cat_grand_battle_plan
+				category = cat_mass_assault
 				uses = 1
 			}
 		}
@@ -652,7 +655,10 @@ focus_tree = {
 			focus = FRA_focus_arm_2
 		}
 		completion_reward = {
-			army_experience = 50
+			swap_ideas = {
+				remove_idea = FRA_legacy_of_war_1
+				add_idea = FRA_single_point_breakthrough
+			}
 			add_doctrine_cost_reduction = {
 				cost_reduction = 0.5
 				category = cat_superior_firepower
@@ -809,9 +815,6 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_7
-		mutually_exclusive = {
-			focus = FRA_focus_arm_8.5
-		}
 		prerequisite = {
 			focus = FRA_focus_arm_7
 		}
@@ -995,7 +998,7 @@ focus_tree = {
 		icon = GFX_focus_AFG_adopt_nufus
 		#북아프리카군
 		id = FRA_focus_arm_4
-		cost = 4
+		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_2
@@ -1004,12 +1007,7 @@ focus_tree = {
 			focus = FRA_focus_arm_3
 		}
 		completion_reward = {
-			army_experience = 10
-			add_tech_bonus = {
-				category = infantry_weapons
-				uses = 2
-				bonus = 0.2
-			}
+			add_ideas = FRA_north_afrikan_army
 		}
 	}
 	focus = {
@@ -1047,6 +1045,9 @@ focus_tree = {
 			else = {
 
 			}
+			custom_effect_tooltip = FRA_focus_new_arm_10_tt
+			unlock_decision_tooltip = FRA_recruit_Tirailleurs_in_western_africa
+			unlock_decision_tooltip = FRA_recruit_Tirailleurs_in_equatorial_africa
 		}
 	}
 	focus = {
@@ -1061,16 +1062,199 @@ focus_tree = {
 			focus = FRA_focus_arm_4
 		}
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.35
-				category = cat_mountaineers_doctrine
-				uses = 2
+			if = {
+				limit = {
+					NOT = {
+						has_template = "Chasseurs d'Afrique"
+					}
+				}
+				division_template = {
+					name = "Chasseurs d'Afrique"
+					regiments = {
+						light_armor = {
+							x = 0
+							y = 0
+						}
+						light_armor = {
+							x = 0
+							y = 1
+						}
+						light_armor = {
+							x = 0
+							y = 2
+						}
+						light_armor = {
+							x = 1
+							y = 0
+						}
+						light_armor = {
+							x = 1
+							y = 1
+						}
+						light_armor = {
+							x = 1
+							y = 2
+						}
+					}
+				}
 			}
-			add_ideas = FRA_mountain_cannon
+			if = {
+				limit = {
+					NOT = {
+						has_template = "Marche de Spahis"
+					}
+				}
+				division_template = {
+					name = "Marche de Spahis"
+					regiments = {
+						cavalry = {
+							x = 0
+							y = 0
+						}
+						cavalry = {
+							x = 0
+							y = 1
+						}
+						cavalry = {
+							x = 0
+							y = 2
+						}
+						cavalry = {
+							x = 1
+							y = 0
+						}
+						cavalry = {
+							x = 1
+							y = 1
+						}
+						cavalry = {
+							x = 1
+							y = 2
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_template = "tirailleurs"
+					}
+				}
+				division_template = {
+					is_locked = yes
+					name = "tirailleurs"
+					regiments = {
+						militia = {
+							x = 0
+							y = 0
+						}
+						militia = {
+							x = 0
+							y = 1
+						}
+						militia = {
+							x = 0
+							y = 2
+						}
+						militia = {
+							x = 1
+							y = 0
+						}
+						militia = {
+							x = 1
+							y = 1
+						}
+						militia = {
+							x = 1
+							y = 2
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_template = "Les Goumiers Marocains"
+					}
+				}
+				division_template = {
+					is_locked = yes
+					name = "Les Goumiers Marocains"
+					regiments = {
+						militia = {
+							x = 0
+							y = 0
+						}
+						militia = {
+							x = 0
+							y = 1
+						}
+						militia = {
+							x = 0
+							y = 2
+						}
+						militia = {
+							x = 1
+							y = 0
+						}
+					}
+				}
+			}
+			swap_ideas = {
+				remove_idea = FRA_north_afrikan_army
+				add_idea = FRA_north_afrikan_army_1
+			}
+			custom_effect_tooltip = FRA_focus_new_arm_4_tt
+			hidden_effect = {
+				461 = {
+					create_unit = {
+						division = "name = \"1er Regiments de Chasseurs d'Afrique\" division_template = \"Chasseurs d'Afrique\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+						owner = FRA
+					}
+					create_unit = {
+						division = "division_template = \"Marche de Spahis\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+						owner = FRA
+					}
+					create_unit = {
+						division = "division_template = \"tirailleurs\" start_experience_factor = 0.1 start_equipment_factor = 0.8" 
+						owner = FRA
+						count = 4
+					}
+				}
+				462 = { 
+					create_unit = {
+						division = "division_template = \"Les Goumiers Marocains\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = FRA
+						count = 3
+					}
+				}
+				459 = {
+					create_unit = {
+						division = "division_template = \"Marche de Spahis\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+						owner = FRA
+					}
+					create_unit = {
+						division = "division_template = \"tirailleurs\" start_experience_factor = 0.1 start_equipment_factor = 0.8" 
+						owner = FRA
+						count = 3
+					}
+				}
+				458 = { 
+					create_unit = {
+						division = "division_template = \"Marche de Spahis\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+						owner = FRA
+					}
+					create_unit = {
+						division = "division_template = \"tirailleurs\" start_experience_factor = 0.1 start_equipment_factor = 0.8" 
+						owner = FRA
+						count = 3
+					}
+				}
+			}
 		}
 	}
 	focus = {
-		#헤일로 대응 교리
+		#헤일로 대응 기술
 		id = FRA_focus_arm_6
 		cost = 4
 		x = 1
@@ -1084,16 +1268,11 @@ focus_tree = {
 			focus = FRA_focus_arm_14
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					infrastructure > 2
-					is_on_continent = africa
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-				}
+			army_experience = 10
+			add_tech_bonus = {
+				category = cat_anti_tank
+				uses = 2
+				bonus = 0.25
 			}
 		}
 	}
@@ -1151,11 +1330,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			army_experience = 10
-			add_tech_bonus = {
-				category = cat_anti_tank
-				uses = 2
-				bonus = 0.25
-			}
 		}
 	}
 	focus = {
@@ -1285,21 +1459,6 @@ focus_tree = {
 			focus = FRA_focus_arm_3.5
 		}
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = FRA_infantry_tactics_1
-				}
-				swap_ideas = {
-					remove_idea = FRA_infantry_tactics_1
-					add_idea = FRA_infantry_tactics_1_def
-				}
-			}
-			else = {
-				swap_ideas = {
-					remove_idea = FRA_infantry_tactics_2
-					add_idea = FRA_infantry_tactics_2_def
-				}
-			}
 		}
 	}
 	focus = {
@@ -1379,7 +1538,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#기동 결전
+		#기병전차 결전
 		id = FRA_focus_new_arm_7
 		icon = GFX_focus_generic_mechanized
 		cost = 4
@@ -1468,10 +1627,29 @@ focus_tree = {
 			focus = FRA_focus_new_arm_3
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = FRA_infantry_tactics_1
+				}
+				swap_ideas = {
+					remove_idea = FRA_infantry_tactics_1
+					add_idea = FRA_infantry_tactics_1_def
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_infantry_tactics_2
+					add_idea = FRA_infantry_tactics_2_def
+				}
+			}
+			custom_effect_tooltip = GER_sturmtruppe_battalion_tt
+			hidden_effect = {
+				set_technology = { sturmtruppe_battalion_tech = 1 popup = no }
+			}
 		}
 	}
 	focus = {
-		#'제병합동'
+		#노획 장비 활용
 		id = FRA_focus_new_arm_10
 		icon = GFX_focus_AUS_raid_military_storages
 		cost = 4
@@ -1482,10 +1660,8 @@ focus_tree = {
 			focus = FRA_focus_arm_13
 		}
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_manoeuvre_n_strike
-				add_idea = FRA_manoeuvre_n_strike_1
-			}
+			custom_effect_tooltip = FRA_focus_new_arm_10_tt
+			unlock_decision_tooltip = FRA_war_steal_guns
 		}
 	}
 	focus = {
@@ -1500,7 +1676,10 @@ focus_tree = {
 			focus = FRA_focus_arm_13
 		}
 		completion_reward = {
-			add_ideas = FRA_elan_vital
+			hidden_effect = {
+			    unlock_tactic = tactic_grand_banzai_charge
+			}
+			custom_effect_tooltip = JAP_instill_the_spirit_of_bushido_tt
 		}
 	}
 	focus = {
