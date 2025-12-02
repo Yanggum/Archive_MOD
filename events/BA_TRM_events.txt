@@ -14408,11 +14408,13 @@ country_event = { # 아리우스에서의 인연
 
 	trigger = {
 		has_completed_focus = TRN_five_clan_republic
+		has_character = atsuko
 	}
 
 	option = { 
 		name = trinity_events_nagisa.52.a 
 		custom_effect_tooltip = trinity_events_nagisa_52_atsuko_tt
+		set_country_flag = TRN_atsuko_host_candidate_flag
 	}
 }
 
@@ -14428,6 +14430,68 @@ country_event = { # 그리고, 가장 소중한 너에게
 	option = { 
 		name = trinity_events_nagisa.53.a 
 		custom_effect_tooltip = trinity_events_nagisa_53_mika_tt
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa_election.2 days = 2 }
+		}
+	}
+}
+
+country_event = { # 마법이 풀린 신데렐라에게
+	id = trinity_events_nagisa.54
+	title = trinity_events_nagisa.54.t
+
+	desc = {
+		text = trinity_events_nagisa.54.desc.seia
+		trigger = {
+			NOT = { has_country_flag = TRM_reconciliation_of_pater_and_filius_flag }
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa.54.desc.mika
+		trigger = {
+			has_country_flag = TRM_reconciliation_of_pater_and_filius_flag
+		}
+	}
+
+	trigger = {
+		NOT = {
+			has_country_leader = {
+				ruling_only = yes
+				character = TRN_Kirifuji_Nagisa
+			}
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.54.a 
+		custom_effect_tooltip = trinity_events_democratic_nagisa_happy_ending_tt
+	}
+}
+
+country_event = { # 구제불능의 의심암귀
+	id = trinity_events_nagisa.55
+	title = trinity_events_nagisa.55.t
+	desc = trinity_events_nagisa.55.desc
+
+	trigger = {
+		has_country_leader = {
+			ruling_only = yes
+			character = TRN_Kirifuji_Nagisa
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.55.a 
+		custom_effect_tooltip = trinity_events_democratic_nagisa_bad_ending_tt
 	}
 }
 
@@ -15809,6 +15873,7 @@ country_event = { # 붉은겨울의 여대공?
 	option = { #  
 		name = trinity_events_nagisa_diplomacy.27.b
 		set_country_flag = TRN_red_winter_takane_hidden_flag
+		custom_effect_tooltip = trinity_events_nagisa_diplomacy_hidden_start_tt
 		mark_focus_tree_layout_dirty = yes
 	}
 }
@@ -16099,6 +16164,228 @@ country_event = { # [GetYear]년 콘클라베
 	option = { #  
 		name = trinity_events_nagisa_election.1.a
 		add_political_power = 25
+	}
+}
+
+country_event = { # [GetYear]년 콘클라베
+	id = trinity_events_nagisa_election.2
+	title = trinity_events_nagisa_election.2.t
+	desc = trinity_events_nagisa_election.2.desc
+
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.nagisa
+		trigger = {
+			count_triggers = {
+				amount = 3 # 아래 조건 중 3가지가 충족될 경우, 히후미가 아닌 나기사가 출마 (나기사의 타락)
+				has_completed_focus = TRN_eventually_happen # 에덴 조약 협상에서 이상주의를 포기하고 현실주의를 택함
+				has_completed_focus = TRN_attack_mika_misono # 본인 권력 유지를 위해 미카를 검찰 기소권으로 괴롭힘
+				has_completed_focus = TRN_arius_inquisition # 아리우스에게 잔인하게 대함
+				has_completed_focus = TRN_realistic_approach # 현지인들에게 잔인하게 대함
+				NOT = { has_completed_focus = TRN_meeting_with_mika } # 미카와 '파테르-필리우스 화해' 협상을 시도조차 하지 않음 (성공, 실패는 중요하지 않음. '시도'가 중요)
+				has_country_flag = trn_nagisa_religion_hardline_flag # 독일 현지 신앙을 강경하게 탄압함
+				NOT = { has_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag } # 나기사가 트리니티의 '유스티나 성도회' 관련 과거사를 반성하지 않음
+			}
+		}
+
+		swap_ruler_traits = {
+			remove = TRN_noble_duty
+			add = TRM_host_nagisa
+		}
+
+		set_country_leader_description = {
+			desc = TRN_nagisa_kirifuji_democratic_bad_ending_leader_desc
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 0
+		}
+
+		custom_effect_tooltip = trinity_events_nagisa_election_nagisa_tt
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.hifumi
+		trigger = {
+			NOT = {
+				count_triggers = {
+					amount = 3 # 반대로 아래 조건 중 3가지가 충족되지 '않을' 경우 나기사가 아닌 히후미가 출마
+					has_completed_focus = TRN_eventually_happen # 에덴 조약 협상에서 이상주의를 포기하고 현실주의를 택함
+					has_completed_focus = TRN_attack_mika_misono # 본인 권력 유지를 위해 미카를 검찰 기소권으로 괴롭힘
+					has_completed_focus = TRN_arius_inquisition # 아리우스에게 잔인하게 대함
+					has_completed_focus = TRN_realistic_approach # 현지인들에게 잔인하게 대함
+					has_country_flag = trn_nagisa_religion_hardline_flag # 독일 현지 신앙을 강경하게 탄압함
+					NOT = { has_completed_focus = TRN_meeting_with_mika } # 미카와 '파테르-필리우스 화해' 협상을 시도조차 하지 않음 (성공, 실패는 중요하지 않음. '시도'가 중요)
+					NOT = { has_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag } # 나기사가 트리니티의 '유스티나 성도회' 관련 과거사를 반성하지 않음
+				}
+			}
+		}
+        
+		add_country_leader_role = {
+         	character = TRN_Ajitani_Hifumi
+          	country_leader = {
+				desc = TRN_hifumi_ajitani_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_hifumi
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Ajitani_Hifumi
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 1
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.seia
+        
+		add_country_leader_role = {
+         	character = TRN_Yurizono_Seia
+          	country_leader = {
+				desc = TRN_seia_yurizono_nagisa_route_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_seia
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Yurizono_Seia
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 2
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.mine
+		trigger = {
+			has_country_flag = TRN_mine_host_candidate_flag
+		}
+        
+		add_country_leader_role = {
+         	character = TRN_Aomori_Mine
+          	country_leader = {
+				desc = TRN_mine_aomori_nagisa_route_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_mine
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Aomori_Mine
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 3
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.ako
+        
+		add_country_leader_role = {
+         	character = GEH_dkzh
+          	country_leader = {
+				desc = TRN_ako_amau_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_ako
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = GEH_dkzh
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 4
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.atsuko
+		trigger = {
+			has_country_flag = TRN_atsuko_host_candidate_flag
+		}
+        
+		add_country_leader_role = {
+         	character = atsuko
+          	country_leader = {
+				desc = TRN_atsuko_hakari_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_atsuko
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = atsuko
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 5
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.takane
+		trigger = {
+			has_completed_focus = TRN_red_winter_takane_hidden_focus
+		}
+        
+		add_country_leader_role = {
+         	character = RED_takane
+          	country_leader = {
+				desc = TRN_takane_miyoshi_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_takane TRM_hidden_trait_takane
+				}
+          	}
+         	promote_leader = yes
+       }
+
+		promote_character = {
+			character = RED_takane
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 6
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.54 hours = 8 }
+			country_event = { id = trinity_events_nagisa.55 hours = 8 }
+			set_global_flag = TRM_democratic_nagisa_ending_flag
+		}
 	}
 }
 
