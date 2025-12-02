@@ -14199,7 +14199,7 @@ country_event = { # 미네와 나기사의 독대
 
 	option = { 
 		name = trinity_events_nagisa.39.a 
-
+		set_variable = { TRM_mika_misono_sns_main_var = 11 }
 	}
 }
 
@@ -14318,7 +14318,88 @@ country_event = { # 미카와의 화해
 
 	option = { 
 		name = trinity_events_nagisa.45.a 
+		random_list = {
+			50 = {
+				# /* 이 기회들은 성공 가능성을 높임 */
+				# §Y$GEH_dkzh$§! 또는 §Y$GEM_perfect_team$§!이(가) 현재 §G조언가§!로 임명
+				modifier = {
+					factor = 2
+					if = {
+						limit = {
+							has_character = GEH_dkzh
+						}
+						GEH_dkzh = {
+							is_political_advisor = yes
+						}
+					}
+					else = {
+						always = no
+					}
+				} 
+				modifier = {
+					factor = 2
+					if = {
+						limit = {
+							has_character = TRN_gehenna_prefect_team
+						}
+						TRN_gehenna_prefect_team = {
+							is_political_advisor = yes
+						}
+					}
+					else = {
+						always = no
+					}
+				} 
+				# §Y아리우스 분교§!를 §G용서§!
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_five_clan_republic
+				} 
+				# 밀레니엄의 과학을 §G용인§!하고 배움
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_peaceful_exchange_with_mil
+				} 
+				# 독일인들에 대한 §Y적대적 태도§!를 포기함
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_idealistic_approach
+				} 
 
+				country_event = { id = trinity_events_nagisa.46 days = 14 } # 성공
+			}
+			50 = {
+				# /* 이 문제들은 실패 가능성을 높임 */
+				# 나기사가 미카에게 정치 공작을 하며 사법 리스크를 줌
+				modifier = {
+					factor = 1.1
+					has_completed_focus = TRN_attack_mika_misono
+				} 
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_attack_pater
+				} 
+				# 현재 트리니티가 §R전쟁 중§!으로, 나기사의 심리가 불안정
+				modifier = {
+					factor = 1.2
+					has_war = yes
+				} 
+				# §Y에덴 조약§!이 파테르의 방해로 §R실패§!함
+				modifier = {
+					factor = 2
+					OR = {
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+					}
+				} 
+				# TRN_german_cultural_revolution$§! 중점을 완료하지 않아, 나기사가 히후미에게 도움을 요청한 적이 §R없음§!
+				modifier = {
+					factor = 1.5
+					NOT = { has_completed_focus = TRN_german_cultural_revolution }
+				} 
+				country_event = { id = trinity_events_nagisa.47 days = 14 } # 실패
+			}
+		}
 	}
 }
 
@@ -14333,7 +14414,8 @@ country_event = { # 필리우스-파테르 화해의 성공
 
 	option = { 
 		name = trinity_events_nagisa.46.a 
-
+		set_country_flag = TRM_reconciliation_of_pater_and_filius_flag
+		# 미카가 다시 조언가로 추가되는 코드 여기 입력
 	}
 }
 
