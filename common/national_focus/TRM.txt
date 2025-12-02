@@ -7774,7 +7774,7 @@ focus_tree = {
 				news_event = { id = trinity_news_events.2 days = 1 }
 
 				TRM_hans_zehrer = { unit_leader_event = { id = trinity_events.39 days = 25 random_days = 25 } } # 한스 프리체
-				country_event = { id = trinity_events.37 days = 35 random_days = 125 } # 소규모 동아리들의 운명
+				country_event = { id = trinity_events.37 days = 50 random_days = 125 } # 소규모 분파의 탄생
 				country_event = { id = trinity_events.45 days = 35 random_days = 14 } # 사회 문제 발생!!
 				country_event = { id = trinity_flavor_events.12 days = 365 } # 세이아 음모론
 				country_event = { id = trinity_flavor_events.33 days = 125 random_days = 125 } # 미소노 미카 드디어 다깟네요;;
@@ -8087,11 +8087,11 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
 			add_to_variable = {
-				TRN_TNC_modifier_weekly_casualties_war_support = 0.003
+				TRN_TNC_modifier_weekly_casualties_war_support = 0.0015
 				tooltip =weekly_casualties_war_support_tt
 			}
 			add_to_variable = {
-				TRN_TNC_modifier_conscription_factor = 0.06
+				TRN_TNC_modifier_conscription_factor = 0.03
 				tooltip = conscription_factor_tt
 			}
 			custom_effect_tooltip = tooltip_white_line
@@ -8131,7 +8131,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = TRN_Trinity_New_Culture_modifier_change
 			add_to_variable = {
-				TRN_TNC_modifier_monthly_population = 0.2
+				TRN_TNC_modifier_monthly_population = 0.1
 				tooltip = monthly_population_tt
 			}
 			add_to_variable = {
@@ -9439,7 +9439,10 @@ focus_tree = {
 		}
 
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_eventually_happen }
+			NOT = { 
+				has_completed_focus = TRN_eventually_happen 
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
 		}
 
 		completion_reward = {
@@ -9528,7 +9531,10 @@ focus_tree = {
 		}
 
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_eventually_happen }
+			NOT = { 
+				has_completed_focus = TRN_eventually_happen 
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
 		}
 
 		completion_reward = {
@@ -14198,9 +14204,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			HEU = { 
-				country_event = { id = TRMDIP.60 days = 01 } 
-			}
+			
 		}
 	}
 
@@ -14550,7 +14554,7 @@ focus_tree = {
 			}
 			reduce_focus_completion_cost = {
 				focus = TRN_destruction_of_soviet_hegemony
-				cost = 70
+				cost = 35
 			}
 		}
 	}
@@ -14658,158 +14662,12 @@ focus_tree = {
 			}
 		}
 	}
-	
-	# 북방 외교
-	focus = { # 북방 외교
-		id = TRN_northern_kivotos_diplomacy
-		icon = GFX_focus_TRN_northern_kivotos_dip
-		prerequisite = {
-			focus = TRN_extinguish_the_flame
-			focus = TRN_curtain_across_kivotos
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRN_invasion_kaiser
-		cost = 5
-
-		bypass = {
-			
-		}
-
-		available = {
-			OR = {
-				is_neighbor_of = RED
-				is_neighbor_of = RE1
-			}
-			has_government = fascism
-		}
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			add_political_power  = 35
-			add_opinion_modifier = {
-				target = RED
-				modifier = BUL_threatening_neighbor
-			}
-			IF = {
-				limit = { country_exists = RE1 }
-				add_opinion_modifier = {
-					target = RE1
-					modifier = BUL_threatening_neighbor
-				}
-			}
-			IF = {
-				limit = { country_exists = RE2 }
-				add_opinion_modifier = {
-					target = RE2
-					modifier = BUL_threatening_neighbor
-				}
-			}
-			IF = {
-				limit = { country_exists = RE3 }
-				add_opinion_modifier = {
-					target = RE3
-					modifier = BUL_threatening_neighbor
-				}
-			}
-
-			IF = {
-				limit = { country_exists = DEN }
-				add_opinion_modifier = {
-					target = DEN
-					modifier = BUL_threatening_neighbor
-				}
-			}
-			IF = {
-				limit = { country_exists = SWE }
-				add_opinion_modifier = {
-					target = SWE
-					modifier = BUL_threatening_neighbor
-				}
-			}
-			IF = {
-				limit = { country_exists = NOR }
-				add_opinion_modifier = {
-					target = NOR
-					modifier = BUL_threatening_neighbor
-				}
-			}
-
-		}
-	}
-
-	focus = { # 덴마크 요구
-		id = TRN_denmark_or_war
-		icon = GFX_goal_TRM_We_Need_Denmark_Milk
-		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
-		x = -1
-		y = 1
-		offset = {
-
-		}
-		relative_position_id = TRN_northern_kivotos_diplomacy
-		cost = 5
-
-		bypass = {
-			
-		}
-
-		available = {
-			has_government = fascism
-			OR = {
-				is_neighbor_of = RE1
-				is_neighbor_of = DEN
-			}
-		}
-		mutually_exclusive = {
-			focus = TRN_use_of_nordic_association
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { # 노르드 협회 이용
-		id = TRN_use_of_nordic_association
-		icon = GFX_focus_generic_scandinavia_flags
-		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
-		x = 2
-		y = 1
-		relative_position_id = TRN_northern_kivotos_diplomacy
-		cost = 5
-
-		bypass = {
-			
-		}
-
-		available = {
-			has_government = fascism
-		}
-		mutually_exclusive = {
-			focus = TRN_denmark_or_war
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
 
 	focus = { #
 		id = TRN_threat_from_the_east
 		icon = GFX_focus_SWE_the_beast_stirs
 		prerequisite = { focus = TRN_destiny_of_trinity }
-		x = -3
+		x = -4
 		y = 1
 		relative_position_id = TRN_destiny_of_trinity
 		cost = 5
@@ -14831,10 +14689,6 @@ focus_tree = {
 			add_opinion_modifier = {
 				target = SOV
 				modifier = BUL_communist_menace
-			}
-			reduce_focus_completion_cost = {
-				focus = TRN_destruction_of_soviet_hegemony
-				cost = 70
 			}
 		}
 	}
@@ -14870,7 +14724,7 @@ focus_tree = {
 		completion_reward = {
 			reduce_focus_completion_cost = {
 				focus = TRN_destruction_of_soviet_hegemony
-				cost = 35
+				cost = 70
 			}
 
 		}
@@ -15008,7 +14862,7 @@ focus_tree = {
 		completion_reward = {
 			reduce_focus_completion_cost = {
 				focus = TRN_destruction_of_soviet_hegemony
-				cost = 35
+				cost = 70
 			}
 			custom_effect_tooltip = TRN_influence_the_baltics_unlock_tt
 		}
@@ -15286,7 +15140,7 @@ focus_tree = {
 			focus = TRN_defiance_of_COU
 			focus = TRN_recognize_the_regime_but_dont_follow_it
 		}
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack
 		cost = 5
@@ -15315,7 +15169,7 @@ focus_tree = {
 			focus = TRN_defiance_of_COU
 			focus = TRN_recognize_the_regime_but_dont_follow_it
 		}
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack
 		cost = 5
@@ -15522,6 +15376,151 @@ focus_tree = {
 				activate_targeted_decision = { target = HUN decision = TRM_promote_ideology_rallies_balkan }
 			}
 			activate_targeted_decision = { target = ROM decision = TRN_romania_give_the_oil }
+
+		}
+	}
+	
+	# 북방 외교
+	focus = { # 북방 외교
+		id = TRN_northern_kivotos_diplomacy
+		icon = GFX_focus_TRN_northern_kivotos_dip
+		prerequisite = {
+			focus = TRN_destiny_of_trinity
+		}
+		x = 8
+		y = 1
+		relative_position_id = TRN_destiny_of_trinity
+		cost = 5
+
+		bypass = {
+			
+		}
+
+		available = {
+			OR = {
+				is_neighbor_of = RED
+				is_neighbor_of = RE1
+			}
+			has_government = fascism
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_political_power  = 35
+			add_opinion_modifier = {
+				target = RED
+				modifier = BUL_threatening_neighbor
+			}
+			IF = {
+				limit = { country_exists = RE1 }
+				add_opinion_modifier = {
+					target = RE1
+					modifier = BUL_threatening_neighbor
+				}
+			}
+			IF = {
+				limit = { country_exists = RE2 }
+				add_opinion_modifier = {
+					target = RE2
+					modifier = BUL_threatening_neighbor
+				}
+			}
+			IF = {
+				limit = { country_exists = RE3 }
+				add_opinion_modifier = {
+					target = RE3
+					modifier = BUL_threatening_neighbor
+				}
+			}
+
+			IF = {
+				limit = { country_exists = DEN }
+				add_opinion_modifier = {
+					target = DEN
+					modifier = BUL_threatening_neighbor
+				}
+			}
+			IF = {
+				limit = { country_exists = SWE }
+				add_opinion_modifier = {
+					target = SWE
+					modifier = BUL_threatening_neighbor
+				}
+			}
+			IF = {
+				limit = { country_exists = NOR }
+				add_opinion_modifier = {
+					target = NOR
+					modifier = BUL_threatening_neighbor
+				}
+			}
+
+		}
+	}
+
+	focus = { # 덴마크 요구
+		id = TRN_denmark_or_war
+		icon = GFX_goal_TRM_We_Need_Denmark_Milk
+		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
+		x = -1
+		y = 1
+		offset = {
+
+		}
+		relative_position_id = TRN_northern_kivotos_diplomacy
+		cost = 5
+
+		bypass = {
+			
+		}
+
+		available = {
+			has_government = fascism
+			OR = {
+				is_neighbor_of = RE1
+				is_neighbor_of = DEN
+			}
+		}
+		mutually_exclusive = {
+			focus = TRN_use_of_nordic_association
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { # 노르드 협회 이용
+		id = TRN_use_of_nordic_association
+		icon = GFX_focus_generic_scandinavia_flags
+		prerequisite = { focus = TRN_northern_kivotos_diplomacy }
+		x = 2
+		y = 1
+		relative_position_id = TRN_northern_kivotos_diplomacy
+		cost = 5
+
+		bypass = {
+			
+		}
+
+		available = {
+			has_government = fascism
+		}
+		mutually_exclusive = {
+			focus = TRN_denmark_or_war
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
 
 		}
 	}
