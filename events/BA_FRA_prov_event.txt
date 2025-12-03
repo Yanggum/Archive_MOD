@@ -69,7 +69,6 @@ country_event = {
 	picture = GFX_report_event_spr_army_of_africa
 	hidden = no
 	option = {
-		custom_effect_tooltip = FRA_disruption_event.3_tt
 		name = FRA_disruption_event.3.a
 		set_temp_variable = { temp_FRA_change_to_disruption = 1 }
 		FRA_change_to_disruption_level = yes
@@ -308,11 +307,9 @@ country_event = {
 			remove_idea = FRA_general_strike_1
 			add_idea = FRA_general_strike_0
 		}
-		hidden_effect = {
-			news_event = FRA_prov_event.44
-			unlock_decision_category_tooltip = FRA_manage_strike_cat
-			activate_mission = FRA_PPNA_activation
-		}
+		unlock_decision_category_tooltip = FRA_manage_strike_cat
+		activate_mission = FRA_PPNA_activation
+		news_event = FRA_prov_event.44
 	}
 }
 
@@ -1372,12 +1369,6 @@ country_event = {
 				traits={ stout_defender }
 				expire="1965.1.1.1"
 				id=-1
-			}
-		}
-		hidden_effect = {
-			country_event = {
-				id = FRA_prov_event.51
-				days = 7
 			}
 		}
 	}
@@ -2678,7 +2669,30 @@ country_event = {
 	id = FRA_prov_event.54
 	title = FRA_prov_event.54.t
 	desc = FRA_prov_event.54.d
-	is_triggered_only = yes
+	trigger = {
+		date > 1936.3.1
+		original_tag = FRA
+		458 = {
+			NOT = {
+				has_dynamic_modifier = FRA_ENA_activities
+			}
+		}
+		459 = {
+			NOT = {
+				has_dynamic_modifier = FRA_ENA_activities
+			}
+		}
+		460 = {
+			NOT = {
+				has_dynamic_modifier = FRA_ENA_activities
+			}
+		}
+		461 = {
+			NOT = {
+				has_dynamic_modifier = FRA_ENA_activities
+			}
+		}
+	}
 	hidden = no
 	fire_only_once = yes
 	picture = GFX_report_event_chinese_soldiers_mountain
@@ -3858,7 +3872,7 @@ country_event = {
 	picture = GFX_report_event_AUS_military_march
 	option = {
 		name = FRA_prov_event.94.a
-		remove_ideas = FRA_general_strike_4
+		remove_ideas = FRA_general_strike_0
 		set_country_flag = FRA_general_strike_over
 		clear_variable = FRA_CGT_org
 		clear_variable = FRA_ppna_search
@@ -4068,13 +4082,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.100.a
 		add_war_support = 0.03
-		unlock_decision_category_tooltip = FRA_prepare_war
-		hidden_effect = {
-			country_event = {
-				id = FRA_prov_event.47
-				days = 17
-			}
-		}
 	}
 }
 
@@ -4746,6 +4753,20 @@ country_event = {
 	picture = GFX_report_event_japan_army_mountainside
 	option = {
 		name = FRA_prov_event.117.a
+		every_country = {
+			limit = {
+				OR = {
+					tag = VIN
+					tag = LAO
+					tag = CAM
+				}
+			}
+			add_autonomy_score = {
+				value = 10
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			custom_effect_tooltip = FRA_prov_event.117_tt
+		}
 		#VIN = {
 		#	add_timed_idea = {
 		#		idea = VIN_upcoming_riot
@@ -4754,6 +4775,8 @@ country_event = {
 		#}
 	}
 }
+
+#.118 - .119 안 씀
 
 country_event = {
 	#페탱의 쿠데타 (시작 집권 이벤트)
@@ -4775,8 +4798,16 @@ country_event = {
 				days = 5
 			}
 			country_event = {
-				id = FRA_prov_event.57
+				id = FRA_prov_event.51
+				days = 12
+			}
+			country_event = {
+				id = FRA_prov_event.47
 				days = 20
+			}
+			country_event = {
+				id = FRA_prov_event.57
+				days = 27
 			}
 			country_event = {
 				id = FRA_prov_event.86
@@ -4793,10 +4824,6 @@ country_event = {
 			country_event = { #저항도 이벤트 - 땅
 				id = FRA_disruption_event.6
 				days = 560
-			}
-			country_event = { #저항도 이벤트 - 산악 무장 반란
-				id = FRA_prov_event.54
-				days = 700
 			}
             if = {
                 limit = {
@@ -4867,7 +4894,7 @@ country_event = { #미사용
 }
 
 country_event = {
-	#부실공사
+	#안 씀
 	id = FRA_prov_event.122
 	title = FRA_prov_event.122.t
 	desc = FRA_prov_event.122.d
