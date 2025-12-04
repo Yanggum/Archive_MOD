@@ -8609,6 +8609,14 @@ focus_tree = {
 				set_temp_variable = { TRN_Honor_change = -10 }
 				TRN_add_Honor = yes
 			}
+			custom_effect_tooltip = {
+				localization_key = TRN_dismantled_Nazi_organization_tt
+				DECISION_NAME = TRN_Mika_social_problem
+				EVENT_0 = {
+					localization_key = COLOR_YELLOW
+					DATA = trinity_social_ploblem_events.7.t
+				}
+			}
 		}
 	}
 
@@ -8630,8 +8638,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_stability = 0.05
-			add_war_support = 0.1
+			add_stability = 0.10
+			add_war_support = 0.02
 			custom_effect_tooltip = {
 				localization_key = TRN_dismantled_Nazi_organization_tt
 				DECISION_NAME = TRN_Mika_social_problem
@@ -8716,6 +8724,19 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = TRN_fate_of_german_culture_trigger_tooltip
+					check_variable = { 
+						var = TRM_pro_german_propaganda_conscription_factor
+						value = var:TRM_propaganda_monthly_conscription_factor_trigger
+						compare = greater_than_or_equals
+					}
+				}
+				NOT = {
+					has_dynamic_modifier = { modifier = TRM_appeasement_germany_modifier }
+				}
+			}
 		}
 
 		ai_will_do = {
