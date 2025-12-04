@@ -1248,12 +1248,6 @@ focus_tree = {
 					add_claim_by = TRM
 				}
 			}
-			if = {
-				limit = { has_completed_focus = TRM_Endsige3 }
-				unlock_decision_tooltip = TRM_Balkan_Reichskommissariat
-				unlock_decision_tooltip = TRM_ITA_Reichskommissariat
-				unlock_decision_tooltip = TRM_SPR_Reichskommissariat
-			}
 		}
 	}
 	focus = { # 타협 체제 유지
@@ -14624,13 +14618,71 @@ focus_tree = {
 		}
 	}
 
-	focus = { #
-		id = TRN_invasion_kaiser
-		icon = GFX_focus_attack_KAI
-		prerequisite = { focus = TRN_destiny_of_trinity }
+	focus = { # 
+		id = TRN_extinguish_the_flame
+		icon = GFX_focus_attack_MIL
+		prerequisite = { 
+			focus = TRN_destiny_of_trinity 
+		}
 		x = 1
 		y = 1
 		relative_position_id = TRN_destiny_of_trinity
+		cost = 5
+
+		available = {
+			has_government = fascism
+			NOT = { has_non_aggression_pact_with = MIL }
+			country_exists = MIL
+		}
+
+		ai_will_do = {
+
+		}
+		bypass = {
+			has_war_with = MIL
+		}
+		completion_reward = {
+			if = {
+				limit = { country_exists = MIL }
+				create_wargoal = {
+					target = MIL
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = TRN_divine_mandate_west_kivotos
+		icon = GFX_focus_TRN_divine_mandate_west_kivotos
+		prerequisite = { focus = TRN_defiance_of_COU focus = TRN_extinguish_the_flame }
+		x = 1
+		y = 1
+		relative_position_id = TRN_defiance_of_COU
+		cost = 5
+
+		available = {
+
+		}
+
+		ai_will_do = {
+
+		}
+		
+		completion_reward = {
+			unlock_decision_tooltip = TRM_COU_Reichskommissariat
+			unlock_decision_tooltip = TRM_MIL_Reichskommissariat
+			unlock_decision_tooltip = TRN_South_MIL_divine_mandate
+		}
+	}
+
+	focus = { #
+		id = TRN_invasion_kaiser
+		icon = GFX_focus_attack_KAI
+		prerequisite = { focus = TRN_defiance_of_COU }
+		x = 0
+		y = 2
+		relative_position_id = TRN_defiance_of_COU
 		cost = 5
 
 		available = {
@@ -14659,37 +14711,86 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 
-		id = TRN_extinguish_the_flame
-		icon = GFX_focus_attack_MIL
-		prerequisite = { 
-			focus = TRN_defiance_of_COU 
-		}
-		x = -1
-		y = 3
-		relative_position_id = TRN_destiny_of_trinity
+	focus = { #
+		id = TRN_ultimatum_to_wild_hunt_academy
+		icon = GFX_focus_WHY_wild_hunt_academy_of_arts
+		prerequisite = { focus = TRN_extinguish_the_flame }
+		x = 0
+		y = 2
+		relative_position_id = TRN_extinguish_the_flame
 		cost = 5
+
+		bypass = {
+
+		}
 
 		available = {
 			has_government = fascism
-			NOT = { has_non_aggression_pact_with = MIL }
-			country_exists = MIL
 		}
+		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
+		id = TRN_TrinityMikaDiplomacySpainAttack
+		icon = GFX_focus_attack_Iberian
+		prerequisite = { 
+			focus = TRN_ultimatum_to_wild_hunt_academy
+			focus = TRN_invasion_kaiser
+		}
+		x = -1
+		y = 1
+		relative_position_id = TRN_ultimatum_to_wild_hunt_academy
+		cost = 5
+
 		bypass = {
-			has_war_with = MIL
+
+		}
+
+		available = {
+			has_government = fascism
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
 		}
 		completion_reward = {
-			if = {
-				limit = { country_exists = MIL }
-				create_wargoal = {
-					target = MIL
-					type = topple_government
-				}
-			}
+
+		}
+	}
+
+	focus = { #
+		id = TRN_TrinityMikaDiplomacyItalyAttack_4
+		icon = GFX_focus_TRN_divine_mandate_iberian
+		x = 2
+		y = 1
+		relative_position_id = TRN_TrinityMikaDiplomacySpainAttack
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			has_government = fascism
+		}
+		prerequisite = {
+			focus = TRN_TrinityMikaDiplomacySpainAttack
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
 		}
 	}
 
@@ -14715,6 +14816,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			custom_effect_tooltip = TRN_influence_the_baltics_unlock_tt
 			add_political_power = 120
 			add_opinion_modifier = {
 				target = SOV
@@ -14851,50 +14953,57 @@ focus_tree = {
 		}
 	}
 
-	focus = { 
-		id = TRN_baltic_diplomancy
-		icon = GFX_focus_SOV_baltic_security
+	focus = { # 발칸 외교
+		id = TRN_balkan_dip
+		icon = GFX_focus_TRN_balkan_dip
 		prerequisite = { focus = TRN_threat_from_the_east }
 		x = 1
 		y = 1
 		relative_position_id = TRN_threat_from_the_east
-		cost = 6
-
-		bypass = {
-			LIT = {
-				OR = {
-					is_puppet = yes
-					exists = no
-				}
-			}
-			LAT = {
-				OR = {
-					is_puppet = yes
-					exists = no
-				}
-			}
-			EST = {
-				OR = {
-					is_puppet = yes
-					exists = no
-				}
-			}
-		}
+		cost = 4
 
 		available = {
 			has_government = fascism
+			is_subject = no
 		}
-		mutually_exclusive = {  }
+
 
 		ai_will_do = {
 
 		}
+
+
 		completion_reward = {
-			reduce_focus_completion_cost = {
-				focus = TRN_destruction_of_soviet_hegemony
-				cost = 70
+			every_other_country = {
+				limit = { 
+					OR = {
+						BUL_is_balkan_nation = yes 
+						tag = HUN
+					}
+					NOT = { tag = TUR }
+				}
+				add_timed_idea = {
+					idea = fascist_influence_weak
+					days = 365
+				}
+				hidden_effect = { country_event = { id = generic.1 } }
 			}
-			custom_effect_tooltip = TRN_influence_the_baltics_unlock_tt
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = SOV_seek_balkan_cooperation_decisions_tt
+			hidden_effect = {
+				activate_targeted_decision = { target = ROM decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = BUL decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = GRE decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = YUG decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = HUN decision = TRM_pressure_country_government_balkan }
+				activate_targeted_decision = { target = ROM decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = BUL decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = GRE decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = YUG decision = TRM_promote_ideology_rallies_balkan }
+				activate_targeted_decision = { target = HUN decision = TRM_promote_ideology_rallies_balkan }
+			}
+			activate_targeted_decision = { target = ROM decision = TRN_romania_give_the_oil }
+
 		}
 	}
 
@@ -14904,7 +15013,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = TRN_threat_from_the_east
-		cost = 35
+		cost = 30
 
 		bypass = {
 
@@ -15217,8 +15326,8 @@ focus_tree = {
 		id = TRN_TrinityMikaDiplomacyItalyAttack_6
 		icon = GFX_focus_generic_vatican_state
 		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_2 }
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_2
 		cost = 5
 
@@ -15262,139 +15371,6 @@ focus_tree = {
 
 		}
 		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRN_TrinityMikaDiplomacySpainAttack
-		icon = GFX_focus_attack_Iberian
-		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
-		x = 1
-		y = 1
-		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			has_government = fascism
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRN_TrinityMikaDiplomacyItalyAttack_4
-		icon = GFX_focus_TRN_divine_mandate_iberian
-		x = 0
-		y = 1
-		relative_position_id = TRN_TrinityMikaDiplomacySpainAttack
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			has_government = fascism
-		}
-		prerequisite = {
-			focus = TRN_TrinityMikaDiplomacySpainAttack
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRN_ultimatum_to_wild_hunt_academy
-		icon = GFX_focus_attack_Iberian
-		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
-		x = -1
-		y = 1
-		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			has_government = fascism
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { # 발칸 외교
-		id = TRN_balkan_dip
-		icon = GFX_focus_TRN_balkan_dip
-		prerequisite = { focus = TRN_TrinityMikaDiplomacyItalyAttack_3 }
-		x = 3
-		y = 1
-		relative_position_id = TRN_TrinityMikaDiplomacyItalyAttack_3
-		cost = 4
-
-		available = {
-			is_subject = no
-		}
-
-
-		ai_will_do = {
-
-		}
-
-
-		completion_reward = {
-			every_other_country = {
-				limit = { 
-					OR = {
-						BUL_is_balkan_nation = yes 
-						tag = HUN
-					}
-					NOT = { tag = TUR }
-				}
-				add_timed_idea = {
-					idea = fascist_influence_weak
-					days = 365
-				}
-				hidden_effect = { country_event = { id = generic.1 } }
-			}
-			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = SOV_seek_balkan_cooperation_decisions_tt
-			hidden_effect = {
-				activate_targeted_decision = { target = ROM decision = TRM_pressure_country_government_balkan }
-				activate_targeted_decision = { target = BUL decision = TRM_pressure_country_government_balkan }
-				activate_targeted_decision = { target = GRE decision = TRM_pressure_country_government_balkan }
-				activate_targeted_decision = { target = YUG decision = TRM_pressure_country_government_balkan }
-				activate_targeted_decision = { target = HUN decision = TRM_pressure_country_government_balkan }
-				activate_targeted_decision = { target = ROM decision = TRM_promote_ideology_rallies_balkan }
-				activate_targeted_decision = { target = BUL decision = TRM_promote_ideology_rallies_balkan }
-				activate_targeted_decision = { target = GRE decision = TRM_promote_ideology_rallies_balkan }
-				activate_targeted_decision = { target = YUG decision = TRM_promote_ideology_rallies_balkan }
-				activate_targeted_decision = { target = HUN decision = TRM_promote_ideology_rallies_balkan }
-			}
-			activate_targeted_decision = { target = ROM decision = TRN_romania_give_the_oil }
 
 		}
 	}
