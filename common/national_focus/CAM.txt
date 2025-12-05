@@ -14,16 +14,21 @@ focus_tree = {
 		icon = GFX_CAM_nokor_reach
 		available = {
 			is_subject = no
+			communism < 0.4
+			democratic < 0.4
 		}
-		x = 39
-		y = 6
+		mutually_exclusive = {
+			focus = IDC_communist_revolution
+		}
+		x = 45
+		y = 7
 		cost = 2
 		completion_reward = {
 			set_party_name = {
-					ideology = neutrality
-					long_name = CAM_neutrality_party_new
-					name = CAM_neutrality_party_new
-				}
+				ideology = neutrality
+				long_name = CAM_neutrality_party_new
+				name = CAM_neutrality_party_new
+			}
 			set_variable = { IDC_break_the_law_cost_var = 180 }
 			custom_effect_tooltip = CAM_nokor_reach_tt
 		}
@@ -38,8 +43,6 @@ focus_tree = {
 		relative_position_id = CAM_nokor_reach
 		available = {
 			is_subject = no
-			communism < 0.4
-			democratic < 0.4
 		}
 		completion_reward = {
 			add_timed_idea = {
@@ -135,7 +138,7 @@ focus_tree = {
 	focus = {
 		id = Aksar_khmer
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-		x = -1
+		x = 0
 		y = 1
 		cost = 5
 		prerequisite = {
@@ -143,29 +146,35 @@ focus_tree = {
 		}
 		relative_position_id = boost_industrialization
 		completion_reward = {
-			remove_ideas = serious_level_of_illiteracy_idea
-			add_ideas = CAM_the_educated_commoners_idea
+			swap_ideas = {
+				remove_idea = serious_level_of_illiteracy_idea
+				add_idea = CAM_the_educated_commoners_idea
+			}
 		}
 	}
 	focus = {
 		id = Angkor_National_University_Laboratory
 		icon = GFX_SOV_socialist_humanism_ccp_2d_sov_compatibility
-		x = 1
-		y = 1
+		x = 4
+		y = 2
 		cost = 10
 		relative_position_id = angkor_power_up
 		prerequisite = {
-			focus = angkor_power_up
+			focus = Aksar_khmer
 		}
 		completion_reward = {
 			add_research_slot = 1
+			swap_ideas = {
+				remove_idea = CAM_the_educated_commoners_idea
+				add_idea = CAM_the_educated_commoners_idea2
+			}
 		}
 	}
 	focus = {
 		id = to_the_glory_of_khmer_empire
 		icon = GFX_to_the_glory_of_khmer_empire
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = glorious_reminder
 		cost = 5
 		bypass = {
@@ -195,7 +204,7 @@ focus_tree = {
 		id = khmer_empire_old_territory
 		icon = GFX_khmer_empire_old_territory
 		x = 0
-		y = 3
+		y = 2
 		cost = 10
 		relative_position_id = glorious_reminder
 		prerequisite = {
@@ -211,6 +220,7 @@ focus_tree = {
 			unlock_decision_tooltip = CAM_north_malay
 			unlock_decision_tooltip = CAM_move_capital_angkor
 			unlock_decision_tooltip = Khmer_victory
+			unlock_decision_tooltip = CAM_tenasserim
 		}
 	}
 	focus = {
@@ -304,12 +314,12 @@ focus_tree = {
 	focus = {
 		id = CAM_VIN_annex
 		icon = GFX_CAM_VIN_annex
-		x = -3
-		y = 1
+		x = -2
+		y = 3
 		relative_position_id = khmer_empire_old_territory
 		cost = 5
 		prerequisite = {
-			focus = khmer_empire_old_territory
+			focus = siemreap
 		}
 		available = {
 			has_full_control_of_state = 868
@@ -381,11 +391,11 @@ focus_tree = {
 	focus = {
 		id = CAM_YUN_annex
 		icon = GFX_CAM_YUN_annex
-		x = 3
-		y = 1
+		x = 2
+		y = 3
 		cost = 5
 		prerequisite = {
-			focus = khmer_empire_old_territory
+			focus = siemreap
 		}
 		relative_position_id = khmer_empire_old_territory
 		available = {
@@ -404,12 +414,12 @@ focus_tree = {
 	focus = {
 		id = CAM_BRM_annex
 		icon = GFX_CAM_BRM_annex
-		x = 3
-		y = 2
+		x = 2
+		y = 0
 		cost = 5
 		prerequisite = {
-			focus = CAM_VIN_annex
-			focus = CAM_YUN_annex
+			focus = siemreap
+			
 		}
 		relative_position_id = CAM_VIN_annex
 		available = {
@@ -440,6 +450,10 @@ focus_tree = {
 	# 무장독립 중점도
 	#########################################################################################################
 	shared_focus = IDC_indochina_communist_party_contact
+	#########################################################################################################
+	# 공산주의 중점도
+	#########################################################################################################
+	shared_focus = IDC_communist_revolution
 	#프랑스 협상
 	focus = {
 		id = CAM_royal_negotiation
