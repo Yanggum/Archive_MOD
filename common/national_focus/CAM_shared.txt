@@ -2240,19 +2240,935 @@ shared_focus = {
 			hidden_effect = {
 				every_other_country = {
 					limit = {
-						original_tag = VIN
-						original_tag = LAO
-						original_tag = CAM
+						OR = {
+							original_tag = VIN
+							original_tag = LAO
+							original_tag = CAM
+						}
 						is_subject_of = FRA
 					}
 					ROOT = {
 						declare_war_on = {
 							target = PREV
-							type = independence_wargoal
+							type = liberate_wargoal
 						}
 					}
 				}
 			}
 		}
+	}
+}
+
+#############################################################################
+# 인도차이나 공산주의 중점
+#############################################################################
+
+shared_focus = {
+	id = IDC_communist_revolution
+	icon = GFX_focus_generic_soviet_politics
+	x = 30
+	y = 7
+	#prerequisite = { focus = CONGO_belgian_congo }
+	#relative_position_id = CONGO_belgian_congo
+	mutually_exclusive = { focus = CAM_nokor_reach }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+		is_subject = no
+		communism > 0.40
+	}
+	completion_reward = {
+		set_politics = {
+			ruling_party = communism
+		}
+		if = {
+			limit = { original_tag = VIN }
+			set_party_name = {
+				ideology = communism
+				long_name = VIN_local_communism_party_long
+				name = VIN_local_communism_party
+			}
+		}
+		if = {
+			limit = { original_tag = LAO }
+			set_party_name = {
+				ideology = communism
+				long_name = LAO_local_communism_party_long
+				name = LAO_local_communism_party
+			}
+		}
+		if = {
+			limit = { original_tag = CAM }
+			set_party_name = {
+				ideology = communism
+				long_name = CAM_local_communism_party_long
+				name = CAM_local_communism_party
+			}
+		}
+		add_political_power = 120
+	}
+}
+shared_focus = {
+	id = IDC_acceptance_of_trotskyism
+	icon = GFX_focus_generic_workers_and_farmers_rise
+	x = -2
+	y = 1
+	prerequisite = { focus = IDC_communist_revolution }
+	relative_position_id = IDC_communist_revolution
+	mutually_exclusive = { focus = IDC_invitation_of_soviet_advisory_group }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		every_possible_country = {
+			limit = { has_character = VIN_ta_thu_thau }
+			VIN_ta_thu_thau = {
+				set_nationality = ROOT
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = trotskyism
+						traits = {
+							VIN_ta_thu_thau_trait
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = { has_character = VIN_ta_thu_thau }
+			promote_character = VIN_ta_thu_thau
+		}
+		if = {
+			limit = {
+				SOU = {
+					exists = yes 
+					has_government = communism 
+				}
+			}
+			SOU = { # How dare you prosecute our boys 
+				add_opinion_modifier = {
+					target = ROOT 
+					modifier = NOR_communist_not_aligned_bad
+				}
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_invitation_of_soviet_advisory_group
+	icon = GFX_focus_SOV_stalins_cult_of_personality
+	x = 2
+	y = 1
+	prerequisite = { focus = IDC_communist_revolution }
+	relative_position_id = IDC_communist_revolution
+	mutually_exclusive = { focus = IDC_acceptance_of_trotskyism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_political_power = 60
+		add_stability = 0.05
+		reverse_add_opinion_modifier = {
+			target = SOV
+			modifier = large_increase
+		}
+	}
+}
+shared_focus = {
+	id = IDC_socialist_education
+	icon = GFX_focus_generic_socialist_science
+	x = 0
+	y = 1
+	prerequisite = { focus = IDC_acceptance_of_trotskyism focus = IDC_invitation_of_soviet_advisory_group }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_research_slot = 1
+		if = {
+			limit = {
+				original_tag = CAM
+			}
+			remove_ideas = serious_level_of_illiteracy_idea
+			add_timed_idea = {
+				idea = CAM_socialist_education_idea
+				days = 365
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_coopting_religious_people
+	icon = GFX_focus_spr_masters_of_our_own_fate
+	x = 2
+	y = 1
+	prerequisite = { focus = IDC_acceptance_of_trotskyism focus = IDC_invitation_of_soviet_advisory_group }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_implementation_of_agricultural_collectivization
+	icon = GFX_goal_generic_soviet_construction
+	x = 0
+	y = 3
+	prerequisite = { focus = IDC_socialist_education focus = IDC_coopting_religious_people }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	mutually_exclusive = { focus = IDC_loose_agricultural_cooperatives }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_political_power = -100
+		add_stability = -0.05
+		add_war_support = -0.05
+		every_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT 
+			}
+			random_select_amount = 3
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_loose_agricultural_cooperatives
+	icon = GFX_focus_prc_agrarian_socialism
+	x = 2
+	y = 3
+	prerequisite = { focus = IDC_socialist_education focus = IDC_coopting_religious_people }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	mutually_exclusive = { focus = IDC_implementation_of_agricultural_collectivization }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_stability = 0.05
+		every_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT 
+			}
+			random_select_amount = 3
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_collectivization_of_light_industry
+	icon = GFX_goal_generic_construct_infrastructure
+	x = 3
+	y = 2
+	prerequisite = { focus = IDC_acceptance_of_trotskyism focus = IDC_invitation_of_soviet_advisory_group }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		every_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT 
+			}
+			random_select_amount = 2
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_investment_in_heavy_industry
+	icon = GFX_goal_generic_construct_civ_factory
+	x = 0
+	y = 2
+	prerequisite = { focus = IDC_collectivization_of_light_industry }
+	relative_position_id = IDC_collectivization_of_light_industry
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		every_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT 
+			}
+			random_select_amount = 3
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_establishment_of_indochina_revolutionary_communist_party
+	icon = GFX_focus_ITA_il_sol_dell_avvenire
+	x = -1
+	y = 2
+	prerequisite = { focus = IDC_acceptance_of_trotskyism }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_war_support = 0.10
+		set_party_name = {
+			ideology = communism
+			long_name = IDC_indochina_revolutionary_communist_party_party_long
+			name = IDC_indochina_revolutionary_communist_party_party
+		}
+		custom_effect_tooltip = enter_tt
+		custom_effect_tooltip = IDC_establishment_of_indochina_revolutionary_communist_party_tt
+		every_state = {
+			limit = {
+				OR = {
+					BA_vietnam_is = yes
+					BA_cambodia_is = yes
+					BA_laos_is = yes
+				}
+			}
+			add_claim_by = ROOT
+		}
+	}
+}
+shared_focus = {
+	id = IDC_revolution_must_be_fast
+	icon = GFX_focus_ARG_women_in_industry
+	x = 0
+	y = 3
+	prerequisite = { focus = IDC_establishment_of_indochina_revolutionary_communist_party }
+	relative_position_id = IDC_establishment_of_indochina_revolutionary_communist_party
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		# I know There's a better way to do this but the tooltip looks wrong otherwise. 
+		if = {
+			limit = {
+				LAO = {
+					NOT = { 
+						has_government = communism 
+						is_in_faction_with = ROOT 
+					}						
+				}
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = LAO
+			}
+		}
+		if = {
+			limit ={
+				CAM = {
+					NOT = { 
+						has_government = communism 
+						is_in_faction_with = ROOT 
+					}						
+				}
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = CAM
+			}
+		}
+
+		if = {
+			limit ={
+				VIN = {
+					NOT = { 
+						has_government = communism 
+						is_in_faction_with = ROOT 
+					}						
+				}
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = VIN
+			}
+		}
+		if = {
+			limit ={
+				FRA = {
+					NOT = { 
+						has_government = communism 
+						is_in_faction_with = ROOT 
+					}	
+					any_owned_state = {
+						OR = {
+							is_core_of = VIN
+							is_core_of = LAO
+							is_core_of = CAM
+						}
+					}					
+				}
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = FRA
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_joining_the_fourth_international
+	icon = GFX_focus_SOV_international_union_of_soviet_republics
+	x = -2
+	y = 1
+	prerequisite = { focus = IDC_acceptance_of_trotskyism }
+	relative_position_id = IDC_acceptance_of_trotskyism
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_fraternity_and_cooperation
+	icon = GFX_focus_ICE_embrace_the_workers_revolution
+	x = 2
+	y = 1
+	prerequisite = { focus = IDC_invitation_of_soviet_advisory_group }
+	relative_position_id = IDC_invitation_of_soviet_advisory_group
+	mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		if = {
+			limit = { original_tag = VIN }
+			add_country_leader_role = {
+				character = VIN_ho_chi_minh
+				promote_leader = yes
+				country_leader = {
+					ideology = marxism
+					traits = {
+						renowned_revolutionary_poet
+					}
+				}
+			}
+		}
+		if = {
+			limit = { original_tag = LAO }
+			add_country_leader_role = {
+				character = LAO_Souphanouvong
+				promote_leader = yes
+				country_leader = {
+					ideology = marxism
+					traits = {
+						LAO_Souphanouvong_trait
+					}
+				}
+			}
+		}
+		if = {
+			limit = { original_tag = CAM }
+			add_country_leader_role = {
+				character = CAM_tou_samouth
+				promote_leader = yes
+				country_leader = {
+					ideology = marxism
+					traits = {
+						CAM_tou_samouth_trait
+					}
+				}
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_checking_extremism
+	icon = GFX_focus_generic_self_management
+	x = -1
+	y = 1
+	prerequisite = { focus = IDC_fraternity_and_cooperation }
+	relative_position_id = IDC_fraternity_and_cooperation
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_coopting_nationalists
+	icon = GFX_focus_generic_treaty
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_fraternity_and_cooperation }
+	relative_position_id = IDC_fraternity_and_cooperation
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_establishment_of_indochina_treaty_organization
+	icon = GFX_focus_generic_join_comintern
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_checking_extremism }
+	prerequisite = { focus = IDC_coopting_nationalists }
+	relative_position_id = IDC_checking_extremism
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_cooperation_of_indochina
+	icon = GFX_goal_generic_national_unity
+	x = 0
+	y = 1
+	prerequisite = { focus = IDC_establishment_of_indochina_treaty_organization }
+	relative_position_id = IDC_establishment_of_indochina_treaty_organization
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_discussion_on_national_unification
+	icon = GFX_goal_generic_improve_relations
+	x = -1
+	y = 1
+	prerequisite = { focus = IDC_cooperation_of_indochina }
+	relative_position_id = IDC_cooperation_of_indochina
+	mutually_exclusive = { focus = IDC_free_confederation }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_free_confederation
+	icon = GFX_goal_generic_intelligence_exchange
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_cooperation_of_indochina }
+	relative_position_id = IDC_cooperation_of_indochina
+	mutually_exclusive = { focus = IDC_discussion_on_national_unification }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_improving_relations_with_western_powers
+	icon = GFX_focus_chi_mission_to_the_us
+	x = 2
+	y = 2
+	prerequisite = { focus = IDC_fraternity_and_cooperation }
+	relative_position_id = IDC_fraternity_and_cooperation
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_our_nationalism
+	icon = GFX_focus_ITA_corpo_volontari_della_liberta
+	x = 6
+	y = 1
+	prerequisite = { focus = IDC_invitation_of_soviet_advisory_group }
+	relative_position_id = IDC_invitation_of_soviet_advisory_group
+	mutually_exclusive = { focus = IDC_fraternity_and_cooperation }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		if = {
+			limit = { original_tag = VIN }
+			set_party_name = {
+				ideology = communism
+				long_name = VIN_nationalism_communism_party_long
+				name = VIN_nationalism_communism_party
+			}
+			add_country_leader_role = {
+				character = VIN_truong_chinh
+				promote_leader = yes
+				country_leader = {
+					ideology = anti_revisionism
+					traits = {
+						VIN_truong_chinh_trait
+					}
+				}
+			}
+		}
+		if = {
+			limit = { original_tag = LAO }
+			set_party_name = {
+				ideology = communism
+				long_name = LAO_nationalism_communism1_party_long
+				name = LAO_nationalism_communism1_party
+			}
+			add_country_leader_role = {
+				character = LAO_nouhak_phoumsavanh
+				promote_leader = yes
+				country_leader = {
+					ideology = anti_revisionism
+					traits = {
+						LAO_nouhak_phoumsavanh_trait
+					}
+				}
+			}
+		}
+		if = {
+			limit = { original_tag = CAM }
+			set_party_name = {
+				ideology = communism
+				long_name = CAM_nationalism_communism1_party_long
+				name = CAM_nationalism_communism1_party
+			}
+			add_country_leader_role = {
+				character = CAM_pol_pot
+				promote_leader = yes
+				country_leader = {
+					ideology = anti_revisionism
+					traits = {
+						CAM_pol_pot_trait
+					}
+				}
+			}
+		}
+	}
+}
+shared_focus = {
+	id = IDC_requesting_soviet_aid
+	icon = GFX_focus_chi_mission_to_the_soviet_union
+	x = 3
+	y = 1
+	prerequisite = { focus = IDC_fraternity_and_cooperation focus = IDC_our_nationalism }
+	relative_position_id = IDC_fraternity_and_cooperation
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_purge_of_opponents
+	icon = GFX_goal_generic_war_with_comintern
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_our_nationalism }
+	relative_position_id = IDC_our_nationalism
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		add_popularity = {
+			ideology = neutrality
+			popularity = -0.10
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = -0.10
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.10
+		}
+		if = {
+			limit = { original_tag = LAO }
+			set_party_name = {
+				ideology = communism
+				long_name = LAO_nationalism_communism2_party_long
+				name = LAO_nationalism_communism2_party
+			}
+		}
+		if = {
+			limit = { original_tag = CAM }
+			set_party_name = {
+				ideology = communism
+				long_name = CAM_nationalism_communism2_party_long
+				name = CAM_nationalism_communism2_party
+			}
+		}
+		add_country_leader_trait = dictator
+	}
+}
+shared_focus = {
+	id = IDC_complete_eradication_of_capitalism
+	icon = GFX_focus_ARG_anti_american_propaganda
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_purge_of_opponents }
+	relative_position_id = IDC_purge_of_opponents
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_expansion_of_military_investment
+	icon = GFX_focus_SWE_let_fly_all_guns
+	x = -1
+	y = 1
+	prerequisite = { focus = IDC_purge_of_opponents }
+	relative_position_id = IDC_purge_of_opponents
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_fortification_of_the_motherland
+	icon = GFX_focus_generic_full_social_mobilization
+	x = 1
+	y = 1
+	prerequisite = { focus = IDC_expansion_of_military_investment }
+	prerequisite = { focus = IDC_complete_eradication_of_capitalism }
+	relative_position_id = IDC_expansion_of_military_investment
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_expansion_of_border_fortifications
+	icon = GFX_goal_generic_fortify_city
+	x = 0
+	y = 1
+	prerequisite = { focus = IDC_fortification_of_the_motherland }
+	relative_position_id = IDC_fortification_of_the_motherland
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+	}
+}
+shared_focus = {
+	id = IDC_establishment_of_indochina_union
+	icon = GFX_focus_PER_communist_afghanistan_intervention
+	x = 3
+	y = 1
+	prerequisite = { focus = IDC_revolution_must_be_fast focus = IDC_discussion_on_national_unification }
+	relative_position_id = IDC_revolution_must_be_fast
+	#mutually_exclusive = { }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
+		set_cosmetic_tag = IDC_indochina_union
+		add_stability = 0.05
+		custom_effect_tooltip = enter_tt
+		custom_effect_tooltip = IDC_establishment_of_indochina_union_tt
+		every_state = {
+			limit = {
+				OR = {
+					BA_vietnam_is = yes
+					BA_cambodia_is = yes
+					BA_laos_is = yes
+				}
+			}
+			add_core_of = ROOT
+		}
+	}
+}
+shared_focus = {
+	id = IDC_protected_motherland
+	icon = GFX_focus_SWE_marauder_bombers
+	x = 0
+	y = 1
+	prerequisite = { focus = IDC_expansion_of_border_fortifications }
+	relative_position_id = IDC_expansion_of_border_fortifications
+	#mutually_exclusive = { focus = IDC_our_nationalism }
+	search_filters = {
+		FOCUS_FILTER_POLITICAL
+	}
+	cost = 5
+	bypass = {
+	}
+	available = {
+	}
+	completion_reward = {
 	}
 }
