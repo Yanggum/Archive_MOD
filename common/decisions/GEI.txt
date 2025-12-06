@@ -1902,3 +1902,68 @@ GEI_the_twisted_will_decisions = {
 		} 	
 	}
 }
+
+BA_crisis_flood_of_machines = {
+	BA_crisis_flood_of_machines_1_mission = {
+		days_mission_timeout = 280
+		priority = 1
+		is_good = no
+   		activation = {
+    	}
+    	available = {
+			OR = {
+				KAI = { has_capitulated = yes }
+				KAI = { exists = no }
+				AND = {
+					BA_britain_scotland_control = yes
+					BA_britain_england_control = yes
+				}
+			}
+    	}
+    	cancel_trigger = {
+			
+    	}
+		visible = {
+		}
+    	complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = BA_crisis_Decagrammaton_next_complete
+				MISSION = BA_crisis_Decagrammaton_1_name
+			}
+			set_variable = {
+				crisis_Decagrammaton_1_mission = 3
+			}
+    	}
+		timeout_effect = {
+			add_ideas = idea_BA_crisis_flood_of_machines_1_failed
+			unlock_decision_tooltip = BA_crisis_flood_of_machines_1_failed_retry
+		}
+	}
+	BA_crisis_flood_of_machines_1_failed_retry = {
+		priority = 1
+		visible = {
+			has_country_flag = flag_BA_crisis_flood_of_machines_1_failed_retry
+			has_idea = idea_BA_crisis_flood_of_machines_1_failed
+		}
+    	available = {
+			OR = {
+				KAI = { has_capitulated = yes }
+				KAI = { exists = no }
+				controls_state = 126
+			}
+    	}
+		visible = {
+		}
+		days_remove = 15
+    	complete_effect = {
+			remove_ideas = idea_BA_crisis_flood_of_machines_1_failed
+			custom_effect_tooltip = {
+				localization_key = BA_crisis_Decagrammaton_next_complete
+				MISSION = BA_crisis_Decagrammaton_1_name
+			}
+			set_variable = {
+				crisis_Decagrammaton_1_mission = 3
+			}
+    	}
+	}
+}
