@@ -7810,7 +7810,7 @@ focus_tree = {
 			hidden_effect = { news_event = trinity_news_events.4 }
 			add_named_threat = {
 				threat = 4
-				name = TRN_creation_of_faction
+				name = TRN_eden_accord
 			}
 
 			if = {
@@ -7845,11 +7845,33 @@ focus_tree = {
 			activate_targeted_decision = { target = TRM decision = TRN_lend_our_support }
 			activate_targeted_decision = { target = TRM decision = TRN_international_propaganda }
 			activate_targeted_decision = { target = POL decision = TRN_border_fortifications }
-			set_variable = { TRN_support_HYA_var = 0 }
-			unlock_decision_tooltip = TRN_support_HYA_decision
 			hidden_effect = {
 				country_event = { id = trinity_events.36 days = 35 random_days = 35 } # 안보 상황
 			}
+		}
+	}
+
+	focus = { #
+		id = TRN_collaboration_with_hyakkiyako 
+		icon = GFX_focus_chi_mission_to_the_HYA
+		prerequisite = { 
+			focus = TRN_eden_accord
+		}
+		x = -1
+		y = 1
+		relative_position_id = TRN_eden_accord
+		cost = 5
+
+		available = {
+			has_government = fascism
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			set_variable = { TRN_support_HYA_var = 0 }
+			unlock_decision_tooltip = TRN_support_HYA_decision
 		}
 	}
 
@@ -8051,11 +8073,11 @@ focus_tree = {
 			hidden_effect = {
 				reduce_focus_completion_cost = {
 					focus = TRN_fate_of_german_culture
-					cost = 105
+					cost = 175
 				}
 				reduce_focus_completion_cost = {
 					focus = TRN_solving_social_problems
-					cost = 105
+					cost = 175
 				}
 			}
 			custom_effect_tooltip = TRN_new_trinity_culture_tt
@@ -8640,6 +8662,15 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.10
 			add_war_support = 0.02
+			add_to_variable = {
+				nagisa_faction_C = 2
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_J = -2
+				tooltip = nagisa_faction_J_tt
+			}
+			TRM_nagisa_faction_modified = yes
 			custom_effect_tooltip = {
 				localization_key = TRN_dismantled_Nazi_organization_tt
 				DECISION_NAME = TRN_Mika_social_problem
@@ -8660,15 +8691,6 @@ focus_tree = {
 					DATA = trinity_social_ploblem_events.12.t
 				}
 			}
-			add_to_variable = {
-				nagisa_faction_C = 2
-				tooltip = nagisa_faction_C_tt
-			}
-			add_to_variable = {
-				nagisa_faction_J = -2
-				tooltip = nagisa_faction_J_tt
-			}
-			TRM_nagisa_faction_modified = yes
 			
 		}
 	}
@@ -8719,7 +8741,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_dismantled_Nazi_organization
-		cost = 20
+		cost = 30
 		overlay = GFX_focus_fast_overlay_generic_clock
 
 		available = {
@@ -8762,7 +8784,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = TRN_dismantled_Nazi_organization
-		cost = 20
+		cost = 30
 		overlay = GFX_focus_fast_overlay_generic_clock
 
 		available = {
@@ -8883,7 +8905,7 @@ focus_tree = {
 		prerequisite = { 
 			focus = TRN_Integrity_of_Trinity 
 		}
-		x = 3
+		x = 5
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 10
@@ -8896,6 +8918,13 @@ focus_tree = {
 				ruling_only = yes
 			}
 			TRN_Mika_has_good_honor_trigger = yes
+		}
+
+		allow_branch = {
+			NOT = { 
+				has_completed_focus = TRN_supreme_leader
+				has_completed_focus = TRN_unprovable_problem
+			}
 		}
 
 		ai_will_do = {
@@ -8913,9 +8942,9 @@ focus_tree = {
 		id = TRN_supreme_leader
 		icon = GFX_goal_TRN_Messiah
 		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = 7
-		y = 1
-		relative_position_id = TRN_Integrity_of_Trinity
+		x = 4
+		y = 0
+		relative_position_id = TRN_codification_of_regime
 		cost = 10
 
 		mutually_exclusive = { focus = TRN_codification_of_regime }
@@ -8926,6 +8955,13 @@ focus_tree = {
 				ruling_only = yes
 			}
 			TRN_Mika_has_bad_honor_trigger = yes
+		}
+
+		allow_branch = {
+			NOT = { 
+				has_completed_focus = TRN_codification_of_regime
+				has_completed_focus = TRN_unprovable_problem
+			}
 		}
 
 		ai_will_do = {
@@ -14353,10 +14389,10 @@ focus_tree = {
 
 	focus = { # 우리만의 '에덴 조약'
 		id = TRN_union_with_gehenna
-		icon = GFX_focus_TRM_united_law
+		icon = GFX_focus_TRN_united_law
 		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = -2
-		y = 2
+		x = -3
+		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 5
 
@@ -14761,10 +14797,8 @@ focus_tree = {
 	focus = { #
 		id = TRN_TrinityMikaDiplomacySpainAttack
 		icon = GFX_focus_attack_Iberian
-		prerequisite = { 
-			focus = TRN_ultimatum_to_wild_hunt_academy
-			focus = TRN_invasion_kaiser
-		}
+		prerequisite = { focus = TRN_ultimatum_to_wild_hunt_academy }
+		prerequisite = { focus = TRN_invasion_kaiser }
 		x = -1
 		y = 1
 		relative_position_id = TRN_ultimatum_to_wild_hunt_academy
@@ -14899,6 +14933,10 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			any_state = {
+				TRN_poland_divine_mandate_highlight_trigger = yes
+				is_controlled_by = TRM
+			}
 		}
 		mutually_exclusive = {  }
 
@@ -14926,6 +14964,10 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			any_state = {
+				TRN_poland_divine_mandate_highlight_trigger = yes
+				is_controlled_by = TRM
+			}
 		}
 		mutually_exclusive = {  }
 
@@ -20239,7 +20281,7 @@ shared_focus = {# 군정 수립
 }
 shared_focus = { # 연합법
 	id = TRM_germany_union
-	icon = GFX_focus_TRM_united_law
+	icon = GFX_focus_TRN_united_law
 	cost = 8.00
 	prerequisite = { focus = TRM_after_war }
 	relative_position_id = TRM_after_war
