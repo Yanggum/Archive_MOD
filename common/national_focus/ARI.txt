@@ -1,12 +1,11 @@
+
 focus_tree = {
 	id = ARI_focus_tree
 	continuous_focus_position = {
 		x = 10
-		y = 10
+		y = 1200
 	}
 	shared_focus = Eden_formation_of_alliance_treaty_organization
-	shared_focus = NSAR_danzigs_ss
-	shared_focus = NSAR_german_ss
 
 	country = {
 		factor = 0
@@ -17,266 +16,451 @@ focus_tree = {
 	}
 	default = no
 
-
 	focus = {
-		id = NSAR_danzigs_ss
-		
-		icon = GFX_focus_GER_integrated_economies
-
-		text_icon = NSAR_ARI_focus_style
-
-		cost = 5
-
-		x = 34
-		y = 0
-
-		available = { 
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
-				limit = {
-					has_country_flag = NSAR_danzigs_ss_in_progress_flag
-				}
-				set_temp_variable = { temp_focus_days = 5 } #For tooltip purposes
-				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_inner_circle_focus_in_progress_tt
-						CHARACTER = saori
-						FLAG_DAYS = [?NSAR_danzigs_ss_in_progress_flag:days]
-					}
-					always = no 
-				}
-			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = ARI_focus_can_only_game_started_tt
-						CHARACTER = saori
-						FOCUS = GEH_zero_congress_focus
-					}
-					always = no
-				}
-			}
-		} 
-
-		bypass = {
-			original_tag = ARI
-			NOT = {
-				country_exists = NSD
-			}
-		}
-
-		ai_will_do = {
-			base = 999
-		}
-
-		available_if_capitulated = no
-
-		select_effect = {
-		}
-
-		completion_reward = {
-
-			effect_tooltip = {
-				NSD = {
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 200
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 50
-					}
-				}
-			}
-
-			hidden_effect = {
-				#NSD = { complete_national_focus = NSAR_danzigs_ss }
-			}
-		}
-	}
-
-
-	focus = {
-		id = NSAR_german_ss
-		
-		icon = GFX_focus_GER_expand_ss_security_duties
-
-		text_icon = NSAR_NSD_focus_style
-
-		cost = 5
-
-		x = 26
-		y = 0
-
-		available = {
-			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
-				limit = {
-					has_country_flag = NSAR_german_ss_in_progress_flag
-				}
-				set_temp_variable = { temp_focus_days = 5 } #For tooltip purposes
-				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = GER_inner_circle_focus_in_progress_tt
-						CHARACTER = reinhard_heydrich
-						FLAG_DAYS = [?NSAR_german_ss_in_progress_flag:days]
-					}
-					always = no 
-				}
-			}
-			else = { #NOT BEEN WORKED ON (Just Explain)
-				custom_override_tooltip = {
-					tooltip = {
-						localization_key = ARI_focus_can_only_game_started_tt
-						CHARACTER = reinhard_heydrich
-						FOCUS = GEH_zero_congress_focus
-					}
-					always = no
-				}
-			}
-		} 
-
-		bypass = {
-			original_tag = NSD
-			NOT = {
-				country_exists = ARI
-			}
-		}
-
-		ai_will_do = {
-			base = 999
-		}
-
-		available_if_capitulated = no
-
-		select_effect = {
-		}
-
-		completion_reward = {
-			add_stability = 0.05
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-
-	focus = {
-		id = NSAR_antitinity_joint_cooperation
-
-		prerequisite = {
-			focus = NSAR_danzigs_ss
-		}
-		
+		id = ARI_beatrice_influence
 		icon = GFX_focus_generic_army_doctrines_2
-
-		cost = 2
-
-		x = 0
-		y = 3
-
-		relative_position_id = NSAR_danzigs_ss
-
-		available = { 
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
-			}
-		} 
-
-		bypass = {
-			NOT = { has_idea = ARI_undisturbed_wareconomy }
-			NOT = { country_exists = NSD }
-			NOT = { has_completed_focus = NSAR_eagle_on_ashes }
-		}
-
-		bypass_effect = {
-			add_political_power = 20
-		}
-
-		ai_will_do = {
-			base = 999
-		}
-
-		available_if_capitulated = no
-
-		select_effect = {
-		}
-
+		cost = 5
+		x = 1
+		y = 0
 		completion_reward = {
-			custom_effect_tooltip = BYPASS_EFFECTS
-			effect_tooltip = {
-				add_political_power = 20
+			add_political_power = 60
+			add_offsite_building = {
+				type = arms_factory
+				level = 2
 			}
 		}
 	}
-
-
 	focus = {
-		id = NSAR_eagle_on_ashes
-		
-		icon = GFX_focus_GER_realpolitik
-
-		cost = 2
-
+		id = ARI_meeting_with_gematria
+		icon = GFX_focus_generic_improve_the_administration
 		prerequisite = {
-			focus = NSAR_german_ss
+			focus = ARI_beatrice_influence
 		}
-
+		cost = 5
 		x = 0
 		y = 3
-
-		relative_position_id = NSAR_german_ss
-
-		available = { 
-			custom_trigger_tooltip = {
-				tooltip = unlock_focuses
-				always = no
+		relative_position_id = ARI_beatrice_influence
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_national_development
+		icon = GFX_focus_generic_tank_production
+		prerequisite = {
+			focus = ARI_beatrice_influence
+		}
+		cost = 5
+		x = 2
+		y = 1
+		relative_position_id = ARI_beatrice_influence
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = ARI_pyeho_hakwon
+				add_idea = ARI_pyeho_hakwon_1
 			}
-		} 
+		}
+	}
+	focus = {
+		id = ARI_danzig_industrial_reactivation
+		icon = GFX_focus_generic_military_industry
+		prerequisite = {
+			focus = ARI_national_development
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_national_development
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = ARI_baltic_sea_trade_contact
+		icon = GFX_focus_generic_reinforcing_the_supply_network
+		prerequisite = {
+			focus = ARI_national_development
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_national_development
+		completion_reward = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 2
+			}
+			add_offsite_building = {
+				type = industrial_complex
+				level = 2
+			}
+		}
+	}
+	focus = {
+		id = ARI_secret_meeting_with_kriegsmarine
+		icon = GFX_focus_generic_naval_discipline
+		prerequisite = {
+			focus = ARI_baltic_sea_trade_contact
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_baltic_sea_trade_contact
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
 
+	################### 나치와 거리두는 외교중점
+
+	focus = {
+		id = ARI_distancing_from_nazi_ss
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		mutually_exclusive = {
+			focus = ARI_danzig_conference
+		}
+		x = 10
+		y = 0
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.05
+			}
+		}
+	}
+	focus = {
+		id = ARI_no_more_retreat
+		icon = GFX_focus_generic_limited_social_mobilization
+		prerequisite = {
+			focus = ARI_distancing_from_nazi_ss
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_distancing_from_nazi_ss
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_mental_armament
+		icon = GFX_focus_generic_japanese_imperial_glory
+		prerequisite = {
+			focus = ARI_distancing_from_nazi_ss
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_distancing_from_nazi_ss
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_opening_porta_fasis
+		icon = GFX_focus_generic_industry_1
+		prerequisite = {
+			focus = ARI_no_more_retreat
+			focus = ARI_mental_armament
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_distancing_from_nazi_ss
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_trumpet_blowing_angels
+		icon = GFX_focus_generic_monarchy_2
+		prerequisite = {
+			focus = ARI_opening_porta_fasis
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_opening_porta_fasis
+		completion_reward = {
+			add_stability = -0.05
+			every_state = {
+				limit = {
+					has_dynamic_modifier = ARI_two_cities
+				}
+				remove_dynamic_modifier = {
+					modifier = ARI_two_cities
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_apocalypse
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = ARI_trumpet_blowing_angels
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_trumpet_blowing_angels
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_no_change
+		icon = GFX_focus_generic_land_reclamation
+		prerequisite = {
+			focus = ARI_no_more_retreat
+			focus = ARI_mental_armament
+		}
+		cost = 5
+		x = -2
+		y = 2
+		relative_position_id = ARI_distancing_from_nazi_ss
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+
+	################### 나치와 가까이하는 외교중점
+
+	focus = {
+		id = ARI_danzig_conference
+		icon = GFX_goal_TRN_info_nazi
+		cost = 5
+		mutually_exclusive = {
+			focus = ARI_distancing_from_nazi_ss
+		}
+		x = 5
+		y = 0
+		relative_position_id = ARI_distancing_from_nazi_ss
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+	focus = {
+		id = ARI_channel_for_ss_activities
+		icon = GFX_goal_generic_construction2
+		prerequisite = {
+			focus = ARI_danzig_conference
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_danzig_conference
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_acceptance_of_german_exiles
+		icon = GFX_focus_eng_special_air_service
+		prerequisite = {
+			focus = ARI_danzig_conference
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_danzig_conference
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_second_exile
+		icon = GFX_focus_generic_subjugation
+		prerequisite = {
+			focus = ARI_acceptance_of_german_exiles
+			focus = ARI_channel_for_ss_activities
+		}
+		available = {
+			NOT = { country_exists = NSD }
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_acceptance_of_german_exiles
+		completion_reward = {
+			ARI = {
+				country_event = {
+					id = ARI_event.23
+					hours = 8
+				}
+			}
+			hidden_effect = {
+				swap_ideas = {
+					remove_idea = BA_student_conscription_idea
+					add_idea = BA_student_conscription_week_idea
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_how_to_hate
+		icon = GFX_focus_generic_military_mission
+		prerequisite = {
+			focus = ARI_danzig_conference
+		}
+		cost = 5
+		x = 2
+		y = 2
+		relative_position_id = ARI_danzig_conference
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = {
+		id = ARI_second_arius
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = {
+			focus = ARI_acceptance_of_german_exiles
+		}
+		prerequisite = {
+			focus = ARI_channel_for_ss_activities
+		}
+		cost = 5
+		x = 1
+		y = 2
+		relative_position_id = ARI_acceptance_of_german_exiles
+		completion_reward = {
+			every_state = {
+				limit = {
+					has_dynamic_modifier = ARI_two_cities
+				}
+				remove_dynamic_modifier = {
+					modifier = ARI_two_cities
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_holy_war
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = ARI_second_arius
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_second_arius
+		available = {
+			is_subject = no
+			has_war_with = TRM
+		}
 		bypass = {
-			NSD = {
-				exists = yes
-				has_capitulated = no
-				NOT = {
+			TRM = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject = yes
+					is_in_faction_with = ROOT
+				}
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = {
 					has_war_with = TRM
 				}
+				custom_effect_tooltip = ARI_acceptance_of_exiles_tt
+				hidden_effect = {
+					add_ideas = ARI_german_defectors_1
+				}
+				division_template = {
+					name = "Deutsches Freikorps"
+					priority = 1
+					division_names_group = GEK_INF_01
+					is_locked = yes
+					regiments = {
+						infantry = {
+							x = 0
+							y = 0
+						}
+						infantry = {
+							x = 0
+							y = 1
+						}
+						infantry = {
+							x = 0
+							y = 2
+						}
+						infantry = {
+							x = 1
+							y = 0
+						}
+						infantry = {
+							x = 1
+							y = 1
+						}
+						infantry = {
+							x = 1
+							y = 2
+						}
+					}
+					support = {
+						engineer = {
+							x = 0
+							y = 0
+						}
+						recon = {
+							x = 0
+							y = 1
+						}
+						artillery = {
+							x = 0
+							y = 2
+						}
+					}
+				}
+				TRM = {
+					add_ideas = ARI_german_defectors_2
+					country_event = {
+						id = ARI_event.70
+					}
+				}
 			}
-		}
-
-		bypass_effect = {
-			add_political_power = 20
-		}
-
-		ai_will_do = {
-			base = 999
-		}
-
-		available_if_capitulated = no
-
-		select_effect = {
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = BYPASS_EFFECTS
-			effect_tooltip = {
-				add_political_power = 20
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = TRM
+					}
+				}
+				effect_tooltip = {
+					custom_effect_tooltip = ARI_acceptance_of_exiles_tt
+					TRM = {
+						add_ideas = ARI_german_defectors_2
+						country_event = {
+							id = ARI_event.71
+						}
+					}
+				}
 			}
 		}
 	}
+}
+
+focus_tree = {
+	id = ARI_OLD_focus_tree
+	continuous_focus_position = {
+		x = 10
+		y = 10
+	}
+	shared_focus = Eden_formation_of_alliance_treaty_organization
+
+	country = {
+		factor = 0
+		modifier = {
+			add = 0
+			tag = ARI
+		}
+	}
+	default = no
+
+
 	focus = {
 		id = ARI_use_hanran		#혼란 이용
 		icon = GFX_goal_generic_major_war
@@ -1239,7 +1423,6 @@ focus_tree = {
 		id = ARI_ss_rejection
 		prerequisite = {
 			focus = ARI_from_the_bottom_up
-			focus = NSAR_eagle_on_ashes
 		}
 		mutually_exclusive = {
 			focus = ARI_second_hideout
@@ -1489,7 +1672,6 @@ focus_tree = {
 			focus = ARI_exercise_of_dominance
 		}
 		prerequisite = {
-			focus = NSAR_antitinity_joint_cooperation
 		}
 		mutually_exclusive = {
 			focus = ARI_ss_rejection
@@ -1504,9 +1686,6 @@ focus_tree = {
 			NOT = {
 				has_global_flag = NSD_the_SS_went_to_america
 				has_global_flag = NSD_the_SS_went_to_gottland
-			}
-			NOT = {
-				has_completed_focus = NSAR_eagle_on_ashes
 			}
 		}
 		bypass = {
