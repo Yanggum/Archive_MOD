@@ -11,10 +11,10 @@ country_event = {
 			base = 100
 		}
 		name = khmer_krom_integration_requirements_event_yes
-		1038 = {
+		1068 = {
 			set_demilitarized_zone = no
 		}
-		1038 = {
+		1068 = {
 			transfer_state_to = CAM
 		}
 		CAM = {
@@ -29,12 +29,12 @@ country_event = {
 			base = 0
 		}
 		name = khmer_krom_integration_requirements_events_no
-		1038 = {
+		1068 = {
 			set_demilitarized_zone = no
 		}
 		CAM = {
 			create_wargoal = {
-				target = 1038.owner
+				target = 1068.owner
 				type = take_state
 			}
 		}
@@ -267,6 +267,110 @@ country_event = {
 	# A real shame
 	option = {
 		name = IDC_event.3.a
+		ai_chance = {
+			factor = 100
+		}
+		add_political_power = 75
+	}
+}
+
+
+# Congolese Nationalists Approach us for aid - event for SOV or GER
+country_event = {
+	id = IDC_event.4
+	title = IDC_event.4.t
+	desc = IDC_event.4.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	# By all means
+	option = {
+		name = IDC_event.4.a
+		ai_chance = {
+			factor = 95
+		}
+		FROM = {
+			country_event = {
+				id = IDC_event.5
+				hours = 12
+				random_hours = 24
+			}
+		}
+	}
+	# There is no reason to intervene 
+	option = {
+		name = IDC_event.4.b
+		ai_chance = {
+			factor = 0.001
+		}
+		FROM = {
+			country_event = {
+				id = IDC_event.6
+				hours = 12
+				random_hours = 24
+			}
+		}
+	}
+}
+
+# [FROM.GetNameDefCap] decides to aid us - event for COG
+country_event = {
+	id = IDC_event.5
+	title = IDC_event.5.t
+	desc = IDC_event.5.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	# Perfect
+	option = {
+		name = IDC_event.5.a
+		ai_chance = {
+			factor = 100
+		}
+		add_war_support = 0.05
+		if = {
+			limit = {
+				has_idea = IDC_international_aid_idea
+			}
+			modify_timed_idea = {
+				idea = IDC_international_aid_idea
+				days = 280
+			}
+		}
+		else = {
+			add_timed_idea = {
+				idea = IDC_international_aid_idea
+				days = 280
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT 
+			}
+			random_select_amount = 1
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+}
+
+# FROM.GetName decides not to aid us - event for COG
+country_event = {
+	id = IDC_event.6
+	title = IDC_event.6.t
+	desc = IDC_event.6.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+	is_triggered_only = yes
+	# A real shame
+	option = {
+		name = IDC_event.6.a
 		ai_chance = {
 			factor = 100
 		}
