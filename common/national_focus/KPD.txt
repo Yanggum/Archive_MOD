@@ -866,6 +866,11 @@ focus_tree = {
 		bypass = {
 			NOT = { has_war_with = TRM }
 		}
+		bypass_effect = {
+			set_technology = {
+				kivotos_artificial_halo_replica_tech = 1
+			}
+		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
@@ -1004,8 +1009,12 @@ focus_tree = {
 			remove_ideas = TCA_anti_trinity_war_idea
 			hidden_effect = {
 				country_event = {
+					id = KPD_event.12
+					days = 5
+				}
+				country_event = {
 					id = KPD_event.13
-					days = 10
+					days = 15
 				}
 			}
 			set_cosmetic_tag = TRM_collapse_win
@@ -1068,6 +1077,10 @@ focus_tree = {
 				limit = { has_idea = KPD_coalition_split_accelerates }
 				remove_ideas = KPD_coalition_split_accelerates
 			}
+
+			GER_add_or_modify_politburo = yes
+			add_to_variable = { GER_politburo_party_popularity_stability_factor = 0.05 tooltip = party_popularity_stability_factor_tt }
+			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.05 tooltip = defensive_war_stability_factor_tt }
 		}
 	}
 	focus = { #반대 좌파 숙청
@@ -1094,10 +1107,9 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			GER_add_or_modify_politburo = yes
-
 			if = { limit = { has_character = KPD_max_seydewitz } KPD_max_seydewitz = { retire = yes } }
 			if = { limit = { has_character = KPD_heinrich_brandler } KPD_heinrich_brandler = { retire = yes } }
+			if = { limit = { has_character = KPD_wilhelm_reich } KPD_wilhelm_reich = { retire = yes } }
 			if = {
 				limit = { has_idea = KPD_conflict_with_the_social_democratic_left }
 				remove_ideas = KPD_conflict_with_the_social_democratic_left
@@ -1107,6 +1119,7 @@ focus_tree = {
 				remove_ideas = KPD_coalition_split_accelerates
 			}
 
+			GER_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
 			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
 		}
@@ -1371,7 +1384,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = KPD_dissolution_of_joint_supreme_command
 		available = {
-			has_political_power > 200
+			has_political_power > 100
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1380,12 +1393,12 @@ focus_tree = {
 		continue_if_invalid = yes
 		cancelable = no
 		select_effect = {
-			add_political_power = -200
+			add_political_power = -100
 		}
 		completion_reward = {
 			custom_effect_tooltip = SOV_focus_select_effect_tt
 			effect_tooltip = {
-				add_political_power = -200
+				add_political_power = -100
 			}
 			custom_effect_tooltip = SOV_focus_complete_effect_tt
 			remove_ideas = KPD_economic_vacuum
@@ -1415,12 +1428,24 @@ focus_tree = {
 				remove_idea = KPD_economic_vacuum
 				add_idea = KPD_factory_councils
 			}
-			custom_effect_tooltip = KPD_establishment_of_factory_councils_1_tt
-			country_event = { id = KPD_event.14 days = 95 }
-			custom_effect_tooltip = KPD_establishment_of_factory_councils_2_tt
-			country_event = { id = KPD_event.15 days = 190 }
-			custom_effect_tooltip = KPD_establishment_of_factory_councils_3_tt
-			country_event = { id = KPD_event.16 days = 285 }
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_time_elapsed_after_focus_completion_BA
+				DAY = 125
+			}
+			country_event = { id = KPD_event.14 days = 125 }
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_time_elapsed_after_focus_completion_BA
+				DAY = 205
+			}
+			country_event = { id = KPD_event.15 days = 205 }
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_time_elapsed_after_focus_completion_BA
+				DAY = 380
+			}
+			country_event = { id = KPD_event.16 days = 380 }
 		}
 	}
 	focus = {
@@ -1496,6 +1521,115 @@ focus_tree = {
 				custom_effect_tooltip = available_political_advisor
 				show_ideas_tooltip = KPD_fritz_selbmann_idea
 			}
+		}
+	}
+	focus = {
+		id = KPD_free_organization_of_unions
+		icon = GFX_focus_AFG_education_reform
+		prerequisite = { focus = KPD_expulsion_of_stalinists }
+
+		x = 2
+		y = 1
+		relative_position_id = KPD_expulsion_of_stalinists
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+			add_ideas = idea_KPD_free_organization_of_unions
+			custom_effect_tooltip = generic_skip_one_line_tt
+			country_event = KPD_antileft_event.1
+		}
+	}
+	focus = {
+		id = KPD_trade_union_integration
+		icon = GFX_focus_PER_communist_afghanistan_intervention
+		prerequisite = { focus = KPD_purge_of_anti_leftists }
+
+		x = -2
+		y = 1
+		relative_position_id = KPD_purge_of_anti_leftists
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+			add_ideas = idea_KPD_trade_union_integration
+			every_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			country_event = KPD_soviet_event.1
+		}
+	}
+	focus = {
+		id = KPD_economic_reform_from_below
+		icon = GFX_focus_DEN_no_regulations
+		prerequisite = { focus = KPD_free_organization_of_unions }
+
+		x = 1
+		y = 2
+		relative_position_id = KPD_free_organization_of_unions
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_economic_reform_from_above
+		icon = GFX_focus_DEN_heavy_regulations
+		prerequisite = { focus = KPD_trade_union_integration }
+
+		x = -1
+		y = 2
+		relative_position_id = KPD_trade_union_integration
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_risen_from_ruins
+		icon = GFX_focus_AFG_helmand_river_authority
+		prerequisite = { focus = KPD_economic_reform_from_above focus = KPD_economic_reform_from_below }
+		prerequisite = { focus = KPD_nationalize_industries }
+
+		x = 0
+		y = 2
+		relative_position_id = KPD_nationalize_industries
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
 		}
 	}
 }

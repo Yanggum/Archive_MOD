@@ -8212,7 +8212,7 @@ shared_focus = { #동독 통일
 			controls_state = 1069
 		}
 	}
-	x = 8
+	x = 4
 	y = 0
 	cost = 2
 	completion_reward = {
@@ -8266,7 +8266,7 @@ shared_focus = { #동독 통일
 	}
 }
 
-shared_focus = { #서부 전쟁
+shared_focus = { #동부 전쟁
 	id = GE2_ambition_for_the_west
 	icon = GFX_goal_generic_occupy_states_ongoing_war
 	prerequisite = {
@@ -8304,7 +8304,7 @@ shared_focus = { #서부 전쟁
 	}
 }
 
-shared_focus = { #서부 통합
+shared_focus = { #동부 통합
 	id = GE2_united_homeland
 	icon = GFX_focus_generic_public_works
 	prerequisite = {
@@ -8561,7 +8561,7 @@ shared_focus = { #서부 공세
 			controls_state = 978
 	}
 	x = 1
-	y = 2
+	y = 3
 	cost = 5
 	completion_reward = {
 		every_other_country = {
@@ -8625,7 +8625,7 @@ shared_focus = { #서부 공세
 		}
 	}
 	x = 0
-	y = 3
+	y = 1
 	cost = 5
 	completion_reward = {
 		add_political_power = 120
@@ -8655,12 +8655,15 @@ shared_focus = { #서부 공세
 			}
 		}
 		if = {
-			limit = { has_idea = GER_national_revitalization_ns }
+			limit = {
+				has_idea = GER_national_revitalization_ns
+			}
 			modify_timed_idea = {
 				idea = GER_national_revitalization_ns
 				days = 545
 			}
-		} else = {
+		}
+		else = {
 			add_timed_idea = {
 				idea = GER_national_revitalization_ns
 				days = 545
@@ -8679,14 +8682,100 @@ shared_focus = { # 독일 통일
 	relative_position_id = GE2_german_unification
 	available = {
 	}
-	x = -9
-	y = 2
+	x = -7
+	y = 1
 	cost = 5
 	completion_reward = {
 	}
 }
 
 # 종교 중점들
+
+shared_focus = { #마지노선 문제
+	id = GE1_maginot_line_garrison_issue
+	icon = GFX_focus_attack_france
+	prerequisite = {
+		focus = GE1_start_focus
+	}
+	relative_position_id = GE1_start_focus
+	available = {
+	}
+	x = -1
+	y = 1
+	cost = 5
+	completion_reward = {
+	}
+}
+
+shared_focus = { #서부 통일
+	id = GE1_western_unification
+	icon = GFX_focus_AUS_disregard_the_treaties
+	prerequisite = {
+		focus = GE1_start_focus
+	}
+	relative_position_id = GE1_start_focus
+	available = {
+	}
+	x = -3
+	y = 1
+	cost = 5
+	completion_reward = {
+	}
+}
+
+shared_focus = { # 룩셈부르크
+	id = GE1_attack_on_luxembourg
+	icon = GFX_focus_attack_HEU
+	prerequisite = {
+		focus = GE1_western_unification
+	}
+	mutually_exclusive = {
+		focus = GE1_cooperation_with_luxembourg
+	}
+	relative_position_id = GE1_western_unification
+	available = {
+	}
+	x = 1
+	y = 2
+	cost = 5
+	completion_reward = {
+	}
+}
+
+shared_focus = { # 룩셈부르크
+	id = GE1_cooperation_with_luxembourg
+	icon = GFX_goal_HEU_fnrtpa
+	prerequisite = {
+		focus = GE1_western_unification
+	}
+	mutually_exclusive = {
+		focus = GE1_attack_on_luxembourg
+	}
+	relative_position_id = GE1_western_unification
+	available = {
+	}
+	x = 3
+	y = 2
+	cost = 5
+	completion_reward = {
+	}
+}
+
+shared_focus = { # 서방 연합국 투자 유치
+	id = GE1_attracting_defense_investment_from_western_allies
+	icon = GFX_focus_AUS_raid_military_storages
+	prerequisite = {
+		focus = GE1_western_unification
+	}
+	relative_position_id = GE1_western_unification
+	available = {
+	}
+	x = 0
+	y = 3
+	cost = 5
+	completion_reward = {
+	}
+}
 
 
 shared_focus = { #경제 정책
@@ -8728,15 +8817,6 @@ shared_focus = { #산업 애국주의
 		}
 		else = {
 			remove_ideas = GEK_attacked_industry_1
-		}
-		if = {
-			limit = {
-				has_idea = GER_national_revitalization
-			}
-			modify_timed_idea = {
-				idea = GER_national_revitalization
-				days = 120
-			}
 		}
 	}
 }
@@ -8915,6 +8995,16 @@ shared_focus = { #전시 산업 재건
 				level = 2
 			}
 		}
+		random_owned_controlled_state = {
+			limit = {
+				BA_is_GER_core = yes
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+			}
+		}
 	}
 }
 shared_focus = { #동독일 수복
@@ -8922,9 +9012,8 @@ shared_focus = { #동독일 수복
 	icon = GFX_goal_generic_occupy_states_ongoing_war
 	prerequisite = {
 		focus = GEK_RM_eco_focus_1
-	}
-	prerequisite = {
 		focus = GEK_RM_eco_focus_2
+		focus = GE1_attracting_defense_investment_from_western_allies
 	}
 	available = {
 		is_subject = no
@@ -8962,7 +9051,7 @@ shared_focus = { #동독일 수복
 	}
 	relative_position_id = GEK_RM_eco_focus_0
 	x = 0
-	y = 3
+	y = 4
 	cost = 2
 	completion_reward = {
 		every_other_country = {
@@ -9019,7 +9108,7 @@ shared_focus = { #라인 강의 기적
 	}
 	relative_position_id = GEK_RM_eco_focus_7
 	x = 0
-	y = 3
+	y = 1
 	cost = 2
 	completion_reward = {
 		add_political_power = 120
@@ -9069,6 +9158,9 @@ shared_focus = { #종교 정책
 	prerequisite = {
 		focus = GE1_start_focus
 		focus = GE2_start_focus
+	}
+	allow_branch = {
+		always = no
 	}
 	relative_position_id = GE1_start_focus
 	x = 1
@@ -9616,7 +9708,7 @@ shared_focus = { #학생 정책
 		focus = GE2_start_focus
 	}
 	relative_position_id = GE1_start_focus
-	x = 6
+	x = 2
 	y = 1
 	cost = 2
 	completion_reward = {
