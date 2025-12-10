@@ -1,0 +1,8552 @@
+﻿add_namespace = trinity_system_events # 시스템용 이벤트 hidden 이벤트를 처리할때 사용합니다.
+add_namespace = trinity_events # 기본 이벤트( 미카 루트 )
+add_namespace = trinity_flavor_events # 플레이버 이벤트
+add_namespace = trinity_news_events # 뉴스 이벤트
+add_namespace = trinity_culture_events # 트리니티 문화 개조
+add_namespace = trinity_social_ploblem_events # 사회문제발생!!
+add_namespace = trinity_honor_events # 미카용 명예
+add_namespace = trinity_divine_mandate_events # 신성통치령 총독부
+add_namespace = trinity_foreign_policy_events # 외교
+# /* 나기사 루트 코드용
+# 기본적으로 기존 코드인 trinity_events를 그대로 사용해서 혼동을 줄이되, 나기사 루트는 _nagisa로 구분 */
+add_namespace = trinity_events_nagisa # 기본 이벤트
+add_namespace = trinity_events_nagisa_faction # 파벌 이벤트
+add_namespace = trinity_events_nagisa_diplomacy # 외교 이벤트
+add_namespace = trinity_events_nagisa_election # 선거 이벤트 (민주 나기사용)
+add_namespace = trinity_events_nagisa_misono_mission # 미션
+
+# trinity_events 1-14, 33 = 인트로 및 시스템 이벤트
+# trinity_flavor_events 1- 999 = 플레이버 이벤트 
+# trinity_events 34, 38, 40 = 학원경제개발부 이벤트
+# trinity_foreign_policy_events = 외교 이벤트
+# trinity_flavor_events.9999~10000 = 디버깅 및 학생 초상화 변경 이벤트 가능하면 이 위로 이벤트 작성
+
+country_event = {
+	id = trinity_system_events.10000
+	title = trinity_system_events.10000.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika"
+		name = trinity_system_events.1000.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_FILIUS_SECT } }
+			}
+		}
+		set_country_flag = TRN_Mika_ai
+		country_event = { id = trinity_system_events.10001 hours = 06 }
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Nagisa"
+		name = trinity_system_events.1000.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Nagisa_ai
+	}
+}
+country_event = {
+	id = trinity_system_events.10001
+	title = trinity_system_events.10001.t
+	desc = trinity_system_events.10000.d
+	
+	hidden = yes
+	is_triggered_only = yes
+	trigger = { is_ai = yes }
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika high honor"
+		name = trinity_system_events.10001.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_high_honor_ai
+	}
+
+	option = {
+		log = "TRINITY POLITICAL PATH - Mika low honor"
+		name = trinity_system_events.10001.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_HIGH_HONOR } }
+				NOT = { has_game_rule = { rule = TRN_PATH option = TRN_PATH_PATER_SECT_LOW_HONOR } }
+			}
+		}
+		set_country_flag = TRN_Mika_low_honor_ai
+	}
+}
+country_event = { # 리워크 중인 중점과 새로운 사건을 불러옵니다.
+	id = trinity_system_events.0
+	title = trinity_system_events.0.t
+	desc = trinity_system_events.0.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		TRM = { TRN_init_rework_setting_effect = yes }
+	}
+
+	option = {
+		name = trinity_system_events.0.a
+    	}
+}
+# 명예, 사쿠라코 이너서클 중점 완료를 위해 사용됩니다. 
+# 이벤트 ID는 trinity_honor_events.9 입니다.
+country_event = { 
+	id = trinity_system_events.1
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = TRN_jewel_of_the_trinity_faith
+			}
+			complete_national_focus = {
+				focus = TRN_jewel_of_the_trinity_faith
+				use_side_message = yes
+				originator_name = TRN_Utazumi_Sakurako
+			}
+			clr_country_flag = TRN_jewel_of_the_trinity_faith_in_progress_flag
+		}
+	}
+}
+ # 명예, 츠루기 이너서클 중점 완료를 위해 사용됩니다.
+ # 이벤트 ID는  trinity_events.15  입니다.
+country_event = {
+	id = trinity_system_events.2
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = TRN_improving_JTF
+			}
+			complete_national_focus = {
+				focus = TRN_improving_JTF
+				use_side_message = yes
+				originator_name = TRN_Kenzaki_Tsurugi
+			}
+			clr_country_flag = TRN_improving_JTF_in_progress_flag
+		}
+	}
+}
+
+########################## 시작
+country_event = { # 티파티 통제
+	id = trinity_events.1
+	title = trinity_events.1.t
+	desc = trinity_events.1.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.1.a
+		remove_trait = {
+			character = TRN_Kirifuji_Nagisa
+			slot = political_advisor
+			trait = b_cjstkdmldusgkq
+		}
+		custom_effect_tooltip = nagisa_faction_A_exit
+		clr_country_flag = nagisa_faction_A_flag
+		add_to_variable = {
+			nagisa_faction_A = -15
+			tooltip = nagisa_faction_A_tt
+		}
+		add_to_variable = {
+			nagisa_faction_C = 15
+			tooltip = nagisa_faction_C_tt
+		}
+		hidden_effect = {
+			country_event = { id = trinity_events.2 days = 04 }
+		}
+    	}
+
+	after = {
+		TRM_nagisa_faction_modified = yes
+	}
+}
+country_event = { # 바시스 스콜라 시위
+	id = trinity_events.2
+	title = trinity_events.2.t
+	desc = trinity_events.2.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.2.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
+		}
+		set_temp_variable = { TRN_Honor_change = 1 }
+		TRN_add_Honor = yes
+		add_to_variable = {
+			nagisa_faction_A = 2
+			tooltip = nagisa_faction_A_tt
+		}
+		add_to_variable = {
+			nagisa_faction_C = -2
+			tooltip = nagisa_faction_C_tt
+		}
+		TRM_nagisa_faction_modified = yes
+    	}
+	option = {
+		name = trinity_events.2.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		add_stability = -0.05
+		add_to_variable = {
+			nagisa_faction_A = -1
+			tooltip = nagisa_faction_A_tt
+		}
+		add_to_variable = {
+			nagisa_faction_c = 1
+			tooltip = nagisa_faction_C_tt
+		}
+		TRM_nagisa_faction_modified = yes
+       
+    	}
+}
+country_event = { # 트리니티 헌법법
+	id = trinity_events.3
+	title = trinity_events.3.t
+	desc = trinity_events.3.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.3.a
+		add_political_power = 50
+		add_to_variable = {
+			nagisa_faction_C = -3
+			tooltip = nagisa_faction_A_tt
+		}
+		add_to_variable = {
+			nagisa_faction_C = -2
+			tooltip = nagisa_faction_B_tt
+		}
+		add_to_variable = {
+			nagisa_faction_C = 5
+			tooltip = nagisa_faction_C_tt
+		}
+		hidden_effect = {
+			country_event = { id = trinity_events.5 days = 08 } # 마지막 자유 연설
+		}
+    	}
+	after = {
+		TRM_nagisa_faction_modified = yes
+	}
+}
+country_event = { # 미소노 미카 법
+	id = trinity_events.4
+	title = trinity_events.4.t
+	desc = trinity_events.4.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.4.a
+		swap_ruler_traits = {
+			remove = TRN_archangel
+			add = TRN_archangel_2
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.20
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.20
+		}
+    	}
+}
+country_event = { # 마지막 자유 발언
+	id = trinity_events.5
+	title = trinity_events.5.t
+	desc = trinity_events.5.desc
+	picture = GFX_report_event_soviet_purge_speech
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.5.a
+
+    	}
+}
+country_event = { # 2달 전
+	id = trinity_events.6
+	title = trinity_events.6.t
+	desc = trinity_events.6.desc
+	picture = GFX_report_event_generic_street_ruin
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.6.a
+		country_event = { id = trinity_events.7 days = 04 } # 호스트 선출
+    	}
+}
+country_event = { # 호스트 선출
+	id = trinity_events.7
+	title = trinity_events.7.t
+	desc = trinity_events.7.desc
+	picture = GFX_report_event_trinity_seia
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.7.a
+		country_event = { id = trinity_events.8 days = 04 }
+		add_country_leader_role = {
+			character = TRN_Yurizono_Seia
+			promote_leader = yes
+			country_leader = {
+				ideology = tea_party_ideology
+				expire = "1965.1.1.1"
+				traits = {
+					TRN_seia_trait
+				}
+			}
+		}
+    	}
+}
+country_event = { # 다락방의 공주님
+	id = trinity_events.8
+	title = trinity_events.8.t
+	desc = trinity_events.8.desc
+	picture = GFX_event_Mika_memories
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.8.a
+		country_event = { id = trinity_events_nagisa.21 days = 03 }
+    	}
+}
+country_event = { # 가슴에 3발
+	id = trinity_events.9
+	title = trinity_events.9.t
+	desc = trinity_events.9.desc
+	picture = GFX_report_walter_ppk
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.9.a
+		add_stability = -0.05
+		swap_ideas = {
+			remove_idea = TRN_political_instability_ns
+			add_idea = TRN_broken_balance_ns
+		}
+		add_trait = {
+			character = TRN_Yurizono_Seia
+			slot = political_advisor
+			trait = TRN_Hurt_Seia
+		}
+		country_event = { id = trinity_events.10 days = 04 }
+
+		GEH = {
+			country_event = { id = GEH.flavor_event.26 days = 08 } #유리조노 세이아의 죽음
+		}
+
+		hidden_effect = {
+			remove_trait = {
+				character = TRN_Yurizono_Seia
+				slot = political_advisor
+				trait = b_dPdjsdmleocjstk
+			}
+			news_event = {
+				id = trinity_news_events.1
+			}
+		}
+		add_country_leader_role = {
+			character = TRN_empty
+			promote_leader = yes
+			country_leader = {
+				ideology = tea_party_ideology
+				expire = "1965.1.1.1"
+				traits = {
+
+				}
+			}
+		}
+		add_country_leader_role = {
+			character = TRN_chika_amabe
+			promote_leader = yes
+			country_leader = {
+				ideology = marxism
+				expire = "1965.1.1.1"
+				traits = {
+
+				}
+			}
+		}
+    	}
+}
+country_event = { # 사망 선언
+	id = trinity_events.10
+	title = trinity_events.10.t
+	desc = trinity_events.10.desc
+	picture = GFX_event_Trinity_Hospital 
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.10.a
+		effect_tooltip = {
+			TRN_Yurizono_Seia = { custom_effect_tooltip = kill_character_tt }
+		}
+		country_event = { id = trinity_events.33 days = 01 }
+		hidden_effect = {
+			TRN_Yurizono_Seia = { set_character_flag = TRN_fake_death_flag }
+			country_event = { id = trinity_events.12 days = 10 } # 토마스 서머 수사
+		}
+		add_country_leader_role = {
+			character = TRN_Natsuki_Kato
+			promote_leader = yes
+			country_leader = {
+				ideology = marxism
+				expire = "1965.1.1.1"
+				traits = {
+
+				}
+			}
+		}
+		custom_effect_tooltip = nagisa_faction_B_exit
+		clr_country_flag = nagisa_faction_B_flag
+    	}
+
+	after = {
+		TRM_nagisa_faction_modified = yes
+	}
+}
+unit_leader_event = { # 미카의 호스트 취임
+	id = trinity_events.11
+	title = trinity_events.11.t
+	desc = trinity_events.11.desc
+	picture = GFX_event_none_picture
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.11.a
+		add_country_leader_role = {
+			character = TRN_Misono_Mika
+			promote_leader = yes
+			country_leader = {
+				ideology = tea_party_ideology
+				expire = "1965.1.1.1"
+				traits = { 
+					TRN_archangel
+				}
+				desc = TRN_Misono_Mika_leader_desc
+			}
+		}
+
+		hidden_effect = {
+			TRN_Utazumi_Sakurako = {
+				unit_leader_event = { id = trinity_events.13 days = 10 } # 정의실현부 음모
+			}
+		}
+    	}
+}
+country_event = { # 토마스 서머 수사
+	id = trinity_events.12
+	title = trinity_events.12.t
+	desc = trinity_events.12.desc
+	picture = GFX_report_event_soviet_purge_officers_02
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.12.a
+		add_manpower = -1
+		add_stability = 0.01
+		hidden_effect = {
+			country_event = { id = trinity_events.14 days = 08 } # 세이아 장례식
+		}
+    	}
+}
+unit_leader_event = { # 시스터후드의 음모?
+	id = trinity_events.13
+	title = trinity_events.13.t
+	desc = trinity_events.13.desc
+	picture = GFX_report_event_soviet_purge_officers_02
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.13.a
+		add_stability = -0.03
+    	}
+}
+country_event = { # 세이아 장례식
+	id = trinity_events.14
+	title = trinity_events.14.t
+	desc = trinity_events.14.desc
+	picture = GFX_report_event_generic_funeral
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.14.a
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
+		}
+		add_popularity = { 
+			ideology = communism 
+			popularity = 0.03
+		}
+    	}
+
+	option = {
+		name = trinity_events.14.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 30
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		add_popularity = { 
+			ideology = communism 
+			popularity = -0.03
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
+		TRN_add_Honor = yes
+    	}
+}
+country_event = { # 정의실현부 정치의원
+	id = trinity_events.15
+	title = trinity_events.15.t
+	desc = trinity_events.15.desc
+	picture = GFX_report_justice_take_force
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.15.a
+		add_political_power = -25
+		add_command_power = -10
+		set_country_flag = { flag = TRN_improving_JTF_in_progress_flag days = 141 value = 1 }
+		hidden_effect = { 
+			activate_shine_on_focus = TRN_improving_JTF
+			country_event = { id = trinity_system_events.2 days = 140 }
+		}
+    	}
+}
+country_event = { # 상투스 분파의 운명
+	id = trinity_events.16
+	title = trinity_events.16.t
+	desc = trinity_events.16.desc
+	picture = GFX_report_event_generic_trinity_prison
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = marxism
+					traits = { }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_events.16.a
+		set_temp_variable = { TRN_Honor_change = -3 }
+		TRN_add_Honor = yes
+
+		set_party_name = {
+			ideology = communism
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
+		}
+		add_popularity = { ideology = communism popularity = -0.06 }
+		add_to_variable = {
+			nagisa_faction_B = -10
+			tooltip = nagisa_faction_B_tt
+		}
+    	}
+	after = {
+		set_country_flag = banned_communism_flag
+		TRM_nagisa_faction_modified = yes
+
+		effect_tooltip = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = marxism
+					traits = { }
+				}
+			}
+		}
+	}
+}
+country_event = { # 필리우스 분파의 운명
+	id = trinity_events.17
+	title = trinity_events.17.t
+	desc = trinity_events.17.desc
+	picture = GFX_report_event_generic_trinity_prison
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = tea_party_neutrality_ideology
+					traits = { }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_events.17.a
+		ai_chance = {
+			base = 0
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_low_honor_ai
+			}
+		}
+		set_temp_variable = { TRN_Honor_change = -5 }
+		TRN_add_Honor = yes
+		add_popularity = { ideology = neutrality popularity = -0.06 }
+		set_country_flag = TRN_Nagisa_is_imprisoned
+    	}
+
+	option = {
+		name = trinity_events.17.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 3
+				has_country_flag = TRN_Mika_high_honor_ai
+			}
+		}
+		add_popularity = { ideology = neutrality popularity = -0.04 }
+		add_stability = 0.02
+    	}
+
+    after = {
+		hidden_effect = { 
+			set_country_flag = banned_neutrality_flag
+			country_event = { id = trinity_flavor_events.32 days = 14 } 
+		}
+
+		set_party_name = {
+			ideology = neutrality
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
+		}
+		
+		custom_effect_tooltip = tooltip_white_line
+		remove_advisor_role = {
+			character = TRN_Kirifuji_Nagisa
+			slot = political_advisor
+		}
+		hidden_effect = {
+			TRN_Kirifuji_Nagisa = { set_character_flag = TRN_nagisa_in_jail }
+		}
+		add_to_variable = {
+			nagisa_faction_A = -10
+			tooltip = nagisa_faction_A_tt
+		}
+		TRM_nagisa_faction_modified = yes
+
+		effect_tooltip = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = tea_party_neutrality_ideology
+					traits = { }
+				}
+			}
+		}
+    	}
+}
+country_event = { # 파테르 분파 내부의 불충
+	id = trinity_events.18
+	title = trinity_events.18.t
+	desc = trinity_events.18.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = tea_party_ideology
+					traits = { }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_events.18.a
+
+		add_to_variable = {
+			nagisa_faction_C = 20
+			tooltip = nagisa_faction_C_tt
+		}
+		
+		add_popularity = { ideology = fascism popularity = 0.06 }
+
+		set_party_name = {
+			ideology = democratic
+			name = TRM_mika_unconfirmed_party
+			long_name = TRM_mika_unconfirmed_party_long
+		}
+		set_politics = { ruling_party = fascism elections_allowed = no }
+		effect_tooltip = {
+			add_country_leader_role = {
+				character = TRN_Misono_Mika
+				promote_leader = yes
+				country_leader = {
+					ideology = tea_party_fascism_ideology
+					traits = { TRN_archangel_2 }
+					desc = TRN_Misono_Mika_leader_desc
+				}
+			}
+		}
+		
+		hidden_effect = {
+			add_country_leader_trait = TRN_archangel_2
+			TRN_Misono_Mika = {
+				IF = {
+					limit = { has_ideology_group = democratic }
+					remove_country_leader_role = {
+						character = PREV
+						ideology = tea_party_ideology
+					}
+				}
+			}
+		}
+    	}
+
+	after = { 
+		set_country_flag = banned_democratic_flag
+		TRM_nagisa_faction_modified = yes
+
+		effect_tooltip = {
+			add_country_leader_role = {
+				character = TRN_power_vacuum_01
+				promote_leader = yes
+				country_leader = {
+					ideology = tea_party_ideology
+					traits = { }
+				}
+			}
+		}
+	}
+}
+country_event = { # 대법관 임명
+	id = trinity_events.19
+	title = trinity_events.19.t
+	desc = trinity_events.19.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.19.a
+		add_political_power = 50
+		add_to_variable = {
+			nagisa_faction_C = 10
+			tooltip = nagisa_faction_C_tt
+		}
+		add_to_variable = {
+			nagisa_faction_A = -5
+			tooltip = nagisa_faction_A_tt
+		}
+		add_to_variable = {
+			nagisa_faction_B = -5
+			tooltip = nagisa_faction_B_tt
+		}
+    	}
+	after = {
+		TRM_nagisa_faction_modified = yes
+	}
+}
+unit_leader_event = { # 기사단국 선포
+	id = trinity_events.20
+	title = trinity_events.20.t
+	desc = trinity_events.20.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.20.a
+    	}
+}
+country_event = { # 트리니티 의용군단
+	id = trinity_events.21
+	title = trinity_events.21.t
+	desc = trinity_events.21.desc
+	picture = GFX_report_event_french_resistance_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.21.a
+		add_stability = -0.05
+		add_popularity = { ideology = communism popularity = 0.04 }
+		add_ideas = TRN_trinity_volunteer_corps_ns
+		every_state = {
+			limit = { 
+				has_resistance = yes 
+				is_controlled_by = TRM
+			}
+			add_resistance = 10
+		}
+    	}
+}
+country_event = { # 충성조항
+	id = trinity_events.22
+	title = trinity_events.22.t
+	desc = trinity_events.22.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+	}
+
+	option = {
+		name = trinity_events.22.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = tooltip_white_line
+		add_political_power = 50
+		add_popularity = { ideology = fascism popularity = 0.05 }
+		custom_effect_tooltip = tooltip_white_line
+    	}
+
+	option = {
+		name = trinity_events.22.b
+		ai_chance = {
+			base = 0
+		}
+		custom_effect_tooltip = tooltip_white_line
+		add_stability = 0.05
+		add_popularity = { ideology = fascism popularity = 0.05 }
+		custom_effect_tooltip = tooltip_white_line
+
+    	}
+}
+country_event = { # 내부 및 외부 국경 통제 법령
+	id = trinity_events.23
+	title = trinity_events.23.t
+	desc = trinity_events.23.desc
+	picture = GFX_report_event_german_polish_border
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.23.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.03
+		add_ideas = TRN_academy_defense_force_ns
+    	}
+
+    after = {
+		hidden_effect = {
+			set_technology = {
+				trinity_white_uniform_security_militias = 1
+				popup = no
+			}
+		}
+	}
+}
+country_event = { # 연합전선의 부상
+	id = trinity_events.24
+	title = trinity_events.24.t
+	desc = trinity_events.24.desc
+	picture = GFX_report_event_SWE_summer_government
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.24.a
+		add_political_power = 25
+    	}
+
+	option = {
+		name = trinity_events.24.b
+		add_political_power = -50
+		add_war_support = 0.05
+    	}
+}
+country_event = { # 누가 양떼를 이끌 것인가
+	id = trinity_events.25
+	title = trinity_events.25.t
+	desc = trinity_events.25.desc
+	picture = GFX_report_event_TRN_mika_4
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.25.a 
+    	}
+}
+country_event = { # 대회의 끝
+	id = trinity_events.26
+	title = trinity_events.26.t
+	desc = trinity_events.26.desc
+	picture = GFX_report_event_SWE_summer_government
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.26.a
+		add_political_power = 25
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.03
+		}
+    	}
+}
+country_event = { # 미소노 미카의 인상
+	id = trinity_events.27
+	title = trinity_events.27.t
+	desc = trinity_events.27.desc
+	picture = GFX_event_Mika_memories
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.27.a
+		ai_chance = { 
+			base = 10
+		}
+		add_country_leader_trait = TRN_trinity_messiah
+    	}
+
+	option = {
+		name = trinity_events.27.b
+		ai_chance = { 
+			base = 0
+		}
+		add_country_leader_trait = TRN_mother_of_trinity
+    	}
+
+	option = {
+		name = trinity_events.27.c
+		ai_chance = { 
+			base = 0
+		}
+		add_country_leader_trait = TRN_der_fuhrer
+    	}
+
+    after = {
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+    	}
+}
+country_event = { # 트리니티 교육과정
+	id = trinity_events.28
+	title = trinity_events.28.t
+	desc = trinity_events.28.desc
+	picture = GFX_report_event_generic_make_up_work_club
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.28.a
+		ai_chance = { 
+			base = 0
+		}
+		set_country_flag = TRN_new_culture_select_religion
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_research_speed_factor = 0.07
+			tooltip = research_speed_factor_tt
+		}
+		custom_effect_tooltip = tooltip_white_line
+    	}
+
+	option = {
+		name = trinity_events.28.b
+		ai_chance = { 
+			base = 10 
+		}
+		set_country_flag = TRN_new_culture_select_secularism
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.05
+		}
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = 0.05
+			tooltip = stability_factor_tt
+		}
+    	}
+}
+
+country_event = {
+	id = trinity_culture_events.1
+	title = trinity_culture_events.1.t
+	desc = trinity_culture_events.1.desc
+	picture = GFX_report_event_SWE_summer_government
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_culture_events.1.a
+		add_dynamic_modifier = {
+			modifier = TRN_Trinity_New_Culture_modifier
+		}
+	}
+}
+country_event = {
+	id = trinity_culture_events.2
+	title = trinity_culture_events.2.t
+	desc = trinity_culture_events.2.desc
+	picture = GFX_report_event_generic_modernism
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_culture_events.2.a
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_production_speed_buildings_factor = 0.05
+			tooltip = production_speed_buildings_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_global_building_slots_factor = 0.15
+			tooltip = global_building_slots_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_factory_energy_consumption = -0.1
+			tooltip = factory_energy_consumption_tt
+		}
+	}
+
+	option = {
+		name = trinity_culture_events.2.b
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_production_speed_buildings_factor = 0.1
+			tooltip = production_speed_buildings_factor_tt
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_global_building_slots_factor = 0.1
+			tooltip = global_building_slots_factor_tt
+		}
+	}
+}
+country_event = {
+	id = trinity_culture_events.3
+	title = trinity_culture_events.3.t
+	desc = trinity_culture_events.3.desc
+	picture = GFX_report_event_ITA_grand_council
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_culture_events.3.a 
+		set_temp_variable = { TRN_Honor_change = 5 }
+		TRN_add_Honor = yes
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_research_speed_factor = 0.05
+			tooltip = research_speed_factor_tt
+		}
+	}
+
+	option = {
+		name = trinity_culture_events.3.b
+		set_temp_variable = { TRN_Honor_change = -10 }
+		TRN_add_Honor = yes
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = 0.05
+			tooltip = stability_factor_tt
+		}
+	}
+}
+country_event = {
+	id = trinity_culture_events.4
+	title = trinity_culture_events.4.t
+	desc = trinity_culture_events.4.desc
+	picture = GFX_report_event_ITA_grand_council
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_culture_events.4.a
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_research_speed_factor = 0.05
+			tooltip = research_speed_factor_tt
+		}
+	}
+
+	option = {
+		name = trinity_culture_events.4.b
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = TRN_Trinity_New_Culture_modifier
+		}
+		add_to_variable = {
+			TRN_TNC_modifier_stability_factor = 0.05
+			tooltip = stability_factor_tt
+		}
+	}
+}
+
+country_event = { # 종교 갈등
+	id = trinity_events.29
+	title = trinity_events.29.t
+	desc = trinity_events.29.desc
+	picture = GFX_report_event_SWE_summer_government
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.29.a
+		unlock_decision_tooltip = TRN_conversion_work_decision
+    	}
+}
+country_event = { # 여성 인권에 대한 논의
+	id = trinity_events.30
+	title = trinity_events.30.t
+	desc = trinity_events.30.desc
+	picture = GFX_report_event_SWE_summer_government
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.30.a
+		ai_chance = { 
+			base = 10
+		}
+		add_stability = -0.07
+		add_timed_idea = {
+			idea = TRN_womens_rights_movement_ns
+			days = 365
+		}
+    	}
+}
+country_event = { # 독일 문화의 운명
+	id = trinity_events.31
+	title = trinity_events.31.t
+	desc = trinity_events.31.desc
+	picture = GFX_report_event_germany_politician_handshake
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		# 문화투쟁 결정에 선택지 하나 추가
+		name = trinity_events.31.a
+		ai_chance = { 
+			base = 10
+		}
+    	}
+
+	option = {
+		# 문화투쟁 결정에 선택지 하나 추가
+		name = trinity_events.31.b
+		ai_chance = { 
+			base = 2
+			modifier = {
+				OR = {
+					TRN_Mika_has_very_low_honor_trigger = yes
+					TRN_Mika_has_low_honor_trigger = yes
+				}
+				add = 1000
+			}
+		}
+		activate_targeted_decision = { target = TRM decision = TRN_geographical_renaming_decision }
+
+		# 이스터에그성 효과
+		if = {
+			limit = { country_exists = GER } 
+			annex_country = {
+				target = GER
+				transfer_troops = yes
+			}
+		}
+		# 근데 정상적인 게임에서 독일이 존재하진 않겠지..?
+    	}
+}
+country_event = { # 학원의 목자
+	id = trinity_events.32
+	title = trinity_events.32.t
+	desc = trinity_events.32.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.32.a
+		ai_chance = { 
+			base = 10
+		}
+		add_political_power = 25
+    	}
+
+    after = {
+		hidden_effect = {
+
+		}
+    	}
+}
+country_event = { # '호스트 선출제'
+	id = trinity_events.33
+	title = trinity_events.33.t
+	desc = trinity_events.33.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.33.a
+		ai_chance = { 
+			base = 100
+		}
+		trigger = {
+			NOT = {
+				has_completed_focus = TRN_unprovable_problem
+			}
+		}
+		effect_tooltip = { country_event = { id = trinity_events.11 days = 02 } }
+		hidden_effect = {
+			TRN_Misono_Mika = {
+				unit_leader_event = { id = trinity_events.11 days = 02 }
+			}
+		}
+		IF = {
+			limit = {
+				NOT = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			}
+			complete_national_focus = TRN_Kyrie_for_the_forgotten_ones
+		}
+    	}
+
+	option = {
+		name = trinity_events.33.b
+		ai_chance = { 
+			base = 0
+		}
+		trigger = {
+			NOT = {
+				has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
+			}
+		}
+		effect_tooltip = { country_event = { id = trinity_events_nagisa.1 days = 02 }  }
+		hidden_effect = {
+			TRN_Kirifuji_Nagisa = {
+				unit_leader_event = { id = trinity_events_nagisa.1 days = 02 }
+			}
+			TRM = { country_event = { id = GEH.flavor_event.27 days = 04 } }
+		}
+		IF = {
+			limit = {
+				NOT = { has_completed_focus = TRN_unprovable_problem }
+			}
+			complete_national_focus = TRN_unprovable_problem
+		}
+    	}
+}
+country_event = { # 학원경제개발부 부장은 누구로 할까요
+	id = trinity_events.34
+	title = trinity_events.34.t
+	desc = trinity_events.34.desc
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 우이
+		name = trinity_events.34.a
+		add_trait = {
+			character = TRN_Kozeki_Ui
+			slot = political_advisor
+			trait = TRN_AED_club_manager
+		}
+		if = {
+			limit = {
+				amount_taken_ideas = {
+					amount < 3
+					slots = { political_advisor }
+				}
+			}
+			hidden_effect = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		}
+		IF = {
+			limit = { has_government = fascism }
+			effect_tooltip = { country_event = trinity_flavor_events.18 }
+			hidden_effect = {
+				TRN_Kozeki_Ui = {
+					unit_leader_event = { id = trinity_flavor_events.18 }
+				}
+			}
+		}
+    	}
+
+	option = { # 시미코
+		name = trinity_events.34.b
+		add_trait = {
+			character = TRN_Endo_Shimiko
+			slot = political_advisor
+			trait = TRN_AED_club_manager
+		}
+		if = {
+			limit = {
+				amount_taken_ideas = {
+					amount < 3
+					slots = { political_advisor }
+				}
+			}
+			hidden_effect = { activate_advisor = TRN_Endo_Shimiko_political_advisor }
+		}
+
+	}
+}
+country_event = { # 보안국 재편
+	id = trinity_events.35
+	title = trinity_events.35.t
+	desc = trinity_events.35.desc
+	picture = GFX_report_event_generic_trinity_logo
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { 
+		name = trinity_events.35.a
+		if = {
+			limit = {
+				NOT = { has_done_agency_upgrade = upgrade_anti_partisan }
+			}
+			upgrade_intelligence_agency = upgrade_anti_partisan
+		}
+		else = { gain_random_agency_upgrade = yes }
+		add_ideas = TRN_general_school_Intelligence_service_ns 
+
+    	}
+}
+country_event = { # 안보상황
+	id = trinity_events.36
+	title = trinity_events.36.t
+	desc = trinity_events.36.desc
+	picture = GFX_report_event_COG_force_publique_capturing_area
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { 
+		name = trinity_events.36.a
+		add_war_support = 0.05
+    	}
+}
+country_event = { # 소규모 동아리들의 운명
+	id = trinity_events.37
+	title = trinity_events.37.t
+	desc = trinity_events.37.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = { 
+		name = trinity_events.37.a
+		add_stability = -0.02
+	}
+}
+country_event = { # 우리만의 자본가
+	id = trinity_events.38
+	title = trinity_events.38.t
+	desc = { 
+		text = trinity_events.38.desc_ui
+		trigger = {
+			TRN_Kozeki_Ui = { has_trait = TRN_AED_club_manager }
+		}
+	}
+	desc = { 
+		text = trinity_events.38.desc_Sch
+		trigger = {
+			NOT = { TRN_Kozeki_Ui = { has_trait = TRN_AED_club_manager } }
+		}
+	}
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { 
+		name = trinity_events.38.a
+		
+		add_political_power = -20
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.05
+		}
+
+    	}
+
+	option = { 
+		name = trinity_events.38.b
+		
+		add_political_power = -70
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.1
+		}
+
+    	}
+
+	option = { 
+		name = trinity_events.38.c
+		trigger = {
+			TRN_Kozeki_Ui = { has_trait = TRN_AED_club_manager }
+		}
+		add_stability = -0.03
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+		set_temp_variable = { TRN_Honor_change = -3 }
+		TRN_add_Honor = yes
+    	}
+
+	option = { 
+		name = trinity_events.38.d
+		trigger = {
+			NOT = { TRN_Kozeki_Ui = { has_trait = TRN_AED_club_manager } }
+		}
+		add_political_power = -125
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 3
+				instant_build = yes
+			}
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+    	}
+}
+unit_leader_event = { # 한스 프리체
+	id = trinity_events.39
+	title = trinity_events.39.t
+	desc = trinity_events.39.desc
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { 
+		name = trinity_events.39.a
+		set_country_flag = TRN_hans_zehrer_flag
+		custom_effect_tooltip = available_political_advisor
+		show_ideas_tooltip = TRM_hans_zehrer_idea
+    	}
+
+	option = { 
+		name = trinity_events.39.b
+		retire_character = TRM_hans_zehrer
+    	}
+}
+country_event = { # 트리니티 재개발
+	id = trinity_events.40
+	title = trinity_events.40.t
+	desc = trinity_events.40.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.40.a
+		random_owned_controlled_state = {
+			limit = { is_core_of = PREV }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+    	}
+}
+country_event = { # 게헨나 학원에서 발생한 저항의 움직임
+	id = trinity_events.41
+	title = trinity_events.41.t
+	desc = trinity_events.41.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { 
+		name = trinity_events.41.a
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_core_of = GEM
+					is_core_of = GEH
+				}
+			}
+			add_resistance = 45
+		}
+		set_variable = { TRM_GehennaResistance_speed = 60 }
+		activate_mission = TRM_loop_Gehenna_Resistance
+		hidden_effect = {
+			country_event = { id = TRN_after_war_event.21 hours = 02 }
+			country_event = { id = TRN_after_war_event.25 days = 35 }
+		}
+    	}
+}
+country_event = { #게헨나 항복 이벤트
+	id = trinity_events.42
+	title = TRM_event.42.t
+	desc = TRM_event.42.desc
+	picture = GFX_event_TRM_event_15
+
+	is_triggered_only = no
+	fire_only_once = yes
+	immediate = { set_global_flag = TRINITY_WON_THE_GEHENNA }
+	trigger = {
+		original_tag = TRM
+		has_government = fascism
+		NOT = { has_global_flag = TRINITY_WON_THE_GEHENNA }
+        	TRM = {
+	            count_triggers = {
+                		amount = 3
+                		controls_state = 59
+                		controls_state = 56
+                		controls_state = 57
+                		controls_state = 55
+                		controls_state = 51
+                		controls_state = 1052
+                		controls_state = 1055
+                		controls_state = 42
+                		controls_state = 50
+                		controls_state = 54
+                		controls_state = 53
+                		controls_state = 52
+                		controls_state = 8
+            	}
+        	}
+		GEM = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject = yes
+			}
+		}
+		GEH = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject = yes
+			}
+		}
+		HEU = {
+			OR = {
+				exists = no
+				has_capitulated = yes
+				is_subject = yes
+			}
+		}
+	}
+	mean_time_to_happen = { 
+		days = 5
+	}
+	option = {
+		name = TRM_event.42.a
+
+	}
+}
+country_event = { # 게헨나 동아리 문제
+	id = trinity_events.43
+	title = trinity_events.43.t
+	desc = trinity_events.43.desc
+	picture = GFX_event_Trinity_Campus
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.43.a
+		effect_tooltip = { add_ideas = TRN_gehenna_clup_resistance_ns }
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			damage_building = {
+				type = industrial_complex
+				damage = 0.7
+			}
+		}
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			damage_building = {
+				type = industrial_complex
+				damage = 0.7
+			}
+		}
+		random_owned_state = {
+			limit = { is_core_of = ROOT }
+			damage_building = {
+				type = industrial_complex
+				damage = 0.7
+			}
+		}
+	}
+}
+country_event = { # 아리우스 분교의 운명
+	id = trinity_events.44
+	title = trinity_events.44.t
+	desc = trinity_events.44.desc
+	picture = GFX_report_event_generic_arius
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.44.a
+		set_temp_variable = { TRN_Honor_change = 1 }
+		TRN_add_Honor = yes
+	}
+	option = {
+		name = trinity_events.44.b
+		set_temp_variable = { TRN_Honor_change = -1 }
+		TRN_add_Honor = yes
+		add_war_support = 0.02
+	}
+}
+country_event = { # 중앙구에서 대규모 시위
+	id = trinity_events.45
+	title = trinity_events.45.t
+	desc = trinity_events.45.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events.45.a
+		add_stability = -0.02
+	}
+}
+country_event = { # 아리우스용
+	id = trinity_events.46
+	title = trinity_events.46.t
+	desc = trinity_events.46.desc
+	picture = GFX_report_event_generic_top_secret
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = trinity_events.46.a
+		trigger = {
+			has_country_leader = { character = TRN_Misono_Mika }
+		}
+	}
+
+	option = {
+		name = trinity_events.46.b
+		trigger = {
+			has_country_leader = { character = TRN_Kirifuji_Nagisa }
+		}
+	}
+
+	after = {
+		custom_effect_tooltip = TRN_after_this_operation_against_arius_tt
+		add_command_power = 5
+	}
+}
+country_event = { # 타협의 끝
+	id = trinity_events.47
+	title = trinity_events.47.t
+	desc = trinity_events.47.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.47.a
+		country_event = { id =  trinity_events.48 days = 7 }
+    	}
+}
+country_event = { # 타협의 끝
+	id = trinity_events.48
+	title = trinity_events.48.t
+	desc = trinity_events.48.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.48.a
+		country_event = { id =  trinity_events.49 days = 02 }
+
+    	}
+}
+country_event = { # 타협의 끝
+	id = trinity_events.49
+	title = trinity_events.49.t
+	desc = trinity_events.49.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.49.a
+		country_event = { id =  trinity_events.50 days = 02 } 
+    	}
+}
+country_event = { # 타협의 끝
+	id = trinity_events.50
+	title = trinity_events.50.t
+	desc = trinity_events.50.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.50.a
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.06
+		}
+		add_to_variable = {
+			nagisa_faction_D = 3
+			tooltip = nagisa_faction_D_tt
+		}
+		add_to_variable = {
+			nagisa_faction_C = -3
+			tooltip = nagisa_faction_C_tt
+		}
+		custom_effect_tooltip = nagisa_faction_D_join
+		set_country_flag = nagisa_faction_D_flag
+    	}
+	after = { 
+		TRM_nagisa_faction_modified = yes
+	}
+}
+country_event = { # 탈나치화 운동
+	id = trinity_events.51
+	title = trinity_events.51.t
+	desc = trinity_events.51.desc
+	picture = GFX_report_event_generic_denazification
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.51.a
+		add_timed_idea = {
+			idea = TRN_denazification_ns
+			days = 730
+		}
+    	}
+}
+country_event = { # 흑적금 국기단 해산
+	id = trinity_events.52
+	title = trinity_events.52.t
+	desc = trinity_events.52.desc
+	picture = GFX_report_event_generic_SPD
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			set_temp_variable = { TRN_Honor_change = -10 }
+			TRN_add_Honor = yes
+			add_to_variable = {
+				nagisa_faction_C = 2
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_G = -2
+				tooltip = nagisa_faction_G_tt
+			}
+			TRM_nagisa_faction_modified = yes
+		}
+	}
+
+	option = { 
+		name = trinity_events.52.a
+		effect_tooltip = {
+			add_to_variable = {
+				nagisa_faction_C = 2
+				tooltip = nagisa_faction_C_tt
+			}
+			add_to_variable = {
+				nagisa_faction_G = -2
+				tooltip = nagisa_faction_G_tt
+			}
+			set_temp_variable = { TRN_Honor_change = -10 }
+			TRN_add_Honor = yes
+		}
+    	}
+
+	after = {
+		
+	}
+}
+country_event = { # 사민당의 퇴장, 파테르 분파의 입장
+	id = trinity_events.53
+	title = trinity_events.53.t
+	desc = trinity_events.53.desc
+	picture = GFX_report_event_generic_SPD
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.53.a
+
+    	}
+}
+country_event = { # 정당 본부 폐쇄
+	id = trinity_events.54
+	title = trinity_events.54.t
+	desc = trinity_events.54.desc
+	picture = GFX_report_event_generic_SPD
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.54.a
+		add_stability = -0.05
+		add_political_power = 75
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.02
+		}
+    	}
+	after = {
+		hidden_effect = {
+			country_event = { id = trinity_events.55 days = 07 }
+		}
+	}
+}
+country_event = { # 반독일 프로파간다
+	id = trinity_events.55
+	title = trinity_events.55.t
+	desc = trinity_events.55.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.55.a
+		add_stability = 0.05
+		add_popularity = {
+			ideology = ROOT
+			popularity = 0.05
+		}
+		custom_effect_tooltip = TRM_CF_modifier_tt
+		add_to_variable = {
+			TRM_pro_german_propaganda_conscription_factor = 0.01
+			tooltip = conscription_factor_tt
+		}
+    	}
+}
+country_event = { # 나치 엘리트 숙청
+	id = trinity_events.56
+	title = trinity_events.56.t
+	desc = trinity_events.56.desc
+	picture = GFX_event_Trinity_Campus
+	
+	is_triggered_only = yes
+ 	fire_only_once = no
+
+	option = { 
+		name = trinity_events.56.a
+
+		add_stability = 0.02
+		add_popularity = { ideology = ROOT popularity = 0.02 }
+		add_timed_idea = {
+			idea = TRN_purged_nazi_elite_ns 
+			days = 365
+		}
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.1
+		}
+    	}
+}
+
+country_event = { # 
+	id = trinity_events.57
+	title = trinity_events.57.t
+	desc = trinity_events.57.desc
+	picture = GFX_report_event_picture_utazumi_sakurako
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_events.57.a
+		effect_tooltip = {
+			add_timed_idea = {
+				idea = TRN_sisterhood_missionary_work_ns
+				days = 730
+			}
+		}
+	}
+}
+
+country_event = { # 저희 친하게 지내요
+	id = trinity_foreign_policy_events.1
+	title = trinity_foreign_policy_events.1.t
+	desc = trinity_foreign_policy_events.1.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trinity_foreign_policy_events.1.a
+
+	}
+}
+
+country_event = { # 답장 받기 1일차
+	id = trinity_foreign_policy_events.2
+	title = trinity_foreign_policy_events.2.t
+	desc = trinity_foreign_policy_events.2.desc
+	picture = GFX_report_event_hyakkiyako_campus
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trinity_foreign_policy_events.2.a
+
+	}
+}
+
+country_event = { # 경제 협력 제안
+	id = trinity_foreign_policy_events.3
+	title = trinity_foreign_policy_events.3.t
+	desc = trinity_foreign_policy_events.3.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 수락
+		name = trinity_foreign_policy_events.3.a
+
+	}
+
+	option = { # 거부
+		name = trinity_foreign_policy_events.3.b
+
+	}
+}
+
+country_event = { # 경제 협력 제안 - 수락 반응
+	id = trinity_foreign_policy_events.4
+	title = trinity_foreign_policy_events.4.t
+	desc = trinity_foreign_policy_events.4.desc
+	picture = GFX_report_event_hyakkiyako_campus
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trinity_foreign_policy_events.4.a
+
+	}
+}
+
+country_event = { # 문제 - 1
+	id = trinity_social_ploblem_events.1
+	title = trinity_social_ploblem_events.1.t
+	desc = trinity_social_ploblem_events.1.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = {
+		name = trinity_social_ploblem_events.1.a
+		add_stability = -0.03
+
+	}
+}
+country_event = { # 문제 - 노조 파업
+	id = trinity_social_ploblem_events.2
+	title = trinity_social_ploblem_events.2.t
+	desc = trinity_social_ploblem_events.2.desc
+	picture = GFX_report_event_generic_deutsche_arbeitsfront
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 탄압한다
+		name = trinity_social_ploblem_events.2.a
+		ai_chance = { base = 1 }
+		add_manpower = -100
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = -100
+		}
+		add_days_mission_timeout = {
+			mission = TRN_Mika_social_problem
+			days = 40
+		}
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 21
+		}
+		add_popularity = { ideology = communism popularity = 0.025 }
+		custom_effect_tooltip = tooltip_white_line
+		TRN_Social_Problem_effect = yes
+	}
+	option = { # 타협한다
+		name = trinity_social_ploblem_events.2.b
+		ai_chance = { 
+			base = 99
+			modifier = {
+				has_political_power > 99
+				factor = 0.1
+			}
+		}
+
+		add_political_power = -40
+		add_popularity = { ideology = ROOT popularity = 0.015 }
+	}
+	option = { # 무시
+		name = trinity_social_ploblem_events.2.c
+		ai_chance = { 
+			base = 3
+			modifier = {
+				has_political_power < 99
+				factor = 3
+			}
+		}
+		
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 30
+		}
+		add_popularity = { ideology = communism popularity = 0.02 }
+	}
+}
+country_event = { # 관공서 폭탄 테러
+	id = trinity_social_ploblem_events.3
+	title = trinity_social_ploblem_events.3.t
+	desc = trinity_social_ploblem_events.3.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 
+		name = trinity_social_ploblem_events.3.a
+		add_popularity = { ideology = ROOT popularity = -0.015 }
+		add_stability = -0.05
+	}
+}
+country_event = { # 문제 - 국민라디오
+	id = trinity_social_ploblem_events.4
+	title = trinity_social_ploblem_events.4.t
+	desc = trinity_social_ploblem_events.4.desc
+	picture = GFX_report_event_generic_volksempfanger
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 이런 방송은 그만두는 레후
+		name = trinity_social_ploblem_events.4.a
+		TRN_Social_Problem_effect = yes
+		add_war_support = -0.03
+
+	}
+}
+country_event = { # 문제 -  베어울프
+	id = trinity_social_ploblem_events.5
+	title = trinity_social_ploblem_events.5.t
+	desc = trinity_social_ploblem_events.5.desc
+	picture = GFX_report_event_generic_hans_adolf_prutzmann
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.5.a
+		ai_chance = {
+			base = 3
+			modifier = {
+				has_army_experience > 50
+				add = 50
+			}
+		}
+		army_experience = -5
+		add_command_power = -10
+	}
+	option = { #  
+		name = trinity_social_ploblem_events.5.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				has_army_experience < 50
+				add = 50
+			}
+		}
+		add_stability = -0.03
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 문제 -  파괴된 트리니티 상징물
+	id = trinity_social_ploblem_events.6
+	title = trinity_social_ploblem_events.6.t
+	desc = trinity_social_ploblem_events.6.desc
+	picture = GFX_report_event_generic_hans_adolf_prutzmann
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.6.a 
+		add_stability = -0.03
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 사민당과 협력을 완료 했을때 일정 효과를 받는거 나옴
+	id = trinity_social_ploblem_events.7
+	title = trinity_social_ploblem_events.7.t
+	desc = trinity_social_ploblem_events.7.desc
+	picture = GFX_report_event_generic_SPD
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.7.a 
+		custom_effect_tooltip = TRM_CF_modifier_tt
+		add_to_variable = {
+			TRM_pro_german_propaganda_conscription_factor = 0.01
+			tooltip = conscription_factor_tt
+		}
+	}
+}
+country_event = { # 저항하는 음악가들
+	id = trinity_social_ploblem_events.8
+	title = trinity_social_ploblem_events.8.t
+	desc = trinity_social_ploblem_events.8.desc
+	picture = GFX_report_event_SWI_president_talking_flag
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.8.a 
+		add_stability = -0.03
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 암살 기도
+	id = trinity_social_ploblem_events.9
+	title = trinity_social_ploblem_events.9.t
+	desc = trinity_social_ploblem_events.9.desc
+	picture = GFX_report_event_spr_anarchist_uprising2
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.9.a
+		add_war_support = 0.01
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 로테 카펠레(붉은 오케스트라)
+	id = trinity_social_ploblem_events.10
+	title = trinity_social_ploblem_events.10.t
+	desc = trinity_social_ploblem_events.10.desc
+	picture = GFX_report_event_generic_rote_kapelle
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.10.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+		TRN_Social_Problem_effect = yes
+	}
+}
+country_event = { # 노동자 태업 문제
+	id = trinity_social_ploblem_events.11
+	title = trinity_social_ploblem_events.11.t
+	desc = trinity_social_ploblem_events.11.desc
+	picture = GFX_report_event_worker_protests
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.11.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_political_power < 100
+				factor = 3
+			}
+		}
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 31
+		}
+		TRN_Social_Problem_effect = yes
+	}
+	option = { #  
+		name = trinity_social_ploblem_events.11.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_political_power > 75
+				factor = 3
+			}
+		}
+		add_timed_idea = {
+			idea = TRN_strike_season_ns
+			days = 7
+		}
+		add_political_power = -25
+	}
+}
+country_event = { # 히틀러 청소년단
+	id = trinity_social_ploblem_events.12
+	title = trinity_social_ploblem_events.12.t
+	desc = trinity_social_ploblem_events.12.desc
+	picture = GFX_report_event_generic_hitlerjugend
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { #  
+		name = trinity_social_ploblem_events.12.a
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.01
+		}
+		TRN_Social_Problem_effect = yes
+	}
+}
+
+country_event = { # 명예 - 구호기사단 무인 병동에서의 강도 사건
+	id = trinity_honor_events.1
+	title = trinity_honor_events.1.t
+	desc = trinity_honor_events.1.desc
+	picture = GFX_report_event_TRN_mika_4
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 구호기사단에게 장비를 제공하는건 어때?
+		name = trinity_honor_events.1.a
+		set_temp_variable = { TRN_Honor_change = 6 }
+		TRN_add_Honor = yes
+
+		add_political_power = -90
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = -150
+		}
+		add_timed_idea = {
+			idea = TRN_supported_remedial_knights_ns
+			days = 70 
+		}
+	}
+
+	option = { # 정의실현부를 불러 도와준다.
+		name = trinity_honor_events.1.b
+		set_temp_variable = { TRN_Honor_change = 6 }
+		TRN_add_Honor = yes
+
+		add_political_power = -30
+		add_timed_idea = {
+			idea = TRN_busy_JTF_ns
+			days = 70
+		}
+	}
+
+	option = { # 안 도와준다.
+		name = trinity_honor_events.1.c
+		set_temp_variable = { TRN_Honor_change = -6 }
+		TRN_add_Honor = yes
+	}
+}
+country_event = { # 명예 - 츠루기의 과잉 진압
+	id = trinity_honor_events.2
+	title = trinity_honor_events.2.t
+	desc = trinity_honor_events.2.desc
+	picture = GFX_report_event_TRN_mika_4
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+
+	option = { # 도와준다
+		name = trinity_honor_events.2.a
+		add_political_power = -30
+		set_temp_variable = { TRN_Honor_change = 3 }
+		TRN_add_Honor = yes
+	}
+
+	option = { # 안 도와준다.
+		name = trinity_honor_events.2.b
+		add_stability = -0.01
+		set_temp_variable = { TRN_Honor_change = -3 }
+		TRN_add_Honor = yes
+	}
+}
+country_event = { # 명예 - 카페 거리에서 총격전
+	id = trinity_honor_events.3
+	title = trinity_honor_events.3.t
+	desc = trinity_honor_events.3.desc
+	picture = GFX_report_event_TRN_mika_2
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 맛있게 먹었다
+		name = trinity_honor_events.3.a
+		add_political_power = 70
+		set_temp_variable = { TRN_Honor_change = 10 }
+		TRN_add_Honor = yes
+	}
+
+	option = { # 맛있게 먹었다
+		name = trinity_honor_events.3.b
+		set_temp_variable = { TRN_Honor_change = -10 }
+		TRN_add_Honor = yes
+	}
+
+	after = {
+		64 = {
+			damage_building = {
+				type = infrastructure
+				damage = 0.2
+			}
+		}
+	}
+}
+country_event = { # 명예 - 시스터후드의 선교 활동
+	id = trinity_honor_events.4
+	title = trinity_honor_events.4.t
+	desc = trinity_honor_events.4.desc
+	picture = GFX_report_event_TRN_mika_4
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 
+		name = trinity_honor_events.4.a
+		set_temp_variable = { TRN_Honor_change = 10 }
+		TRN_add_Honor = yes
+		add_stability = -0.02
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.05
+		}
+		set_country_flag = { flag = TRN_jewel_of_the_trinity_faith_in_progress_flag days = 141 value = 1 }
+		hidden_effect = { 
+			activate_shine_on_focus = TRN_jewel_of_the_trinity_faith
+			country_event = { id = trinity_system_events.1 days = 140 }
+		} 
+		effect_tooltip = { unlock_national_focus = TRN_jewel_of_the_trinity_faith }
+	}
+
+	option = { #
+		name = trinity_honor_events.4.b
+		set_temp_variable = { TRN_Honor_change = -10 }
+		TRN_add_Honor = yes
+		add_political_power = 35
+	}
+}
+
+
+news_event = { # 세이아 피습 사건
+	id = trinity_news_events.1
+	title = trinity_news_events.1.t
+	desc = trinity_news_events.1.desc
+	picture = GFX_event_seia_cut
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = TRM_flag_seia_cut
+		
+	}
+
+	option = {
+		name = trinity_news_events.1.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+	option = {
+		name = trinity_news_events.1.b
+		trigger = {
+			NOT = { tag = TRM }
+			Kivotos_school_tag = yes
+		}
+	}
+	option = {
+		name = BA_news.1.d
+		trigger = {
+			NOT = {
+				Kivotos_school_tag = yes
+			}
+		}
+	}
+}
+news_event = { # 미소노 미카의 정권 찬탈
+	id = trinity_news_events.2
+	title = trinity_news_events.2.t
+	desc = trinity_news_events.2.desc
+	picture = GFX_event_tmr_news_event_1
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				add_named_threat = {
+					threat = 5
+					name = TRN_trinity_order_state_threat_name
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_news_events.2.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+	option = {
+		name = trinity_news_events.2.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+			NOT = { original_tag = HEU }
+		}
+	}
+	option = {
+		name = trinity_news_events.2.c
+		trigger = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.2.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 아이돌 마리
+	id = trinity_news_events.3
+	title = trinity_news_events.3.t
+	desc = trinity_news_events.3.desc
+	picture = GFX_news_TRM_Animated_Iochi_Mari
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+	option = {
+		name = trinity_news_events.3.a
+		trigger = { NOT = { original_tag = TRM } }
+		
+	}
+	option = {
+		name = trinity_news_events.3.a
+		trigger = { original_tag = TRM }
+		TRM = {
+			TRN_Iochi_Mari = {
+				unit_leader_event = { id = trinity_flavor_events.1000 }
+			}
+		}
+	}
+}
+news_event = { # 트리니티 - 에덴 협정
+	id = trinity_news_events.4
+	title = trinity_news_events.4.t
+	desc = trinity_news_events.4.desc
+	picture = GFX_news_event_trinity_building
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = {
+		name = trinity_news_events.4.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+	option = {
+		name = trinity_news_events.4.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+			NOT = { original_tag = HEU }
+		}
+	}
+	option = {
+		name = trinity_news_events.4.c
+		trigger = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.4.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 트리니티 - 게헨나 전쟁
+	id = trinity_news_events.5
+	title = trinity_news_events.5.t
+	desc = trinity_news_events.5.desc
+	picture = GFX_event_news_event_5
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = BA_Trinity_Gehenna_War
+	}
+
+	option = {
+		name = trinity_news_events.5.a
+		trigger = {
+			TAG = TRM
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				#scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.5.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+			NOT = { original_tag = HEU }
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.5.c
+		trigger = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.5.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+}
+news_event = { # 트리니티 - 트리니티에서 발생한 독일인 봉기
+	id = trinity_news_events.6
+	title = trinity_news_events.6.t
+	desc = trinity_news_events.6.desc
+	picture = GFX_news_event_trinity_germany_uprising
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.6.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+	option = {
+		name = trinity_news_events.6.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+			NOT = { original_tag = HEU }
+		}
+	}
+	option = {
+		name = trinity_news_events.6.c
+		trigger = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.6.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 키리후지 나기사의 트리니티 장악
+	id = trinity_news_events.7
+	title = trinity_news_events.7.t
+	desc = trinity_news_events.7.desc
+	picture = GFX_news_event_TRM_nagisa_kirifuji_1
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.7.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+	option = {
+		name = trinity_news_events.7.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+			NOT = { original_tag = HEU }
+		}
+	}
+	option = {
+		name = trinity_news_events.7.c
+		trigger = {
+			OR = {
+				original_tag = GEM
+				original_tag = GEH
+				original_tag = HEU
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.7.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 에덴 조약의 성공
+	id = trinity_news_events.8
+	title = trinity_news_events.8.t
+	
+	desc = { 
+		text = trinity_news_events.8.desc
+		trigger = {
+			NOT = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+			}
+		}
+	}
+	
+	desc = { 
+		text = trinity_news_events.8.desc.alt
+		trigger = {
+			has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+		}
+	}
+
+	picture = GFX_news_event_TRM_eden_treaty
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.8.a
+		trigger = {
+			OR = {
+				original_tag = TRM
+				original_tag = GEH
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.8.b
+		trigger = {
+			original_tag = GEM
+		}
+	}
+	option = {
+		name = trinity_news_events.8.c
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+		}
+	}
+	option = {
+		name = trinity_news_events.8.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 트리니티 - 게헨나 전쟁
+	id = trinity_news_events.9
+	title = trinity_news_events.9.t
+	desc = trinity_news_events.9.desc
+	picture = GFX_event_news_event_5
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = BA_Trinity_Gehenna_War
+	}
+
+	option = {
+		name = trinity_news_events.9.a
+		trigger = {
+			TAG = TRM
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				#scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.9.b
+		trigger = {
+			OR = {
+				original_tag = GEM
+				AND = {
+					original_tag = GEH
+					GEH = { has_war_with = TRM }
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.9.c
+		trigger = {
+			AND = {
+				original_tag = GEH
+				NOT = { GEH = { has_war_with = TRM } }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.9.d
+		trigger = {
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+		}
+		hidden_effect = {
+			if = {
+				limit = { is_ai = no }
+				scoped_play_song = "BA_fall_schwarz"
+				set_country_flag = {
+					flag = BA_Super_Event_Visible
+					value = 5
+					days = 15
+				}
+			}
+		}
+	}
+}
+news_event = { # 에덴 조약의 실패
+	id = trinity_news_events.10
+	title = trinity_news_events.10.t
+	desc = trinity_news_events.10.desc
+
+	picture = GFX_news_event_TRM_eden_treaty_fail
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.10.a
+		trigger = {
+			OR = {
+				original_tag = TRM
+				original_tag = GEH
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.10.b
+		trigger = {
+			original_tag = GEM
+		}
+	}
+	option = {
+		name = trinity_news_events.10.c
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { tag = TRM }
+			NOT = { original_tag = GEH }
+			NOT = { original_tag = GEM }
+		}
+	}
+	option = {
+		name = trinity_news_events.10.d
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 에덴 체제 수립
+	id = trinity_news_events.11
+	title = trinity_news_events.11.t
+	
+	desc = { 
+		text = trinity_news_events.11.desc
+		trigger = {
+			NOT = {
+				country_exists = GEH
+			}
+		}
+	}
+	
+	desc = { 
+		text = trinity_news_events.11.desc.alt
+		trigger = {
+			country_exists = GEH
+		}
+	}
+
+	picture = GFX_news_event_TRM_nagisa_kirifuji_queen
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.11.a
+		trigger = {
+			OR = {
+				original_tag = TRM
+				original_tag = GEH
+			}
+		}
+	}
+	option = {
+		name = trinity_news_events.11.b
+		trigger = {
+			Kivotos_tag = yes
+			NOT = { original_tag = TRM }
+			NOT = { original_tag = GEH }
+		}
+	}
+	option = {
+		name = trinity_news_events.11.c
+		trigger = {
+			NOT = { Kivotos_tag = yes }
+		}
+	}
+}
+news_event = { # 트리니티 - 난 먀울임
+	id = trinity_news_events.12
+	title = trinity_news_events.12.t
+	desc = trinity_news_events.12.desc
+	picture = GFX_news_event_meowl
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+
+	}
+
+	option = {
+		name = trinity_news_events.12.a
+	}
+}
+
+unit_leader_event = { # 아이돌 마리 - 1
+	id = trinity_flavor_events.1000
+	title = trinity_flavor_events.1000.t
+	desc = trinity_flavor_events.1000.desc
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 바꾸죠?
+		name = trinity_flavor_events.1000.a
+		ai_chance = {
+			base = 10
+		}
+		custom_effect_tooltip = trn_idol_portrait_tt
+		TRN_Iochi_Mari = {
+			set_portraits = {
+				army = { 
+					large = GFX_Portrait_TRN_Iochi_Mari_Idol 
+					small = GFX_TRN_Iochi_Mari_idol_idea
+				}
+			}
+			unit_leader_event = trinity_flavor_events.1001
+		}
+
+    	}
+
+	option = { # 기본이 더 낫네요
+		name = trinity_flavor_events.1000.b
+		ai_chance = {
+			base = 90
+		}
+		TRN_Iochi_Mari = {
+			set_portraits = {
+				army = { 
+					large = GFX_Portrait_TRN_Iochi_Mari 
+					small = GFX_TRN_Iochi_Mari_2_idea
+				}
+			}
+			unit_leader_event = trinity_flavor_events.1002
+		}
+
+    	}
+}
+
+unit_leader_event = { # 아이돌 마리 - 2
+	id = trinity_flavor_events.1001
+	title = trinity_flavor_events.1001.t
+	desc = trinity_flavor_events.1001.desc
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { # 좋아해 줘! 좀 더! 나를 바라봐 줘! 좀 더!
+		name = trinity_flavor_events.1001.a
+		add_trait = { 
+			character = TRN_Iochi_Mari
+			trait = media_personality 
+		}
+		custom_effect_tooltip = trnfla_1001_tt
+    	}
+}
+
+unit_leader_event = { # 아이돌 마리 - 3
+	id = trinity_flavor_events.1002
+	title = trinity_flavor_events.1002.t
+	desc = trinity_flavor_events.1002.desc
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { #  
+		name = trinity_flavor_events.1002.a
+		custom_effect_tooltip = trnfla_1002_tt
+    	}
+}
+
+country_event = {
+	id = trinity_flavor_events.0
+	title = trinity_flavor_events.0.t
+	desc = trinity_flavor_events.0.desc
+	picture = GFX_report_event_american_hunger_march
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = trinity_flavor_events.0.a
+		country_event = { id = trinity_flavor_events.1 }
+	}
+}
+country_event = {
+	id = trinity_flavor_events.1
+	title = trinity_flavor_events.1.t
+	desc = trinity_flavor_events.1.desc
+	picture = GFX_report_event_american_hunger_march
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = trinity_flavor_events.1.a
+		add_country_leader_trait = TRN_seiausesandevistan
+		set_country_flag = TRN_Seia_Sandevistan
+        load_focus_tree = {
+            tree = TRM_focus_tree
+            keep_completed = yes
+        	}
+        mark_focus_tree_layout_dirty = yes
+		
+		set_portraits = {
+			character = TRN_Yurizono_Seia
+			civilian = { large = "gfx/leaders/TRN/Portrait_TRN_Yurizono_Seia_sandevistan.tga" }
+		}
+	}
+}
+country_event = { # "타협점을 찾아서" - 1
+	id = trinity_flavor_events.2
+	title = trinity_flavor_events.2.t
+	desc = trinity_flavor_events.2.desc
+	picture = GFX_event_none_picture
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = trinity_flavor_events.2.a
+		hidden_effect = {
+			country_event = { id = trinity_flavor_events.3 }
+		}
+		TRN_country_collapse_down = yes
+	}
+}
+country_event = { # "타협점을 찾아서" - 2
+	id = trinity_flavor_events.3
+	title = trinity_flavor_events.3.t
+	desc = trinity_flavor_events.3.desc
+	picture = GFX_event_none_picture
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = trinity_flavor_events.3.a
+		add_stability = -0.05
+	}
+}
+country_event = { # 보충수업부 편입하는 스토리 이벤트
+	id = trinity_flavor_events.4
+	title = TRM_work_clup
+	desc = trinity_flavor_events.4.desc
+	picture = GFX_report_event_generic_make_up_work_club
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = trinity_flavor_events.4.a
+		add_ideas = TRM_work_clup
+	}
+}
+country_event = { # 트리니티의 개쩌는 사업 아이템!
+	id = trinity_flavor_events.5
+	title = trinity_flavor_events.5.t
+	desc = trinity_flavor_events.5.desc
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.5.a
+	}
+}
+country_event = { # 슈테틴 항구 사건
+	id = trinity_flavor_events.6
+	title = trinity_flavor_events.6.t
+	desc = trinity_flavor_events.6.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.6.a
+		hidden_effect = {
+			country_event = {
+				id = trinity_flavor_events.7 days = 180
+			}
+		}
+	}
+}
+country_event = { # 쾨니히스베르크 - 어여쁜 마을에서의 산보
+	id = trinity_flavor_events.7
+	title = trinity_flavor_events.7.t
+	desc = trinity_flavor_events.7.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.7.a
+		hidden_effect = {
+			country_event = { 
+				id =  trinity_flavor_events.8
+				days = 25
+			}
+		}
+	}
+}
+country_event = { # 쾨니히스베르크 - 예나 지금이나 가문 싸움
+	id = trinity_flavor_events.8
+	title = trinity_flavor_events.8.t
+	desc = trinity_flavor_events.8.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.8.a
+		hidden_effect = {
+			country_event = { 
+				id = trinity_flavor_events.9
+				days = 180
+			}
+		}
+	}
+}
+country_event = { # 바시스 스콜라 - 가장 우리다운 우리
+	id = trinity_flavor_events.9
+	title = trinity_flavor_events.9.t
+	desc = trinity_flavor_events.9.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.9.a
+		hidden_effect = {
+			country_event = {
+				id = trinity_flavor_events.10
+				days = 02
+			}
+		}
+	}
+}
+country_event = { # 바시스 스콜라 - 피, 죽음, 구원
+	id = trinity_flavor_events.10
+	title = trinity_flavor_events.10.t
+	desc = trinity_flavor_events.10.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.10.a
+		hidden_effect = {
+			country_event = {
+				id = trinity_flavor_events.11
+				days = 365
+			}
+		}
+	}
+}
+country_event = { # 인생의 굴레
+	id = trinity_flavor_events.11
+	title = trinity_flavor_events.11.t
+	desc = trinity_flavor_events.11.desc
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	immediate = {
+		hidden_effect = { scoped_play_song = RED_DEAD }
+	}
+
+	option = {
+		name = trinity_flavor_events.11.a
+		
+	}
+}
+country_event = { # 음모론 - 세이아는 살아계시다!
+	id = trinity_flavor_events.12
+	title = trinity_flavor_events.12.t
+	desc = trinity_flavor_events.12.desc
+	picture = GFX_event_Seia_standing
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.12.a
+		add_stability = -0.005
+	}
+}
+country_event = { # 나치즘
+	id = trinity_flavor_events.13
+	title = trinity_flavor_events.13.t
+	desc = trinity_flavor_events.13.desc
+	picture = GFX_report_event_fascists_posing
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.13.a
+
+	}
+}
+country_event = { # 총학생회장의 행방
+	id = trinity_flavor_events.14
+	title = trinity_flavor_events.14.t
+	desc = trinity_flavor_events.14.desc
+	picture = GFX_COU_event_start_report
+	
+	is_triggered_only = no
+	fire_only_once = no
+
+	trigger = {
+		original_tag = TRM
+		has_global_flag = COU_event_1_flag
+		NOT = { has_country_flag = TRN_trnfal_14_triggered }
+	}
+	mean_time_to_happen = { days = 2 }
+	immediate = {
+		hidden_effect = {
+			set_country_flag = TRN_trnfal_14_triggered
+		}
+	}
+
+	option = {
+		name = trinity_flavor_events.14.a
+	}
+}
+country_event = { # 동행인
+	id = trinity_flavor_events.15
+	title = trinity_flavor_events.15.t
+	desc = trinity_flavor_events.15.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.15.a
+
+	}
+}
+country_event = { # 부작용
+	id = trinity_flavor_events.16
+	title = trinity_flavor_events.16.t
+	desc = trinity_flavor_events.16.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.16.a
+		add_stability = -0.02
+		68 = {
+			damage_building = {
+				type = industrial_complex
+				damage = 0.02
+			}
+		}
+	}
+
+	option = {
+		name = trinity_flavor_events.16.b
+		add_political_power = -55
+		if = {
+			limit = { has_completed_focus = TRN_Kyrie_for_the_forgotten_ones }
+			set_temp_variable = { TRN_Honor_change = 5 }
+			TRN_add_Honor = yes 
+		}
+	}
+}
+unit_leader_event = { # 침울한 하늘 아래에서
+	id = trinity_flavor_events.17
+	title = trinity_flavor_events.17.t
+	desc = trinity_flavor_events.17.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.17.a 
+		
+	}
+}
+unit_leader_event = { # 우이 당황
+	id = trinity_flavor_events.18
+	title = trinity_flavor_events.18.t
+	desc = trinity_flavor_events.18.desc
+	picture = GFX_event_kozeki_ui
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.18.a 
+		if = {
+			limit = { 
+				has_focus_tree = Trinity_focus
+			}
+			effect_tooltip = { activate_advisor = TRN_Kozeki_Ui_political_advisor }
+		}
+	}
+}
+unit_leader_event = { # 얄마르 샤흐트
+	id = trinity_flavor_events.19
+	title = trinity_flavor_events.19.t
+	desc = trinity_flavor_events.19.desc
+	picture = GFX_event_kozeki_ui
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.19.a 
+		effect_tooltip = { activate_advisor = TRN_hjalmar_schacht_political_advisor }
+	}
+}
+country_event = { # 다도부가 예산 깎이니 빡쳐서 학교 수영장에 홍차 던지는 사건
+	id = trinity_flavor_events.20
+	title = trinity_flavor_events.20.t
+	desc = trinity_flavor_events.20.desc
+	picture = GFX_report_event_generic_swimmingpool
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.20.a 
+		
+	}
+}
+country_event = { # 방디부가 디저트 먹는거 -1
+	id = trinity_flavor_events.21
+	title = trinity_flavor_events.21.t
+	desc = trinity_flavor_events.21.desc
+	picture = GFX_report_event_ive_alive_2
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.21.a 
+		custom_effect_tooltip = trnfla_21_tt
+	}
+}
+country_event = { # 인터넷 연결 됨!
+	id = trinity_flavor_events.22
+	title = trinity_flavor_events.22.t
+	desc = trinity_flavor_events.22.desc
+	picture = GFX_report_event_trinity_student
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.22.a 
+		
+	}
+}
+country_event = { # [ROOT.GetLeader]님! 제 토지를 찢지마세요!
+	id = trinity_flavor_events.23
+	title = trinity_flavor_events.23.t
+	desc = trinity_flavor_events.23.desc
+	picture = GFX_report_event_generic_riverside_road
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.23.a 
+		
+	}
+}
+country_event = { # 색채 침입 - 미카
+	id = trinity_flavor_events.24
+	title = trinity_flavor_events.24.t
+	desc = trinity_flavor_events.24.desc
+	picture = GFX_event_TRN_mika_event_picture_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no 
+
+	option = {
+		name = trinity_flavor_events.24.a 
+		set_country_flag = TRN_MIKA_Iridescence
+		mark_focus_tree_layout_dirty = yes
+	}
+}
+country_event = { # 하카리 아츠코 발동용
+	id = trinity_flavor_events.25
+	title = trinity_flavor_events.25.t
+	desc = trinity_flavor_events.25.desc
+	picture = GFX_report_event_atsuko
+	
+	is_triggered_only = no
+    	fire_only_once = yes
+
+	trigger = {
+		tag = TRM
+		has_completed_focus = TRN_religious_conversion
+		has_completed_focus = TRN_annex_the_bandit_states
+		TRM = { has_character = ARI_hakari_atsuko }
+	}
+	option = {
+		name = trinity_flavor_events.25.a 
+	}
+}
+
+country_event = { # 백화요란 - 정의실현부 공동 훈련
+	id = trinity_flavor_events.27
+	title = trinity_flavor_events.27.t
+	desc = trinity_flavor_events.27.desc
+	picture = GFX_report_event_TRN_hasumi_renge
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.27.a 
+	}
+}
+
+country_event = { # 백화요란 - 정의실현부 공동 훈련 - 2일차
+	id = trinity_flavor_events.28
+	title = trinity_flavor_events.28.t
+	desc = trinity_flavor_events.28.desc
+	picture = GFX_report_event_generic_kivotos_city_2
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.28.a
+		trigger = {
+			has_country_leader = {
+				ruling_only = yes
+				character = TRN_Misono_Mika
+			}
+		}
+		#activate_mission = TRN_Mika_honor_social_problem
+	}
+
+	option = {
+		name = trinity_flavor_events.28.a
+		trigger = {
+			has_country_leader = {
+				ruling_only = yes
+				character = TRN_Kirifuji_Nagisa
+			}
+		}
+	}
+}
+
+country_event = { # 본연으로
+	id = trinity_flavor_events.29
+	title = trinity_flavor_events.29.t
+	desc = trinity_flavor_events.29.desc
+	picture = GFX_report_event_generic_azusa
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.29.a
+		custom_effect_tooltip = TRN_trinity_44_b_tt 
+		hidden_effect = {
+			ARI = {
+				country_event = { id = trinity_flavor_events.30 days = 30 }
+			}
+		}
+	}
+}
+
+country_event = { # 본연으로 - 2
+	id = trinity_flavor_events.30
+	title = trinity_flavor_events.30.t
+	desc = trinity_flavor_events.30.desc
+	picture = GFX_report_event_generic_azusa
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.30.a
+		set_country_flag = ARI_azusa_comeback
+		effect_tooltip = {
+			IF = {
+				limit = { has_character = ARI_Shirasu_Azusa }
+				add_advisor_role = {
+					character = ARI_Shirasu_Azusa
+					advisor = {
+						slot = high_command
+						desc = TRN_Azusa_advisor_desc
+						idea_token = ARI_Shirasu_Azusa_high_command
+						traits = { army_commando_2 }
+						cost = 100
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.31
+	title = trinity_flavor_events.31.t
+	desc = trinity_flavor_events.31.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.31.a
+		add_stability = 0.01
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.32
+	title = trinity_flavor_events.32.t
+	desc = trinity_flavor_events.32.desc
+	picture = GFX_report_event_generic_trinity_prison
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.32.a
+		add_stability = -0.01
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = { id = trinity_flavor_events.34 days = 20 }
+		}
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.33
+	title = trinity_flavor_events.33.t
+	desc = trinity_flavor_events.33.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.33.a
+		set_country_flag = TRN_trnfla_33_triggered
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.34
+	title = trinity_flavor_events.34.t
+	desc = trinity_flavor_events.34.desc
+	picture = GFX_report_event_TRN_mika_5
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.34.a
+		add_stability = -0.01
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.35
+	title = trinity_flavor_events.35.t
+	desc = trinity_flavor_events.35.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.35.a
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.05
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+
+	option = {
+		name = trinity_flavor_events.35.b
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.15
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.36
+	title = trinity_flavor_events.36.t
+	desc = trinity_flavor_events.36.desc
+	picture = GFX_report_event_picture_pius_XI
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.36.a
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.37
+	title = trinity_flavor_events.37.t
+	desc = trinity_flavor_events.37.desc
+	picture = GFX_event_kozeki_ui
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.37.a
+		effect_tooltip = {
+			add_to_variable = { 
+				TRM_Nagi_IronSword_Var = 15
+				tooltip = TRM_Nagi_IronSword_Var_plus
+			}
+		}
+	}
+}
+
+unit_leader_event = { # 
+	id = trinity_flavor_events.38
+	title = {
+		text = trinity_flavor_events.38.t.Yoshimi
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Ibaragi_Yoshimi has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	title = {
+		text = trinity_flavor_events.38.t.Airi
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Kurimura_Airi has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	title = {
+		text = trinity_flavor_events.38.t.Natsu
+		trigger = { 
+			THIS = { 
+				is_character = TRN_Yutori_Natsu has_trait = trait_TRN_lack_of_experience
+			} 
+		}
+	}
+	desc = {
+		text = trinity_flavor_events.38.d.Yoshimi
+		trigger = { 
+			THIS = { is_character = TRN_Ibaragi_Yoshimi has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	desc = {
+		text = trinity_flavor_events.38.d.Airi
+		trigger = { 
+			THIS = { is_character = TRN_Kurimura_Airi has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	desc = {
+		text = trinity_flavor_events.38.d.Natsu
+		trigger = { 
+			THIS = { is_character = TRN_Yutori_Natsu has_trait = trait_TRN_lack_of_experience } 
+		}
+	}
+	
+	is_triggered_only = yes
+	trigger = {
+		THIS = {
+			has_trait = trait_TRN_lack_of_experience
+			OR = {
+				is_character = TRN_Ibaragi_Yoshimi
+				is_character = TRN_Kurimura_Airi
+				is_character = TRN_Yutori_Natsu
+			}
+		}
+
+	}
+	option = {
+		name = trinity_flavor_events.38.Yoshimi
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Ibaragi_Yoshimi }
+		}
+	}
+	option = {
+		name = trinity_flavor_events.38.Airi
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Kurimura_Airi }
+		}
+	}
+	option = {
+		name = trinity_flavor_events.38.Natsu
+		trigger = { 
+			THIS = { has_trait = trait_TRN_lack_of_experience is_character = TRN_Yutori_Natsu }
+		}
+	}
+    after = {
+		THIS = {
+			remove_unit_leader_trait =  trait_TRN_lack_of_experience
+			random_list = {
+				1 = { add_attack = 1}
+				1 = { add_planning = 1 }
+				1 = { add_logistics = 1 }
+			}
+		}
+    	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.39
+	title = trinity_flavor_events.39.t
+	desc = trinity_flavor_events.39.desc
+	picture = GFX_report_event_gehenna_haruna
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.39.a
+
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.40
+	title = trinity_flavor_events.40.t
+	desc = trinity_flavor_events.40.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		add_to_variable = { TRN_trnfla_40 = 1 }
+	}
+	trigger = {
+		check_variable = { TRN_trnfla_40 < 3 }
+	}
+
+	option = {
+		name = trinity_flavor_events.40.a
+		add_stability = -0.01
+		hidden_effect = {
+			country_event = { id = trinity_flavor_events.40 days = 180 }
+		}
+	}
+}
+
+unit_leader_event = { # 
+	id = trinity_flavor_events.41
+	title = trinity_flavor_events.41.t
+	desc = trinity_flavor_events.41.desc
+	picture = GFX_report_event_TRN_mika_lay_down
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.41.a
+
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.42
+	title = trinity_flavor_events.42.t
+	desc = trinity_flavor_events.42.desc
+	picture = GFX_report_event_kreisau_ircle
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.42.a
+
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.43
+	title = trinity_flavor_events.43.t
+	desc = trinity_flavor_events.43.desc
+	picture = GFX_report_event_generic_famine
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.43.a
+
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.44
+	title = trinity_flavor_events.44.t
+	desc = trinity_flavor_events.44.desc
+	picture = GFX_report_event_TRN_mika_4
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.44.a
+		effect_tooltip = { unlock_decision_tooltip = TRN_Mika_honor_loop_decision }
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.45
+	title = trinity_flavor_events.45.t
+	desc = trinity_flavor_events.45.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.45.a
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = 0.05
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+
+	option = {
+		name = trinity_flavor_events.45.b
+		add_power_balance_value = {
+			id = TRM_power_balance
+			value = -0.15
+		}
+		mark_focus_tree_layout_dirty = yes
+	}
+}
+
+country_event = { # 히후미
+	id = trinity_flavor_events.46
+	title = trinity_flavor_events.46.t
+	desc = trinity_flavor_events.46.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.46.a
+
+	}
+}
+
+unit_leader_event = { # 고마워해 하는 미네.
+	id = trinity_flavor_events.47
+	title = trinity_flavor_events.47.t
+	desc = trinity_flavor_events.47.desc
+	picture = GFX_report_event_TRN_mika_2
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.47.a
+		set_temp_variable = { TRN_Honor_change = 6 }
+		TRN_add_Honor = yes
+	}
+}
+
+country_event = { # 교육과정에서 채플 수업 빼면 사쿠라코가 미카한테 뭐라 함
+	id = trinity_flavor_events.48
+	title = trinity_flavor_events.48.t
+	desc = trinity_flavor_events.48.desc
+	picture = GFX_report_event_picture_utazumi_sakurako_angry
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_flavor_events.48.a
+
+	}
+}
+
+country_event = { # 폴란드 총독
+	id = trinity_divine_mandate_events.1
+	title = trinity_divine_mandate_events.1.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    target_country = TR3
+				    character = POL_wladyslaw_studnicki
+				}
+			}
+			TRM = {
+				set_nationality = {
+				    target_country = TR3
+				    character = TRN_Kurusu_Rin
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR3 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_ideas = TRN_trinity_controlled_divine_ns 
+          		add_country_leader_role = {
+            	  	character = TRN_Kurusu_Rin
+            	   	country_leader = {
+    			        	expire = "1965.1.1"
+            	        	ideology = pater_nazism
+            	        	traits = { 
+						TRN_puppet_leader_Trait 
+						ideological_crusader
+					}
+            	   	}
+            	  	promote_leader = yes
+          		}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		TR3 = { 
+			add_country_leader_role = {
+				character = POL_wladyslaw_studnicki
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+		}
+	}
+}
+
+country_event = { # 우크라이나 총독
+	id = trinity_divine_mandate_events.2
+	title = trinity_divine_mandate_events.2.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    target_country = TR5
+				    character = UKR_andriy_Melnky
+				}
+			}
+			TRM = {
+				set_nationality = {
+					target_country = TR5
+					character = TRN_Sayaka_Ohara
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR5 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_ideas = TRN_trinity_controlled_divine_ns 
+			add_country_leader_role = {
+				character = TRN_Sayaka_Ohara
+            	   	country_leader = {
+    			      	expire = "1965.1.1"
+            	      	ideology = pater_nazism
+            	        	traits = { TRN_puppet_leader_Trait AUS_fascist_writer }
+            	   	}
+            		promote_leader = yes
+			}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		TR5 = {
+			add_country_leader_role = {
+				character = UKR_andriy_Melnky
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BAUKR_fascism_party_long
+				name = BAUKR_fascism_party
+			}
+		}
+	}
+}
+
+country_event = { # 벨라루스 총독
+	id = trinity_divine_mandate_events.3
+	title = trinity_divine_mandate_events.3.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			event_target:system = {
+				set_nationality = {
+				    	target_country = TR4
+				    	character = BLR_radasklaw_ostrowski
+				}
+			}
+			TRM = {
+				set_nationality = {
+					target_country = TR4
+				    	character = TRN_Ayaka_Ohashi
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR4 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Ayaka_Ohashi
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait fascist_corporatist }
+            	      	}
+            	      promote_leader = yes
+            	}
+		}
+	}
+	after = {
+		hidden_effect = {
+			country_event = trinity_divine_mandate_events.10
+		}
+	}
+	#option = {
+	#	name = trinity_divine_mandate_events.1.b
+	#	TR4 = {
+	#		add_country_leader_role = {
+	#			character = BLR_radasklaw_ostrowski
+	#			promote_leader = yes
+	#			country_leader = {
+	#				ideology = pater_nazism
+	#				expire = "1965.1.1.1"
+	#				traits = { GER_governor_general_trait }
+	#			}
+	#		}
+	#		add_ideas = TRN_local_controlled_divine_ns 
+	#		set_party_name = {
+	#			ideology = fascism
+	#			long_name = BABLR_fascism_party_long
+	#			name = BABLR_fascism_party
+	#		}
+	#	}
+	#}
+}
+
+country_event = { # 모스크바 총독
+	id = trinity_divine_mandate_events.4
+	title = trinity_divine_mandate_events.4.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+					target_country = TR6
+					character = TRN_Wakayama_Shion
+				}
+			}
+			IF = {
+				limit = {
+					SOV = { 
+						NOT = { has_completed_focus = SOV_dismantle_the_zemsky_sobor } 
+					}
+				}
+				SOV = {
+					set_portraits = {
+						character = SOV_konstantin_rodzayevsky
+						civilian = { 
+							large = "gfx/leaders/ZZZ/portrait_RUS_konstantin_rodzaevsky.tga" 
+						}
+					}
+					set_nationality = {
+					    target_country = TR6
+					    character = SOV_konstantin_rodzayevsky
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR6 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Wakayama_Shion
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait anti_communist_crusader}
+            	      	}
+            	      promote_leader = yes
+            	}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		trigger = {
+			SOV = {
+				NOT = { has_completed_focus = SOV_dismantle_the_zemsky_sobor }
+			}
+		}
+		TR6 = {
+			add_country_leader_role = {
+				character = SOV_konstantin_rodzayevsky
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BASOV_fascism_party_russian
+				name = SOV_fascism_party_russian
+			}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.4.c
+		trigger = {
+			has_country_flag = TRN_Nagisa_is_imprisoned
+		}
+		custom_effect_tooltip = TRN_trndivine_4_tt
+		hidden_effect = {
+			TRN_Kirifuji_Nagisa = { clr_character_flag = TRN_nagisa_in_jail }
+			set_portraits = {
+				character = TRN_Kirifuji_Nagisa
+				civilian = { large = "gfx/leaders/TRN/Portrait_TRN_Kirihuji_Nagisa_angry.tga" }
+				army = { large = "gfx/leaders/TRN/Portrait_TRN_Kirihuji_Nagisa_angry.tga" }
+			}
+			set_nationality = {
+				target_country = TR6
+				character = TRN_Kirifuji_Nagisa
+			}
+			TR6 = { 
+				hidden_effect = { add_ideas = BA_student_conscription_idea }
+				country_event = { id = trinity_divine_mandate_events.5 } 
+			}
+		}
+		
+		
+	}
+}
+country_event = { # 모스크바 총독
+	id = trinity_divine_mandate_events.5
+	title = trinity_divine_mandate_events.4.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+	hidden = yes
+	
+	immediate = {
+		IF = {
+			limit = { has_character = TRN_Kirifuji_Nagisa }
+			add_country_leader_role = {
+				character = TRN_Kirifuji_Nagisa
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { TRM_Kirifuji_Nagisa_trait }
+				}
+			}
+		}
+	}
+}
+
+country_event = { # 캅카스 총독
+	id = trinity_divine_mandate_events.6
+	title = trinity_divine_mandate_events.6.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+				    target_country = TR7
+				    character = TRN_Sakura_Ayane
+				}
+			}
+			IF = {
+				limit = {
+					GEO = {
+						exists = no
+					}
+				}
+				GEO = {
+					set_nationality = {
+					    target_country = RKK
+					    character = GEO_shalva_maglakelidze
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR7 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_ideas = TRN_trinity_controlled_divine_ns 
+            	add_country_leader_role = {
+            	      character = TRN_Sakura_Ayane
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait IRQ_militant_politician }
+            	      	}
+            	      promote_leader = yes
+            	}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		trigger = {
+			GEO = { exists = no }
+		}
+		TR7 = {
+			add_country_leader_role = {
+				character = GEO_shalva_maglakelidze
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = GEO_fascism_party
+				name = GEO_fascism_party_long
+			}
+		}
+	}
+}
+
+country_event = { # 밀레니엄 총독
+	id = trinity_divine_mandate_events.7
+	title = trinity_divine_mandate_events.7.t
+	desc = trinity_divine_mandate_events.7.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			IF = {
+				limit = {
+					MIL = {
+						exists = no
+						NOT = { has_completed_focus = MIL_K_appeasement }
+					}
+				}
+				MIL = {
+					set_nationality = {
+					    target_country = TR8
+					    character = MIL_Koyuki
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR8 = { 
+			add_ideas = MIL_neutrality_idea
+			add_ideas = TRN_trinity_controlled_divine_ns
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+
+			# create country leader가 얼마나 구린 코드인지 나도 알고 있지만
+			# 그렇다고 잘 쓰고 있는 정치 고문 하나 날리는건 좀 마음이 아프잖냐..
+			create_country_leader = {
+				name = TRN_Kozeki_Ui
+				picture = GFX_Portrait_TRN_Kozeki_Ui
+				ideology = pater_nazism
+				traits = { TRN_puppet_leader_Trait TRN_economist_ui }
+				female = yes
+			}
+			set_country_leader_ideology = technocracy
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		trigger = {
+			MIL = {
+				exists = no
+				NOT = { has_completed_focus = MIL_K_appeasement }
+			}
+		}
+		TR8 = {
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+			add_country_leader_role = {
+				character = MIL_Koyuki
+				promote_leader = yes
+				country_leader = {
+					ideology = pater_nazism
+					expire = "1965.1.1.1"
+					traits = { GER_governor_general_trait }
+				}
+			}
+			add_ideas = MIL_neutrality_idea
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = MIL_democratic_party
+				name = MIL_democratic_party
+			}
+			set_country_leader_ideology = technocracy
+		}
+	}
+}
+
+country_event = { # 프랑스 총독
+	id = trinity_divine_mandate_events.8
+	title = trinity_divine_mandate_events.8.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			TRM = {
+				set_nationality = {
+				    target_country = TR2
+				    character = TRN_Kusunoki_Tomori
+				}
+			}
+			event_target:system = {
+				set_nationality = {
+				    target_country = TR2
+				    character = FRA_fernand_de_brinon
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR2 = { 
+			hidden_effect = { add_ideas = BA_student_conscription_idea }
+            	add_country_leader_role = {
+            	      character = TRN_Kusunoki_Tomori
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_puppet_leader_Trait }
+            	      	}
+            	      promote_leader = yes
+            	}
+			add_ideas = TRN_trinity_controlled_divine_ns 
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		TR2 = { 
+            	add_country_leader_role = {
+            	      character = FRA_fernand_de_brinon
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { GER_governor_general_trait }
+            	      	}
+            	      promote_leader = yes
+            	}
+			add_ideas = TRN_local_controlled_divine_ns 
+			set_party_name = {
+				ideology = fascism
+				long_name = BATR2_fascism_party_long
+				name = BATR2_fascism_party
+			}
+		}
+	}
+	after = {
+		#21 = { 
+		#	add_to_array = { global.state_with_lore = THIS.id }
+		#	add_to_array = { lore_entries = 9 } 
+		#}
+	}
+}
+
+country_event = { # 밀레니엄 총독
+	id = trinity_divine_mandate_events.9
+	title = trinity_divine_mandate_events.9.t
+	desc = trinity_divine_mandate_events.1.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		hidden_effect = {
+			COU = {
+				set_nationality = {
+				    target_country = TR1
+				    character = COU_HAINE
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.1.a
+		TR1 = {
+			add_ideas = TRN_trinity_controlled_divine_ns 
+			create_country_leader = {
+				name = TRN_Ajitani_Hifumi
+				picture = GFX_Portrait_TRN_Ajitani_Hifumi
+				ideology = pater_nazism
+				traits = { TRN_fake_chonghak }
+				female = yes
+			}
+		}
+	}
+	option = {
+		name = trinity_divine_mandate_events.1.b
+		TR1 = { 
+            	add_country_leader_role = {
+            	      character = COU_HAINE
+            	      country_leader = {
+					expire = "1974.6.18"
+            	      	ideology = pater_nazism
+					traits = { TRN_fake_chonghak }
+            	      	}
+            	      promote_leader = yes
+            	}
+			add_ideas = TRN_local_controlled_divine_ns
+		}
+	}
+}
+
+country_event = { # 벨라루스 중앙라다
+	id = trinity_divine_mandate_events.10
+	title = trinity_divine_mandate_events.10.t
+	desc = trinity_divine_mandate_events.10.desc
+	picture = GFX_report_event_generic_library
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	immediate = {
+		every_state = {
+			limit = {
+				OR = {
+					state = 95
+					state = 65
+					state = 96
+					state = 207
+					state = 206
+					state = 204
+					state = 194
+					state = 94
+				}
+			}
+			set_state_flag = TRN_state_of_central_council
+		}
+	}
+
+	option = {
+		name = trinity_divine_mandate_events.10.a
+		every_state = {
+			limit = { has_state_flag = TRN_state_of_central_council }
+			add_dynamic_modifier = { modifier = TRN_central_council }
+		}
+		TR4 = { add_ideas = TR4_radaslau_astrouski_ns }
+	}
+	option = {
+		name = trinity_divine_mandate_events.10.b
+	}
+	after = {
+		every_state = {
+			limit = { has_state_flag = TRN_state_of_central_council }
+			clr_state_flag = TRN_state_of_central_council
+		}
+	}
+}
+
+# 나기나기의 호스트 취임
+unit_leader_event = { 
+	id = trinity_events_nagisa.1
+	title = trinity_events_nagisa.1.t
+	desc = trinity_events_nagisa.1.desc
+	picture = GFX_event_none_picture
+	
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = trinity_events_nagisa.1.a
+		add_country_leader_role = {
+			character = TRN_Kirifuji_Nagisa
+			promote_leader = yes
+			country_leader = {
+				ideology = traditionalism_with_trinity_characteristics
+				expire = "1965.1.1.1"
+				traits = { 
+					TRN_noble_duty
+					TRM_cynical_skeptic_nagisa
+					#TRN_nagisa_1_off
+				}
+				desc = TRN_Kirifuji_Nagisa_desc
+			}
+		}
+		
+		custom_effect_tooltip = nagisa_faction_C_exit
+		clr_country_flag = nagisa_faction_C_flag
+
+		hidden_effect = {
+			TRN_Utazumi_Sakurako = {
+				unit_leader_event = { id = trinity_events.13 days = 10 } # 시스터후드 음모
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = TRM_nagi_nagi_neutrality_party_long
+				name = TRM_nagi_nagi_neutrality_party
+			}
+			set_party_name = {
+				ideology = fascism
+				long_name = TRM_nagi_nagi_fascism_party_long
+				name = TRM_nagi_nagi_fascism_party
+			}
+			set_party_name = {
+				ideology = communism
+				long_name = TRM_nagi_nagi_communism_party_long
+				name = TRM_nagi_nagi_communism_party
+			}
+			set_party_name = {
+				ideology = democratic
+				long_name = TRM_nagi_nagi_democratic_party_long
+				name = TRM_nagi_nagi_democratic_party
+			}
+		}
+    	}
+
+	after = {
+		TRM_nagisa_faction_modified = yes
+	}
+}
+
+country_event = { # 상투스 분파와의 회담
+	id = trinity_events_nagisa.2
+	title = trinity_events_nagisa.2.t
+	desc = trinity_events_nagisa.2.desc
+	picture = GFX_event_tmr_event_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.2.a
+		add_stability = 0.01
+	}
+}
+
+country_event = { # 우정의 끝
+	id = trinity_events_nagisa.3
+	title = trinity_events_nagisa.3.t
+	desc = trinity_events_nagisa.3.desc
+	picture = GFX_event_tmr_event_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.3.a
+		add_political_power = 50
+	}
+}
+
+country_event = { # 공주의 마지막
+	id = trinity_events_nagisa.4
+	title = trinity_events_nagisa.4.t
+	desc = trinity_events_nagisa.4.desc
+	picture = GFX_event_TRN_mika_event_picture
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.4.a
+		remove_advisor_role = {
+			character = TRN_Misono_Mika
+			slot = political_advisor
+		}
+		
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.5 days = 2 }
+		}
+	}
+}
+
+country_event = { # 남아 있는 분파들
+	id = trinity_events_nagisa.5
+	title = trinity_events_nagisa.5.t
+	desc = trinity_events_nagisa.5.desc
+	picture = GFX_report_event_generic_kivotos_city_2
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.5.a
+
+	}
+}
+
+unit_leader_event = { # 증명 불가능한 문제
+	id = trinity_events_nagisa.6
+	title = trinity_events_nagisa.6.t
+	desc = trinity_events_nagisa.6.desc
+	picture = GFX_event_none_picture
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.6.a
+		custom_effect_tooltip = trinity_events_nagisa_6a_tt
+	}
+}
+
+country_event = { # 시스터후드와의 만남
+	id = trinity_events_nagisa.7
+	title = trinity_events_nagisa.7.t
+	desc = trinity_events_nagisa.7.desc
+	picture = GFX_event_tmr_event_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.7.a
+	}
+}
+
+country_event = { # 말을 뒤집으며
+	id = trinity_events_nagisa.8
+	title = trinity_events_nagisa.8.t
+	desc = trinity_events_nagisa.8.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.8.a
+	}
+}
+
+country_event = { # 회담의 끝
+	id = trinity_events_nagisa.9
+	title = trinity_events_nagisa.9.t
+	desc = trinity_events_nagisa.9.desc
+	picture = GFX_report_event_generic_handshake
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.9.a
+		add_stability = 0.01
+	}
+}
+
+country_event = { # [GetYear]년 트리니티 공의회
+	id = trinity_events_nagisa.10
+	title = trinity_events_nagisa.10.t
+	desc = trinity_events_nagisa.10.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.10.a
+		if = {
+			limit = {
+				NOT = { has_completed_focus = TRN_nagisa_meeting_with_sisterhood }
+			}
+			custom_effect_tooltip = trinity_events_nagisa_10sakurako_tt
+			TRM_nagisa_bop_low_decrease_effect = yes
+		}
+	}
+}
+
+country_event = { # 호스트의 권한
+	id = trinity_events_nagisa.11
+	title = trinity_events_nagisa.11.t
+	desc = trinity_events_nagisa.11.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = {
+		name = trinity_events_nagisa.11.a
+		meta_effect = {
+			text = {
+				set_politics = {
+					ruling_party = democratic
+					last_election = "[CURRENT_DATE]"
+					election_frequency = 36
+					elections_allowed = yes
+				}
+			}
+			CURRENT_DATE = "[?global.date.GetDateStringNoHour]"
+		}
+	}
+}
+
+country_event = { # 게헨나 문제
+	id = trinity_events_nagisa.12
+	title = trinity_events_nagisa.12.t
+	desc = trinity_events_nagisa.12.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.12.a
+		add_political_power = 50
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.12.b
+		add_war_support = -0.02
+		add_stability = 0.03
+	}
+}
+
+country_event = { # 신앙
+	id = trinity_events_nagisa.13
+	title = trinity_events_nagisa.13.t
+	desc = trinity_events_nagisa.13.desc
+	picture = GFX_report_event_generic_trinity_building
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.13.a
+		set_country_flag = trn_nagisa_religion_hardline_flag
+		add_political_power = 25
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.13.b
+		set_country_flag = trn_nagisa_religion_moderate_flag
+	}
+}
+
+country_event = { # 공의회를 마무리하며
+	id = trinity_events_nagisa.14
+	title = trinity_events_nagisa.14.t
+	desc = trinity_events_nagisa.14.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.14.a
+
+	}
+}
+
+country_event = { # 그래서 투표권 언제 줄 건데
+	id = trinity_events_nagisa.15
+	title = trinity_events_nagisa.15.t
+	desc = trinity_events_nagisa.15.desc
+	picture = GFX_report_event_generic_SPD
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.15.a
+
+	}
+}
+
+country_event = { # 분파 문제
+	id = trinity_events_nagisa.16
+	title = trinity_events_nagisa.16.t
+	desc = trinity_events_nagisa.16.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_worried
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.16.a
+
+	}
+}
+
+country_event = { # 정의로운 전쟁을 위하여
+	id = trinity_events_nagisa.17
+	title = trinity_events_nagisa.17.t
+	desc = trinity_events_nagisa.17.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.17.a
+		effect_tooltip = {
+			add_ideas = TRN_military_mission_generic_ns
+			custom_effect_tooltip = tooltip_white_line
+			TRM = {
+				send_equipment = {
+					target = GEH
+					type = infantry_equipment
+					amount = 1000
+				}
+			}
+		}
+	}
+}
+
+country_event = { # 나기사-아코 회담의 준비
+	id = trinity_events_nagisa.18
+	title = trinity_events_nagisa.18.t
+	desc = trinity_events_nagisa.18.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.18.a
+
+	}
+}
+
+country_event = { # 나기사-아코 회담
+	id = trinity_events_nagisa.19
+	title = trinity_events_nagisa.19.t
+
+	desc = { 
+		text = trinity_events_nagisa.19.desc
+		trigger = {
+			NOT = {
+				GEH = {
+					has_country_leader = {
+						ruling_only = yes
+						character = GEH_dkzh
+					}
+				}
+			}
+		}
+	}
+
+	desc = { 
+		text = trinity_events_nagisa.19.desc.alt
+		trigger = {
+			GEH = {
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_dkzh
+				}
+			}
+		}
+	}
+
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.19.a
+		add_ideas = TRN_joint_security_organization_ns
+	}
+}
+
+country_event = { # 아코-나기사 회담
+	id = trinity_events_nagisa.20
+	title = trinity_events_nagisa.20.t
+
+	desc = { 
+		text = trinity_events_nagisa.20.desc
+		trigger = {
+			GEH = {
+				has_country_leader = {
+					ruling_only = yes
+					character = GEH_hina
+				}
+			}
+		}
+	}
+
+	desc = { 
+		text = trinity_events_nagisa.20.desc.alt
+		trigger = {
+			NOT = { 
+				GEH = {
+					has_country_leader = {
+						ruling_only = yes
+						character = GEH_hina
+					}
+				}
+			}
+		}
+	}
+
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.20.a
+		add_ideas = TRN_joint_security_organization_ns
+	}
+}
+
+country_event = { # 오후에 차 한 잔
+	id = trinity_events_nagisa.21
+	title = trinity_events_nagisa.21.t
+	desc = trinity_events_nagisa.21.desc
+	picture = GFX_report_event_generic_tea
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.21.a
+
+	}
+	after = {
+		country_event = { id = trinity_events.9 days = 03 }
+	}
+}
+
+country_event = { # 신앙의 힘
+	id = trinity_events_nagisa.22
+	title = trinity_events_nagisa.22.t
+
+	desc = { 
+		text = trinity_events_nagisa.22.desc.hardline
+		trigger = {
+			has_country_flag = trn_nagisa_religion_hardline_flag
+		}
+	}
+
+	desc = { 
+		text = trinity_events_nagisa.22.desc.moderate
+		trigger = {
+			has_country_flag = trn_nagisa_religion_moderate_flag
+		}
+	}
+
+	picture = GFX_report_event_GEH_haruna_kurodate
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.22.a 
+		if = {
+			limit = {
+				has_country_flag = trn_nagisa_religion_hardline_flag
+			}
+			add_timed_idea = {
+				idea = TRN_german_new_religion_ns
+				days = 720
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = trn_nagisa_religion_moderate_flag
+			}
+			add_timed_idea = {
+				idea = TRN_german_harmony_religion_ns
+				days = 720
+			}
+		}
+	}
+}
+
+country_event = { # 사자가 되어주세요
+	id = trinity_events_nagisa.23
+	title = trinity_events_nagisa.23.t
+	desc = trinity_events_nagisa.23.desc
+	picture = GFX_report_event_GEH_haruna_kurodate
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.23.a 
+		effect_tooltip = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_political_advisor
+		}
+	}
+}
+
+country_event = { # 게헨나 중앙구의 승전 결산
+	id = trinity_events_nagisa.24
+	title = trinity_events_nagisa.24.t
+	desc = trinity_events_nagisa.24.desc
+	picture = GFX_report_event_gem_makoto_ibuki
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.24.a 
+		effect_tooltip = {
+			every_controlled_state = {
+				limit = {
+					has_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+				}
+				remove_dynamic_modifier = { modifier = TRM_anti_geh_emotion }
+			}
+			add_political_power = 100
+		}
+	}
+}
+
+country_event = { # 믿음은 굳건하여라
+	id = trinity_events_nagisa.25
+	title = trinity_events_nagisa.25.t
+
+	desc = { 
+		text = trinity_events_nagisa.25.desc.hardline
+		trigger = {
+			has_country_flag = trn_nagisa_religion_hardline_flag
+		}
+	}
+
+	desc = { 
+		text = trinity_events_nagisa.25.desc.moderate
+		trigger = {
+			has_country_flag = trn_nagisa_religion_moderate_flag
+		}
+	}
+
+	picture = GFX_report_event_GEH_haruna_kurodate
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.25.a 
+		add_stability = 0.1
+	}
+}
+
+country_event = { # 게헨나 학생회장 키리후지 나기사
+	id = trinity_events_nagisa.26
+	title = trinity_events_nagisa.26.t
+	desc = trinity_events_nagisa.26.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.26.a 
+
+	}
+}
+
+country_event = { # 게헨나 학생회장 시로미 이오리
+	id = trinity_events_nagisa.27
+	title = trinity_events_nagisa.27.t
+	desc = trinity_events_nagisa.27.desc
+	picture = GFX_report_event_iori_shiromi_generic_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.27.a 
+
+	}
+}
+
+country_event = { # 게헨나 학생회장 히무로 세나
+	id = trinity_events_nagisa.28
+	title = trinity_events_nagisa.28.t
+	desc = trinity_events_nagisa.28.desc
+	picture = GFX_event_Himuro_Sena
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.28.a 
+
+	}
+}
+
+country_event = { # 나기사-하스미 회동
+	id = trinity_events_nagisa.29
+	title = trinity_events_nagisa.29.t
+	desc = trinity_events_nagisa.29.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_2
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_leader = {
+			ruling_only = yes
+			character = TRN_Kirifuji_Nagisa
+		}
+	}
+
+	option = { 
+		name = trinity_events_nagisa.29.a 
+
+	}
+}
+
+country_event = { # 미식연구회는 미치지 않았다
+	id = trinity_events_nagisa.31
+	title = trinity_events_nagisa.31.t
+	desc = trinity_events_nagisa.31.desc
+	picture = GFX_report_event_gehenna_haruna
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.31.a
+		ai_chance = {
+			base = 0
+		}
+		add_stability = -0.05
+		custom_effect_tooltip = trinity_events_nagisa_31_a_tt
+		TRN_Aomori_Mine = {
+			add_trait = {
+				trait = trait_reckless
+			}
+			add_attack = 2
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa.31.b
+		ai_chance = {
+			base = 1
+		}
+		custom_effect_tooltip = trinity_events_nagisa_31_b_tt
+		add_stability = 0.01
+	}
+}
+
+country_event = { # 소라사키 히나 조사
+	id = trinity_events_nagisa.32
+	title = trinity_events_nagisa.32.t
+
+	desc = {
+		text = trinity_events_nagisa.32.desc.hina
+		trigger = {
+			GEH = {
+				NOT = { has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_1 }
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa.32.desc.robot
+		trigger = {
+			GEH = {
+				has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_1
+			}
+		}
+	}
+
+	picture = GFX_report_event_TRM_hina_sorasaki_tea_party
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa.32.a
+
+	}
+}
+
+country_event = { # 아마우 아코 조사
+	id = trinity_events_nagisa.33
+	title = trinity_events_nagisa.33.t
+	desc = trinity_events_nagisa.33.desc
+	picture = GFX_report_event_TRM_ako_amau_tea_party
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.33.a 
+
+	}
+}
+
+country_event = { # 아리우스에 대한 인도적 지원
+	id = trinity_events_nagisa.34
+	title = trinity_events_nagisa.34.t
+	desc = trinity_events_nagisa.34.desc
+	picture = GFX_report_event_generic_arius
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.34.a 
+
+	}
+}
+
+country_event = { # 아리우스 이단 심문
+	id = trinity_events_nagisa.35
+	title = trinity_events_nagisa.35.t
+	desc = trinity_events_nagisa.35.desc
+	picture = GFX_report_event_generic_read_write
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.35.a 
+
+	}
+}
+
+country_event = { # 네 이웃을 사랑하라
+	id = trinity_events_nagisa.36
+	title = trinity_events_nagisa.36.t
+	desc = trinity_events_nagisa.36.desc
+	picture = GFX_report_event_generic_door
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.36.a 
+
+	}
+}
+
+country_event = { # 아리우스 분파의 탄생
+	id = trinity_events_nagisa.37
+	title = trinity_events_nagisa.37.t
+	desc = trinity_events_nagisa.37.desc
+	picture = GFX_report_event_generic_arius
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.37.a 
+		custom_effect_tooltip = trinity_events_nagisa_37_a_tt
+	}
+}
+
+country_event = { # 게헨나 분파의 등장
+	id = trinity_events_nagisa.38
+	title = trinity_events_nagisa.38.t
+	desc = trinity_events_nagisa.38.desc
+	picture = GFX_event_mega_cities_GEH_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.38.a 
+		custom_effect_tooltip = trinity_events_nagisa_38_a_tt
+	}
+}
+
+country_event = { # 미네와 나기사의 독대
+	id = trinity_events_nagisa.39
+	title = trinity_events_nagisa.39.t
+	desc = trinity_events_nagisa.39.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.39.a 
+		set_variable = { TRM_mika_misono_sns_main_var = 11 }
+	}
+}
+
+country_event = { # 병상에서 깨어난 유리조노 세이아
+	id = trinity_events_nagisa.40
+	title = trinity_events_nagisa.40.t
+	desc = trinity_events_nagisa.40.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.40.a 
+
+	}
+}
+
+country_event = { # 세이아의 복귀
+	id = trinity_events_nagisa.41
+	title = trinity_events_nagisa.41.t
+	desc = trinity_events_nagisa.41.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.41.a 
+		custom_effect_tooltip = trinity_events_nagisa_41_a_tt
+		TRN_Yurizono_Seia = {
+			clr_character_flag = TRN_fake_death_flag
+			add_trait = {
+				trait = TRM_attached_to_filius
+			}
+		}
+	}
+}
+
+country_event = { # 세이아의 필리우스 가입에 대한 파테르의 항의
+	id = trinity_events_nagisa.42
+	title = trinity_events_nagisa.42.t
+	desc = trinity_events_nagisa.42.desc
+	picture = GFX_event_TRN_mika_event_picture
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.42.a 
+
+	}
+}
+
+country_event = { # 요한 분파의 정치 개입?
+	id = trinity_events_nagisa.43
+	title = trinity_events_nagisa.43.t
+	desc = trinity_events_nagisa.43.desc
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		focus_progress = {
+			focus = TRN_nagisa_democratic_ending
+			progress < 0.1
+		}
+		has_government = democratic
+		check_variable = { nagisa_faction_A < 45 }
+	}
+
+	option = { 
+		name = trinity_events_nagisa.43.a 
+		custom_effect_tooltip = trinity_events_nagisa_43_a_tt
+		set_country_flag = TRN_mine_host_candidate_flag
+	}
+
+	option = { 
+		name = trinity_events_nagisa.43.b
+		add_political_power = 25
+	}
+}
+
+country_event = { # 나기사 헌법
+	id = trinity_events_nagisa.44
+	title = trinity_events_nagisa.44.t
+	desc = trinity_events_nagisa.44.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.44.a 
+
+	}
+}
+
+country_event = { # 미카와의 화해
+	id = trinity_events_nagisa.45
+	title = trinity_events_nagisa.45.t	
+
+	desc = {
+		text = trinity_events_nagisa.45.desc.seia
+		trigger = {
+			has_completed_focus = TRN_meeting_with_mine
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa.45.desc.generic
+		trigger = {
+			NOT = { has_completed_focus = TRN_meeting_with_mine }
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_kirifuji_sitting_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.45.a 
+		random_list = {
+			50 = {
+				# /* 이 기회들은 성공 가능성을 높임 */
+				# §Y$GEH_dkzh$§! 또는 §Y$GEM_perfect_team$§!이(가) 현재 §G조언가§!로 임명
+				modifier = {
+					factor = 2
+					if = {
+						limit = {
+							has_character = GEH_dkzh
+						}
+						GEH_dkzh = {
+							is_political_advisor = yes
+						}
+					}
+					else = {
+						always = no
+					}
+				} 
+				modifier = {
+					factor = 2
+					if = {
+						limit = {
+							has_character = TRN_gehenna_prefect_team
+						}
+						TRN_gehenna_prefect_team = {
+							is_political_advisor = yes
+						}
+					}
+					else = {
+						always = no
+					}
+				} 
+				# §Y아리우스 분교§!를 §G용서§!
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_five_clan_republic
+				} 
+				# 밀레니엄의 과학을 §G용인§!하고 배움
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_peaceful_exchange_with_mil
+				} 
+				# 독일인들에 대한 §Y적대적 태도§!를 포기함
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_idealistic_approach
+				} 
+
+				country_event = { id = trinity_events_nagisa.46 days = 14 } # 성공
+			}
+			50 = {
+				# /* 이 문제들은 실패 가능성을 높임 */
+				# 나기사가 미카에게 정치 공작을 하며 사법 리스크를 줌
+				modifier = {
+					factor = 1.1
+					has_completed_focus = TRN_attack_mika_misono
+				} 
+				modifier = {
+					factor = 2
+					has_completed_focus = TRN_attack_pater
+				} 
+				# 현재 트리니티가 §R전쟁 중§!으로, 나기사의 심리가 불안정
+				modifier = {
+					factor = 1.2
+					has_war = yes
+				} 
+				# §Y에덴 조약§!이 파테르의 방해로 §R실패§!함
+				modifier = {
+					factor = 2
+					OR = {
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_fail_flag
+						has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+					}
+				} 
+				# TRN_german_cultural_revolution$§! 중점을 완료하지 않아, 나기사가 히후미에게 도움을 요청한 적이 §R없음§!
+				modifier = {
+					factor = 1.5
+					NOT = { has_completed_focus = TRN_german_cultural_revolution }
+				} 
+				country_event = { id = trinity_events_nagisa.47 days = 14 } # 실패
+			}
+		}
+	}
+}
+
+country_event = { # 필리우스-파테르 화해의 성공
+	id = trinity_events_nagisa.46
+	title = trinity_events_nagisa.46.t
+	desc = trinity_events_nagisa.46.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.46.a 
+		set_country_flag = TRM_reconciliation_of_pater_and_filius_flag
+		# 미카가 다시 조언가로 추가되는 코드 여기 입력
+	}
+}
+
+country_event = { # 필리우스-파테르 화해의 실패
+	id = trinity_events_nagisa.47
+	title = trinity_events_nagisa.47.t
+	desc = trinity_events_nagisa.47.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_1
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.47.a 
+
+	}
+}
+
+country_event = { # 미래 예지? 평행 우주?
+	id = trinity_events_nagisa.48
+	title = trinity_events_nagisa.48.t
+	desc = trinity_events_nagisa.48.desc
+
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.48.a 
+
+	}
+
+	option = { 
+		name = trinity_events_nagisa.48.b
+
+	}
+}
+
+country_event = { # 나기사의 연임? 아니면...
+	id = trinity_events_nagisa.49
+	title = trinity_events_nagisa.49.t
+	desc = trinity_events_nagisa.49.desc
+
+	picture = GFX_report_event_TRM_nagisa_kirifuji_worried
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.49.a 
+		custom_effect_tooltip = trinity_events_nagisa_49_a_tt
+	}
+}
+
+country_event = { # 세이아와의 대화
+	id = trinity_events_nagisa.50
+	title = trinity_events_nagisa.50.t
+	desc = trinity_events_nagisa.50.desc
+
+	picture = GFX_event_Seia_standing
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.50.a 
+		custom_effect_tooltip = trinity_events_nagisa_50_seia_tt
+	}
+}
+
+country_event = { # 감찰관실에서의 시간
+	id = trinity_events_nagisa.51
+	title = trinity_events_nagisa.51.t
+	desc = trinity_events_nagisa.51.desc
+
+	picture = GFX_report_event_TRM_ako_amau_tea_party
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.51.a 
+		custom_effect_tooltip = trinity_events_nagisa_51_ako_tt
+	}
+}
+
+country_event = { # 아리우스에서의 인연
+	id = trinity_events_nagisa.52
+	title = trinity_events_nagisa.52.t
+	desc = trinity_events_nagisa.52.desc
+
+	picture = GFX_report_event_generic_arius
+    	
+	is_triggered_only = yes
+
+	trigger = {
+		has_completed_focus = TRN_five_clan_republic
+		has_character = ARI_hakari_atsuko
+	}
+
+	option = { 
+		name = trinity_events_nagisa.52.a 
+		custom_effect_tooltip = trinity_events_nagisa_52_atsuko_tt
+		set_country_flag = TRN_atsuko_host_candidate_flag
+	}
+}
+
+country_event = { # 그리고, 가장 소중한 너에게
+	id = trinity_events_nagisa.53
+	title = trinity_events_nagisa.53.t
+	desc = trinity_events_nagisa.53.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.53.a 
+		custom_effect_tooltip = trinity_events_nagisa_53_mika_tt
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa_election.2 days = 2 }
+		}
+	}
+}
+
+country_event = { # 마법이 풀린 신데렐라에게
+	id = trinity_events_nagisa.54
+	title = trinity_events_nagisa.54.t
+
+	desc = {
+		text = trinity_events_nagisa.54.desc.seia
+		trigger = {
+			NOT = { has_country_flag = TRM_reconciliation_of_pater_and_filius_flag }
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa.54.desc.mika
+		trigger = {
+			has_country_flag = TRM_reconciliation_of_pater_and_filius_flag
+		}
+	}
+
+	trigger = {
+		NOT = {
+			has_country_leader = {
+				ruling_only = yes
+				character = TRN_Kirifuji_Nagisa
+			}
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.54.a 
+		custom_effect_tooltip = trinity_events_democratic_nagisa_happy_ending_tt
+	}
+}
+
+country_event = { # 구제불능의 의심암귀
+	id = trinity_events_nagisa.55
+	title = trinity_events_nagisa.55.t
+	desc = trinity_events_nagisa.55.desc
+
+	trigger = {
+		has_country_leader = {
+			ruling_only = yes
+			character = TRN_Kirifuji_Nagisa
+		}
+	}
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.55.a 
+		custom_effect_tooltip = trinity_events_democratic_nagisa_bad_ending_tt
+	}
+}
+
+country_event = { # 독사굴
+	id = trinity_events_nagisa.56
+	title = trinity_events_nagisa.56.t
+	desc = trinity_events_nagisa.56.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.56.a 
+
+	}
+}
+
+country_event = { # 본 적 없는 미래
+	id = trinity_events_nagisa.57
+	title = trinity_events_nagisa.57.t
+	desc = trinity_events_nagisa.57.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.57.a 
+
+	}
+}
+
+country_event = { # 백의의 전사의 죽음
+	id = trinity_events_nagisa.58
+	title = trinity_events_nagisa.58.t
+	desc = trinity_events_nagisa.58.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.58.a 
+
+	}
+}
+
+country_event = { # 자신이 할 수 있는 일
+	id = trinity_events_nagisa.59
+	title = trinity_events_nagisa.59.t
+	desc = trinity_events_nagisa.59.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.59.a 
+
+	}
+}
+
+country_event = { # 승리가 아닌 한 페이지
+	id = trinity_events_nagisa.60
+	title = trinity_events_nagisa.60.t
+	desc = trinity_events_nagisa.60.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.60.a 
+
+	}
+}
+
+country_event = { # 오호호! 호스트랍니다!
+	id = trinity_events_nagisa.61
+	title = trinity_events_nagisa.61.t
+	desc = trinity_events_nagisa.61.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.61.a 
+
+	}
+}
+
+country_event = { # 오호호! 호스트랍니다!
+	id = trinity_events_nagisa.62
+	title = trinity_events_nagisa.62.t
+	desc = trinity_events_nagisa.62.desc
+
+	picture = GFX_report_event_TRM_nagisa_and_mika_2
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.62.a 
+
+	}
+}
+
+country_event = { # 만약에
+	id = trinity_events_nagisa.63
+	title = trinity_events_nagisa.63.t
+	desc = trinity_events_nagisa.63.desc
+
+	picture = GFX_report_event_trinity_student
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.63.a 
+		custom_effect_tooltip = trinity_events_nagisa_63_a_tt
+	}
+}
+
+country_event = { # 만약에
+	id = trinity_events_nagisa.64
+	title = trinity_events_nagisa.64.t
+	desc = trinity_events_nagisa.64.desc
+
+	picture = GFX_report_event_trinity_student
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.64.a 
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.66 days = 28 }
+		}
+	}
+}
+
+country_event = { # 저는 히후미 씨를 믿습니다
+	id = trinity_events_nagisa.65
+	title = trinity_events_nagisa.65.t
+	desc = trinity_events_nagisa.65.desc
+
+	picture = GFX_report_event_trinity_student
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.65.a # 필리우스를 믿고, §R견딘다.§!
+		custom_effect_tooltip = trinity_events_nagisa_65_a_tt
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.64 days = 21 } # 못견딤
+		}
+	}
+
+	option = { 
+		name = trinity_events_nagisa.65.b # 용기를 내어 말한다. '견딜 수 없어요.'
+		custom_effect_tooltip = trinity_events_nagisa_65_b_tt
+        
+		add_country_leader_role = {
+         	character = GEH_dkzh
+          	country_leader = {
+				desc = TRN_ako_amau_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_ako_2
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = GEH_dkzh
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		TRN_Ajitani_Hifumi = {
+			IF = {
+				limit = { has_ideology_group = democratic }
+				remove_country_leader_role = {
+					character = PREV
+					ideology = traditionalism_with_trinity_characteristics
+				}
+			}
+		}
+
+	}
+}
+
+country_event = { # 파우스트
+	id = trinity_events_nagisa.66
+	title = trinity_events_nagisa.66.t
+	desc = trinity_events_nagisa.66.desc
+
+	picture = GFX_report_event_trinity_student
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.66.a 
+		custom_effect_tooltip = trinity_events_nagisa_66_a_tt
+		hidden_effect = {
+			add_country_leader_trait = TRM_cynical_skeptic_hifumi
+			swap_ruler_traits = {
+				remove = TRM_host_hifumi_2
+				add = TRM_host_hifumi_3
+			}
+			remove_country_leader_trait = TRM_host_hifumi
+			set_country_leader_description = {
+				desc = TRN_hifumi_ajitani_faust_leader_desc
+			}
+		}
+	}
+}
+
+country_event = { # 이것은 구호가 아닙니다
+	id = trinity_events_nagisa.67
+	title = trinity_events_nagisa.67.t
+	desc = trinity_events_nagisa.67.desc
+
+	picture = GFX_report_event_trinity_student
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.67.a 
+		custom_effect_tooltip = trinity_events_nagisa_67_a_tt
+        
+		add_country_leader_role = {
+         	character = TRN_Yurizono_Seia
+          	country_leader = {
+				desc = TRN_seia_yurizono_nagisa_route_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_seia_2
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Yurizono_Seia
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+
+		TRN_Aomori_Mine = {
+			IF = {
+				limit = { has_ideology_group = democratic }
+				remove_country_leader_role = {
+					character = PREV
+					ideology = traditionalism_with_trinity_characteristics
+				}
+			}
+		}
+	}
+
+	option = { 
+		name = trinity_events_nagisa.67.b
+		custom_effect_tooltip = trinity_events_nagisa_67_b_tt
+	}
+}
+
+country_event = { # 나기사 BoP 테스트용
+	id = trinity_events_nagisa.10000
+	title = trinity_events_nagisa.10000.t
+	desc = trinity_events_nagisa.10000.desc
+	picture = GFX_report_event_GEH_haruna_kurodate
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.10000.a 
+
+		set_power_balance = {
+		    id = TRM_nagisa_power_balance # 고치라오 고란 쿠다사이
+		}
+
+	}
+}
+
+country_event = { # 에덴의 승리를 기념하며
+	id = trinity_events_nagisa_faction.1
+	title = trinity_events_nagisa_faction.1.t
+	desc = trinity_events_nagisa_faction.1.desc
+	picture = GFX_report_event_generic_library
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_faction.1.a 
+		custom_effect_tooltip = trinity_events_nagisa_faction_1_tt
+		random_list = {
+			70 = {
+				country_event = { id = trinity_events_nagisa_faction.2 days = 120 }
+			}
+			30 = {
+				country_event = { id = trinity_events_nagisa_faction.3 days = 120 }
+			}
+		}
+	}
+
+	option = { 
+		name = trinity_events_nagisa_faction.1.b
+		custom_effect_tooltip = trinity_events_nagisa_faction_1_tt
+		random_list = {
+			40 = {
+				country_event = { id = trinity_events_nagisa_faction.4 days = 120 }
+			}
+			60 = {
+				country_event = { id = trinity_events_nagisa_faction.5 days = 120 }
+			}
+		}
+	}
+}
+
+country_event = { # 문학적 성공 - 성녀의 발걸음
+	id = trinity_events_nagisa_faction.2
+	title = trinity_events_nagisa_faction.2.t
+	desc = trinity_events_nagisa_faction.2.desc
+	picture = GFX_report_event_generic_library
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_faction.2.a 
+		TRM_nagisa_bop_medium_increase_effect = yes
+	}
+}
+
+country_event = { # 문학적 실패 - 체ㅔ강뱀파이어 슬레이어 나기사
+	id = trinity_events_nagisa_faction.3
+	title = trinity_events_nagisa_faction.3.t
+	desc = trinity_events_nagisa_faction.3.desc
+	picture = GFX_report_event_generic_library
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_faction.3.a 
+		add_political_power = 1
+	}
+}
+
+country_event = { # 대중예술의 성공 - 밀레니엄에서의 게임
+	id = trinity_events_nagisa_faction.4
+	title = trinity_events_nagisa_faction.4.t
+	desc = trinity_events_nagisa_faction.4.desc
+	picture = GFX_report_event_generic_library
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_faction.4.a 
+		TRM_nagisa_bop_high_increase_effect = yes
+	}
+}
+
+country_event = { # 대중예술의 실패 - 절대로 지지 않는 나기사 호스트
+	id = trinity_events_nagisa_faction.5
+	title = trinity_events_nagisa_faction.5.t
+	desc = trinity_events_nagisa_faction.5.desc
+	picture = GFX_report_event_generic_library
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_faction.5.a 
+		add_political_power = 1
+	}
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.1
+	title = trinity_events_nagisa_diplomacy.1.t
+	desc = trinity_events_nagisa_diplomacy.1.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.1.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.2 hours = 12 }
+		}
+		GEM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.3 hours = 12 }
+		}
+	}
+
+	option = { #  AI는 선택하지 않음 - 하지만 유저라면 에덴 조약을 거부할 수 있는 선택지가 있음.
+		name = trinity_events_nagisa_diplomacy.1.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.7 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.2
+	title = trinity_events_nagisa_diplomacy.2.t
+	desc = trinity_events_nagisa_diplomacy.2.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.2.a
+		set_global_flag = trinity_gehenna_eden_treaty_negotiation_flag
+	}
+
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.3
+	title = trinity_events_nagisa_diplomacy.3.t
+	desc = trinity_events_nagisa_diplomacy.3.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.3.a
+	}
+
+}
+
+country_event = { # 에덴 조약 실패 (트리니티)
+	id = trinity_events_nagisa_diplomacy.4
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.4.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.4.a
+		add_political_power = -100
+		hidden_effect = {
+			news_event = { id = trinity_news_events.10 hours = 4 } # 에덴 조약 실패 뉴스
+			remove_ideas = {
+				TRN_pater_hate_naginagi_generic_ns
+				TRN_pater_hate_naginagi_pro_gehenna_ns
+				TRN_pater_hate_naginagi_pro_pater_ns
+			} 
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 실패 (선도부)
+	id = trinity_events_nagisa_diplomacy.5
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.4.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.4.a
+		add_political_power = -100
+	}
+
+}
+
+country_event = { # 에덴 조약 실패
+	id = trinity_events_nagisa_diplomacy.6
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.4.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.6.a
+	}
+
+}
+
+country_event = { # [GEH.GetName]의 협상 거부
+	id = trinity_events_nagisa_diplomacy.7
+	title = trinity_events_nagisa_diplomacy.7.t
+	desc = trinity_events_nagisa_diplomacy.7.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.7.a
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.8
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.8.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.8.a
+		effect_tooltip = {
+			TRM = {
+				give_guarantee = GEH
+				give_military_access = GEH
+			}
+			GEH = {
+				give_guarantee = TRM
+				give_military_access = TRM
+			}
+		}
+		hidden_effect = {
+			news_event = { id = trinity_news_events.8 hours = 4 } # 에덴 조약 성공 뉴스
+			swap_ideas = {
+				remove_idea = TRN_pater_hate_naginagi_generic_ns
+				add_idea = TRN_pater_hate_naginagi_pro_gehenna_ns
+			}
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.9
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.8.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.8.a
+		effect_tooltip = {
+			TRM = {
+				give_guarantee = GEH
+				give_military_access = GEH
+			}
+			GEH = {
+				give_guarantee = TRM
+				give_military_access = TRM
+			}
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.10
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.8.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.10.a
+		effect_tooltip = {
+			TRM = {
+				give_guarantee = GEH
+				give_military_access = GEH
+			}
+			GEH = {
+				give_guarantee = TRM
+				give_military_access = TRM
+			}
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.11
+	title = trinity_events_nagisa_diplomacy.11.t
+	desc = trinity_events_nagisa_diplomacy.11.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.11.a
+		effect_tooltip = {
+			complete_special_project = sp:sp_land_stronghold_network
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.12
+	title = trinity_events_nagisa_diplomacy.12.t
+	desc = trinity_events_nagisa_diplomacy.12.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.12.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+		every_state = {
+			limit = {
+				is_controlled_by = GEH 
+			}
+			add_core_of = TRM
+		}
+		TRM = {
+			annex_country = {
+				target = ROOT
+			}
+			country_event = { id = trinity_events_nagisa_diplomacy.13 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.12.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.14 }
+		}
+	}
+
+}
+
+country_event = { #
+	id = trinity_events_nagisa_diplomacy.13
+	title = trinity_events_nagisa_diplomacy.13.t
+	desc = trinity_events_nagisa_diplomacy.13.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.13.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = { #
+	id = trinity_events_nagisa_diplomacy.14
+	title = trinity_events_nagisa_diplomacy.14.t
+	desc = trinity_events_nagisa_diplomacy.14.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.14.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+country_event = { # 우리를 총학생회장으로 인정하는 [FROM.GetName]
+	id = trinity_events_nagisa_diplomacy.15
+	title = trinity_events_nagisa_diplomacy.15.t
+	desc = trinity_events_nagisa_diplomacy.15.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.15.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.16 hours = 12 }
+		}
+	}
+
+	option = { #  AI는 선택하지 않음
+		name = trinity_events_nagisa_diplomacy.15.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.17 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.16
+	title = trinity_events_nagisa_diplomacy.16.t
+	desc = trinity_events_nagisa_diplomacy.16.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.16.a
+		ai_chance = {
+			base = 100
+		}
+		add_to_faction = HEU
+		set_global_flag = HEU_TRM_faction
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 거부
+	id = trinity_events_nagisa_diplomacy.17
+	title = trinity_events_nagisa_diplomacy.17.t
+	desc = trinity_events_nagisa_diplomacy.17.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.a
+		ai_chance = {
+			base = 0
+		}
+		every_other_country = {
+			limit = {
+				any_controlled_state = {
+					OR = {
+						is_core_of = HEU
+					}
+				}
+			}
+			display_individual_scopes = yes
+			ROOT = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.b
+		ai_chance = {
+			base = 10
+		}
+		every_other_country = {
+			limit = {
+				any_controlled_state = {
+					OR = {
+						is_core_of = SHE
+						is_core_of = COU
+						is_core_of = KSP
+						is_core_of = HEU
+					}
+				}
+			}
+			display_individual_scopes = yes
+			ROOT = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.17.c
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+country_event = { # 우리를 총학생회장으로 인정하는 [FROM.GetName]
+	id = trinity_events_nagisa_diplomacy.18
+	title = trinity_events_nagisa_diplomacy.18.t
+	desc = trinity_events_nagisa_diplomacy.18.desc
+	picture = GFX_report_event_generic_door
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.18.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			puppet = ROOT
+			country_event = { id = trinity_events_nagisa_diplomacy.19 hours = 12 }
+		}
+	}
+
+	option = { # 
+		name = trinity_events_nagisa_diplomacy.18.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.20 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.19
+	title = trinity_events_nagisa_diplomacy.19.t
+	desc = trinity_events_nagisa_diplomacy.19.desc
+	picture = GFX_report_event_generic_door
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.19.a
+		ai_chance = {
+			base = 100
+		}
+		effect_tooltip = {
+			puppet = FROM
+		}
+	}
+}
+
+country_event = { # [FROM.GetName]의 제안 거부
+	id = trinity_events_nagisa_diplomacy.20
+	title = trinity_events_nagisa_diplomacy.20.t
+	desc = trinity_events_nagisa_diplomacy.20.desc
+	picture = GFX_report_event_Problem_Solver_68
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.20.a
+		ai_chance = {
+			base = 10
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = WHY
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.20.b
+		ai_chance = {
+			base = 0
+		}
+	}
+
+}
+
+country_event = { # Code: BOX - 사절단 준비
+	id = trinity_events_nagisa_diplomacy.21
+	title = trinity_events_nagisa_diplomacy.21.t
+	desc = trinity_events_nagisa_diplomacy.21.desc
+	picture = GFX_report_event_TRM_nagisa_kirifuji_dokidoki
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.a
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 0 # 냐기냐기
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.b
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 1 # 이 치카
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.c
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 2 # 구호
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.d
+		ai_chance = {
+			base = 25
+		}
+		set_variable = {
+			global.TRN_code_box_character_var = 3 # 뭐야 아마우인가
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.22 days = 5 }
+	}
+}
+
+country_event = { # Code: BOX - 1일차
+	id = trinity_events_nagisa_diplomacy.22
+	title = trinity_events_nagisa_diplomacy.22.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.22.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_code_box_momoi
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.22.a # 방아쇠를 당긴다
+		ai_chance = {
+			base = 25
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_attack = 1
+				add_defense = -1
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.22.b # 인내한다
+		ai_chance = {
+			base = 75
+		}
+		add_stability = 0.01
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.23 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 4일차
+	id = trinity_events_nagisa_diplomacy.23
+	title = trinity_events_nagisa_diplomacy.23.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.23.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_nagisa_kirifuji_gun_1
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.23.a # 일대 다 교전으로 오토마톤들을 제압한다.
+		ai_chance = {
+			base = 25
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_attack = 1
+						add_trait = {
+							trait = trait_engineer
+						} 
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 3
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_attack = 1
+						add_trait = {
+							trait = trait_engineer
+						} 
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 3
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.23.b # 삼거리에서 코유키와 다른 방향으로 달려, 오토마톤들을 교란시킨다.
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_planning = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_planning = 1
+			}
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.24 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 7일차
+	id = trinity_events_nagisa_diplomacy.24
+	title = trinity_events_nagisa_diplomacy.24.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.24.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_code_box_arginine_box
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.24.a # 레이를 향해 돌진한다
+		ai_chance = {
+			base = 0
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_logistics = 1
+						add_trait = {
+							trait = commando
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 7
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = commando
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = trait_engineer
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_logistics = 1
+						add_trait = {
+							trait = commando
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 7
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.24.b # 안전한 다른 통로를 찾아본다
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_logistics = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_logistics = 1
+			}
+		}
+	}
+
+	after = {
+		country_event = { id = trinity_events_nagisa_diplomacy.25 days = 3 }
+	}
+}
+
+country_event = { # Code: BOX - 폐막식
+	id = trinity_events_nagisa_diplomacy.25
+	title = trinity_events_nagisa_diplomacy.25.t
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.nagisa
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 0
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.ichika
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 1
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.mine
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 2
+			}
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_diplomacy.25.desc.ako
+		trigger = {
+			check_variable = {
+				global.TRN_code_box_character_var = 3
+			}
+		}
+	}
+	
+	picture = GFX_report_event_TRM_nagisa_kirifuji_gun_2
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.25.a # 악어의 공격으로부터 [MIL.GetLeader]를 몸으로 감싼다.
+		ai_chance = {
+			base = 0
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_nagisa_tt
+			random_list = {
+				67 = {
+					TRN_Kirifuji_Nagisa = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					TRN_Kirifuji_Nagisa = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 90
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = front_line_general
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = urban_assault_specialist
+				} 
+				add_timed_unit_leader_trait = {
+					trait = wounded
+					days = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			custom_effect_tooltip = trinity_events_nagisa_diplomacy_code_box_ako_tt
+			random_list = {
+				67 = {
+					GEH_dkzh = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 1
+						}
+					}
+				}
+				33 = {
+					GEH_dkzh = {
+						add_trait = {
+							trait = front_line_general
+						} 
+						add_timed_unit_leader_trait = {
+							trait = wounded
+							days = 90
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.25.b # 측면에서 악어를 공격해 제압하려고 노력한다.
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 0 # 나기사가 방문
+				}
+			}
+			TRN_Kirifuji_Nagisa = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 1 # 이치카
+				}
+			}
+			TRN_dlclzk = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 2 # 미네
+				}
+			}
+			TRN_Aomori_Mine = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					global.TRN_code_box_character_var = 3 # 아코
+				}
+			}
+			GEH_dkzh = {
+				add_trait = {
+					trait = brilliant_strategist
+				} 
+			}
+		}
+	}
+}
+
+country_event = { # Code: BOX - 트리니티로
+	id = trinity_events_nagisa_diplomacy.26
+	title = trinity_events_nagisa_diplomacy.26.t
+	desc = trinity_events_nagisa_diplomacy.26.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.26.a
+		effect_tooltip = {
+			add_named_threat = {
+				threat = -5
+				name = TRN_curtain_across_kivotos
+			}
+		}
+	}
+}
+
+country_event = { # 붉은겨울의 여대공?
+	id = trinity_events_nagisa_diplomacy.27
+	title = trinity_events_nagisa_diplomacy.27.t
+	desc = trinity_events_nagisa_diplomacy.27.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = no
+	fire_only_once = yes
+
+	trigger = {
+		tag = TRM
+		has_country_leader = {
+			ruling_only = yes
+			character = TRN_Kirifuji_Nagisa
+		}
+		NOT = { has_completed_focus = TRN_nagisa_democratic_ending }
+		NOT = { country_exists = RED }
+		owns_state = 141
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.27.a
+		add_stability = 0.01
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.27.b
+		set_country_flag = TRN_red_winter_takane_hidden_flag
+		custom_effect_tooltip = trinity_events_nagisa_diplomacy_hidden_start_tt
+		mark_focus_tree_layout_dirty = yes
+	}
+}
+
+country_event = { # 가짜 아나스타샤
+	id = trinity_events_nagisa_diplomacy.28
+	title = trinity_events_nagisa_diplomacy.28.t
+	desc = trinity_events_nagisa_diplomacy.28.desc
+	picture = GFX_report_event_RED_campus_night
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.28.a
+		
+	}
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.31
+	title = trinity_events_nagisa_diplomacy.1.t
+	desc = trinity_events_nagisa_diplomacy.1.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.1.a
+		ai_chance = {
+			base = 100
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.32 hours = 12 }
+		}
+		GEM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.33 hours = 12 }
+		}
+	}
+
+	option = { #  AI는 선택하지 않음 - 하지만 유저라면 에덴 조약을 거부할 수 있는 선택지가 있음.
+		name = trinity_events_nagisa_diplomacy.1.b
+		ai_chance = {
+			base = 0
+		}
+		TRM = {
+			country_event = { id = trinity_events_nagisa_diplomacy.37 hours = 12 }
+		}
+	}
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.32
+	title = trinity_events_nagisa_diplomacy.2.t
+	desc = trinity_events_nagisa_diplomacy.2.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.1.a
+		set_global_flag = trinity_gehenna_eden_treaty_negotiation_ALT_flag
+	}
+
+}
+
+country_event = { # [TRM.GetAdjective]-[GEH.GetAdjective] 협상
+	id = trinity_events_nagisa_diplomacy.33
+	title = trinity_events_nagisa_diplomacy.3.t
+	desc = trinity_events_nagisa_diplomacy.33.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.3.a
+	}
+
+}
+
+country_event = { # 에덴 조약 실패 (트리니티)
+	id = trinity_events_nagisa_diplomacy.34
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.34.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.4.a
+		add_political_power = -100
+		#add_stability = -0.1
+		hidden_effect = {
+			news_event = { id = trinity_news_events.10 hours = 4 } # 에덴 조약 실패 뉴스
+			remove_ideas = {
+				TRN_pater_hate_naginagi_generic_ns
+				TRN_pater_hate_naginagi_pro_gehenna_ns
+				TRN_pater_hate_naginagi_pro_pater_ns
+			} 
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 실패 (선도부)
+	id = trinity_events_nagisa_diplomacy.35
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.34.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.4.a
+		add_political_power = -5
+		#add_stability = -0.05
+	}
+
+}
+
+country_event = { # 에덴 조약 실패
+	id = trinity_events_nagisa_diplomacy.36
+	title = trinity_events_nagisa_diplomacy.4.t
+	desc = trinity_events_nagisa_diplomacy.34.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.6.a
+	}
+
+}
+
+country_event = { # [GEH.GetName]의 협상 거부
+	id = trinity_events_nagisa_diplomacy.37
+	title = trinity_events_nagisa_diplomacy.7.t
+	desc = trinity_events_nagisa_diplomacy.37.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.7.a
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.38
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.38.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.8.a
+		effect_tooltip = {
+			TRM = {
+				diplomatic_relation = {
+					country = GEH
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+			GEH = {
+				diplomatic_relation = {
+					country = TRM
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+		}
+		hidden_effect = {
+			swap_ideas = {
+				remove_idea = TRN_pater_hate_naginagi_generic_ns
+				add_idea = TRN_pater_hate_naginagi_pro_pater_ns
+			}
+			news_event = { id = trinity_news_events.8 hours = 4 } # 에덴 조약 성공 뉴스
+		}
+	}
+
+}
+
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.39
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.38.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.8.a
+		effect_tooltip = {
+			TRM = {
+				diplomatic_relation = {
+					country = GEH
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+			GEH = {
+				diplomatic_relation = {
+					country = TRM
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+		}
+	}
+
+}
+
+country_event = { # [FROM.GetName]의 제안 승낙
+	id = trinity_events_nagisa_diplomacy.999
+	title = trinity_events_nagisa_diplomacy.999.t
+	desc = trinity_events_nagisa_diplomacy.21.desc.nagisa
+	picture = GFX_report_event_TRM_nagisa_kirifuji_dokidoki
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.21.a
+		ai_chance = {
+			base = 100
+		}
+		set_cosmetic_tag = TRM_trinity_commonwealth
+	}
+}
+country_event = { # 에덴 조약 성공
+	id = trinity_events_nagisa_diplomacy.40
+	title = trinity_events_nagisa_diplomacy.8.t
+	desc = trinity_events_nagisa_diplomacy.38.desc
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_diplomacy.10.a
+		effect_tooltip = {
+			TRM = {
+				diplomatic_relation = {
+					country = GEH
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+			GEH = {
+				diplomatic_relation = {
+					country = TRM
+					relation = non_aggression_pact
+					active = yes
+				}
+			}
+		}
+	}
+
+}
+
+country_event = { # [GetYear]년 콘클라베
+	id = trinity_events_nagisa_election.1
+	title = trinity_events_nagisa_election.1.t
+
+	desc = {
+		text = trinity_events_nagisa_election.1.desc.phase_1
+		trigger = {
+			NOT = { has_completed_focus = TRN_right_of_the_victor }
+		}
+	}
+
+	desc = {
+		text = trinity_events_nagisa_election.1.desc.phase_2
+		trigger = {
+			has_completed_focus = TRN_right_of_the_victor
+		}
+	}
+
+	trigger = {
+		original_tag = TRM
+		has_completed_focus = TRN_nagisa_constitution_discussion
+	}
+
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_election.1.a
+		add_political_power = 25
+	}
+}
+
+country_event = { # [GetYear]년 콘클라베
+	id = trinity_events_nagisa_election.2
+	title = trinity_events_nagisa_election.2.t
+	desc = trinity_events_nagisa_election.2.desc
+
+	picture = GFX_report_event_generic_trinity_logo
+
+	is_triggered_only = yes
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.nagisa
+		trigger = {
+			count_triggers = {
+				amount = 3 # 아래 조건 중 3가지가 충족될 경우, 히후미가 아닌 나기사가 출마 (나기사의 타락)
+				has_completed_focus = TRN_eventually_happen # 에덴 조약 협상에서 이상주의를 포기하고 현실주의를 택함
+				has_completed_focus = TRN_attack_mika_misono # 본인 권력 유지를 위해 미카를 검찰 기소권으로 괴롭힘
+				has_completed_focus = TRN_arius_inquisition # 아리우스에게 잔인하게 대함
+				has_completed_focus = TRN_realistic_approach # 현지인들에게 잔인하게 대함
+				NOT = { has_completed_focus = TRN_meeting_with_mika } # 미카와 '파테르-필리우스 화해' 협상을 시도조차 하지 않음 (성공, 실패는 중요하지 않음. '시도'가 중요)
+				has_country_flag = trn_nagisa_religion_hardline_flag # 독일 현지 신앙을 강경하게 탄압함
+				NOT = { has_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag } # 나기사가 트리니티의 '유스티나 성도회' 관련 과거사를 반성하지 않음
+			}
+		}
+
+		swap_ruler_traits = {
+			remove = TRN_noble_duty
+			add = TRM_host_nagisa
+		}
+
+		set_country_leader_description = {
+			desc = TRN_nagisa_kirifuji_democratic_bad_ending_leader_desc
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 0
+		}
+
+		custom_effect_tooltip = trinity_events_nagisa_election_nagisa_tt
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.62 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.hifumi
+		trigger = {
+			NOT = {
+				count_triggers = {
+					amount = 3 # 반대로 아래 조건 중 3가지가 충족되지 '않을' 경우 나기사가 아닌 히후미가 출마
+					has_completed_focus = TRN_eventually_happen # 에덴 조약 협상에서 이상주의를 포기하고 현실주의를 택함
+					has_completed_focus = TRN_attack_mika_misono # 본인 권력 유지를 위해 미카를 검찰 기소권으로 괴롭힘
+					has_completed_focus = TRN_arius_inquisition # 아리우스에게 잔인하게 대함
+					has_completed_focus = TRN_realistic_approach # 현지인들에게 잔인하게 대함
+					has_country_flag = trn_nagisa_religion_hardline_flag # 독일 현지 신앙을 강경하게 탄압함
+					NOT = { has_completed_focus = TRN_meeting_with_mika } # 미카와 '파테르-필리우스 화해' 협상을 시도조차 하지 않음 (성공, 실패는 중요하지 않음. '시도'가 중요)
+					NOT = { has_country_flag = TRM_nagisa_constitution_reflection_on_past_history_flag } # 나기사가 트리니티의 '유스티나 성도회' 관련 과거사를 반성하지 않음
+				}
+			}
+		}
+        
+		add_country_leader_role = {
+         	character = TRN_Ajitani_Hifumi
+          	country_leader = {
+				desc = TRN_hifumi_ajitani_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_hifumi
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Ajitani_Hifumi
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 1
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.56 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.seia
+        
+		add_country_leader_role = {
+         	character = TRN_Yurizono_Seia
+          	country_leader = {
+				desc = TRN_seia_yurizono_nagisa_route_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_seia
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Yurizono_Seia
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 2
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.57 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.mine
+		trigger = {
+			has_country_flag = TRN_mine_host_candidate_flag
+		}
+        
+		add_country_leader_role = {
+         	character = TRN_Aomori_Mine
+          	country_leader = {
+				desc = TRN_mine_aomori_nagisa_route_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_mine
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = TRN_Aomori_Mine
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 3
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.58 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.ako
+        
+		add_country_leader_role = {
+         	character = GEH_dkzh
+          	country_leader = {
+				desc = TRN_ako_amau_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_ako
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = GEH_dkzh
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 4
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.59 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.ARI_hakari_atsuko
+		trigger = {
+			has_country_flag = TRN_atsuko_host_candidate_flag
+		}
+        
+		add_country_leader_role = {
+         	character = ARI_hakari_atsuko
+          	country_leader = {
+				desc = TRN_atsuko_hakari_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_atsuko
+				}
+          	}
+         	promote_leader = yes
+       }
+	   
+		promote_character = {
+			character = ARI_hakari_atsuko
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 5
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.60 days = 7 }
+		}
+	}
+
+	option = { #  
+		name = trinity_events_nagisa_election.2.takane
+		trigger = {
+			has_completed_focus = TRN_red_winter_takane_hidden_focus
+		}
+        
+		add_country_leader_role = {
+         	character = RED_takane
+          	country_leader = {
+				desc = TRN_takane_miyoshi_leader_desc
+               	ideology = traditionalism_with_trinity_characteristics
+               	traits = { 
+					TRM_host_takane TRM_hidden_trait_takane
+				}
+          	}
+         	promote_leader = yes
+       }
+
+		promote_character = {
+			character = RED_takane
+			ideology = traditionalism_with_trinity_characteristics
+		}
+
+		set_variable = {
+			TRM_nagisa_kirifuji_after_host_var = 6
+		}
+
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.61 days = 7 }
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = { id = trinity_events_nagisa.54 hours = 8 }
+			country_event = { id = trinity_events_nagisa.55 hours = 8 }
+			set_global_flag = TRM_democratic_nagisa_ending_flag
+		}
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.9999
+	title = trinity_flavor_events.9999.t
+	desc = trinity_flavor_events.9999.desc
+	picture = GFX_report_event_picture_pius_XI
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	hidden = yes
+
+	immediate = {
+		TRN_Kirifuji_Nagisa = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_swim_Nagisa 
+					small = GFX_idea_TRN_Kirifuji_Nagisa_idea_swimsuit
+				}
+				army = { 
+					large = GFX_Portrait_TRN_swim_Nagisa 
+					small = GFX_idea_TRN_Kirifuji_Nagisa_idea_swimsuit
+				}
+			}
+		}
+		TRN_Misono_Mika = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_swim_Mika 
+					small = GFX_idea_TRN_Misono_Mika_swimsuit
+				}
+				army = { 
+					large = GFX_Portrait_TRN_swim_Mika 
+					small = GFX_idea_TRN_Misono_Mika_swimsuit
+				}
+			}
+		}
+		TRN_Yurizono_Seia = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_swim_Seia 
+					small = GFX_idea_TRN_Yurizono_Seia_swimsuit
+				}
+				army = { 
+					large = GFX_Portrait_TRN_swim_Seia 
+					small = GFX_idea_TRN_Yurizono_Seia_swimsuit
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_flavor_events.9999.a
+		custom_effect_tooltip = "https://discord.gg/kddrRNS6dt"
+	}
+}
+
+country_event = { # 
+	id = trinity_flavor_events.10000
+	title = trinity_flavor_events.9999.t
+	desc = trinity_flavor_events.9999.desc
+	picture = GFX_report_event_picture_pius_XI
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	hidden = yes
+
+	immediate = {
+		TRN_Kyoyama_Kazusa = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_band_Kazusa 
+					small = GFX_idea_TRN_Band_Kyoyama_Kazusa
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Kazusa 
+					small = GFX_idea_TRN_Band_Kyoyama_Kazusa
+				}
+			}
+		}
+		TRN_Yutori_Natsu = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_TRN_band_Natsu 
+					small = GFX_idea_TRN_Band_Yutori_Natsu
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Natsu 
+					small = GFX_idea_TRN_Band_Yutori_Natsu
+				}
+			}
+		}
+		TRN_Ibaragi_Yoshimi = { 
+			set_portraits = {
+				civilian = { 
+					large = GFX_Portrait_BlueArchive_TRM_Ibaragi_Yoshimi 
+					small = GFX_idea_TRN_Band_Ibaraki_Yoshimi
+				}
+				army = { 
+					large = GFX_Portrait_TRN_band_Yoshimi 
+					small = GFX_idea_TRN_Band_Ibaraki_Yoshimi
+				}
+			}
+		}
+	}
+
+	option = {
+		name = trinity_flavor_events.10000.a
+		
+	}
+}
+
+### 포 ###
+
+country_event = { # 파테르 분파의 무기 생산 확대 추진
+	id = trinity_events_nagisa_misono_mission.1
+	title = trinity_events_nagisa_misono_mission.1.t
+	desc = trinity_events_nagisa_misono_mission.1.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_misono_mission.00.a
+
+		activate_mission = TRM_misono_mission_demands_military_factories
+
+		set_variable = { TRM_desired_military_factories = num_of_military_factories }
+		add_to_variable = { TRM_desired_military_factories = 4 }
+
+	}
+}
+
+country_event = { # 파테르 분파의 징병법 개정 희망
+	id = trinity_events_nagisa_misono_mission.2
+	title = trinity_events_nagisa_misono_mission.2.t
+	desc = trinity_events_nagisa_misono_mission.2.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_misono_mission.00.a
+
+		activate_mission = TRM_misono_mission_demands_conscription_law_change
+
+		hidden_effect = {
+			IF = {
+				limit = {
+					has_idea = disarmed_nation
+				}
+				set_country_flag = TRM_in_on_disarmed_nation_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_idea = volunteer_only
+				}
+				set_country_flag = TRM_in_on_volunteer_only_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_idea = limited_conscription
+				}
+				set_country_flag = TRM_in_on_limited_conscription_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_idea = extensive_conscription
+				}
+				set_country_flag = TRM_in_on_extensive_conscription_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_idea = service_by_requirement
+				}
+				set_country_flag = TRM_in_on_service_by_requirement_flag
+			}
+			ELSE_IF = {
+				limit = {
+					has_idea = all_adults_serve
+				}
+				set_country_flag = TRM_in_on_all_adults_serve_flag
+			}
+		}
+	}
+}
+
+country_event = { # 파테르 분파의 지원 트럭 요구
+	id = trinity_events_nagisa_misono_mission.3
+	title = trinity_events_nagisa_misono_mission.3.t
+	desc = trinity_events_nagisa_misono_mission.3.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_misono_mission.00.a
+
+		activate_mission = TRM_misono_mission_demands_more_trucks
+	}
+}
+
+country_event = { # 파테르 분파의 전차 생산 요구
+	id = trinity_events_nagisa_misono_mission.4
+	title = trinity_events_nagisa_misono_mission.4.t
+	desc = trinity_events_nagisa_misono_mission.4.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_misono_mission.00.a
+
+		activate_mission = TRM_misono_mission_demands_more_tanks
+	}
+}
+
+country_event = { # 파테르 분파의 포 생산 요구
+	id = trinity_events_nagisa_misono_mission.5
+	title = trinity_events_nagisa_misono_mission.5.t
+	desc = trinity_events_nagisa_misono_mission.5.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa_misono_mission.00.a
+
+		activate_mission = TRM_misono_mission_demands_more_artillery
+	}
+}
+
+country_event = { # 파테르 분파의 조선소 생산 증대 추진
+	id = trinity_events_nagisa_misono_mission.6
+	title = trinity_events_nagisa_misono_mission.6.t
+	desc = trinity_events_nagisa_misono_mission.6.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_demands_dockyards
+
+		set_variable = { TRM_desired_naval_factories = num_of_naval_factories }
+		add_to_variable = { TRM_desired_naval_factories = 4 }
+
+	}
+}
+
+country_event = { # 파테르 분파의 연료 비축 계획 요구
+	id = trinity_events_nagisa_misono_mission.7
+	title = trinity_events_nagisa_misono_mission.7.t
+	desc = trinity_events_nagisa_misono_mission.7.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_demands_more_oil
+	}
+}
+
+country_event = { # 파테르 분파의 국내 산업 기반 확장 추진
+	id = trinity_events_nagisa_misono_mission.8
+	title = trinity_events_nagisa_misono_mission.8.t
+	desc = trinity_events_nagisa_misono_mission.8.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_demands_factories
+
+		set_variable = { TRM_desired_civilian_factories = num_of_civilian_factories }
+		add_to_variable = { TRM_desired_civilian_factories = 2 }
+	}
+}
+
+country_event = { # 파테르 분파의 공군 생산 요구
+	id = trinity_events_nagisa_misono_mission.9
+	title = trinity_events_nagisa_misono_mission.9.t
+	desc = trinity_events_nagisa_misono_mission.9.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_demands_more_fighter
+	}
+}
+
+country_event = { # 파테르 분파의 신비 직조기 생산 요구
+	id = trinity_events_nagisa_misono_mission.10
+	title = trinity_events_nagisa_misono_mission.10.t
+	desc = trinity_events_nagisa_misono_mission.10.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_demands_more_mystery
+	}
+}
+
+country_event = { # 파테르 분파의 참모총장 임명 요구
+	id = trinity_events_nagisa_misono_mission.11
+	title = trinity_events_nagisa_misono_mission.11.t
+	desc = trinity_events_nagisa_misono_mission.11.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_army_demands_political_appointment
+	}
+}
+
+country_event = { # 파테르 분파의 참모총장 임명 요구
+	id = trinity_events_nagisa_misono_mission.12
+	title = trinity_events_nagisa_misono_mission.12.t
+	desc = trinity_events_nagisa_misono_mission.12.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_navy_demands_political_appointment
+	}
+}
+
+country_event = { # 파테르 분파의 참모총장 임명 요구
+	id = trinity_events_nagisa_misono_mission.13
+	title = trinity_events_nagisa_misono_mission.13.t
+	desc = trinity_events_nagisa_misono_mission.13.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+
+		activate_mission = TRM_misono_mission_air_force_demands_political_appointment
+	}
+}
+
+country_event = { # 아무것도 요구하지 않는 파테르
+	id = trinity_events_nagisa_misono_mission.14
+	title = trinity_events_nagisa_misono_mission.14.t
+	desc = trinity_events_nagisa_misono_mission.14.desc
+	picture = GFX_report_event_JAP_imperial_influence
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.a #Intentional
+	}
+}
+
+country_event = { # [ROOT.GetLeader]의 정국 영향력 상실
+	id = trinity_events_nagisa_misono_mission.100
+	title = trinity_events_nagisa_misono_mission.100.t
+	desc = trinity_events_nagisa_misono_mission.100.desc
+	picture = GFX_report_event_TRM_nagisa_and_mika_1
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = SEA_imperial_influence_events.00.b #Intentional
+
+		TRM_pater_demand_add_to_failed_missions = yes
+	}
+}
+
