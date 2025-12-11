@@ -36,6 +36,9 @@ focus_tree = {
 		prerequisite = {
 			focus = ARI_beatrice_influence
 		}
+		available = {
+			date < 1939.1.1
+		}
 		cost = 5
 		x = 0
 		y = 3
@@ -49,6 +52,11 @@ focus_tree = {
 		icon = GFX_focus_generic_tank_production
 		prerequisite = {
 			focus = ARI_beatrice_influence
+		}
+		bypass = {
+			NOT = { 
+				has_idea = ARI_pyeho_hakwon
+			}
 		}
 		cost = 5
 		x = 2
@@ -72,6 +80,21 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_national_development
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 3
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -106,7 +129,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_baltic_sea_trade_contact
 		completion_reward = {
-			add_political_power = 120
+			country_event = ARI_story_event.1
 		}
 	}
 
@@ -122,6 +145,12 @@ focus_tree = {
 		x = 10
 		y = 0
 		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
 			add_popularity = {
 				ideology = fascism
 				popularity = -0.05
@@ -191,6 +220,9 @@ focus_tree = {
 					modifier = ARI_two_cities
 				}
 			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = ARI_trumpet_blowing_angels_tt
+			set_country_flag = flag_ARI_angel_blowing_the_trumpet_of_apocalypse
 		}
 	}
 	focus = {
@@ -209,7 +241,6 @@ focus_tree = {
 		relative_position_id = ARI_trumpet_blowing_angels
 		completion_reward = {
 			add_political_power = 120
-			set_country_flag = flag_ARI_angel_blowing_the_trumpet_of_apocalypse
 		}
 	}
 	focus = {
@@ -241,6 +272,12 @@ focus_tree = {
 		y = 0
 		relative_position_id = ARI_distancing_from_nazi_ss
 		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
 			add_popularity = {
 				ideology = fascism
 				popularity = 0.05
@@ -301,7 +338,19 @@ focus_tree = {
 					remove_idea = BA_student_conscription_idea
 					add_idea = BA_student_conscription_week_idea
 				}
+				add_country_leader_role = {
+					character = ARI_reinhard_heydrich
+					promote_leader = no
+					country_leader = {
+						ideology = nazism
+						expire = "1965.1.1.1"
+						traits = {
+							ARI_reinhard_heydrich_Atrait
+						}
+					}
+				}
 			}
+			add_ideas = ARI_reinhard_heydrich_idea_1
 		}
 	}
 	focus = {
