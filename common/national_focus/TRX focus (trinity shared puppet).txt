@@ -11,374 +11,302 @@ focus_tree = {
 				tag = TR3
 				tag = TR4
 				tag = TR5
+				tag = TR6
+				tag = TR7
+			}
+		}
+	}
+
+	focus = { 
+		id = TRX_spires_and_frozen_stones_covered_in_ashen_dus
+		icon = {
+			trigger = { tag = TR3 }
+			value = GFX_focus_TRX_spires_and_frozen_stones_covered_in_ashen_dust_poland
+		}
+		icon = {
+			trigger = { tag = TR4 }
+			value = GFX_focus_TRX_spires_and_frozen_stones_covered_in_ashen_dust_belarus
+		}
+		icon = {
+			trigger = { tag = TR5 }
+			value = GFX_focus_TRX_spires_and_frozen_stones_covered_in_ashen_dust_ukraine
+		}
+		icon = {
+			trigger = { tag = TR6 }
+			value = GFX_focus_TRX_spires_and_frozen_stones_covered_in_ashen_dust_russian
+		}
+		icon = {
+			trigger = { tag = TR7 }
+			value = GFX_focus_TRX_spires_and_frozen_stones_covered_in_ashen_dust_caucasus
+		}
+		icon = GFX_focus_TRN_cause_of_trinity
+		cost = 5
+		x = 15
+		y = 0
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = SOV_restoration_and_development_idea
+				days = 365
+			}
+		}
+	}
+
+	focus = { 
+		id = TRX_national_reconstruction
+		icon = GFX_focus_generic_public_works
+		prerequisite = { focus = TRX_spires_and_frozen_stones_covered_in_ashen_dus }
+		cost = 5
+		x = 5
+		y = 1
+		relative_position_id = TRX_spires_and_frozen_stones_covered_in_ashen_dus
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+			if = {
+				limit = { has_idea = SOV_restoration_and_development_idea }
+				modify_timed_idea = {
+					idea = SOV_restoration_and_development_idea
+					days = 365
+				}
+			}
+			else = {
+				add_timed_idea = {
+					idea = SOV_restoration_and_development_idea
+					days = 365
+				}
+			}
+			hidden_effect = {
+				reduce_focus_completion_cost = {
+					focus = TRX_GetCapitalVictoryPointName_development
+					cost = 35
+				}
 			}
 		}
 	}
 
 
-	focus = { #
+	focus = { 
 		id = TRX_trinity_railway_construction
 		icon = GFX_focus_TR0_national_railway_expansion
-		cost = 4
-		x = 10
-		y = 0
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		completion_reward = {
-
-		}
-	}
-	focus = { #
-		id = TRX_baltic_port_modernization
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 5
-		x = 3
-		y = 0
-		relative_position_id = TRX_trinity_railway_construction
-		allow_branch = {
-			tag = TR4
-		}
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_road_network_construction
-		icon = GFX_focus_generic_road_investment
-		cost = 8
-		prerequisite = { 
-			focus = TRX_trinity_railway_construction
-		}
-		x = -2
-		y = 1
-		relative_position_id = TRX_trinity_railway_construction
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-			custom_trigger_tooltip =  {
-				tooltip = infrastructure_effort_tt
-				all_owned_state = {
-					free_building_slots = {
-						building = infrastructure
-						size < 2
-					}
-				}
-			}
-		}
-
-		completion_reward = {
-			random_owned_state = {
-				limit = { infrastructure < 5 }
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = { infrastructure < 5 }
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = { infrastructure < 5 }
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				limit = { infrastructure < 5 }
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-	focus = { #
-		id = TRX_mazyr_wetland_reclamation
-		icon = GFX_focus_generic_land_reclamation
-		cost = 8
-		prerequisite = { 
-			focus = TRX_trinity_railway_construction
-			focus = TRX_baltic_port_modernization
-		}
-		x = 1
-		y = 1
-		relative_position_id = TRX_trinity_railway_construction
-		allow_branch = {
-			tag = TR4
-		}
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_automobile_factory
-		icon = GFX_focus_TRN_arsenal_support_1
-		cost = 8
-		prerequisite = { 
-			focus = TRX_road_network_construction
-		}
-		x = -2
-		y = 1
-		relative_position_id = TRX_road_network_construction
-
-		ai_will_do = {
-			base = 80
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_truck_production
-		icon = GFX_focus_generic_truck
-		cost = 8
-		prerequisite = { 
-			focus = TRX_automobile_factory
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRX_automobile_factory
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_electrification
-		icon = GFX_focus_ARG_develop_the_electricity_sector
-		cost = 8
-		prerequisite = { focus = TRX_road_network_construction }
-		x = 0
-		y = 1
-		relative_position_id = TRX_road_network_construction
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_expand_telegraph_network
-		icon = GFX_focus_AFG_telegraph
-		cost = 8
-		prerequisite = { 
-			focus = TRX_electrification
-		}
-		x = -1
-		y = 1
-		relative_position_id = TRX_electrification
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_import_radio
-		icon = GFX_focus_SWE_radiotjanst
-		cost = 8
-		prerequisite = { focus = TRX_electrification }
-		x = 0
-		y = 2
-		relative_position_id = TRX_electrification
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_national_agriculture_machine_factory
-		icon = GFX_focus_generic_industry_1
-		cost = 8
-		prerequisite = { 
-			focus = TRX_mazyr_wetland_reclamation
-		}
-		x = -1
-		y = 1
-		relative_position_id = TRX_mazyr_wetland_reclamation
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_agricultural_product_processing
-		icon = GFX_focus_generic_farmland
-		cost = 8
-		prerequisite = { 
-			focus = TRX_national_agriculture_machine_factory
-		}
-		x = -1
-		y = 1
-		relative_position_id = TRX_national_agriculture_machine_factory
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_farmer_support
-		icon = GFX_focus_generic_workers_and_farmers_rise
-		cost = 8
-		prerequisite = { 
-			focus = TRX_agricultural_product_processing
-		}
-		x = 0
-		y = 2
-		relative_position_id = TRX_agricultural_product_processing
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_textile_factory
-		icon = GFX_focus_CHL_enlarge_the_textile_industries
-		cost = 8
-		prerequisite = { 
-			focus = TRX_mazyr_wetland_reclamation
-		}
-		x = 1
-		y = 1
-		relative_position_id = TRX_mazyr_wetland_reclamation
-
-		ai_will_do = {
-			base = 80 
-		}
-
-		bypass = {
-
-		}
-
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = TRX_daugava_river_dam_construction
-		icon = GFX_focus_IRQ_construct_the_kut_barrage
-		cost = 8
-		prerequisite = {
-
-			focus = TRX_baltic_port_modernization
-		}
+		prerequisite = { focus = TRX_national_reconstruction }
+		cost = 10
 		x = 2
 		y = 1
-		relative_position_id = TRX_baltic_port_modernization
-		allow_branch = {
-			tag = TR4
-		}
+		relative_position_id = TRX_national_reconstruction
 
 		ai_will_do = {
 			base = 80 
 		}
 
-		bypass = {
+		completion_reward = {
 
+		}
+	}
+
+	focus = { 
+		id = TRX_GetCapitalVictoryPointName_development
+		icon = GFX_focus_generic_improve_the_administration_2
+		prerequisite = { focus = TRX_spires_and_frozen_stones_covered_in_ashen_dus }
+		cost = 10
+		x = -1
+		y = 1
+		relative_position_id = TRX_spires_and_frozen_stones_covered_in_ashen_dus
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_reduce_focus_cost 
+				FOCUS = TRX_national_reconstruction
+				TIME = 35
+			}
+		}
+	}
+
+	focus = { 
+		id = TRX_trinity_style_industry
+		icon = GFX_focus_TRN_improving_academy_industry
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_development }
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = TRX_GetCapitalVictoryPointName_development
+
+		ai_will_do = {
+			base = 80 
 		}
 
 		completion_reward = {
 
 		}
+	}
+
+	focus = {
+		id = TRX_rebuilding_public_education
+		icon = GFX_focus_research
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_development }
+		cost = 5
+		x = 2
+		y = 1
+		relative_position_id = TRX_GetCapitalVictoryPointName_development
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = TRX_tamed_market_economy
+		icon = GFX_focus_generic_central_planning
+		prerequisite = { focus = TRX_trinity_style_industry }
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = TRX_trinity_style_industry
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = TRX_eco_friendly_industry
+		icon = GFX_focus_generic_eco_friendly_industry
+		prerequisite = { focus = TRX_trinity_style_industry }
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = TRX_trinity_style_industry
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = TRX_GetCapitalVictoryPointName_establish_of_arsenal
+		icon = GFX_focus_generic_reorient_production
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_development }
+		cost = 5
+		x = -4
+		y = 1
+		relative_position_id = TRX_GetCapitalVictoryPointName_development
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = TRX_long_term_economic_planning
+		icon = GFX_focus_generic_commission
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_development }
+		cost = 5
+		x = -2
+		y = 1
+		relative_position_id = TRX_GetCapitalVictoryPointName_development
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+			add_ideas = CHI_long_term_economic_planning
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = TRX_industrial_research_projects
+		icon = GFX_focus_generic_currency_reforms
+		prerequisite = { focus = TRX_long_term_economic_planning }
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = TRX_long_term_economic_planning
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = TRX_industrial_research_projects
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = { 
+		id = TRX_leveraging_russia_legacy
+		icon = GFX_focus_generic_low_cost_housing
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_establish_of_arsenal }
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = TRX_GetCapitalVictoryPointName_establish_of_arsenal
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = { 
+		id = TRX_arms_production
+		icon = GFX_focus_generic_military_industry
+		prerequisite = { focus = TRX_GetCapitalVictoryPointName_establish_of_arsenal }
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = TRX_GetCapitalVictoryPointName_establish_of_arsenal
+
+		ai_will_do = {
+			base = 80 
+		}
+
+		completion_reward = {
+
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 }
