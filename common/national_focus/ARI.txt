@@ -40,16 +40,127 @@ focus_tree = {
 			date < 1939.1.1
 		}
 		cost = 5
-		x = 0
-		y = 3
+		x = -1
+		y = 1
 		relative_position_id = ARI_beatrice_influence
 		completion_reward = {
 			add_political_power = 120
 		}
 	}
 	focus = {
+		id = ARI_integration_of_work_classroom_into_production
+		icon = GFX_goal_generic_production2
+		prerequisite = {
+			focus = ARI_beatrice_influence
+		}
+		available = {
+		}
+		cost = 5
+		x = 0
+		y = 3
+		relative_position_id = ARI_beatrice_influence
+		completion_reward = {
+			mio:ARI_3rd_classroom = {
+				add_mio_funds_gain_factor = 0.15
+				add_mio_research_bonus = 0.05
+			}
+			mio:ARI_7th_classroom = {
+				add_mio_funds_gain_factor = 0.15
+				add_mio_research_bonus = 0.05
+			}
+			mio:ARI_9th_classroom = {
+				add_mio_funds_gain_factor = 0.15
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+	focus = {
+		id = ARI_adherence_to_existing_method
+		icon = GFX_goal_panzerwaffe
+		prerequisite = {
+			focus = ARI_integration_of_work_classroom_into_production
+		}
+		mutually_exclusive = {
+			focus = ARI_firearm_production_priority
+		}
+		available = {
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_integration_of_work_classroom_into_production
+		completion_reward = {
+			add_tech_bonus = {
+				name = ARI_adherence_to_existing_method
+				bonus = 0.50
+				uses = 1
+				category = infantry_weapons
+			}
+			mio:ARI_9th_classroom = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.1
+			}
+		}
+	}
+	focus = {
+		id = ARI_firearm_production_priority
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = {
+			focus = ARI_integration_of_work_classroom_into_production
+		}
+		mutually_exclusive = {
+			focus = ARI_adherence_to_existing_method
+		}
+		available = {
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_integration_of_work_classroom_into_production
+		completion_reward = {
+			add_tech_bonus = {
+				name = ARI_firearm_production_priority
+				bonus = 1.00
+				uses = 2
+				category = infantry_weapons
+			}
+			mio:ARI_3rd_classroom = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.1
+			}
+		}
+	}
+	focus = {
+		id = ARI_advanced_equipment
+		icon = GFX_goal_generic_army_artillery
+		prerequisite = {
+			focus = ARI_adherence_to_existing_method
+			focus = ARI_firearm_production_priority
+		}
+		available = {
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_adherence_to_existing_method
+		completion_reward = {
+			add_tech_bonus = {
+				name = ARI_adherence_to_existing_method
+				bonus = 2
+				uses = 1
+				category = artillery
+				category = cat_anti_tank
+				category = cat_anti_air
+			}
+			mio:ARI_7th_classroom = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.1
+			}
+		}
+	}
+	focus = {
 		id = ARI_national_development
-		icon = GFX_focus_generic_tank_production
+		icon = GFX_goal_generic_production
 		prerequisite = {
 			focus = ARI_beatrice_influence
 		}
@@ -108,9 +219,14 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_national_development
 		completion_reward = {
-			add_offsite_building = {
-				type = arms_factory
-				level = 2
+			custom_effect_tooltip = BA_factoriesof_new_world_tt
+			set_country_flag = BA_can_remove_isolation_flag
+			if = {
+				limit = { has_idea = BA_isolation }
+				swap_ideas = {
+					remove_idea = BA_isolation
+					add_idea = closed_economy
+				}
 			}
 			add_offsite_building = {
 				type = industrial_complex
@@ -381,6 +497,20 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_acceptance_of_german_exiles
 		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_consumer_goods_factor = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_industrial_capacity_factory = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				ARI_arian_industrial_capacity_dockyard = 0.05
+				tooltip = industrial_capacity_dockyard_tt
+			}
+			custom_effect_tooltip = enter_tt
 			every_state = {
 				limit = {
 					has_dynamic_modifier = ARI_two_cities
@@ -404,16 +534,6 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_war_with = TRM
-		}
-		bypass = {
-			TRM = {
-				OR = {
-					exists = no
-					has_capitulated = yes
-					is_subject = yes
-					is_in_faction_with = ROOT
-				}
-			}
 		}
 		completion_reward = {
 			if = {
