@@ -178,7 +178,58 @@ on_actions = {
 					add_country_leader_trait = TRN_nagisa_1_on
 				}
 			}
-
+		}
+		effect = {
+			IF = {
+				limit = { has_completed_focus = TRN_second_trinity }
+				IF = {
+					limit = {
+						has_country_leader = {
+							character = TRN_Misono_Mika
+							ruling_only = yes
+						}
+						TRN_Mika_has_low_honor_trigger = yes
+					}
+					add_country_leader_trait = TRN_lowhonor_trait
+					remove_country_leader_trait = TRN_verylowhonor_trait
+				}
+				IF = {
+					limit = {
+						has_country_leader = {
+							character = TRN_Misono_Mika
+							ruling_only = yes
+						}
+						TRN_Mika_has_very_low_honor_trigger = yes
+					}
+					remove_country_leader_trait = TRN_lowhonor_trait
+					add_country_leader_trait = TRN_verylowhonor_trait
+				}
+				IF = {
+					limit = {
+						has_country_leader = {
+							character = TRN_Misono_Mika
+							ruling_only = yes
+						}
+						OR = {
+							has_country_leader_with_trait = TRN_lowhonor_trait
+							has_country_leader_with_trait = TRN_verylowhonor_trait
+						}
+						OR = {
+							TRN_Mika_has_very_high_honor_trigger = yes
+							TRN_Mika_has_high_honor_trigger = yes
+							TRN_Mika_has_middle_honor_trigger = yes
+						}
+					}
+					IF = {
+						limit = { has_country_leader_with_trait = TRN_lowhonor_trait }
+						remove_country_leader_trait = TRN_lowhonor_trait
+					}
+					else_if = {
+						limit = { has_country_leader_with_trait = TRN_verylowhonor_trait }
+						remove_country_leader_trait = TRN_verylowhonor_trait
+					}
+				}
+			}
 		}
 	}
 
