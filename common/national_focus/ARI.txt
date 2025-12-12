@@ -642,11 +642,34 @@ focus_tree = {
 			focus = ARI_weapon_warehouse_raid
 			focus = ARI_infiltration_doctrine
 		}
+		available = {
+			NOT = {
+				has_war = yes
+			}
+		}
+		bypass = {
+			has_war = yes
+		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_weapon_warehouse_raid
 		completion_reward = {
+			custom_effect_tooltip = ARI_sneaking_into_enemy_gaps_tt
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						BA_prussian_territory_is = yes
+					}
+					add_dynamic_modifier = {
+						modifier = ARI_guerrilla_warfare
+						days = 200
+						scope = ARI
+					}
+				}
+			}
+			custom_effect_tooltip = enter_tt
+			add_war_support = 0.05
 		}
 	}
 	focus = {
@@ -655,11 +678,33 @@ focus_tree = {
 		prerequisite = {
 			focus = ARI_sneaking_into_enemy_gaps
 		}
+		available = {
+			is_subject = no
+			NOT = {
+				is_in_faction_with = TRM
+			}
+		}
+		bypass = {
+			is_subject = no
+			TRM = {
+				OR = {
+					has_war_with = ARI
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ARI
+				}
+			}
+		}
 		cost = 5
 		x = 0
 		y = 2
 		relative_position_id = ARI_sneaking_into_enemy_gaps
+		will_lead_to_war_with = TRM
 		completion_reward = {
+			declare_war_on = {
+				target = TRM
+				type = annex_everything
+			}
 		}
 	}
 }

@@ -1,0 +1,30 @@
+on_actions = {
+	on_war = {
+		effect = {
+			if = { # 게헨나가 "GEM_war_preparations" 중점을 완료 했고 전쟁을 선포했을때
+				limit = {
+					original_tag = ARI
+					ARI = { 
+						OR = {
+							has_completed_focus = ARI_sneaking_into_enemy_gaps
+						}
+						NOT = { has_country_flag = ARI_guerrilla_warfare_ns }
+					}
+				}
+				ARI = {
+					set_country_flag = ARI_guerrilla_warfare_ns
+				}
+				every_state = {
+					limit = {
+						BA_prussian_territory_is = yes
+					}
+					add_dynamic_modifier = {
+						modifier = ARI_guerrilla_warfare
+						days = 200
+						scope = ARI
+					}
+				}
+			}
+		}
+	}
+}
