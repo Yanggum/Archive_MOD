@@ -181,6 +181,7 @@ focus_tree = {
 				country_event = { id = HEU_event.134 }
 			}
 			HEU_bop_medium_increase_effect = yes
+			custom_effect_tooltip = BA_warning_violence_tt
 		}
 	}
 	focus = {
@@ -3419,6 +3420,109 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HEU_luxembourgian_primacy
+		
+		relative_position_id = HEU_rikuhachima_governemnt
+
+		icon = GFX_focus_generic_conference
+
+		prerequisite = { 
+			focus = HEU_rikuhachima_governemnt 
+		}
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -5
+		y = 1
+
+		available = {
+			is_puppet = no
+		}
+
+		completion_reward = {
+			set_rule = {
+				can_create_factions = yes
+			}
+			IF = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+					is_in_faction = yes
+				}
+				add_faction_initiative = 1
+			}
+		}
+	}
+
+	focus = {
+		id = HEU_join_red_winter
+		
+		relative_position_id = HEU_rikuhachima_governemnt
+
+		icon = GFX_focus_GER_the_peoples_victory
+
+		prerequisite = { 
+			focus = HEU_luxembourgian_primacy 
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		mutually_exclusive = {
+			focus = HEU_join_gehenna
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -6
+		y = 2
+
+		available = {
+			is_puppet = no
+			custom_trigger_tooltip = {
+				tooltip = THIS_IS_WIP_TT
+				is_debug = yes
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = RED }
+				has_war_with = RED
+				RED = { is_puppet = yes }
+			}
+		}
+
+		completion_reward = {
+			create_faction_from_template = BA_faction_template_LUX_european_union
+			RED = {
+				country_event = {
+					id = generic.5
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "HEU"
+					value = 200
+				}
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "RED"
+				value = 200
+			}
+			custom_effect_tooltip = HEU_join_red_winter_tt
+		}
+	}
+
+	focus = {
 		id = HEU_join_gehenna
 		
 		relative_position_id = HEU_rikuhachima_governemnt
@@ -3427,6 +3531,10 @@ focus_tree = {
 
 		prerequisite = { 
 			focus = HEU_rikuhachima_governemnt 
+		}
+
+		mutually_exclusive = {
+			focus = HEU_join_red_winter
 		}
 
 		ai_will_do = {
@@ -3438,7 +3546,7 @@ focus_tree = {
 		cost = 5.00
 
 		x = -4
-		y = 1
+		y = 2
 
 		available = {
 			is_puppet = no
@@ -3470,6 +3578,7 @@ focus_tree = {
 
 		prerequisite = { 
 			focus = HEU_join_gehenna 
+			focus = HEU_join_red_winter
 		}
 
 		ai_will_do = {
@@ -3509,6 +3618,7 @@ focus_tree = {
 
 		prerequisite = { 
 			focus = HEU_join_gehenna 
+			focus = HEU_join_red_winter 
 		}
 
 		ai_will_do = {
@@ -3884,8 +3994,12 @@ focus_tree = {
 		search_filters = {  }
 
 		completion_reward = {
-			set_rule = {
-				can_create_factions = yes
+			IF = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+					is_in_faction = yes
+				}
+				add_faction_initiative = 1
 			}
 			add_war_support = 0.05
 		}
@@ -7972,7 +8086,7 @@ focus_tree = {
 		
 		relative_position_id = HEU_gehenna_labour_council
 
-		icon = GFX_focus_BRA_rio_protocol
+		icon = GFX_focus_generic_immigration
 
 		prerequisite = { 
 			focus = HEU_gehenna_labour_council 
@@ -8460,6 +8574,7 @@ focus_tree = {
 			hidden_effect = {
 				country_event = { id = HEU_event.131 }
 			}
+			custom_effect_tooltip = BA_warning_yuri_benriya_tt
 		}
 	}
 	
@@ -8527,6 +8642,32 @@ focus_tree = {
 					is_in_faction_with = HEU # 하지만 마이너라도 흥신소랑 같은 팩션이면 예외
 				}
 				add_to_tech_sharing_group = UNESCO_research
+			}
+
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					is_in_faction = yes
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_faction_goal_slot = {
+					category  = medium_term 
+					value = 1 
+				}
+				add_faction_goal_slot = {
+					category  = long_term 
+					value = 1 
+				}
+			}
+			else_if = {
+				limit = {
+					is_in_faction = yes
+					NOT = { has_dlc = "No Compromise, No Surrender" }
+				}
+				add_stability = 0.15
+			}
+			else = {
+				can_create_factions = yes
 			}
 		}
 	}
