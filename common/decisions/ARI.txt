@@ -1190,7 +1190,10 @@ ARI_penetration_us = {
 		complete_effect = {
 			unlock_decision_category_tooltip = ARI_heart_strike_plan
 			custom_effect_tooltip = ARI_commencement_of_full_scale_political_maneuvering_tt
-			set_country_flag = flag_ARI_commencement_of_full_scale_political_maneuvering
+			set_global_flag = flag_ARI_commencement_of_full_scale_political_maneuvering
+			TRM = {
+				country_event = ARI_story_event.2
+			}
 		}
 	}
 }
@@ -1205,7 +1208,11 @@ ARI_heart_strike_plan = {
 		}
 
 		ai_will_do = {
-			factor = 1000
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
 		}
 
 		custom_cost_text = decision_cost_20_cp
@@ -1219,14 +1226,6 @@ ARI_heart_strike_plan = {
 
 		modifier = {
 			max_command_power = -20
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = 10
-				has_war = no
-			}
 		}
 
 		complete_effect = {
@@ -1251,7 +1250,11 @@ ARI_heart_strike_plan = {
 		}
 
 		ai_will_do = {
-			factor = 1000
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
 		}
 
 		custom_cost_text = BA_decision_cost_750_mp
@@ -1265,14 +1268,6 @@ ARI_heart_strike_plan = {
 
 		modifier = {
 			conscription_factor = -0.05
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = 10
-				has_war = no
-			}
 		}
 
 		complete_effect = {
@@ -1297,7 +1292,11 @@ ARI_heart_strike_plan = {
 		}
 
 		ai_will_do = {
-			factor = 1000
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
 		}
 
 		custom_cost_text = BA_decision_cost_1_IC
@@ -1311,14 +1310,6 @@ ARI_heart_strike_plan = {
 
 		modifier = {
 			civilian_factory_use = 1
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = 10
-				has_war = no
-			}
 		}
 
 		complete_effect = {
@@ -1340,7 +1331,11 @@ ARI_heart_strike_plan = {
 		}
 
 		ai_will_do = {
-			factor = 1000
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
 		}
 
 		cost = 75
@@ -1349,14 +1344,6 @@ ARI_heart_strike_plan = {
 
 		modifier = {
 			political_power_cost = 0.15
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = 10
-				has_war = no
-			}
 		}
 
 		complete_effect = {
@@ -1378,7 +1365,11 @@ ARI_heart_strike_plan = {
 		}
 
 		ai_will_do = {
-			factor = 1000
+			factor = 10
+			modifier = {
+				has_stability < 0.30
+				factor = 0
+			}
 		}
 
 		custom_cost_text = COU_strengthening_influence_stv_tt
@@ -1394,14 +1385,6 @@ ARI_heart_strike_plan = {
 			stability_factor = -0.05
 		}
 
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				has_stability < 0.30
-				factor = 0
-			}
-		}
-
 		complete_effect = {
 			hidden_effect = {
 				add_stability = -0.05
@@ -1415,4 +1398,222 @@ ARI_heart_strike_plan = {
 		remove_effect = {
 		}
 	}
+}
+
+TRM_heart_strike_plan = {
+    
+    TRM_frontline_inspection = {
+        icon = GFX_decision_generic_prepare_civil_war
+
+        available = {
+            command_power > 19.9
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                add = 0
+                has_war = yes
+            }
+        }
+
+        custom_cost_text = decision_cost_20_cp
+        custom_cost_trigger = {
+            command_power > 19.9
+        }
+
+        cost = 0
+        
+        days_remove = 35
+
+        modifier = {
+            max_command_power = -20
+        }
+
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                add = 10
+                has_war = no
+            }
+        }
+
+        complete_effect = {
+            hidden_effect = {
+                add_command_power = -20
+            }
+            add_to_variable = {
+                global.TRM_heart_strike_plan_var = 10
+                tooltip = TRM_heart_strike_plan_var_tt
+            }
+        }
+        
+        remove_effect = {
+        }
+    }
+    
+    TRM_replenishment_of_security_personnel = {
+        icon = GFX_decision_generic_prepare_civil_war
+
+        available = {
+            has_manpower > 2249
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                add = 0.5
+                has_war = yes
+            }
+        }
+
+        custom_cost_text = BA_decision_cost_2250_mp
+        custom_cost_trigger = {
+            has_manpower > 2249
+        }
+
+        cost = 0
+        
+        days_remove = 35
+
+        modifier = {
+            conscription_factor = -0.05
+        }
+
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                add = 10
+                has_war = no
+            }
+        }
+
+        complete_effect = {
+            hidden_effect = {
+                add_manpower = -2250
+            }
+            add_to_variable = {
+                global.TRM_heart_strike_plan_var = 1
+                tooltip = TRM_heart_strike_plan_var_tt
+            }
+        }
+        
+        remove_effect = {
+        }
+    }
+    
+    TRM_expansion_of_emergency_contact_network = {
+        icon = GFX_decision_generic_prepare_civil_war
+
+        available = {
+            num_of_available_civilian_factories > 2
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                add = 0.5
+                has_war = yes
+            }
+        }
+
+        custom_cost_text = BA_decision_cost_3_IC
+        custom_cost_trigger = {
+            num_of_available_civilian_factories > 2
+        }
+
+        cost = 0
+        
+        days_remove = 35
+
+        modifier = {
+            civilian_factory_use = 3
+        }
+
+        complete_effect = {
+            add_to_variable = {
+                global.TRM_heart_strike_plan_var = 1
+                tooltip = TRM_heart_strike_plan_var_tt
+            }
+        }
+        
+        remove_effect = {
+        }
+    }
+    
+    TRM_utilization_of_german_collaborators = {
+        icon = GFX_decision_generic_prepare_civil_war
+
+        available = {
+            has_political_power > 74
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                add = 0.5
+                has_war = yes
+            }
+        }
+
+        cost = 75
+        
+        days_remove = 35
+
+        modifier = {
+            political_power_cost = 0.15
+        }
+
+        complete_effect = {
+            add_to_variable = {
+                global.TRM_heart_strike_plan_var = 1
+                tooltip = TRM_heart_strike_plan_var_tt
+            }
+        }
+        
+        remove_effect = {
+        }
+    }
+    
+    TRM_arius_background_check = {
+        icon = GFX_decision_generic_prepare_civil_war
+
+        available = {
+            has_stability > 0.05
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                has_stability < 0.70
+                factor = 0
+            }
+        }
+
+        custom_cost_text = COU_strengthening_influence_stv_tt
+        custom_cost_trigger = {
+            has_stability > 0.049
+        }
+
+        cost = 0
+        
+        days_remove = 35
+
+        modifier = {
+            stability_factor = -0.05
+        }
+
+        complete_effect = {
+            hidden_effect = {
+                add_stability = -0.05
+            }
+            add_to_variable = {
+                global.TRM_heart_strike_plan_var = 1
+                tooltip = TRM_heart_strike_plan_var_tt
+            }
+        }
+        
+        remove_effect = {
+        }
+    }
 }
