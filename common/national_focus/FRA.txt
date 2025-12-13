@@ -644,7 +644,7 @@ focus_tree = {
 		id = FRA_focus_arm_3
 		icon = GFX_goal_FRA_focus_arm2
 		cost = 6
-		x = 2
+		x = 4
 		y = 1
 		relative_position_id = FRA_focus_arm_1
 		prerequisite = {
@@ -675,8 +675,8 @@ focus_tree = {
 		icon = GFX_focus_AFG_adopt_nufus
 		#북아프리카군
 		id = FRA_focus_arm_4
-		cost = 5
-		x = 8
+		cost = 6
+		x = 11
 		y = 1
 		relative_position_id = FRA_focus_arm_1
 		prerequisite = {
@@ -690,7 +690,7 @@ focus_tree = {
 		#외인 부대 확대
 		icon = GFX_focus_chi_army_reform
 		id = FRA_focus_arm_14
-		cost = 4
+		cost = 6
 		x = -2
 		y = 1
 		relative_position_id = FRA_focus_arm_4
@@ -735,12 +735,70 @@ focus_tree = {
 			focus = FRA_focus_arm_14
 		}
 		completion_reward = {
-			if = {
-				limit = {
-					has_template = "Chasseurs d'Afrique"
+			swap_ideas = {
+				remove_idea = FRA_north_afrikan_army
+				add_idea = FRA_north_afrikan_army_1
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Chasseurs d'Afrique"
+					LINE_1 = { localization_key = line_battalion_tt NAME = light_armor ICON = GFX_unit_light_armor_icon_small COUNT = 6 }
 				}
-				delete_unit_template_and_units = {
-					division_template = "Chasseurs d'Afrique"
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Marche de Spahis"
+					LINE_1 = { localization_key = line_battalion_tt NAME = cavalry ICON = GFX_unit_cavalry_icon_small COUNT = 6 }
+				}
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "tirailleurs"
+					LINE_1 = { localization_key = line_battalion_tt NAME = militia ICON = GFX_unit_militia_icon_small COUNT = 6 }
+				}
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Les Goumiers Marocains"
+					LINE_1 = { localization_key = line_battalion_tt NAME = militia ICON = GFX_unit_militia_icon_small COUNT = 4 }
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_template = "Chasseurs d'Afrique"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Chasseurs d'Afrique"
+					}
+				}
+				if = {
+					limit = {
+						has_template = "Marche de Spahis"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Marche de Spahis"
+					}
+				}
+				if = {
+					limit = {
+						has_template = "tirailleurs"
+					}
+					delete_unit_template_and_units = {
+						division_template = "tirailleurs"
+					}
+				}
+				if = {
+					limit = {
+						has_template = "Les Goumiers Marocains"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Les Goumiers Marocains"
+					}
 				}
 			}
 			division_template = {
@@ -770,14 +828,6 @@ focus_tree = {
 						x = 1
 						y = 2
 					}
-				}
-			}
-			if = {
-				limit = {
-					has_template = "Marche de Spahis"
-				}
-				delete_unit_template_and_units = {
-					division_template = "Marche de Spahis"
 				}
 			}
 			division_template = {
@@ -810,14 +860,6 @@ focus_tree = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_template = "tirailleurs"
-				}
-				delete_unit_template_and_units = {
-					division_template = "tirailleurs"
-				}
-			}
 			division_template = {
 				is_locked = yes
 				name = "tirailleurs"
@@ -848,14 +890,6 @@ focus_tree = {
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_template = "Les Goumiers Marocains"
-				}
-				delete_unit_template_and_units = {
-					division_template = "Les Goumiers Marocains"
-				}
-			}
 			division_template = {
 				is_locked = yes
 				name = "Les Goumiers Marocains"
@@ -877,10 +911,6 @@ focus_tree = {
 						y = 0
 					}
 				}
-			}
-			swap_ideas = {
-				remove_idea = FRA_north_afrikan_army
-				add_idea = FRA_north_afrikan_army_1
 			}
 			custom_effect_tooltip = FRA_focus_new_arm_4_tt
 			hidden_effect = {
@@ -989,7 +1019,7 @@ focus_tree = {
 		#식민지 조병창 가동
 		id = FRA_colonial_munitions_industry
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 2
+		cost = 6
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_0
@@ -997,9 +1027,22 @@ focus_tree = {
 			focus = FRA_focus_new_arm_0
 		}
 		completion_reward = {
-			add_timed_idea = {
-				idea = FRA_rebuilding_army
-				months = 8
+			mio:FRA_arsenaux_coloniaux_organization = {
+				add_mio_funds = 500
+				add_mio_research_bonus = 0.1
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			random_owned_state = {
+				limit = {
+					is_controlled_by = FRA
+					infrastructure > 1
+					is_on_continent = africa
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
 			}
 		}
 	}
@@ -1024,12 +1067,24 @@ focus_tree = {
 				uses = 2
 				bonus = 0.25
 			}
-			if = {
-				limit = {
-					has_template = "Régiment d'opération anti-halo"
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Régiment d'opération anti-halo"
+					LINE_1 = { localization_key = line_battalion_tt NAME = infantry ICON = GFX_unit_infantry_icon_small COUNT = 10 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = anti_tank_brigade ICON = GFX_unit_anti_tank_brigade_icon_small COUNT = 2 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = anti_tank ICON = GFX_unit_anti_tank_icon_small }
 				}
-				delete_unit_template_and_units = {
-					division_template = "Régiment d'opération anti-halo"
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_template = "Régiment d'opération anti-halo"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Régiment d'opération anti-halo"
+					}
 				}
 			}
 			division_template = {
@@ -1049,6 +1104,10 @@ focus_tree = {
 						y = 2
 					}
 					infantry = {
+						x = 0
+						y = 3
+					}
+					infantry = {
 						x = 1
 						y = 0
 					}
@@ -1081,15 +1140,19 @@ focus_tree = {
 						y = 1
 					}
 				}
-			}
-			custom_effect_tooltip = FRA_focus_arm_6_tt
-			459 = {
-				hidden_effect = {
-					create_unit = {
-						division = "name = \"Régiment d'opération anti-halo\" division_template = \"Régiment d'opération anti-halo\" start_experience_factor = 0.3 start_equipment_factor = 1" 
-						owner = FRA
-						count = 3
+				support = {
+					anti_tank = {
+						x = 0
+						y = 0
 					}
+				}
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			459 = {
+				create_unit = {
+					division = "name = \"Régiment d'opération anti-halo\" division_template = \"Régiment d'opération anti-halo\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+					owner = FRA
+					count = 3
 				}
 			}
 		}
@@ -1098,7 +1161,7 @@ focus_tree = {
 		#중소산업 병합
 		id = FRA_vertical_integration
 		icon = GFX_focus_SOV_merge_plants
-		cost = 2
+		cost = 6
 		x = 0
 		y = 2
 		relative_position_id = FRA_colonial_munitions_industry
@@ -1106,9 +1169,48 @@ focus_tree = {
 			focus = FRA_colonial_munitions_industry
 		}
 		completion_reward = {
-			add_timed_idea = {
-				idea = FRA_rebuilding_army
-				months = 8
+			custom_effect_tooltip = FRA_vertical_integration_tt
+			random_owned_state = {
+				limit = {
+					OR = {
+						state = 459
+						state = 460
+						state = 458
+						state = 513
+						state = 665
+						state = 461
+						state = 462
+					}
+					industrial_complex > 1
+				}
+				add_extra_state_shared_building_slots = 1
+				remove_building = {
+					type = industrial_complex
+					level = 2
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+				}
+			}
+		}
+	}
+	focus = {
+		#차량화 전술
+		id = FRA_focus_arm_11
+		icon = GFX_goal_generic_army_motorized
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_new_arm_0
+		prerequisite = {
+			focus = FRA_focus_new_arm_0
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				category = motorized_equipment
+				uses = 1
+				bonus = 1
 			}
 		}
 	}
@@ -1116,22 +1218,21 @@ focus_tree = {
 		#수륙양용전차 개발
 		icon = GFX_focus_generic_naval_invasion_tank
 		id = FRA_focus_new_arm_15
-		cost = 4
-		x = 0
-		y = 2
-		relative_position_id = FRA_focus_new_arm_0
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_arm_11
 		prerequisite = {
-			focus = FRA_focus_new_arm_0
+			focus = FRA_focus_arm_11
 		}
 		prerequisite = {
 			focus = FRA_focus_arm_9
 		}
 		completion_reward = {
-			army_experience = 10
 			add_tech_bonus = {
-				category = cat_anti_tank
-				uses = 2
-				bonus = 0.25
+				technology = amphibious_tank_chassis
+				uses = 1
+				bonus = 1
 			}
 		}
 	}
@@ -1443,7 +1544,7 @@ focus_tree = {
 		#화력 지원 교리
 		icon = GFX_goal_FRA_focus_arm5
 		id = FRA_focus_new_arm_5
-		cost = 4
+		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = FRA_focus_arm_3
@@ -1458,6 +1559,15 @@ focus_tree = {
 				swap_ideas = {
 					remove_idea = FRA_focus_on_field_gun_1
 					add_idea = FRA_focus_on_field_gun_sum
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = FRA_focus_on_field_gun_1_2
+				}
+				swap_ideas = {
+					remove_idea = FRA_focus_on_field_gun_1_2
+					add_idea = FRA_focus_on_field_gun_sum_all
 				}
 			}
 			else = {
@@ -1475,7 +1585,7 @@ focus_tree = {
 		#지상 지원
 		icon = GFX_focus_generic_cas_aircraft
 		id = FRA_focus_arm_5
-		cost = 4
+		cost = 5
 		x = 1
 		y = 2
 		relative_position_id = FRA_focus_arm_3
@@ -1490,6 +1600,15 @@ focus_tree = {
 				swap_ideas = {
 					remove_idea = FRA_focus_on_field_gun
 					add_idea = FRA_focus_on_field_gun_sum
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = FRA_focus_on_field_gun_2
+				}
+				swap_ideas = {
+					remove_idea = FRA_focus_on_field_gun_2
+					add_idea = FRA_focus_on_field_gun_sum_all
 				}
 			}
 			else = {
@@ -1507,7 +1626,7 @@ focus_tree = {
 		#함포 사격
 		icon = GFX_focus_SWE_coastal_support
 		id = FRA_focus_new_arm_6
-		cost = 4
+		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_arm_5
@@ -1516,9 +1635,29 @@ focus_tree = {
 			focus = FRA_focus_new_arm_5
 		}
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_single_point_breakthrough
-				add_idea = FRA_single_point_breakthrough_1
+			if = {
+				limit = {
+					has_idea = FRA_focus_on_field_gun_sum
+				}
+				swap_ideas = {
+					remove_idea = FRA_focus_on_field_gun_sum
+					add_idea = FRA_focus_on_field_gun_sum_all
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = FRA_focus_on_field_gun_1
+				}
+				swap_ideas = {
+					remove_idea = FRA_focus_on_field_gun_1
+					add_idea = FRA_focus_on_field_gun_1_2
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_focus_on_field_gun
+					add_idea = FRA_focus_on_field_gun_2
+				}
 			}
 		}
 	}
@@ -1526,7 +1665,7 @@ focus_tree = {
 		#강력한 화력에의 의지
 		icon = GFX_focus_generic_railway_gun
 		id = FRA_focus_new_arm_9
-		cost = 4
+		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_6
@@ -1551,7 +1690,7 @@ focus_tree = {
 		id = FRA_Deuxieme_Bureau
 		icon = GFX_focus_generic_secret_service_agency
 		cost = 4
-		x = 4
+		x = 7
 		y = 1
 		relative_position_id = FRA_focus_arm_1
 		prerequisite = {
@@ -1589,8 +1728,8 @@ focus_tree = {
 		#새로운 프랑스 군사학
 		icon = GFX_focus_generic_military_academy
 		id = FRA_focus_arm_15
-		cost = 4
-		x = 2
+		cost = 5
+		x = 3
 		y = 1
 		relative_position_id = FRA_focus_arm_2
 		prerequisite = {
@@ -1598,14 +1737,21 @@ focus_tree = {
 			focus = FRA_focus_arm_3
 		}
 		completion_reward = {
-			add_research_slot = 1
+			every_army_leader = {
+				limit = {
+					has_trait = old_guard
+				}
+				remove_trait = {
+					trait = old_guard
+				}
+			}
 		}
 	}
 	focus = {
 		#상륙 후 거점 방어
 		icon = GFX_focus_BEL_better_than_maginot
 		id = FRA_focus_new_arm_12
-		cost = 4
+		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_arm_15
@@ -1616,13 +1762,28 @@ focus_tree = {
 			focus = FRA_focus_arm_3.5
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = FRA_single_point_breakthrough
+				}
+				swap_ideas = {
+					remove_idea = FRA_single_point_breakthrough
+					add_idea = FRA_single_point_breakthrough_defense
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_mass_naval_invasion
+					add_idea = FRA_mass_naval_invasion_defense
+				}
+			}
 		}
 	}
 	focus = {
 		#소모전 유도
 		icon = GFX_focus_SWE_hedgehog_defense
 		id = FRA_focus_new_arm_13
-		cost = 4
+		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_12
@@ -1630,13 +1791,28 @@ focus_tree = {
 			focus = FRA_focus_new_arm_12
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = FRA_single_point_breakthrough_defense
+				}
+				swap_ideas = {
+					remove_idea = FRA_single_point_breakthrough_defense
+					add_idea = FRA_single_point_breakthrough_defense_1
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_mass_naval_invasion_defense
+					add_idea = FRA_mass_naval_invasion_defense_1
+				}
+			}
 		}
 	}
 	focus = {
 		#잘 계획된 공세
 		icon = GFX_goal_generic_position_armies
 		id = FRA_focus_new_arm_14
-		cost = 4
+		cost = 5
 		x = 0
 		y = 2
 		relative_position_id = FRA_focus_new_arm_12
@@ -1644,13 +1820,28 @@ focus_tree = {
 			focus = FRA_focus_new_arm_13
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = FRA_single_point_breakthrough_defense_1
+				}
+				swap_ideas = {
+					remove_idea = FRA_single_point_breakthrough_defense_1
+					add_idea = FRA_single_point_breakthrough_defense_2
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_mass_naval_invasion_defense_1
+					add_idea = FRA_mass_naval_invasion_defense_2
+				}
+			}
 		}
 	}
 	focus = {
 		#기병전차 운용
 		id = FRA_focus_arm_3.5
 		icon = GFX_focus_NOR_rikstanken
-		cost = 6
+		cost = 8
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_15
@@ -1661,19 +1852,31 @@ focus_tree = {
 			focus = FRA_focus_new_arm_12
 		}
 		completion_reward = {
-			army_experience = 50
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.5
-				category = cat_mobile_warfare
-				uses = 1
+			add_mastery = {
+				amount = 100
+				track = armor
 			}
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 480
+				track = armor
+				name = FRA_focus_new_arm_1
+			}
+			add_tech_bonus = {
+				name = FRA_focus_arm_3.5
+				category = cat_light_armor
+				uses = 1
+				bonus = 1
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			add_ideas = FRA_manoeuvre_n_strike
 		}
 	}
 	focus = {
-		#차량화 전술
-		id = FRA_focus_arm_11
-		icon = GFX_goal_generic_army_motorized
-		cost = 4
+		#생산 설비 확충
+		id = FRA_armor_factory
+		icon = GFX_focus_generic_mass_production
+		cost = 8
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_arm_3.5
@@ -1681,44 +1884,59 @@ focus_tree = {
 			focus = FRA_focus_arm_3.5
 		}
 		completion_reward = {
-			army_experience = 20
-			add_tech_bonus = {
-				category = motorized_equipment
-				uses = 1
-				bonus = 0.25
+			mio:FRA_amx_organization = {
+				add_mio_funds = 500
+				add_mio_research_bonus = 0.1
 			}
-			add_tech_bonus = {
-				category = cat_mechanized_equipment
-				uses = 1
-				bonus = 0.25
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			459 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+				}
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			if = {
+				limit = {
+					has_idea = FRA_manoeuvre_n_strike
+				}
+				swap_ideas = {
+					remove_idea = FRA_manoeuvre_n_strike
+					add_idea = FRA_manoeuvre_n_strike_2
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_manoeuvre_n_strike_1
+					add_idea = FRA_manoeuvre_n_strike_sum
+				}
 			}
 		}
 	}
 	focus = {
-		#기병전차 결전
+		#기갑 결전
 		id = FRA_focus_new_arm_7
-		icon = GFX_focus_generic_mechanized
-		cost = 4
-		x = 1
-		y = 1
-		relative_position_id = FRA_focus_arm_11
+		icon = GFX_focus_generic_tankette
+		cost = 8
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_arm_3.5
 		prerequisite = {
 			focus = FRA_focus_arm_3.5
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				category = cat_light_armor
-				uses = 1
-				bonus = 0.25
+			swap_ideas = {
+				remove_idea = FRA_manoeuvre_n_strike
+				add_idea = FRA_manoeuvre_n_strike_1
 			}
-			add_ideas = FRA_manoeuvre_n_strike
 		}
 	}
 	focus = {
 		#보병 운용 교리
 		icon = GFX_goal_generic_allies_build_infantry
 		id = FRA_focus_new_arm_1
-		cost = 4
+		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = FRA_focus_arm_2
@@ -1739,7 +1957,7 @@ focus_tree = {
 		#산개 대형
 		icon = GFX_focus_ETH_peacekeeping_forces
 		id = FRA_focus_new_arm_2
-		cost = 4
+		cost = 5
 		x = -3
 		y = 1
 		relative_position_id = FRA_focus_new_arm_1
@@ -1760,7 +1978,7 @@ focus_tree = {
 		#탄막 전개
 		icon = GFX_focus_AUS_frontmiliz_focus
 		id = FRA_focus_new_arm_3
-		cost = 4
+		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_1
@@ -1781,7 +1999,7 @@ focus_tree = {
 		#돌격대
 		icon = GFX_focus_CHL_departemento_de_las_tropas_nacistas_de_asalto
 		id = FRA_focus_arm_13
-		cost = 4
+		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_2
@@ -1815,7 +2033,7 @@ focus_tree = {
 		#'엘랑 비탈'
 		icon = GFX_focus_AFG_against_kabul
 		id = FRA_focus_new_arm_8
-		cost = 4
+		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_13
@@ -3929,6 +4147,27 @@ focus_tree = {
 				swap_ideas = {
 					remove_idea = inner_circle_FRA_idea_7_one
 					add_idea = inner_circle_FRA_idea_7_two
+				}
+				#드골의 따까리
+				create_corps_commander = {
+					name = "Marie-Pierre Koenig"
+					GFX = GFX_portrait_fra_marie_pierre_koenig
+					skill = 3
+					traits = {  }
+					attack_skill = 2
+					defense_skill = 2
+					planning_skill = 3
+					logistics_skill = 3
+				}
+				create_corps_commander = {
+					name = "Georges Catroux"
+					GFX = GFX_portrait_fra_georges_catroux
+					skill = 3
+					traits = {  }
+					attack_skill = 3
+					defense_skill = 3
+					planning_skill = 2
+					logistics_skill = 2
 				}
 			}
 		}
