@@ -8178,7 +8178,7 @@ focus_tree = {
 	}
 	
 	focus = { #
-		id = TRN_
+		id = TRN_new_order_movement
 		icon = GFX_focus_TRN_alliance_of_faith
 		prerequisite = { 
 			focus = TRN_support_justice_task_force
@@ -14008,7 +14008,7 @@ focus_tree = {
 	focus = { # 꼬리잡기
 		id = TRN_catch_tail
 		icon = GFX_focus_Arius_logo
-		x = 6
+		x = 7
 		y = 0
 		relative_position_id = TRN_ministry_of_industrial_development
 		cost = 3
@@ -15581,7 +15581,7 @@ focus_tree = {
 	focus = {
 		id = TRN_increase_military_budget
 		icon = GFX_focus_TRN_increase_military_budget
-		x = 13
+		x = 15
 		y = 0
 		relative_position_id = TRN_ministry_of_industrial_development
 
@@ -15603,17 +15603,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = {
-				localization_key = tooltip_reduce_focus_cost 
-				FOCUS = TRN_second_trinity
-				TIME = 35
+			IF = {
+				limit = {
+					NOT = {
+						has_completed_focus = TRN_second_trinity
+						has_completed_focus = TRN_successor_to_the_first_trinity
+					}
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = TRN_second_trinity
+					TIME = 35
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = TRN_successor_to_the_first_trinity
+					TIME = 35
+				}
+				custom_effect_tooltip = tooltip_white_line
 			}
-			custom_effect_tooltip = {
-				localization_key = tooltip_reduce_focus_cost 
-				FOCUS = TRN_successor_to_the_first_trinity
-				TIME = 35
-			}
-			custom_effect_tooltip = tooltip_white_line
 			add_tech_bonus = {
 				name = TRN_increase_military_budget
 				bonus = 0.5
@@ -15668,7 +15676,7 @@ focus_tree = {
 		id = TRN_military_factory_maintenance
 		icon = GFX_focus_generic_reorient_production
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 20
@@ -15682,12 +15690,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = {
-				localization_key = tooltip_reduce_focus_cost 
-				FOCUS = TRN_ministry_of_industrial_development
-				TIME = 35
+			IF = {
+				limit = { NOT = { has_completed_focus = TRN_ministry_of_industrial_development } }
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = TRN_ministry_of_industrial_development
+					TIME = 35
+				}
+				custom_effect_tooltip = tooltip_white_line
 			}
-			custom_effect_tooltip = tooltip_white_line
 	    		add_tech_bonus = {
 				name = TRN_military_factory_maintenance
 			    	bonus = 0.75
@@ -15702,37 +15713,12 @@ focus_tree = {
 				TRN_industry_ns_production_factory_max_efficiency_factor = 0.03
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
-		}
-	}
 
-	focus = {
-		id = TRN_supply_line_improvements
-		icon = GFX_focus_generic_supply_line
-		prerequisite = { focus = TRN_military_factory_maintenance }
-		x = -3
-		y = 1
-		relative_position_id = TRN_military_factory_maintenance
-		cost = 5
-		available = {
-
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = {
-				localization_key = tooltip_modify_dynmod 
-				DYNMOD = TRN_army_ns
-			}
-			add_to_variable = {
-				TRN_army_ns_supply_node_range = 0.1
-				tooltip = supply_node_range_tt
-			}
-			add_to_variable = { 
-				TRN_army_ns_out_of_supply_factor = -0.1
-				tooltip = out_of_supply_factor_tt
+			hidden_effect = {
+				reduce_focus_completion_cost = {
+					focus = TRN_supply_line_improvements
+					cost = 35
+				}
 			}
 		}
 	}
@@ -15776,11 +15762,10 @@ focus_tree = {
 		id = TRN_optimize_production_line
 		icon = GFX_focus_generic_printing_press
 		prerequisite = { focus = TRN_flexible_line }
-		prerequisite = { focus = TRN_supply_line_improvements }
 		x = -1
 		y = 1
 		relative_position_id = TRN_flexible_line
-		cost = 5
+		cost = 10
 		available = {
 
 		}
@@ -15815,7 +15800,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_military_factory_maintenance
-		cost = 4
+		cost = 5
 		available = {
 
 		}
@@ -15852,7 +15837,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_arsenal_support
-		cost = 4
+		cost = 5
 		available = {
 
 		}
@@ -15884,7 +15869,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_arsenal_support
-		cost = 4
+		cost = 5
 		available = {
 
 		}
@@ -15911,30 +15896,29 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_germany_army_reform
-		icon = GFX_focus_GER_army
+		id = TRN_armor_refit
+		icon = GFX_focus_TRN_armor_refit
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 1
+		x = 6
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
 		available = {
 
 		}
-		mutually_exclusive = {
-			focus = TRN_trinity_army_reform
-		}
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
-				cost_reduction = 0.5
+			add_tech_bonus = {
+				name = TRN_armor_refit
+				ahead_reduction = 1
+				bonus = 0.75
 				uses = 1
-				category = land_doctrine
+				category = armor
 			}
+
 			army_experience = 15
 		}
 	}
@@ -15942,10 +15926,10 @@ focus_tree = {
 	focus = {
 		id = TRN_germany_army_reform_1
 		icon = GFX_focus_generic_tank_assault
-		prerequisite = { focus = TRN_germany_army_reform }
-		x = 1
+		prerequisite = { focus = TRN_armor_refit }
+		x = -2
 		y = 1
-		relative_position_id = TRN_germany_army_reform
+		relative_position_id = TRN_armor_refit
 		cost = 5
 		available = {
 
@@ -15964,7 +15948,7 @@ focus_tree = {
 				bonus = 0.1
 				days = 240
 				track = armor
-				name = TRN_germany_army_reform
+				name = TRN_armor_refit
 			}
 			custom_effect_tooltip = available_theorist
 			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
@@ -15977,16 +15961,12 @@ focus_tree = {
 				DYNMOD = TRN_army_ns
 			}
 			add_to_variable = {
-				TRN_army_ns_org_loss_when_moving = -0.1
+				TRN_army_ns_org_loss_when_moving = -0.05
 				tooltip = org_loss_when_moving_tt
 			}
 			add_to_variable = {
 				TRN_army_ns_army_armor_attack_factor = 0.05
 				tooltip = army_armor_attack_factor_tt
-			}
-			add_to_variable = {
-				TRN_army_ns_experience_gain_artillery_combat_factor = -0.1
-				tooltip = experience_gain_artillery_combat_factor_tt
 			}
 		}
 	}
@@ -15995,8 +15975,8 @@ focus_tree = {
 		id = TRN_germany_army_reform_2
 		icon = GFX_goal_generic_army_tanks
 		prerequisite = { focus = TRN_germany_army_reform_1 }
-		x = 0
-		y = 2
+		x = -1
+		y = 1
 		relative_position_id = TRN_germany_army_reform_1
 		cost = 5
 		available = {
@@ -16011,24 +15991,16 @@ focus_tree = {
 
 			custom_effect_tooltip = tooltip_white_line
 			add_trait = {
-                    	character = TRN_Ajitani_Hifumi
-                    	slot = high_command
-                    	trait = army_armored_2
+                    		character = TRN_Ajitani_Hifumi
+                    		slot = high_command
+                    		trait = army_armored_2
 			}
 			hidden_effect = {
 				remove_trait = {
-                  	  	character = TRN_Ajitani_Hifumi
-                  	  	slot = high_command
-                  	  	trait = army_armored_1
+                  	  		character = TRN_Ajitani_Hifumi
+                  	  		slot = high_command
+                  	  		trait = army_armored_1
 				}
-			}
-			custom_effect_tooltip = {
-				localization_key = tooltip_modify_dynmod 
-				DYNMOD = TRN_army_ns
-			}
-			add_to_variable = {
-				TRN_army_ns_coordination_bonus = 0.05
-				tooltip = coordination_bonus_tt
 			}
 		}
 	}
@@ -16106,7 +16078,7 @@ focus_tree = {
 			army_experience = 35
 			custom_effect_tooltip = tooltip_white_line
 			add_doctrine_cost_reduction = {
-				name = TRN_germany_army_reform
+				name = TRN_armor_refit
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_mobile_warfare
@@ -16131,15 +16103,12 @@ focus_tree = {
 		id = TRN_trinity_army_reform
 		icon = GFX_focus_TRN_army
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 5
+		x = 10
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
 		available = {
 
-		}
-		mutually_exclusive = {
-			focus = TRN_germany_army_reform
 		}
 		ai_will_do = {
 
@@ -16160,7 +16129,7 @@ focus_tree = {
 		id = TRN_retracing_the_mechanized_brigade_tragedy
 		icon = GFX_focus_FIN_motti_tactics
 		prerequisite = { focus = TRN_trinity_army_reform }
-		x = -1
+		x = 2
 		y = 1
 		relative_position_id = TRN_trinity_army_reform
 		cost = 5
@@ -16188,10 +16157,6 @@ focus_tree = {
 				DYNMOD = TRN_army_ns
 			}
 			add_to_variable = { 
-				TRN_army_ns_army_attack_speed_factor  = -0.1
-				tooltip = army_attack_speed_factor_tt
-			}
-			add_to_variable = { 
 				TRN_army_ns_army_artillery_attack_factor = 0.05
 				tooltip = army_artillery_defence_factor_tt
 			}
@@ -16204,11 +16169,11 @@ focus_tree = {
 
 	focus = {
 		id = TRN_small_attack_groups
-		icon = GFX_focus_TRN_Trinity_Field_Artillery
-		prerequisite = { focus = TRN_trinity_army_reform }
-		x = 0
-		y = 2
-		relative_position_id = TRN_trinity_army_reform
+		icon = GFX_focus_ETH_peacekeeping_forces
+		prerequisite = { focus = TRN_retracing_the_mechanized_brigade_tragedy }
+		x = -1
+		y = 1
+		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
 		cost = 5
 		available = {
 
@@ -16231,27 +16196,140 @@ focus_tree = {
 				DYNMOD = TRN_army_ns
 			}
 			add_to_variable = {
-				TRN_army_ns_org_loss_when_moving = -0.1
+				TRN_army_ns_org_loss_when_moving = -0.05
 				tooltip = org_loss_when_moving_tt
-			}
-			add_to_variable = {
-				TRN_army_ns_combat_width_factor = -0.1
-				tooltip = combat_width_factor_tt
 			}
 			add_to_variable = { 
 				TRN_army_ns_army_artillery_defence_factor = 0.05
 				tooltip = army_artillery_attack_factor_tt
 			}
+			add_to_variable = {
+				TRN_army_ns_experience_loss_factor = -0.05
+				tooltip = experience_loss_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_sophisticated_artillery_equipment
+		icon = GFX_focus_TRN_Trinity_Field_Artillery
+		prerequisite = { focus = TRN_retracing_the_mechanized_brigade_tragedy }
+		x = 1
+		y = 1
+		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			mio:TRM_royal_arsenal_organization = {
+				add_mio_size = 1
+			}
+
+			add_tech_bonus = {
+				name = TRN_sophisticated_artillery_equipment
+				bonus = 0.75
+				uses = 2
+				category = artillery
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.25
+			}
+			
+		}
+	}
+
+	focus = {
+		id = TRN_thousand_blades
+		icon = GFX_focus_TRN_thousand_blades
+		prerequisite = { focus = TRN_small_attack_groups }
+		prerequisite = { focus = TRN_sophisticated_artillery_equipment }
+		x = 0
+		y = 2
+		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 180
+				track = infantry
+				name = TRN_thousand_blades
+			}
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 180
+				track = combat_support
+				name = TRN_thousand_blades
+			}
+			army_experience = 30
+
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_attack_factor = 0.05
+				tooltip = army_attack_factor_tt
+			}
+			add_to_variable = {
+				TRN_army_ns_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_artillery_attack_factor = 0.05
+				tooltip = army_artillery_defence_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_kivotos_drone
+		icon = GFX_focus_generic_drone_2
+		prerequisite = { 
+			focus = TRN_armor_refit 
+			focus = TRN_trinity_army_reform 
+		}
+		x = -1
+		y = 1
+		relative_position_id = TRN_trinity_army_reform
+		cost = 10
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			set_technology = { kivotos_dron_tech = 1 }
 		}
 	}
 
 	focus = {
 		id = TRN_general_staff_reform
 		icon = GFX_focus_generic_military_mission
-		prerequisite =  { focus = TRN_retracing_the_mechanized_brigade_tragedy }
-		x = -1
+		prerequisite =  { focus = TRN_armor_refit focus = TRN_trinity_army_reform }
+		x = 1
 		y = 1
-		relative_position_id = TRN_small_attack_groups
+		relative_position_id = TRN_armor_refit
 		cost = 5
 		available = {
 
@@ -16274,16 +16352,15 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_thousand_blades
-		icon = GFX_focus_TRN_thousand_blades
-		prerequisite = { focus = TRN_small_attack_groups }
-		prerequisite = { focus = TRN_general_staff_reform}
-		x = 0
-		y = 2
-		relative_position_id = TRN_small_attack_groups
-		cost = 5
+		id = TRN_military_chaplain
+		icon = GFX_focus_generic_military_mission
+		prerequisite =  { focus = TRN_general_staff_reform focus = TRN_kivotos_drone }
+		x = 1
+		y = 1
+		relative_position_id = TRN_general_staff_reform
+		cost = 10
 		available = {
-
+			has_country_flag = nagisa_faction_D_flag
 		}
 		ai_will_do = {
 
@@ -16291,41 +16368,47 @@ focus_tree = {
 
 		completion_reward = {
 
-			add_mastery_bonus = {
-				bonus = 0.1
-				days = 240
-				track = infantry
-				name = TRN_thousand_blades
-			}
+		}
+	}
 
-			add_mastery_bonus = {
-				bonus = 0.1
-				days = 240
-				track = combat_support
-				name = TRN_thousand_blades
-			}
-			army_experience = 30
+	focus = {
+		id = TRN_supply_line_improvements
+		icon = GFX_focus_generic_supply_line
+		prerequisite = { focus = TRN_general_staff_reform }
+		x = -1
+		y = 1
+		relative_position_id = TRN_military_chaplain
+		cost = 10
+		overlay = GFX_focus_fast_overlay_generic_clock
+		available = {
 
-			custom_effect_tooltip = tooltip_white_line
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			IF = {
+				limit = { NOT = { has_completed_focus = TRN_military_factory_maintenance } }
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = TRN_military_factory_maintenance
+					TIME = 35
+				}
+				custom_effect_tooltip = tooltip_white_line
+			}
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod 
 				DYNMOD = TRN_army_ns
 			}
-			add_to_variable = { 
-				TRN_army_ns_army_attack_factor = 0.1
-				tooltip = army_attack_factor_tt
-			}
 			add_to_variable = {
-				TRN_army_ns_breakthrough_factor = 0.05
-				tooltip = breakthrough_factor_tt
+				TRN_army_ns_supply_node_range = 0.1
+				tooltip = supply_node_range_tt
 			}
 			add_to_variable = { 
-				TRN_army_ns_army_attack_speed_factor  = -0.1
-				tooltip = army_attack_speed_factor_tt
-			}
-			add_to_variable = { 
-				TRN_army_ns_army_artillery_attack_factor = 0.05
-				tooltip = army_artillery_defence_factor_tt
+				TRN_army_ns_out_of_supply_factor = -0.1
+				tooltip = out_of_supply_factor_tt
 			}
 		}
 	}
@@ -16333,14 +16416,11 @@ focus_tree = {
 	focus = {
 		id = TRN_generic_army_reform
 		icon = GFX_focus_generic_drone
-		prerequisite = { 
-			focus = TRN_thousand_blades 
-			focus = TRN_germany_army_reform_4 
-		}
-		x = -1
-		y = 1
-		relative_position_id = TRN_thousand_blades
-		cost = 5
+		prerequisite = { focus = TRN_kivotos_drone }
+		x = 0
+		y = 2
+		relative_position_id = TRN_kivotos_drone
+		cost = 10
 		available = {
 
 		}
@@ -16349,6 +16429,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			#custom_effect_tooltip = {
+			#	localization_key = generic_enables_tech_tt
+			#	TECH_EFFECT = tech_effect|BA_drone_bonus_tech
+			#	TECH_NAME = BA_drone_bonus_tech
+			#}
+			#hidden_effect = { set_technology = { BA_drone_bonus_tech = 1 popup = no } }
+        		#custom_effect_tooltip = tooltip_white_line
         		custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod 
 				DYNMOD = TRN_army_ns
@@ -16361,10 +16448,10 @@ focus_tree = {
 				TRN_army_ns_intel_from_combat_factor = 0.1 
 				tooltip = intel_from_combat_factor_tt
 			}
-        		add_to_variable = { 
-				TRN_army_ns_recon_factor_while_entrenched = 0.1 
-				tooltip = recon_factor_while_entrenched_tt
-			}
+        		#add_to_variable = { 
+			#	TRN_army_ns_recon_factor_while_entrenched = 0.1 
+			#	tooltip = recon_factor_while_entrenched_tt
+			#}
         		custom_effect_tooltip = tooltip_white_line
 			air_experience = 15
 		}
@@ -16374,7 +16461,7 @@ focus_tree = {
 		id = TRN_control_of_baltic_sea
 		icon = GFX_focus_TRN_navy
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 9
+		x = 18
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -17260,7 +17347,7 @@ focus_tree = {
 		id = TRN_air_force_focus_01
 		icon = GFX_focus_TRN_airforce
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 16
+		x = 25
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
