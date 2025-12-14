@@ -843,7 +843,7 @@ focus_tree = {
 				}
 			}
 		}
-		cost = 5
+		cost = 2
 		x = -3
 		y = 1
 		relative_position_id = ARI_drawing_sword
@@ -870,7 +870,7 @@ focus_tree = {
 				}
 			}
 		}
-		cost = 5
+		cost = 2
 		x = -1
 		y = 1
 		relative_position_id = ARI_drawing_sword
@@ -900,7 +900,7 @@ focus_tree = {
 				}
 			}
 		}
-		cost = 5
+		cost = 2
 		x = 1
 		y = 1
 		relative_position_id = ARI_drawing_sword
@@ -930,7 +930,7 @@ focus_tree = {
 				}
 			}
 		}
-		cost = 5
+		cost = 2
 		x = 3
 		y = 1
 		relative_position_id = ARI_drawing_sword
@@ -945,23 +945,51 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			has_war_with = TRM
+			BA_prussian_territory_control = yes
 		}
 		bypass = {
-			is_subject = no
-			TRM = {
-				OR = {
-					exists = no
-					has_capitulated = yes
-					is_subject_of = ARI
-				}
-			}
 		}
 		cost = 2
 		x = 0
 		y = 2
 		relative_position_id = ARI_drawing_sword
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = ARI_undisturbed_wareconomy
+				add_idea = ARI_wareconomy
+			}
+			every_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					NOT = { is_core_of = ROOT }
+				}
+				display_individual_scopes = yes
+				add_core_of = ROOT
+				create_unit = {
+					division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.75"
+					owner = ARI
+					count = 2
+				}
+			}
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = ROOT }
+				}
+				add_resistance = -10
+				add_compliance = 10
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = ARI_holding_arius_council_tt
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = 750
+				producer = TRM
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 6500
+				producer = TRM
+			}
 		}
 	}
 	focus = {
