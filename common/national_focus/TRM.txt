@@ -9349,9 +9349,9 @@ focus_tree = {
 				custom_effect_tooltip = TRN_nagisa_constitution_discussion_warning_tt
 			}
 			country_event = { id = trinity_events_nagisa.14 }
-			custom_effect_tooltip = enter_tt
-			custom_effect_tooltip = TRM_misono_mission_flag_on_tt
-			set_country_flag = TRM_misono_mission_on_flag
+			# custom_effect_tooltip = enter_tt
+			# custom_effect_tooltip = TRM_misono_mission_flag_on_tt
+			# set_country_flag = TRM_misono_mission_on_flag
 		}
 	}
 
@@ -12226,7 +12226,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			country_event = { id = trinity_events_nagisa.68 }
+			set_cosmetic_tag = TRM_trinity_commonwealth # 나기사 루트 트리니티 코스믹 태그
+			# 로컬 작성 후 뉴스 추가
 		}
 	}
 
@@ -12418,7 +12420,32 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = TRN_trinity_carnival_default_tt
+			custom_effect_tooltip = TRN_new_and_free_trininy_culture_tt
+			if = {
+				limit = {NOT = { has_country_flag = TRM_nagisa_constitution_strengthening_federalism_flag }  }
+				custom_effect_tooltip = TRN_trinity_carnival_default_tt
+			}
+			else = {
+				if = {
+					limit = {	
+						TRN_Kyoyama_Kazusa = {
+							is_political_advisor = yes # 쿄야마 카즈사가 조언가일 때 효과가 좋아짐
+						}
+					}
+					custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+					add_to_variable = {
+						TRM_nagisa_constitution_non_core_manpower = 0.03
+						tooltip = non_core_manpower_tt
+					}
+				}
+				else = {
+					custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+					add_to_variable = {
+						TRM_nagisa_constitution_non_core_manpower = 0.02
+						tooltip = non_core_manpower_tt
+					}
+				}
+			}
 		}
 	}
 
@@ -12717,6 +12744,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = TRN_new_and_free_trininy_culture_tt
 			if = {
 				limit = {	
 					TRN_Kyoyama_Kazusa = {
