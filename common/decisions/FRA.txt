@@ -48,6 +48,23 @@ FRA_industrialize = {
 }
 
 FRA_urbanization = {
+	FRA_navy_gonna_die = { #해군 정비
+		days_mission_timeout = 960
+		fire_only_once = yes
+		icon = GFX_decision_generic_naval
+		available = {
+			OR = {
+				has_completed_focus = FRA_focus_arm_12.5
+				has_completed_focus = FRA_focus_arm_12
+			}
+		}
+		timeout_effect = {
+			#함선부숴지는효과
+		}
+		activation = {
+			always = no
+		}
+	}
 	FRA_alz_infra = {
 		ai_will_do = {
 			factor = 200
@@ -1017,182 +1034,211 @@ FRA_war_dec = { #본토 수복 결전
 			factor = 10
 		}
 	}
-	FRA_fight_with_MIL_1 = {
+	FRA_fight_with_MIL_1 = { #본토 수복 계획 I
 		visible = {
 			has_completed_focus = FRA_focus_resistance_5
+			has_completed_focus = FRA_focus_new_arm_14
 			has_war_with = MIL
 		}
 		icon = GFX_decision_generic_prepare_civil_war
 		available = {
 			has_war_with = MIL
-			any_core_state = {
-				is_on_continent = europe
-				is_controlled_by_ROOT_or_ally = yes
-				NOT = {
-					state = 1
-				}
-				is_owned_by = MIL
-			}
 		}
-		days_remove = 20
-		cost = 100
-		remove_effect = {
-			add_ideas = {
-				FRA_fight_MIL
-			}
-			set_variable = {
-				FRA_war = 1
-			}
-		}
+	    ai_hint_pp_cost = 25
+	    custom_cost_trigger = {
+	    	command_power > 24
+	    	has_political_power > 24
+	    }
+	    custom_cost_text = decision_cost_CP_25_pp_25	
+
 		fire_only_once = yes
+
+
 		ai_will_do = {
-			factor = 100
+			base = 100
 		}
-	}
-	FRA_fight_with_MIL_2 = {
-		icon = GFX_decision_generic_prepare_civil_war
-		allowed = {
-		}
-		visible = {
-			check_variable = {
-				FRA_war = 1
+
+		complete_effect = {
+			set_country_flag = {
+				flag = FRA_last_liberate_plan_flag
+				value = 1
 			}
-			has_completed_focus = FRA_focus_resistance_5
-			has_war_with = MIL
-		}
-		available = {
-			has_war_with = MIL
-			any_core_state = {
-				is_on_continent = europe
-				is_controlled_by_ROOT_or_ally = yes
-				NOT = {
-					state = 1
-				}
-				is_owned_by = MIL
+			hidden_effect = {
+				add_political_power = -25
+				add_command_power = -25
 			}
 		}
-		days_remove = 20
-		cost = 200
-		remove_effect = {
-			swap_ideas = {
-				remove_idea = FRA_fight_MIL
-				add_idea = FRA_fight_MIL_1
-			}
-			add_to_variable = {
-				FRA_war = 1
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 100
-		}
-	}
-	FRA_fight_with_MIL_3 = {
-		icon = GFX_decision_generic_prepare_civil_war
-		fire_only_once = yes
-		allowed = {
-		}
-		visible = {
-			check_variable = {
-				FRA_war = 2
-			}
-			has_completed_focus = FRA_focus_resistance_5
-			has_war_with = MIL
-		}
-		available = {
-			has_war_with = MIL
-			any_core_state = {
-				is_on_continent = europe
-				is_controlled_by_ROOT_or_ally = yes
-				NOT = {
-					state = 1
-				}
-				is_owned_by = MIL
-			}
-		}
-		days_remove = 20
-		cost = 300
-		remove_effect = {
-			swap_ideas = {
-				remove_idea = FRA_fight_MIL_1
-				add_idea = FRA_fight_MIL_2
-			}
-			add_to_variable = {
-				FRA_war = 1
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-	}
-	FRA_fight_with_MIL_4 = {
-		allowed = {
-		}
-		visible = {
-			check_variable = {
-				FRA_war = 3
-			}
-			has_completed_focus = FRA_focus_resistance_5
-			has_war_with = MIL
-		}
-		icon = GFX_decision_generic_prepare_civil_war
-		available = {
-			has_war_with = MIL
-			any_core_state = {
-				is_on_continent = europe
-				is_controlled_by_ROOT_or_ally = yes
-				NOT = {
-					state = 1
-				}
-				is_owned_by = MIL
-			}
-		}
-		days_remove = 20
-		cost = 400
-		remove_effect = {
-			swap_ideas = {
-				remove_idea = FRA_fight_MIL_2
-				add_idea = FRA_fight_MIL_3
-			}
-			clear_variable = fra_war
-		}
-		ai_will_do = {
-			factor = 100
-		}
-	}
-	FRA_out_army = {
-		visible = {
-			has_completed_focus = FRA_focus_resistance_5
-			has_war_with = MIL
-		}
-		icon = GFX_decision_generic_army_support
-		available = {
-			has_war_with = MIL
-		}
-		fire_only_once = yes
-		cost = 20
-		days_remove = 200
+		days_remove = -1
 		modifier = {
-			conscription_factor = 0.2
-			non_core_manpower = 0.2
+			army_core_attack_factor = 0.06
+			army_core_defence_factor = 0.03
+			naval_invasion_penalty = -0.25
 		}
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_last_liberate_plan_flag_tt
+				NOT = {
+					has_country_flag = {
+						flag = FRA_last_liberate_plan_flag
+						value = 1
+					}
+				}
+			}
+		}
+		fire_only_once = yes
 		ai_will_do = {
-			factor = 10
+			factor = 100
+		}
+	}
+	FRA_fight_with_MIL_2 = { #본토 수복 계획 II
+		visible = {
+			has_completed_focus = FRA_focus_resistance_5
+			has_completed_focus = FRA_focus_new_arm_14
+			has_war_with = MIL
+			has_country_flag = FRA_last_liberate_plan_flag
+		}
+		icon = GFX_decision_generic_prepare_civil_war
+		available = {
+			has_war_with = MIL
+			any_core_state = {
+				is_on_continent = europe
+				NOT = {
+					state = 1
+				}
+				FRA = {
+					has_full_control_of_state = prev
+				}
+				is_owned_by = MIL
+			}
+		}
+	    ai_hint_pp_cost = 25
+	    custom_cost_trigger = {
+	    	command_power > 24
+	    	has_political_power > 24
+	    }
+	    custom_cost_text = decision_cost_CP_25_pp_25	
+
+		fire_only_once = yes
+
+
+		ai_will_do = {
+			base = 100
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -25
+				add_command_power = -25
+			}
+			set_country_flag = {
+				flag = FRA_last_liberate_plan_flag
+				value = 2
+			}
+		}
+		days_remove = -1
+		modifier = {
+			army_core_attack_factor = 0.03
+			army_core_defence_factor = 0.1
+			dig_in_speed_factor = 0.35
+		}
+		cancel_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_last_liberate_plan_flag_tt
+				NOT = {
+					has_country_flag = {
+						flag = FRA_last_liberate_plan_flag
+						value = 2
+					}
+				}
+			}
+		}
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	FRA_fight_with_MIL_3 = { #본토 수복 계획 III
+		visible = {
+			has_completed_focus = FRA_focus_resistance_5
+			has_completed_focus = FRA_focus_new_arm_14
+			has_war_with = MIL
+			OR = {
+				has_country_flag = {
+					flag = FRA_last_liberate_plan_flag
+					value = 2
+				}
+				has_country_flag = {
+					flag = FRA_last_liberate_plan_flag
+					value = 3
+				}
+			}
+		}
+		icon = GFX_decision_generic_prepare_civil_war
+		available = {
+			has_war_with = MIL
+			MIL = {
+				surrender_progress > 0.3
+			}
+		}
+	    ai_hint_pp_cost = 25
+	    custom_cost_trigger = {
+	    	command_power > 24
+	    	has_political_power > 24
+	    }
+	    custom_cost_text = decision_cost_CP_25_pp_25	
+
+		fire_only_once = yes
+
+
+		ai_will_do = {
+			base = 100
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_political_power = -25
+				add_command_power = -25
+			}
+			set_country_flag = {
+				flag = FRA_last_liberate_plan_flag
+				value = 3
+			}
+		}
+		days_remove = 120
+		modifier = {
+			army_core_attack_factor = 0.1
+			army_core_defence_factor = 0.03
+			army_speed_factor = 0.1
+		}
+		cancel_trigger = {
+			NOT = {
+				has_war_with = MIL
+			}
+		}
+		cancel_effect = {
+			clr_country_flag = FRA_last_liberate_plan_flag
+		}
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 100
 		}
 	}
 	FRA_lib_bor = {
 		visible = {
 			has_completed_focus = FRA_focus_resistance_5
 			has_war_with = MIL
-			check_variable = {
-				FRA_i_lib_bor = 0
-			}
 		}
 		
 		icon = GFX_decision_generic_nationalism
 		available = {
 			19 = {
 				is_controlled_by_ROOT_or_ally = yes
+			}
+		}
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_states_trigger = {
+				state = 19
 			}
 		}
 		days_remove = 3
@@ -1202,11 +1248,15 @@ FRA_war_dec = { #본토 수복 결전
 					news_event = FRA_prov_event.40
 				}
 			}
-			add_political_power = 30
-			news_event = FRA_prov_event.40
-			set_variable = {
-				FRA_i_lib_bor = 1
+			19 = {
+				create_unit = {
+					division = "name = \"French Resistance\" division_template = \"French Resistance\" start_experience_factor = 0.2 start_equipment_factor = 1"
+					owner = FRA
+					count = 3
+					allow_spawning_on_enemy_provs = yes
+				}
 			}
+			news_event = FRA_prov_event.40
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -1218,14 +1268,17 @@ FRA_war_dec = { #본토 수복 결전
 		visible = {
 			has_completed_focus = FRA_focus_resistance_5
 			has_war_with = MIL
-			check_variable = {
-				FRA_i_lib_bor = 0
-			}
 		}
 		icon = GFX_decision_generic_nationalism
 		available = {
 			21 = {
 				is_controlled_by_ROOT_or_ally = yes
+			}
+		}
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_states_trigger = {
+				state = 21
 			}
 		}
 		days_remove = 3
@@ -1236,9 +1289,13 @@ FRA_war_dec = { #본토 수복 결전
 					news_event = FRA_prov_event.39
 				}
 			}
-			add_political_power = 30
-			set_variable = {
-				FRA_i_lib_bor = 1
+			21 = {
+				create_unit = {
+					division = "name = \"French Resistance\" division_template = \"French Resistance\" start_experience_factor = 0.2 start_equipment_factor = 1"
+					owner = FRA
+					count = 3
+					allow_spawning_on_enemy_provs = yes
+				}
 			}
 		}
 		ai_will_do = {
@@ -1256,6 +1313,12 @@ FRA_war_dec = { #본토 수복 결전
 				is_controlled_by_ROOT_or_ally = yes
 			}
 		}
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_states_trigger = {
+				state = 24
+			}
+		}
 		days_remove = 5
 		remove_effect = {
 			hidden_effect = {
@@ -1263,8 +1326,15 @@ FRA_war_dec = { #본토 수복 결전
 					news_event = FRA_prov_event.41
 				}
 			}
+			24 = {
+				create_unit = {
+					division = "name = \"French Resistance\" division_template = \"French Resistance\" start_experience_factor = 0.2 start_equipment_factor = 1"
+					owner = FRA
+					count = 3
+					allow_spawning_on_enemy_provs = yes
+				}
+			}
 			news_event = FRA_prov_event.41
-			add_political_power = 30
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -1306,46 +1376,7 @@ FRA_war_dec = { #본토 수복 결전
 				state = 16
 				remember_old_capital = no
 			}
-			if = {
-				limit = {
-					has_idea = FRA_emergency_mobil
-				}
-				remove_ideas = FRA_emergency_mobil
-				add_popularity = {
-					ideology = fascism
-					popularity = -0.3
-				}
-			}
-			if = {
-				limit = {
-					has_idea = FRA_emergency_mobil_fas
-				}
-				remove_ideas = FRA_emergency_mobil_fas
-				add_popularity = {
-					ideology = communism
-					popularity = -0.3
-				}
-			}
 			clear_variable = FRA_dec
-			if = {
-				limit = {
-					NOT = {
-						has_government = fascism
-					}
-				}
-				set_party_name = {
-					ideology = fascism
-					long_name = FRA_fascism_party_new
-					name = FRA_fascism_party_new
-				}
-			}
-			else = {
-				set_party_name = {
-					ideology = communism
-					long_name = FRA_communism_party
-					name = FRA_communism_party
-				}
-			}
 			annex_country = {
 				target = FRM
 			}

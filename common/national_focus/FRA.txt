@@ -1001,7 +1001,7 @@ focus_tree = {
 		#고등 국방 연구원
 		id = FRA_focus_new_arm_0
 		icon = GFX_focus_generic_education
-		cost = 2
+		cost = 4
 		x = 0
 		y = 1
 		relative_position_id = FRA_focus_arm_4
@@ -1009,16 +1009,13 @@ focus_tree = {
 			focus = FRA_focus_arm_4
 		}
 		completion_reward = {
-			add_timed_idea = {
-				idea = FRA_rebuilding_army
-				months = 8
-			}
+			add_research_slot = 1
 		}
 	}
 	focus = {
 		#식민지 조병창 가동
 		id = FRA_colonial_munitions_industry
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_CONGO_copper_cartridges
 		cost = 6
 		x = -1
 		y = 1
@@ -1199,7 +1196,7 @@ focus_tree = {
 		#차량화 전술
 		id = FRA_focus_arm_11
 		icon = GFX_goal_generic_army_motorized
-		cost = 5
+		cost = 4
 		x = 0
 		y = 2
 		relative_position_id = FRA_focus_new_arm_0
@@ -1216,9 +1213,9 @@ focus_tree = {
 	}
 	focus = {
 		#수륙양용전차 개발
-		icon = GFX_focus_generic_naval_invasion_tank
+		icon = GFX_focus_BEL_flooded_tank_barriers
 		id = FRA_focus_new_arm_15
-		cost = 5
+		cost = 4
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_11
@@ -1237,15 +1234,18 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#전투기 제조 설비 구축
+		#본토 항공전 대비
 		id = FRA_focus_arm_7
 		icon = GFX_focus_generic_air_bases
 		cost = 4
-		x = 4
+		x = 8
 		y = 1
 		relative_position_id = FRA_focus_arm_4
 		prerequisite = {
 			focus = FRA_focus_arm_4
+		}
+		mutually_exclusive = {
+			focus = FRA_stop_air
 		}
 		completion_reward = {
 			461 = {
@@ -1253,20 +1253,6 @@ focus_tree = {
 				add_building_construction = {
 					type = arms_factory
 					level = 1
-				}
-			}
-			if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
 				}
 			}
 		}
@@ -1294,20 +1280,6 @@ focus_tree = {
 				cost_reduction = 0.2
 				category = cat_paratroopers_doctrine
 			}
-			if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
-				}
-			}
 		}
 	}
 	focus = {
@@ -1328,34 +1300,44 @@ focus_tree = {
 				uses = 3
 				bonus = 0.2
 			}
-			if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
-				}
+		}
+	}
+	focus = {
+		#공수부대 육성
+		icon = GFX_focus_generic_paratrooper
+		id = FRA_paratroopers
+		cost = 4
+		x = 2
+		y = 2
+		relative_position_id = FRA_focus_arm_7
+		prerequisite = {
+			focus = FRA_focus_arm_9.5
+		}
+		completion_reward = {
+			navy_experience = 20
+			add_tech_bonus = {
+				name = FRA_paratroopers
+				category = para_tech
+				uses = 1
+				bonus = 1
+			}
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = FRA_paratroopers
+				category = cat_paratroopers_doctrine
 			}
 		}
 	}
 	focus = {
-		#다목적 항공기 연구
-		icon = GFX_focus_generic_multi_role_aircraft
+		#항공기 제조 설비 구축
+		icon = GFX_focus_HUN_establish_the_mavag_aircraft_factory
 		id = FRA_focus_new_arm_16
 		cost = 4
-		x = 1
-		y = 3
-		relative_position_id = FRA_focus_arm_7
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_arm_9.5
 		prerequisite = {
 			focus = FRA_focus_arm_8.5
-		}
-		prerequisite = {
 			focus = FRA_focus_arm_9.5
 		}
 		completion_reward = {
@@ -1365,18 +1347,99 @@ focus_tree = {
 				uses = 3
 				bonus = 0.2
 			}
+		}
+	}
+	focus = {
+		#항공전 포기
+		id = FRA_stop_air
+		icon = GFX_goal_generic_air_naval_bomber
+		cost = 4
+		x = 11
+		y = 1
+		relative_position_id = FRA_focus_arm_4
+		prerequisite = {
+			focus = FRA_focus_arm_4
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_arm_7
+		}
+		completion_reward = {
 			if = {
 				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
+					has_completed_focus = FRA_focus_arm_5
 				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
+				uncomplete_national_focus = {
+					focus = FRA_focus_arm_5
+				}
+				if = {
+					limit = {
+						has_idea = FRA_focus_on_field_gun_sum
+					}
+					swap_ideas = {
+						remove_idea = FRA_focus_on_field_gun_sum
+						add_idea = FRA_focus_on_field_gun
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = FRA_focus_on_field_gun_sum_all
+					}
+					swap_ideas = {
+						remove_idea = FRA_focus_on_field_gun_sum_all
+						add_idea = FRA_focus_on_field_gun_2
+					}
+				}
+				else = {
+					remove_ideas = FRA_focus_on_field_gun_1
+				}
+			}
+			461 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+			}
+		}
+	}
+	focus = {
+		#대공 방어
+		id = FRA_defense_air
+		icon = GFX_focus_generic_air_defense
+		cost = 4
+		x = 0
+		y = 1
+		relative_position_id = FRA_stop_air
+		prerequisite = {
+			focus = FRA_stop_air
+		}
+		completion_reward = {
+			461 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+			}
+		}
+	}
+	focus = {
+		#전투기 판매
+		id = FRA_sell_airplane
+		icon = GFX_focus_SMB_purchase_aircraft
+		cost = 4
+		x = 0
+		y = 2
+		relative_position_id = FRA_defense_air
+		prerequisite = {
+			focus = FRA_defense_air
+		}
+		completion_reward = {
+			461 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
 				}
 			}
 		}
@@ -1385,7 +1448,7 @@ focus_tree = {
 		#해군 재규합
 		icon = GFX_goal_FRA_navy_reform
 		id = FRA_focus_arm_8
-		cost = 5
+		cost = 4
 		x = 2
 		y = 1
 		relative_position_id = FRA_focus_arm_4
@@ -1393,6 +1456,7 @@ focus_tree = {
 			focus = FRA_focus_arm_4
 		}
 		completion_reward = {
+			navy_experience = 20
 			460 = {
 				add_building_construction = {
 					type = naval_headquarters
@@ -1428,18 +1492,129 @@ focus_tree = {
 			focus = FRA_focus_arm_8
 		}
 		completion_reward = {
+			navy_experience = 20
+			add_tech_bonus = {
+				name = FRA_focus_arm_9
+				category = marine_tech
+				uses = 1
+				bonus = 1
+			}
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = FRA_focus_arm_9
+				category = cat_marines_doctrine
+			}
 		}
 	}
 	focus = {
-		#무역 봉쇄
-		icon = GFX_focus_generic_midget_submarines
-		id = FRA_focus_arm_12
-		cost = 4
+		#조선소 건설
+		icon = GFX_focus_POL_develop_polish_shipbuilding
+		id = FRA_focus_arm_10
+		cost = 6
 		x = 0
 		y = 2
 		relative_position_id = FRA_focus_arm_8
 		prerequisite = {
 			focus = FRA_focus_arm_8
+		}
+		completion_reward = {
+			458 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+			}
+		}
+	}
+	focus = {
+		#함대 재건에 집중
+		icon = GFX_focus_generic_navy_battleship2
+		id = FRA_focus_arm_12.5
+		cost = 8
+		x = 1
+		y = 1
+		relative_position_id = FRA_focus_arm_8
+		prerequisite = {
+			focus = FRA_focus_arm_8
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_arm_12
+		}
+		completion_reward = {
+			459 = {
+				add_building_construction = {
+					type = naval_base
+					level = 3
+					province = 1145
+				}
+				add_building_construction = {
+					type = naval_supply_hub
+					level = 1
+					province = 1145
+				}
+
+			}
+		}
+	}
+	focus = {
+		#건함경쟁
+		icon = GFX_focus_generic_refit_civilian_ships
+		id = FRA_naval_arms_race
+		cost = 20
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_arm_12.5
+		ai_will_do = {
+			base = 0
+			modifier = {
+				has_war = yes
+				add = 1
+			}
+		}
+		prerequisite = {
+			focus = FRA_focus_arm_10
+		}
+		prerequisite = {
+			focus = FRA_focus_arm_12.5
+		}
+		cancelable = no
+		available = {
+			OR = {
+				has_war = yes
+				industrial_complex > 30
+			}
+		}
+		select_effect = {
+			add_ideas = FRA_shipbuilding_competetion
+		}
+		completion_reward = {
+			custom_effect_tooltip = SOV_focus_select_effect_tt
+			add_ideas = FRA_shipbuilding_competetion
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			remove_ideas = FRA_shipbuilding_competetion
+			272 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+			}
+		}
+	}
+	focus = {
+		#주력함 판매
+		icon = GFX_focus_GRE_a_long_and_proud_tradition
+		id = FRA_focus_arm_12
+		cost = 4
+		x = 3
+		y = 1
+		relative_position_id = FRA_focus_arm_8
+		prerequisite = {
+			focus = FRA_focus_arm_8
+		}
+		mutually_exclusive = {
+			focus = FRA_focus_arm_12.5
 		}
 		completion_reward = {
 			add_tech_bonus = {
@@ -1448,96 +1623,63 @@ focus_tree = {
 				uses = 1
 			}
 			navy_experience = 10
-			if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
-				}
-			}
 		}
 	}
 	focus = {
-		#해상 지배에서의 우위
-		icon = GFX_goal_generic_navy_battleship
-		id = FRA_focus_arm_12.5
+		#보조함 건조
+		icon = GFX_goal_generic_navy_cruiser
+		id = FRA_make_auxiliary
 		cost = 4
-		x = 1
+		x = -1
+		y = 1
+		relative_position_id = FRA_focus_arm_12
+		prerequisite = {
+			focus = FRA_focus_arm_12
+			focus = FRA_focus_arm_12.5
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		#잠수함 주력
+		icon = GFX_goal_generic_navy_submarine
+		id = FRA_make_submarine
+		cost = 4
+		x = 0
+		y = 2
+		relative_position_id = FRA_focus_arm_12
+		prerequisite = {
+			focus = FRA_focus_arm_12
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		#해군 작전사령부
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		id = FRA_naval_commander
+		cost = 4
+		x = 5
 		y = 1
 		relative_position_id = FRA_focus_arm_8
 		prerequisite = {
 			focus = FRA_focus_arm_8
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				category = marine_tech
-				bonus = 0.85
-				uses = 1
-			}
-			navy_experience = 20
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.2
-				category = cat_marines_doctrine
-			}if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
-				}
-			}
 		}
 	}
 	focus = {
-		#조선소 확충
-		icon = GFX_focus_POL_develop_polish_shipbuilding
-		id = FRA_focus_arm_10
+		#지중해 통제
+		icon = GFX_focus_generic_mediterranean_sea_focus
+		id = FRA_control_mediterrian
 		cost = 4
-		x = 1
-		y = 3
-		relative_position_id = FRA_focus_arm_8
+		x = 0
+		y = 2
+		relative_position_id = FRA_naval_commander
 		prerequisite = {
-			focus = FRA_focus_arm_12
-			focus = FRA_focus_arm_12.5
+			focus = FRA_naval_commander
 		}
 		completion_reward = {
-			461 = {
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = naval_base
-					level = 1
-				}
-				add_building_construction = {
-					type = dockyard
-					level = 3
-				}
-			}if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }                       
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
-				}
-			}
 		}
 	}
 	focus = {
@@ -1835,6 +1977,8 @@ focus_tree = {
 					add_idea = FRA_mass_naval_invasion_defense_2
 				}
 			}
+			custom_effect_tooltip = FRA_focus_new_arm_10_tt
+			unlock_decision_tooltip = FRA_fight_with_MIL_1
 		}
 	}
 	focus = {
@@ -1870,6 +2014,69 @@ focus_tree = {
 			}
 			custom_effect_tooltip = CHL_skip_one_line_tt
 			add_ideas = FRA_manoeuvre_n_strike
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Brigade de Chars de Combat"
+					LINE_1 = { localization_key = line_battalion_tt NAME = light_armor ICON = GFX_unit_light_armor_icon_small COUNT = 4 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = motorized ICON = GFX_unit_motorized_icon_small COUNT = 2 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = mot_recon ICON = GFX_unit_mot_recon_icon_small }
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_template = "Brigade de Chars de Combat"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Brigade de Chars de Combat"
+					}
+				}
+			}
+			division_template = {
+				name = "Brigade de Chars de Combat"
+				regiments = {
+					light_armor = {
+						x = 0
+						y = 0
+					}
+					light_armor = {
+						x = 0
+						y = 1
+					}
+					light_armor = {
+						x = 1
+						y = 0
+					}
+					light_armor = {
+						x = 1
+						y = 1
+					}
+					motorized = {
+						x = 2
+						y = 0
+					}
+					motorized = {
+						x = 2
+						y = 1
+					}
+				}
+				support = {
+					mot_recon = {
+						x = 0
+						y = 0
+					}
+				}
+			}
+			custom_effect_tooltip = CHL_skip_one_line_tt
+			459 = {
+				create_unit = {
+					division = "name = \"Brigade de Chars de Combat\" division_template = \"Brigade de Chars de Combat\" start_experience_factor = 0.3 start_equipment_factor = 1" 
+					owner = FRA
+					count = 1
+				}
+			}
 		}
 	}
 	focus = {
@@ -2529,6 +2736,29 @@ focus_tree = {
 				id = FRA_prov_event.100
 				days = 2
 			}
+				hidden_effect = {
+				if = {
+					limit = {
+						has_template = "French Resistance" 
+					}
+					delete_unit_template_and_units = {
+						division_template = "French Resistance"
+					}
+				}
+				division_template = {
+					name = "French Resistance"		
+					division_names_group = FRA_INF_01
+					is_locked = yes
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 1 y = 0 }
+						militia = { x = 1 y = 1 }
+						militia = { x = 1 y = 2 }
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -2790,27 +3020,6 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			if = {
-				limit = {
-					has_template = "French Resistance" 
-				}
-				delete_unit_template_and_units = {
-					division_template = "French Resistance"
-				}
-			}
-			division_template = {
-				name = "French Resistance"		
-				division_names_group = FRA_INF_01
-				is_locked = yes
-				regiments = {
-					militia = { x = 0 y = 0 }
-					militia = { x = 0 y = 1 }
-					militia = { x = 0 y = 2 }
-					militia = { x = 1 y = 0 }
-					militia = { x = 1 y = 1 }
-					militia = { x = 1 y = 2 }
-				}
-			}
 
 			if = {
 				limit = { #적색 유격대
