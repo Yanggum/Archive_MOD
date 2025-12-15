@@ -3518,7 +3518,42 @@ focus_tree = {
 				id = "RED"
 				value = 200
 			}
-			custom_effect_tooltip = HEU_join_red_winter_tt
+		}
+	}
+
+	focus = {
+		id = HEU_red_alert
+		
+		relative_position_id = HEU_rikuhachima_governemnt
+
+		icon = GFX_focus_JAP_raise_the_red_flag_high
+
+		prerequisite = { 
+			focus = HEU_join_red_winter 
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		search_filters = {  }
+
+		cost = 5.00
+
+		x = -6
+		y = 4
+
+		available = {
+			is_puppet = no
+			NOT = { has_completed_focus = HEU_unified_gehenna }
+		}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.3
+			}
+			custom_effect_tooltip = HEU_red_alert_tt
 		}
 	}
 
@@ -4087,6 +4122,8 @@ focus_tree = {
 				}
 			}
 			country_event = { id = HEU_event.281 }
+			add_political_power = 50
+			add_command_power = 25
 		}
 	}
 
@@ -4312,6 +4349,10 @@ focus_tree = {
 				cost_reduction = 0.5
 				uses = 1
 				category = naval_doctrine
+			}
+			add_timed_idea = {
+				idea = HEU_dockyard_mass_operation
+				days = 365
 			}
 		}
 	}
@@ -5789,6 +5830,33 @@ focus_tree = {
 			}
 			hidden_effect = {
 				GEM_to_HEU_effect_replace_negotiation_partner_with_luxembourg = yes
+			}
+			if = {
+				limit = { has_completed_focus = HEU_red_alert }
+				
+				add_country_leader_role = {
+					character = HEU_aru
+					promote_leader = yes
+					country_leader = {
+						ideology = rikuhachima_socialism
+						desc = "HEU_aru_fascist_leader_desc"
+						traits = { 
+							HEU_ARU_T1
+							HEU_regent_of_luxembourg
+						}
+					}
+				}
+
+				set_party_name = {
+					ideology = neutrality
+					long_name = HEU_neutrality_party
+					name = HEU_neutrality_party
+				}
+
+				set_politics = {
+					ruling_party = communism
+					elections_allowed = yes
+				}
 			}
 		}
 	}
