@@ -11197,9 +11197,9 @@ focus_tree = {
 	### 키보토스, 게헨나랑 전쟁 분기
 	###
 
-	focus = { # 공존할 수 없는 자들
-		id = Gehenna_Diplomacy_impossible_to_coexist
-		icon = GFX_goal_war_with_gehenna
+	focus = { #
+		id = Gehenna_Diplomacy_our_future
+		icon = GFX_goal_GEH_HID
 		x = 10
 		y = 1
 		relative_position_id = GEH_three_congress_focus
@@ -11233,293 +11233,216 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_opinion_modifier = {
-				target = GEM
-				modifier = BUL_old_enemies
-			}
-			add_opinion_modifier = {
-				target = GEH
-				modifier = BUL_old_enemies
-			}
-			every_other_country = {
-				limit = {
-					OR = {
-						tag = GEM
-						tag = GEH
-					}
-				}
-				add_opinion_modifier = { target = ROOT modifier = existential_threat }
-			}
-		#	activate_targeted_decision = { target = GEM decision = GEH_anti_pandemonium_society }
-		#	activate_targeted_decision = { target = GEM decision = GEH_create_pro_trinity_group }
-		#	activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Gourmet_Research_Society }
-		#	activate_targeted_decision = { target = GEM decision = GEH_pandemonium_society_approach_club_Hot_Springs_Department }
-
-		#	activate_targeted_decision = { target = GEH decision = GEH_prefect_team_discipline_decline }
 
 		}
 	}
 
-	focus = { # 악마와의 동맹
-		id = Gehenna_Diplomacy_alliance_with_devil
-		icon = GFX_focus_GEH_alliance_with_devil
-		x = 2
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_impossible_to_coexist
-		cost = 2
-
-		available = {
-			NOT = { has_global_flag = HEU_TRM_alliance }
-			NOT = { has_completed_focus = Gehenna_Diplomacy_spiritual_warfare }
-			country_exists = HEU
-			HEU = { NOT = { has_completed_focus = HEU_watch_right_wing_party } }
-		}
-		prerequisite = { focus = Gehenna_Diplomacy_impossible_to_coexist }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			HEU = { 
-				country_event = { id = TRMDIP.60 days = 01 } 
-			}
-		}
-	}
-
-	focus = { # 신성통치령
-		id = Gehenna_Diplomacy_divine_mandate
-		icon = GFX_goal_GEH_domination
+	focus = {
+		id = Gehenna_Diplomacy_our_faction_first
+		icon = GFX_focus_generic_conference
 		x = -2
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_impossible_to_coexist
+		relative_position_id = Gehenna_Diplomacy_our_future
 		cost = 5
 
 		available = {
 			is_puppet = no
 		}
-		prerequisite = { focus = Gehenna_Diplomacy_impossible_to_coexist }
+		prerequisite = { focus = Gehenna_Diplomacy_our_future }
 
 		ai_will_do = {
 
 		}
 		completion_reward = {
-		    unlock_decision_category_tooltip = TRN_Trinity_divine_mandate_cat
-            set_country_flag = TRM_Reichskommissariat_flag
-		}
-	}
-
-	focus = { # 영적 전쟁
-		id = Gehenna_Diplomacy_spiritual_warfare
-		icon = GFX_focus_attack_GEH
-		x = 0
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_impossible_to_coexist
-		cost = 5
-
-		available = {
-			is_faction_leader = yes
-			has_army_manpower = { size > 249999 }
-			has_war_support > 0.4
-			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			custom_trigger_tooltip = {
-				tooltip = GEH_gehenna_eq_trigger_tt
-				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			}
-		}
-		prerequisite = { focus = Gehenna_Diplomacy_impossible_to_coexist }
-
-		ai_will_do = {
-
-		}
-
-		will_lead_to_war_with = GEH
-		will_lead_to_war_with = GEM
-		completion_reward = {
-			#set_temp_variable = { GEH_Honor_change = -5 }
-			#GEH_add_Honor = yes
-			hidden_effect = {
-				if = {
-					limit = { has_government = fascism }
-					scoped_play_song = "BA_from_the_new"
+			IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
 				}
 			}
-			declare_war_on = {
-				target = GEM
-				type = annex_everything
-			}
-			declare_war_on = {
-				target = GEH
-				type = annex_everything
-			}
-			hidden_effect = { 
-				news_event = { id = trinity_news_events.5 hours = 01 } 
+			ELSE = {
+				add_political_power = 150
 			}
 		}
 	}
 
-	focus = { # 총학생회에 대한 도전
-		id = Gehenna_Diplomacy_defiance_of_COU
-		icon = GFX_focus_attack_COU
-		x = -2
+	focus = { # 
+		id = Gehenna_Diplomacy_war_against_cou
+		icon = GFX_goal_TRM_invade_benelux
+		x = 0
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_spiritual_warfare
+		relative_position_id = Gehenna_Diplomacy_our_future
 		cost = 5
 
 		available = {
-			#has_completed_focus = GEH_Integrity_of_Trinity
-			has_government = fascism
+			OR = {
+				country_exists = COU
+				country_exists = SHE
+				country_exists = KSP
+				country_exists = HEU
+			}
+			NOT = { has_war_with = COU }
+			NOT = { has_war_with = SHE }
+			NOT = { has_war_with = KSP }
+			NOT = { has_war_with = HEU }
+			is_puppet = no
 		}
-		bypass = {
-			NOT = { country_exists = COU }
-		}
-		prerequisite = { focus = Gehenna_Diplomacy_spiritual_warfare }
+
+		prerequisite = { focus = Gehenna_Diplomacy_our_future }
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_recognition_of_cou }
 
 		ai_will_do = {
 
 		}
+		bypass = {
+			OR = {
+				has_war_with = COU
+				has_war_with = SHE
+				has_war_with = KSP
+				has_war_with = HEU
+				AND = {
+					NOT = { country_exists = COU }
+					NOT = { country_exists = SHE }
+					NOT = { country_exists = KSP }
+					NOT = { country_exists = HEU }
+				}
+			}
+		}
+
+		bypass_effect = {
+			add_war_support = 0.05
+		}
+
 		completion_reward = {
 			add_war_support = 0.05
 			add_named_threat = {
 				threat = 5
-				name = Gehenna_Diplomacy_defiance_of_COU
+				name = TRN_defiance_of_COU
 			}
-
-			COU = { add_opinion_modifier = { target = ROOT modifier = existential_threat } }
-		}
-	}
-
-	focus = { # 
-		id = Gehenna_Diplomacy_extinguish_the_flame
-		icon = GFX_focus_attack_MIL
-		x = -1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_defiance_of_COU
-		cost = 5
-
-		available = {
-			has_government = fascism
-			NOT = { has_non_aggression_pact_with = MIL }
-			has_army_manpower = { size > 1500000 }
-			has_deployed_air_force_size = { size > 1999 }
-			country_exists = MIL
-		}
-		prerequisite = { focus = Gehenna_Diplomacy_defiance_of_COU }
-		mutually_exclusive = { focus = Gehenna_Diplomacy_curtain_across_kivotos }
-
-		ai_will_do = {
-
-		}
-		bypass = {
-			has_war_with = MIL
-		}
-		completion_reward = {
-			if = {
-				limit = { country_exists = MIL }
-				create_wargoal = {
-					target = MIL
-					type = topple_government
+			
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						OR = {
+							is_core_of = SHE
+							is_core_of = COU
+							is_core_of = KSP
+							is_core_of = HEU
+						}
+					}
 				}
+				add_opinion_modifier = { target = ROOT modifier = existential_threat }
 			}
-
-		}
-	}
-
-	focus = { # 
-		id = Gehenna_Diplomacy_curtain_across_kivotos
-		icon = GFX_focus_SWE_refuge_from_war
-		x = 1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_defiance_of_COU
-		cost = 5
-
-		available = {
-			has_government = fascism
-		}
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_defiance_of_COU 
-		}
-		mutually_exclusive = { focus = Gehenna_Diplomacy_extinguish_the_flame }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_cooperation_with_KAI
-		icon = GFX_focus_chi_mission_to_the_KAI
-		x = -1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_curtain_across_kivotos
-		cost = 5
-
-		bypass = {
-			KAI = { exists = no }
-		}
-
-		available = {
-			has_government = fascism
-			KAI = {
-				exists = yes
-				custom_trigger_tooltip = {
-					tooltip = tooltip_KAI_maintaining_the_system
-					has_completed_focus = KAI_FOCUS_8
-					has_idea = KAI_corporate_state
+			custom_effect_tooltip = tooltip_white_line
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						OR = {
+							is_core_of = SHE
+							is_core_of = COU
+							is_core_of = KSP
+							is_core_of = HEU
+						}
+					}
+				}
+				display_individual_scopes = yes
+				ROOT = {
+					create_wargoal = {
+						type = annex_everything
+						target = PREV
+					}
 				}
 			}
 		}
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_curtain_across_kivotos 
-			focus = Gehenna_Diplomacy_extinguish_the_flame
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
 	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_SovietAttack
-		icon = GFX_focus_SWE_the_beast_stirs
+	
+	focus = {
+		id = Gehenna_Diplomacy_recognition_of_cou
+		icon = GFX_focus_generic_influence_benelux
 		x = 2
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_spiritual_warfare
+
 		cost = 5
 
-		bypass = {
-
-		}
-
 		available = {
-			#has_completed_focus = GEH_Integrity_of_Trinity
-			has_government = fascism
+			OR = {
+				country_exists = COU
+				country_exists = SHE
+				country_exists = KSP
+				country_exists = HEU
+			}
+			NOT = { has_war_with = COU }
+			NOT = { has_war_with = SHE }
+			NOT = { has_war_with = KSP }
+			NOT = { has_war_with = HEU }
 		}
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_spiritual_warfare 
-		}
-		mutually_exclusive = {  }
+
+		relative_position_id = Gehenna_Diplomacy_our_future
+		prerequisite = { focus = Gehenna_Diplomacy_our_future }
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_war_against_cou }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		completion_reward = {
+			add_opinion_modifier = {
+				target = SHE
+				modifier = friendship_om
+			}
+			add_opinion_modifier = {
+				target = COU
+				modifier = friendship_om
+			}
+			add_opinion_modifier = {
+				target = KSP
+				modifier = friendship_om
+			}
+
+			SHE = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = friendship_om
+				}
+			}
+			COU = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = friendship_om
+				}
+			}
+			KSP = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = friendship_om
+				}
+			}
+
+			add_stability = 0.05
 		}
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_SovietAttack_2
-		icon = GFX_focus_SOV_zemsky_sobor
+		id = Gehenna_Diplomacy_russian_winter
+		icon = GFX_focus_generic_winter_warfare
 		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_SovietAttack
+		relative_position_id = Gehenna_Diplomacy_war_against_cou
 		cost = 5
 
 		bypass = {
@@ -11527,16 +11450,54 @@ focus_tree = {
 		}
 
 		available = {
-			has_government = fascism
-			any_country = {
-				has_war_with = ROOT
-				has_government = communism
+
+		}
+
+		prerequisite = { 
+			focus = Gehenna_Diplomacy_war_against_cou 
+			focus = Gehenna_Diplomacy_recognition_of_cou 
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			every_army_leader = {
+				limit = {
+					skill > 1
+				}
+		    		random_select_amount = 3
+				add_max_trait = 1
+				add_unit_leader_trait = winter_expert
 			}
 		}
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_SovietAttack 
+	}
+
+	focus = { #
+		id = Gehenna_Diplomacy_red_winter_aliance
+		icon = GFX_focus_GER_the_peoples_victory
+		x = -3
+		y = 1
+		relative_position_id = Gehenna_Diplomacy_russian_winter
+		cost = 5
+
+		bypass = {
+
 		}
-		mutually_exclusive = {  }
+
+		available = {
+			country_exists = RED
+			is_faction_leader = yes
+			NOT = { has_war_with = RED }
+		}
+
+		prerequisite = { 
+			focus = Gehenna_Diplomacy_russian_winter 
+		}
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_red_winter_problem }
+
 
 		ai_will_do = {
 
@@ -11547,11 +11508,45 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_SovietAttack_3
+		id = Gehenna_Diplomacy_red_winter_problem
+		icon = GFX_focus_RED_BEAR_movement
+		x = -1
+		y = 1
+		relative_position_id = Gehenna_Diplomacy_russian_winter
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			NOT = { has_non_aggression_pact_with = RED }
+			has_army_manpower = { size > 750000 }
+			has_deployed_air_force_size = { size > 1999 }
+			country_exists = RED
+		}
+
+		prerequisite = { 
+			focus = Gehenna_Diplomacy_russian_winter 
+		}
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_red_winter_aliance }
+
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
+		id = Gehenna_Diplomacy_attack_soviet
 		icon = GFX_focus_GER_end_european_communism
 		x = 0
 		y = 2
-		relative_position_id = Gehenna_Diplomacy_SovietAttack
+		relative_position_id = Gehenna_Diplomacy_russian_winter
 		cost = 10
 
 		bypass = {
@@ -11562,53 +11557,78 @@ focus_tree = {
 			has_government = fascism
 		}
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_SovietAttack 
+			focus = Gehenna_Diplomacy_russian_winter 
 		}
 		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				has_war_with_major = yes # 대규모 전선을 두 개로 만들지 않는다
+			}
+		}
+
+		completion_reward = {
+			create_wargoal = {
+				target = SOV
+				type = puppet_wargoal_focus
+			}
 		}
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_AttackSwiss
+		id = Gehenna_Diplomacy_attack_swi
 		icon = GFX_focus_attack_switzerland
-		x = 1
+		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_SovietAttack
+		relative_position_id = Gehenna_Diplomacy_south_kivotos
 		cost = 5
 
-		bypass = {
-
-		}
-
 		available = {
-			has_government = fascism
+			is_puppet = no
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_SovietAttack 
-			focus = Gehenna_Diplomacy_ItalyAttack
+			focus = Gehenna_Diplomacy_south_kivotos 
 		}
+
 		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		bypass = {
+			OR = {
+				has_war_with = SWI
+				NOT = { country_exists = SWI }
+				SWI = { is_in_faction_with = ROOT }
+				SWI = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = SWI }
+				create_wargoal = {
+					target = SWI
+					type = topple_government
+				}
+			}
 		}
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_ItalyAttack
+		id = Gehenna_Diplomacy_south_kivotos
 		icon = GFX_focus_ITA_cavalry_charge
-		x = 2
+		x = 6
 		y = 0
-		relative_position_id = Gehenna_Diplomacy_SovietAttack
+		relative_position_id = Gehenna_Diplomacy_russian_winter
 		cost = 5
 
 		bypass = {
@@ -11616,12 +11636,13 @@ focus_tree = {
 		}
 
 		available = {
-			#has_completed_focus = GEH_Integrity_of_Trinity
-			has_government = fascism
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_spiritual_warfare 
+			focus = Gehenna_Diplomacy_war_against_cou 
+			focus = Gehenna_Diplomacy_recognition_of_cou 
 		}
+
 		mutually_exclusive = {  }
 
 		ai_will_do = {
@@ -11633,11 +11654,11 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_ItalyAttack_2
+		id = Gehenna_Diplomacy_south_kivotos_2
 		icon = GFX_focus_attack_italy
 		x = 1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_ItalyAttack
+		relative_position_id = Gehenna_Diplomacy_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11645,10 +11666,10 @@ focus_tree = {
 		}
 
 		available = {
-			has_government = fascism
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_ItalyAttack 
+			focus = Gehenna_Diplomacy_south_kivotos 
 		}
 		mutually_exclusive = {  }
 
@@ -11661,11 +11682,11 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_ItalyAttack_3
+		id = Gehenna_Diplomacy_south_kivotos_3
 		icon = GFX_focus_GRE_a_land_of_mountains
 		x = 0
 		y = 2
-		relative_position_id = Gehenna_Diplomacy_ItalyAttack
+		relative_position_id = Gehenna_Diplomacy_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11676,8 +11697,7 @@ focus_tree = {
 			has_government = fascism
 		}
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_ItalyAttack_2
-			focus = Gehenna_Diplomacy_AttackSwiss 
+			focus = Gehenna_Diplomacy_south_kivotos_2
 		}
 		mutually_exclusive = {  }
 
@@ -11694,7 +11714,7 @@ focus_tree = {
 		icon = GFX_focus_focus_fra_intervention_spain
 		x = 3
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_ItalyAttack
+		relative_position_id = Gehenna_Diplomacy_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11705,8 +11725,9 @@ focus_tree = {
 			has_government = fascism
 		}
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_ItalyAttack
+			focus = Gehenna_Diplomacy_south_kivotos
 		}
+
 		mutually_exclusive = {  }
 
 		ai_will_do = {
