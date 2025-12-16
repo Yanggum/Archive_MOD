@@ -1227,6 +1227,10 @@ ARI_heart_strike_plan = {
 			}
 		}
 
+		cancel_effect = {
+			set_global_flag = ARI_heart_strike_plan_stop_flag
+		}
+
 		timeout_effect = {
 			custom_effect_tooltip = ARI_imminent_d_day_tt
 			hidden_effect = {
@@ -1379,6 +1383,7 @@ ARI_heart_strike_plan = {
 					}
 				}
 			}
+			set_global_flag = ARI_heart_strike_plan_stop_flag
 		}
 	}
 	
@@ -1827,4 +1832,134 @@ TRM_heart_strike_plan = {
         remove_effect = {
         }
     }
+}
+
+ARI_decision_permanent_anti_trinity_military_operation = {
+	ARI_mission_setback_reinforcement = {
+		priority = 1000
+		icon = GFX_decision_CHL_carabineros
+		allowed = { tag = ARI } #manually activated
+		is_good = no
+		fire_only_once = no
+		days_mission_timeout = 70
+		cancel_trigger = {
+			NOT = {
+				has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			}
+		}
+
+		activation = {
+			has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			NOT = { has_completed_focus = ARI_holding_arius_council }
+		}
+		ai_will_do = { base = 1000 }
+
+		available = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+		complete_effect = {
+		}
+		timeout_effect = {
+			hidden_effect = {
+				add_to_variable = {
+					ARI_PATMO_idea_monthly_army_org_factor_increase = -0.02
+				}
+			}
+			
+			custom_effect_tooltip = ARI_mission_setback_reinforcement_tt
+		}
+		cancel_effect = {
+			
+		}
+	}
+	ARI_mission_goal_achievement_failure = {
+		priority = 1000
+		icon = GFX_decision_CHL_carabineros
+		allowed = { tag = ARI } #manually activated
+		is_good = no
+		fire_only_once = no
+		days_mission_timeout = 280
+		cancel_trigger = {
+			NOT = {
+				has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			}
+		}
+
+		activation = {
+			has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			NOT = { has_completed_focus = ARI_holding_arius_council }
+		}
+		ai_will_do = { base = 1000 }
+
+		available = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+		complete_effect = {
+		}
+		timeout_effect = {
+			hidden_effect = {
+				add_to_variable = {
+					ARI_PATMO_idea_monthly_army_org_factor_increase = -0.05
+				}
+			}
+			
+			custom_effect_tooltip = ARI_mission_goal_achievement_failure_tt
+		}
+		cancel_effect = {
+			
+		}
+	}
+	ARI_mission_permanent_anti_trinity_military_operation = {
+		priority = 999
+		icon = GFX_decision_SWI_consolidate_council_power
+		allowed = { tag = ARI } #manually activated
+		is_good = no
+		fire_only_once = no
+		days_mission_timeout = 35
+		cancel_trigger = {
+			NOT = {
+				has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			}
+		}
+
+		activation = {
+			has_dynamic_modifier = { modifier = ARI_permanent_anti_trinity_military_operation }
+			NOT = { has_completed_focus = ARI_holding_arius_council }
+		}
+		ai_will_do = { base = 1000 }
+
+		available = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+		complete_effect = {
+			custom_effect_tooltip = ARI_permanent_anti_trinity_military_operation_tt
+			custom_effect_tooltip = ARI_mission_permanent_anti_trinity_military_operation_tt
+			hidden_effect = {
+				set_variable = {
+					ARI_PATMO_idea_army_org_factor = 0
+				}
+			}
+		}
+		timeout_effect = {
+			if = {
+				limit = {
+					check_variable = { ARI_PATMO_idea_army_org_factor > -0.90 }
+				}
+				custom_effect_tooltip = ARI_permanent_anti_trinity_military_operation_tt
+				add_to_variable = {
+					ARI_PATMO_idea_army_org_factor = ARI_PATMO_idea_monthly_army_org_factor_increase
+					tooltip = army_org_factor_tt
+				}
+				clamp_variable = {
+					var = ARI.ARI_PATMO_idea_army_org_factor
+					min = -0.90
+				}
+			}
+
+			activate_mission = ARI_mission_permanent_anti_trinity_military_operation
+		}
+		cancel_effect = {
+			
+		}
+	}
 }
