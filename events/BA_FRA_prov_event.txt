@@ -2601,15 +2601,34 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
+	#해군 손상
 	id = FRA_prov_event.53
 	title = FRA_prov_event.53.t
 	desc = FRA_prov_event.53.d
 	is_triggered_only = yes
-	picture = GFX_report_event_AUS_military_march
+	picture = GFX_report_event_merchant_ship_01
 	option = {
 		name = FRA_prov_event.53.a
-		add_war_support = 0.05
+		destroy_ships = {
+			type = heavy_cruiser
+			count = 3
+		}
+		destroy_ships = {
+			type = light_cruiser
+			count = 1
+		}
+		destroy_ships = {
+			type = destroyer
+			count = 15
+		}
+		destroy_ships = {
+			type = ship_hull_submarine_2
+			count = 5
+		}
+		destroy_ships = {
+			type = ship_hull_submarine_1
+			count = 10
+		}
 	}
 }
 
@@ -2926,72 +2945,95 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
-	#요구 수용
+	#프랑스의 전함 판매
 	id = FRA_prov_event.63
 	title = FRA_prov_event.63.t
 	desc = FRA_prov_event.63.d
 	is_triggered_only = yes
-	fire_only_once = yes
+	picture = GFX_report_event_merchant_ship_01
+	after = {
+		set_country_flag = FRA_sold_ship
+	}
 	option = {
 		name = FRA_prov_event.63.a
-		add_stability = 0.05
-		459 = {
-			set_demilitarized_zone = no
+		add_timed_idea = {
+			idea = FRA_buying_ship
+			days = 150
+		}
+		FRA = {
+			custom_effect_tooltip = FRA_prov_event.63_tt
+			transfer_ship = {
+				type = battleship
+				target = PREV
+				exclude_refitting = yes
+			}
+		}
+		ai_chance = {
+			base = 2
 		}
 		hidden_effect = {
+			FRA = {
+				country_event = {
+					id = FRA_prov_event.64
+					hours = 6
+				}
+			}
+		}
+	}
+	option = {
+		name = FRA_prov_event.63.b
+		hidden_effect = {
+			FRA = {
+				country_event = {
+					id = FRA_prov_event.65
+					hours = 6
+				}
+			}
 		}
 	}
 }
 
 country_event = {
-	#안 씀
-	#앙리 하의 선거
+	#함선 구매됨
 	id = FRA_prov_event.64
 	title = FRA_prov_event.64.t
 	desc = FRA_prov_event.64.d
 	is_triggered_only = yes
-	fire_only_once = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	option = {
 		name = FRA_prov_event.64.a
-		FRA_pierre_laval = {
-			set_can_be_fired_in_advisor_role = {
-				value = yes
+		effect_tooltip = {
+			FRA = {
+				transfer_ship = {
+					type = battleship
+					target = PREV
+					count = 1
+				}
 			}
 		}
-		add_popularity = {
-			ideology = democratic
-			popularity = 0.1
+		FROM = {
+			FRA = {
+				custom_effect_tooltip = FRA_prov_event.63_tt
+			}
 		}
-		country_event = {
-			id = FRA_prov_event.57
-			days = 10
+		add_offsite_building = {
+			type = industrial_complex
+			level = 2
 		}
+		clr_country_flag = FRA_selling_ships
 	}
 }
 
-news_event = {
-	#안 씀
-	#프랑스 쿠데타 뉴스
+country_event = {
+	#함선 구매 안 됨
 	id = FRA_prov_event.65
 	title = FRA_prov_event.65.t
 	desc = FRA_prov_event.65.d
-	picture = GFX_event_BA_fra_news_koup
 	is_triggered_only = yes
-	major = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	option = {
 		name = FRA_prov_event.65.a
-		trigger = {
-			tag = FRA
-		}
-	}
-	option = {
-		name = FRA_prov_event.65.b
-		trigger = {
-			NOT = {
-				tag = FRA
-			}
-		}
+		clr_country_flag = FRA_selling_ships
 	}
 }
 

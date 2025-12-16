@@ -1237,7 +1237,7 @@ focus_tree = {
 		#본토 항공전 대비
 		id = FRA_focus_arm_7
 		icon = GFX_focus_generic_air_bases
-		cost = 4
+		cost = 6
 		x = 8
 		y = 1
 		relative_position_id = FRA_focus_arm_4
@@ -1248,11 +1248,16 @@ focus_tree = {
 			focus = FRA_stop_air
 		}
 		completion_reward = {
-			461 = {
-				add_extra_state_shared_building_slots = 1
+			air_experience = 20
+			add_tech_bonus = {
+				category = light_air
+				uses = 1
+				bonus = 1
+			}
+			1 = {
 				add_building_construction = {
-					type = arms_factory
-					level = 1
+					type = air_base
+					level = 2
 				}
 			}
 		}
@@ -1270,15 +1275,16 @@ focus_tree = {
 			focus = FRA_focus_arm_7
 		}
 		completion_reward = {
-			air_experience = 20
-			add_tech_bonus = {
-				category = para_tech
-				bonus = 0.85
-				uses = 1
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 480
+				track = strike_aircraft
+				name = FRA_focus_arm_8.5
 			}
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.2
-				category = cat_paratroopers_doctrine
+			add_tech_bonus = {
+				category = cat_air_bombs
+				uses = 1
+				bonus = 1
 			}
 		}
 	}
@@ -1294,11 +1300,16 @@ focus_tree = {
 			focus = FRA_focus_arm_7
 		}
 		completion_reward = {
-			air_experience = 30
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 480
+				track = fighter_aircraft 
+				name = FRA_focus_arm_9.5
+			}
 			add_tech_bonus = {
-				category = air_equipment
-				uses = 3
-				bonus = 0.2
+				category = cat_air_guns
+				uses = 1
+				bonus = 1
 			}
 		}
 	}
@@ -1332,7 +1343,7 @@ focus_tree = {
 		#항공기 제조 설비 구축
 		icon = GFX_focus_HUN_establish_the_mavag_aircraft_factory
 		id = FRA_focus_new_arm_16
-		cost = 4
+		cost = 6
 		x = 0
 		y = 2
 		relative_position_id = FRA_focus_arm_9.5
@@ -1341,11 +1352,12 @@ focus_tree = {
 			focus = FRA_focus_arm_9.5
 		}
 		completion_reward = {
-			air_experience = 30
-			add_tech_bonus = {
-				category = air_equipment
-				uses = 3
-				bonus = 0.2
+			461 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+				}
 			}
 		}
 	}
@@ -1353,7 +1365,7 @@ focus_tree = {
 		#항공전 포기
 		id = FRA_stop_air
 		icon = GFX_goal_generic_air_naval_bomber
-		cost = 4
+		cost = 2
 		x = 11
 		y = 1
 		relative_position_id = FRA_focus_arm_4
@@ -1393,13 +1405,7 @@ focus_tree = {
 					remove_ideas = FRA_focus_on_field_gun_1
 				}
 			}
-			461 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-				}
-			}
+			air_experience = -10
 		}
 	}
 	focus = {
@@ -1414,12 +1420,17 @@ focus_tree = {
 			focus = FRA_stop_air
 		}
 		completion_reward = {
-			461 = {
-				add_extra_state_shared_building_slots = 1
+			1 = {
 				add_building_construction = {
-					type = arms_factory
-					level = 1
+					type = anti_air_building
+					level = 2
 				}
+			}
+			add_tech_bonus = {
+				name = FRA_defense_air
+				category = cat_anti_air
+				uses = 2
+				bonus = 1
 			}
 		}
 	}
@@ -1435,13 +1446,6 @@ focus_tree = {
 			focus = FRA_defense_air
 		}
 		completion_reward = {
-			461 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-				}
-			}
 		}
 	}
 	focus = {
@@ -1456,26 +1460,16 @@ focus_tree = {
 			focus = FRA_focus_arm_4
 		}
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = FRA_exile_navy
+				add_idea = FRA_exile_navy_1
+			}
 			navy_experience = 20
 			460 = {
 				add_building_construction = {
 					type = naval_headquarters
 					province = 12051
 					level = 1
-				}
-			}
-			if = {
-				limit = {
-					OR = {
-                        has_idea = FRA_rebuilding_army
-                        NOT = {
-                            has_completed_focus = FRA_focus_new_arm_0
-                        }
-                    }        
-				}
-				modify_timed_idea = {
-					idea = FRA_rebuilding_army
-					months = 2
 				}
 			}
 		}
@@ -1542,6 +1536,33 @@ focus_tree = {
 			focus = FRA_focus_arm_12
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = FRA_exile_navy_doc
+				}
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_doc
+					add_idea = FRA_exile_navy_rebuild_doc
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_1
+					add_idea = FRA_exile_navy_rebuild
+				}
+			}
+			add_tech_bonus = {
+				name = FRA_focus_arm_12.5
+				bonus = 1
+				uses = 1
+				category = ca_tech
+			}
+			add_tech_bonus = {
+				name = FRA_focus_arm_12.5
+				bonus = 1
+				uses = 1
+				category = bb_tech
+			}
 			459 = {
 				add_building_construction = {
 					type = naval_base
@@ -1553,7 +1574,6 @@ focus_tree = {
 					level = 1
 					province = 1145
 				}
-
 			}
 		}
 	}
@@ -1582,7 +1602,7 @@ focus_tree = {
 		available = {
 			OR = {
 				has_war = yes
-				industrial_complex > 30
+				industrial_complex > 29
 			}
 		}
 		select_effect = {
@@ -1617,12 +1637,22 @@ focus_tree = {
 			focus = FRA_focus_arm_12.5
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				category = tp_tech
-				bonus = 0.85
-				uses = 1
+			if = {
+				limit = {
+					has_idea = FRA_exile_navy_doc
+				}
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_doc
+					add_idea = FRA_exile_navy_sell_doc
+				}
 			}
-			navy_experience = 10
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_1
+					add_idea = FRA_exile_navy_sell
+				}
+			}
+			unlock_decision_tooltip = FRA_sell_ships_to
 		}
 	}
 	focus = {
@@ -1638,6 +1668,25 @@ focus_tree = {
 			focus = FRA_focus_arm_12.5
 		}
 		completion_reward = {
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 480 
+				track = screens
+				name = FRA_make_auxiliary
+			}
+			add_tech_bonus = {
+				name = FRA_make_auxiliary
+				bonus = 1
+				uses = 1
+				category = dd_tech
+			}
+			458 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+			}
 		}
 	}
 	focus = {
@@ -1652,6 +1701,18 @@ focus_tree = {
 			focus = FRA_focus_arm_12
 		}
 		completion_reward = {
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 480
+				track = submarines
+				name = FRA_make_submarine
+			}
+			add_tech_bonus = {
+				name = FRA_make_submarine
+				bonus = 1
+				uses = 1
+				category = ss_tech
+			}
 		}
 	}
 	focus = {
@@ -1666,20 +1727,95 @@ focus_tree = {
 			focus = FRA_focus_arm_8
 		}
 		completion_reward = {
+			navy_experience = 20
+			if = {
+				limit = {
+					has_idea = FRA_exile_navy_rebuild
+				}
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_rebuild
+					add_idea = FRA_exile_navy_rebuild_doc
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = FRA_exile_navy_sell
+				}
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_sell
+					add_idea = FRA_exile_navy_sell_doc
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_1
+					add_idea = FRA_exile_navy_doc
+				}
+			}
 		}
 	}
 	focus = {
-		#지중해 통제
+		#서지중해 통제
 		icon = GFX_focus_generic_mediterranean_sea_focus
 		id = FRA_control_mediterrian
 		cost = 4
 		x = 0
 		y = 2
+		available = {
+			has_naval_control = 68
+			OR = {
+				has_completed_focus = FRA_naval_arms_race
+				has_completed_focus = FRA_make_submarine
+			}
+			OR = {
+				has_navy_size = {
+					size > 7
+					type = capital_ship
+				}
+				has_navy_size = {
+					size > 41
+					type = screen_ship
+				}
+			}
+		}
 		relative_position_id = FRA_naval_commander
 		prerequisite = {
 			focus = FRA_naval_commander
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = FRA_focus_arm_12.5
+						has_completed_focus = FRA_focus_arm_12
+					}
+				}
+				custom_effect_tooltip = FRA_control_mediterrian_tt_1
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_rebuild_doc
+					add_idea = FRA_exile_navy_rebuild_medi
+				}
+				custom_effect_tooltip = FRA_control_mediterrian_tt_2
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_sell_doc
+					add_idea = FRA_exile_navy_sell_medi
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = FRA_focus_arm_12
+				}
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_sell_doc
+					add_idea = FRA_exile_navy_sell_medi
+				}
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = FRA_exile_navy_rebuild_doc
+					add_idea = FRA_exile_navy_rebuild_medi
+				}
+			}
 		}
 	}
 	focus = {

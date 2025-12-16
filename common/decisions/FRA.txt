@@ -58,12 +58,14 @@ FRA_urbanization = {
 				has_completed_focus = FRA_focus_arm_12
 			}
 		}
+		is_good = no
 		timeout_effect = {
-			#함선부숴지는효과
+			country_event = FRA_prov_event.53
 		}
 		activation = {
 			always = no
 		}
+		priority = 10
 	}
 	FRA_alz_infra = {
 		ai_will_do = {
@@ -1823,6 +1825,57 @@ FRA_prepare_war = {
 }
 
 FRA_ally = { #외교 정책
+	FRA_sell_ships_to = { #전함 판매
+		cost = 10
+		visible = {
+			has_completed_focus = FRA_focus_arm_12
+		}
+		ai_will_do = {
+			base = 40
+		}
+		available = {
+			NOT = {
+				has_country_flag = FRA_selling_ships
+			}
+			has_navy_size = {
+				type = battleship
+				size > 0
+			}
+		}
+		icon = GFX_decision_generic_merge_plant_ship
+		target_trigger = {
+			FROM = {
+				OR = {
+					tag = SPR
+					tag = ITA
+					tag = YUG
+					tag = CHI
+					tag = USA
+				}
+				NOT = {
+					has_country_flag = FRA_sold_ship
+				}
+			}
+		}
+		days_remove = 5
+		complete_effect = {
+			set_country_flag = FRA_selling_ships
+		}
+		remove_effect = {
+			FROM = {
+				country_event = FRA_prov_event.63
+			}
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				FROM = {
+					capital_scope = {
+						state = PREV.PREV
+					}
+				}
+			}
+		}
+	}
 	FRA_ita_surrender = { #이탈리아에 항복
 		icon = GFX_decision_eng_trade_unions_support
 		visible = {
