@@ -1,351 +1,14 @@
-add_namespace = COU_event
-add_namespace = COU_event_notkaya
 add_namespace = COU_start_event
+add_namespace = COU_event
+
+add_namespace = COU_event_kaya
+add_namespace = COU_event_notkaya
+
+add_namespace = COU_event_industry
+add_namespace = COU_event_military
+
 add_namespace = COU_kivotos_alliance
 add_namespace = COU_event_normal_days
-
-##KIVOTOSALLIANCE
-country_event = { #원정군 파병
-	id = COU_kivotos_alliance.1
-	title = COU_kivotos_alliance.1.t
-	desc = COU_kivotos_alliance.1.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-	
-	is_triggered_only = yes
-
-	trigger = {
-		NOT = {
-			tag = global.kivotos_alliance_leader
-		}
-	}
-
-	option = { 
-		name = COU_kivotos_alliance.1.a
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_government = fascism
-				factor = 0.5
-			}
-			modifier = {
-				has_government = democratic
-				factor = 1.5
-			}
-			modifier = {
-				NOT = {
-					has_government = democratic
-				}
-				has_government = var:global.kivotos_alliance_leader
-				factor = 1.5
-			}
-		}
-		add_ideas = COU_direct_support
-		event_target:BA_decisions_defensive_war_target_COUNTRY = {
-			ROOT = {
-				add_ai_strategy = {
-					type = send_volunteers_desire
-					id = PREV
-					value = 500
-				}
-				add_ai_strategy = {
-					type = send_lend_lease_desire
-					id = PREV
-					value = 1000
-				}
-			}
-		}
-	}
-	option = { 
-		name = COU_kivotos_alliance.1.b
-		ai_chance = {
-			base = 10
-		}
-		add_war_support = -0.02
-	}
-}
-country_event = { #불가침 조약
-	id = COU_kivotos_alliance.2
-	title = COU_kivotos_alliance.2.t
-	desc = COU_kivotos_alliance.2.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-	
-	is_triggered_only = yes
-
-	trigger = {
-		NOT = {
-			tag = global.kivotos_alliance_leader
-		}
-	}
-
-	option = { 
-		name = COU_kivotos_alliance.2.a
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_government = fascism
-				factor = 0.5
-			}
-			modifier = {
-				has_government = democratic
-				factor = 1.5
-			}
-			modifier = {
-				NOT = {
-					has_government = democratic
-				}
-				has_government = var:global.kivotos_alliance_leader
-				factor = 1.5
-			}
-		}
-		if = {
-			limit = { has_government = fascism }
-			set_country_flag = COU_cooperative_treaty_ratification_fascism_flag
-		}
-		else_if = {
-			limit = { has_government = communism }
-			set_country_flag = COU_cooperative_treaty_ratification_communism_flag
-		}
-		else_if = {
-			limit = { has_government = democratic }
-			set_country_flag = COU_cooperative_treaty_ratification_democratic_flag
-		}
-		else_if = {
-			limit = { has_government = neutrality }
-			set_country_flag = COU_cooperative_treaty_ratification_neutrality_flag
-		}
-		add_ideas = COU_cooperative_treaty_ratification
-		unlock_decision_tooltip = BA_cooperative_treaty_ratification_dec
-	}
-	option = {
-		name = COU_kivotos_alliance.2.b
-		trigger = {
-			NOT = { has_idea = KSP_duties_of_the_police_academy }
-		}
-		ai_chance = {
-			base = 10
-		}
-		add_war_support = 0.10
-		if = {
-			limit =  {
-				is_in_array = {
-					array = global.kivotos_alliance
-					value = ROOT
-				}
-			}
-			custom_effect_tooltip = BA_kivotos_alliance_remove_to_ROOT
-			remove_from_array = {
-				array = global.kivotos_alliance
-				value = ROOT
-			}
-			if = { 
-				limit = { 
-					is_in_faction_with = global.kivotos_alliance_leader 
-					is_faction_leader = no 
-				}
-				leave_faction = yes
-			}
-			if = { 
-				limit = { 
-					is_in_faction_with = global.kivotos_alliance_leader 
-					is_faction_leader = yes 
-				}
-				remove_from_faction = global.kivotos_alliance_leader
-			}
-			news_event = { id = BA_news.87  hours = 12 }
-		}
-	}
-}
-country_event = { #불가침 조약 탈퇴
-	id = COU_kivotos_alliance.3
-	title = COU_kivotos_alliance.3.t
-	desc = COU_kivotos_alliance.3.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-	
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.3.a
-		ai_chance = {
-			base = 15
-		}
-		custom_effect_tooltip = BA_kivotos_alliance_remove_to_FROM
-		remove_from_array = {
-			array = global.kivotos_alliance
-			value = FROM
-		}
-		FROM = {
-			if = { 
-				limit = { 
-					is_in_faction_with = global.kivotos_alliance_leader 
-					is_faction_leader = no 
-				}
-				leave_faction = yes
-			}
-			if = { 
-				limit = { 
-					is_in_faction_with = global.kivotos_alliance_leader 
-					is_faction_leader = yes 
-				}
-				remove_from_faction = global.kivotos_alliance_leader
-			}
-			news_event = BA_news.90
-		}
-	}
-	option = {
-		name = COU_kivotos_alliance.3.b
-		ai_chance = {
-			base = 10
-		}
-		add_stability = -0.02
-	}
-}
-country_event = { #경찰 학교 복원
-	id = COU_kivotos_alliance.4
-	title = COU_kivotos_alliance.4.t
-	desc = COU_kivotos_alliance.4.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-	
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.4.a
-		add_stability = 0.10
-	}
-}
-
-country_event = { # 키보토스 연합 가입 권유
-	id = COU_kivotos_alliance.5
-	title = COU_kivotos_alliance.5.t
-	desc = COU_kivotos_alliance.5.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.3.a
-		ai_chance = {
-			base = 25
-		}		
-		FROM = {
-			add_to_faction = ROOT
-			country_event = { id = COU_kivotos_alliance.6 hours = 8 }
-		}
-	}
-	option = {
-		name = COU_kivotos_alliance.3.b
-		ai_chance = {
-			base = 15
-		}
-		FROM = {
-			country_event = { id = COU_kivotos_alliance.7 hours = 8 }
-		}
-	}
-}
-
-country_event = { # 가입 수용
-	id = COU_kivotos_alliance.6
-	title = COU_kivotos_alliance.6.t
-	desc = COU_kivotos_alliance.6.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.6.a
-		ai_chance = {
-			base = 100
-		}		
-	}
-}
-
-country_event = { # 가입 거절
-	id = COU_kivotos_alliance.7
-	title = COU_kivotos_alliance.7.t
-	desc = COU_kivotos_alliance.7.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.7.a
-		ai_chance = {
-			base = 100
-		}
-	}
-}
-
-country_event = { # 키보토스 협력기구 가입
-	id = COU_kivotos_alliance.8
-	title = COU_kivotos_alliance.8.t
-	desc = COU_kivotos_alliance.8.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.8.a
-		ai_chance = {
-			base = 100
-			modifier = {
-				FROM = {
-					has_government = ROOT
-				}
-				factor = 2.0
-			}
-			modifier = {
-				FROM = {
-					has_government = neutrality
-				}
-				factor = 1.3
-			}
-		}
-		add_to_array = {
-			array = global.kivotos_alliance
-			value = FROM
-		}
-		FROM = {
-			country_event = { id = COU_kivotos_alliance.9 hours = 8 }
-		}
-	}
-
-	option = {
-		name = COU_kivotos_alliance.8.b
-		ai_chance = {
-			base = 100
-		}
-		FROM = {
-			country_event = { id = COU_kivotos_alliance.10 hours = 8 }
-		}
-	}
-}
-
-country_event = { # 키보토스 협력기구 가입 수락
-	id = COU_kivotos_alliance.9
-	title = COU_kivotos_alliance.9.t
-	desc = COU_kivotos_alliance.9.desc
-	picture = GFX_report_event_generic_sign_treaty2
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.9.a
-	}
-}
-
-country_event = { # 키보토스 협력기구 가입 거절
-	id = COU_kivotos_alliance.10
-	title = COU_kivotos_alliance.10.t
-	desc = COU_kivotos_alliance.10.desc
-	picture = GFX_report_event_generic_read_write
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_kivotos_alliance.10.a
-	}
-}
-
-##
 
 country_event = { #린의 사병 조직
 	id = COU_start_event.1
@@ -880,7 +543,83 @@ country_event = { #협력자 문제
 	}
 }
 
-##린 불신 
+
+
+###########
+####산업####
+###########
+
+##기업인들과의 만남 
+country_event = { 
+	id = COU_event_industry.1
+	title = COU_event_industry.1.t
+	desc = COU_event_industry.1.desc
+	picture = GFX_report_event_communist_leader
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = { 
+		name = COU_event_industry.1.a
+		custom_effect_tooltip = COU_tooltip_unlock_dutch_belgium_cons
+		add_one_random_civilian_factory = yes
+		custom_effect_tooltip = COU_establishment_of_federal_industrial_committee_tt
+		add_to_variable = { COU_emergency_measures_committee_consumer_goods_factor = -0.10 }
+	}
+}
+
+
+
+###########
+####군사####
+###########
+
+##장교들과의 만남
+country_event = { 
+	id = COU_event_military.1
+	title = COU_event_military.1.t
+	desc = COU_event_military.1.desc
+	picture = GFX_report_event_generic_soldiers_surrendering
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = { 
+		name = COU_event_military.1.a
+		custom_effect_tooltip = COU_tooltip_unlock_dutch_belgium_generals
+		add_one_random_military_factory = yes
+	}
+}
+
+##플란데런 백작 샤를 고용 
+country_event = { 
+	id = COU_event_military.2
+	title = COU_event_military.2.t
+	desc = COU_event_military.2.d
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = { 
+		name = COU_event_military.2.a
+	}
+}
+
+
+
+##########################
+##린 불신: 카야 루트 시작점##
+##########################
 country_event = { 
 	id = COU_event.7
 	title = COU_event.7.t
@@ -905,1427 +644,12 @@ country_event = {
 	}
 }
 
-##린과의 개싸움 시작
-country_event = { 
-	id = COU_event.8
-	title = COU_event.8.t
-	desc = COU_event.8.desc
-	picture = GFX_COU_event_216
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	    hidden_effect = {
-		    activate_mission = COU_rin_getout_kaya
-			activate_mission = COU_increasing_the_crisis
-			country_event = { id = COU_event.19 days = 10 }
-			country_event = { id = COU_event.29 days = 2 }
-		}
-	}
 
-	option = { 
-		name = COU_event.8.a
-		add_stability = -0.01
-		set_country_flag = COU_flag_acivate_norin_decision
-		set_country_flag = COU_deagree_out_rin
-		set_country_flag = COU_deagree_out_rin2
-		set_country_flag = COU_deagree_out_rin3
-		add_to_variable = { var = COU_rin_percen value = 10 }
-		#activate_mission = 
-		custom_effect_tooltip = COU_tooltip_kaya_coueventeight
-	}
-}
 
-##카야 패배 
-country_event = { 
-	id = COU_event.9
-	title = COU_event.9.t
-	desc = COU_event.9.desc
-	picture = GFX_COU_event_218
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
 
-	option = { 
-		name = COU_event.9.a
-		add_stability = -0.1
-		clr_country_flag = UNLOCK_KAYA_CONTENTS
-		clr_country_flag = COU_flag_acivate_norin_decision
-		set_country_flag = KAYA_ARREST
-		custom_effect_tooltip = COU_KAYA_ARREST_tt
-		custom_effect_tooltip = COU_tooltip_remove_kaya_contents
-		hidden_effect = { #collapse focus tree
-			load_focus_tree = {
-				tree = COU_focus_tree
-				keep_completed = yes
-			}
-			mark_focus_tree_layout_dirty = yes
-	    }
-	}
-}
-
-##기업인들과의 만남 
-country_event = { 
-	id = COU_event.10
-	title = COU_event.10.t
-	desc = COU_event.10.desc
-	picture = GFX_report_event_communist_leader
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.10.a
-		custom_effect_tooltip = COU_tooltip_unlock_dutch_belgium_cons
-		add_one_random_civilian_factory = yes
-		custom_effect_tooltip = COU_establishment_of_federal_industrial_committee_tt
-		add_to_variable = { COU_emergency_measures_committee_consumer_goods_factor = -0.10 }
-	}
-}
-
-##장교들과의 만남
-country_event = { 
-	id = COU_event.11
-	title = COU_event.11.t
-	desc = COU_event.11.desc
-	picture = GFX_report_event_generic_soldiers_surrendering
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.11.a
-		custom_effect_tooltip = COU_tooltip_unlock_dutch_belgium_generals
-		add_one_random_military_factory = yes
-	}
-}
-
-##플란데런 백작 샤를 고용 
-country_event = { 
-	id = COU_event.12
-	title = COU_event.12.t
-	desc = COU_event.12.desc
-	picture = GFX_report_event_generic_sign_treaty1
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.12.a
-	}
-}
-
-##모모카-아우우 관련 
-country_event = { 
-	id = COU_event.13
-	title = COU_event.13.t
-	desc = COU_event.13.desc
-	picture = GFX_report_event_picture_arrest_momoka
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.13.a
-		custom_effect_tooltip = COU_MOMOKA_ARREST_tt
-		set_country_flag = MOMOKA_ARREST
-		custom_effect_tooltip = COU_tooltip_momoka_thats_all_right
-		add_stability = -0.01
-	}
-}
-
-country_event = { 
-	id = COU_event.14
-	title = COU_event.14.t
-	desc = COU_event.14.desc
-	picture = GFX_report_event_picture_arrest_ayumu
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.14.a
-		custom_effect_tooltip = COU_AYUMU_ARREST_tt
-		set_country_flag = AYUMU_ARREST
-		custom_effect_tooltip = COU_tooltip_ayumu_thats_all_right
-		add_stability = -0.01
-	}
-}
-
-country_event = { 
-	id = COU_event.15
-	title = COU_event.15.t
-	desc = COU_event.15.desc
-	picture = GFX_report_event_picture_pen_and_papeer
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.15.a
-		custom_effect_tooltip = COU_tooltip_srt_fox_notbanned
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.16 days = 2 }
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.16
-	title = COU_event.16.t
-	desc = COU_event.16.desc
-	picture = GFX_event_mega_cities_SRT
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.16.a
-		custom_effect_tooltip = COU_tooltip_yukino_idk_everything
-		add_political_power = 25
-		add_command_power = 25
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.17 days = 3 }
-	    }
-	}
-}
-
-country_event = { 
-	id = COU_event.17
-	title = COU_event.17.t
-	desc = COU_event.17.desc
-	picture = GFX_report_event_she_srt_integration
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.17.a
-		custom_effect_tooltip = COU_tooltip_fox_real_in_kaya
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.35 days = 1 }
-		}
-		#complete_national_focus = COU_focus_recruit_srt
-		#country_event = { id = COU_event.18 days = 1 } 
-		#news_event = { id = BA_news.126 hours = 4 }
-		#custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		#add_to_variable = { var = COU_rin_percen value = 10 }
-	}
-}
-
-country_event = { 
-	id = COU_event.18
-	title = COU_event.18.t
-	desc = COU_event.18.desc
-	picture = GFX_event_cyberpunk
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.18.a
-		custom_effect_tooltip = COU_tooltip_rin_showed_shit
-		add_days_mission_timeout = {
-			 mission = COU_rin_getout_kaya
-		     days = 50
-	    }
-	}
-}
-
-##하이네의 지지
-country_event = { 
-	id = COU_event.19
-	title = COU_event.19.t
-	desc = COU_event.19.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = { 
-	    hidden_effect = { country_event = { id = COU_event.22 days = 5 } }
-	}
-
-	option = { 
-		name = COU_event.19.a
-		clr_country_flag = COU_deagree_out_rin3
-		set_country_flag = COU_agree_out_rin3
-		custom_effect_tooltip = COU_tooltip_jaime_accept_yoon
-		custom_effect_tooltip = COU_tooltip_jaime_umm
-		add_stability = 0.01
-		add_political_power = 75
-	}
-}
-
-##디츨란드법
-country_event = { 
-	id = COU_event.20
-	title = COU_event.20.t
-	desc = COU_event.20.desc
-	picture = GFX_COU_shakehands
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.20.a
-		custom_effect_tooltip = COU_tooltip_rin_getout_fuck
-		add_stability = 0.05
-		add_war_support = 0.05
-		add_ideas = COU_ditchland_law
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-	    complete_national_focus = COU_focus_treaty_of_amsterdam
-	}
-}
-
-##보고서 가로채기용 협박
-country_event = { 
-	id = COU_event.21
-	title = COU_event.21.t
-	desc = COU_event.21.desc
-	picture = GFX_COU_event_302
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.21.a
-		custom_effect_tooltip = COU_tooltip_kaya_haha
-		add_political_power = 25
-		set_country_flag = COU_unlock_hwaeu_aoi_smomo
-	}
-}
-
-##공포를 해야겠다 - 시라누이 카야
-country_event = { 
-	id = COU_event.22
-	title = COU_event.22.t
-	desc = COU_event.22.desc
-	picture = GFX_report_event_picture_kaya_2
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.22.a
-		add_political_power = 75
-		custom_effect_tooltip = COU_tooltip_kaya_gets_scared
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.34 days = 4 }
-		}
-	}
-}
-
-##아오이 회유 - 이기뭐노
-country_event = { 
-	id = COU_event.23
-	title = COU_event.23.t
-	desc = COU_event.23.desc
-	picture = GFX_report_event_picture_aoi
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.23.a
-		custom_effect_tooltip = COU_tooltip_aoi_started_hondon
-		add_political_power = 50
-	}
-}
-
-##스모모 회유 - 흐름
-country_event = { 
-	id = COU_event.24
-	title = COU_event.24.t
-	desc = COU_event.24.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.24.a
-		custom_effect_tooltip = COU_tooltip_smomo_okay
-		clr_country_flag = COU_deagree_out_rin2
-		set_country_flag = COU_agree_out_rin2
-		custom_effect_tooltip = COU_tooltip_smomo_accept_yoon
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-		add_political_power = 75
-	}
-}
-
-##아오이 회유 - 카이저 코퍼레이션 
-country_event = { 
-	id = COU_event.25
-	title = COU_event.25.t
-	desc = COU_event.25.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.25.a
-		custom_effect_tooltip = COU_tooltip_aoi_okay
-		clr_country_flag = COU_deagree_out_rin
-		set_country_flag = COU_agree_out_rin
-		set_country_flag = AOI_AGREED
-		custom_effect_tooltip = COU_tooltip_aoi_accept_yoon
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-		add_political_power = 75
-	}
-}
-
-##SRT 폭동 
-country_event = { 
-	id = COU_event.26
-	title = COU_event.26.t
-	desc = COU_event.26.desc
-	picture = GFX_report_event_picture_srt_uprised
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.26.a
-		set_country_flag = SRT_BANNED
-		custom_effect_tooltip = COU_tooltip_cant_use_srt
-		custom_effect_tooltip = COU_tooltip_kaya_getmoved
-		news_event = { id = BA_news.129 hours = 6 }
-	}
-}
-
-##인권보장실 설립 
-country_event = { 
-	id = COU_event.27
-	title = COU_event.27.t
-	desc = COU_event.27.desc
-	picture = GFX_report_event_picture_the_du
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.27.a
-		custom_effect_tooltip = COU_tooltip_the_new_days_of_humans
-		add_political_power = 150
-	}
-}
-
-##SRT 복귀
-country_event = { 
-	id = COU_event.28
-	title = COU_event.28.t
-	desc = COU_event.28.desc
-	picture = GFX_report_event_she_srt_integration
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.28.a
-		custom_effect_tooltip = COU_tooltip_srt_got_backed_and
-	}
-}
-
-##인권보장실 설립 요구 
-country_event = { 
-	id = COU_event.29
-	title = COU_event.29.t
-	desc = COU_event.29.desc
-	picture = GFX_report_event_generic_croatia_handshake
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.29.a
-		activate_mission = COU_demand_establish_humans_land
-		#custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		#add_to_variable = { var = COU_rin_percen value = 10 }
-	}
-}
-
-##중점2개 
-country_event = { 
-	id = COU_event.30
-	title = COU_event.30.t
-	desc = COU_event.30.desc
-	picture = GFX_report_event_picture_the_du
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.30.a
-		custom_effect_tooltip = COU_tooltip_letsgo_fascists
-		add_popularity = { 
-		    ideology = fascism
-		    popularity = 0.1
-		}
-		#event 추가 연계
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.32 days = 7 }
-		}
-	}
-}
-
-###막간을이용한아오이의월권경고쇼
-country_event = { 
-	id = COU_event.31
-	title = COU_event.31.t
-	desc = COU_event.31.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.31.a
-		custom_effect_tooltip = COU_tooltip_rin_says_what
-		add_political_power = 5
-	}
-}
-
-country_event = { 
-	id = COU_event.32
-	title = COU_event.32.t
-	desc = COU_event.32.desc
-	picture = GFX_report_event_picture_the_du
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.32.a
-		custom_effect_tooltip = COU_tooltip_fascists_agree_kaya
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-	}
-}
-
-##드그렐 씨에게 
-country_event = { 
-	id = COU_event.33
-	title = COU_event.33.t
-	desc = COU_event.33.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.33.a
-		custom_effect_tooltip = COU_tooltip_flanderns_agree_kaya
-		custom_effect_tooltip = COU_tooltip_high_five_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 5 }
-	}
-}
-
-##공포를 줘야겠다 - FOX 소대 동원 
-country_event = { 
-	id = COU_event.34
-	title = COU_event.34.t
-	desc = COU_event.34.desc
-	picture = GFX_report_event_picture_srt_uprised
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.34.a
-		custom_effect_tooltip = COU_tooltip_srt_foxs_agree_to_kaya
-		add_political_power = 5
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.15 days = 1 }
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.35
-	title = COU_event.35.t
-	desc = COU_event.35.desc
-	picture = GFX_COU_interrogationroom
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.35.a
-		set_country_flag = SRT_STARTED_BUNTANGS_KAYA
-		custom_effect_tooltip = COU_tooltip_srt_can_able_to_use
-	}
-}
-
-country_event = { 
-	id = COU_event.36
-	title = COU_event.36.t
-	desc = COU_event.36.desc
-	picture = GFX_report_event_COU_srt_divided
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.36.a
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = COU_event.37 
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.37
-	title = COU_event.37.t
-	desc = COU_event.37.desc
-	picture = GFX_report_event_COU_srt_divided
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.37.a
-		set_country_flag = COU_tooltip_rabbit_join_fox
-		custom_effect_tooltip = COU_tooltip_rabbit_joins_fox
-		custom_effect_tooltip = COU_tooltip_activate_buntangs_srt
-	}
-}
-
-country_event = { 
-	id = COU_event.38
-	title = COU_event.38.t
-	desc = COU_event.38.desc
-	picture = GFX_report_event_picture_minori_two
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.38.a
-		add_stability = -0.01
-		add_political_power = 25
-		custom_effect_tooltip = COU_RED_MINORI_START
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.39 days = 7 }
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.39
-	title = COU_event.39.t
-	desc = COU_event.39.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.39.a
-		custom_effect_tooltip = COU_tooltip_kaya_and_minori
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   country_event = { id = COU_event.40 days = 7 }
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.40
-	title = COU_event.40.t
-	desc = COU_event.40.desc
-	picture = GFX_report_event_picture_minori_one
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.40.a
-	    custom_effect_tooltip = COU_tooltip_minori_ended_movement
-		RED = { country_event = { id = COU_event.42 days = 1 } }
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-	}
-}
-
-##붉겨쪽 
-country_event = { 
-	id = COU_event.41
-	title = COU_event.41.t
-	desc = COU_event.41.desc
-	picture = GFX_report_event_picture_minori_two
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.41.a
-	}
-}
-
-country_event = { 
-	id = COU_event.42
-	title = COU_event.42.t
-	desc = COU_event.42.desc
-	picture = GFX_report_event_picture_minori_two
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.42.a
-	}
-}
-
-##SRT 습격 
-country_event = { 
-	id = COU_event.43
-	title = COU_event.43.t
-	desc = COU_event.43.desc
-	picture = GFX_COU_event_meetingroom
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.43.a
-	    custom_effect_tooltip = COU_tooltip_kaya_holy
-		custom_effect_tooltip = COU_tooltip_high_five_kim_daejung_deagrees
-		add_to_variable = { var = COU_rin_percen value = -5 }
-	}
-}
-
-unit_leader_event = {
-	id = COU_event.44
-	title = COU_event.44.t
-	desc = COU_event.44.desc
-	
-	fire_only_once = yes	
-    is_triggered_only = yes
-	
-	option = { 
-		name = COU_event.44.a
-	    custom_effect_tooltip = COU_tooltip_kaya_ilikeit
-		if = {
-		   limit = { has_country_flag = COU_flag_acivate_norin_decision }
-		   hidden_effect = { country_event = { id = COU_event.43 days = 4 } }
-		}
-	}
-}
-
-unit_leader_event = {
-	id = COU_event.45
-	title = COU_event.45.t
-	desc = COU_event.45.desc
-	
-	fire_only_once = yes	
-    is_triggered_only = yes
-	
-	option = { 
-		name = COU_event.45.a
-	    custom_effect_tooltip = COU_tooltip_kaya_ilikeit2
-		custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		add_to_variable = { var = COU_rin_percen value = 10 }
-	}
-}
-
-##린 탄핵 
-country_event = { 
-	id = COU_event.46
-	title = COU_event.46.t
-	desc = COU_event.46.desc
-	picture = GFX_COU_event_203
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	    hidden_effect = {
-		    news_event = { id = BA_news.132 hours = 3 }
-			COU = { set_cosmetic_tag = COU_KAYA_DICTATORSHIP }
-		    BA_ban_democratic_effect = yes
-			add_popularity = { 
-		       ideology = democratic
-		       popularity = -0.1
-		   }
-		   add_popularity = { 
-		       ideology = fascism
-		       popularity = 0.1
-		   }
-		   set_politics = {
-			  ruling_party = fascism
-			  elections_allowed = no
-		   }
-		   add_political_power = 75
-		}
-	}
-
-	option = { 
-		name = COU_event.46.a
-	    custom_effect_tooltip = COU_tooltip_getout_rin_end
-		effect_tooltip = { 
-		add_popularity = { 
-		    ideology = democratic
-		    popularity = -0.1
-		}
-		add_popularity = { 
-		    ideology = fascism
-		    popularity = 0.1
-		}
-	    set_politics = {
-			ruling_party = fascism
-			elections_allowed = no
-		}
-		add_political_power = 75
-		}
-		add_stability = 0.1
-		add_war_support = 0.1
-		set_country_flag = RIN_ARREST
-		country_event = COU_event.68
-		country_event = { id = COU_event.59 days = 5 }
-		#country_event = { id = COU_event.57 days = 10 }
-	}
-}
-
-country_event = { 
-	id = COU_event.47 
-	title = COU_event.47.t
-	desc = COU_event.47.desc
-	picture = GFX_report_event_picture_kaya_3
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.47.a
-		set_country_flag = LETSGO_CHONGHAKS
-	    custom_effect_tooltip = COU_tooltip_arona_fuck
-		country_event = { id = COU_event.60 days = 10 }
-	}
-}
-
-##데카르트, 무소유 투쟁!
-country_event = { 
-	id = COU_event.48
-	title = COU_event.48.t
-	desc = COU_event.48.desc
-	picture = GFX_report_event_picture_decart
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.48.a
-		custom_effect_tooltip = COU_tooltip_decart_mission_starts
-		add_ideas = COU_notwork_crisis
-		news_event = { id = BA_news.134 hours = 6 }
-	}
-}
-
-##SRT 재판 
-country_event = { 
-	id = COU_event.49
-	title = COU_event.49.t
-	desc = COU_event.49.desc
-	picture = GFX_report_event_COU_srt_divided
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.49.a
-		country_event = { id = COU_event.50 }
-	}
-}
-
-country_event = { 
-	id = COU_event.50
-	title = COU_event.50.t
-	desc = COU_event.50.desc
-	picture = GFX_report_event_COU_srt_divided
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.50.a
-		custom_effect_tooltip = COU_tooltip_srt_gonna_dead
-		country_event = { id = COU_event.26 days = 10 }
-	}
-}
-
-##프랑스인 자치 보장 
-country_event = { 
-	id = COU_event.51
-	title = COU_event.51.t
-	desc = COU_event.51.desc
-	picture = GFX_report_event_picture_the_letter
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.51.a
-		custom_effect_tooltip = COU_tooltip_add_state_core_twenty_nine
-		add_state_core = 29
-	}
-}
-
-##싯딤의 상자 이벤트: 통제권 재수복 
-country_event = { 
-	id = COU_event.52
-	title = COU_event.52.t
-	desc = COU_event.52.desc
-	picture = GFX_report_event_she_ipad
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.52.a
-		country_event = { id = COU_event.53 days = 30 }
-	}
-}
-
-country_event = { 
-	id = COU_event.53
-	title = COU_event.53.t
-	desc = COU_event.53.desc
-	picture = GFX_report_event_she_arona
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.53.a
-		custom_effect_tooltip = COU_tooltip_remove_sangtum_tower_debuff
-		add_stability = 0.1
-		COU_cut_tower_down_remove = yes 
-		country_event = { id = COU_event.54 days = 2 }
-	}
-}
-
-country_event = { 
-	id = COU_event.54
-	title = COU_event.54.t
-	desc = COU_event.54.desc
-	picture = GFX_report_event_she_arona_notgood
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.54.a
-		custom_effect_tooltip = COU_tooltip_arona_feels_bad
-		custom_effect_tooltip = kivotos_halo_add1_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 1 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-	}
-}
-
-##필립스 고용 
-country_event = { 
-	id = COU_event.55
-	title = COU_event.55.t
-	desc = COU_event.55.desc
-	picture = GFX_report_event_picture_anton_phillips
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.55.a
-		custom_effect_tooltip = COU_tooltip_philips_gonna_work
-		add_tech_bonus = {
-				name = HOL_philips_focus
-				bonus = 1.5
-				uses = 3
-				category = electronics
-			}
-	}
-}
-
-##스페인 협력자 도주 
-unit_leader_event = {
-	id = COU_event.56
-	title = COU_event.56.t
-	desc = COU_event.56.desc
-	
-	fire_only_once = yes	
-    is_triggered_only = yes
-	
-	option = { 
-		name = COU_event.56.a
-	    custom_effect_tooltip = COU_tooltip_sancho_davilla_fernandez
-	}
-	
-	option = { 
-		name = COU_event.56.b
-	    custom_effect_tooltip = COU_tooltip_sancho_davilla_fernandeztwo
-	}
-}
-
-##카야 루트- 중점 5개들 
-country_event = { 
-	id = COU_event.57
-	title = COU_event.57.t
-	desc = COU_event.57.desc
-	picture = GFX_report_event_COU_srt_divided
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	    #hidden_effect = { country_event = { id = COU_event.58 days = 7 } }
-	}
-
-	option = { 
-		name = COU_event.57.a
-		custom_effect_tooltip = COU_tooltip_srt_get_okay
-		clr_country_flag = SRT_BANNED
-	    custom_effect_tooltip = COU_tooltip_one_more_chance
-		complete_national_focus = COU_focus_yaksok_for_srt
-		swap_ideas = {
-		    remove_idea = COU_notgood_kaya_power
-			add_idea = COU_notgood_kaya_power2
-		}
-	}
-}
-
-country_event = { 
-	id = COU_event.58
-	title = COU_event.58.t
-	desc = COU_event.58.desc
-	picture = GFX_report_event_generic_door
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.58.a
-		custom_effect_tooltip = COU_tooltip_queen_never_cry
-		add_stability = -0.1
-		add_political_power = 100
-		complete_national_focus = COU_focus_let_be_the_queen
-		swap_ideas = {
-		    remove_idea = COU_notgood_kaya_power2
-			add_idea = COU_notgood_kaya_power3
-		}
-		news_event = { id = BA_news.137 hours = 6 }
-		#HOL = { country_event = { id = BA_news.137 days = 1 } }
-	}
-}
-
-##끝..?
-country_event = {
-	id = COU_event.59
-	title = COU_event.59.t
-	desc = COU_event.59.desc
-	picture = GFX_COU_event_meetingroom
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.59.a
-		custom_effect_tooltip = COU_tooltip_maybe_its_bad
-		country_event = { id = COU_event.47 days = 2 }
-	}
-}
-
-country_event = {
-	id = COU_event.60
-	title = COU_event.60.t
-	desc = COU_event.60.desc
-	picture = GFX_COU_event_gsc_meetingroom
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.60.a
-		custom_effect_tooltip = COU_tooltip_maybe_its_really_bad
-		country_event = { id = COU_event.61 days = 7 }
-	}
-}
-
-country_event = {
-	id = COU_event.61
-	title = COU_event.61.t
-	desc = COU_event.61.desc
-	picture = GFX_report_event_picture_kaya_3
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.61.a
-		custom_effect_tooltip = COU_tooltip_kaya_started_the_movement
-		add_ideas = COU_notgood_kaya_power
-		hidden_effect = {
-		     country_event = { id = COU_event.57 days = 7 }
-			 country_event = { id = COU_event.58 days = 14 } 
-			 country_event = { id = COU_event.62 days = 21 } 
-			 country_event = { id = COU_event.63 days = 28 } 
-			 country_event = { id = COU_event.64 days = 35 } 
-		}
-	}
-}
-
-country_event = {
-	id = COU_event.62
-	title = COU_event.62.t
-	desc = COU_event.62.desc
-	picture = GFX_report_event_she_arona_good
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.62.a
-		custom_effect_tooltip = COU_tooltip_kaya_gets_sangtum_tower
-		complete_national_focus = COU_focus_get_masterkey_from_arona
-		swap_ideas = {
-		    remove_idea = COU_notgood_kaya_power3
-			add_idea = COU_notgood_kaya_power4
-		}
-	}
-}
-
-country_event = {
-	id = COU_event.63
-	title = COU_event.63.t
-	desc = COU_event.63.desc
-	picture = GFX_report_event_picture_rabbit_uprised
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	}
-
-	option = { 
-		name = COU_event.63.a
-		custom_effect_tooltip = COU_tooltip_kaya_kronos_dead
-		complete_national_focus = COU_focus_use_the_news
-		swap_ideas = {
-		    remove_idea = COU_notgood_kaya_power4
-			add_idea = COU_notgood_kaya_power5
-		}
-	}
-}
-
-country_event = {
-	id = COU_event.64
-	title = COU_event.64.t
-	desc = COU_event.64.desc
-	picture = GFX_report_event_picture_pen_and_papeer
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	immediate = {
-	    hidden_effect = {
-		    KSP = { country_event = { id = COU_event.65 } }
-			country_event = { id = COU_event.69 days = 7 }
-		}
-	}
-
-	option = { 
-		name = COU_event.64.a
-		custom_effect_tooltip = COU_tooltip_kaya_valkirie_declarewar
-		complete_national_focus = COU_focus_checks_the_valkirie
-		remove_ideas = COU_notgood_kaya_power5
-	}
-}
-
-country_event = {
-	id = COU_event.65
-	title = COU_event.65.t
-	desc = COU_event.65.desc
-	picture = GFX_report_event_picture_pen_and_papeer
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.65.a
-		COU = { country_event = { id = COU_event.66 hours = 8 } }
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_completed_focus = KSP_kanna_gov_rule
-				factor = -10
-			}
-		}
-	}
-	
-	option = { 
-		name = COU_event.65.b
-		COU = { annex_country = { target = KSP transfer_troops = yes } }
-		COU = { country_event = { id = COU_event.67 hours = 8 } }
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_completed_focus = KSP_sanghwal_safety_coup
-				factor = 30
-			}
-		}
-	}
-}
-
-country_event = {
-	id = COU_event.66
-	title = COU_event.66.t
-	desc = COU_event.66.desc
-	picture = GFX_report_event_picture_kaya_1
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.66.a
-		declare_war_on = {
-			target = KSP
-			type = annex_everything
-			generator = { 34 }
-	    }
-	}
-}
-
-country_event = {
-	id = COU_event.67
-	title = COU_event.67.t
-	desc = COU_event.67.desc
-	picture = GFX_report_event_picture_kaya_1
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.67.a
-		add_stability = 0.02
-	}
-}
-
-##행정명령 6873호
-country_event = {
-	id = COU_event.68
-	title = COU_event.68.t
-	desc = COU_event.68.desc
-	picture = GFX_report_event_picture_kaya_1
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.68.a
-		custom_effect_tooltip = COU_tooltip_kaya_cant_do_nothing
-		add_political_power = -25
-		swap_ideas = {
-		    remove_idea = COU_ditchland_law
-			add_idea = COU_ditchland_law2
-		}
-	}
-}
-
-country_event = {
-	id = COU_event.69
-	title = COU_event.69.t
-	desc = COU_event.69.desc
-	picture = GFX_report_event_picture_kaya_3
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.69.a
-		custom_effect_tooltip = COU_tooltip_wait_we_fucked
-		add_political_power = -75
-		swap_ideas = {
-		    remove_idea = COU_ditchland_law2
-			add_idea = COU_ditchland_law3
-		}
-		swap_ruler_traits = {
-			remove = COU_KAYA_TRAIT
-			add = COU_the_fail
-		}
-		set_country_leader_description = {
-			desc = KAYA_FUCKED_DESC
-		}
-		COU_KAYA = {
-			set_portraits = {
-				civilian = {
-					large=GFX_leaders_kayaface_four
-				}
-			}
-		}
-	}
-}
-
-
-
-##카야 구분용 
-###모모카: 카야 무력화 
+####################
+##모모카: 카야 무력화##
+####################
 country_event = {
 	id = COU_event_notkaya.1
 	title = COU_event_notkaya.1.t
@@ -2350,6 +674,7 @@ country_event = {
 		}
 	}
 }
+
 
 
 
@@ -2418,151 +743,354 @@ country_event = {
 }
 
 
+
+
 ##일상 이벤트 
-country_event = { 
-	id = COU_event_normal_days.1
-	title = COU_event_normal_days.1.t
-	desc = COU_event_normal_days.1.desc
-	picture = GFX_event_none_picture
 
-	is_triggered_only = yes
 
-	option = {
-		name = COU_event_normal_days.1.a
-		custom_effect_tooltip = COU_tooltip_normal_days_one
-	}
-}
 
-country_event = { 
-	id = COU_event_normal_days.2
-	title = COU_event_normal_days.2.t
-	desc = COU_event_normal_days.2.desc
-	picture = GFX_event_none_picture
 
-	is_triggered_only = yes
 
-	option = {
-		name = COU_event_normal_days.2.a
-		custom_effect_tooltip = COU_tooltip_normal_days_two
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.3
-	title = COU_event_normal_days.3.t
-	desc = COU_event_normal_days.3.desc
-	picture = GFX_report_event_picture_aoi
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.3.a
-		custom_effect_tooltip = COU_tooltip_normal_days_three
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.4
-	title = COU_event_normal_days.4.t
-	desc = COU_event_normal_days.4.desc
-	picture = GFX_report_event_picture_kaya_2
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.4.a
-		custom_effect_tooltip = COU_tooltip_normal_days_four
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.5
-	title = COU_event_normal_days.5.t
-	desc = COU_event_normal_days.5.desc
-	picture = GFX_report_event_picture_rabbit_uprised
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.5.a
-		custom_effect_tooltip = COU_tooltip_normal_days_five
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.6
-	title = COU_event_normal_days.6.t
-	desc = COU_event_normal_days.6.desc
-	picture = GFX_report_event_generic_reloading
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.6.a
-		custom_effect_tooltip = COU_tooltip_normal_days_six
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.7
-	title = COU_event_normal_days.7.t
-	desc = COU_event_normal_days.7.desc
-	picture = GFX_report_event_generic_venice
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.7.a
-		custom_effect_tooltip = COU_tooltip_normal_days_seven
-	}
-}
-
-country_event = { 
-	id = COU_event_normal_days.8
-	title = COU_event_normal_days.8.t
-	desc = COU_event_normal_days.8.desc
-	picture = GFX_report_event_generic_trains
-
-	is_triggered_only = yes
-
-	option = {
-		name = COU_event_normal_days.8.a
-		custom_effect_tooltip = COU_tooltip_normal_days_eight
-	}
-}
-
-##안네 프랑크 이벤트체인 
-unit_leader_event = {
-	id = COU_event_normal_days.1000
-	title = COU_event_normal_days.1000.t
-	desc = COU_event_normal_days.1000.desc
+##KIVOTOSALLIANCE
+country_event = { #원정군 파병
+	id = COU_kivotos_alliance.1
+	title = COU_kivotos_alliance.1.t
+	desc = COU_kivotos_alliance.1.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
 	
-	fire_only_once = yes	
-    is_triggered_only = yes
-	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = {
+			tag = global.kivotos_alliance_leader
+		}
+	}
+
 	option = { 
-		name = COU_event_normal_days.1000.a
-	    custom_effect_tooltip = COU_tooltip_anne_frank_one
-		hidden_effect = {
-		COU_ANNE_FRANK = { unit_leader_event = { id = COU_event_normal_days.1001 days = 30 } }
+		name = COU_kivotos_alliance.1.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_government = fascism
+				factor = 0.5
+			}
+			modifier = {
+				has_government = democratic
+				factor = 1.5
+			}
+			modifier = {
+				NOT = {
+					has_government = democratic
+				}
+				has_government = var:global.kivotos_alliance_leader
+				factor = 1.5
+			}
+		}
+		add_ideas = COU_direct_support
+		event_target:BA_decisions_defensive_war_target_COUNTRY = {
+			ROOT = {
+				add_ai_strategy = {
+					type = send_volunteers_desire
+					id = PREV
+					value = 500
+				}
+				add_ai_strategy = {
+					type = send_lend_lease_desire
+					id = PREV
+					value = 1000
+				}
+			}
+		}
+	}
+	option = { 
+		name = COU_kivotos_alliance.1.b
+		ai_chance = {
+			base = 10
+		}
+		add_war_support = -0.02
+	}
+}
+country_event = { #불가침 조약
+	id = COU_kivotos_alliance.2
+	title = COU_kivotos_alliance.2.t
+	desc = COU_kivotos_alliance.2.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = {
+			tag = global.kivotos_alliance_leader
+		}
+	}
+
+	option = { 
+		name = COU_kivotos_alliance.2.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_government = fascism
+				factor = 0.5
+			}
+			modifier = {
+				has_government = democratic
+				factor = 1.5
+			}
+			modifier = {
+				NOT = {
+					has_government = democratic
+				}
+				has_government = var:global.kivotos_alliance_leader
+				factor = 1.5
+			}
+		}
+		if = {
+			limit = { has_government = fascism }
+			set_country_flag = COU_cooperative_treaty_ratification_fascism_flag
+		}
+		else_if = {
+			limit = { has_government = communism }
+			set_country_flag = COU_cooperative_treaty_ratification_communism_flag
+		}
+		else_if = {
+			limit = { has_government = democratic }
+			set_country_flag = COU_cooperative_treaty_ratification_democratic_flag
+		}
+		else_if = {
+			limit = { has_government = neutrality }
+			set_country_flag = COU_cooperative_treaty_ratification_neutrality_flag
+		}
+		add_ideas = COU_cooperative_treaty_ratification
+		unlock_decision_tooltip = BA_cooperative_treaty_ratification_dec
+	}
+	option = {
+		name = COU_kivotos_alliance.2.b
+		trigger = {
+			NOT = { has_idea = KSP_duties_of_the_police_academy }
+		}
+		ai_chance = {
+			base = 10
+		}
+		add_war_support = 0.10
+		if = {
+			limit =  {
+				is_in_array = {
+					array = global.kivotos_alliance
+					value = ROOT
+				}
+			}
+			custom_effect_tooltip = BA_kivotos_alliance_remove_to_ROOT
+			remove_from_array = {
+				array = global.kivotos_alliance
+				value = ROOT
+			}
+			if = { 
+				limit = { 
+					is_in_faction_with = global.kivotos_alliance_leader 
+					is_faction_leader = no 
+				}
+				leave_faction = yes
+			}
+			if = { 
+				limit = { 
+					is_in_faction_with = global.kivotos_alliance_leader 
+					is_faction_leader = yes 
+				}
+				remove_from_faction = global.kivotos_alliance_leader
+			}
+			news_event = { id = BA_news.87  hours = 12 }
+		}
+	}
+}
+country_event = { #불가침 조약 탈퇴
+	id = COU_kivotos_alliance.3
+	title = COU_kivotos_alliance.3.t
+	desc = COU_kivotos_alliance.3.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+	
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.3.a
+		ai_chance = {
+			base = 15
+		}
+		custom_effect_tooltip = BA_kivotos_alliance_remove_to_FROM
+		remove_from_array = {
+			array = global.kivotos_alliance
+			value = FROM
+		}
+		FROM = {
+			if = { 
+				limit = { 
+					is_in_faction_with = global.kivotos_alliance_leader 
+					is_faction_leader = no 
+				}
+				leave_faction = yes
+			}
+			if = { 
+				limit = { 
+					is_in_faction_with = global.kivotos_alliance_leader 
+					is_faction_leader = yes 
+				}
+				remove_from_faction = global.kivotos_alliance_leader
+			}
+			news_event = BA_news.90
+		}
+	}
+	option = {
+		name = COU_kivotos_alliance.3.b
+		ai_chance = {
+			base = 10
+		}
+		add_stability = -0.02
+	}
+}
+country_event = { #경찰 학교 복원
+	id = COU_kivotos_alliance.4
+	title = COU_kivotos_alliance.4.t
+	desc = COU_kivotos_alliance.4.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+	
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.4.a
+		add_stability = 0.10
+	}
+}
+
+country_event = { # 키보토스 연합 가입 권유
+	id = COU_kivotos_alliance.5
+	title = COU_kivotos_alliance.5.t
+	desc = COU_kivotos_alliance.5.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.3.a
+		ai_chance = {
+			base = 25
+		}		
+		FROM = {
+			add_to_faction = ROOT
+			country_event = { id = COU_kivotos_alliance.6 hours = 8 }
+		}
+	}
+	option = {
+		name = COU_kivotos_alliance.3.b
+		ai_chance = {
+			base = 15
+		}
+		FROM = {
+			country_event = { id = COU_kivotos_alliance.7 hours = 8 }
 		}
 	}
 }
 
-unit_leader_event = {
-	id = COU_event_normal_days.1001
-	title = COU_event_normal_days.1001.t
-	desc = COU_event_normal_days.1001.desc
-	
-	fire_only_once = yes	
-    is_triggered_only = yes
-	
-	option = { 
-		name = COU_event_normal_days.1001.a
-	    custom_effect_tooltip = COU_tooltip_anne_frank_two
-		hidden_effect = {
-		#COU_ANNE_FRANK = { unit_leader_event = { id = COU_event_normal_days.1002 days = 30 } }
+country_event = { # 가입 수용
+	id = COU_kivotos_alliance.6
+	title = COU_kivotos_alliance.6.t
+	desc = COU_kivotos_alliance.6.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.6.a
+		ai_chance = {
+			base = 100
+		}		
+	}
+}
+
+country_event = { # 가입 거절
+	id = COU_kivotos_alliance.7
+	title = COU_kivotos_alliance.7.t
+	desc = COU_kivotos_alliance.7.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.7.a
+		ai_chance = {
+			base = 100
 		}
 	}
 }
+
+country_event = { # 키보토스 협력기구 가입
+	id = COU_kivotos_alliance.8
+	title = COU_kivotos_alliance.8.t
+	desc = COU_kivotos_alliance.8.desc
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.8.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				FROM = {
+					has_government = ROOT
+				}
+				factor = 2.0
+			}
+			modifier = {
+				FROM = {
+					has_government = neutrality
+				}
+				factor = 1.3
+			}
+		}
+		add_to_array = {
+			array = global.kivotos_alliance
+			value = FROM
+		}
+		FROM = {
+			country_event = { id = COU_kivotos_alliance.9 hours = 8 }
+		}
+	}
+
+	option = {
+		name = COU_kivotos_alliance.8.b
+		ai_chance = {
+			base = 100
+		}
+		FROM = {
+			country_event = { id = COU_kivotos_alliance.10 hours = 8 }
+		}
+	}
+}
+
+country_event = { # 키보토스 협력기구 가입 수락
+	id = COU_kivotos_alliance.9
+	title = COU_kivotos_alliance.9.t
+	desc = COU_kivotos_alliance.9.desc
+	picture = GFX_report_event_generic_sign_treaty2
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.9.a
+	}
+}
+
+country_event = { # 키보토스 협력기구 가입 거절
+	id = COU_kivotos_alliance.10
+	title = COU_kivotos_alliance.10.t
+	desc = COU_kivotos_alliance.10.desc
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = {
+		name = COU_kivotos_alliance.10.a
+	}
+}
+
+##
 
