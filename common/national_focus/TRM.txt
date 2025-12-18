@@ -8261,24 +8261,28 @@ focus_tree = {
 			add_political_power = 40
 			add_stability = 0.02
 			TRN_Utazumi_Sakurako = {
-				effect_tooltip = {
-					swap_ideas = {
-						add_idea = TRM_defender_of_faith_ns_2_fake
-						remove_idea = TRM_defender_of_faith_ns_fake
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_modify_character_trait
+						ROLE = political_advisor TRAIT = TRM_defender_of_faith
+					}
+					remove_trait = {
+						character = TRN_Utazumi_Sakurako
+						slot = political_advisor
+						trait = TRM_defender_of_faith
+					}
+					add_trait = {
+						character = TRN_Utazumi_Sakurako
+						slot = political_advisor
+						trait = TRM_defender_of_faith_2
 					}
 				}
+
 			}
-			hidden_effect = {
-				remove_trait = {
-					character = TRN_Utazumi_Sakurako
-					slot = political_advisor
-					trait = TRM_defender_of_faith
-				}
-				add_trait = {
-					character = TRN_Utazumi_Sakurako
-					slot = political_advisor
-					trait = TRM_defender_of_faith_2
-				}
+			effect_tooltip = {
+				set_temp_variable = { modifier_change_tt = 0.05 tooltip = political_power_factor_tt }
+				set_temp_variable = { modifier_change_tt = 0.01 tooltip = modifier_compliance_gain_tt }
+				set_temp_variable = { modifier_change_tt = -0.01 tooltip = communism_drift_tt }
 			}
 		}
 	}
@@ -18123,33 +18127,10 @@ focus_tree = {
 		}
 	}
 	shared_focus = {
-		id = TRN_Fission
-		icon = GFX_goal_TRN_nuclear_fission
-		cost = 5.00
-		prerequisite = { focus = TRN_research_slot }
-		available = {
-			has_global_flag = TRM_OTTO_HAN_EVENT
-		}
-		ai_will_do = {
-			base = 1
-			modifier = {
-				add = 50
-				date < 1944.1.1
-			}
-		}
-		x = 0
-		y = 1
-		relative_position_id = TRN_research_slot
-		completion_reward = {
-			custom_effect_tooltip = TRN_Fission_tt
-			country_event = TRM_event.73
-		}
-	}
-	shared_focus = {
 		id = TRN_Uranprojekt
 		icon = GFX_goal_TRN_Uranprojekt
 		cost = 5
-		prerequisite = { focus = TRN_Fission }
+		prerequisite = { focus = TRN_research_slot }
 		ai_will_do = {
 			base = 1
 			modifier = {
@@ -18157,10 +18138,12 @@ focus_tree = {
 				date < 1944.1.1
 			}
 		}
-		allow_branch = { has_country_flag = OTTO_HAN }
+		available = {
+			num_of_factories > 100
+		}
 		x = 0
 		y = 1
-		relative_position_id = TRN_Fission
+		relative_position_id = TRN_research_slot
 		completion_reward = {  
 			custom_effect_tooltip = TRN_Otto_han_tt
 			if = {
