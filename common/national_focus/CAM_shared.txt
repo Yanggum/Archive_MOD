@@ -2058,216 +2058,229 @@ shared_focus = {
 	completion_reward = {
 		set_variable = { IDC_break_the_law_cost_var = 365 }
 		custom_effect_tooltip = IDC_outbreak_of_indochina_war_tt
+		hidden_effect = { # 만약 먼저 시도된 해방자가 있나?
+			if = {
+				limit = {
+					has_global_flag = IDC_independence_war_ongoing
+					any_country = {
+						has_country_flag = has_IDC_independence_war_starter
+					}
+				}
+				set_country_flag = has_IDC_independence_war_controller
+			}
+			else_if = { # 이건 원래 없어도 되야하는데 버그 고려해서 넣음
+				limit = {
+					has_global_flag = IDC_independence_war_ongoing
+				}
+				set_country_flag = has_IDC_independence_war_starter
+			}
+			else = {
+				set_global_flag = IDC_independence_war_ongoing
+				set_country_flag = has_IDC_independence_war_starter
+			}
+		}
+		hidden_effect = { # 기본 공용 효과
+			IF = {
+				limit = {
+					is_subject = yes
+				}
+				OVERLORD = {
+					set_autonomy = {
+						target = ROOT
+						autonomy_state = autonomy_free
+						end_wars = yes
+						end_civil_wars = yes
+					}
+				}
+			}
+			
+			drop_cosmetic_tag = yes
+			
+			IDC_free_country_effect = yes
+
+			IF = {
+				limit = { has_country_flag = IDC_monarchist_movement_flag }
+				delete_unit_template_and_units = {
+					division_template = "Royal Private"
+					disband = yes #if yes, will refund equipment/manpower.
+				}
+
+				division_template = {
+					name = "Royal Private"		
+					division_names_group = BEL_INF_01
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 1 y = 0 }
+					}
+					support = {
+					}
+				}
+
+				capital_scope = { 
+					create_unit = {
+						division = "name = \"1. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"2. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+						owner = ROOT
+					}
+				}
+			}
+
+			IF = {
+				limit = { has_country_flag = IDC_vietcong_unit_flag }
+				delete_unit_template_and_units = {
+					division_template = "Viet Cong"
+					disband = yes #if yes, will refund equipment/manpower.
+				}
+
+				division_template = {
+					name = "Viet Cong"		
+					division_names_group = BEL_INF_01
+					regiments = {
+						irregular_infantry = { x = 0 y = 0 }
+						irregular_infantry = { x = 0 y = 1 }
+						irregular_infantry = { x = 0 y = 2 }
+						irregular_infantry = { x = 1 y = 0 }
+						irregular_infantry = { x = 1 y = 1 }
+					}
+					support = {
+					}
+				}
+
+				capital_scope = { 
+					create_unit = {
+						division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.4 start_equipment_factor = 0.8"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+						owner = ROOT
+					}
+				}
+			}
+			IF = {
+				limit = {
+					has_country_flag = IDC_will_get_soviet_aid_flag
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
+				add_offsite_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 500
+					producer = SOV
+				}
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 250
+					producer = SOV
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = SOV
+				}
+				add_manpower = 15000
+			}
+			IF = {
+				limit = {
+					has_country_flag = IDC_will_get_chinese_aid_flag
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
+				add_offsite_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 500
+					producer = CHI
+				}
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 250
+					producer = CHI
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = CHI
+				}
+				add_manpower = 15000
+			}
+			IF = {
+				limit = {
+					has_country_flag = IDC_will_get_japanese_aid_flag
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
+				add_offsite_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 500
+					producer = JAP
+				}
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 250
+					producer = JAP
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 150
+					producer = JAP
+				}
+				add_manpower = 15000
+			}
+		}
 		if = {
 			limit = { has_global_flag = IDC_independence_war_ongoing }
 			hidden_effect = {
 				if = {
-					limit = {
-						any_country = {
-							has_country_flag = has_IDC_independence_war_starter
-						}
-					}
-					set_country_flag = has_IDC_independence_war_controller
-				}
-				else = {
-					set_country_flag = has_IDC_independence_war_starter
-				}
-				drop_cosmetic_tag = yes
-				IF = {
-					limit = {
-						is_subject = yes
-					}
-					OVERLORD = {
-						set_autonomy = {
+					limit = { has_country_flag = has_IDC_independence_war_controller }
+					random_other_country = {
+						limit = { has_country_flag = has_IDC_independence_war_starter }
+						white_peace = ROOT
+						remove_wargoal = {
+							type = all
 							target = ROOT
-							autonomy_state = autonomy_free
-							end_wars = yes
-							end_civil_wars = yes
 						}
-					}
-				}
-				
-				IDC_free_country_effect = yes
-
-				IF = {
-					limit = { has_country_flag = IDC_monarchist_movement_flag }
-					delete_unit_template_and_units = {
-						division_template = "Royal Private"
-						disband = yes #if yes, will refund equipment/manpower.
-					}
-
-					division_template = {
-						name = "Royal Private"		
-						division_names_group = BEL_INF_01
-						regiments = {
-							infantry = { x = 0 y = 0 }
-							infantry = { x = 0 y = 1 }
-							infantry = { x = 1 y = 0 }
-						}
-						support = {
-						}
-					}
-
-					capital_scope = { 
-						create_unit = {
-							division = "name = \"1. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"2. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-					}
-				}
-
-				IF = {
-					limit = { has_country_flag = IDC_vietcong_unit_flag }
-					delete_unit_template_and_units = {
-						division_template = "Viet Cong"
-						disband = yes #if yes, will refund equipment/manpower.
-					}
-
-					division_template = {
-						name = "Viet Cong"		
-						division_names_group = BEL_INF_01
-						regiments = {
-							irregular_infantry = { x = 0 y = 0 }
-							irregular_infantry = { x = 0 y = 1 }
-							irregular_infantry = { x = 0 y = 2 }
-							irregular_infantry = { x = 1 y = 0 }
-							irregular_infantry = { x = 1 y = 1 }
-						}
-						support = {
-						}
-					}
-
-					capital_scope = { 
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.4 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-					}
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_soviet_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = SOV
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = SOV
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = SOV
-					}
-					add_manpower = 15000
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_chinese_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = CHI
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = CHI
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = CHI
-					}
-					add_manpower = 15000
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_japanese_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = JAP
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = JAP
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = JAP
-					}
-					add_manpower = 15000
-				}
-				hidden_effect = {
-					if = {
-						limit = { has_country_flag = has_IDC_independence_war_controller }
-						random_country = {
-							limit = { has_country_flag = has_IDC_independence_war_starter }
-							white_peace = PREV
-							remove_wargoal = {
-								type = all
-								target = PREV
+						ROOT = {
+							add_to_war = {
+								targeted_alliance = PREV
+								enemy = FRA
+								hostility_reason = asked_to_join
 							}
-							PREV = {
-								add_to_war = {
-									targeted_alliance = PREV
-									enemy = FRA
-									hostility_reason = asked_to_join
-								}
-								give_military_access = PREV
-							}
+							give_military_access = PREV
 						}
 					}
-					else = {
-						declare_war_on = {
-							target = FRA
-							type = independence_wargoal
-						}
+				}
+				else = { # 이 상황은 원래 발생하면 안되기에 아래 효과 복붙.
+					declare_war_on = {
+						target = FRA
+						type = independence_wargoal
+					}
+					hidden_effect = {
 						every_other_country = {
 							limit = {
 								OR = {
@@ -2276,6 +2289,7 @@ shared_focus = {
 									original_tag = CAM
 								}
 								is_subject_of = FRA
+								NOT = { has_war_with = ROOT }
 							}
 							ROOT = {
 								declare_war_on = {
@@ -2285,198 +2299,24 @@ shared_focus = {
 							}
 						}
 					}
-					every_other_country = {
-						limit = {
-							has_country_flag = has_IDC_independence_war_controller
-							has_war_with = ROOT
-							NOT = { is_subject_of = FRA }
-						}
-						white_peace = ROOT
-						remove_wargoal = {
-							type = all
-							target = ROOT
-						}
-						ROOT = { give_military_access = PREV }
+				}
+				every_other_country = {
+					limit = {
+						has_country_flag = has_IDC_independence_war_controller
+						has_war_with = ROOT
+						NOT = { is_subject_of = FRA }
 					}
+					white_peace = ROOT
+					remove_wargoal = {
+						type = all
+						target = ROOT
+					}
+					ROOT = { give_military_access = PREV }
 				}
 			}
 		}
 		else = {
 			hidden_effect = {
-				set_country_flag = has_IDC_independence_war_starter
-				set_global_flag = IDC_independence_war_ongoing
-				drop_cosmetic_tag = yes
-				IF = {
-					limit = {
-						is_subject = yes
-					}
-					OVERLORD = {
-						set_autonomy = {
-							target = ROOT
-							autonomy_state = autonomy_free
-							end_wars = yes
-							end_civil_wars = yes
-						}
-					}
-				}
-				
-				IDC_free_country_effect = yes
-
-				IF = {
-					limit = { has_country_flag = IDC_monarchist_movement_flag }
-					delete_unit_template_and_units = {
-						division_template = "Royal Private"
-						disband = yes #if yes, will refund equipment/manpower.
-					}
-
-					division_template = {
-						name = "Royal Private"		
-						division_names_group = BEL_INF_01
-						regiments = {
-							infantry = { x = 0 y = 0 }
-							infantry = { x = 0 y = 1 }
-							infantry = { x = 1 y = 0 }
-						}
-						support = {
-						}
-					}
-
-					capital_scope = { 
-						create_unit = {
-							division = "name = \"1. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"2. Royal Private\" division_template = \"Royal Private\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-					}
-				}
-
-				IF = {
-					limit = { has_country_flag = IDC_vietcong_unit_flag }
-					delete_unit_template_and_units = {
-						division_template = "Viet Cong"
-						disband = yes #if yes, will refund equipment/manpower.
-					}
-
-					division_template = {
-						name = "Viet Cong"		
-						division_names_group = BEL_INF_01
-						regiments = {
-							irregular_infantry = { x = 0 y = 0 }
-							irregular_infantry = { x = 0 y = 1 }
-							irregular_infantry = { x = 0 y = 2 }
-							irregular_infantry = { x = 1 y = 0 }
-							irregular_infantry = { x = 1 y = 1 }
-						}
-						support = {
-						}
-					}
-
-					capital_scope = { 
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.4 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-						create_unit = {
-							division = "name = \"Viet Cong\" division_template = \"Viet Cong\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-							owner = ROOT
-						}
-					}
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_soviet_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = SOV
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = SOV
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = SOV
-					}
-					add_manpower = 15000
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_chinese_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = CHI
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = CHI
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = CHI
-					}
-					add_manpower = 15000
-				}
-				IF = {
-					limit = {
-						has_country_flag = IDC_will_get_japanese_aid_flag
-					}
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-					add_offsite_building = {
-						type = arms_factory
-						level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 500
-						producer = JAP
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = JAP
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 150
-						producer = JAP
-					}
-					add_manpower = 15000
-				}
-
 				declare_war_on = {
 					target = FRA
 					type = independence_wargoal
