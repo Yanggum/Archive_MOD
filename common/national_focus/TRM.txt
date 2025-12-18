@@ -8179,7 +8179,7 @@ focus_tree = {
 	
 	focus = { #
 		id = TRN_new_order_movement
-		icon = GFX_focus_TRN_alliance_of_faith
+		icon = GFX_focus_TRN_new_order_movement
 		prerequisite = { 
 			focus = TRN_support_justice_task_force
 			focus = TRN_alliance_of_faith
@@ -8197,7 +8197,24 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			if = {
+				limit = {
+					power_balance_value = {
+						id = TRM_power_balance
+						value < 0.01
+					}
+				}
+				custom_effect_tooltip = "값이 0.01을 보다 높으면 이게 나와요"
+			}
+			if = {
+				limit = {
+					power_balance_value = {
+						id = TRM_power_balance
+						value > 0.01
+					}
+				}
+				custom_effect_tooltip = "값이 0.01 보다 낮으면 이게 나와요"
+			}
 		}
 	}
 
@@ -8243,22 +8260,24 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 40
 			add_stability = 0.02
-			effect_tooltip = {
-				swap_ideas = {
-					add_idea = TRM_defender_of_faith_ns_2_fake
-					remove_idea = TRM_defender_of_faith_ns_fake
+			TRN_Utazumi_Sakurako = {
+				effect_tooltip = {
+					swap_ideas = {
+						add_idea = TRM_defender_of_faith_ns_2_fake
+						remove_idea = TRM_defender_of_faith_ns_fake
+					}
 				}
 			}
 			hidden_effect = {
-				add_trait = {
-					character = TRN_Utazumi_Sakurako
-					slot = political_advisor
-					trait = TRM_defender_of_faith_2
-				}
 				remove_trait = {
 					character = TRN_Utazumi_Sakurako
 					slot = political_advisor
 					trait = TRM_defender_of_faith
+				}
+				add_trait = {
+					character = TRN_Utazumi_Sakurako
+					slot = political_advisor
+					trait = TRM_defender_of_faith_2
 				}
 			}
 		}
@@ -15810,7 +15829,11 @@ focus_tree = {
 		id = TRN_optimize_production_line
 		icon = GFX_focus_generic_printing_press
 		prerequisite = { focus = TRN_flexible_line }
-		x = -1
+		prerequisite = { 
+			focus = TRN_motors_support 
+			focus = TRN_design_bureau_support
+		}
+		x = 1
 		y = 1
 		relative_position_id = TRN_flexible_line
 		cost = 10
@@ -15844,10 +15867,10 @@ focus_tree = {
 	focus = {
 		id = TRN_arsenal_support
 		icon = GFX_focus_TRN_arsenal_support
-		prerequisite = { focus = TRN_military_factory_maintenance }
-		x = 1
+		prerequisite = { focus = TRN_increase_military_budget }
+		x = 0
 		y = 1
-		relative_position_id = TRN_military_factory_maintenance
+		relative_position_id = TRN_increase_military_budget
 		cost = 5
 		available = {
 
@@ -15947,7 +15970,7 @@ focus_tree = {
 		id = TRN_armor_refit
 		icon = GFX_focus_TRN_armor_refit
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 6
+		x = 5
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -15968,6 +15991,11 @@ focus_tree = {
 			}
 
 			army_experience = 15
+
+			reduce_focus_completion_cost = {
+				focus = TRN_trinity_army_reform
+				cost = -180
+			}
 		}
 	}
 
@@ -15975,7 +16003,7 @@ focus_tree = {
 		id = TRN_germany_army_reform_1
 		icon = GFX_focus_generic_tank_assault
 		prerequisite = { focus = TRN_armor_refit }
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = TRN_armor_refit
 		cost = 5
@@ -16069,13 +16097,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
-			add_mastery_bonus = {
-				bonus = 0.1
-				days = 240
-				track = armor
-				name = TRN_germany_army_reform_2
-			}
+
 			add_tech_bonus = {
 				name = TRN_germany_army_reform_3
 				ahead_reduction = 1
@@ -16122,6 +16144,18 @@ focus_tree = {
 		}
 
 		completion_reward = {
+
+			reduce_focus_completion_cost = {
+				focus = TRN_trinity_army_reform
+				cost = 180
+			}
+			
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 240
+				track = armor
+				name = TRN_germany_army_reform_4
+			}
 			add_command_power = 25
 			army_experience = 35
 			custom_effect_tooltip = tooltip_white_line
@@ -16151,7 +16185,7 @@ focus_tree = {
 		id = TRN_trinity_army_reform
 		icon = GFX_focus_TRN_army
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 10
+		x = 9
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -16170,6 +16204,11 @@ focus_tree = {
 				category = land_doctrine
 			}
 			army_experience = 15
+
+			reduce_focus_completion_cost = {
+				focus = TRN_armor_refit
+				cost = -180
+			}
 		}
 	}
 
@@ -16177,7 +16216,7 @@ focus_tree = {
 		id = TRN_retracing_the_mechanized_brigade_tragedy
 		icon = GFX_focus_FIN_motti_tactics
 		prerequisite = { focus = TRN_trinity_army_reform }
-		x = 2
+		x = 1
 		y = 1
 		relative_position_id = TRN_trinity_army_reform
 		cost = 5
@@ -16313,6 +16352,11 @@ focus_tree = {
 
 		completion_reward = {
 
+			reduce_focus_completion_cost = {
+				focus = TRN_armor_refit
+				cost = 180
+			}
+
 			add_mastery_bonus = {
 				bonus = 0.1
 				days = 180
@@ -16401,7 +16445,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_military_chaplain
-		icon = GFX_focus_generic_military_mission
+		icon = GFX_focus_TRN_military_chaplain
 		prerequisite =  { focus = TRN_general_staff_reform focus = TRN_kivotos_drone }
 		x = 1
 		y = 1
@@ -16506,10 +16550,33 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRN_special_forces
+		icon = GFX_focus_generic_drone
+		prerequisite = { 
+			focus = TRN_supply_line_improvements
+			focus = TRN_generic_army_reform
+		}
+		x = 0
+		y = 2
+		relative_position_id = TRN_military_chaplain
+		cost = 10
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
 		id = TRN_control_of_baltic_sea
 		icon = GFX_focus_TRN_navy
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 18
+		x = 28
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -17395,7 +17462,7 @@ focus_tree = {
 		id = TRN_air_force_focus_01
 		icon = GFX_focus_TRN_airforce
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 25
+		x = 19
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -17413,7 +17480,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_air_force_focus_02
-		icon = GFX_focus_PRC_establish_domestic_aircraft_production
+		icon = GFX_focus_generic_air_research_boost
 		prerequisite = { focus = TRN_air_force_focus_01 }
 		x = -2
 		y = 1
@@ -17433,7 +17500,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_air_force_focus_03
-		icon = GFX_focus_SOV_flying_clubs
+		icon = GFX_focus_SOV_women_in_aviation
 		prerequisite = { focus = TRN_air_force_focus_01 }
 		x = 2
 		y = 1
@@ -17455,8 +17522,8 @@ focus_tree = {
 		id = TRN_air_force_focus_99
 		icon = GFX_goal_generic_air_naval_bomber
 		prerequisite = { focus = TRN_control_of_baltic_sea }
-		prerequisite = { focus = TRN_air_force_focus_02 }
-		x = 2
+		#prerequisite = { focus = TRN_air_force_focus_02 }
+		x = -2
 		y = 2
 		relative_position_id = TRN_control_of_baltic_sea
 		cost = 5
