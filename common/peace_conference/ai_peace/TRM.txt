@@ -80,6 +80,11 @@ peace_ai_desires = {
 		ai_desire = 300
 	}
 
+	### /* 트리니티 (민주) AI 조정 */
+	### 기본적으로 민주주의 AI는 다른 국가의 땅을 협정에서 잘 얻으려 하지 않음 (우선도 낮음)
+	### 민주주의 트리니티가 평화 협정에서 다른 국가 땅을 다 되돌려주는 종전 협정을 하지 않게 하기 위해
+	### AI에 주 점령에 대한 가중치 부여
+
 	TRM_nagisa_annex_gehenna = {
 		peace_action_type = take_states
 		enable = {
@@ -90,14 +95,64 @@ peace_ai_desires = {
 				}
 			}
 			ROOT = { 
-				original_tag = TRM
-				has_country_leader = {
-					character = TRN_Kirifuji_Nagisa
-					ruling_only = yes
+				AND = {
+					original_tag = TRM
+					has_government = democratic
 				}
 			}
 		}
         ai_desire = 1000
+	}
+
+	TRM_nagisa_annex_arius = {
+		peace_action_type = take_states
+		enable = {
+			FROM.FROM.FROM = {
+				OR = {
+					is_core_of = ARI
+				}
+			}
+			ROOT = { 
+				AND = {
+					original_tag = TRM
+					has_government = democratic
+				}
+			}
+		}
+        ai_desire = 1000
+	}
+	
+	TRM_nagisa_liberate_and_force_government_ban = {
+		peace_action_type = { force_government liberate } # 정부 교체/그냥 독립만 시키기 (민주주의 AI가 정부교체를 선호함)
+		enable = {
+			ROOT = { 
+				AND = {
+					original_tag = TRM
+					has_government = democratic
+				}
+			}
+		}
+		ai_desire = -1000 # 매우 강하게 거부
+	}
+	
+	TRM_nagisa_puppet_peace_action = {
+		peace_action_type = { puppet } # 나기사에게는 신성통치령이 없으므로, 대신 일반적인 위성국에 협정 가중치 부여
+		enable = {
+			ROOT = { 
+				AND = {
+					original_tag = TRM
+					has_government = democratic
+				}
+			}
+			FROM.FROM.FROM = {
+				AND = {
+					NOT = { is_core_of = GEM }
+					NOT = { is_core_of = GEH }
+					NOT = { is_core_of = ARI }
+				}
+			}
+		}
+		ai_desire = 300
 	}
 }
 
