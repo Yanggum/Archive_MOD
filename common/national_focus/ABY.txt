@@ -10888,6 +10888,30 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = { has_idea = BA_isolation }
+				swap_ideas = {
+					remove_idea = BA_isolation
+					add_idea = limited_exports
+				}
+			}
+			else_if = {
+				limit = { NOT = {has_idea = BA_isolation} }
+				add_political_power = 100
+				add_stability = 0.05
+			}
+			every_country = {
+				limit = {
+					has_opinion_modifier = BA_another_demension
+					capital_scope = {
+						is_on_continent = europe
+					}
+				}
+				remove_opinion_modifier = {
+					target = PREV
+					modifier = BA_another_demension #흥신소 = 룩셈부르크 대공국, 대외적으로 '대전이 국가' 아님
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -10915,7 +10939,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			#중점 완료시 얻는 보상
+            create_wargoal = {
+                type = annex_everything
+                target = HUN
+            }
+			set_country_flag = ABY_flag_hungary_divide
+			custom_effect_tooltip = ABY_hungary_divide_tt
+			#중점 완료시 얻는 보상 
 		}
 	}
 	focus = {
@@ -10942,6 +10972,34 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			every_state = {
+				limit = {
+					AND = {
+						is_controlled_by = ABY
+						OR = {
+							state = 9
+							state = 972
+							state = 72
+							state = 74
+							state = 75
+							state = 4
+							state = 152
+							state = 153
+							state = 1051
+							state = 975
+							state = 976
+							state = 848
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -10965,10 +11023,22 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			YUG = {
+				has_war = no
+				is_puppet = no
+				exists = yes
+				is_in_faction = no
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			YUG = {
+				country_event = {
+					id = ABY_shiroko_fas_event.5
+					hours = 5
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -10996,6 +11066,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			SLO = {
+				country_event = {
+					id = ABY_shiroko_fas_event.2
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11023,6 +11099,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_culture_infra_tt
+			set_country_flag = ABY_flag_culture_infra
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11050,6 +11128,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.15
+			}
+			add_stability = 0.05
+			add_political_power = 100
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11077,6 +11163,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = ITA
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11100,10 +11190,38 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			any_country = {
+				is_puppet_of = ABY
+				has_cosmetic_tag = ABY_hungary_puppet_YUG
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					any_country = {
+						is_puppet_of = ABY
+						has_cosmetic_tag = ABY_hungary_puppet_YUG
+					}
+				}
+				every_country = {
+					limit = {
+						is_puppet_of = ABY
+						has_cosmetic_tag = ABY_hungary_puppet_YUG
+					}
+					YUG = {
+						annex_country = {
+							target = PREV
+							transfer_troops = yes 
+						}
+					}
+				}
+				973 = {add_core_of = YUG}
+				974 = {add_core_of = YUG}
+				custom_effect_tooltip = ABY_tt_shiroko_fas_outdoor_minus_5
+				add_to_variable = {ABY_var_shiroko_outdoor = -5}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11127,10 +11245,22 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			ROM = {
+				has_war = no
+				is_puppet = no
+				exists = yes
+				is_in_faction = no
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			ROM = {
+				country_event = {
+					id = ABY_shiroko_fas_event.5
+					hours = 5
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11161,6 +11291,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_cosmetic_tag = ABY_united_states
+			set_country_flag = ABY_flag_recover_homeschool
+			custom_effect_tooltip = ABY_homeschool_tt
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_30
+			add_to_variable = {ABY_var_shiroko_indoor = 30}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11188,6 +11323,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_industry_infra_tt
+			set_country_flag = ABY_flag_industry_infra
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11215,6 +11352,35 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			custom_effect_tooltip = ABY_tt_ethics_6_add
+			hidden_effect = {
+				if = {
+					limit = {
+						has_completed_focus = ABY_focus_shiroko_fas_22
+					}
+					add_to_variable = {ABY_var_shiroko_indoor = 15}
+				}
+				if = {
+					limit = {
+						has_completed_focus = ABY_focus_shiroko_fas_28
+					}
+					add_to_variable = {ABY_var_shiroko_indoor = 15}
+				}
+				if = {
+					limit = {
+						check_variable = {ABY_var_ethics_6 = 3}
+					}
+					add_to_variable = {ABY_var_shiroko_indoor = 45}
+				}
+				if = {
+					limit = {
+						check_variable = {ABY_var_ethics_6 = 2}
+					}
+					add_to_variable = {ABY_var_shiroko_indoor = 30}
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11242,6 +11408,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.05
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11269,6 +11449,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			add_stability = 0.1
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11296,6 +11479,22 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 44
+						state = 805
+						state = 934
+						state = 48
+						state = 211
+						state = 212
+						state = 801
+						state = 184
+						state = 731
+					}
+				}
+				add_claim_by = YUG
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11323,6 +11522,39 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 154
+						state = 834
+						state = 192
+					}
+				}
+				add_claim_by = ROM
+			}
+			if = {
+				limit = {
+					any_country = {
+						is_puppet_of = ABY
+						has_cosmetic_tag = ABY_hungary_puppet_ROM
+					}
+				}
+				every_country = {
+					limit = {
+						is_puppet_of = ABY
+						has_cosmetic_tag = ABY_hungary_puppet_ROM
+					}
+					ROM = {
+						annex_country = {
+							target = PREV
+							transfer_troops = yes 
+						}
+					}
+				}
+				154 = {add_core_of = ROM}
+				custom_effect_tooltip = ABY_tt_shiroko_fas_outdoor_minus_5
+				add_to_variable = {ABY_var_shiroko_outdoor = -5}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11350,6 +11582,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_country_flag = ABY_flag_ruthenian_dominion
+			custom_effect_tooltip = ABY_ruthenia_tt
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11373,10 +11607,22 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			GEH = {
+				has_war = no
+				is_puppet = no
+				exists = yes
+				is_in_faction = no
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			GEH = {
+				country_event = {
+					id = ABY_shiroko_fas_event.5
+					hours = 5
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11407,6 +11653,27 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_ethics_1_remove
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {ABY_var_ethics_6 = 1}
+					}
+					add_to_variable = { ABY_var_ethics_1 = -1 }
+					add_to_variable = { ABY_var_ethics_resistance_target = -0.005 }
+					add_to_variable = { ABY_var_ethics_compliance_growth = 0.01 }
+					add_to_variable = { ABY_var_ethics_resistance_growth = -0.01 }
+				}
+				if = {
+					limit = {
+						check_variable = {ABY_var_ethics_6 = 2}
+					}
+					add_to_variable = { ABY_var_ethics_1 = -2 }
+					add_to_variable = { ABY_var_ethics_resistance_target = -0.01 }
+					add_to_variable = { ABY_var_ethics_compliance_growth = 0.02 }
+					add_to_variable = { ABY_var_ethics_resistance_growth = -0.02 }
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11434,6 +11701,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			custom_effect_tooltip = ABY_tt_ethics_6_up
+			hidden_effect = {
+				add_to_variable = { ABY_var_ethics_conscription_factor = 0.025 }
+				add_to_variable = { ABY_var_ethics_party_popularity_stability_factor = 0.05 }
+				add_to_variable = { ABY_var_ethics_political_power_cost = 0.1 }
+			}
+			add_political_power = 100
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11464,6 +11740,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_country_flag = ABY_flag_divide_ITA
+			custom_effect_tooltip = ABY_italy_divide_tt
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11494,7 +11772,23 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			create_faction_from_template = BA_faction_template_ABY_small_entente
+			custom_effect_tooltip = ABY_tt_shiroko_fas_outdoor_30
+			add_to_variable = {ABY_var_shiroko_outdoor = 30}
 			#중점 완료시 얻는 보상
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = ROM
+						original_tag = YUG
+						original_tag = GEH
+					}
+				}
+				country_event = {
+					id = generic.5
+					hours = 8
+				}
+			}
 		}
 	}
 	focus = {
@@ -11520,10 +11814,19 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			155 = {
+				is_controlled_by = ABY
+				compliance > 50
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			155 = {add_core_of = ABY}
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_30
+			add_to_variable = {ABY_var_shiroko_indoor = 30}
+			custom_effect_tooltip = ABY_tt_shiroko_fas_outdoor_30
+			add_to_variable = {ABY_var_shiroko_outdoor = 30}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11551,6 +11854,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_country_leader_trait = ABY_trait_school_leader_2
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11581,6 +11885,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.95
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11608,6 +11918,24 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ABY_tt_shiroko_fas_indoor_10
+			add_to_variable = {ABY_var_shiroko_indoor = 10}
+			custom_effect_tooltip = ABY_tt_ethics_6_up
+			custom_effect_tooltip = ABY_tt_ethics_7_remove
+			hidden_effect = {
+				add_to_variable = { ABY_var_ethics_conscription_factor = 0.025 }
+				add_to_variable = { ABY_var_ethics_party_popularity_stability_factor = 0.05 }
+				add_to_variable = { ABY_var_ethics_political_power_cost = 0.1 }
+				if = {
+					limit = {
+						check_variable = {ABY_var_ethics_7 = 1}
+					}
+					add_to_variable = { ABY_var_ethics_7 = -1 }
+					add_to_variable = { ABY_var_ethics_stability_factor = -0.025 }
+					add_to_variable = { ABY_var_ethics_political_power_factor = -0.025 }
+					add_to_variable = { ABY_var_ethics_drift_defence_factor = 0.075 }
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11638,6 +11966,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			YUG = {
+				country_event = {
+					id = ABY_shiroko_fas_event.8
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11665,6 +11999,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			ROM = {
+				country_event = {
+					id = ABY_shiroko_fas_event.8
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11688,10 +12028,15 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			43 = {
+				is_controlled_by = ABY
+				compliance > 50
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			43 = {add_core_of = ABY}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -11722,6 +12067,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			#ABY_scripted_effect_golden_throne_count_effect_2 = yes
+			add_country_leader_trait = ABY_trait_wolf_god_2
+			hidden_effect = {
+				add_dynamic_modifier = {
+					modifier = ABY_dynamic_modifier_golden_throne
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}

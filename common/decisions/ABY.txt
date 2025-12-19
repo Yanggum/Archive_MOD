@@ -22953,11 +22953,11 @@ ABY_descision_category_invite_balkan = {
 
 		visible = {
 			tag = ABY
-			has_country_flag = ABY_flag_divide_ITA
+			has_country_flag = ABY_flag_divide_ITA_X
 		}
 
 		available = {
-			has_country_flag = ABY_flag_divide_ITA
+			has_country_flag = ABY_flag_divide_ITA_X
 			735 = {is_controlled_by_ROOT_or_subject = yes}
 			1058 = {is_controlled_by_ROOT_or_subject = yes}
 			158 = {is_controlled_by_ROOT_or_subject = yes}
@@ -25501,6 +25501,456 @@ ABY_descision_category_kivotos = {
 				create_unit = {
 					division = "name = \"Nephthys PMC division\" division_template = \"Nephthys PMC division\" start_experience_factor = 0.1 start_equipment_factor = 1"
 					owner = ABY
+				}
+			}
+		}
+	}
+}
+ABY_descision_category_shiroko_fas = {
+	ABY_descision_shiroko_fas_hun_seged = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_hungary_divide
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			973 = {is_fully_controlled_by = ABY}
+			974 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			create_dynamic_country = {
+				original_tag = ABC
+				copy_tag = ABC
+				set_cosmetic_tag = ABY_hungary_puppet_YUG
+				every_state = {
+					limit = {
+						OR = {
+							state = 973
+							state = 974
+						}
+					}
+					transfer_state_to = PREV
+					add_core_of = PREV
+				}
+				ABY = { puppet = PREV }
+				ABY = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_two_world_republic
+					}
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_hun_debrezen = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_hungary_divide
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			154 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			create_dynamic_country = {
+				original_tag = ABC
+				copy_tag = ABC
+				set_cosmetic_tag = ABY_hungary_puppet_ROM
+				every_state = {
+					limit = {
+						OR = {
+							state = 154
+						}
+					}
+					transfer_state_to = PREV
+					add_core_of = PREV
+				}
+				ABY = { puppet = PREV }
+				ABY = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_two_world_republic
+					}
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_ruthenia = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_ruthenian_dominion
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			73 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			create_dynamic_country = {
+				original_tag = ABC
+				copy_tag = ABC
+				set_cosmetic_tag = ABY_puppet_CRP
+				every_state = {
+					limit = {
+						is_controlled_by = ABY
+						OR = {
+							state = 73
+							state = 89
+						}
+					}
+					transfer_state_to = PREV
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 73
+							state = 89
+						}
+					}
+					add_core_of = PREV
+				}
+				ABY = { puppet = PREV }
+				ABY = {
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_two_world_republic
+					}
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_culture_infra = {
+		icon = GFX_decision_eng_trade_unions_support
+
+		on_map_mode = map_and_decisions_view
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = { 
+				is_core_of = ABY
+			}
+		}
+
+        allowed = {
+            tag = ABY
+        }
+
+		visible = {
+			tag = ABY
+			has_country_flag = ABY_flag_culture_infra
+			NOT = {
+				FROM = {
+					has_state_flag = ABY_flag_infra_installed
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				FROM = {
+					has_state_flag = ABY_flag_infra_installed
+				}
+			}
+			FROM = {
+				is_controlled_by = ABY
+				infrastructure > 4
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 100
+
+		cost = 50
+
+		remove_effect = {
+			add_to_variable = {ABY_var_shiroko_indoor = 3}
+			FROM = {
+				set_state_flag = ABY_flag_infra_installed
+				add_dynamic_modifier = {
+					modifier = ABY_state_modifier_culture_infra
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_industry_infra = {
+		icon = GFX_decision_eng_trade_unions_support
+
+		on_map_mode = map_and_decisions_view
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = { 
+				is_core_of = ABY
+			}
+		}
+
+        allowed = {
+            tag = ABY
+        }
+
+		visible = {
+			tag = ABY
+			has_country_flag = ABY_flag_industry_infra
+			NOT = {
+				FROM = {
+					has_state_flag = ABY_flag_infra_installed
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				FROM = {
+					has_state_flag = ABY_flag_infra_installed
+				}
+			}
+			FROM = {
+				is_controlled_by = ABY
+				infrastructure > 4
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 100
+
+		cost = 50
+
+		remove_effect = {
+			add_to_variable = {ABY_var_shiroko_indoor = 3}
+			FROM = {
+				set_state_flag = ABY_flag_infra_installed
+				add_dynamic_modifier = {
+					modifier = ABY_state_modifier_industry_infra
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_veneto = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_divide_ITA
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			159 = {is_fully_controlled_by = ABY}
+			160 = {is_fully_controlled_by = ABY}
+			850 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			every_state = {
+				limit = {
+					OR = {
+						state = 159
+						state = 160
+						state = 850
+					}
+					is_controlled_by = ABY
+				}
+				transfer_state_to = LBV
+			}
+			ABY = { puppet = LBV }
+			LBV = {set_cosmetic_tag = ABY_united_states_puppet_LBV}
+			ABY = {
+				set_autonomy = {
+					target = LBV
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_papal = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_divide_ITA
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			157 = {is_fully_controlled_by = ABY}
+			161 = {is_fully_controlled_by = ABY}
+			2 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			every_state = {
+				limit = {
+					is_core_of = PAP
+					is_controlled_by = ABY
+				}
+				transfer_state_to = PAP
+			}
+			ABY = { puppet = PAP }
+			PAP = {set_cosmetic_tag = ABY_united_states_puppet_PAP}
+			ABY = {
+				set_autonomy = {
+					target = PAP
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_toscana = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_divide_ITA
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			162 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			every_state = {
+				limit = {
+					is_core_of = TOS
+					is_controlled_by = ABY
+				}
+				transfer_state_to = TOS
+			}
+			ABY = { puppet = TOS }
+			TOS = {set_cosmetic_tag = ABY_united_states_puppet_TOS}
+			ABY = {
+				set_autonomy = {
+					target = TOS
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_two_sicilia = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_divide_ITA
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			115 = {is_fully_controlled_by = ABY}
+			117 = {is_fully_controlled_by = ABY}
+			156 = {is_fully_controlled_by = ABY}
+			849 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			every_state = {
+				limit = {
+					is_core_of = TTS
+					is_controlled_by = ABY
+				}
+				transfer_state_to = TTS
+			}
+			ABY = { puppet = TTS }
+			TTS = {set_cosmetic_tag = ABY_united_states_puppet_TTS}
+			ABY = {
+				set_autonomy = {
+					target = TTS
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+	}
+	ABY_descision_shiroko_fas_spm = {
+		priority = 1
+		fire_only_once = yes
+		
+		visible = {       
+			tag = ABY
+			has_country_flag = ABY_flag_divide_ITA
+		}
+		                 
+        allowed = {
+            tag = ABY
+        }        
+
+		available = {
+			114 = {is_fully_controlled_by = ABY}
+			158 = {is_fully_controlled_by = ABY}
+			735 = {is_fully_controlled_by = ABY}
+			1058 = {is_fully_controlled_by = ABY}
+		}         
+
+		complete_effect = {
+			add_to_variable = {ABY_var_shiroko_outdoor = 5}
+			every_state = {
+				limit = {
+					OR = {
+						state = 114 
+						state = 158 
+						state = 735 
+						state = 1058
+					}
+					is_controlled_by = ABY
+				}
+				transfer_state_to = SPM
+				add_core_of = SPM
+			}
+			ABY = { puppet = SPM }
+			SPM = {set_cosmetic_tag = ABY_united_states_puppet_SPM}
+			ABY = {
+				set_autonomy = {
+					target = SPM
+					autonomy_state = autonomy_puppet
 				}
 			}
 		}
