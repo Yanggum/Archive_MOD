@@ -16,11 +16,806 @@ focus_tree = {
 	}
 	default = no
 
+	################### 유스티나 성도회
+
+	focus = {
+		id = ARI_justina_council_transfer
+		icon = GFX_focus_BEL_christian_corporatism
+		cost = 5
+		x = 5
+		y = 0
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 25
+		}
+	}
+	focus = {
+		id = ARI_our_own_method
+		icon = GFX_focus_ARI_our_own_method
+		prerequisite = {
+			focus = ARI_justina_council_transfer
+		}
+		mutually_exclusive = {
+			focus = ARI_danzig_advisor_recruitment
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_justina_council_transfer
+		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_army_attack_factor = 0.05
+				tooltip = army_attack_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
+			add_command_power = 25
+			army_experience = 15
+		}
+	}
+	focus = {
+		id = ARI_danzig_advisor_recruitment
+		icon = GFX_focus_GER_prussian_legacy
+		prerequisite = {
+			focus = ARI_justina_council_transfer
+		}
+		mutually_exclusive = {
+			focus = ARI_our_own_method
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_justina_council_transfer
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery = {
+				amount = 150
+				track = infantry
+			}
+
+			add_doctrine_cost_reduction = {
+				name = GER_the_prussian_legacy
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = ARI_ancient_combat_analysis
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = {
+			focus = ARI_our_own_method
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_our_own_method
+		completion_reward = {
+			
+			army_experience = 25
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 280
+				name = ARI_ancient_combat_analysis
+
+				track = infantry
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_army_org_factor = -0.05 
+				tooltip = army_org_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_modifier_army_sub_unit_category_halo_attack_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_modifier_army_sub_unit_category_halo_defence_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_defence_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_fear_and_terror
+		icon = GFX_focus_SWE_let_fly_all_guns
+		prerequisite = {
+			focus = ARI_our_own_method
+		}
+		cost = 5
+		x = -3
+		y = 1
+		relative_position_id = ARI_our_own_method
+		completion_reward = {
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_7th_classroom = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+			add_tech_bonus = {
+				name = ARI_fear_and_terror
+				bonus = 0.5
+				uses = 2
+				category = artillery
+			}
+			add_tech_bonus = {
+				name = ARI_fear_and_terror
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_army_artillery_defence_factor = 0.1
+				tooltip = army_artillery_defence_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_council_acquisition
+		icon = GFX_focus_Arius_logo
+		prerequisite = {
+			focus = ARI_ancient_combat_analysis
+		}
+		prerequisite = {
+			focus = ARI_fear_and_terror
+		}
+		cost = 5
+		x = -2
+		y = 2
+		relative_position_id = ARI_our_own_method
+		completion_reward = {
+			
+			army_experience = 25
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_army_artillery_attack_factor = 0.1
+				tooltip = army_artillery_attack_factor_tt
+			}
+
+			custom_effect_tooltip = {
+				localization_key = focus_completed_trigger_modify_effect_tt
+				FOCUS = ARI_chemical_warfare_preparation
+			}
+			custom_effect_tooltip = ARI_chemical_warfare_modifier_tt
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_army_speed_factor = 0.05
+				tooltip = army_speed_factor_tt
+			}
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_modifier_army_sub_unit_category_halo_attack_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_attack_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_frontline_fire_brigade
+		icon = GFX_focus_PRC_develop_the_army
+		prerequisite = {
+			focus = ARI_council_acquisition
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_council_acquisition
+		completion_reward = {
+			
+			army_experience = 25
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_army_org_factor = -0.05 
+				tooltip = army_org_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_modifier_army_sub_unit_category_halo_attack_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_modifier_army_sub_unit_category_halo_defence_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_defence_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_ss_tactics_imitation
+		icon = GFX_focus_generic_little_entente
+		prerequisite = {
+			focus = ARI_danzig_advisor_recruitment
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_danzig_advisor_recruitment
+		completion_reward = {
+			
+			army_experience = 25
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 280
+				name = ARI_ss_tactics_imitation
+
+				track = infantry
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_max_dig_in_factor = 0.05 
+				tooltip = max_dig_in_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_planning_speed = 0.05
+				tooltip = planning_speed_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_danzig_militia_recruitment
+		icon = GFX_focus_POL_clamp_down_on_danzig
+		prerequisite = {
+			focus = ARI_danzig_advisor_recruitment
+		}
+		cost = 5
+		x = 3
+		y = 1
+		relative_position_id = ARI_danzig_advisor_recruitment
+		completion_reward = {
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_3rd_classroom = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+			add_tech_bonus = {
+				name = ARI_danzig_militia_recruitment
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					has_template = "Militia Gedanensis"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Militia Gedanensis"
+					disband = yes
+				}
+			}
+
+			division_template = {
+				name = "Militia Gedanensis"
+				division_names_group = ARI_HAL_01
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+				}
+				support = {
+					artillery = { x = 0 y = 0 }
+				}
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 85 }
+				create_unit = {
+					division = "name = \"Militia Gedanensis\" division_template = \"Militia Gedanensis\" start_experience_factor = 0.05 start_equipment_factor = 0.9"
+					owner = ARI
+					count = 3
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_production_facility_expansion
+		icon = GFX_focus_AUS_raid_military_storages
+		prerequisite = {
+			focus = ARI_ss_tactics_imitation
+		}
+		prerequisite = {
+			focus = ARI_danzig_militia_recruitment
+		}
+		prerequisite = {
+			focus = ARI_integration_of_work_classroom_into_production
+		}
+		cost = 5
+		x = 3
+		y = 2
+		relative_position_id = ARI_danzig_advisor_recruitment
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_mobilization_speed = 0.05
+				tooltip = mobilization_speed_tt
+			}
+			add_to_variable = { 
+				ARI_army_land_doctrine_cost_factor = -0.05
+				tooltip = land_doctrine_cost_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_arius_militarism
+		icon = GFX_focus_chi_army_reform
+		prerequisite = {
+			focus = ARI_production_facility_expansion
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_production_facility_expansion
+		completion_reward = {
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_experience_gain_army_factor = 0.05
+				tooltip = experience_gain_army_factor_tt
+			}
+			add_to_variable = { 
+				ARI_army_mobilization_speed = 0.05
+				tooltip = mobilization_speed_tt
+			}
+			add_to_variable = { 
+				ARI_army_command_power_gain_mult = 0.10
+				tooltip = command_power_gain_mult_tt
+			}
+
+			custom_effect_tooltip = {
+				localization_key = focus_completed_trigger_modify_effect_tt
+				FOCUS = ARI_chemical_warfare_preparation
+			}
+			custom_effect_tooltip = ARI_chemical_warfare_modifier_tt
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_chemical_warfare_preparation
+		icon = GFX_focus_RAJ_a_private_military
+		prerequisite = {
+			focus = ARI_our_own_method
+			focus = ARI_danzig_advisor_recruitment
+		}
+		cost = 5
+		x = 0
+		y = 3
+		relative_position_id = ARI_justina_council_transfer
+		completion_reward = {
+			custom_effect_tooltip = ARI_unlock_operational_planning_chemical_warfare_tt
+			effect_tooltip = { #This is done for tooltip purposes
+				add_dynamic_modifier = { modifier = ARI_chemical_warfare_modifier }
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_army_artillery_attack_factor = 0.1
+				tooltip = army_artillery_attack_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_vulnerability_analysis
+		icon = GFX_focus_CHL_departemento_de_las_tropas_nacistas_de_asalto
+		prerequisite = {
+			focus = ARI_chemical_warfare_preparation
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+			army_experience = 15
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_doctrine_cost_reduction = {
+				name = GER_stormtroopers
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
+			}
+			add_tech_bonus = {
+				name = GER_stormtroopers
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_chemical_warfare_modifier_tt
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_army_infantry_attack_factor = 0.05
+				tooltip = army_infantry_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = GER_sturmtruppe_battalion_tt
+			hidden_effect = {
+				set_technology = { sturmtruppe_battalion_tech = 1 popup = no }
+			}
+		}
+	}
+	focus = {
+		id = ARI_chemical_facility_expansion
+		icon = GFX_focus_generic_reinforcing_the_supply_network
+		prerequisite = {
+			focus = ARI_chemical_warfare_preparation
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_chemical_warfare_modifier_tt
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_asymmetric_warfare
+		icon = GFX_focus_PRC_controlled_growth
+		prerequisite = {
+			focus = ARI_vulnerability_analysis
+			focus = ARI_chemical_facility_expansion
+		}
+		mutually_exclusive = {
+			focus = ARI_conventional_warfare
+			focus = ARI_indirect_fire_support
+		}
+		cost = 5
+		x = -2
+		y = 2
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+			add_timed_idea = {
+				idea = PRC_army_education_efforts ## 0,2 * 365 = 73
+				days = 365
+			}
+		
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					has_doctrine = peoples_war
+				}
+				add_mastery_bonus = {
+					bonus = 0.25
+					days = 365
+					name = ARI_asymmetric_warfare
+					sub_doctrine = peoples_war
+				}
+			}
+			else_if = {
+				limit = {
+					has_doctrine = guerilla_war
+				}
+				add_mastery_bonus = {
+					bonus = 0.25
+					days = 365
+					name = ARI_asymmetric_warfare
+					sub_doctrine = guerilla_war
+				}
+			}
+			else = {
+				add_mastery_bonus = {
+					bonus = 0.1
+					days = 365
+					name = ARI_asymmetric_warfare
+					track = operations
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
+			add_to_variable = {
+				ARI_army_attrition = -0.05
+				tooltip = attrition_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			every_unit_leader = {
+				random_select_amount = 2
+				limit = {
+					NOT = {
+						has_trait = militias_officer
+					}
+				}	
+				add_trait = { trait = militias_officer }
+			}
+		}
+	}
+	focus = {
+		id = ARI_conventional_warfare
+		icon = GFX_focus_PRC_arms_recovery_efforts
+		prerequisite = {
+			focus = ARI_vulnerability_analysis
+			focus = ARI_chemical_facility_expansion
+		}
+		mutually_exclusive = {
+			focus = ARI_asymmetric_warfare
+			focus = ARI_indirect_fire_support
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+			
+			army_experience = 50
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 365
+				name = ARI_conventional_warfare
+
+				track = infantry
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_army_infantry_attack_factor = 0.05 
+				tooltip = army_infantry_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_attrition = 0.05
+				tooltip = attrition_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+
+			every_unit_leader = {
+				random_select_amount = 2
+				limit = {
+					NOT = {
+						has_trait = infantry_officer
+					}
+				}	
+				add_trait = { trait = infantry_officer }
+			}
+		}
+	}
+	focus = {
+		id = ARI_indirect_fire_support
+		icon = GFX_goal_generic_army_artillery
+		prerequisite = {
+			focus = ARI_vulnerability_analysis
+			focus = ARI_chemical_facility_expansion
+		}
+		mutually_exclusive = {
+			focus = ARI_asymmetric_warfare
+			focus = ARI_conventional_warfare
+		}
+		cost = 5
+		x = 2
+		y = 2
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+
+			army_experience = 50
+
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 365
+				name = ARI_indirect_fire_support
+
+				track = combat_support
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_army_artillery_attack_factor = 0.1
+				tooltip = army_artillery_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_army_attrition = 0.05
+				tooltip = attrition_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+
+			every_unit_leader = {
+				random_select_amount = 2
+				limit = {
+					NOT = {
+						has_trait = fortress_buster
+					}
+				}	
+				add_trait = { trait = fortress_buster }
+			}
+		}
+	}
+	focus = {
+		id = ARI_next_phase_preparation
+		icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
+		prerequisite = {
+			focus = ARI_asymmetric_warfare
+			focus = ARI_conventional_warfare
+			focus = ARI_indirect_fire_support
+		}
+
+		available = {
+			has_army_manpower = { size > 199999 }
+		}
+
+		cost = 5
+		x = 0
+		y = 3
+		relative_position_id = ARI_chemical_warfare_preparation
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				name = ARI_next_phase_preparation
+				bonus = 0.1
+				days = 240
+				track = armor
+			}
+			add_mastery_bonus = {
+				name = ARI_next_phase_preparation
+				bonus = 0.1
+				days = 240
+				track = infantry
+				grand_doctrine = new_mobile_warfare
+			}
+
+			add_doctrine_cost_reduction = {
+				name = ARI_next_phase_preparation
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_next_phase_preparation
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 3
+				category = cat_light_armor
+				category = cat_medium_armor
+			}
+		}
+	}
+
 	focus = {
 		id = ARI_beatrice_influence
 		icon = GFX_focus_generic_army_doctrines_2
 		cost = 5
-		x = 1
+		x = 12
 		y = 0
 		completion_reward = {
 			add_political_power = 60
@@ -57,7 +852,7 @@ focus_tree = {
 		}
 		cost = 5
 		x = 0
-		y = 3
+		y = 2
 		relative_position_id = ARI_beatrice_influence
 		completion_reward = {
 			mio:ARI_3rd_classroom = {
@@ -96,9 +891,15 @@ focus_tree = {
 				uses = 1
 				category = infantry_weapons
 			}
-			mio:ARI_9th_classroom = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.1
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_9th_classroom = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.1
+				}
 			}
 		}
 	}
@@ -124,9 +925,15 @@ focus_tree = {
 				uses = 2
 				category = infantry_weapons
 			}
-			mio:ARI_3rd_classroom = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.1
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_3rd_classroom = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.1
+				}
 			}
 		}
 	}
@@ -152,9 +959,15 @@ focus_tree = {
 				category = cat_anti_tank
 				category = cat_anti_air
 			}
-			mio:ARI_7th_classroom = {
-				add_mio_size = 1
-				add_mio_funds_gain_factor = 0.1
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_7th_classroom = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.1
+				}
 			}
 		}
 	}
@@ -170,7 +983,7 @@ focus_tree = {
 			}
 		}
 		cost = 5
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = ARI_beatrice_influence
 		completion_reward = {
@@ -258,7 +1071,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = ARI_danzig_conference
 		}
-		x = 10
+		x = 20
 		y = 0
 		completion_reward = {
 			custom_effect_tooltip = ARI_arian_faith_tt
@@ -480,7 +1293,37 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_danzig_conference
 		completion_reward = {
-			add_political_power = 120
+			set_variable = { ARI_army_army_infantry_attack_factor = 0 }
+set_variable = { ARI_army_army_artillery_attack_factor = -0.10 }
+set_variable = { ARI_army_army_artillery_defence_factor = 0 }
+set_variable = { ARI_army_army_armor_attack_factor = 0 }
+set_variable = { ARI_army_army_armor_speed_factor = 0 }
+set_variable = { ARI_army_org_loss_when_moving = -0.05 }
+set_variable = { ARI_army_motorized_attack_factor = 0 }
+set_variable = { ARI_army_mechanized_attack_factor = 0 }
+set_variable = { ARI_army_army_org_factor = 0.05 }
+set_variable = { ARI_army_planning_speed = -0.10 }
+set_variable = { ARI_army_supply_consumption_factor = 0 }
+set_variable = { ARI_army_equipment_capture = 0 }
+set_variable = { ARI_army_initiative_factor = 0 }
+set_variable = { ARI_army_army_fuel_consumption_factor = 0 }
+set_variable = { ARI_army_coordination_bonus = 0 }
+set_variable = { ARI_army_air_superiority_bonus_in_combat = 0 }
+set_variable = { ARI_army_max_dig_in_factor = 0 }
+set_variable = { ARI_army_special_forces_cap = 0 }
+set_variable = { ARI_army_acclimatization_hot_climate_gain_factor = 0 }
+set_variable = { ARI_army_acclimatization_cold_climate_gain_factor = 0 }
+set_variable = { ARI_army_land_doctrine_cost_factor = 0 }
+set_variable = { ARI_army_modifier_army_sub_unit_category_halo_attack_factor = 0 }
+set_variable = { ARI_army_modifier_army_sub_unit_category_halo_defence_factor = 0 }
+set_variable = { ARI_army_modifier_army_sub_unit_category_halo_speed_factor = 0 }
+set_variable = { ARI_army_experience_gain_army_factor = 0 }
+set_variable = { ARI_army_army_morale_factor = 0 }
+set_variable = { ARI_army_mobilization_speed = -0.10 }
+set_variable = { ARI_army_minimum_training_level = 0 }
+set_variable = { ARI_army_unit_leader_as_advisor_cp_cost_factor = 0 }
+set_variable = { ARI_army_command_power_gain_mult = 0 }
+set_variable = { ARI_army_attrition = -0.05 }
 		}
 	}
 	focus = {
@@ -619,7 +1462,7 @@ focus_tree = {
 	################### 사오리 정치
 	focus = {
 		id = ARI_guidance_of_the_squad
-		icon = GFX_goal_TRN_info_nazi
+		icon = GFX_focus_ARI_saori
 		cost = 5
 		mutually_exclusive = {
 		}
@@ -627,7 +1470,12 @@ focus_tree = {
 		y = 0
 		relative_position_id = ARI_distancing_from_nazi_ss
 		completion_reward = {
-			set_country_leader_ideology = arius_nihilism
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_army_attack_factor = 0.05
+				tooltip = army_attack_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
 		}
 	}
 	focus = {
@@ -644,6 +1492,12 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_guidance_of_the_squad
 		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_army_attack_factor = 0.05
+				tooltip = army_attack_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
 		}
 	}
 	focus = {
@@ -660,6 +1514,16 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_guidance_of_the_squad
 		completion_reward = {
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_research_speed_factor = 0.05
+				tooltip = research_speed_factor_tt
+			}
+			custom_effect_tooltip = enter_tt
 		}
 	}
 	focus = {
@@ -700,6 +1564,28 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_will_of_madame
 		completion_reward = {
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_swap_arius_army_modifier_tt
+			add_to_variable = {
+				ARI_army_planning_speed = 0.10
+				tooltip = planning_speed_tt
+			}
+			add_to_variable = {
+				ARI_army_mobilization_speed = 0.10
+				tooltip = mobilization_speed_tt
+			}
+			add_to_variable = {
+				ARI_army_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = ARI_arius_infiltration_unit_system_modifier
+				}
+				add_dynamic_modifier = {
+					modifier = ARI_arius_army_modifier
+				}
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
 			unlock_decision_category_tooltip = ARI_penetration_us
 			custom_effect_tooltip = ARI_creation_of_arius_army_tt
 		}
@@ -865,12 +1751,12 @@ focus_tree = {
 			custom_effect_tooltip = ARI_holding_arius_council_tt
 			add_equipment_to_stockpile = {
 				type = kivotos_infantry_equipment
-				amount = 25
+				amount = 180
 				producer = TRM
 			}
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 1000
+				amount = 650
 				producer = TRM
 			}
 		}
