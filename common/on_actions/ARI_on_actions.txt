@@ -27,4 +27,38 @@ on_actions = {
 			}
 		}
 	}
+	
+	#ROOT = attacking side
+	#FROM = defending side
+	#fired when two countries end up at war with each other (on_war is fired when a country goes to war against anyone and is not fired again when it enters war against another country unless it went to peace first)
+	on_war_relation_added = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = { original_tag = ARI }
+					NOT = { FROM = { original_tag = ARI } }
+				}
+				FROM = {
+					add_to_array = { 
+						array = ARI.ARI_war_targets_array 
+						value = THIS
+					}
+					log = "[THIS.GetName] was added to array"
+				}
+			}
+			if = {
+				limit = {
+					FROM = { original_tag = ARI }
+					NOT = { ROOT = { original_tag = ARI } }
+				}
+				ROOT = {
+					add_to_array = { 
+						array = ARI.ARI_war_targets_array 
+						value = THIS
+					}
+					log = "[THIS.GetName] was added to array"
+				}
+			}
+		}
+	}
 }

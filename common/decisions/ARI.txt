@@ -1322,7 +1322,7 @@ ARI_heart_strike_plan = {
 
 						add_timed_idea = {
 							idea = ARI_day_of_doom_idea
-							days = 280
+							days = 140
 						}
 
 						random_army_leader = {
@@ -1960,6 +1960,108 @@ ARI_decision_permanent_anti_trinity_military_operation = {
 		}
 		cancel_effect = {
 			
+		}
+	}
+}
+
+
+
+# Operational Planning
+ARI_operational_planning_category = {
+
+	# Campaign Instructions against [FROM.GetName]
+	ARI_operational_planning = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+
+		ai_will_do = {
+			base = 1
+			modifier = {
+				factor = 5
+				has_war_with = FROM
+			}
+			modifier = {
+				factor = 2
+				FROM = {
+					is_major = yes
+				}
+			}
+			modifier = { #Muahahahaha
+				factor = 2
+				FROM = {
+					is_ai = no
+				}
+			}
+			modifier = { #Germany is super aggressive and wastes CP and XP on countries they only have a War Goal on
+				factor = 0
+				NOT = {
+					has_war_with = FROM
+				}
+			}
+		}
+
+		allowed = {
+			original_tag = ARI
+		}
+
+		days_remove = 365
+
+		custom_cost_trigger = {
+			command_power > 24
+			has_army_experience > 14
+		}
+
+		custom_cost_text = decision_cost_CP_25_ArmXP_15 
+
+		available = { #Can't be target_root_trigger
+			NOT = {	has_country_flag = ARI_operational_planning_flag }
+			OR = {
+				has_war_with = FROM
+				has_wargoal_against = FROM
+			}
+		}
+
+		target_array = ROOT.ARI_war_targets_array
+
+		target_trigger = { #TODO_Danne This needs to be refined! 
+			FROM = {
+				has_war_with = ROOT
+				any_controlled_state = {
+					is_on_continent = europe
+					any_neighbor_state = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
+			}
+		}
+
+		#fire_only_once = yes
+		
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -25
+				army_experience = -15
+				set_country_flag = ARI_operational_planning_flag
+			}
+			
+			every_state = {
+				limit = {
+					is_controlled_by = FROM
+					is_on_continent = europe
+				}
+				add_dynamic_modifier = {
+					modifier = ARI_chemical_warfare_modifier
+					scope = ARI
+					days = 90
+				}
+			}	
+
+			hidden_effect = { #This removes the ARI_operational_planning_flag, enabling Germany to do the decision again. remove_effect won't work if the country in question capitulates
+				country_event = { id = ARI_hidden.3 days = 90 } 
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		}
+		remove_effect = {
 		}
 	}
 }
