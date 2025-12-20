@@ -1167,7 +1167,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			custom_effect_tooltip = FRA_vertical_integration_tt
-			random_owned_state = {
+			every_owned_state = {
 				limit = {
 					OR = {
 						state = 459
@@ -1359,6 +1359,7 @@ focus_tree = {
 					level = 2
 				}
 			}
+			activate_mission = FRA_product_aircraft
 		}
 	}
 	focus = {
@@ -1435,7 +1436,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#전투기 판매
+		#항공기 판매
 		id = FRA_sell_airplane
 		icon = GFX_focus_SMB_purchase_aircraft
 		cost = 4
@@ -1446,6 +1447,14 @@ focus_tree = {
 			focus = FRA_defense_air
 		}
 		completion_reward = {
+			add_timed_idea = {
+				idea = FRA_selling_plane
+				days = 960
+			}
+			add_offsite_building = {
+				type = industrial_complex
+				level = 1
+			}
 		}
 	}
 	focus = {
@@ -1769,11 +1778,11 @@ focus_tree = {
 			}
 			OR = {
 				has_navy_size = {
-					size > 7
+					size > 19
 					type = capital_ship
 				}
 				has_navy_size = {
-					size > 41
+					size > 89
 					type = screen_ship
 				}
 			}
@@ -1856,6 +1865,12 @@ focus_tree = {
 				days = 480
 				track = infantry
 				name = FRA_focus_new_arm_5
+			}
+			add_tech_bonus = {
+				name = FRA_focus_new_arm_5
+				bonus = 0.25
+				uses = 2
+				category = artillery
 			}
 		}
 	}
@@ -2157,6 +2172,7 @@ focus_tree = {
 					NAME = "Brigade de Chars de Combat"
 					LINE_1 = { localization_key = line_battalion_tt NAME = light_armor ICON = GFX_unit_light_armor_icon_small COUNT = 4 }
 					LINE_2 = { localization_key = line_battalion_tt NAME = motorized ICON = GFX_unit_motorized_icon_small COUNT = 2 }
+					LINE_3 = { localization_key = line_battalion_tt NAME = mot_anti_tank_brigade ICON = GFX_unit_mot_anti_tank_brigade_icon_small COUNT = 2 }
 					SUPPORT_1 = { localization_key = support_battalion_tt NAME = mot_recon ICON = GFX_unit_mot_recon_icon_small }
 				}
 			}
@@ -2197,6 +2213,14 @@ focus_tree = {
 						x = 2
 						y = 1
 					}
+					mot_anti_tank_brigade = {
+						x = 3
+						y = 0
+					}
+					mot_anti_tank_brigade = {
+						x = 3
+						y = 1
+					}
 				}
 				support = {
 					mot_recon = {
@@ -2230,14 +2254,6 @@ focus_tree = {
 			mio:FRA_amx_organization = {
 				add_mio_funds = 500
 				add_mio_research_bonus = 0.1
-			}
-			custom_effect_tooltip = CHL_skip_one_line_tt
-			459 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-				}
 			}
 			custom_effect_tooltip = CHL_skip_one_line_tt
 			if = {
@@ -2293,6 +2309,12 @@ focus_tree = {
 				days = 480
 				track = infantry
 				name = FRA_focus_new_arm_1
+			}
+			add_tech_bonus = {
+				name = FRA_focus_new_arm_1
+				bonus = 0.25
+				uses = 2
+				category = infantry_weapons
 			}
 		}
 	}
@@ -2390,471 +2412,9 @@ focus_tree = {
 			custom_effect_tooltip = JAP_instill_the_spirit_of_bushido_tt
 		}
 	}
-	focus = {
-		#런던 다리가 무너지다
-		icon = GFX_goal_FRA_london
-		id = FRA_focus_london_bridge
-		cost = 2
-		x = 3
-		y = 8
-		available = {
-			always = no
-		}
-		completion_reward = {
-			add_political_power = 50
-			hidden_effect = {
-			}
-		}
-	}
-	focus = {
-		#밖을 바라보다
-		icon = GFX_goal_generic_more_territorial_claims
-		id = FRA_focus_london_0
-		cost = 2
-		x = -1
-		y = 2
-		relative_position_id = FRA_focus_london_bridge
-		available = {
-			always = no
-		}
-		completion_reward = {
-			add_political_power = 50
-		}
-	}
-	focus = {
-		#대화를 시도하다
-		id = FRA_focus_london_1
-		icon = GFX_goal_generic_major_alliance
-		cost = 2
-		x = 1
-		y = 1
-		relative_position_id = FRA_focus_london_bridge
-		ai_will_do = {
-			factor = 100
-		}
-		prerequisite = {
-			focus = FRA_focus_london_bridge
-		}
-		bypass = {
-			ENG = {
-				exists = no
-			}
-		}
-		completion_reward = {
-			country_event = {
-				id = FRA_prov_event.8
-				days = 2
-			}
-		}
-	}
-	focus = {
-		#영토 재수복
-		id = FRA_focus_london_2
-		cost = 2
-		x = 1
-		y = 2
-		relative_position_id = FRA_focus_london_bridge
-		icon = GFX_focus_generic_provoke_border_clashes
-		ai_will_do = {
-			factor = 100
-		}
-		prerequisite = {
-			focus = FRA_focus_london_1
-		}
-		mutually_exclusive = {
-			focus = FRA_focus_london_3
-		}
-		bypass = {
-			ENG = {
-				exists = no
-			}
-		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = FRA_focus_london_2_tt
-				check_variable = {
-					FRA_call = 2
-				}
-			}
-		}
-		completion_reward = {
-			clear_variable = FRA_call
-		}
-	}
-	focus = {
-		#회담 시작
-		id = FRA_focus_london_3
-		cost = 2
-		icon = GFX_focus_chi_reach_out_to_france
-		x = 5
-		y = 2
-		relative_position_id = FRA_focus_london_bridge
-		ai_will_do = {
-			factor = 100
-		}
-		prerequisite = {
-			focus = FRA_focus_london_1
-		}
-		mutually_exclusive = {
-			focus = FRA_focus_london_2
-		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = FRA_focus_london_3_tt
-				check_variable = {
-					FRA_call = 1
-				}
-			}
-		}
-		completion_reward = {
-			clear_variable = FRA_call
-			set_variable = {
-				FRA_demand_colony = 1
-			}
-			set_variable = {
-				FRA_demand_economy = 1
-			}
-			set_variable = {
-				FRA_demand_after_war = 1
-			}
-			set_variable = {
-				FRA_demand_entente = 1
-			}
-			country_event = {
-				id = FRA_prov_event.12
-				days = 1
-			}
-		}
-	}
-	focus = {
-		#영국의 투자
-		id = FRA_focus_london_4
-		cost = 2
-		x = 0
-		y = 3
-		relative_position_id = FRA_focus_london_bridge
-		icon = GFX_focus_chi_british_cooperation
-		available = {
-			has_idea = FRA_economy_help
-		}
-		prerequisite = {
-			focus = FRA_focus_london_0
-			focus = FRA_focus_london_3
-		}
-		bypass = {
-			OR={NOT ={
-				has_idea = FRA_ENG_economy_help
-				USA = {
-					has_idea = USA_intervention_in_europe
-				}
-				has_idea = PASTA_signatories_of_the_stresa_idea
-			}
-			has_government = communism
-			}
-		}
-		completion_reward = {
-			add_political_power = -30
-			ENG = {
-				country_event = {
-					id = FRA_prov_event.129
-					days = 3
-				}
-			}
-		}
-	}
-	focus = {
-		#미국의 투자
-		icon = GFX_focus_generic_befriend_usa
-		id = FRA_focus_london_4_5
-		cost = 2
-		x = 2
-		y = 3
-		relative_position_id = FRA_focus_london_bridge
-		ai_will_do = {
-			base = 1
-			modifier = {
-				has_government = communism
-				add = 100
-			}
-		}
-		available = {
-			USA = {
-				has_idea = USA_intervention_in_europe
-			}
-		}
-		prerequisite = {
-			focus = FRA_focus_london_0
-			focus = FRA_focus_london_2
-			focus = FRA_focus_london_3
-		}
-		bypass = {OR={
-			NOT ={
-				has_idea = FRA_ENG_economy_help
-				USA = {
-					has_idea = USA_intervention_in_europe
-				}
-				has_idea = PASTA_signatories_of_the_stresa_idea
-			}
-			has_government = communism
-			}
-		}
-		completion_reward = {
-			add_political_power = -30
-			USA = {
-				country_event = {
-					id = FRA_prov_event.129
-					days = 3
-				}
-			}
-		}
-	}
-	focus = {
-		#이탈리아의 투자
-		icon = GFX_focus_befriend_italy
-		id = FRA_focus_london_4.8
-		cost = 2
-		x = 4
-		y = 3
-		relative_position_id = FRA_focus_london_bridge
-		available = {
-			has_idea = PASTA_signatories_of_the_stresa_idea
-			#has_completed_focus = FRA_focus_german_1
-		}
-		prerequisite = {
-			focus = FRA_focus_london_0
-			focus = FRA_focus_london_2
-			focus = FRA_focus_london_3
-		}
-		bypass = {
-			OR={NOT ={
-				has_idea = FRA_ENG_economy_help
-				USA = {
-					has_idea = USA_intervention_in_europe
-				}
-				has_idea = PASTA_signatories_of_the_stresa_idea
-			}
-			has_government = communism
-			}
-		}
-		completion_reward = {
-			add_political_power = -30
-			ITA = {
-				country_event = {
-					id = FRA_prov_event.129
-					days = 3
-				}
-			}
-		}
-	}
-	focus = {
-		#외무 재개
-		id = FRA_focus_london_5
-		cost = 2
-		x = 5
-		y = 4
-		relative_position_id = FRA_focus_london_bridge
-		icon = GFX_goal_generic_alliance
-		prerequisite = {
-			focus = FRA_focus_london_4
-			focus = FRA_focus_london_4_5
-			focus = FRA_focus_london_4.8
-		}
-		completion_reward = {
-			effect_tooltip = {
-				unlock_decision_category_tooltip = FRA_ally
-			}
-		}
-	}
-	focus = {
-		#스페인에서의 격변
-		id = FRA_focus_spain_civilwar
-		cost = 2
-		x = 50
-		y = 18
-		allow_branch = {
-			is_debug = yes
-		}
-		icon = GFX_goal_FRA_revolution_to_the_utmost
-		available = {
-			always = no
-		}
-		completion_reward = {
-			add_political_power = 50
-		}
-	}
-	focus = {
-		#아프리카 내 패권 강화
-		id = FRA_focus_spain_1
-		cost = 2
-		x = -1
-		y = 1
-		relative_position_id = FRA_focus_spain_civilwar
-		icon = GFX_goal_FRA_spain_attack
-		ai_will_do = {
-			factor = 100
-		}
-		available = {
-			has_global_flag = spanish_civil_war
-		}
-		prerequisite = {
-			focus = FRA_focus_spain_civilwar
-		}
-		completion_reward = {
-			country_event = {
-				id = FRA_prov_event.29
-				days = 2
-			}
-		}
-	}
-	focus = {
-		#국민파와 함께
-		icon = GFX_goal_FRA_nationalism_spain
-		id = FRA_focus_spain_2
-		cost = 2
-		x = 0
-		y = 2
-		relative_position_id = FRA_focus_spain_civilwar
-		ai_will_do = {
-			factor = 100
-		}
-		available = {
-			any_country = {
-				OR = {
-					original_tag = SPA
-					original_tag = SPR
-				}
-				has_civil_war = yes
-			}
-		}
-		mutually_exclusive = {
-			focus = FRA_focus_spain_3
-		}
-		prerequisite = {
-			focus = FRA_focus_spain_1
-		}
-		completion_reward = {
-			random_other_country = {
-				limit = {
-					original_tag = SPR
-					OR = {
-						has_government = neutrality
-						has_government = fascism
-					}
-				}
-				add_opinion_modifier = {
-					target = FRA
-					modifier = FRA_help_civ
-				}
-				random_other_country = {
-					limit = {
-						original_tag = SPR
-						has_government = democratic
-					}
-					FRA = {
-						add_timed_idea = {
-							idea = FRA_spciv_d02
-							days = 300
-						}
-					}
-				}
-			}
-			add_ai_strategy = {
-				type = send_volunteers_desire
-				id = SPA
-				value = 100
-			}
-		}
-	}
-	focus = {
-		#공화파와 함께
-		icon = GFX_goal_FRA_republic_spain_ally
-		id = FRA_focus_spain_3
-		cost = 2
-		x = -2
-		y = 2
-		relative_position_id = FRA_focus_spain_civilwar
-		ai_will_do = {
-			factor = 0
-		}
-		available = {
-			FRA_philippe_petain = {
-				is_country_leader = no
-			}
-			any_country = {
-				OR = {
-					original_tag = SPA
-					original_tag = SPR
-				}
-				has_civil_war = yes
-			}
-		}
-		mutually_exclusive = {
-			focus = FRA_focus_spain_2
-		}
-		prerequisite = {
-			focus = FRA_focus_spain_1
-		}
-		completion_reward = {
-			random_other_country = {
-				limit = {
-					original_tag = SPR
-					has_government = democratic
-				}
-				add_opinion_modifier = {
-					target = FRA
-					modifier = FRA_help_civ
-				}
-				random_other_country = {
-					limit = {
-						original_tag = SPR
-						OR = {
-							has_government = neutrality
-							has_government = fascism
-						}
-					}
-					FRA = {
-						add_timed_idea = {
-							idea = FRA_spciv
-							days = 300
-						}
-					}
-				}
-			}
-			add_popularity = {
-				ideology = democratic
-				popularity = 0.01
-			}
-			add_popularity = {
-				ideology = communism
-				popularity = 0.01
-			}
-			add_ai_strategy = {
-				type = send_volunteers_desire
-				id = SPD
-				value = 100
-			}
-		}
-	}
-	focus = {
-		#잠잠해지다
-		icon = GFX_focus_POL_sanation_right
-		id = FRA_focus_spain_4
-		cost = 1
-		x = -1
-		y = 3
-		relative_position_id = FRA_focus_spain_civilwar
-		prerequisite = {
-			focus = FRA_focus_spain_3
-			focus = FRA_focus_spain_2
-			#focus = FRA_focus_resistance_11
-		}
-		available = {
-			always = no
-		}
-		completion_reward = {
-			add_political_power = 50
-		}
-	}
+
+	
+
 	focus = {
 		#본토와의 접촉
 		id = FRA_focus_resistance_1

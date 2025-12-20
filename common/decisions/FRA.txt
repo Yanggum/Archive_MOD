@@ -40,6 +40,9 @@ FRA_industrialize = {
 			}
 		}
 		complete_effect = {
+			add_to_variable = {
+				FRA_can_put_military = -1
+			}
 			set_temp_variable = { temp_FRA_change_to_disruption = -1 }
 			FRA_change_to_disruption_level = yes
 			custom_effect_tooltip = CHL_skip_one_line_tt
@@ -48,6 +51,32 @@ FRA_industrialize = {
 }
 
 FRA_urbanization = {
+	FRA_product_aircraft = { #항공기 생산
+		days_mission_timeout = 360
+		icon = GFX_decision_generic_merge_plant_aircraft
+		fire_only_once = yes
+		available = {
+			has_equipment = {
+				small_plane_airframe > 299
+			}
+		}
+		is_good = no
+		priority = 10
+		timeout_effect = {
+			add_political_power = -50
+			add_stability = -0.05
+			add_war_support = -0.1
+			461 = {
+				remove_building = {
+					type = arms_factory
+					level = 2
+				}
+			}
+		}
+		activation = {
+			always = no
+		}
+	}
 	FRA_navy_gonna_die = { #해군 정비
 		days_mission_timeout = 960
 		fire_only_once = yes
@@ -1837,9 +1866,27 @@ FRA_ally = { #외교 정책
 			NOT = {
 				has_country_flag = FRA_selling_ships
 			}
-			has_navy_size = {
-				type = battleship
-				size > 0
+			OR = {
+				has_navy_size = { 
+					type = capital_ship
+					archetype = battleship_1
+					size > 0
+				}
+				has_navy_size = { 
+					type = capital_ship
+					archetype = battleship_2
+					size > 0
+				}
+				has_navy_size = { 
+					type = capital_ship
+					archetype = battleship_3
+					size > 0
+				}
+				has_navy_size = { 
+					type = capital_ship
+					archetype = battleship_4
+					size > 0
+				}
 			}
 		}
 		icon = GFX_decision_generic_merge_plant_ship
@@ -3180,234 +3227,6 @@ FRA_indochina_issue = {
 			}
 		}
 		priority = 100
-	}
-	FRA_interfere_indochina = { #인도차이나에 개입
-		fire_only_once = yes
-		icon = GFX_decision_generic_operation
-		visible = {
-			has_country_flag = FRA_has_indochina_war
-		}
-		cost = 200
-		available = {
-			has_stability > 0.5
-			VIN = {
-				NOT={has_war_with = JAP}
-			}
-		}
-		ai_will_do = {
-			base = 1
-		}
-		days_remove = 5
-		complete_effect = {
-		}
-		remove_effect = {
-			every_country = {
-				limit = {
-					has_war_with = VIN
-					original_tag = VIN
-				}
-				FRA={
-					declare_war_on = {
-						target = prev
-						type = annex_everything
-					}
-				}
-			}
-		}
-	}
-	FRA_give_equipment_vin = { #물자 지원
-		icon = GFX_decision_generic_industry
-		days_remove = 30
-		days_re_enable = 30
-		cost = 20
-		modifier = {
-			civilian_factory_use = 1
-		}
-		visible = {
-			has_country_flag = FRA_has_indochina_war
-		}
-		ai_will_do = {
-			base = 2
-		}
-		available = {
-			has_equipment = {
-				infantry_equipment > 499
-			}
-		}
-		complete_effect = {
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = -500
-			}
-		}
-		remove_effect = {
-			VIN = {
-				random_controlled_state = {
-					create_unit = {
-						division = "name = \"milice coloniale\" division_template = \"milice coloniale\" start_experience_factor = 0.1"
-						owner = VIN
-					}
-				}
-			}
-		}
-	}
-	FRA_give_division_vin = { #소규모 군사 파견
-		icon = GFX_decision_eng_blackshirt_march
-		days_remove = 30
-		days_re_enable = 30
-		cost = 20
-		modifier = {
-			civilian_factory_use = 1
-		}
-		ai_will_do = {
-			base = 2
-		}
-		visible = {
-			has_country_flag = FRA_has_indochina_war
-		}
-		available = {
-			has_equipment = {
-				infantry_equipment > 1499
-			}
-		}
-		complete_effect = {
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = -800
-			}
-			add_manpower = -1000
-		}
-		remove_effect = {
-			VIN = {
-				random_controlled_state = {
-					create_unit = {
-						division = "name = \"Brigade Coloniale\" division_template = \"Brigade Coloniale\" start_experience_factor = 0.1"
-						owner = VIN
-					}
-					create_unit = {
-						division = "name = \"Brigade Coloniale\" division_template = \"Brigade Coloniale\" start_experience_factor = 0.1"
-						owner = VIN
-					}
-				}
-			}
-		}
-	}
-	FRA_indochina_going_bad = { #심화되어가는 식민지인 저항
-		icon = GFX_decision_revolt
-		days_mission_timeout = 80
-		available = {OR=
-			{has_country_flag = FRA_has_indochina_war
-			has_country_flag = FRA_finished_vin_cirisis}
-		}
-		activation = {
-			always = no
-		}
-		is_good = no
-		timeout_effect = {
-			VIN = {
-				add_stability = -0.01
-			}
-			activate_mission = FRA_indochina_going_bad
-		}
-		priority = 100
-	}
-	FRA_make_vin_colony = { #총독부 통제권 확보
-		icon = GFX_decision_hol_draw_up_staff_plans
-		cost = 100
-		available = {
-			ships_in_area = {
-				area = 75
-				size = 50
-			}
-			has_stability > 0.4
-		}
-		visible = {
-			has_country_flag = FRA_indochina_make_colony
-		}
-		days_remove = 50
-		remove_effect = {
-			VIN = {
-			}
-			set_country_flag = FRA_finished_vin_cirisis
-			remove_mission = FRA_indochina_going_bad
-			clr_global_flag = VIN_has_crisis
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			base = 10
-		}
-	}
-	FRA_make_vin_dominion = { #현지인 자치권 부여
-		icon = GFX_decision_SWI_swiss_democratic_tradition_campaign
-		cost = 100
-		visible = {
-			has_country_flag = FRA_indochina_make_dominion
-		}
-		days_remove = 50
-		remove_effect = {
-			VIN = {
-				add_popularity = {
-					ideology = neutrality
-					popularity = -0.1
-				}
-				set_politics = {
-					ruling_party = neutrality
-					election_frequency = 36
-					elections_allowed = yes
-				}
-				set_party_name = {
-					ideology = neutrality
-					long_name = VIN_neutrality_party_new
-					name = VIN_neutrality_party_new
-				}
-				set_cosmetic_tag = VIN_dominion_cosmetic_tag
-				hidden_effect = {
-				}
-			}
-			FRA = {
-				set_autonomy = {
-					target = VIN
-					autonomy_state = autonomy_dominion
-				}
-				remove_resource_rights = 671
-				remove_resource_rights = 286
-			}
-			clr_global_flag = VIN_has_crisis
-			set_country_flag = FRA_finished_vin_cirisis
-			remove_mission = FRA_indochina_going_bad
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			base = 10
-		}
-	}
-	FRA_help_vin_afterwar = { #재건 지원
-		ai_will_do = {
-			base = 10
-		}
-		icon = GFX_decision_generic_construction
-		cost = 100
-		visible = {
-			has_country_flag = FRA_indochina_support_rebuild
-		}
-		days_remove = 250
-		modifier = {
-			consumer_goods_expected_value = 0.08
-		}
-		remove_effect = {
-			VIN = {
-				remove_ideas = VIN_fucked_up
-				add_popularity = {
-					ideology = neutrality
-					popularity = 0.1
-				}
-			}
-			set_country_flag = FRA_has_indochina_issue
-			# unlock_decision_tooltip = FRA_more_resource_indochina
-			# unlock_decision_tooltip = FRA_more_industry_indochina
-			# unlock_decision_tooltip = FRA_more_arms_factory_indochina
-		}
-		fire_only_once = yes
 	}
 }
 FRA_ALG_war= {
