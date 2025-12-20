@@ -44,12 +44,422 @@ focus_tree = {
 		completion_reward = {
 		   
 		}
-		text_icon = NORDIC_focus_style
 	}
-
-    focus = {
+	
+	focus = { #실패 분석 
+		id = COU_focus_look_the_our_economy_fucked
+		icon = GFX_focus_COU_rework_the_dutch_economy
+		x = -2
+		y = 1
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_after_two_months }
+		completion_reward = {
+			
+		}
+	}	
+	
+	 focus = { #자위더르해 사업 재추진  
+        id = COU_economy_focus_0
+        icon = GFX_focus_COU_focus_continue_the_bettter_lands
+        x = -6
+        y = 2
+        cost = 5
+		relative_position_id = COU_focus_after_two_months
+        available = {
+            owns_state = 7
+            owns_state = 36
+        }
+        bypass = {
+        }
+        search_filters = {
+            FOCUS_FILTER_INDUSTRY
+        }
+        prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
+        completion_reward = {
+            add_stability = 0.05
+            add_tech_bonus = {
+                name = HOL_the_zuiderzee_works
+                bonus = 1.0
+                ahead_reduction = 2
+                uses = 2
+                category = industry
+            }
+            7 = {
+                add_extra_state_shared_building_slots = 3
+                set_building_level = {
+                     type = infrastructure
+                     level = 5
+                     instant_build = yes
+                 }
+            }
+            36 = {
+                add_extra_state_shared_building_slots = 3
+                set_building_level = {
+                     type = infrastructure
+                     level = 5
+                     instant_build = yes
+                }
+            }
+            news_event = { id = mtg_news.47 days = 1 } 
+        }
+    }
+	
+	focus = { #기업 매수 
 		id = COU_establishment_of_federal_industrial_committee
 		icon = GFX_focus_COU_aoi_with_companys
+		x = -7
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_economy_focus_0 }
+		completion_reward = {
+			country_event = COU_event_industry.1
+		}
+	}	
+	
+	focus = { #하이랜더와 협력  
+		id = COU_focus_order_highlander
+		icon = GFX_focus_hai_shupo
+		x = -6
+		y = 4
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_economy_focus_0 }
+		completion_reward = {
+			 if = { limit = { has_idea = BA_railway_gauge_issue }
+                modify_timed_idea = {
+                    idea = BA_railway_gauge_issue
+                    days = -180
+                }
+            }
+            if = {
+                limit = { NOT = { has_country_flag = BA_nationalized_highlander }}
+                custom_effect_tooltip = BA_highlander_invest_big_tt
+                add_to_variable = {
+                    BA_highlander_invest = 4
+                }
+            }
+            add_state_core = 977
+		}
+	}	
+	
+	focus = { #림뷔르흐 국영광산 재가동 
+		id = COU_focus_mineral_prospecting
+		icon = GFX_focus_generic_mineral_prospecting
+		x = -7
+		y = 5
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_order_highlander }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #델타 프로젝트
+		id = COU_focus_project_delta
+		icon = GFX_focus_focus_generic_build_dam
+		x = -8
+		y = 6
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_order_highlander }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #민간건설 집중 
+		id = COU_focus_on_industrial_complex
+		icon = GFX_goal_generic_construct_civ_factory
+		x = -5
+		y = 5
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_order_highlander }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #케이블망 재건 
+		id = COU_focus_restore_cable_internet
+		icon = GFX_focus_COU_restore_cable_internet
+		x = -6
+		y = 6
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_mineral_prospecting }
+		prerequisite = { focus = COU_focus_on_industrial_complex }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #갈로팽 원칙 수용  
+		id = COU_focus_have_with_galopin
+		icon = GFX_focus_collaborate_with_belgium
+		x = -3
+		y = 2
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		mutually_exclusive = { focus = COU_focus_have_with_hirschfeld }
+		prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
+		completion_reward = {
+			
+		}
+	}	
+	
+	focus = { #벨기에 자산 흡수 
+		id = COU_focus_absorption_belgian_assets
+		icon = GFX_focus_BEL_belgian_miracle
+		x = -4
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_have_with_galopin }
+		completion_reward = {
+			
+		}
+	}
+
+    focus = { #플랑 드 망 
+		id = COU_focus_plan_de_man
+		icon = GFX_focus_generic_expropriate_industrialist
+		x = -4
+		y = 4
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_have_with_galopin }
+		completion_reward = {
+			
+		}
+	}	
+	
+	focus = { #히르슈펠트 등용 
+		id = COU_focus_have_with_hirschfeld
+		icon = GFX_focus_collaboratte_with_netherland
+		x = -1
+		y = 2
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		mutually_exclusive = { focus = COU_focus_have_with_galopin }
+		prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
+		completion_reward = {
+			
+		}
+	}	
+	
+	focus = { #보호무역주의 확대  
+		id = COU_focus_expansion_of_protectionism
+		icon = GFX_COU_focus_defensive
+		x = 0
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_have_with_hirschfeld }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #플랑 드 보스-틴베르겐  
+		id = COU_focus_plan_de_vos_tinbergen
+		icon = GFX_focus_generic_low_cost_housing
+		x = 0
+		y = 4
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_expansion_of_protectionism }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #통화 통일 
+		id = COU_focus_currency_unification
+		icon = GFX_focus_BEL_benelux_union
+		x = -2
+		y = 4
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_have_with_galopin focus = COU_focus_have_with_hirschfeld }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #펌프 설치 의무화
+        id = COU_focus_eco_rework_the_dead_lands
+        icon = GFX_focus_generic_treaty
+        x = -3
+        y = 5
+        cost = 5
+		relative_position_id = COU_focus_after_two_months
+        available = {
+           owns_state = 36 
+        }
+        bypass = {
+        }
+        search_filters = {
+            FOCUS_FILTER_INDUSTRY
+        }
+        prerequisite = { focus = COU_focus_currency_unification }
+        completion_reward = {
+            36 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
+            7 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
+        }
+    }
+	
+	focus = { #도로 재정비 
+        id = COU_focus_rework_our_roads
+        icon = GFX_focus_generic_road_investment
+        x = -3
+        y = 6
+        cost = 5
+		relative_position_id = COU_focus_after_two_months
+        available = {
+           owns_state = 36 
+        }
+        bypass = {
+        }
+        search_filters = {
+            FOCUS_FILTER_INDUSTRY
+        }
+        prerequisite = { focus = COU_focus_currency_unification }
+        completion_reward = {
+            
+        }
+    }
+	
+	focus = { #금본위제 완전 폐지
+		id = COU_focus_abandon_the_gold_standard
+		icon = GFX_focus_hol_abandon_the_gold_standard
+		x = -1
+		y = 5
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_currency_unification }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #농업 현대화  
+		id = COU_focus_modernizing_agriculture
+		icon = GFX_focus_generic_modernizing_agriculture
+		x = -1
+		y = 6
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_abandon_the_gold_standard }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #관광산업 재건 
+		id = COU_focus_reestablish_tourism
+		icon = GFX_focus_BEL_engine_of_the_economy
+		x = 1
+		y = 6
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_abandon_the_gold_standard }
+		completion_reward = {
+            
+		}
+	}
+	
+	focus = { #요르다노프로어 수습 
+		id = COU_focus_apprenticeship_jordaanoproer 
+		icon = GFX_focus_BEL_government_resigns
 		x = 3
 		y = 1
 		relative_position_id = COU_focus_after_two_months
@@ -61,14 +471,158 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_after_two_months }
 		completion_reward = {
-			#custom_effect_tooltip = COU_establishment_of_federal_industrial_committee_tt
-			#add_to_variable = { COU_emergency_measures_committee_consumer_goods_factor = -0.10 }
-			country_event = COU_event_industry.1
-			#custom_effect_tooltip = COU_tooltip_unlock_dutch_belgium_cons
-			#add_one_random_civilian_factory = yes
-			#set_country_flag = COU_yes_sanub
+			
 		}
-	}	
+	}
+	
+	focus = { #북프랑스 평정 
+		id = COU_focus_attack_northern_france
+		icon = GFX_focus_attack_france
+		x = 3
+		y = 2
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_apprenticeship_jordaanoproer }
+		completion_reward = {
+            add_political_power = 25
+            country_event = COU_event.51
+		}
+	}
+	
+	focus = { #암스테르담 대학교 재건  
+		id = COU_focus_reestablish_amsterdam_univ
+		icon = GFX_focus_research
+		x = 2
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 10
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_attack_northern_france }
+		completion_reward = {
+            add_research_slot = 1
+		}
+	}
+	
+	focus = { #합성 화학 
+		id = COU_focus_hapsung_research
+		icon = GFX_focus_GER_factories_for_resources
+		x = 2
+		y = 5
+		relative_position_id = COU_focus_after_two_months
+		cost = 10
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_reestablish_amsterdam_univ }
+		completion_reward = {
+            
+		}
+	}
+	
+	focus = { #흐레베-필람 방어선 보강 
+		id = COU_focus_restore_grebee_peelram_line
+		icon = GFX_focus_SWE_hedgehog_defense
+		x = 4
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_attack_northern_france }
+		completion_reward = {
+            
+		}
+	}
+	
+	focus = { #크로노스 통제 
+		id = COU_focus_lock_the_kronous
+		icon = GFX_focus_lock_the_news
+		x = 1
+		y = 2
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_apprenticeship_jordaanoproer }
+		completion_reward = {
+			add_stability = 0.05
+            add_state_core = 6
+		}
+	}
+	
+	focus = { #인권보장실 설립  
+		id = COU_focus_establish_humans_rights
+		icon = GFX_focus_COU_establish_humans
+		x = 6
+		y = 2
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		mutually_exclusive = { focus = COU_give_power_to_degrelle }
+		prerequisite = { focus = COU_focus_apprenticeship_jordaanoproer }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #거래 중단   
+		id = COU_focus_stop_our_deals
+		icon = GFX_focus_24hours
+		x = 6
+		y = 3
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		mutually_exclusive = { focus = COU_keep_our_deals }
+		prerequisite = { focus = COU_focus_establish_humans_rights focus = COU_give_power_to_degrelle }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #갱 자금 압수   
+		id = COU_focus_take_their_money
+		icon = GFX_focus_RAJ_institutional_money_laundering
+		x = 6
+		y = 4
+		relative_position_id = COU_focus_after_two_months
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		mutually_exclusive = { focus = COU_keep_our_deals }
+		prerequisite = { focus = COU_focus_establish_humans_rights focus = COU_give_power_to_degrelle }
+		completion_reward = {
+			
+		}
+	}
 
 
 
@@ -88,7 +642,80 @@ focus_tree = {
 #  |  | ,'         ---'    |   ;/           \  \  ;         |   :  \    `----'  |   :    ::  ,      .-./'--'.     /  
 #  `--''                   '---'             :  \  \        |   | ,'             \   \  /  `--`----'      `--'---'   
 #                                             \  ' ;        `----'                `----'                             
-#                              
+#        
+
+    focus = {
+		id = COU_shaking_royalty #충성심 뒤흔들기 
+		icon = GFX_focus_COU_meet_the_dutchs
+		x = 17
+		y = 0
+		cost = 5
+		available = {
+		}
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = COU_give_power_to_degrelle #드그렐에게 권력을 
+		icon = GFX_focus_COU_look_the_mountain
+		x = -2
+		y = 2
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		available = {
+		}
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		mutually_exclusive = { focus = COU_focus_establish_humans_rights }
+		prerequisite = { focus = COU_shaking_royalty }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = COU_keep_our_deals #갱과의 거래 지속 
+		icon = GFX_focus_brabant
+		x = -2
+		y = 3
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		available = {
+		}
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		mutually_exclusive = { focus = COU_focus_stop_our_deals }
+		prerequisite = { focus = COU_give_power_to_degrelle focus = COU_focus_establish_humans_rights }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = COU_focus_buy_their_weapon #무기 거래 
+		icon = GFX_focus_generic_money_for_equipment
+		x = -2
+		y = 4
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		available = {
+		}
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_keep_our_deals }
+		completion_reward = {
+			
+		}
+	}
+	
     ##현지 장교들과 접촉 
     focus = {
 		id = COU_reduction_of_administrative_committee_authority
@@ -112,34 +739,18 @@ focus_tree = {
 				}
 			}
 		}
-		x = 18
-		y = 0
+		x = 0
+		y = 1
 		cost = 5
+		relative_position_id = COU_shaking_royalty
 		available = {
 		}
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		text_icon = NORDIC_focus_style
+		prerequisite = { focus = COU_shaking_royalty }
 		completion_reward = {
 			country_event = COU_event_military.1
-			if = {
-				limit = { NOT = { has_completed_focus = COU_normalization_of_administration } }
-				set_country_flag = COU_reduction_of_administrative_committee_authority_flag
-			}
-			custom_effect_tooltip = COU_the_dead_flower_tooltip
-			add_to_variable = {
-				COU_the_dead_flower_aof = 0.05 
-				tooltip = army_org_factor_tt
-			}
-			add_to_variable = {
-				COU_the_dead_flower_ttf = -0.1 
-				tooltip = training_time_factor_tt
-			}
-			add_to_variable = {
-				COU_the_dead_flower_cf = 0.05 
-				tooltip = conscription_factor_tt
-			}
 		}
 	}
 
@@ -178,7 +789,6 @@ focus_tree = {
 				NOT = { has_country_flag = MISSINGGSCP }
 			}
 		}
-		text_icon = NORDIC_focus_style
 		search_filters = {
 			
 						FOCUS_FILTER_POLITICAL
