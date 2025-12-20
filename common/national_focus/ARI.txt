@@ -347,18 +347,19 @@ focus_tree = {
 			}
 
 			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-				}
 				prioritize = { 85 }
-				create_unit = {
-					division = "name = \"Militia Gedanensis\" division_template = \"Militia Gedanensis\" start_experience_factor = 0.05 start_equipment_factor = 0.9"
-					owner = ARI
-					count = 3
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 3
+					NAME = ARI_danzig_militia_recruitment_tt
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Militia Gedanensis\" division_template = \"Militia Gedanensis\" start_experience_factor = 0.05 start_equipment_factor = 0.9"
+						owner = ARI
+						count = 3
+					}
 				}
 			}
 		}
@@ -1098,7 +1099,19 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_distancing_from_nazi_ss
 		completion_reward = {
-			add_political_power = 120
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_army_defence_factor = 0.05
+				tooltip = army_defence_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_max_dig_in_factor = 0.05
+				tooltip = max_dig_in_factor_tt
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_stability = -0.05
 		}
 	}
 	focus = {
@@ -1129,21 +1142,41 @@ focus_tree = {
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			delete_unit_template_and_units = {
-				division_template = "Manus Incursoria"
-				disband = yes
+			if = {
+				limit = {
+					has_template = "Manus Incursoria"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Manus Incursoria"
+					disband = yes
+				}
 			}
 			division_template = {
 				name = "Manus Incursoria"
 				division_names_group = ARI_HAL_01
-				is_locked = yes
-				force_allow_recruiting = no
 				#template_counter = 67
 				regiments = {
 					penal_battalion = { x = 0 y = 0 }
 					penal_battalion = { x = 0 y = 1 }
 					penal_battalion = { x = 1 y = 0 }
 					penal_battalion = { x = 1 y = 1 }
+				}
+			}
+
+			random_owned_controlled_state = {
+				prioritize = { 85 }
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 2
+					NAME = ARI_mental_armament_tt
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Manus Incursoria\" division_template = \"Manus Incursoria\" start_experience_factor = 0.05 start_equipment_factor = 0.7"
+						owner = ARI
+						count = 2
+					}
 				}
 			}
 		}
@@ -1160,7 +1193,19 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_distancing_from_nazi_ss
 		completion_reward = {
-			add_political_power = 120
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_unit_leader = {
+				random_select_amount = 2
+				limit = {
+					NOT = {
+						has_trait = trait_ARI_hatred_tactics
+					}
+				}	
+				add_trait = { trait = trait_ARI_hatred_tactics }
+			}
 		}
 	}
 	focus = {
@@ -1218,7 +1263,16 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_distancing_from_nazi_ss
 		completion_reward = {
-			add_political_power = 120
+			custom_effect_tooltip = ARI_no_change_tt
+			if = {
+				limit = {
+					always = no
+				}
+			}
+			else = {
+				custom_effect_tooltip = ARI_no_change_0_tt
+				add_stability = 0.05
+			}
 		}
 	}
 
@@ -1273,7 +1327,50 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_danzig_conference
 		completion_reward = {
-			add_political_power = 120
+			add_ideas = ARI_lantern_of_the_germanic
+			
+			add_war_support = 0.05
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					has_template = "Freikorps Deutschland"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Freikorps Deutschland"
+					disband = yes
+				}
+			}
+			division_template = {
+				name = "Freikorps Deutschland"
+				division_names_group = ARI_HAL_01
+				#template_counter = 67
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+				}
+			}
+
+			random_owned_controlled_state = {
+				prioritize = { 85 }
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 3
+					NAME = ARI_acceptance_of_german_exiles_tt
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Freikorps Deutschland\" division_template = \"Freikorps Deutschland\" start_experience_factor = 0.05 start_equipment_factor = 0.7"
+						owner = ARI
+						count = 3
+					}
+				}
+			}
 		}
 	}
 	focus = {
