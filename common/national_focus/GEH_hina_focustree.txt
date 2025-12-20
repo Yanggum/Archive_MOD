@@ -11248,11 +11248,13 @@ focus_tree = {
 		available = {
 			is_puppet = no
 		}
+		
 		prerequisite = { focus = Gehenna_Diplomacy_our_future }
 
 		ai_will_do = {
 
 		}
+
 		completion_reward = {
 			IF = {
 				limit = {
@@ -11437,6 +11439,31 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = Gehenna_Diplomacy_interpol
+		icon = GFX_goal_HEU_flag_of_league_of_nations
+		x = 3
+		y = 1
+		relative_position_id = Gehenna_Diplomacy_war_against_cou
+		cost = 5
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = Gehenna_Diplomacy_war_against_cou 
+			focus = Gehenna_Diplomacy_recognition_of_cou 
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			
+		}
+	}
+
 	focus = { #
 		id = Gehenna_Diplomacy_russian_winter
 		icon = GFX_focus_generic_winter_warfare
@@ -11582,11 +11609,11 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_attack_swi
+		id = Gehenna_Diplomacy_attack_SWI
 		icon = GFX_focus_attack_switzerland
 		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_south_kivotos
+		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
 		cost = 5
 
 		available = {
@@ -11594,7 +11621,8 @@ focus_tree = {
 		}
 
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_south_kivotos 
+			focus = Gehenna_Diplomacy_attack_south_kivotos 
+			focus = Gehenna_Diplomacy_aliance_south_kivotos 
 		}
 
 		mutually_exclusive = {  }
@@ -11624,7 +11652,7 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_south_kivotos
+		id = Gehenna_Diplomacy_attack_south_kivotos
 		icon = GFX_focus_ITA_cavalry_charge
 		x = 6
 		y = 0
@@ -11634,6 +11662,8 @@ focus_tree = {
 		bypass = {
 
 		}
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_aliance_south_kivotos }
 
 		available = {
 		}
@@ -11654,11 +11684,43 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_south_kivotos_2
+		id = Gehenna_Diplomacy_aliance_south_kivotos
+		icon = GFX_focus_ITA_cavalry_charge
+		x = 8
+		y = 0
+		relative_position_id = Gehenna_Diplomacy_russian_winter
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+		}
+
+		prerequisite = { 
+			focus = Gehenna_Diplomacy_war_against_cou 
+			focus = Gehenna_Diplomacy_recognition_of_cou 
+		}
+
+		mutually_exclusive = { focus = Gehenna_Diplomacy_attack_south_kivotos }
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
+		id = Gehenna_Diplomacy_attack_south_kivotos_2
 		icon = GFX_focus_attack_italy
 		x = 1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_south_kivotos
+		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11666,27 +11728,46 @@ focus_tree = {
 		}
 
 		available = {
+			is_puppet = no
 		}
 
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_south_kivotos 
+			focus = Gehenna_Diplomacy_attack_south_kivotos 
+			focus = Gehenna_Diplomacy_aliance_south_kivotos 
 		}
+
 		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		bypass = {
+			OR = {
+				has_war_with = ITA
+				NOT = { country_exists = ITA }
+				ITA = { is_in_faction_with = ROOT }
+				ITA = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = ITA }
+				create_wargoal = {
+					target = ITA
+					type = topple_government
+				}
+			}
 		}
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_south_kivotos_3
-		icon = GFX_focus_GRE_a_land_of_mountains
+		id = Gehenna_Diplomacy_remove_vatican
+		icon = GFX_focus_generic_vatican_state
 		x = 0
 		y = 2
-		relative_position_id = Gehenna_Diplomacy_south_kivotos
+		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11694,10 +11775,12 @@ focus_tree = {
 		}
 
 		available = {
-			has_government = fascism
+			is_puppet = no
+			2 = { owns_or_subject_of = yes }
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_south_kivotos_2
+			focus = Gehenna_Diplomacy_attack_south_kivotos_2
 		}
 		mutually_exclusive = {  }
 
@@ -11710,11 +11793,11 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_IberianAttack
-		icon = GFX_focus_focus_fra_intervention_spain
+		id = Gehenna_Diplomacy_support_WHY
+		icon = GFX_focus_GRE_a_land_of_mountains
 		x = 3
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_south_kivotos
+		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
 		cost = 5
 
 		bypass = {
@@ -11722,10 +11805,12 @@ focus_tree = {
 		}
 
 		available = {
-			has_government = fascism
+			is_puppet = no
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_south_kivotos
+			focus = Gehenna_Diplomacy_attack_south_kivotos
+			focus = Gehenna_Diplomacy_aliance_south_kivotos 
 		}
 
 		mutually_exclusive = {  }
@@ -11739,11 +11824,11 @@ focus_tree = {
 	}
 
 	focus = { #
-		id = Gehenna_Diplomacy_PortugalAttack
-		icon = GFX_focus_generic_attack_portugal
+		id = Gehenna_Diplomacy_attack_SPR
+		icon = GFX_focus_attack_Iberian
 		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_IberianAttack
+		relative_position_id = Gehenna_Diplomacy_support_WHY
 		cost = 5
 
 		bypass = {
@@ -11751,18 +11836,70 @@ focus_tree = {
 		}
 
 		available = {
-			has_government = fascism
+			OR = {
+				AND = {
+					country_exists = SPR
+					SPR = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = POR
+					POR = { NOT = { is_in_faction_with = ROOT } }
+				}
+				AND = {
+					country_exists = CAT
+					CAT = { NOT = { is_in_faction_with = ROOT } }
+				}
+			}
+			is_puppet = no
 		}
+
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_IberianAttack
+			focus = Gehenna_Diplomacy_support_WHY
 		}
+
 		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		completion_reward = {
+			if = {
+				limit = {
+					AND = {
+						country_exists = SPR
+						SPR = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = SPR
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = POR
+						POR = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = POR
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						country_exists = CAT
+						CAT = { NOT = { is_in_faction_with = ROOT } }
+					}
+				}
+				create_wargoal = {
+					target = CAT
+					type = puppet_wargoal_focus
+				}
+			}
 		}
 	}
 
