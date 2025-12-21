@@ -7459,9 +7459,9 @@ focus_tree = {
 		}
 	}
 
-	focus = { # 자경단 투입
-		id = TRN_bring_in_vigilantes
-		icon = GFX_focus_TRN_Suzumi
+	focus = { # 유격전
+		id = TRN_destroy_partisans
+		icon = GFX_focus_TRN_destroy_partisans
 		prerequisite = {
 			focus = TRN_Kyrie_for_the_forgotten_ones
 			focus = TRN_unprovable_problem
@@ -7516,11 +7516,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			hidden_effect = {
-				set_variable = { TRN_completed_industrial_decisions = 0 }
-			}
 			add_to_variable = {
-				global.NSD_country_collapse_decisions_value = -15
+				global.NSD_country_collapse_decisions_value = -5
 				tooltip = NSD_country_collapse_value_tt
 			}
 			add_to_variable = {
@@ -7533,6 +7530,7 @@ focus_tree = {
 				}
 				country_event = { id = trinity_flavor_events.6 days = 365 }
 			}
+			custom_effect_tooltip = TRN_destroy_partisans_effect_tt
 		}
 	}
 
@@ -8191,30 +8189,14 @@ focus_tree = {
 
 		available = {
 			has_government = fascism
+			has_power_balance = { id = TRM_power_balance }
 		}
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
-			if = {
-				limit = {
-					power_balance_value = {
-						id = TRM_power_balance
-						value < 0.01
-					}
-				}
-				custom_effect_tooltip = "값이 0.01을 보다 높으면 이게 나와요"
-			}
-			if = {
-				limit = {
-					power_balance_value = {
-						id = TRM_power_balance
-						value > 0.01
-					}
-				}
-				custom_effect_tooltip = "값이 0.01 보다 낮으면 이게 나와요"
-			}
+			
 		}
 	}
 
@@ -8360,8 +8342,8 @@ focus_tree = {
 	}
 
 	focus = { # 
-		id = TRN_white_uniformed_corps_assault_battalion
-		icon = GFX_focus_ITA_blackshirts
+		id = TRN_cooperation_with_suzumi
+		icon = GFX_focus_TRN_cooperation_with_suzumi
 		prerequisite = { 
 			focus = TRN_academy_defense_force
 		}
@@ -8378,10 +8360,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			custom_effect_tooltip = ITA_battaglioni_d_assalto_tt
-			hidden_effect = {
-				set_technology = { blackshirt_assault_battalion_tech = 1 popup = no }
-			}
+
 		}
 	}
 
@@ -8403,7 +8382,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			country_event = { id = trinity_events.30 } # 여성 인권 
+			activate_targeted_decision = { target = TRM decision = TRN_honor_woman_right}
 			add_war_support = 0.1
 			add_to_variable = {
 				nagisa_faction_J = -2
@@ -8797,7 +8776,7 @@ focus_tree = {
 		id = TRN_divine_mandate
 		icon = GFX_goal_TRN_domination
 		prerequisite = { focus = TRN_Integrity_of_Trinity }
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = TRN_Integrity_of_Trinity
 		cost = 5
@@ -15732,11 +15711,13 @@ focus_tree = {
 			custom_effect_tooltip = tooltip_white_line
 			effect_tooltip = {
 				add_ideas = TRN_trinity_army_ns_fake
+				add_ideas = TRN_hidden_armor_doctrine_1_ns
 				add_ideas = TRN_trinity_navy_ns_fake
 				add_ideas = TRN_trinity_airfocre_ns_fake
 			}
 			hidden_effect = {
 				add_dynamic_modifier = { modifier = TRN_army_ns }
+				add_ideas = TRN_hidden_armor_doctrine_1_ns
 				add_dynamic_modifier = { modifier = TRN_navy_ns }
 				add_dynamic_modifier = { modifier = TRN_airforce_ns }
 			}
@@ -15788,7 +15769,7 @@ focus_tree = {
 			hidden_effect = {
 				reduce_focus_completion_cost = {
 					focus = TRN_supply_line_improvements
-					cost = 35
+					cost = 70
 				}
 			}
 		}
@@ -15995,11 +15976,6 @@ focus_tree = {
 			}
 
 			army_experience = 15
-
-			reduce_focus_completion_cost = {
-				focus = TRN_trinity_army_reform
-				cost = -180
-			}
 		}
 	}
 
@@ -16010,7 +15986,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_armor_refit
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16044,9 +16020,9 @@ focus_tree = {
 				TRN_army_ns_org_loss_when_moving = -0.05
 				tooltip = org_loss_when_moving_tt
 			}
-			add_to_variable = {
-				TRN_army_ns_army_armor_attack_factor = 0.05
-				tooltip = army_armor_attack_factor_tt
+			swap_ideas = {
+				add_idea =TRN_hidden_armor_doctrine_2_ns
+				remove_idea = TRN_hidden_armor_doctrine_1_ns
 			}
 		}
 	}
@@ -16058,7 +16034,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_germany_army_reform_1
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16092,7 +16068,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_germany_army_reform_1
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16110,19 +16086,10 @@ focus_tree = {
 				category = cat_mechanized_equipment
 			}
 			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = {
-				localization_key = tooltip_modify_dynmod 
-				DYNMOD = TRN_army_ns
+			swap_ideas = {
+				add_idea =TRN_hidden_armor_doctrine_3_ns
+				remove_idea = TRN_hidden_armor_doctrine_2_ns
 			}
-			add_to_variable = {
-				TRN_army_ns_motorized_attack_factor = 0.1
-				tooltip = motorized_attack_factor_tt
-			}
-			add_to_variable = {
-				TRN_army_ns_mechanized_attack_factor = 0.1
-				tooltip = mechanized_attack_factor_tt
-			}
-			custom_effect_tooltip = tooltip_white_line
 			mio:TRM_motorized_mechanized_organization = {
 				add_mio_size = 1
 				add_mio_funds_gain_factor = 0.25
@@ -16139,7 +16106,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_germany_army_reform_2
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16148,11 +16115,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-			reduce_focus_completion_cost = {
-				focus = TRN_trinity_army_reform
-				cost = 180
-			}
 			
 			add_mastery_bonus = {
 				bonus = 0.1
@@ -16174,14 +16136,13 @@ focus_tree = {
 				DYNMOD = TRN_army_ns
 			}
 			add_to_variable = {
-				TRN_army_ns_army_armor_attack_factor = 0.05
-				tooltip = army_armor_attack_factor_tt
-			}
-			add_to_variable = {
 				TRN_army_ns_breakthrough_factor = 0.05
 				tooltip = breakthrough_factor_tt
 			}
-			
+			swap_ideas = {
+				add_idea =TRN_hidden_armor_doctrine_4_ns
+				remove_idea = TRN_hidden_armor_doctrine_3_ns
+			}
 		}
 	}
 
@@ -16208,11 +16169,6 @@ focus_tree = {
 				category = land_doctrine
 			}
 			army_experience = 15
-
-			reduce_focus_completion_cost = {
-				focus = TRN_armor_refit
-				cost = -180
-			}
 		}
 	}
 
@@ -16223,7 +16179,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_trinity_army_reform
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16265,7 +16221,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16308,7 +16264,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16346,7 +16302,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = TRN_retracing_the_mechanized_brigade_tragedy
-		cost = 5
+		cost = 6
 		available = {
 
 		}
@@ -16355,11 +16311,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-			reduce_focus_completion_cost = {
-				focus = TRN_armor_refit
-				cost = 180
-			}
 
 			add_mastery_bonus = {
 				bonus = 0.1
@@ -16454,7 +16405,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_general_staff_reform
-		cost = 10
+		cost = 6
 		available = {
 			has_country_flag = nagisa_faction_D_flag
 		}
@@ -16463,7 +16414,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = { 
+				TRN_army_ns_army_org_regain = 0.1
+				tooltip = army_org_regain_tt
+			}
 		}
 	}
 
@@ -16474,7 +16432,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_military_chaplain
-		cost = 10
+		cost = 20
 		overlay = GFX_focus_fast_overlay_generic_clock
 		available = {
 
@@ -16490,7 +16448,7 @@ focus_tree = {
 				custom_effect_tooltip = {
 					localization_key = tooltip_reduce_focus_cost 
 					FOCUS = TRN_military_factory_maintenance
-					TIME = 35
+					TIME = 70
 				}
 				custom_effect_tooltip = tooltip_white_line
 			}
