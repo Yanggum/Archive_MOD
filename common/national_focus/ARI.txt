@@ -1866,6 +1866,9 @@ focus_tree = {
 			add_dynamic_modifier = {
 				modifier = ARI_permanent_anti_trinity_military_operation
 			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
 			activate_mission = ARI_mission_permanent_anti_trinity_military_operation
 			activate_mission = ARI_mission_setback_reinforcement
 			activate_mission = ARI_mission_goal_achievement_failure
@@ -2003,10 +2006,18 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
-				create_unit = {
-					division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.75"
-					owner = ARI
-					count = 2
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 2
+					NAME = ARI_holding_arius_council_dv
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.70"
+						owner = ARI
+						count = 2
+					}
 				}
 			}
 		}
@@ -2050,10 +2061,18 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
-				create_unit = {
-					division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.75"
-					owner = ARI
-					count = 2
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 2
+					NAME = ARI_holding_arius_council_dv
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.70"
+						owner = ARI
+						count = 2
+					}
 				}
 			}
 		}
@@ -2075,6 +2094,30 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_drawing_sword
 		completion_reward = {
+			custom_effect_tooltip = ARI_permanent_anti_trinity_military_operation_tt
+			add_to_variable = {
+				ARI_PATMO_idea_army_attack_factor = -0.05
+				tooltip = army_attack_factor_tt
+			}
+			add_to_variable = {
+				ARI_PATMO_idea_army_defence_factor = -0.05
+				tooltip = army_defence_factor_tt
+			}
+			effect_tooltip = {
+				set_temp_variable = {
+					tempvar = ARI_PATMO_idea_army_org_factor
+				}
+				multiply_temp_variable = {
+					tempvar = -1
+				}
+				add_to_variable = {
+					ARI_PATMO_idea_army_org_factor = tempvar
+					tooltip = army_org_factor_tt
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
 			swap_ideas = {
 				remove_idea = ARI_undisturbed_wareconomy
 				add_idea = ARI_wareconomy
@@ -2084,14 +2127,20 @@ focus_tree = {
 					BA_prussian_territory_is = yes
 					NOT = { is_core_of = ROOT }
 				}
-				display_individual_scopes = yes
 				add_core_of = ROOT
-				create_unit = {
-					division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.75"
-					owner = ARI
-					count = 1
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = ARI_holding_arius_council_state
+					COUNT = 1
+					NAME = ARI_holding_arius_council_dv
 				}
-				custom_effect_tooltip = enter_tt
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.65"
+						owner = ARI
+						count = 1
+					}
+				}
 			}
 			every_controlled_state = {
 				limit = {
@@ -2111,6 +2160,13 @@ focus_tree = {
 				type = infantry_equipment
 				amount = 6500
 				producer = TRM
+			}
+			news_event = { id = ARI_news.1 hours = 8 }
+
+			hidden_effect = {
+				country_event = { id = ARI_story_event.4 days = 5 random_hours = 8 }
+				country_event = { id = ARI_story_event.5 days = 65 random_hours = 8 }
+				country_event = { id = ARI_story_event.6 days = 25 random_hours = 8 }
 			}
 		}
 	}
@@ -2201,13 +2257,31 @@ focus_tree = {
 			focus = ARI_maintaining_continuous_offensive
 			focus = ARI_preparation_for_trinity_counterattack
 		}
+
 		available = {
+			has_army_manpower = { size > 49999 }
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_maintaining_continuous_offensive
 		completion_reward = {
+
+			army_experience = 15
+			add_command_power = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arius_army_modifier_tt
+			add_to_variable = {
+				ARI_army_command_power_gain_mult = 0.05
+				tooltip = command_power_gain_mult_tt
+			}
+			add_to_variable = {
+				ARI_army_experience_gain_army_factor = 0.05
+				tooltip = experience_gain_army_factor_tt
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 	}
 	focus = {
@@ -2223,6 +2297,38 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_military_system_reorganization
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_completed_focus = ARI_sunny_place }
+				}
+				random_controlled_state = {
+					custom_effect_tooltip = {
+						localization_key = effect_division_creation_name
+						STATE = "[THIS.GetName]"
+						COUNT = 2
+						NAME = ARI_holding_arius_council_dv
+					}
+					hidden_effect = {
+						create_unit = {
+							division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.35"
+							owner = ARI
+							count = 2
+						}
+					}
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_conscription = 0.005
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				ARI_arian_training_time_factor = -0.10
+				tooltip = training_time_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 	}
 	focus = {
@@ -2253,6 +2359,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_holding_arius_council
 		completion_reward = {
+			remove_country_leader_trait = cornered_fox
+			add_country_leader_trait = ARI_arius_student_council_president
 		}
 	}
 	focus = {
@@ -2268,6 +2376,28 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_inauguration_of_arius_student_council_president
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_consumer_goods_factor = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -2283,6 +2413,64 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_promotion_of_production_department_to_industry_department
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = ARI_economic_corruption
+				}
+				remove_ideas = ARI_economic_corruption
+			}
+			else = {
+				custom_effect_tooltip = ARI_economic_structure_reform_tt
+			}
+			add_stability = 0.05
+			add_war_support = -0.05
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -2313,6 +2501,15 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_arius_academy
 		completion_reward = {
+			set_cosmetic_tag = ARI_general_school
+			delete_unit_template_and_units = {
+				division_template = "Arius Vexillatio"
+				disband = yes
+			}
+			country_event = ARI_story_event.7
+			effect_tooltip = {
+				news_event = { id = ARI_news.2 hours = 8 }
+			}
 		}
 	}
 }
