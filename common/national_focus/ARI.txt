@@ -1632,6 +1632,10 @@ focus_tree = {
 				tooltip = army_attack_factor_tt
 			}
 			custom_effect_tooltip = enter_tt
+			set_power_balance = {
+				id = ARI_balance_of_power
+				set_default = yes
+			}
 		}
 	}
 	focus = {
@@ -2338,12 +2342,37 @@ focus_tree = {
 			focus = ARI_military_system_reorganization
 		}
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = "헤일로 보병 리워크되면 열어줄께요."
+				always = no
+			}
 		}
 		cost = 5
 		x = -1
 		y = 2
 		relative_position_id = ARI_military_system_reorganization
 		completion_reward = {
+
+			if = {
+				limit = {
+					has_template = "Levis Angelorum"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Levis Angelorum"
+					disband = yes
+				}
+			}
+			division_template = {
+				name = "Levis Angelorum"
+				division_names_group = ARI_HAL_01
+				#template_counter = 67
+				regiments = {
+					penal_battalion = { x = 0 y = 0 }
+					penal_battalion = { x = 0 y = 1 }
+					penal_battalion = { x = 1 y = 0 }
+					penal_battalion = { x = 1 y = 1 }
+				}
+			}
 		}
 	}
 	focus = {
@@ -2475,7 +2504,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ARI_arius_academy
-		icon = GFX_focus_ARG_strengthening_the_concordancia
+		icon = GFX_focus_TRN_five_clan_republic
 		prerequisite = {
 			focus = ARI_inauguration_of_arius_student_council_president
 		}
@@ -2486,6 +2515,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_inauguration_of_arius_student_council_president
 		completion_reward = {
+			set_cosmetic_tag = ARI_general_school
 		}
 	}
 	focus = {
@@ -2495,13 +2525,32 @@ focus_tree = {
 			focus = ARI_arius_academy
 		}
 		available = {
+			TRM = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+				}
+			}
 		}
 		cost = 5
 		x = -1
 		y = 2
 		relative_position_id = ARI_arius_academy
 		completion_reward = {
-			set_cosmetic_tag = ARI_general_school
+			every_country = {
+				limit = {
+					original_tag = TRM
+					is_subject_of = ROOT
+					has_capitulated = no
+				}
+				ROOT = {
+					annex_country = {
+						target = PREV
+						transfer_troops = no
+					}
+				}
+			}
 			delete_unit_template_and_units = {
 				division_template = "Arius Vexillatio"
 				disband = yes
@@ -2510,6 +2559,22 @@ focus_tree = {
 			effect_tooltip = {
 				news_event = { id = ARI_news.2 hours = 8 }
 			}
+		}
+	}
+	focus = {
+		id = ARI_third_council
+		icon = GFX_focus_ARI_third_council
+		prerequisite = {
+			focus = ARI_sunny_place
+		}
+		available = {
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = ARI_sunny_place
+		completion_reward = {
+			custom_effect_tooltip = ARI_third_council_tt
 		}
 	}
 }
