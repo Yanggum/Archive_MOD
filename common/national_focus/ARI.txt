@@ -2594,8 +2594,130 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = ARI_sunny_place
-		completion_reward = {
+		select_effect = {
+			
 			custom_effect_tooltip = ARI_third_council_tt
+			if = {
+				limit = {
+					power_balance_value = {
+						id = ARI_balance_of_power
+						value < -0.4
+					}
+				}
+				set_country_flag = flag_ARI_third_council_tt1
+				if = {
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value < -0.8
+						}
+					}
+					set_country_flag = flag_ARI_third_council_ttex
+				}
+			}
+			else_if = {
+				limit = {
+					power_balance_value = {
+						id = ARI_balance_of_power
+						value > 0.4
+					}
+				}
+				set_country_flag = flag_ARI_third_council_tt2
+				if = {
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value > 0.8
+						}
+					}
+					set_country_flag = flag_ARI_third_council_ttex
+				}
+			}
+			else = {
+				set_country_flag = flag_ARI_third_council_tt3
+			}
+		}
+		completion_reward = {
+			effect_tooltip = {
+				custom_effect_tooltip = ARI_third_council_tt
+				if = {
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value < -0.4
+						}
+					}
+					custom_effect_tooltip = ARI_third_council_tt1
+					if = {
+						limit = {
+							power_balance_value = {
+								id = ARI_balance_of_power
+								value < -0.8
+							}
+						}
+						custom_effect_tooltip = generic_skip_one_line_tt
+						custom_effect_tooltip = ARI_third_council_ttex
+						add_stability = 0.05
+						army_experience = 25
+					}
+				}
+				else_if = {
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value > 0.4
+						}
+					}
+					custom_effect_tooltip = ARI_third_council_tt2
+					if = {
+						limit = {
+							power_balance_value = {
+								id = ARI_balance_of_power
+								value > 0.8
+							}
+						}
+						custom_effect_tooltip = generic_skip_one_line_tt
+						custom_effect_tooltip = ARI_third_council_ttex
+						add_stability = 0.05
+						add_political_power = 100
+					}
+				}
+				else = {
+					custom_effect_tooltip = ARI_third_council_tt3
+				}
+			}
+			# 이쪽이 진짜 효과
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = flag_ARI_third_council_tt1
+					}
+					set_country_flag = flag_ARI_fortress_arius
+					if = {
+						limit = {
+							has_country_flag = flag_ARI_third_council_ttex
+						}
+						add_stability = 0.05
+						army_experience = 25
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_flag = flag_ARI_third_council_tt2
+					}
+					set_country_flag = flag_ARI_approval_of_reformist_manifesto
+					if = {
+						limit = {
+							has_country_flag = flag_ARI_third_council_ttex
+						}
+						add_stability = 0.05
+						add_political_power = 100
+					}
+				}
+				else = {
+					set_country_flag = flag_ARI_emergency_government
+				}
+			}
 		}
 	}
 	focus = {
@@ -2609,12 +2731,23 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			has_country_flag = flag_ARI_fortress_arius
 		}
 		cost = 5
-		x = -7
+		x = 7
 		y = 1
 		relative_position_id = ARI_third_council
 		completion_reward = {
+			if = {
+				limit = { has_country_leader_with_trait = ARI_arius_squad }
+				swap_ruler_traits = {
+					remove = ARI_arius_squad
+					add = ARI_arius_squad_right_trait
+				}
+			}
+			else = {
+				add_country_leader_trait = ARI_arius_squad_right_trait
+			}
 		}
 	}
 	focus = {
@@ -2628,6 +2761,7 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			has_country_flag = flag_ARI_emergency_government
 		}
 		cost = 5
 		x = 0
@@ -2647,12 +2781,23 @@ focus_tree = {
 			focus = ARI_emergency_government
 		}
 		available = {
+			has_country_flag = flag_ARI_approval_of_reformist_manifesto
 		}
 		cost = 5
-		x = 7
+		x = -7
 		y = 1
 		relative_position_id = ARI_third_council
 		completion_reward = {
+			if = {
+				limit = { has_country_leader_with_trait = ARI_arius_squad }
+				swap_ruler_traits = {
+					remove = ARI_arius_squad
+					add = ARI_arius_squad_left_trait
+				}
+			}
+			else = {
+				add_country_leader_trait = ARI_arius_squad_left_trait
+			}
 		}
 	}
 	focus = {
@@ -2668,6 +2813,12 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_fortress_arius
 		completion_reward = {
+			unlock_decision_category_tooltip = ARI_historical_records
+			unlock_decision_tooltip = ARI_arius_victory_monument_construction
+			unlock_decision_tooltip = ARI_azusa_joamae_saori_statue_construction
+			unlock_decision_tooltip = ARI_cathedral_of_communion_reconstruction
+			unlock_decision_tooltip = ARI_new_city_plan
+			unlock_decision_tooltip = ARI_statues_of_heroes_construction
 		}
 	}
 	focus = {
@@ -2677,12 +2828,71 @@ focus_tree = {
 			focus = ARI_heroic_epic_of_joumae_saori
 		}
 		available = {
+			is_subject = no
+			Eden_country_defend_trigger = no
+			has_army_manpower = { size > 299999 }
+			has_war_support > 0.4
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+			NOT = { has_non_aggression_pact_with = GEM }
 		}
 		cost = 5
 		x = 0
 		y = 2
 		relative_position_id = ARI_heroic_epic_of_joumae_saori
+		will_lead_to_war_with = GEM
+		will_lead_to_war_with = GEH
+		will_lead_to_war_with = HEU
 		completion_reward = {
+			add_opinion_modifier = {
+				target = GEM
+				modifier = BUL_old_enemies
+			}
+			add_opinion_modifier = {
+				target = GEH
+				modifier = BUL_old_enemies
+			}
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = GEM
+						tag = GEH
+					}
+				}
+				display_individual_scopes = yes
+				add_opinion_modifier = { target = ROOT modifier = existential_threat }
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			hidden_effect = {
+				if = {
+					limit = { has_government = fascism }
+					scoped_play_song = "BA_from_the_new"
+				}
+			}
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = GEH
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = HEU
+				type = annex_everything
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			add_timed_idea = {
+				idea = idea_ARI_evil_named_gehenna
+				days = 120
+			}
 		}
 	}
 	focus = {
@@ -2698,6 +2908,59 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_fortress_arius
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_speed_arms_factory_factor = 0.10
+				tooltip = production_speed_arms_factory_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -2713,6 +2976,12 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_fortress_arius
 		completion_reward = {
+			add_ideas = idea_ARI_arius_student_comrades_association
+			add_command_power = 25
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
 		}
 	}
 	focus = {
@@ -2794,6 +3063,30 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_arius_student_comrades_association
 		completion_reward = {
+			every_owned_state = {
+				limit = {
+					infrastructure < 5
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_consumer_goods_factor = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -2812,6 +3105,37 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_arius_military_complex
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_consumer_goods_factor = 0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = -0.03
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_production_factory_max_efficiency_factor = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -2825,6 +3149,31 @@ focus_tree = {
 			focus = ARI_corporate_economy_research
 		}
 		available = {
+			is_puppet = no
+			GEH = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			GEM = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+			HEU = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
 		}
 		cost = 5
 		x = 1
