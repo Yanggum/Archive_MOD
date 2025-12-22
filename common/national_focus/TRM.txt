@@ -12797,7 +12797,12 @@ focus_tree = {
 		cost = 6
 
 		available = {
-			has_completed_focus = TRN_infinite_trust_and_faith
+			if = {
+				limit = {
+					has_completed_focus = TRN_safeguarding_the_ideal_of_factional_democracy
+				}
+				has_completed_focus = TRN_infinite_trust_and_faith
+			}
 		}
 
 		allow_branch = {
@@ -12828,6 +12833,9 @@ focus_tree = {
 				country_event = { id = trinity_events_nagisa.41 }
 				country_event = { id = trinity_events_nagisa.42 days = 14 }
 				country_event = { id = trinity_events_nagisa.43 days = 28 }
+			}
+			effect_tooltip = {
+				country_event = { id = trinity_events_nagisa.41 }
 			}
 		}
 	}
@@ -13067,6 +13075,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_temp_variable = { temp_nagsia_neutrality = party_popularity@democratic }
+			multiply_temp_variable = { temp_nagsia_neutrality = 0.4 }
+			add_popularity = {
+				ideology = neutrality
+				popularity = var:temp_nagsia_neutrality
+			}
+			set_politics = {
+				ruling_party = neutrality
+				election_frequency = 36
+				elections_allowed = yes
+			}
 			mark_focus_tree_layout_dirty = yes
 		}
 	}
@@ -13114,7 +13133,7 @@ focus_tree = {
 			focus = TRN_iron_woman
 		}
 
-		x = -4
+		x = -3
 		y = 1
 
 		relative_position_id = TRN_iron_woman
@@ -13134,7 +13153,422 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_to_variable = {
+				nagisa_faction_A = 4
+				tooltip = nagisa_faction_A_tt
+			}
+			add_to_variable = {
+				nagisa_faction_C = -4
+				tooltip = nagisa_faction_C_tt
+			}
+			TRM_nagisa_faction_modified = yes
+			custom_effect_tooltip = enter_tt
+			every_character = {
+				limit = {
+					has_trait = TRM_attached_to_filius
+				}
+				add_planning = 1
+				add_attack = 1
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_removing_local_parties
+		icon = GFX_focus_deal_with_spd
+		
+		prerequisite = { 
+			focus = TRN_illusion_of_equality
+		}
+
+		x = -1
+		y = 1
+
+		relative_position_id = TRN_illusion_of_equality
+
+		cost = 6
+
+		available = {
 			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = TRN_hope_light_distant_sky_1_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_hope_light_distant_sky_1_ns
+					add_idea = TRN_hope_light_distant_sky_2_ns
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = TRN_hope_light_distant_sky_2_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_hope_light_distant_sky_2_ns
+					add_idea = TRN_hope_light_distant_sky_3_ns
+				}
+			}
+			else = {
+				effect_tooltip = {
+					add_ideas = TRN_hope_light_distant_sky_3_ns
+				}
+			}
+			custom_effect_tooltip = TRN_removing_local_parties_tt
+			set_temp_variable = {
+				TRN_SPD_temp_var = nagisa_faction_G # 임시 변수에 사회민주당 변수를 옮김
+			}
+			subtract_from_variable = { nagisa_faction_G = TRN_SPD_temp_var } # 그 숫자를 사회민주당 변수에서 감소
+			add_to_variable = { nagisa_faction_A = TRN_SPD_temp_var } # 한 뒤 필리우스로 옮김
+			multiply_temp_variable = { TRN_SPD_temp_var = -0.01 } # 이후 사회민주당 변수를 -0.01 곱하기 (사회민주당 지지율이 4%일 경우 -0.04)
+			add_stability = TRN_SPD_temp_var # 안정도 감소
+			TRM_nagisa_faction_modified = yes
+		}
+	}
+
+	focus = {
+		id = TRN_hope_light_distant_sky 
+		icon = GFX_focus_generic_conference
+		
+		prerequisite = { 
+			focus = TRN_iron_woman
+		}
+
+		x = -5
+		y = 1
+
+
+		relative_position_id = TRN_iron_woman
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		allow_branch = {
+			has_completed_focus = TRN_iron_woman
+		}
+
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_ideas = TRN_hope_light_distant_sky_1_ns
+			remove_country_leader_trait = TRM_cynical_skeptic_nagisa
+		}
+	}
+	
+	
+	focus = {
+		id = TRN_birth_of_trinity_pan_nationalism_alt
+		icon = GFX_focus_TRN_birth_of_trinity_pan_nationalism
+
+		x = -7
+		y = 1
+
+
+		relative_position_id = TRN_iron_woman
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		allow_branch = {
+			has_completed_focus = TRN_iron_woman
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+			add_to_variable = {
+				nagisa_faction_F = 1
+				tooltip = nagisa_faction_F_tt
+			}
+			add_to_variable = {
+				nagisa_faction_A = -1
+				tooltip = nagisa_faction_A_tt
+			}
+			TRM_nagisa_faction_modified = yes
+		}
+	}
+
+	focus = {
+		id = TRN_make_up_work_club
+		icon = GFX_focus_JAP_implement_army_reforms
+		
+		prerequisite = { 
+			focus = TRN_illusion_of_equality
+		}
+		
+		prerequisite = { 
+			focus = TRN_hope_light_distant_sky
+		}
+
+		x = -3
+		y = 1
+
+		relative_position_id = TRN_illusion_of_equality
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_make_up_work_club_tt
+			hidden_effect = {
+				delete_unit_template_and_units = {
+					division_template = "Trinity Make-up Work Club"
+					disband = yes
+				}
+
+				division_template = {
+					name = "Trinity Make-up Work Club"
+					division_names_group = TRM_INF_01
+					is_locked = yes
+					force_allow_recruiting = no
+					#template_counter = 67
+					regiments = {
+						penal_battalion = { x = 0 y = 0 }
+						penal_battalion = { x = 0 y = 1 }
+						penal_battalion = { x = 0 y = 2 }
+						penal_battalion = { x = 1 y = 0 }
+						penal_battalion = { x = 1 y = 1 }
+						penal_battalion = { x = 1 y = 2 }
+					}
+				}
+			}
+
+			random_controlled_state = {
+				create_unit = {
+					division = "name = \"Trinity Make-up Work Club\" division_template = \"Trinity Make-up Work Club\" start_experience_factor = 0.05 start_equipment_factor = 0.5"
+					owner = TRM
+					allow_spawning_on_enemy_provs = yes
+					count = 1
+				}
+			}
+			
+			random_controlled_state = {
+				create_unit = {
+					division = "name = \"Trinity Make-up Work Club\" division_template = \"Trinity Make-up Work Club\" start_experience_factor = 0.05 start_equipment_factor = 0.5"
+					owner = TRM
+					allow_spawning_on_enemy_provs = yes
+					count = 1
+				}
+			}
+			
+			random_controlled_state = {
+				create_unit = {
+					division = "name = \"Trinity Make-up Work Club\" division_template = \"Trinity Make-up Work Club\" start_experience_factor = 0.05 start_equipment_factor = 0.5"
+					owner = TRM
+					allow_spawning_on_enemy_provs = yes
+					count = 1
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_lord_protector_appointment
+		icon = GFX_goal_generic_parliament
+		
+		prerequisite = { 
+			focus = TRN_hope_light_distant_sky
+		}
+
+		x = -5
+		y = 1
+
+		relative_position_id = TRN_illusion_of_equality
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = TRN_hope_light_distant_sky_1_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_hope_light_distant_sky_1_ns
+					add_idea = TRN_hope_light_distant_sky_2_ns
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = TRN_hope_light_distant_sky_2_ns
+				}
+				swap_ideas = {
+					remove_idea = TRN_hope_light_distant_sky_2_ns
+					add_idea = TRN_hope_light_distant_sky_3_ns
+				}
+			}
+			else = {
+				effect_tooltip = {
+					add_ideas = TRN_hope_light_distant_sky_3_ns
+				}
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.15
+			}
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_bill_of_attainder
+		
+		icon = {
+			value = GFX_focus_usa_voter_registration_act
+			trigger = {
+				NOT = { has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag }
+			}
+		}
+		
+		icon = {
+			value = GFX_focus_generic_court
+			trigger = {
+				has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+			}
+		}
+		
+		prerequisite = { 
+			focus = TRN_lord_protector_appointment
+			focus = TRN_removing_local_parties
+		}
+
+		x = -4
+		y = 2
+
+		relative_position_id = TRN_illusion_of_equality
+
+		cost = 6
+
+		available = {
+			has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRN_pater_dissolution
+		icon = GFX_focus_focus_fra_fascist_threat
+		
+		prerequisite = { 
+			focus = TRN_lord_protector_appointment
+		}
+		
+		prerequisite = { 
+			focus = TRN_removing_local_parties
+		}
+
+		x = -2
+		y = 2
+
+		relative_position_id = TRN_illusion_of_equality
+
+		cost = 6
+
+		available = {
+			
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			set_temp_variable = {
+				TRN_pater_temp_var = nagisa_faction_C # 임시 변수에 파테르 변수를 옮김
+			}
+			divide_temp_variable = { TRN_pater_temp_var = 2 } # 그 변수를 반으로 나누고
+			round_temp_variable = TRN_pater_temp_var # 소숫점 반올림
+			subtract_from_variable = { nagisa_faction_C = TRN_pater_temp_var } # 그 숫자를 파테르 변수에서 감소
+			add_to_variable = { nagisa_faction_A = TRN_pater_temp_var } # 한 뒤 필리우스로 옮김
+		}
+	}
+
+	
+
+	focus = {
+		id = TRN_nagisa_neutrality_ending
+		icon = GFX_focus_TRN_Integrity_of_Trinity
+		
+		prerequisite = { 
+			focus = TRN_pater_dissolution
+		}
+		
+		prerequisite = { 
+			focus = TRN_end_of_new_constitution_discussion
+		}
+		
+		prerequisite = { 
+			focus = TRN_meeting_with_mine
+		}
+
+		x = -2
+		y = 4
+
+		relative_position_id = TRN_iron_woman
+
+		cost = 6
+
+		available = {
+			
+		}
+		
+		select_effect = {
+
+		}
+
+		ai_will_do = {
+			base = 1000 # 엔딩
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRN_nagisa_neutrality_ending_tt
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 
@@ -13404,6 +13838,7 @@ focus_tree = {
 					has_completed_focus = TRN_working_hours_limit
 					has_completed_focus = TRN_minimum_wage_law
 					has_completed_focus = TRN_affirmative_action
+					has_completed_focus = TRN_meeting_with_mine
 
 					# 민주 나기사
 					has_completed_focus = TRN_expansion_of_the_tea_party_scale
@@ -13414,7 +13849,15 @@ focus_tree = {
 					has_completed_focus = TRN_infinite_trust_and_faith
 					has_completed_focus = TRN_opening_the_old_library
 					has_completed_focus = TRN_new_and_free_trininy_culture
-					has_completed_focus = TRN_meeting_with_mine
+
+					# 비동맹 나기사
+					has_completed_focus = TRN_illusion_of_equality
+					has_completed_focus = TRN_hope_light_distant_sky
+					has_completed_focus = TRN_birth_of_trinity_pan_nationalism_alt
+					has_completed_focus = TRN_make_up_work_club
+					has_completed_focus = TRN_removing_local_parties
+					has_completed_focus = TRN_bill_of_attainder
+					has_completed_focus = TRN_pater_dissolution
 				}
 			}
 		}
