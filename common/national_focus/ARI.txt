@@ -2788,6 +2788,9 @@ focus_tree = {
 			else = {
 				add_country_leader_trait = ARI_arius_squad_right_trait
 			}
+			hidden_effect = {
+				country_event = { id = ARI_conservative_event_chain.1 days = 50 random_hours = 8 }
+			}
 		}
 	}
 	focus = {
@@ -2859,6 +2862,21 @@ focus_tree = {
 			unlock_decision_tooltip = ARI_cathedral_of_communion_reconstruction
 			unlock_decision_tooltip = ARI_new_city_plan
 			unlock_decision_tooltip = ARI_statues_of_heroes_construction
+		}
+	}
+	focus = {
+		id = ARI_establishment_of_arius_intelligence_agency
+		icon = GFX_goal_generic_intelligence_exchange
+		prerequisite = {
+			focus = ARI_heroic_epic_of_joumae_saori
+		}
+		available = {
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_heroic_epic_of_joumae_saori
+		completion_reward = {
 		}
 	}
 	focus = {
@@ -3151,6 +3169,24 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_wipe_out_all_resistance_forces
 		completion_reward = {
+			unlock_decision_tooltip = ARI_persuading_after_school_dessert_club
+			unlock_decision_tooltip = ARI_persuading_library_committee
+		}
+	}
+	focus = {
+		id = ARI_sisterhood_break_with_the_past
+		icon = GFX_focus_TRN_alliance_of_faith
+		prerequisite = {
+			focus = ARI_control_of_separatist_groups
+		}
+		available = {
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_control_of_separatist_groups
+		completion_reward = {
+			country_event = ARI_conservative_event_chain.2
 		}
 	}
 	focus = {
@@ -3337,6 +3373,9 @@ focus_tree = {
 		icon = GFX_focus_chi_mission_to_the_SHA
 		prerequisite = {
 			focus = ARI_arius_above_all_names
+		}
+		mutually_exclusive = {
+			focus = ARI_reichskommissariat_germanien
 		}
 		available = {
 		}
@@ -3709,6 +3748,59 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_transfer_crusade_system
 		completion_reward = {
+			every_owned_state = {
+				limit = {
+					infrastructure < 5
+				}
+				random_select_amount = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dynamic_modifier = { modifier = ARI_militarized_society }}
+				}
+				custom_effect_tooltip = ARI_add_militarized_society_modifier_tt
+				hidden_effect = {
+					add_dynamic_modifier = { modifier = ARI_militarized_society } 
+				}
+			}
+			else = {
+				custom_effect_tooltip = ARI_modify_militarized_society_modifier_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			add_to_variable = { 
+				ARI_militarized_society_production_speed_arms_factory_factor = 0.05
+				tooltip = production_speed_arms_factory_factor_tt
+			}
 		}
 	}
 	focus = {
