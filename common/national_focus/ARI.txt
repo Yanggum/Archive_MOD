@@ -1144,40 +1144,54 @@ focus_tree = {
 
 			if = {
 				limit = {
-					has_template = "Manus Incursoria"
+					has_completed_focus = ARI_ghosts_of_the_nation
 				}
-				delete_unit_template_and_units = {
-					division_template = "Manus Incursoria"
-					disband = yes
-				}
+				#Spawn Penal divisions
+				custom_effect_tooltip = ARI_penal_battalions_spawn_improve_tt
+				ARI_spawn_penal_divisions_effect = yes
 			}
-			division_template = {
-				name = "Manus Incursoria"
-				division_names_group = ARI_HAL_01
-				#template_counter = 67
-				regiments = {
-					penal_battalion = { x = 0 y = 0 }
-					penal_battalion = { x = 0 y = 1 }
-					penal_battalion = { x = 1 y = 0 }
-					penal_battalion = { x = 1 y = 1 }
-				}
-			}
+			else = {
 
-			random_owned_controlled_state = {
-				prioritize = { 85 }
-				custom_effect_tooltip = {
-					localization_key = effect_division_creation_name
-					STATE = "[THIS.GetName]"
-					COUNT = 2
-					NAME = ARI_mental_armament_tt
-				}
-				hidden_effect = {
-					create_unit = {
-						division = "name = \"Manus Incursoria\" division_template = \"Manus Incursoria\" start_experience_factor = 0.05 start_equipment_factor = 0.7"
-						owner = ARI
-						count = 2
+				if = {
+					limit = {
+						has_template = "Manus Incursoria"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Manus Incursoria"
+						disband = yes
 					}
 				}
+				division_template = {
+					name = "Manus Incursoria"
+					division_names_group = ARI_PEN_01
+					#template_counter = 67
+					is_locked = yes
+					force_allow_recruiting = no
+					regiments = {
+						penal_battalion = { x = 0 y = 0 }
+						penal_battalion = { x = 0 y = 1 }
+						penal_battalion = { x = 1 y = 0 }
+						penal_battalion = { x = 1 y = 1 }
+					}
+				}
+
+				random_owned_controlled_state = {
+					prioritize = { 85 }
+					custom_effect_tooltip = {
+						localization_key = effect_division_creation_name
+						STATE = "[THIS.GetName]"
+						COUNT = 2
+						NAME = ARI_mental_armament_tt
+					}
+					hidden_effect = {
+						create_unit = {
+							division = "name = \"Manus Incursoria\" division_template = \"Manus Incursoria\" start_experience_factor = 0.05 start_equipment_factor = 0.7"
+							owner = ARI
+							count = 2
+						}
+					}
+				}
+				
 			}
 		}
 	}
@@ -2565,6 +2579,10 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_arius_academy
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = BA_ARI_bitter_revanchism
+				add_idea = BA_ARI_bitter_revanchism_ns_1
+			}
 			every_country = {
 				limit = {
 					original_tag = TRM
@@ -2589,6 +2607,7 @@ focus_tree = {
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
 
+			custom_effect_tooltip = ARI_sunny_place_tt
 			unlock_decision_category_tooltip = ARI_trinity_academy_dissolution
 		}
 	}
@@ -3267,6 +3286,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_evil_named_gehenna
 		completion_reward = {
+			remove_ideas = BA_ARI_bitter_revanchism_ns_1
 		}
 	}
 	focus = {
@@ -3290,6 +3310,26 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_corporate_economy_research
 		completion_reward = {
+			custom_effect_tooltip = ARI_add_militarized_society_modifier_tt
+			hidden_effect = {
+				add_dynamic_modifier = { modifier = ARI_militarized_society } 
+			}
+			add_to_variable = {
+				ARI_militarized_society_training_time_factor = -0.1
+				tooltip = training_time_factor_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_industrial_capacity_factory = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_industrial_capacity_dockyard = 0.05
+				tooltip = industrial_capacity_dockyard_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_production_speed_buildings_factor = -0.10
+				tooltip = production_speed_buildings_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -3385,6 +3425,43 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_militarization_of_society
 		completion_reward = {
+			custom_effect_tooltip = SOV_war_economy_stability_tt
+			if = {
+				limit = {
+					has_war = no
+				}
+				add_stability = -0.1
+			}
+			else = {
+				custom_effect_tooltip = SOV_war_economy_stability_war_tt
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			if = {
+				limit = {
+					NOT = { has_idea = war_economy }
+					NOT = { has_idea = tot_economic_mobilisation }
+				}
+				add_ideas = war_economy
+			}
+
+			random_controlled_state = {
+				limit = {
+					arms_factory > 1
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -3400,6 +3477,42 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_militarization_of_society
 		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				random_select_amount = 4
+				add_extra_state_shared_building_slots = 1
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = GER_autarky_efforts
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = GER_gain_autarkic_economy_lock_free_trade_tt
+			add_ideas = ARI_self_sufficiency_economy
 		}
 	}
 	focus = {
@@ -3415,6 +3528,61 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_economic_self_sufficiency
 		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 65 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			add_tech_bonus = {
+				name = ARI_coal_liquefaction
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dynamic_modifier = { modifier = ARI_militarized_society }}
+				}
+				custom_effect_tooltip = ARI_add_militarized_society_modifier_tt
+				hidden_effect = {
+					add_dynamic_modifier = { modifier = ARI_militarized_society } 
+				}
+			}
+			else = {
+				custom_effect_tooltip = ARI_modify_militarized_society_modifier_tt
+			}
+			add_to_variable = { 
+				ARI_militarized_society_production_speed_synthetic_refinery_factor = 0.1
+				tooltip = production_speed_synthetic_refinery_factor_tt
+			}
+			add_to_variable = { 
+				ARI_militarized_society_production_speed_fuel_silo_factor = 0.1
+				tooltip = production_speed_fuel_silo_factor_tt
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			custom_effect_tooltip = available_industrial_concern
+			
+			show_ideas_tooltip = ARI_arius_petrochemical_company
 		}
 	}
 	focus = {
@@ -3430,11 +3598,33 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_militarization_of_society
 		completion_reward = {
+			add_ideas = idea_ARI_transfer_crusade_system
+
+			add_stability = -0.05
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dynamic_modifier = { modifier = ARI_militarized_society }}
+				}
+				custom_effect_tooltip = ARI_add_militarized_society_modifier_tt
+				hidden_effect = {
+					add_dynamic_modifier = { modifier = ARI_militarized_society } 
+				}
+			}
+			else = {
+				custom_effect_tooltip = ARI_modify_militarized_society_modifier_tt
+			}
+			add_to_variable = { 
+				ARI_militarized_society_war_support_factor = 0.10
+				tooltip = war_support_factor_tt
+			}
 		}
 	}
 	focus = {
 		id = ARI_ghosts_of_the_nation
-		icon = GFX_focus_POL_sanation_right
+		icon = GFX_focus_SOV_penal_battalions
 		prerequisite = {
 			focus = ARI_transfer_crusade_system
 		}
@@ -3445,6 +3635,65 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_transfer_crusade_system
 		completion_reward = {
+			hidden_effect = {
+				#set_technology = { penal_infantry = 1 popup = no } #Note: Granting tech will make the penal battalion available for any template
+
+				if = {
+					limit = {
+						has_template = "Divisio Poenalis"
+					}
+					delete_unit_template_and_units = {
+						division_template = "Divisio Poenalis"
+						disband = yes
+					}
+				}
+
+				division_template = {
+					name = "Divisio Poenalis"
+					division_names_group = ARI_PEN_02
+					is_locked = yes
+
+					regiments = {
+						penal_battalion = { x = 0 y = 0 }
+						penal_battalion = { x = 0 y = 1 }
+						penal_battalion = { x = 0 y = 2 }
+						penal_battalion = { x = 1 y = 0 }
+						penal_battalion = { x = 1 y = 1 }
+						penal_battalion = { x = 1 y = 2 }
+						penal_battalion = { x = 2 y = 0 }
+						penal_battalion = { x = 2 y = 1 }
+						penal_battalion = { x = 2 y = 2 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_political_power = 20
+
+			ARI_spawn_penal_divisions_effect = yes
+
+			custom_effect_tooltip = {
+				localization_key = focus_completed_trigger_modify_effect_tt
+				FOCUS = ARI_chemical_warfare_preparation
+			}
+			#Spawn Penal divisions
+			custom_effect_tooltip = ARI_penal_battalions_spawn_tt
+
+			custom_effect_tooltip = {
+				localization_key = focus_completed_trigger_modify_effect_tt
+				FOCUS = ARI_mental_armament
+			}
+
+			delete_unit_template_and_units = {
+				division_template = "Manus Incursoria"
+				disband = yes
+			}
+			#Spawn Penal divisions
+			custom_effect_tooltip = ARI_penal_battalions_spawn_improve_tt
 		}
 	}
 	focus = {
