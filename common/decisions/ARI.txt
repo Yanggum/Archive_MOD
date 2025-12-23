@@ -2353,3 +2353,105 @@ ARI_historical_records = {
 		}
 	}
 }
+
+ARI_trinity_academy_dissolution = {
+	ARI_establishment_of_administrative_districts = {
+
+		icon = GFX_decision_generic_form_nation
+
+		ai_will_do = {
+			base = 50
+		}
+
+		priority = 25
+
+		#highlight_states = {
+		#	highlight_state_targets = {
+		#		state = FROM 
+		#	} 
+		#}
+	
+		allowed = {
+			original_tag = ARI
+		}
+		
+		visible = {
+			has_completed_focus = ARI_sunny_place
+		}
+		
+		available = {
+			FROM = {
+				NOT = { has_state_flag = ARI_coring_this_trinity_state_in_progress_flag }
+			}
+			FROM = {
+				compliance > 50
+			}
+		}
+
+		state_target = any_controlled_state
+	    
+	    target_trigger = {
+	        FROM = {
+	        	NOT = { is_core_of = ROOT }
+	        	is_fully_controlled_by = ROOT
+	        	OR = {
+	        		BA_trinity_is = yes
+	        	}
+	        	OR = {
+	        		any_neighbor_state = {
+	        			is_core_of = ROOT
+	        		}
+	        		is_coastal = yes
+	        	}
+	        }
+	    }
+	    on_map_mode = map_and_decisions_view
+
+	    cost = 50		
+
+		fire_only_once = yes
+
+		days_remove = 35
+
+		complete_effect = {
+			hidden_effect = {
+				FROM = {
+					set_state_flag = { flag = ARI_coring_this_trinity_state_in_progress_flag value = 1 days = 31 }
+				}
+			}
+		}
+
+		remove_effect = {
+			hidden_effect = {
+				FROM = {
+					clr_state_flag = ARI_coring_this_trinity_state_in_progress_flag
+				}
+			}
+
+			FROM = {
+				if = {
+					limit = {
+						is_core_of = TRM
+					}
+					remove_core_of = TRM
+				}
+				add_core_of = ROOT
+			}
+			
+		}
+
+		cancel_trigger = {
+			FROM = {
+				NOT = { is_fully_controlled_by = ROOT }
+			}
+		}
+
+		cancel_effect = {
+			hidden_effect = {
+				FROM = {
+					clr_state_flag = ARI_coring_this_trinity_state_in_progress_flag
+				}
+			}
+		}
+	}
+}
