@@ -9,11 +9,11 @@ focus_tree = {
 	} 
 	inlay_window = {
 		id = fra_inner_circle_inlay_window
-		position = { x = 1500 y = 1280 }
+		position = { x = 2140 y = 1800 }
 	}
 	continuous_focus_position = {
-		x = 1500
-		y = 2000
+		x = 1300
+		y = 1800
 	}
 	initial_show_position = {
         x = 10
@@ -24,6 +24,11 @@ focus_tree = {
 	#	target = FRA_focus_london_5
 	#	scroll_wheel_factor = 1
 	#}
+	shortcut = {
+		name = FRA_focus_shortcut_diplomacy
+		target = FRA_an_unexpected_ally
+		scroll_wheel_factor = 1
+	} 
 	shortcut = {
 		name = FRA_focus_shortcut_military
 		target = FRA_focus_arm_1
@@ -142,6 +147,9 @@ focus_tree = {
 		relative_position_id = FRA_focus_ind
 		x = 4
 		y = 0
+		ai_will_do = {
+			base = 10
+		}
 		prerequisite = {
 			focus = FRA_focus.1
 		}
@@ -613,6 +621,13 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus.1
 		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				date > 1937.3.1
+				add = 200
+			}
+		}
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = FRA_legacy_of_war
@@ -698,6 +713,9 @@ focus_tree = {
 		relative_position_id = FRA_focus_arm_1
 		prerequisite = {
 			focus = FRA_focus_arm_1
+		}
+		ai_will_do = {
+			base = 10
 		}
 		completion_reward = {
 			add_ideas = FRA_north_afrikan_army
@@ -1485,6 +1503,9 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_arm_4
 		}
+		ai_will_do = {
+			base = 10
+		}
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = FRA_exile_navy
@@ -1560,6 +1581,9 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = FRA_focus_arm_12
+		}
+		ai_will_do = {
+			base = 10
 		}
 		completion_reward = {
 			if = {
@@ -2434,23 +2458,24 @@ focus_tree = {
 	focus = {
 		#국제사회에서 정통성 확인
 		id = FRA_authenticity_in_the_international_community
-		cost = 4
+		cost = 2
 		icon = GFX_focus_generic_league_of_nations
-		x = -3
-		y = 7
+		x = -4
+		y = 8
 		available = {
 			date > 1936.6.1
 		}
 		relative_position_id = FRA_focus.1
 		completion_reward = {
+			add_stability = 0.03
 		}
 	}
 	focus = {
-		#이탈리아 패권 인정
-		id = FRA_confirm_italian_hegemony
+		#지중해 외교
+		id = FRA_mediterranean_diplomacy
 		cost = 4
-		icon = GFX_focus_ITA_greater_italy
-		x = -5
+		icon = GFX_focus_SWE_Vasa_II
+		x = -7
 		y = 1
 		prerequisite = {
 			focus = FRA_authenticity_in_the_international_community
@@ -2460,10 +2485,24 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#키보토스에 맞선 공투
-		id = FRA_italian_joint_struggle_on_kivotos
+		#이탈리아 패권 인정
+		id = FRA_confirm_italian_hegemony
 		cost = 4
-		icon = GFX_focus_befriend_italy
+		icon = GFX_focus_ITA_greater_italy
+		x = 3
+		y = 1
+		prerequisite = {
+			focus = FRA_mediterranean_diplomacy
+		}
+		relative_position_id = FRA_mediterranean_diplomacy
+		completion_reward = {
+		}
+	}
+	focus = {
+		#이탈리아 자본가들의 투자
+		id = FRA_italian_invest
+		cost = 4
+		icon = GFX_SOV_foreign_experts_ccp_2d_sov_compatibility
 		x = -1
 		y = 1
 		prerequisite = {
@@ -2474,16 +2513,75 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#이탈리아 자본가들의 투자
-		id = FRA_italian_invest
+		#동병상련
+		id = FRA_in_the_same_boat
 		cost = 4
-		icon = GFX_SOV_foreign_experts_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_befriend_republican_spain_focus
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = FRA_mediterranean_diplomacy
+		}
+		relative_position_id = FRA_mediterranean_diplomacy
+		completion_reward = {
+		}
+	}
+	focus = {
+		#이계-볼셰비즘에 맞서는 장벽
+		id = FRA_barrier_against_kivotos-Bolshevism
+		cost = 4
+		icon = GFX_focus_ger_bulwark_against_bolshevism
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = FRA_in_the_same_boat
+		}
+		relative_position_id = FRA_in_the_same_boat
+		completion_reward = {
+		}
+	}
+	focus = {
+		#북아프리카 고속도로
+		id = FRA_north_africa_road
+		cost = 4
+		icon = GFX_focus_generic_road_investment
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = FRA_italian_invest
+		}
+		prerequisite = {
+			focus = FRA_barrier_against_kivotos-Bolshevism
+		}
+		relative_position_id = FRA_barrier_against_kivotos-Bolshevism
+		completion_reward = {
+		}
+	}
+	focus = {
+		#지중해 무역
+		id = FRA_trade_treaty
+		cost = 4
+		icon = GFX_focus_generic_merchant_fleet
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = FRA_mediterranean_diplomacy
+		}
+		relative_position_id = FRA_mediterranean_diplomacy
+		completion_reward = {
+		}
+	}
+	focus = {
+		#범지중해 경제권
+		id = FRA_mediterranean_economic_bloc
+		cost = 4
+		icon = GFX_focus_ITA_subdue_the_sentinels
 		x = 0
 		y = 2
 		prerequisite = {
-			focus = FRA_confirm_italian_hegemony
+			focus = FRA_trade_treaty
 		}
-		relative_position_id = FRA_confirm_italian_hegemony
+		relative_position_id = FRA_trade_treaty
 		completion_reward = {
 		}
 	}
@@ -2512,6 +2610,23 @@ focus_tree = {
 			focus = FRA_solidarity_between_governments_in_exile
 		}
 		relative_position_id = FRA_solidarity_between_governments_in_exile
+		completion_reward = {
+		}
+	}
+	focus = {
+		#키보토스에 맞선 공투
+		id = FRA_italian_joint_struggle_on_kivotos
+		cost = 4
+		icon = GFX_focus_focus_fra_ratify_stresa
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = FRA_halifax_conference
+		}
+		prerequisite = {
+			focus = FRA_confirm_italian_hegemony
+		}
+		relative_position_id = FRA_halifax_conference
 		completion_reward = {
 		}
 	}
@@ -2550,7 +2665,7 @@ focus_tree = {
 		#부유한 콩고 자본가들의 투자
 		id = FRA_invest_from_belgian_capitalist
 		cost = 4
-		icon = GFX_focus_BEL_the_new_ruhr
+		icon = GFX_focus_generic_currency_reforms
 		x = -1
 		y = 1
 		prerequisite = {
@@ -2623,7 +2738,7 @@ focus_tree = {
 		#벨기에 임시 본토수복 정부
 		id = FRA_belgium_provisional_mainland_restoration_government
 		cost = 4
-		icon = GFX_focus_BEL_the_walloon_legion
+		icon = GFX_focus_BEL_free_belgian_forces
 		x = -1
 		y = 1
 		prerequisite = {
@@ -2676,10 +2791,10 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#프랑스령 인도차이나
+		#프랑스령 인도차이나 개발
 		id = FRA_french_indochina
 		cost = 4
-		icon = GFX_focus_eng_move_to_secure_the_dominions
+		icon = GFX_focus_generic_energy
 		x = -1
 		y = 1
 		prerequisite = {
@@ -2766,6 +2881,9 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus.1
 		}
+		ai_will_do = {
+			base = 2
+		}
 		completion_reward = {
 			add_political_power = 10
 			country_event = {
@@ -2798,7 +2916,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#해방군 조직
+		#레지스탕스 해방군 조직
 		icon = GFX_focus_focus_fra_national_resistance_council
 		id = FRA_focus_resistance_9
 		cost = 5
@@ -2807,6 +2925,9 @@ focus_tree = {
 		relative_position_id = FRA_focus_resistance_1
 		prerequisite = {
 			focus = FRA_focus_resistance_1
+		}
+		ai_will_do = {
+			base = 10
 		}
 		completion_reward = {
 			add_ideas = FRA_lib_army
@@ -2991,6 +3112,9 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_resistance_1
 		}
+		available = {
+			has_completed_focus = FRA_focus_Resistance_9
+		}
 		mutually_exclusive = {
 			focus = FRA_focus_resistance_2
 		}
@@ -3009,6 +3133,9 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_resistance_2
 			focus = FRA_focus_resistance_3
+		}
+		ai_will_do = {
+			base = 20
 		}
 		prerequisite = {
 		}
@@ -7414,6 +7541,9 @@ focus_tree = {
 		}
 	#</조르주 바르데슈>
 #</3분기 이너써클 자리>
+
+
+
 	focus = {	
 		#식민지부 재건
 		id = FRA_focus_12
@@ -7421,6 +7551,9 @@ focus_tree = {
 		cost = 4
 		prerequisite = {
 			focus = FRA_focus_resistance_1
+		}
+		ai_will_do = {
+			base = 20
 		}
 		x = 0
 		y = 1
@@ -7451,6 +7584,13 @@ focus_tree = {
 		cost = 6
 		x = 0
 		y = 1
+		ai_will_do = {
+			base = 0
+			modifier = {
+				date > 1939.1.1
+				add = 1
+			}
+		}
 		prerequisite = {
 			focus = FRA_focus_12
 		}
@@ -7882,8 +8022,8 @@ focus_tree = {
 		icon = GFX_goal_generic_dangerous_deal
 		id = FRA_an_unexpected_ally
 		cost = 6
-		x = 10
-		y = 13
+		x = 11
+		y = 14
 		available = {
 			is_ally_with = MIL
 		}
