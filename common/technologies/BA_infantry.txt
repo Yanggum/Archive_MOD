@@ -1,66 +1,166 @@
+#!gfx:interface\BA_Technologies.gfx
 technologies = {
-	kivotos_infantry_weapons = {
-		allow = {
-			OR = {
-				has_country_flag = kivotos_research_on
-				has_tech = kivotos_artificial_halo_low
-			}
-        }
+	BA_kivotos_student_recruitment = {
 		enable_equipments = {
-			kivotos_infantry_equipment_0
-			kivotos_infantry_equipment_1
 		}
 
-		path = {
-			leads_to_tech = kivotos_halo_upgrade 
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = kivotos_halo_max_upgrade 
-			research_cost_coeff = 1
+		allow = {
+			has_dlc = "Gotterdammerung"
 		}
 
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_infantry_weapons_tt
-			hidden_effect = {
-				set_variable = { ROOT.halo_infantry_cap = 0 } # 사단 제한, 헤일로 보병의 사단 제한과 같아야 함'
-				if = {
-					limit = {
-						has_template = "Halo Infantry Division"
-					}
-					delete_unit_template_and_units = {
-						division_template = "Halo Infantry Division"
-					}
-				}
-					
-				division_template = {
-					name = "Halo Infantry Division"		
-					division_names_group = BA_HAL_01
-					is_locked = yes
-					force_allow_recruiting = yes
-					division_cap = 0
-					regiments = {
-						halo_infantry = { x = 0 y = 0 }
-						halo_infantry = { x = 0 y = 1 }
-						halo_infantry = { x = 0 y = 2 }
-						halo_infantry = { x = 1 y = 0 }
-						halo_infantry = { x = 1 y = 1 }
-						halo_infantry = { x = 1 y = 2 }
-						halo_infantry = { x = 2 y = 0 }
-						halo_infantry = { x = 2 y = 1 }
-						halo_infantry = { x = 2 y = 2 }
-					}
-					support = {
-						halo_recon = { x = 0 y = 0 }
-						engineer = { x = 0 y = 1 }
-						artillery = { x = 0 y = 2 }
-						anti_air = { x = 0 y = 3 }
-					}
-				}
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
+		}
+
+		research_speed_factor = 0.02
+
+		path = {
+			leads_to_tech = kivotos_artificial_halo_replica_tech 
+			research_cost_coeff = 1
+		}
+		
+		ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
 			}
+		}
+
+		special_project_specialization = { specialization_land }
+		
+		research_cost = 2
+		
+		start_year = 1938
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 0 }
+		}
+		
+		categories = {
+			mystic_engineering
+		}
+	}
+
+	kivotos_artificial_halo_replica_tech  = {
+		is_special_project_tech = yes
+		enable_equipments = {
+			kivotos_infantry_equipment_0
+		}
+		
+		enable_subunits = {
+			halo_infantry
+		}
+		
+		allow = {
+		}
+
+		path = {
+			leads_to_tech = kivotos_infantry_weapons 
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = kivotos_halo_recon 
+			research_cost_coeff = 1
+		}
+		
+		
+		ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
+			}
+		}
+
+		research_cost = 2
+		start_year = 1936
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 3 }
+		}
+	}
+	kivotos_halo_recon  = {
+		is_special_project_tech = yes
+		enable_subunits = {
+			halo_recon
+		}
+		allow = {
+			has_tech = tech_recon
+			OR = {
+				has_tech = kivotos_infantry_weapons
+				has_tech = kivotos_artificial_halo_low
+			}
+        }
+		
+		
+		ai_will_do = {
+			factor = 5000
+		}
+		
+		research_cost = 3
+		
+		start_year = 1936
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = -2 y = 3 }
+		}
+		
+		categories = {
+			mystic_engineering
+		}
+	}
+	kivotos_infantry_weapons = {
+		is_special_project_tech = yes
+		allow = {
+        }
+		enable_equipments = {
+			kivotos_infantry_equipment_1
+		}
+
+		on_research_complete = {
+			#custom_effect_tooltip = kivotos_infantry_weapons_tt
+			#hidden_effect = {
+			#	set_variable = { ROOT.halo_infantry_cap = 0 } # 사단 제한, 헤일로 보병의 사단 제한과 같아야 함'
+			#	if = {
+			#		limit = {
+			#			has_template = "Halo Infantry Division"
+			#		}
+			#		delete_unit_template_and_units = {
+			#			division_template = "Halo Infantry Division"
+			#		}
+			#	}
+			#		
+			#	division_template = {
+			#		name = "Halo Infantry Division"		
+			#		division_names_group = BA_HAL_01
+			#		is_locked = yes
+			#		force_allow_recruiting = yes
+			#		division_cap = 0
+			#		regiments = {
+			#			halo_infantry = { x = 0 y = 0 }
+			#			halo_infantry = { x = 0 y = 1 }
+			#			halo_infantry = { x = 0 y = 2 }
+			#			halo_infantry = { x = 1 y = 0 }
+			#			halo_infantry = { x = 1 y = 1 }
+			#			halo_infantry = { x = 1 y = 2 }
+			#			halo_infantry = { x = 2 y = 0 }
+			#			halo_infantry = { x = 2 y = 1 }
+			#			halo_infantry = { x = 2 y = 2 }
+			#		}
+			#		support = {
+			#			halo_recon = { x = 0 y = 0 }
+			#			engineer = { x = 0 y = 1 }
+			#			artillery = { x = 0 y = 2 }
+			#			anti_air = { x = 0 y = 3 }
+			#		}
+			#	}
+			#	set_variable = { BA_halo_infantry_cap_edit_var = 6 }
+			#	BA_halo_infantry_cap_edit_effect = yes
+			#}
 		}
 		
 		
@@ -74,11 +174,11 @@ technologies = {
 		
 		research_cost = 2
 		
-		start_year = 1936
+		start_year = 1938
 
 		folder = {
 			name = mystic_engineering_folder
-			position = { x = 0 y = 0 }
+			position = { x = 0 y = 7 }
 		}
 		
 		categories = {
@@ -103,11 +203,11 @@ technologies = {
 		
 		research_cost = 1.5
 		
-		start_year = 1936
+		start_year = 1937
 
 		folder = {
 			name = mystic_engineering_folder
-			position = { x = 0 y = 3 }
+			position = { x = 0 y = 5 }
 		}
 		
 		categories = {
@@ -490,7 +590,7 @@ technologies = {
 
 		folder = {
 			name = mystic_engineering_folder
-			position = { x = 4 y = 3 }
+			position = { x = 2 y = 3 }
 		}
 		
 		categories = {
@@ -592,36 +692,6 @@ technologies = {
 			mystic_engineering
 		}
 	}
-	kivotos_halo_recon  = {
-		enable_subunits = {
-			halo_recon
-		}
-		allow = {
-			has_tech = tech_recon
-			OR = {
-				has_tech = kivotos_infantry_weapons
-				has_tech = kivotos_artificial_halo_low
-			}
-        }
-		
-		
-		ai_will_do = {
-			factor = 5000
-		}
-		
-		research_cost = 3
-		
-		start_year = 1936
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = 2 y = 0 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
 	kivotos_artificial_halo  = {
 		allow = {
             always = no
@@ -657,19 +727,6 @@ technologies = {
 			ap_attack = 0.10
 			soft_attack = 0.10
 		}
-	}
-
-	kivotos_artificial_halo_replica_tech  = {
-		enable_equipments = {
-			kivotos_infantry_equipment_0
-		}
-		
-		allow = {
-			always = no
-		}
-
-		research_cost = 1
-		start_year = 1936
 	}
 
 	pre_modern_infantry_equipment = {
