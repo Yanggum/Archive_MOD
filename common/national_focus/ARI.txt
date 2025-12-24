@@ -2877,6 +2877,21 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_heroic_epic_of_joumae_saori
 		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				if = {
+					limit = {
+						has_intelligence_agency = no
+					}
+					create_intelligence_agency = yes
+				}
+				add_ideas = ARI_intelligence_department
+			}
+			else = {
+				add_ideas = ARI_intelligence_department_vanilla
+			}
 		}
 	}
 	focus = {
@@ -2901,6 +2916,9 @@ focus_tree = {
 		icon = GFX_focus_attack_GEH
 		prerequisite = {
 			focus = ARI_establishment_of_arius_alliance
+		}
+		prerequisite = {
+			focus = ARI_establishment_of_arius_intelligence_agency
 		}
 		available = {
 			is_subject = no
@@ -3340,6 +3358,79 @@ focus_tree = {
 		relative_position_id = ARI_evil_named_gehenna
 		completion_reward = {
 			remove_ideas = BA_ARI_bitter_revanchism_ns_1
+		}
+	}
+	focus = {
+		id = ARI_centralization_of_internal_affairs
+		icon = GFX_focus_ITA_banda_carita
+		prerequisite = {
+			focus = ARI_arius_above_all_names
+		}
+		available = {
+			agency_upgrade_number > 4
+		}
+
+		allow_branch = {
+			has_dlc = "La Resistance"
+			#if = {
+			#	limit = {
+			#		has_dlc = "By Blood Alone"
+			#		has_game_rule = {
+			#			rule = obsolete_focus_branches_visibility
+			#			option = HIDE
+			#		}
+			#	}
+			#	NOT = { has_completed_focus = ITA_defy_the_duce }
+			#}
+		}
+		cost = 5
+		x = -3
+		y = 1
+		relative_position_id = ARI_arius_above_all_names
+		completion_reward = {
+			if = {
+				limit = { has_idea = ARI_intelligence_department_vanilla }
+				remove_ideas = ARI_intelligence_department_vanilla
+			}
+
+			swap_ideas = {
+				remove_idea = ARI_intelligence_department
+				add_idea = ARI_directorate_of_internal_affairs
+			}
+		}
+	}
+	focus = {
+		id = ARI_secret_police_leadership
+		icon = GFX_focus_generic_national_security
+		prerequisite = {
+			focus = ARI_centralization_of_internal_affairs
+		}
+		available = {
+			agency_upgrade_number > 9
+		}
+
+		allow_branch = {
+			has_dlc = "La Resistance"
+			#if = {
+			#	limit = {
+			#		has_dlc = "By Blood Alone"
+			#		has_game_rule = {
+			#			rule = obsolete_focus_branches_visibility
+			#			option = HIDE
+			#		}
+			#	}
+			#	NOT = { has_completed_focus = ITA_defy_the_duce }
+			#}
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_centralization_of_internal_affairs
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = ARI_directorate_of_internal_affairs
+				add_idea = ARI_directorate_of_internal_affairs_1
+			}
 		}
 	}
 	focus = {
