@@ -2880,10 +2880,27 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = ARI_establishment_of_arius_alliance
+		icon = GFX_goal_generic_alliance
+		prerequisite = {
+			focus = ARI_heroic_epic_of_joumae_saori
+		}
+		available = {
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_heroic_epic_of_joumae_saori
+		completion_reward = {
+			set_rule = { can_create_factions = yes }
+			create_faction_from_template = BA_faction_template_ARI_arius_alliance
+		}
+	}
+	focus = {
 		id = ARI_evil_named_gehenna
 		icon = GFX_focus_attack_GEH
 		prerequisite = {
-			focus = ARI_heroic_epic_of_joumae_saori
+			focus = ARI_establishment_of_arius_alliance
 		}
 		available = {
 			is_subject = no
@@ -3816,6 +3833,62 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_arius_state
 		completion_reward = {
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:ARI_3rd_classroom = {
+					add_mio_research_bonus = 0.05
+				}
+				mio:ARI_7th_classroom = {
+					add_mio_research_bonus = 0.05
+				}
+				mio:ARI_9th_classroom = {
+					add_mio_research_bonus = 0.05
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dynamic_modifier = { modifier = ARI_militarized_society }}
+				}
+				custom_effect_tooltip = ARI_add_militarized_society_modifier_tt
+				hidden_effect = {
+					add_dynamic_modifier = { modifier = ARI_militarized_society } 
+				}
+			}
+			else = {
+				custom_effect_tooltip = ARI_modify_militarized_society_modifier_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_industrial_capacity_factory = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_industrial_capacity_dockyard = 0.05
+				tooltip = industrial_capacity_dockyard_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_conscription = 0.01
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+
+			custom_effect_tooltip = {
+				localization_key = focus_completed_trigger_modify_effect_tt
+				FOCUS = ARI_chemical_warfare_preparation
+			}
+			custom_effect_tooltip = ARI_chemical_warfare_modifier_tt
+			add_to_variable = {
+				ARI_chemical_warfare_modifier_modifier_army_sub_unit_category_halo_attack_factor = 0.05
+				tooltip = modifier_army_sub_unit_category_halo_attack_factor_tt
+			}
 		}
 	}
 }
