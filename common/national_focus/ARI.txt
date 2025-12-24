@@ -1780,24 +1780,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_creation_of_arius_army
 		completion_reward = {
+			unlock_decision_tooltip = ARI_shaking_trinity_loyalty
+			custom_effect_tooltip = ARI_infiltration_doctrine_tt
 		}
 	}
 	focus = {
 		id = ARI_guerrilla_warfare_theory
 		icon = GFX_focus_CHI_guerrilla_warfare
-		prerequisite = {
-			focus = ARI_infiltration_doctrine
-		}
-		cost = 5
-		x = 1
-		y = 1
-		relative_position_id = ARI_infiltration_doctrine
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = ARI_weapon_warehouse_raid
-		icon = GFX_focus_PRC_raid_weapon_depots
 		prerequisite = {
 			focus = ARI_creation_of_arius_army
 		}
@@ -1806,27 +1795,123 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_creation_of_arius_army
 		completion_reward = {
-			custom_effect_tooltip = ARI_weapon_warehouse_raid_tt
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = {
+				ARI_army_org_loss_when_moving = -0.05
+				tooltip = org_loss_when_moving_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_ideas = PRC_guerilla_warfare
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					has_doctrine = peoples_war
+				}
+
+				add_mastery_bonus = {
+					bonus = 0.25
+					days = 365
+					name = ARI_guerrilla_warfare_theory
+
+					sub_doctrine = peoples_war
+				}
+			}
+			else_if = {
+				limit = {
+					has_doctrine = guerilla_war
+				}
+				add_mastery_bonus = {
+					bonus = 0.25
+					days = 365
+					name = ARI_guerrilla_warfare_theory
+					sub_doctrine = guerilla_war
+				}
+			}
+			else = {
+				add_mastery_bonus = {
+					bonus = 0.1
+					days = 365
+					name = ARI_guerrilla_warfare_theory
+
+					track = operations
+				}
+
+
+			}
 		}
 	}
 	focus = {
-		id = ARI_expansion_of_resistance
-		icon = GFX_goal_generic_propaganda
+		id = ARI_weapon_warehouse_raid
+		icon = GFX_focus_PRC_raid_weapon_depots
 		prerequisite = {
-			focus = ARI_weapon_warehouse_raid
+			focus = ARI_guerrilla_warfare_theory
 		}
 		cost = 5
 		x = -1
 		y = 1
-		relative_position_id = ARI_weapon_warehouse_raid
+		relative_position_id = ARI_guerrilla_warfare_theory
 		completion_reward = {
+			custom_effect_tooltip = ARI_weapon_warehouse_raid_tt
+		}
+	}
+	focus = {
+		id = ARI_modernization_of_military_armament
+		icon = GFX_focus_AFG_a_modern_economy
+		prerequisite = {
+			focus = ARI_infiltration_doctrine
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_infiltration_doctrine
+		completion_reward = {
+			add_tech_bonus = {
+				name = ARI_modernization_of_military_armament
+				bonus = 1.00
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+				category = support_tech
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 365
+				name = ARI_guerrilla_warfare_theory
+
+				track = combat_support
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
 		id = ARI_sneaking_into_enemy_gaps
 		icon = GFX_focus_FIN_weapon_caches
 		prerequisite = {
-			focus = ARI_weapon_warehouse_raid
+			focus = ARI_guerrilla_warfare_theory
 			focus = ARI_infiltration_doctrine
 		}
 		available = {
@@ -1840,7 +1925,7 @@ focus_tree = {
 		cost = 5
 		x = 1
 		y = 1
-		relative_position_id = ARI_weapon_warehouse_raid
+		relative_position_id = ARI_guerrilla_warfare_theory
 		completion_reward = {
 			custom_effect_tooltip = ARI_sneaking_into_enemy_gaps_tt
 			effect_tooltip = {
