@@ -94,7 +94,7 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 10
 		available = {
 		}
 		search_filters = {
@@ -102,7 +102,38 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_after_two_months }
 		completion_reward = {
-			
+		     custom_effect_tooltip = BA_factoriesof_new_world_tt
+			 set_country_flag = BA_can_remove_isolation_flag
+			 custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+			 }
+			 add_to_variable = {
+				COU_industry_production_factory_efficiency_gain_factor = 0.03
+			 	tooltip = production_factory_efficiency_gain_factor_tt
+			 }
+			 add_to_variable = {
+				COU_industry_political_power_factor = -0.05
+			 	tooltip = political_power_factor_tt
+			 }
+			  
+			 random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					is_coastal = yes
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}	
 	
@@ -111,7 +142,7 @@ focus_tree = {
         icon = GFX_focus_COU_focus_continue_the_bettter_lands
         x = -6
         y = 2
-        cost = 5
+        cost = 8
 		relative_position_id = COU_focus_after_two_months
         available = {
             owns_state = 7
@@ -124,51 +155,50 @@ focus_tree = {
         }
         prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
         completion_reward = {
-            add_stability = 0.05
+		    unlock_decision_category_tooltip = COU_restart_the_zuiderzee_works
             add_tech_bonus = {
-                name = HOL_the_zuiderzee_works
-                bonus = 1.0
-                ahead_reduction = 2
-                uses = 2
+                #name = HOL_the_zuiderzee_works
+                bonus = 2.0
+                uses = 1
                 category = industry
             }
-            7 = {
-                add_extra_state_shared_building_slots = 3
-                set_building_level = {
-                     type = infrastructure
-                     level = 5
-                     instant_build = yes
-                 }
-            }
-            36 = {
-                add_extra_state_shared_building_slots = 3
-                set_building_level = {
-                     type = infrastructure
-                     level = 5
-                     instant_build = yes
-                }
-            }
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_infrastructure_factor = 0.08
+			 	tooltip = production_speed_infrastructure_factor_tt
+		    }
+            add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.05
+			 	tooltip = consumer_goods_factor_tt
+		    }
             news_event = { id = mtg_news.47 days = 1 } 
         }
     }
 	
-	focus = { #기업 매수 
-		id = COU_establishment_of_federal_industrial_committee
-		icon = GFX_focus_COU_aoi_with_companys
-		x = -7
-		y = 3
+	focus = { #펌프 설치 의무화
+        id = COU_focus_eco_rework_the_dead_lands
+        icon = GFX_focus_generic_treaty
+        x = -7
+        y = 3
+        cost = 5
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-		prerequisite = { focus = COU_economy_focus_0 }
-		completion_reward = {
-			country_event = COU_event_industry.1
-		}
-	}	
+        available = {
+           has_country_flag = COMPLETED_LEV1
+        }
+        bypass = {
+        }
+        search_filters = {
+            FOCUS_FILTER_INDUSTRY
+        }
+        prerequisite = { focus = COU_economy_focus_0 }
+        completion_reward = {
+            36 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
+            7 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
+        }
+    }
 	
 	focus = { #하이랜더와 협력  
 		id = COU_focus_order_highlander
@@ -176,7 +206,7 @@ focus_tree = {
 		x = -6
 		y = 4
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -184,6 +214,22 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_economy_focus_0 }
 		completion_reward = {
+		     custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_infrastructure_factor = 0.03
+			 	tooltip = production_speed_infrastructure_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_rail_way_factor = 0.08
+			 	tooltip = production_speed_rail_way_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_supply_node_factor = 0.1
+			 	tooltip = production_speed_supply_node_factor_tt
+		    }
 			 if = { limit = { has_idea = BA_railway_gauge_issue }
                 modify_timed_idea = {
                     idea = BA_railway_gauge_issue
@@ -402,27 +448,35 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #펌프 설치 의무화
-        id = COU_focus_eco_rework_the_dead_lands
-        icon = GFX_focus_generic_treaty
-        x = -3
-        y = 5
-        cost = 5
+	focus = { #기업 매수 
+		id = COU_establishment_of_federal_industrial_committee
+		icon = GFX_focus_COU_aoi_with_companys
+		x = -3
+		y = 5
 		relative_position_id = COU_focus_after_two_months
-        available = {
-           owns_state = 36 
-        }
-        bypass = {
-        }
-        search_filters = {
-            FOCUS_FILTER_INDUSTRY
-        }
-        prerequisite = { focus = COU_focus_currency_unification }
-        completion_reward = {
-            36 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
-            7 = { remove_dynamic_modifier = { modifier = COU_the_dead_land } }
-        }
-    }
+		cost = 8
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_currency_unification }
+		completion_reward = { 
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_factory = 0.05
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+            add_to_variable = {
+			    COU_industry_industrial_capacity_dockyard = 0.05
+			 	tooltip = industrial_capacity_dockyard_tt
+		    }
+			country_event = COU_event_industry.1
+		}
+	}	
 	
 	focus = { #도로 재정비 
         id = COU_focus_rework_our_roads
@@ -439,7 +493,7 @@ focus_tree = {
         search_filters = {
             FOCUS_FILTER_INDUSTRY
         }
-        prerequisite = { focus = COU_focus_eco_rework_the_dead_lands }
+        prerequisite = { focus = COU_establishment_of_federal_industrial_committee }
         completion_reward = {
             
         }
