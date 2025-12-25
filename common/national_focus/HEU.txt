@@ -3487,18 +3487,13 @@ focus_tree = {
 
 		available = {
 			is_puppet = no
-			custom_trigger_tooltip = {
-				tooltip = THIS_IS_WIP_TT
-				is_debug = yes
-			}
+			country_exists = RED
+			NOT = { has_war_with = RED }
+			RED = { is_puppet = no }
 		}
 
 		bypass = {
-			OR = {
-				NOT = { country_exists = RED }
-				has_war_with = RED
-				RED = { is_puppet = yes }
-			}
+			
 		}
 
 		completion_reward = {
@@ -3554,6 +3549,16 @@ focus_tree = {
 				popularity = 0.3
 			}
 			custom_effect_tooltip = HEU_red_alert_tt
+
+			add_to_variable = {
+				HEU_aru_var_communism_drift = HEU_aru_var_fascism_drift
+				tooltip = communism_drift_factor_tt
+			}
+
+			subtract_from_variable = {
+				HEU_aru_var_fascism_drift = HEU_aru_var_fascism_drift
+				#tooltip = fascism_drift_factor_tt
+			}
 		}
 	}
 
@@ -3887,6 +3892,10 @@ focus_tree = {
 			unlock_decision_tooltip = HEU_aru_GSC_defiance_attack_KSP
 			unlock_decision_tooltip = HEU_aru_GSC_defiance_attack_COU
 			unlock_decision_tooltip = HEU_aru_GSC_defiance_attack_SHE
+
+			set_variable = {
+				var_HEU_leader_68_trait = 1
+			}
 		}
 	}
 
@@ -3958,6 +3967,10 @@ focus_tree = {
 			unlock_decision_tooltip = HEU_aru_GSC_annex_core_west_belgium_states
 			unlock_decision_tooltip = HEU_aru_GSC_annex_core_south_GSC_states
 			unlock_decision_tooltip = HEU_aru_GSC_annex_core_north_GSC_states
+
+			set_variable = {
+				var_HEU_leader_68_trait = 2
+			}
 		}
 	}
 
@@ -4154,22 +4167,10 @@ focus_tree = {
 		y = 2
 
 		available = {
-            #custom_trigger_tooltip = {
-            #    tooltip = THIS_IS_WIP_TT
-			#    has_country_flag = GAEBALJUNG
-            #}
-			#custom_trigger_tooltip = {
-			#	tooltip = HEU_pro_gehenna_route_ending_1_tt
-			#	has_completed_focus = HEU_civil_partnership
-			#}
 			custom_trigger_tooltip = {
 				tooltip = HEU_pro_gehenna_route_ending_2_tt
 				NOT = { country_exists = GEI }
 			}
-			#custom_trigger_tooltip = {
-			#	tooltip = HEU_pro_gehenna_route_ending_3_tt
-			#	check_variable = { global.HEU_core_GSC > 3 }
-			#}
 		}
 
 		bypass = {
@@ -5833,7 +5834,18 @@ focus_tree = {
 			}
 			if = {
 				limit = { has_completed_focus = HEU_red_alert }
-				
+
+				add_country_leader_role = {
+					character = HEU_emile_speller
+					promote_leader = yes
+					country_leader = {
+						ideology = transitioning_democracy
+						traits = { 
+
+						}
+					}
+				}
+
 				add_country_leader_role = {
 					character = HEU_aru
 					promote_leader = yes
@@ -5842,15 +5854,41 @@ focus_tree = {
 						desc = "HEU_aru_fascist_leader_desc"
 						traits = { 
 							HEU_ARU_T1
-							HEU_regent_of_luxembourg
+							HEU_regent_of_luxembourg_2
 						}
 					}
 				}
 
+				if = {
+					limit = {
+						has_completed_focus = HEU_school_of_atheism
+					}
+					add_country_leader_trait = HEU_school_of_atheism_trait
+				}
+
+				if = {
+					limit = {
+						check_variable = { var_HEU_leader_68_trait > 1 }
+					}
+					add_country_leader_trait = HEU_GSC_trait_2
+				}
+				else_if = {
+					limit = {
+						check_variable = { var_HEU_leader_68_trait > 0 }
+					}
+					add_country_leader_trait = HEU_GSC_trait_1
+				}
+
 				set_party_name = {
-					ideology = neutrality
-					long_name = HEU_neutrality_party
-					name = HEU_neutrality_party
+					ideology = fascism
+					long_name = HEU_pro_kayoko_party
+					name = HEU_pro_kayoko_party
+				}
+
+				set_party_name = {
+					ideology = communism
+					long_name = HEU_benriya_party
+					name = HEU_benriya_party
 				}
 
 				set_politics = {
