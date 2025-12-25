@@ -1,0 +1,760 @@
+@base_reward_weight = 2 # 기본 보상 가중치
+@reward_weight_factor_theme = 0.25 # 테마 반복 방지를 위한 가중치 계수
+
+# ==========================================
+# 1. SCIENTIST XP REWARDS (과학자 경험치)
+# ==========================================
+
+# Low Scientist XP gain (소량의 과학자 경험치)
+sp_mystic_generic_reward_scientist_xp_1 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_scientist_xp_flag
+		}
+		modifier = {
+			factor = 0
+			var:scientist = {
+				has_scientist_level = {
+					level > 4
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_scientist_xp
+		
+		iteration_output = {
+			scientist_effects = {
+				if = {
+					limit = { }
+					add_scientist_xp = {
+						experience = constant:sp_scientist_xp_gain.low
+						specialization = specialization_mystic_engineering
+					}
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_scientist_xp_flag }
+			}
+		}
+	}
+}
+
+# Medium Scientist XP gain (중량의 과학자 경험치)
+sp_mystic_generic_reward_scientist_xp_2 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_scientist_xp_flag
+		}
+		modifier = {
+			factor = 0
+			var:scientist = {
+				has_scientist_level = {
+					level > 4
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_scientist_xp
+		
+		iteration_output = {
+			scientist_effects = {
+				if = {
+					limit = {
+						has_scientist_level = {
+							level < 5
+							specialization = specialization_mystic_engineering
+						}
+					}
+					add_scientist_xp = {
+						experience = constant:sp_scientist_xp_gain.medium
+						specialization = specialization_mystic_engineering
+					}
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_scientist_xp_flag }
+			}
+		}
+	}
+}
+
+# High Scientist XP gain (대량의 과학자 경험치)
+sp_mystic_generic_reward_scientist_xp_3 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_scientist_xp_flag
+		}
+		modifier = {
+			factor = 0
+			var:scientist = {
+				has_scientist_level = {
+					level > 4
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_scientist_xp
+		
+		iteration_output = {
+			scientist_effects = {
+				if = {
+					limit = {
+						has_scientist_level = {
+							level < 5
+							specialization = specialization_mystic_engineering
+						}
+					}
+					add_scientist_xp = {
+						experience = constant:sp_scientist_xp_gain.high
+						specialization = specialization_mystic_engineering
+					}
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_scientist_xp_flag }
+			}
+
+			country_effects = {
+				add_breakthrough_progress = {
+					specialization = specialization_mystic_engineering
+					value = sp_breakthrough_progress.medium
+				}
+			}
+		}
+	}
+}
+
+# ==========================================
+# 2. PROGRESS REWARDS (연구 진행도 보상)
+# ==========================================
+
+# Low Extra Progress
+sp_mystic_generic_reward_major_progress_1 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+	
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_major_progress_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_major_breakthrough
+		
+		iteration_output = {
+			country_effects = {
+				FROM = {
+					add_project_progress_ratio = constant:sp_progress.gain.low				
+					set_project_flag = sp_mystic_generic_reward_major_progress_flag
+				}
+			}
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+}
+
+# Medium Extra Progress
+sp_mystic_generic_reward_major_progress_2 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+	
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_major_progress_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_major_breakthrough
+		
+		iteration_output = {
+			country_effects = {
+				FROM = {
+					add_project_progress_ratio = constant:sp_progress.gain.medium				
+					set_project_flag = sp_mystic_generic_reward_major_progress_flag
+				}
+			}
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+}
+
+# High Extra Progress
+sp_mystic_generic_reward_major_progress_3 = {
+	fire_only_once = yes
+
+	threshold = {
+		min = 0
+		max = 100
+	}
+	
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_major_progress_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_major_breakthrough
+		
+		iteration_output = {
+			country_effects = {
+				FROM = {
+					add_project_progress_ratio = constant:sp_progress.gain.high				
+					set_project_flag = sp_mystic_generic_reward_major_progress_flag
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_mystic_engineering
+					value = sp_breakthrough_progress.medium
+				}
+			}
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+}
+
+# ==========================================
+# 3. FAILURE REWARDS (실패 및 리스크)
+# ==========================================
+
+# Low Progress Loss (단순 실패)
+sp_mystic_generic_reward_test_failure_1 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 15
+		max = 100
+	}
+	
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_test_failure_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_test_failure
+		
+		iteration_output = {
+			country_effects = { 
+				FROM = {
+					add_project_progress_ratio = constant:sp_progress.loss.low
+					set_project_flag = sp_mystic_generic_reward_test_failure_flag
+				}
+			}
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+}
+
+# Medium Progress Loss
+sp_mystic_generic_reward_test_failure_2 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 30
+		max = 100
+	}
+	
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_test_failure_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_test_failure
+		
+		iteration_output = {
+			country_effects = { 
+				FROM = {
+					add_project_progress_ratio = constant:sp_progress.loss.medium
+					set_project_flag = sp_mystic_generic_reward_test_failure_flag
+				}
+			}
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+			}
+		}
+	}
+}
+
+# Critical Failure (치명적 실패: 진행도 손실 + 시설 파괴 + 과학자 부상)
+sp_mystic_generic_reward_critical_failure = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 25
+		max = 80
+	}
+
+	weight = {
+		base = 0.5
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_critical_failure
+		
+		iteration_output = {
+			country_effects = { 
+				FROM = { add_project_progress_ratio = constant:sp_progress.loss.medium }
+			}
+
+			scientist_effects = {
+				add_scientist_xp = {
+					experience = constant:sp_scientist_xp_gain.low
+					specialization = specialization_mystic_engineering
+				}
+				injure_scientist_for_days = 30
+			}
+
+			facility_state_effects = {
+				damage_building = {
+					tags = facility
+					damage = 0.25
+					province = var:facility_province_id
+				}
+			}
+		}
+	}
+}
+
+# ==========================================
+# 4. THEME: MYSTIC ENGINEERING (공학 기술)
+# ==========================================
+# 산업(Industry) 및 전자공학(Electronics) 연구 가속
+
+# Low Tech Bonus
+sp_mystic_generic_reward_engineering_tech_1 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.1
+					uses = 1
+					category = industry
+					category = electronics
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# Medium Tech Bonus
+sp_mystic_generic_reward_engineering_tech_2 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.25
+					uses = 1
+					category = industry
+					category = electronics
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# High Tech Bonus
+sp_mystic_generic_reward_engineering_tech_3 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.50
+					uses = 2
+					category = industry
+					category = electronics
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_mystic_engineering
+					value = sp_breakthrough_progress.medium
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# 이계 공학 연구 가속
+
+# Low Tech Bonus
+sp_mystic_generic_reward_mystic_engineering_tech_1 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.1
+					uses = 1
+					category = mystic_engineering
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# Medium Tech Bonus
+sp_mystic_generic_reward_mystic_engineering_tech_2 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.25
+					uses = 1
+					category = mystic_engineering
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# High Tech Bonus
+sp_mystic_generic_reward_mystic_engineering_tech_3 = {
+	fire_only_once = yes
+	
+	threshold = {
+		min = 0
+		max = 100
+	}
+
+	weight = {
+		base = @base_reward_weight
+		modifier = {
+			factor = @reward_weight_factor_theme
+			has_project_flag = sp_mystic_generic_reward_engineering_tech_flag
+		}
+	}
+	
+	option = {
+		token = sp_mystic_generic_reward_option_engineering_tech
+		
+		iteration_output = {
+			country_effects = { 
+				add_tech_bonus = {
+					name = sp_mystic_generic_reward_option_engineering_tech_bonus_name
+					bonus = 0.50
+					uses = 2
+					category = mystic_engineering
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_mystic_engineering
+					value = sp_breakthrough_progress.medium
+				}
+				FROM = { set_project_flag = sp_mystic_generic_reward_engineering_tech_flag }
+			}
+		}
+	}
+}
+
+# ==========================================
+# 5. THEME: OTHERWORLDLY INFANTRY (이계 보병)
+# ==========================================
+# 보병 무기, 지원 중대 보너스 및 육군 경험치
+
+# # Low Tech Bonus (Infantry/Support)
+# sp_mystic_generic_reward_infantry_tech_1 = {
+# 	fire_only_once = yes
+# 	
+# 	threshold = {
+# 		min = 0
+# 		max = 100
+# 	}
+# 
+# 	weight = {
+# 		base = @base_reward_weight
+# 		modifier = {
+# 			factor = @reward_weight_factor_theme
+# 			has_project_flag = sp_mystic_generic_reward_infantry_tech_flag
+# 		}
+# 	}
+# 	
+# 	option = {
+# 		token = sp_mystic_generic_reward_option_infantry_tech
+# 		
+# 		iteration_output = {
+# 			country_effects = { 
+# 				add_tech_bonus = {
+# 					name = sp_mystic_generic_reward_option_infantry_tech_bonus_name
+# 					bonus = 0.1
+# 					uses = 1
+# 					category = infantry_weapons
+# 					category = support_tech
+# 				}
+# 				FROM = { set_project_flag = sp_mystic_generic_reward_infantry_tech_flag }
+# 			}
+# 		}
+# 	}
+# }
+# 
+# # High Tech Bonus (Infantry/Support)
+# sp_mystic_generic_reward_infantry_tech_2 = {
+# 	fire_only_once = yes
+# 	
+# 	threshold = {
+# 		min = 0
+# 		max = 100
+# 	}
+# 
+# 	weight = {
+# 		base = @base_reward_weight
+# 		modifier = {
+# 			factor = @reward_weight_factor_theme
+# 			has_project_flag = sp_mystic_generic_reward_infantry_tech_flag
+# 		}
+# 	}
+# 	
+# 	option = {
+# 		token = sp_mystic_generic_reward_option_infantry_tech
+# 		
+# 		iteration_output = {
+# 			country_effects = { 
+# 				add_tech_bonus = {
+# 					name = sp_mystic_generic_reward_option_infantry_tech_bonus_name
+# 					bonus = 0.35
+# 					uses = 1
+# 					category = infantry_weapons
+# 					category = support_tech
+# 				}
+# 				FROM = { set_project_flag = sp_mystic_generic_reward_infantry_tech_flag }
+# 			}
+# 		}
+# 	}
+# }
+# 
+# # Army XP Reward (육군 경험치)
+# sp_mystic_generic_reward_army_xp = {
+# 	fire_only_once = yes
+# 	
+# 	threshold = {
+# 		min = 20
+# 		max = 100
+# 	}
+# 	
+# 	weight = {
+# 		base = @base_reward_weight
+# 		modifier = {
+# 			factor = @reward_weight_factor_theme
+# 			has_project_flag = sp_mystic_generic_reward_army_xp_flag
+# 		}
+# 	}
+# 	
+# 	option = {
+# 		token = sp_mystic_generic_reward_option_army_xp
+# 		
+# 		iteration_output = {
+# 			country_effects = {
+# 				army_experience = constant:sp_military_xp_gain.high
+# 				FROM = { set_project_flag = sp_mystic_generic_reward_army_xp_flag }
+# 			}
+# 		}
+# 	}
+# }
+# 
+# # Otherworldly Equipment Modification (이계의 장비 개량)
+# # 내구도(Reliability)를 희생하여 대인 공격력(Soft Attack)과 돌파(Breakthrough) 상승
+# sp_mystic_generic_reward_equipment_bonus = {
+# 	fire_only_once = yes
+# 	
+# 	threshold = {
+# 		min = 50
+# 		max = 100
+# 	}
+# 	
+# 	weight = {
+# 		base = @base_reward_weight
+# 		modifier = {
+# 			factor = @reward_weight_factor_theme
+# 			has_project_flag = sp_mystic_generic_reward_equipment_bonus_flag
+# 		}
+# 	}
+# 	
+# 	option = {
+# 		token = sp_mystic_generic_reward_option_equipment_bonus
+# 		
+# 		iteration_output = {
+# 			# 장비 성능 직접 수정
+# 			equipment_bonus = {
+# 				infantry_equipment = {
+# 					soft_attack = 0.15      # 대인 공격력 대폭 상승
+# 					breakthrough = 0.10     # 돌파 상승
+# 					reliability = -0.15     # 신뢰도 하락 (불안정함)
+# 				}
+# 			}
+# 			
+# 			country_effects = {
+# 				add_breakthrough_progress = {
+# 					specialization = specialization_mystic_engineering
+# 					value = sp_breakthrough_progress.medium
+# 				}
+# 				FROM = { set_project_flag = sp_mystic_generic_reward_equipment_bonus_flag }
+# 			}
+# 		}
+# 	}
+# }
