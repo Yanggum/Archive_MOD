@@ -27,7 +27,12 @@ focus_tree = {
 	shortcut = {
 		name = FRA_focus_shortcut_diplomacy
 		target = FRA_an_unexpected_ally
-		scroll_wheel_factor = 1
+		scroll_wheel_factor = 0.9
+	} 
+	shortcut = {
+		name = FRA_focus_shortcut_innercircle
+		target = FRA_resolution_to_oust_philippe_petain
+		scroll_wheel_factor = 0.8
 	} 
 	shortcut = {
 		name = FRA_focus_shortcut_military
@@ -2482,6 +2487,27 @@ focus_tree = {
 		}
 		relative_position_id = FRA_authenticity_in_the_international_community
 		completion_reward = {
+			every_country = {
+				limit = {
+					any_core_state = {
+						state_is_in_the_mediterranean_sea = yes
+					}
+					Kivotos_tag = no
+					NOT = {
+						tag = FRA
+					}
+				}
+				add_opinion_modifier = {
+					target = FRA
+					modifier = FRA_befriend_medi
+				}
+				FRA = {
+					add_opinion_modifier = {
+						target = prev
+						modifier = FRA_befriend_medi
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -2765,7 +2791,7 @@ focus_tree = {
 	focus = {
 		#식민지 외교에 집중
 		id = FRA_focus_on_colonial_deiplomacy
-		cost = 4
+		cost = 2
 		icon = GFX_focus_ETH_boots_on_the_shore
 		x = 8
 		y = 1
@@ -2774,6 +2800,10 @@ focus_tree = {
 		}
 		relative_position_id = FRA_authenticity_in_the_international_community
 		completion_reward = {
+			country_event = {
+				id = FRA_prov_event.9
+				days = 2
+			}
 		}
 	}
 	focus = {
@@ -2786,8 +2816,58 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_focus_on_colonial_deiplomacy
 		}
+		available = {
+			OR = {
+				VIN = {
+					is_subject_of = FRA
+				}
+				CAM = {
+					is_subject_of = FRA
+				}
+				LAO = {
+					is_subject_of = FRA
+				}
+			}
+		}
+		bypass = {
+			NOT = {
+				OR = {
+					VIN = {
+						is_subject_of = FRA
+					}
+					CAM = {
+						is_subject_of = FRA
+					}
+					LAO = {
+						is_subject_of = FRA
+					}
+				}
+			}
+
+		}
 		relative_position_id = FRA_focus_on_colonial_deiplomacy
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = VIN
+						original_tag = CAM
+						original_tag = LAO
+					}
+					is_subject_of = FRA
+				}
+				country_event = {
+					id = FRA_prov_event.10
+					hours = 3
+				}
+				add_ideas = FRA_military_minister
+				add_autonomy_score = {
+					value = -100
+				}
+			}
+			unlock_decision_tooltip = FRA_control_VIN
+			unlock_decision_tooltip = FRA_control_LAO
+			unlock_decision_tooltip = FRA_control_CAM
 		}
 	}
 	focus = {
@@ -2803,8 +2883,46 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = FRA_withdraw_from_indochina
 		}
+		available = {
+			OR = {
+				VIN = {
+					is_subject_of = FRA
+				}
+				CAM = {
+					is_subject_of = FRA
+				}
+				LAO = {
+					is_subject_of = FRA
+				}
+			}
+		}
 		relative_position_id = FRA_military_minister_to_indochina
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = VIN
+						original_tag = CAM
+						original_tag = LAO
+					}
+					is_subject_of = FRA
+				}
+				capital_scope = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				add_autonomy_score = {
+					value = -100
+				}
+			}
+
+			unlock_decision_tooltip = FRA_rice_farming_on_Mekong_Delta
+			unlock_decision_tooltip = FRA_rubber_extract_on_south_vietnam
+			unlock_decision_tooltip = FRA_mining_extract_on_north_vietnam
+			unlock_decision_tooltip = FRA_industry_on_Phnom_Pehn
 		}
 	}
 	focus = {
@@ -2820,14 +2938,77 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = FRA_french_indochina
 		}
+		available = {
+			OR = {
+				VIN = {
+					is_subject_of = FRA
+				}
+				CAM = {
+					is_subject_of = FRA
+				}
+				LAO = {
+					is_subject_of = FRA
+				}
+			}
+		}
+		bypass = {
+			NOT = {
+				OR = {
+					VIN = {
+						is_subject_of = FRA
+					}
+					CAM = {
+						is_subject_of = FRA
+					}
+					LAO = {
+						is_subject_of = FRA
+					}
+				}
+			}
+
+		}
 		relative_position_id = FRA_military_minister_to_indochina
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = VIN
+						original_tag = CAM
+						original_tag = LAO
+					}
+					is_subject_of = FRA
+				}
+				custom_effect_tooltip = FRA_withdraw_from_indochina_tt
+				FRA = {
+					add_cic = 1500
+				}
+				custom_effect_tooltip = CHL_skip_one_line_tt
+			}
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = VIN
+						original_tag = CAM
+						original_tag = LAO
+					}
+					is_subject_of = FRA
+				}
+				capital_scope = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				add_autonomy_score = {
+					value = 100
+				}
+			}
 		}
 	}
 	focus = {
 		#동남아시아 경제 블록
 		id = FRA_southeast_asia_economic_bloc
-		cost = 4
+		cost = 6
 		icon = GFX_focus_GER_south_east_asian_natural_wealth
 		x = -1
 		y = 1
@@ -2837,8 +3018,47 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_french_indochina
 		}
+		available = {
+			AND = {
+				VIN = {
+					is_subject_of = FRA
+				}
+				CAM = {
+					is_subject_of = FRA
+				}
+				LAO = {
+					is_subject_of = FRA
+				}
+				INS = {
+					exists = no
+				}
+				HOL = {
+					exists = yes
+				}
+			}
+		}
 		relative_position_id = FRA_french_indochina
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = VIN
+						tag = CAM
+						tag = LAO
+						tag = HOL
+					}
+				}
+				country_event = {
+					id = FRA_prov_event.11
+					days = 1
+				}
+				custom_effect_tooltip = if_they_accept
+				effect_tooltip = {			
+					add_cic = 1000
+					add_ideas = FRA_southeast_asia_economic_bloc
+				}
+			}
+			unlock_decision_tooltip = FRA_invite_to_southeast_asia_economic_bloc
 		}
 	}
 	focus = {
@@ -2848,11 +3068,36 @@ focus_tree = {
 		icon = GFX_focus_IRQ_expand_membership
 		x = 1
 		y = 1
+		available = {
+			ENG = {
+				has_war_with = EGY
+			}
+		}
+		bypass = {
+			SYR = {
+				exists = no
+			}
+		}
 		prerequisite = {
 			focus = FRA_focus_on_colonial_deiplomacy
 		}
 		relative_position_id = FRA_focus_on_colonial_deiplomacy
 		completion_reward = {
+			if = {
+				limit = {
+					LEB = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = LEB
+					type = puppet_wargoal_focus
+				}
+			}
+			create_wargoal = {
+				target = SYR
+				type = puppet_wargoal_focus
+			}
 		}
 	}
 	focus = {
@@ -2862,11 +3107,43 @@ focus_tree = {
 		icon = GFX_focus_IRQ_liberate_levant
 		x = 0
 		y = 2
+		available = {
+			SYR = {
+				is_subject_of = FRA
+			}
+		}
 		prerequisite = {
 			focus = FRA_intervention_to_middle_east
 		}
 		relative_position_id = FRA_intervention_to_middle_east
 		completion_reward = {
+			every_country = {
+				limit = {
+					original_tag = SYR
+				}
+				set_cosmetic_tag = SYR_french
+				country_event = {
+					id = FRA_prov_event.10
+					hours = 3
+				}
+				add_ideas = FRA_military_minister
+				add_autonomy_score = {
+					value = -100
+				}
+				if = {
+					limit = {
+						LEB = {
+							is_subject_of = FRA
+						}
+					}
+					SYR = {
+						annex_country = {
+							target = LEB
+							transfer_troops = yes
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -3113,7 +3390,7 @@ focus_tree = {
 			focus = FRA_focus_resistance_1
 		}
 		available = {
-			has_completed_focus = FRA_focus_Resistance_9
+			has_completed_focus = FRA_focus_resistance_9
 		}
 		mutually_exclusive = {
 			focus = FRA_focus_resistance_2
