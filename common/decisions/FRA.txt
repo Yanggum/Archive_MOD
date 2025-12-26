@@ -2256,6 +2256,50 @@ FRA_prepare_war = {
 }
 
 FRA_ally = { #외교 정책
+	FRA_suggest_mediterranean_trade_treaty = { #지중해 무역 협정 제안
+		cost = 10
+		ai_will_do = {
+			base = 40
+		}
+		visible = {
+			has_completed_focus = FRA_trade_treaty
+		}
+		icon = GFX_decision_eng_trade_unions_support
+		target_trigger = {
+			FROM = {
+				any_core_state = {
+					state_is_in_the_mediterranean_sea = yes
+				}
+				Kivotos_tag = no
+				NOT = {
+					tag = FRA
+				}
+				NOT = {
+					has_country_flag = FRA_rejected_mediterranean_trade_treaty
+				}
+			}
+		}
+		days_remove = 5
+		complete_effect = {
+			FROM = {
+				country_event = FRA_prov_event.14
+				custom_effect_tooltip = if_they_accept
+				effect_tooltip = {			
+					add_political_power = -30
+					add_ideas = FRA_mediterranean_trade_treaty
+				}
+			}
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				FROM = {
+					capital_scope = {
+						state = PREV.PREV
+					}
+				}
+			}
+		}
+	}
 	FRA_invite_to_southeast_asia_economic_bloc = { #동남아시아 경제 블록에 초대
 		cost = 10
 		ai_will_do = {
@@ -2278,9 +2322,11 @@ FRA_ally = { #외교 정책
 				}
 			}
 		}
-		days_remove = 5
-		remove_effect = {
-			add_cic = -1000
+		days_remove = 120
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		complete_effect = {
 			FROM = {
 				country_event = FRA_prov_event.11
 				custom_effect_tooltip = if_they_accept
@@ -4451,6 +4497,33 @@ economy_decisions = {
 		complete_effect = {
 			remove_ideas = FRA_southeast_asia_economic_bloc
 			set_country_flag = FRA_rejected_southeast_economic_bloc
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				has_government = communism
+				add = 10
+			}
+			modifier = {
+				has_war_with = FRA
+				add = 999
+			}
+		}
+	}
+	FRA_break_medi_treaty = { #지중해 무역 협정 파기
+		icon = GFX_decision_generic_break_treaty
+		visible = {
+			has_idea = FRA_mediterranean_trade_treaty
+		}
+		available = {
+			NOT = {
+				is_subject_of = FRA
+			}
+		}
+		complete_effect = {
+			add_political_power = 30
+			remove_ideas = FRA_mediterranean_trade_treaty
+			set_country_flag = FRA_rejected_mediterranean_trade_treaty
 		}
 		ai_will_do = {
 			base = 0

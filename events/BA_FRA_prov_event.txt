@@ -1496,7 +1496,7 @@ country_event = {
 }
 
 country_event = {
-	#보편적 수락
+	#경제관련 수락 (지중해 / 동남아시아)
 	id = FRA_prov_event.13
 	title = FRA_prov_event.13.t
 	desc = FRA_prov_event.13.d
@@ -1506,64 +1506,59 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty1
 	option = {
 		name = FRA_prov_event.13.a
+		if = {
+			limit = {
+				FROM = {
+					has_idea = FRA_mediterranean_trade_treaty
+				}
+			}
+			add_cic = 1000
+		}
 	}
 }
 
 country_event = {
-	#경제적 보상
+	#지중해 무역협정 제안
+
 	id = FRA_prov_event.14
 	title = FRA_prov_event.14.t
 	desc = FRA_prov_event.14.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.14.a
 		ai_chance = {
-			factor = 80
-		}
-		add_timed_idea = {
-			idea = FRA_colony_economy
-			days = 600
-		}
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		add_to_variable = {
-			FRA_demand_colony = 1
-		}
-		transfer_state = 777
-		transfer_state = 776
-		transfer_state = 774
-		transfer_state = 773
-		transfer_state = 660
-		transfer_state = 539
-		transfer_state = 772
-		hidden_effect = {
-			ENG = {
-				country_event = {
-					id = FRA_prov_event.15
-					days = 1
+			base = 3
+			modifier = {
+				OR = {
+					tag = SYR
+					tag = LEB
+					tag = EGY
 				}
+				add = -1
+			}
+			modifier = {
+				has_war_with = FRA
+				add = -99
+			}
+		}
+		add_political_power = -30
+		add_ideas = FRA_mediterranean_trade_treaty
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.13
+				days = 1
 			}
 		}
 	}
 	option = {
-		add_to_variable = {
-			FRA_demand_colony = 1
-		}
-		ai_chance = {
-			factor = 30
-		}
 		name = FRA_prov_event.14.b
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		ENG = {
+		set_country_flag = FRA_rejected_mediterranean_trade_treaty
+		FRA = {
 			country_event = {
-				id = FRA_prov_event.17
+				id = FRA_prov_event.55
 				days = 1
 			}
 		}
@@ -1571,19 +1566,16 @@ country_event = {
 }
 
 country_event = {
-	#영국이 보상 받기
+	#지중해 무역협정 파기
 	id = FRA_prov_event.15
 	title = FRA_prov_event.15.t
 	desc = FRA_prov_event.15.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.15.a
-		add_timed_idea = {
-			idea = FRA_ENG_colony_economy
-			days = 600
-		}
 	}
 }
 
@@ -1639,10 +1631,6 @@ country_event = {
 			}
 		}
 		name = FRA_prov_event.18.a
-		add_timed_idea = {
-			idea = FRA_ENG_economy_help
-			days = 1200
-		}
 		FRA = {
 			country_event = {
 				id = FRA_prov_event.21
@@ -1696,10 +1684,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.21.a
 		add_political_power = 10
-		add_timed_idea = {
-			idea = FRA_economy_help
-			days = 1200
-		}
 		country_event = {
 			id = FRA_prov_event.12
 			days = 1
@@ -2573,7 +2557,7 @@ country_event = {
 }
 
 country_event = {
-	#보편적 거절
+	#경제관련- 거절 (동남아시아 / 지중해)
 	id = FRA_prov_event.55
 	title = FRA_prov_event.55.t
 	desc = FRA_prov_event.55.d
@@ -2581,7 +2565,6 @@ country_event = {
 	picture = GFX_report_event_tur_inonu_diplomacy
 	option = {
 		name = FRA_prov_event.55.a
-		add_political_power = -5
 	}
 }
 
