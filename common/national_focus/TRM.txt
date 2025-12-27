@@ -6891,7 +6891,7 @@ focus_tree = {
 				add_stability = -0.02
 			}
 			custom_effect_tooltip = tooltip_effect_upon_focus_completion
-			add_ideas = TRM_trinity_farm_ns
+			add_ideas = TRN_trinity_farm_ns
 			
 			63 = { #힌터포메른
 				BA_increase_state_category_by_one_level = yes
@@ -6949,7 +6949,7 @@ focus_tree = {
 			country_event = { id = trinity_flavor_events.23 days = 7 }
 		}
 		completion_reward = {
-			add_ideas = TRM_cop_of_junker_ns
+			add_ideas = TRN_cop_of_junker_ns
 				
 			63 = { #힌터포메른
 				BA_increase_state_category_by_one_level = yes
@@ -8395,7 +8395,7 @@ focus_tree = {
 			TRM_nagisa_faction_modified = yes
 			hidden_effect = {
 				TRN_Alfred_Hugenberg = {
-					unit_leader_event = { id = trinity_flavor_events.41 days = 15 } # 알프레드 후겐베르크의 평론
+					unit_leader_event = { id = trinity_flavor_events.41 days = 15 } 
 				}
 				country_event = { id = trinity_flavor_events.42 days = 50 random_days = 50 } 
 				country_event = { id = trinity_events.56 days = 30 random_days = 70 }
@@ -8408,6 +8408,7 @@ focus_tree = {
 		id = TRN_limit_german_party
 		icon = GFX_focus_ITA_banda_carita
 		prerequisite = { focus = TRN_denazification }
+		prerequisite = { focus = TRN_second_trinity }
 		x = 0
 		y = 1
 		relative_position_id = TRN_denazification
@@ -15426,7 +15427,7 @@ focus_tree = {
 				is_controlled_by = TRM
 			}
 		}
-		mutually_exclusive = {  }
+		mutually_exclusive = { focus = TRN_polish_autonomous_state }
 
 		ai_will_do = {
 
@@ -16425,17 +16426,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_command_power = 25
-			army_experience = 15
+			
+			add_daily_mastery = {
+				amount = 0.1
+				days = 90	
+				name =  TRN_germany_army_reform_1
+				folder = land
+				track = armor
+			}
 
 			custom_effect_tooltip = tooltip_white_line
 
-			add_mastery_bonus = {
-				bonus = 0.1
-				days = 240
-				track = armor
-				name = TRN_armor_refit
-			}
 			custom_effect_tooltip = available_theorist
 			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
 
@@ -16619,14 +16620,13 @@ focus_tree = {
 
 		completion_reward = {
 
-			add_mastery_bonus = {
-				bonus = 0.1
-				days = 240
+			add_daily_mastery = {
+				amount = 0.1
+				days = 90	
+				name =  TRN_retracing_the_mechanized_brigade_tragedy
+				folder = land
 				track = infantry
-				name = TRN_small_attack_groups
 			}
-
-			army_experience = 15
 
 			custom_effect_tooltip = tooltip_white_line
 			custom_effect_tooltip = {
@@ -16968,7 +16968,7 @@ focus_tree = {
 		id = TRN_control_of_baltic_sea
 		icon = GFX_focus_TRN_navy
 		prerequisite = { focus = TRN_increase_military_budget }
-		x = 28
+		x = 30
 		y = 1
 		relative_position_id = TRN_increase_military_budget
 		cost = 5
@@ -17851,7 +17851,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_air_force_focus_01
+		id = TRN_air_force_reinforcement
 		icon = GFX_focus_TRN_airforce
 		prerequisite = { focus = TRN_increase_military_budget }
 		x = 19
@@ -17866,17 +17866,156 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+				name = TRN_air_force_reinforcement
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+
+			custom_effect_tooltip = tooltip_has_completed_focus_TRN_ministry_of_industrial_development
+			unlock_decision_tooltip = TRN_air_factory_decision
+			unlock_decision_tooltip = TRN_junkers_corp_assets_decision
+		}
+	}
+
+	focus = {
+		id = TRN_academy_aircraft_construction
+		icon = GFX_focus_generic_air_research_boost
+		prerequisite = { focus = TRN_air_force_reinforcement }
+		x = 5
+		y = 1
+		relative_position_id = TRN_air_force_reinforcement
+		cost = 8
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			unlock_military_industrial_organization_tooltip = mio:TRM_fighter_aircraft_organization
+			
+			mio:TRM_fighter_aircraft_organization = {
+				add_mio_funds = 1000 
+			}
+			if = {
+				limit = {
+					64 = { # 트리니티 중앙구
+						is_fully_controlled_by = ROOT
+						air_facility < 1
+						land_facility < 1
+						naval_facility < 1
+						nuclear_facility < 1
+					}
+				}
+				64 = {
+					add_building_construction = {
+						type = air_facility
+						level = 1
+						instant_build = yes
+						province = 9496 
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_prop_plane_recommission
+		icon = GFX_focus_CHI_appropriate_design
+		prerequisite = { focus = TRN_academy_aircraft_construction }
+		x = -1
+		y = 1
+		relative_position_id = TRN_academy_aircraft_construction
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+			add_tech_bonus = {
+				name = TRN_prop_plane_recommission
+				bonus = 1
+				uses = 1
+				category = light_fighter
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_air_force_focus_02
-		icon = GFX_focus_generic_air_research_boost
-		prerequisite = { focus = TRN_air_force_focus_01 }
+		id = TRN_jet_technolgy
+		icon = GFX_focus_generic_jet_planes
+		prerequisite = { focus = TRN_academy_aircraft_construction }
+		x = 1
+		y = 1
+		relative_position_id = TRN_academy_aircraft_construction
+		cost = 10
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.25
+			}
+
+			add_tech_bonus = {
+				name = TRN_jet_technolgy
+				bonus = 0.35
+				uses = 2
+				category = jet_technology
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_establish_of_training_system
+		icon = GFX_focus_generic_pilot_training
+		prerequisite = { focus = TRN_academy_aircraft_construction }
+		x = -3
+		y = 1
+		relative_position_id = TRN_academy_aircraft_construction
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_accidents_factor = -0.1
+				tooltip = air_accidents_factor_tt
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_flying_club
+		icon = GFX_focus_SOV_women_in_aviation
+		prerequisite = { focus = TRN_air_force_reinforcement }
 		x = -2
 		y = 1
-		relative_position_id = TRN_air_force_focus_01
+		relative_position_id = TRN_air_force_reinforcement
 		cost = 5
 		available = {
 
@@ -17886,18 +18025,501 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			air_experience = 25
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_accidents_factor = -0.05
+				tooltip = air_accidents_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_rule_the_sky
+		icon = GFX_generic_air_fighter2_new
+		prerequisite = { focus = TRN_air_force_reinforcement }
+		x = -4
+		y = 2
+		relative_position_id = TRN_air_force_reinforcement
+
+		cost = 6
+		
+		available = {
+			OR = {
+				has_doctrine = new_strategic_destruction
+				has_doctrine = new_battlefield_support
+				has_doctrine = new_operational_integrity
+			}
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			IF = {
+				limit = {
+					has_doctrine = air_subdoctrine_tactical_flexibility
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 75
+					name =  TRN_rule_the_sky
+					track = fighter_aircraft
+				}
+
+			}
+			ELSE_IF = {
+				limit ={
+					has_subdoctrine_in_track = fighter_aircraft
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 50
+					name =  TRN_rule_the_sky
+					track = fighter_aircraft
+				}
+			}
+			ELSE = {
+				set_sub_doctrine = air_subdoctrine_tactical_flexibility
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_range_factor = 0.1
+				tooltip = air_range_factor_tt
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_mission_efficiency = 0.05
+				tooltip = air_mission_efficiency_tt
+			}
 
 		}
 	}
 
 	focus = {
-		id = TRN_air_force_focus_03
-		icon = GFX_focus_SOV_women_in_aviation
-		prerequisite = { focus = TRN_air_force_focus_01 }
+		id = TRN_ensure_mobility
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = TRN_rule_the_sky }
+		x = -1
+		y = 1
+		relative_position_id = TRN_rule_the_sky
+
+		cost = 6
+		
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_agility_factor = 0.05
+				tooltip = air_agility_factor_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_cooperation_with_the_army
+		icon = GFX_focus_generic_armored_air_support
+		prerequisite = { focus = TRN_rule_the_sky }
+		x = 1
+		y = 1
+		relative_position_id = TRN_rule_the_sky
+
+		cost = 6
+		
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+
+			if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_1_ns }
+				swap_ideas = {
+					add_idea = TRN_hidden_air_doctrine_2_ns
+					remove_idea = TRN_hidden_air_doctrine_1_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_3_ns }
+				remove_ideas = TRN_hidden_air_doctrine_3_ns
+			}
+
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_superiority_bonus_in_combat = 0.05
+				tooltip = air_superiority_bonus_in_combat_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_long_range_bomber
+		icon = GFX_focus_generic_long_range_aircraft
+		prerequisite = { focus = TRN_cooperation_with_the_army }
+		prerequisite = { focus = TRN_ensure_mobility }
+		x = 0
+		y = 2
+		relative_position_id = TRN_rule_the_sky
+
+		cost = 6
+		
+		available = {
+
+		}
+		mutually_exclusive = { focus = TRN_dive_bomber }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_mastery_bonus = {
+				name = TRN_long_range_bomber
+				bonus = 0.15
+				days = 180
+				track = heavy_aircraft
+			}
+			add_doctrine_cost_reduction = {
+				name = TRN_long_range_bomber
+				cost_reduction = 0.25
+				uses = 2
+				category = air_doctrine
+			}
+			add_tech_bonus = {
+				name = TRN_long_range_bomber
+				bonus = 0.5
+				uses = 1
+				category = heavy_air
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_range_factor = 0.05
+				tooltip = air_range_factor_tt
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_strategic_bomber_bombing_factor = 0.1
+				tooltip = air_strategic_bomber_bombing_factor_tt
+			}
+
+			if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_1_ns }
+				swap_ideas = {
+					add_idea = TRN_hidden_air_doctrine_3_ns
+					remove_idea = TRN_hidden_air_doctrine_1_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_2_ns }
+				remove_ideas = TRN_hidden_air_doctrine_2_ns
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_air_defense_net
+		icon = GFX_focus_PRC_anti_air_effort
+		prerequisite = { focus = TRN_air_force_reinforcement }
+		x = 0
+		y = 2
+		relative_position_id = TRN_air_force_reinforcement
+
+		cost = 6
+		
+		available = {
+			OR = {
+				has_doctrine = new_strategic_destruction
+				has_doctrine = new_battlefield_support
+				has_doctrine = new_operational_integrity
+			}
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			IF = {
+				limit = {
+					has_doctrine = air_subdoctrine_fighter_homeland_defense
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 75
+					name =  TRN_air_defense_net
+					track = fighter_aircraft
+				}
+			}
+			ELSE_IF = {
+				limit ={
+					has_subdoctrine_in_track = fighter_aircraft
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 50
+					name =  TRN_air_defense_net
+					track = fighter_aircraft
+				}
+			}
+			ELSE = {
+				set_sub_doctrine = air_subdoctrine_fighter_homeland_defense
+			}
+			random_owned_state = {
+				limit = { 
+					is_core_of = TRM 
+					anti_air_building < 5
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+				prioritize = { 64 }
+			}
+			random_owned_state = {
+				limit = { 
+					is_core_of = TRM 
+					anti_air_building < 5
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+				prioritize = { 86 }
+			}
+			add_tech_bonus = {
+				name = TRN_air_defense_net
+				bonus = 0.5
+				uses = 1
+				category = cat_anti_air
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = { 
+				TRN_airforce_ns_air_home_defence_factor = 0.1 
+				tooltip = air_home_defence_factor_tt
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_ground_crew_efficiency
+		icon = GFX_focus_CHI_effectivize_ground_crew_usage
+		prerequisite = { focus = TRN_air_defense_net }
+		x = -1
+		y = 1
+		relative_position_id = TRN_air_defense_net
+
+		cost = 6
+		
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = { 
+				TRN_airforce_ns_air_manpower_requirement_factor = -0.1
+				tooltip = air_manpower_requirement_factor_tt
+			}
+
+		}
+	}
+
+	focus = {
+		id = TRN_intercept_mission
+		icon = GFX_focus_CHI_positional_advantage
+		prerequisite = { focus = TRN_air_defense_net }
+		x = 1
+		y = 1
+		relative_position_id = TRN_air_defense_net
+
+		cost = 6
+		
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
+				complete_special_project = sp:sp_air_radar
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_interception_detect_factor = 0.1
+				tooltip = air_interception_detect_factor_tt
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_intercept_efficiency = 0.1
+				tooltip = air_intercept_efficiency_tt
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_dive_bomber
+		icon = GFX_focus_generic_cas_aircraft
+		prerequisite = { focus = TRN_ground_crew_efficiency }
+		prerequisite = { focus = TRN_intercept_mission }
+		x = 0
+		y = 2
+		relative_position_id = TRN_air_defense_net
+
+		cost = 6
+		
+		available = {
+
+		}
+		mutually_exclusive = { focus = TRN_long_range_bomber }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			add_mastery_bonus = {
+				name = TRN_dive_bomber
+				bonus = 0.15
+				days = 180
+				track = strike_aircraft
+			}
+			add_doctrine_cost_reduction = {
+				name = TRN_dive_bomber
+				cost_reduction = 0.25
+				uses = 1
+				category = air_doctrine
+			}
+
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_air_superiority_bonus_in_combat = 0.05
+				tooltip = air_superiority_bonus_in_combat_tt
+			}
+
+			if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_1_ns }
+				swap_ideas = {
+					add_idea = TRN_hidden_air_doctrine_3_ns
+					remove_idea = TRN_hidden_air_doctrine_1_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_air_doctrine_2_ns }
+				remove_ideas = TRN_hidden_air_doctrine_2_ns
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_helicopter
+		icon = GFX_focus_generic_early_helicopter
+		prerequisite = { 
+			focus = TRN_air_defense_net 
+			focus = TRN_rule_the_sky
+		}
+		x = 5
+		y = 3
+		relative_position_id = TRN_flying_club
+
+		cost = 10
+		
+		available = {
+			has_dlc_gtd = yes
+		}
+
+		bypass = {
+			has_dlc_gtd = no
+		}
+		ai_will_do = {
+
+		}
+
+
+		completion_reward = {
+
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.5
+			}
+
+			IF = {
+				limit = {
+					NOT = { is_special_project_completed = sp:sp_air_helicopter }
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_modify_dynmod
+					DYNMOD = TRN_airforce_ns
+				}
+				add_to_variable = {
+					TRN_airforce_ns_sp_air_helicopter_speed_factor = 0.15
+					tooltip = sp_air_helicopter_speed_factor_tt
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_air_force_focus_11
+		icon = GFX_focus_generic_early_helicopter
+		prerequisite = { focus = TRN_helicopter }
+		prerequisite = { 
+			focus = TRN_prop_plane_recommission
+			focus = TRN_jet_technolgy
+		}
 		x = 2
 		y = 1
-		relative_position_id = TRN_air_force_focus_01
+		relative_position_id = TRN_helicopter
+
 		cost = 5
+		
 		available = {
 
 		}
@@ -17911,10 +18533,10 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_air_force_focus_99
+		id = TRN_aviation_torpedoes
 		icon = GFX_goal_generic_air_naval_bomber
 		prerequisite = { focus = TRN_control_of_baltic_sea }
-		#prerequisite = { focus = TRN_air_force_focus_02 }
+		prerequisite = { focus = TRN_academy_aircraft_construction }
 		x = -2
 		y = 2
 		relative_position_id = TRN_control_of_baltic_sea
@@ -17927,7 +18549,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_airforce_ns
+			}
+			add_to_variable = {
+				TRN_airforce_ns_port_strike = 0.1
+				tooltip = port_strike_tt
+			}
 		}
 	}
 }

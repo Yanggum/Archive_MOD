@@ -1279,6 +1279,9 @@ ARI_heart_strike_plan = {
 				NOT = { country_exists = ARI }
 				NOT = { country_exists = TRM }
 			}
+			hidden_trigger = {
+				has_global_flag = ARI_heart_strike_plan_stop_flag
+			}
 		}
 
 		cancel_effect = {
@@ -1442,6 +1445,7 @@ ARI_heart_strike_plan = {
 				}
 			}
 			set_global_flag = ARI_heart_strike_plan_stop_flag
+			complete_national_focus = ARI_drawing_sword
 		}
 	}
 	
@@ -1668,6 +1672,9 @@ TRM_heart_strike_plan = {
 			OR = {
 				NOT = { country_exists = ARI }
 				NOT = { country_exists = TRM }
+			}
+			hidden_trigger = {
+				has_global_flag = ARI_heart_strike_plan_stop_flag
 			}
 		}
 
@@ -2515,7 +2522,7 @@ ARI_trinity_academy_dissolution = {
 	    }
 	    on_map_mode = map_and_decisions_view
 
-	    cost = 50		
+	    cost = 25		
 
 		fire_only_once = yes
 
@@ -2596,7 +2603,18 @@ ARI_trinity_academy_dissolution = {
 			hidden_effect = {
 				set_country_flag = ARI_recruited_after_school_dessert_club
 			}
+
 			country_event = ARI_conservative_event_chain.3
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = ROOT }
+					is_core_of = TRM
+				}
+				add_compliance = 15
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
 			custom_effect_tooltip = available_theorist
 			show_ideas_tooltip = ARI_kyoyama_kazusa_theorist
 			
@@ -2654,13 +2672,769 @@ ARI_trinity_academy_dissolution = {
 			hidden_effect = {
 				set_country_flag = ARI_recruited_library_committee
 			}
+
 			country_event = ARI_conservative_event_chain.4
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = ROOT }
+					is_core_of = TRM
+				}
+				add_compliance = 15
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ARI_kozeki_ui_political_advisor
 			
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ARI_endo_shimiko_political_advisor
+		}
+	}
+}
+
+ARI_balance_of_power_category = {
+	ARI_academy_military_training = {
+		icon = GFX_decision_generic_reorganize_irregulars
+		priority = 100
+
+		available = {
+		}
+
+		visible = {
+		}
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value > 0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		cost = 25
+		
+		days_remove = 90
+
+		modifier = {
+			experience_gain_army = 0.05
+		}
+
+		complete_effect = {
+		}
+		
+		remove_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = -0.05
+			}
+		}
+	}
+	ARI_upholding_old_arius_values = {
+		icon = GFX_decision_oppression
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value > 0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		days_remove = 90
+
+		modifier = {
+			stability_weekly = 0.0025
+		}
+
+		cost = 50
+
+		remove_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = -0.1
+			}
+		}
+	}
+	ARI_suppression_using_power = {
+		icon = GFX_decision_oppression
+		priority = 100
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+			has_completed_focus = ARI_inauguration_of_arius_student_council_president
+		}
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value > 0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_stability = 0.025
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = -0.1
+			}
+		}
+	}
+	ARI_saoris_education = {
+		icon = GFX_decision_generic_research
+		priority = 100
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value > 0.4
+				}
+				factor = 2.5
+			}
+		}
+
+
+		cost = 25
+
+		days_remove = 31
+
+		modifier = {
+			stability_weekly = 0.01
+		}
+
+		fire_only_once = yes
+
+		remove_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = -0.05
+			}
+		}
+	}
+
+	ARI_reformist_movement_propaganda = {
+		icon = GFX_decision_generic_political_rally
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		days_remove = 90
+
+		modifier = {
+			research_speed_factor = 0.025
+		}
+
+		cost = 75
+
+		remove_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.15
+			}
+		}
+	}
+	ARI_utilizing_azusas_network = {
+		icon = GFX_decision_generic_welfare
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.10
+			}
+		}
+	}
+	ARI_recruiting_trinity_faction = {
+		icon = GFX_decision_generic_welfare
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		cost = 75
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.15
+			}
+		}
+	}
+	ARI_utilizing_danzig_network = {
+		icon = GFX_decision_generic_welfare
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.05
+			}
+		}
+	}
+	ARI_persuading_maia = {
+		icon = GFX_decision_generic_political_discourse
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+			has_character = ARI_tachigi_maia
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.05
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			ARI_tachigi_maia = {
+				gain_xp = 400
+				add_coordination = 1
+			}
+		}
+	}
+	ARI_persuading_german_political_parties = {
+		icon = GFX_decision_generic_political_discourse
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 99
+			}
+			modifier = {
+				has_country_flag = ai_flag_ARI_select_reformists
+				factor = 2.5
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_conservatives
+				factor = 0.1
+			}
+			modifier = {
+				has_country_flag = ai_flag_select_competition
+				power_balance_value = {
+					id = ARI_balance_of_power
+					value < -0.4
+				}
+				factor = 2.5
+			}
+		}
+
+		visible = {
+			has_completed_focus = ARI_holding_arius_council
+			has_character = ARI_tachigi_maia
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		complete_effect = {
+			add_stability = 0.025
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_power_balance_value = {
+				id = ARI_balance_of_power
+				value = 0.05
+			}
+		}
+	}
+}
+
+ARI_end_of_pacifism = {
+	ARI_rising_approval_rating_due_to_prolonged_war = {
+		priority = 1000
+		icon = GFX_decision_gre_paying_ifc_debt
+		allowed = { tag = TRM } #manually activated
+		is_good = yes
+		fire_only_once = no
+		days_mission_timeout = 31
+		cancel_trigger = {
+			has_global_flag = flag_ARI_trinity_pacifism_stop
+		}
+
+		activation = {
+			has_global_flag = flag_ARI_trinity_pacifism
+			NOT = { has_global_flag = flag_ARI_trinity_pacifism_stop }
+		}
+		ai_will_do = { base = 1000 }
+
+		available = {
+			NOT = { has_war_with = ARI }
+		}
+		complete_effect = {
+		}
+		timeout_effect = {
+			random_list = {
+				8 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 1
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				5 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 3
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				3 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 5
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+			}
+		}
+		cancel_effect = {
+			
+		}
+	}
+	ARI_spreading_arius_reality = {
+		icon = GFX_decision_generic_political_rally
+		priority = 100
+
+		ai_will_do = {
+			base = 10
+		}
+
+		visible = {
+			has_idea = ARI_trinity_pacifism_idea
+		}
+
+		days_remove = 15
+
+		modifier = {
+			political_power_cost = 0.25
+		}
+
+		cost = 25
+
+		remove_effect = {
+			random_list = {
+				8 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 1
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				5 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 3
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				3 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 5
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+			}
+		}
+	}
+	ARI_frontline_damage_report = {
+		icon = GFX_decision_infiltrate_state
+
+		available = {
+			has_stability > 0.05
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				has_stability < 0.30
+				factor = 0
+			}
+		}
+
+		custom_cost_text = COU_strengthening_influence_stv_tt
+		custom_cost_trigger = {
+			has_stability > 0.049
+		}
+
+		cost = 0
+		
+		days_remove = 15
+
+		modifier = {
+			stability_factor = -0.05
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_stability = -0.05
+			}
+		}
+		
+		remove_effect = {
+			random_list = {
+				8 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 1
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				5 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 3
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				3 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 5
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+			}
+		}
+	}
+	ARI_justice_task_force_led_assembly = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			command_power > 19.9
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		custom_cost_text = decision_cost_20_cp
+		custom_cost_trigger = {
+			command_power > 19.9
+		}
+
+		cost = 0
+		
+		days_remove = 15
+
+		modifier = {
+			max_command_power = -20
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -20
+			}
+			random_list = {
+				8 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 1
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				5 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 3
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+				3 = {
+					add_to_variable = {
+						global.ARI_trinity_pacifism_var = 5
+						tooltip = ARI_trinity_pacifism_var_tt
+					}
+				}
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	ARI_guerrilla_organization_sweep = {
+		icon = GFX_decision_oppression
+
+		available = {
+			check_variable = {
+				global.ARI_trinity_pacifism_var > 24
+			}
+		}
+
+		visible = {
+			has_idea = ARI_arius_guerrilla_activity_idea
+		}
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		cost = 35
+		
+		days_remove = 55
+
+		complete_effect = {
+			add_to_variable = {
+				global.ARI_trinity_pacifism_var = -25
+			}
+		}
+		
+		remove_effect = {
+			remove_ideas = ARI_arius_guerrilla_activity_idea
+			add_war_support = 0.05
+		}
+	}
+	ARI_dec_end_of_pacifism = {
+		icon = GFX_decision_oppression
+
+		available = {
+			check_variable = {
+				global.ARI_trinity_pacifism_var > 24
+			}
+		}
+
+		visible = {
+			has_idea = ARI_trinity_pacifism_idea
+		}
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		cost = 35
+		
+		days_remove = 55
+
+		complete_effect = {
+			add_to_variable = {
+				global.ARI_trinity_pacifism_var = -25
+			}
+		}
+		
+		remove_effect = {
+			remove_ideas = ARI_trinity_pacifism_idea
+			add_war_support = 0.05
+			if = {
+				limit = {
+					NOT = {
+						has_idea = ARI_trinity_pacifism_idea
+						has_idea = ARI_arius_guerrilla_activity_idea
+					}
+				}
+				set_global_flag = flag_ARI_trinity_pacifism_stop
+			}
 		}
 	}
 }

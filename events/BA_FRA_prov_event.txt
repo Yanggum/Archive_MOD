@@ -1396,21 +1396,38 @@ country_event = { #.8부터 .26까지 안 씀
 }
 
 country_event = {
-	#해외 식민지의 상황
+	#그라나다 선언 제안
 	id = FRA_prov_event.9
 	title = FRA_prov_event.9.t
 	desc = FRA_prov_event.9.d
 	fire_only_once = yes
 	is_triggered_only = yes
-	picture = GFX_report_event_spr_army_of_africa
+	picture = GFX_report_event_generic_sign_treaty3
 	hidden = no
 	option = {
 		name = FRA_prov_event.9.a
-		553 = {
-			add_claim_by = FRA
+		add_ideas = FRA_granada_declaration
+		ai_chance = {
+			base = 999
+			modifier = {
+				has_war_with = FRA
+				add = -9999
+			}
 		}
-		554 = {
-			add_claim_by = FRA
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.16
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = FRA_prov_event.9.b
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.17
+				days = 1
+			}
 		}
 	}
 }
@@ -1496,7 +1513,7 @@ country_event = {
 }
 
 country_event = {
-	#보편적 수락
+	#경제관련 수락 (지중해 / 동남아시아)
 	id = FRA_prov_event.13
 	title = FRA_prov_event.13.t
 	desc = FRA_prov_event.13.d
@@ -1506,64 +1523,59 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty1
 	option = {
 		name = FRA_prov_event.13.a
+		if = {
+			limit = {
+				FROM = {
+					has_idea = FRA_mediterranean_trade_treaty
+				}
+			}
+			add_cic = 1000
+		}
 	}
 }
 
 country_event = {
-	#경제적 보상
+	#지중해 무역협정 제안
+
 	id = FRA_prov_event.14
 	title = FRA_prov_event.14.t
 	desc = FRA_prov_event.14.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.14.a
 		ai_chance = {
-			factor = 80
-		}
-		add_timed_idea = {
-			idea = FRA_colony_economy
-			days = 600
-		}
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		add_to_variable = {
-			FRA_demand_colony = 1
-		}
-		transfer_state = 777
-		transfer_state = 776
-		transfer_state = 774
-		transfer_state = 773
-		transfer_state = 660
-		transfer_state = 539
-		transfer_state = 772
-		hidden_effect = {
-			ENG = {
-				country_event = {
-					id = FRA_prov_event.15
-					days = 1
+			base = 3
+			modifier = {
+				OR = {
+					tag = SYR
+					tag = LEB
+					tag = EGY
 				}
+				add = -1
+			}
+			modifier = {
+				has_war_with = FRA
+				add = -99
+			}
+		}
+		add_political_power = -30
+		add_ideas = FRA_mediterranean_trade_treaty
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.13
+				days = 1
 			}
 		}
 	}
 	option = {
-		add_to_variable = {
-			FRA_demand_colony = 1
-		}
-		ai_chance = {
-			factor = 30
-		}
 		name = FRA_prov_event.14.b
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		ENG = {
+		set_country_flag = FRA_rejected_mediterranean_trade_treaty
+		FRA = {
 			country_event = {
-				id = FRA_prov_event.17
+				id = FRA_prov_event.55
 				days = 1
 			}
 		}
@@ -1571,24 +1583,21 @@ country_event = {
 }
 
 country_event = {
-	#영국이 보상 받기
+	#지중해 무역협정 파기
 	id = FRA_prov_event.15
 	title = FRA_prov_event.15.t
 	desc = FRA_prov_event.15.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.15.a
-		add_timed_idea = {
-			idea = FRA_ENG_colony_economy
-			days = 600
-		}
 	}
 }
 
 country_event = {
-	#거절당하기
+	#스페인의 그라나다 선언 수락
 	id = FRA_prov_event.16
 	title = FRA_prov_event.16.t
 	desc = FRA_prov_event.16.d
@@ -1597,19 +1606,12 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.16.a
-		add_political_power = -10
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		add_to_variable = {
-			FRA_demand_colony = 1
-		}
+		add_ideas = FRA_granada_declaration
 	}
 }
 
 country_event = {
-	#영국이 거절당하기
+	#스페인의 거절
 	id = FRA_prov_event.17
 	title = FRA_prov_event.17.t
 	desc = FRA_prov_event.17.d
@@ -1623,64 +1625,52 @@ country_event = {
 }
 
 country_event = {
-	#경제적 협력 요청
+	#제2차 레콩키스타 (프랑스 국민정신 강화)
 	id = FRA_prov_event.18
 	title = FRA_prov_event.18.t
 	desc = FRA_prov_event.18.d
 	fire_only_once = yes
-	is_triggered_only = yes
-	hidden = no
-	option = {
-		ai_chance = {
-			factor = 100
-			modifier = {
-				has_country_flag = MIL_FRA_cut_flag
-				factor = 0
-			}
-		}
-		name = FRA_prov_event.18.a
-		add_timed_idea = {
-			idea = FRA_ENG_economy_help
-			days = 1200
+	picture = GFX_report_event_spr_anarchist_uprising2
+	trigger = {
+		SPR = {
+			has_war_with = WHY
 		}
 		FRA = {
-			country_event = {
-				id = FRA_prov_event.21
-				days = 1
-			}
+			has_idea = FRA_granada_declaration
 		}
+		tag = FRA
 	}
+	hidden = yes
 	option = {
-		ai_chance = {
-			factor = 10
-		}
-		name = FRA_prov_event.18.b
-		FRA = {
-			country_event = {
-				id = FRA_prov_event.19
-				days = 1
-			}
+		swap_ideas = {
+			remove_idea = FRA_granada_declaration
+			add_idea = FRA_granada_declaration_stronger
 		}
 	}
 }
 
 country_event = {
-	#경제적 협력 거절
+	#본토수복결전 (스페인 국민정신 강화)
 	id = FRA_prov_event.19
 	title = FRA_prov_event.19.t
 	desc = FRA_prov_event.19.d
 	fire_only_once = yes
-	is_triggered_only = yes
-	hidden = no
-	option = {
-		name = FRA_prov_event.19.a
-		add_political_power = -10
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
+	is_triggered_only = no
+	hidden = yes
+	picture = GFX_report_event_spr_anarchist_uprising2
+	trigger = {
+		FRA = {
+			has_war_with = MIL
 		}
-		add_to_variable = {
-			FRA_demand_economy = 1
+		SPR = {
+			has_idea = FRA_granada_declaration
+		}
+		tag = SPR
+	}
+	option = {
+		swap_ideas = {
+			remove_idea = FRA_granada_declaration
+			add_idea = FRA_granada_declaration_stronger
 		}
 	}
 }
@@ -1696,10 +1686,6 @@ country_event = {
 	option = {
 		name = FRA_prov_event.21.a
 		add_political_power = 10
-		add_timed_idea = {
-			idea = FRA_economy_help
-			days = 1200
-		}
 		country_event = {
 			id = FRA_prov_event.12
 			days = 1
@@ -2573,7 +2559,7 @@ country_event = {
 }
 
 country_event = {
-	#보편적 거절
+	#경제관련- 거절 (동남아시아 / 지중해)
 	id = FRA_prov_event.55
 	title = FRA_prov_event.55.t
 	desc = FRA_prov_event.55.d
@@ -2581,7 +2567,6 @@ country_event = {
 	picture = GFX_report_event_tur_inonu_diplomacy
 	option = {
 		name = FRA_prov_event.55.a
-		add_political_power = -5
 	}
 }
 
