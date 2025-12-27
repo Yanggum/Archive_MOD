@@ -662,6 +662,74 @@ COU_restudy_freikorps = {
 	}
 }
 
+##페르피두스 
+COU_decision_cat_perfidus = {
+   #debug 
+   COU_perfidus_debug = {
+	    
+		#icon = generic_merge_plant_materiel
+		
+		visible = { is_debug = yes }
+
+		available = {
+			 is_debug = yes 
+		}
+
+		ai_will_do = { 
+			base = 0
+		}
+		
+		fire_only_once = no
+
+		cost = 0
+		
+		complete_effect = { 
+			 add_to_variable = { COU_Perfidus_sta = -0.5 }
+			 set_variable = { COU_Perfidus_ttf = 0.03 }
+			 #set_variable = { COU_Perfidus_icf = 0.03 }
+			 activate_mission = COU_collaboraters_wants_political_money
+			 clamp_variable = { var = COU.COU_Perfidus_cg min = -20 }
+			 add_to_variable = { COU_Perfidus_cf = -0.53 }
+             clamp_variable = { var = COU_Perfidus_cf min = -20 }
+            clamp_variable = { var = COU_Perfidus_cg min = -20 }
+            clamp_variable = { var = COU_Perfidus_ttf min = -20 }
+            clamp_variable = { var = COU_Perfidus_ms min = -20 }
+            clamp_variable = { var = COU_Perfidus_cf min = -20 }
+            clamp_variable = { var = COU_Perfidus_aof min = -20 }
+		}
+	}
+	#
+	
+	COU_collaboraters_wants_political_money = { #뽀찌 요구 
+		icon = generic_break_treaty
+		allowed = {
+			tag = COU
+			always = no
+		}
+
+		available = {
+		    has_country_flag = COU_perfidus_happy_yay
+		}
+
+		activation = { always = no }
+		
+		fire_only_once = yes
+		
+		is_good = no
+
+		days_mission_timeout = 120
+
+		timeout_effect = {
+			 COU_perfidus_random_nerf_list = yes 
+		}
+	}
+}
+
+
+
+
+
+##자위더르해 사업 
 COU_restart_the_zuiderzee_works = {
     COU_restore_our_fucked_lands = {
 		icon = hol_inundate_water_lines
@@ -1190,54 +1258,8 @@ COU_decision_the_student_council = {
 		}
 	}
 	
-	##
-    COU_the_srt_problem = {
-		icon = srt_icon
-		allowed = {
-			tag = COU
-			always = no
-		}
-
-		available = {
-		    NOT = { always = yes }
-		}
-
-		activation = { always = no }
-		
-		fire_only_once = yes
-		
-		is_good = no
-
-		days_mission_timeout = 1
-
-		timeout_effect = {
-			 country_event = COU_event.49
-		}
-	}
-	
-	COU_the_decart_problem = {
-		icon = generic_break_treaty
-		allowed = {
-			tag = COU
-			always = no
-		}
-
-		available = {
-		    NOT = { always = yes }
-		}
-
-		activation = { always = no }
-		
-		fire_only_once = yes
-		
-		is_good = no
-
-		days_mission_timeout = 45
-
-		timeout_effect = {
-			 country_event = COU_event.48
-		}
-	}
+	##데카르트-srt 재판은 정치 개발할때 같이 할게요
+    
 	
 	COU_the_normal_days_of_cou = {
 
