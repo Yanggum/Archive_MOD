@@ -11198,9 +11198,9 @@ focus_tree = {
 	###
 
 	focus = { #
-		id = Gehenna_Diplomacy_our_future
-		icon = GFX_goal_GEH_HID
-		x = 10
+		id = GEH_our_future
+		icon = GFX_focus_GER_realpolitik
+		x = 14
 		y = 1
 		relative_position_id = GEH_three_congress_focus
 		cost = 5
@@ -11237,56 +11237,12 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = Gehenna_Diplomacy_our_faction_first
-		icon = GFX_focus_generic_conference
-		x = -2
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_our_future
-		cost = 5
-
-		available = {
-			is_puppet = no
-		}
-		
-		prerequisite = { focus = Gehenna_Diplomacy_our_future }
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			IF = {
-				limit = {
-					is_faction_leader = yes 
-				}
-				
-				IF = {
-					limit = {
-						has_dlc = "No Compromise, No Surrender"
-					}
-					add_faction_goal_slot = {
-						category  = medium_term 
-						value = 1 
-					}
-					add_faction_goal_slot = {
-						category  = long_term 
-						value = 1 
-					}
-				}
-			}
-			ELSE = {
-				add_political_power = 150
-			}
-		}
-	}
-
 	focus = { # 
-		id = Gehenna_Diplomacy_war_against_cou
+		id = GEH_war_against_cou
 		icon = GFX_goal_TRM_invade_benelux
-		x = 0
+		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_our_future
+		relative_position_id = GEH_our_future
 		cost = 5
 
 		available = {
@@ -11303,9 +11259,9 @@ focus_tree = {
 			is_puppet = no
 		}
 
-		prerequisite = { focus = Gehenna_Diplomacy_our_future }
+		prerequisite = { focus = GEH_our_future }
 
-		mutually_exclusive = { focus = Gehenna_Diplomacy_recognition_of_cou }
+		mutually_exclusive = { focus = GEH_recognition_of_cou }
 
 		ai_will_do = {
 
@@ -11373,9 +11329,9 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = Gehenna_Diplomacy_recognition_of_cou
+		id = GEH_recognition_of_cou
 		icon = GFX_focus_generic_influence_benelux
-		x = 2
+		x = 1
 		y = 1
 
 		cost = 5
@@ -11393,10 +11349,10 @@ focus_tree = {
 			NOT = { has_war_with = HEU }
 		}
 
-		relative_position_id = Gehenna_Diplomacy_our_future
-		prerequisite = { focus = Gehenna_Diplomacy_our_future }
+		relative_position_id = GEH_our_future
+		prerequisite = { focus = GEH_our_future }
 
-		mutually_exclusive = { focus = Gehenna_Diplomacy_war_against_cou }
+		mutually_exclusive = { focus = GEH_war_against_cou }
 
 		ai_will_do = {
 
@@ -11439,396 +11395,132 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = Gehenna_Diplomacy_interpol
-		icon = GFX_goal_HEU_flag_of_league_of_nations
-		x = 3
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_war_against_cou
-		cost = 5
-
-		available = {
-			is_puppet = no
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_war_against_cou 
-			focus = Gehenna_Diplomacy_recognition_of_cou 
-		}
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-			
-		}
-	}
-
 	focus = { #
-		id = Gehenna_Diplomacy_russian_winter
-		icon = GFX_focus_generic_winter_warfare
-		x = -1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_war_against_cou
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_war_against_cou 
-			focus = Gehenna_Diplomacy_recognition_of_cou 
-		}
-
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			every_army_leader = {
-				limit = {
-					skill > 1
-				}
-		    		random_select_amount = 3
-				add_max_trait = 1
-				add_unit_leader_trait = winter_expert
-			}
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_red_winter_aliance
-		icon = GFX_focus_GER_the_peoples_victory
-		x = -3
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_russian_winter
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			country_exists = RED
-			is_faction_leader = yes
-			NOT = { has_war_with = RED }
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_russian_winter 
-		}
-
-		mutually_exclusive = { focus = Gehenna_Diplomacy_red_winter_problem }
-
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_red_winter_problem
-		icon = GFX_focus_RED_BEAR_movement
-		x = -1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_russian_winter
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			NOT = { has_non_aggression_pact_with = RED }
-			has_army_manpower = { size > 750000 }
-			has_deployed_air_force_size = { size > 1999 }
-			country_exists = RED
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_russian_winter 
-		}
-
-		mutually_exclusive = { focus = Gehenna_Diplomacy_red_winter_aliance }
-
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_attack_soviet
-		icon = GFX_focus_GER_end_european_communism
-		x = 0
-		y = 2
-		relative_position_id = Gehenna_Diplomacy_russian_winter
-		cost = 10
-
-		bypass = {
-
-		}
-
-		available = {
-			has_government = fascism
-		}
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_russian_winter 
-		}
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-
-		ai_will_do = {
-			base = 100
-			modifier = {
-				factor = 0
-				has_war_with_major = yes # 대규모 전선을 두 개로 만들지 않는다
-			}
-		}
-
-		completion_reward = {
-			create_wargoal = {
-				target = SOV
-				type = puppet_wargoal_focus
-			}
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_attack_SWI
-		icon = GFX_focus_attack_switzerland
-		x = -1
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
-		cost = 5
-
-		available = {
-			is_puppet = no
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_attack_south_kivotos 
-			focus = Gehenna_Diplomacy_aliance_south_kivotos 
-		}
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-
-		bypass = {
-			OR = {
-				has_war_with = SWI
-				NOT = { country_exists = SWI }
-				SWI = { is_in_faction_with = ROOT }
-				SWI = { is_puppet_of = ROOT }
-			}
-		}
-
-		completion_reward = {
-			if = {
-				limit = { country_exists = SWI }
-				create_wargoal = {
-					target = SWI
-					type = topple_government
-				}
-			}
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_attack_south_kivotos
-		icon = GFX_focus_ITA_cavalry_charge
-		x = 6
-		y = 0
-		relative_position_id = Gehenna_Diplomacy_russian_winter
-		cost = 5
-
-		bypass = {
-
-		}
-
-		mutually_exclusive = { focus = Gehenna_Diplomacy_aliance_south_kivotos }
-
-		available = {
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_war_against_cou 
-			focus = Gehenna_Diplomacy_recognition_of_cou 
-		}
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_aliance_south_kivotos
-		icon = GFX_focus_ITA_cavalry_charge
-		x = 8
-		y = 0
-		relative_position_id = Gehenna_Diplomacy_russian_winter
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_war_against_cou 
-			focus = Gehenna_Diplomacy_recognition_of_cou 
-		}
-
-		mutually_exclusive = { focus = Gehenna_Diplomacy_attack_south_kivotos }
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_attack_south_kivotos_2
-		icon = GFX_focus_attack_italy
+		id = GEH_stopping_kaisers_hegemony
+		icon = GFX_focus_attack_KAI
 		x = 1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
+
+		relative_position_id = GEH_war_against_cou
 		cost = 5
 
-		bypass = {
-
-		}
-
 		available = {
+			NOT = { has_non_aggression_pact_with = KAI }
+			has_army_manpower = { size > 750000 }
+			has_deployed_air_force_size = { size > 1999 }
+			OR = {
+				has_navy_size = { size > 49 }
+				is_neighbor_of = KAI
+			}
+			country_exists = KAI
 			is_puppet = no
 		}
 
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_attack_south_kivotos 
-			focus = Gehenna_Diplomacy_aliance_south_kivotos 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
 		}
-
-		mutually_exclusive = {  }
 
 		ai_will_do = {
 
 		}
 
 		bypass = {
-			OR = {
-				has_war_with = ITA
-				NOT = { country_exists = ITA }
-				ITA = { is_in_faction_with = ROOT }
-				ITA = { is_puppet_of = ROOT }
-			}
+			BA_britain_england_control = yes
+			BA_britain_scotland_control = yes
 		}
 
 		completion_reward = {
 			if = {
-				limit = { country_exists = ITA }
+				limit = { country_exists = KAI }
 				create_wargoal = {
-					target = ITA
-					type = topple_government
+					target = KAI
+					type = puppet_wargoal_focus
 				}
 			}
 		}
 	}
 
-	focus = { #
-		id = Gehenna_Diplomacy_remove_vatican
-		icon = GFX_focus_generic_vatican_state
-		x = 0
+	focus = { # 
+		id = GEH_we_dont_need_other_big_three_school
+		icon = GFX_focus_attack_MIL
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		x = 2
 		y = 2
-		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
+
+		relative_position_id = GEH_war_against_cou
 		cost = 5
-
-		bypass = {
-
-		}
 
 		available = {
 			is_puppet = no
-			2 = { owns_or_subject_of = yes }
+			NOT = { has_non_aggression_pact_with = MIL }
+			country_exists = MIL
 		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_attack_south_kivotos_2
-		}
-		mutually_exclusive = {  }
+		
+		mutually_exclusive = { focus = GEH_technical_cooperation }
 
 		ai_will_do = {
 
 		}
-		completion_reward = {
 
+		bypass = {
+			has_war_with = MIL
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = MIL }
+				create_wargoal = {
+					target = MIL
+					type = puppet_wargoal_focus
+				}
+			}
 		}
 	}
 
+
 	focus = { #
-		id = Gehenna_Diplomacy_support_WHY
+		id = GEH_support_WHY
 		icon = GFX_focus_GRE_a_land_of_mountains
-		x = 3
-		y = 1
-		relative_position_id = Gehenna_Diplomacy_attack_south_kivotos
-		cost = 5
-
-		bypass = {
-
-		}
-
-		available = {
-			is_puppet = no
-		}
-
-		prerequisite = { 
-			focus = Gehenna_Diplomacy_attack_south_kivotos
-			focus = Gehenna_Diplomacy_aliance_south_kivotos 
-		}
-
-		mutually_exclusive = {  }
-
-		ai_will_do = {
-
-		}
-		completion_reward = {
-
-		}
-	}
-
-	focus = { #
-		id = Gehenna_Diplomacy_attack_SPR
-		icon = GFX_focus_attack_Iberian
 		x = -1
 		y = 1
-		relative_position_id = Gehenna_Diplomacy_support_WHY
+		relative_position_id = GEH_we_dont_need_other_big_three_school
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = GEH_we_dont_need_other_big_three_school
+			focus = GEH_technical_cooperation
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+		}
+	}
+
+	focus = { #
+		id = GEH_attack_SPR
+		icon = GFX_focus_attack_Iberian
+		x = 0
+		y = 1
+		relative_position_id = GEH_support_WHY
 		cost = 5
 
 		bypass = {
@@ -11854,7 +11546,7 @@ focus_tree = {
 		}
 
 		prerequisite = { 
-			focus = Gehenna_Diplomacy_support_WHY
+			focus = GEH_support_WHY
 		}
 
 		mutually_exclusive = {  }
@@ -11900,6 +11592,1044 @@ focus_tree = {
 					type = puppet_wargoal_focus
 				}
 			}
+		}
+	}
+	
+	focus = {
+		id = GEH_crossing_the_atlantic
+		icon = GFX_focus_generic_air_carrier
+		prerequisite = { focus = GEH_attack_SPR }
+
+		x = 0
+		y = 1
+		relative_position_id = GEH_attack_SPR
+		cost = 10
+
+		cancel_if_invalid = yes
+		
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = GER_crossing_the_atlantic_trigger_tt
+				NOT = {
+					any_enemy_country = {
+						is_major = yes
+						any_controlled_state = { 
+							is_on_continent = europe
+						}
+					}
+				}
+			}
+		}
+
+		bypass = {
+			USA = {
+				exists = no
+			}
+		}
+
+		will_lead_to_war_with = USA
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			IF = {
+				limit = {
+					NOT = {
+						OR = {
+							has_war_with = USA
+							has_wargoal_against = {
+								target = USA
+							}
+						}
+					}
+
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = USA
+				}
+
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = marine_tech
+				name = GER_crossing_the_atlantic
+			}
+
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_doctrine_cost_reduction = {
+					cost_reduction = 0.5
+					uses = 2
+					category = cat_marines_doctrine
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_ideas = GER_crossing_the_atlantic_ns
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			# Add Dockyards and Replace Mils - Cap is 10 states
+			custom_effect_tooltip = GEM_crossing_the_atlantic_dockyards_tt
+
+			if = { #Tooltip so players can know where the hell the dockyards were added
+				limit = {
+					check_variable = { number_of_states_getting_dockyards > 0 }
+				}
+				custom_effect_tooltip = generic_states_affected_tt
+				every_controlled_state = {
+					limit = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					display_individual_scopes = yes
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+
+			hidden_effect = {
+				every_controlled_state = { #Prio "self-sufficient" coastal states, with 2 mils
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						arms_factory > 1
+						NOT = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						remove_building = {
+							type = arms_factory
+							level = 2
+						}
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+
+						set_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag
+						add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+						#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 2 mils" #Debug tool
+					}
+				}
+
+				every_controlled_state = { #Next prio coastal states with only 1 mil
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						AND = {
+							arms_factory < 2
+							arms_factory > 0
+						}
+						NOT = { has_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						add_extra_state_shared_building_slots = 1
+						remove_building = {
+							type = arms_factory
+							level = 1
+						}
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+						custom_effect_tooltip = GER_crossing_the_atlantic_1_factory_tt
+						hidden_effect = {
+							ROOT = {
+								random_controlled_state = {
+									limit = {
+										is_fully_controlled_by = ROOT
+										is_on_continent = europe
+										NOT = { is_coastal = yes }
+										arms_factory > 0
+									}
+									remove_building = {
+										type = arms_factory
+										level = 1
+									}
+								}
+							}
+
+							set_state_flag = GEM_crossing_the_atlantic_dockyards_built_flag
+							add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+							#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 1 mil" #Debug tool
+						}
+					}
+				}
+
+				every_controlled_state = { #Last are coastal states with no mils on them
+					limit = {
+						is_fully_controlled_by = ROOT
+						is_on_continent = europe
+						is_coastal = yes
+						arms_factory < 1
+						NOT = { has_state_flag = GER_crossing_the_atlantic_dockyards_built_flag }
+					}
+					if = {
+						limit = {
+							check_variable = { ROOT.number_of_states_getting_dockyards < 10 }
+						}
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = dockyard
+							level = 2
+							instant_build = yes
+						}
+						custom_effect_tooltip = GER_crossing_the_atlantic_2_factories_tt
+						hidden_effect = {
+							ROOT = {
+								random_controlled_state = {
+									limit = {
+										is_fully_controlled_by = ROOT
+										is_on_continent = europe
+										NOT = { is_coastal = yes }
+										arms_factory > 1
+									}
+									remove_building = {
+										type = arms_factory
+										level = 2
+									}
+								}
+							}
+
+							set_state_flag = GER_crossing_the_atlantic_dockyards_built_flag
+							add_to_variable = { ROOT.number_of_states_getting_dockyards = 1 }
+							#log = "Number [?ROOT.number_of_states_getting_dockyards] - Built in [THIS.GetName] - Coastal with 0 mils" #Debug tool
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	focus = { # 
+		id = GEH_technical_cooperation
+		icon = GFX_focus_chi_mission_to_the_MIL
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		x = 0
+		y = 2
+
+		relative_position_id = GEH_war_against_cou
+		cost = 5
+
+		available = {
+			is_puppet = no
+			country_exists = MIL
+			NOT = { has_war_with = MIL }
+			OR = {
+				AND = {
+					has_government = democratic
+					MIL = { has_government = democratic }
+				}
+				AND = {
+					has_government = fascism
+					MIL = { has_government = fascism }
+				}
+				AND = {
+					has_government = communism
+					MIL = { has_government = communism }
+				}
+				AND = {
+					has_government = neutrality
+					MIL = { has_government = neutrality }
+				}
+			}
+		}
+
+		mutually_exclusive = { focus = GEH_we_dont_need_other_big_three_school }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			
+		}
+
+		completion_reward = {
+			MIL = {
+				country_event = {
+					id = generic.5
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "GEH"
+					value = 200
+				}
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "MIL"
+				value = 200
+			}
+		}
+	}
+
+	focus = {
+		id = GEH_interpol
+		icon = GFX_goal_HEU_flag_of_league_of_nations
+		x = 5
+		y = 1
+		relative_position_id = GEH_war_against_cou
+		cost = 5
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			add_ideas = GEH_international_judicial_order_1
+		}
+	}
+
+	focus = {
+		id = GEH_our_faction_first
+		icon = GFX_focus_generic_conference
+		x = -1
+		y = 1
+		relative_position_id = GEH_interpol
+		cost = 5
+
+		available = {
+			is_puppet = no
+		}
+		
+		prerequisite = { focus = GEH_interpol }
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			IF = {
+				limit = {
+					is_faction_leader = yes 
+				}
+				
+				IF = {
+					limit = {
+						has_dlc = "No Compromise, No Surrender"
+					}
+					add_faction_goal_slot = {
+						category  = medium_term 
+						value = 1 
+					}
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+				}
+			}
+			ELSE = {
+				add_political_power = 150
+			}
+
+			swap_ideas = {
+				remove_idea = GEH_international_judicial_order_1
+				add_idea = GEH_international_judicial_order_2
+			}
+		}
+	}
+	
+	focus = {
+		id = GEH_friendship_with_trinity
+		icon = GFX_focus_TRN_justice_task_force
+		cost = 5.00
+
+		prerequisite = { focus = GEH_interpol }
+
+		available = {
+			OR = {
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_fail_flag
+				has_global_flag = trinity_gehenna_eden_treaty_negotiation_success_flag
+			}
+			AND = {
+				NOT = { country_exists = TRM }
+				owns_state = 64
+			}
+		}
+
+		available_if_capitulated = no
+		x = 1
+		y = 1
+		relative_position_id = GEH_interpol
+
+		completion_reward = {
+			every_possible_country = {
+				limit = { has_character = TRN_nakamasa_ichika }
+				TRN_nakamasa_ichika = { set_nationality = ROOT }
+			}
+		}
+	}
+	
+	focus = {
+		id = GEH_ICC
+		icon = GFX_goal_GEH_bureaucracy
+		cost = 5.00
+
+		prerequisite = { 
+			focus = GEH_our_faction_first 
+			focus = GEH_friendship_with_trinity 
+		}
+
+		available = {
+			is_subject = no
+		}
+
+		available_if_capitulated = no
+		x = 0
+		y = 2
+		relative_position_id = GEH_interpol
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = GEH_international_judicial_order_2
+				add_idea = GEH_international_judicial_order_3
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_russian_winter
+		icon = GFX_focus_generic_winter_warfare
+		x = -3
+		y = 1
+		relative_position_id = GEH_war_against_cou
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+
+		}
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			every_army_leader = {
+				limit = {
+					skill > 1
+				}
+		    		random_select_amount = 3
+				add_max_trait = 1
+				add_unit_leader_trait = winter_expert
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_red_winter_aliance
+		icon = GFX_focus_GER_the_peoples_victory
+		x = -3
+		y = 1
+		relative_position_id = GEH_russian_winter
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			country_exists = RED
+			is_faction_leader = yes
+			NOT = { has_war_with = RED }
+		}
+
+		prerequisite = { 
+			focus = GEH_russian_winter 
+		}
+
+		mutually_exclusive = { focus = GEH_red_winter_problem }
+
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
+			RED = {
+				country_event = {
+					id = generic.5
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "GEH"
+					value = 200
+				}
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "RED"
+				value = 200
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_red_winter_problem
+		icon = GFX_focus_RED_BEAR_movement
+		x = -1
+		y = 1
+		relative_position_id = GEH_russian_winter
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			NOT = { has_non_aggression_pact_with = RED }
+			has_army_manpower = { size > 750000 }
+			has_deployed_air_force_size = { size > 1999 }
+			country_exists = RED
+		}
+
+		prerequisite = { 
+			focus = GEH_russian_winter 
+		}
+
+		mutually_exclusive = { focus = GEH_red_winter_aliance }
+
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			if = {
+				limit = { country_exists = MIL }
+				create_wargoal = {
+					target = RED
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = { # 
+		id = GEH_attack_intermarium
+		icon = GFX_focus_GER_brest_litovsk_borders
+
+		prerequisite = { 
+			focus = GEH_russian_winter 
+		}
+
+		x = 1
+		y = 1
+
+		relative_position_id = GEH_russian_winter
+		cost = 5
+
+		available = {
+			is_puppet = no
+			NOT = { has_non_aggression_pact_with = POL }
+			country_exists = POL
+		}
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			has_war_with = POL
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = POL }
+				create_wargoal = {
+					target = POL
+					type = annex_everything
+				}
+			}
+
+			add_political_power = 50
+			add_war_support = 0.05
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.05
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = EST
+						original_tag = LAT
+						original_tag = LIT
+						original_tag = POL
+					
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = existential_threat
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GEH_attack_baltic
+
+		icon = GFX_focus_generic_attack_baltics
+
+		prerequisite = { focus = GEH_attack_intermarium }
+
+		x = 1
+		y = 1
+
+		relative_position_id = GEH_attack_intermarium
+
+		cost = 10
+
+		will_lead_to_war_with = EST
+		will_lead_to_war_with = LAT
+		will_lead_to_war_with = LIT
+		will_lead_to_war_with = POL
+		will_lead_to_war_with = BLR
+
+		available = {
+			is_subject = no
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			add_named_threat = { threat = 5 name = GER_expand_claims_in_baltic }
+
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						OR = {
+							is_core_of = EST
+							is_core_of = LAT
+							is_core_of = LIT
+						}
+					}
+				}
+				display_individual_scopes = yes
+				every_controlled_state = {
+					limit = {
+						OR = {
+							is_core_of = EST
+							is_core_of = LAT
+							is_core_of = LIT
+						}
+					}
+					add_to_array = {
+						array = PREV.GER_baltic_target_states_array
+						value = THIS
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						type = take_state_focus
+						target = PREV
+						generator = PREV.GER_baltic_target_states_array
+					}
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_attack_soviet
+		icon = GFX_focus_GER_end_european_communism
+		x = 0
+		y = 2
+		relative_position_id = GEH_russian_winter
+		cost = 10
+
+		bypass = {
+
+		}
+
+		available = {
+			has_government = fascism
+		}
+		prerequisite = { 
+			focus = GEH_red_winter_aliance
+			focus = GEH_red_winter_problem 
+			focus = GEH_attack_intermarium 
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				has_war_with_major = yes # 대규모 전선을 두 개로 만들지 않는다
+			}
+		}
+
+		completion_reward = {
+			create_wargoal = {
+				target = SOV
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+	
+    focus = {
+		id =  GEH_attack_soviet_1
+
+		icon = GFX_focus_SOV_panslavic_nationalism
+		cost = 3
+
+		relative_position_id = GEH_attack_soviet
+		x = -1
+		y = 1
+
+		available = {
+			has_war_with = SOV
+		}
+		
+        prerequisite = {
+            focus = GEH_attack_soviet
+		}
+
+		ai_will_do = {
+			base = 100
+		}
+
+		completion_reward = {
+			add_intel = {
+			    target = SOV
+			    civilian_intel = 40
+			    army_intel = 20
+			    navy_intel = 20
+			    airforce_intel = 20
+			}
+			
+			add_collaboration = {
+			    target = SOV
+			    value = 0.15
+			}
+		}
+	}
+	
+    focus = {
+		id =  GEH_attack_soviet_2
+
+		icon = GFX_focus_generic_self_propelled_gun
+		cost = 3
+
+		relative_position_id = GEH_attack_soviet
+		x = 1
+		y = 1
+
+		available = {
+			has_war_with = SOV
+		}
+		
+        prerequisite = {
+            focus = GEH_attack_soviet
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = GEH_winter_special_equipment
+				days = 730
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_attack_south_kivotos
+		icon = GFX_focus_attack_SHA_HYA_ABY
+		x = 9
+		y = 1
+
+		relative_position_id = GEH_war_against_cou
+		cost = 5
+
+		bypass = {
+
+		}
+
+		mutually_exclusive = { focus = GEH_aliance_south_kivotos }
+
+		available = {
+		}
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_attack_south_kivotos_tt
+		}
+	}
+
+	focus = { #
+		id = GEH_aliance_south_kivotos
+		icon = GFX_goal_SHA_Southern_Kivotos
+		x = 11
+		y = 1
+		relative_position_id = GEH_war_against_cou
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+		}
+
+		prerequisite = { 
+			focus = GEH_war_against_cou 
+			focus = GEH_recognition_of_cou 
+		}
+
+		mutually_exclusive = { focus = GEH_attack_south_kivotos }
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+			custom_effect_tooltip = GEH_if_faction_leader_tt
+			unlock_decision_tooltip = GEH_finding_alliance_ABY
+			unlock_decision_tooltip = GEH_finding_alliance_HYA
+			unlock_decision_tooltip = GEH_finding_alliance_SHA
+		}
+	}
+
+	focus = { #
+		id = GEH_attack_SWI
+		icon = GFX_focus_attack_switzerland
+		x = -1
+		y = 1
+		relative_position_id = GEH_attack_south_kivotos
+		cost = 5
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = GEH_attack_south_kivotos 
+			focus = GEH_aliance_south_kivotos 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = SWI
+				NOT = { country_exists = SWI }
+				SWI = { is_in_faction_with = ROOT }
+				SWI = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = SWI }
+				create_wargoal = {
+					target = SWI
+					type = topple_government
+				}
+			}
+		}
+	}
+
+	focus = { #
+		id = GEH_attack_ITA
+		icon = GFX_focus_attack_italy
+		x = 1
+		y = 1
+		relative_position_id = GEH_attack_south_kivotos
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = GEH_attack_south_kivotos 
+			focus = GEH_aliance_south_kivotos 
+		}
+
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = ITA
+				NOT = { country_exists = ITA }
+				ITA = { is_in_faction_with = ROOT }
+				ITA = { is_puppet_of = ROOT }
+			}
+		}
+
+		completion_reward = {
+			if = {
+				limit = { country_exists = ITA }
+				create_wargoal = {
+					target = ITA
+					type = topple_government
+				}
+			}
+		}
+	}
+	 
+    focus = {
+		id = GEH_diplomacy_balkans_alliance
+		icon = GFX_focus_generic_balkan_diplomacy
+		cost = 3
+
+		relative_position_id = GEH_attack_south_kivotos
+		x = 3
+		y = 1
+
+		available = {
+			is_puppet = no
+		}
+
+		prerequisite = { 
+			focus = GEH_attack_south_kivotos 
+			focus = GEH_aliance_south_kivotos 
+		}
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 2
+				has_war = no
+			}
+			modifier = {
+				factor = 0.5
+				has_war = yes
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = GEH_if_faction_leader_tt
+			unlock_decision_tooltip = GEH_finding_alliance_YUG
+			unlock_decision_tooltip = GEH_finding_alliance_ALB
+			unlock_decision_tooltip = GEH_finding_alliance_BUL
+			unlock_decision_tooltip = GEH_finding_alliance_ROM
+			unlock_decision_tooltip = GEH_finding_alliance_GRE
+		}
+	}
+
+	focus = { #
+		id = GEH_remove_vatican
+		icon = GFX_focus_generic_vatican_state
+		x = 0
+		y = 2
+		relative_position_id = GEH_attack_south_kivotos
+		cost = 5
+
+		bypass = {
+
+		}
+
+		available = {
+			is_puppet = no
+			2 = { owns_or_subject_of = yes }
+		}
+
+		prerequisite = { 
+			focus = GEH_attack_ITA
+		}
+		mutually_exclusive = {  }
+
+		ai_will_do = {
+
+		}
+		completion_reward = {
+
 		}
 	}
 
