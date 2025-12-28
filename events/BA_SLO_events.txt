@@ -356,7 +356,11 @@ country_event = {
 
 	option = {
 		name = SLO_event.5.a
-		custom_effect_tooltip = SLO_tt_4
+		SLO = {
+			puppet = {
+				target = ABY
+			}
+		}
 	}
 }
 country_event = { 
@@ -368,7 +372,6 @@ country_event = {
 
 	option = {
 		name = SLO_event.6.a
-		custom_effect_tooltip = SLO_tt_5
 	}
 }
 country_event = { 
@@ -380,12 +383,10 @@ country_event = {
 
 	option = {
 		name = SLO_event.7.a
-		custom_effect_tooltip = SLO_tt_6
-		effect_tooltip = {
-			add_timed_idea = {
-				idea = SLO_slo_worker_idea
-				days = 360
-			}
+		complete_national_focus = SLO_focus_diplomacy_3
+		uncomplete_national_focus = {
+			focus = SLO_focus_diplomacy_2
+			refund_political_power = no
 		}
 	}
 }
@@ -398,8 +399,33 @@ country_event = {
 
 	option = {
 		name = SLO_event.8.a
-		effect_tooltip = {
-			add_ideas = SLO_slo_economic_dependence_idea_ROM
+		ai_chance = {
+			base = 0
+		}
+		ABY = {
+			country_event = {
+				id = SLO_event.5
+				hours = 8
+			}
+		}
+		set_country_flag = SLO_flag_linz_occupy_mission
+		custom_effect_tooltip = SLO_abydos_tt
+	}
+	option = {
+		name = SLO_event.8.b
+		ai_chance = {
+			base = 10
+		}
+		ABY = {
+			country_event = {
+				id = SLO_event.6
+				hours = 8
+			}
+		}
+		complete_national_focus = SLO_focus_diplomacy_3
+		uncomplete_national_focus = {
+			focus = SLO_focus_diplomacy_2
+			refund_political_power = no
 		}
 	}
 }
@@ -416,11 +442,9 @@ country_event = {
 			base = 10
 		}
 		SLO = {
-			set_autonomy = {
-				target = ROOT
-				autonomous_state = autonomy_colony
-				end_wars = no
-				end_civil_wars = no
+			country_event = {
+				id = SLO_event.8
+				hours = 8
 			}
 		}
 	}
@@ -429,70 +453,10 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
-		add_political_power = -200
-		add_stability = -0.10
-		if = {
-			limit = {tag = ROM}
-			remove_ideas = SLO_slo_economic_dependence_idea_ROM
-		}
-		if = {
-			limit = {tag = YUG}
-			remove_ideas = SLO_slo_economic_dependence_idea_YUG
-		}
-		if = {
-			limit = {tag = POL}
-			remove_ideas = SLO_slo_economic_dependence_idea_POL
-		}
-		if = {
-			limit = {tag = HUN}
-			remove_ideas = SLO_slo_economic_dependence_idea_HUN
-		}
-		add_timed_idea = {
-			idea = SLO_slo_economic_chaos_idea
-			days = 720
-		}
-		if = {
-			limit = {
-				tag = ROM
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.91
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = YUG
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.92
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = POL
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.93
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = HUN
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.94
-					hours = 6
-				}
+		SLO = {
+			country_event = {
+				id = SLO_event.7
+				hours = 8
 			}
 		}
 	}
@@ -1374,6 +1338,9 @@ country_event = {
 		add_popularity = {
 			ideology = democratic
 			popularity = 0.20
+		}
+		add_ideas = {
+			SLO_idea_hlinka
 		}
 		swap_ideas = {
 			remove_idea = SLO_idea_strong_democratic_movement
