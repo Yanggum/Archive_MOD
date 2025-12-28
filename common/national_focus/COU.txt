@@ -156,12 +156,14 @@ focus_tree = {
         prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
         completion_reward = {
 		    unlock_decision_category_tooltip = COU_restart_the_zuiderzee_works
+			#news_event = { id = mtg_news.47 days = 1 } 
             add_tech_bonus = {
                 #name = HOL_the_zuiderzee_works
                 bonus = 2.0
                 uses = 1
                 category = industry
             }
+			custom_effect_tooltip = enter_tt
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_industry
@@ -174,7 +176,6 @@ focus_tree = {
 			    COU_industry_consumer_goods_factor = -0.05
 			 	tooltip = consumer_goods_factor_tt
 		    }
-            news_event = { id = mtg_news.47 days = 1 } 
         }
     }
 	
@@ -206,7 +207,8 @@ focus_tree = {
 		x = -6
 		y = 4
 		relative_position_id = COU_focus_after_two_months
-		cost = 8
+		cost = 20
+		overlay = GFX_focus_fast_overlay_generic_clock
 		available = {
 		}
 		search_filters = {
@@ -214,7 +216,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_economy_focus_0 }
 		completion_reward = {
-		     custom_effect_tooltip = {
+		    custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_industry
 		    }
@@ -230,20 +232,32 @@ focus_tree = {
 			    COU_industry_production_speed_supply_node_factor = 0.1
 			 	tooltip = production_speed_supply_node_factor_tt
 		    }
+			custom_effect_tooltip = enter_tt
 			 if = { limit = { has_idea = BA_railway_gauge_issue }
-                modify_timed_idea = {
-                    idea = BA_railway_gauge_issue
-                    days = -180
-                }
+                remove_ideas = BA_railway_gauge_issue
             }
             if = {
                 limit = { NOT = { has_country_flag = BA_nationalized_highlander }}
                 custom_effect_tooltip = BA_highlander_invest_big_tt
                 add_to_variable = {
-                    BA_highlander_invest = 4
+                    BA_highlander_invest = 3
                 }
             }
+			
             add_state_core = 977
+			custom_effect_tooltip = enter_tt
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = COU_focus_currency_unification
+					}
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = COU_focus_currency_unification
+					TIME = 70
+				}
+			}
 		}
 	}	
 	
@@ -253,7 +267,7 @@ focus_tree = {
 		x = -7
 		y = 5
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -261,7 +275,27 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_order_highlander }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = 0.05
+			 	tooltip = consumer_goods_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			add_tech_bonus = {
+				name = COU_focus_mineral_prospecting
+				bonus = 0.5
+				uses = 3
+				category = excavation_tech
+			}
+			35 = {
+				add_resource = {
+					type = coal
+					amount = 41
+				}
+			}
 		}
 	}
 	
@@ -271,15 +305,40 @@ focus_tree = {
 		x = -8
 		y = 6
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
+		    controls_state = 35
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = COU_focus_order_highlander }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.08
+			 	tooltip = consumer_goods_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			35 = {
+			    add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = energy_infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = dam
+					level = 1
+					instant_build = yes
+					province = {
+						id = 3262
+					}
+				}
+			}
 		}
 	}
 	
@@ -289,7 +348,7 @@ focus_tree = {
 		x = -5
 		y = 5
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -297,7 +356,37 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_order_highlander }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_industrial_complex_factor = 0.08
+			 	tooltip = production_speed_industrial_complex_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -307,7 +396,7 @@ focus_tree = {
 		x = -6
 		y = 6
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -316,7 +405,27 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_mineral_prospecting }
 		prerequisite = { focus = COU_focus_on_industrial_complex }
 		completion_reward = {
-			
+			add_stability = 0.05
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_factory = 0.03
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_dockyard = 0.03
+			 	tooltip = industrial_capacity_dockyard_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_factory_max_efficiency_factor = 0.04
+			 	tooltip = production_factory_max_efficiency_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_factory_start_efficiency_factor = 0.04
+			 	tooltip = production_factory_start_efficiency_factor_tt
+		    }
 		}
 	}
 	
@@ -335,7 +444,18 @@ focus_tree = {
 		mutually_exclusive = { focus = COU_focus_have_with_hirschfeld }
 		prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_industrial_complex_factor = 0.02
+			 	tooltip = production_speed_industrial_complex_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			add_ideas = COU_have_with_galopin
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_alexandre_galopin
 		}
 	}	
 	
@@ -345,7 +465,7 @@ focus_tree = {
 		x = -4
 		y = 3
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -353,7 +473,15 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_have_with_galopin }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_production_factory_efficiency_gain_factor = 0.02
+			 	tooltip = production_factory_efficiency_gain_factor_tt
+		    }
+			add_offsite_building = { type = industrial_complex level = 3 }
 		}
 	}
 
@@ -371,7 +499,22 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_have_with_galopin }
 		completion_reward = {
-			
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_factory = 0.05
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_dockyard = 0.05
+			 	tooltip = industrial_capacity_dockyard_tt
+		    }
+			add_to_variable = {
+			    COU_industry_global_building_slots_factor = 0.1
+			 	tooltip = global_building_slots_factor_tt
+		    }
 		}
 	}	
 	
@@ -390,7 +533,29 @@ focus_tree = {
 		mutually_exclusive = { focus = COU_focus_have_with_galopin }
 		prerequisite = { focus = COU_focus_look_the_our_economy_fucked }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.03
+			 	tooltip = consumer_goods_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_buildings_factor = 0.05
+			 	tooltip = production_speed_buildings_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_factory_efficiency_gain_factor = 0.03
+			 	tooltip = production_factory_efficiency_gain_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_political_power_factor = 0.03
+			 	tooltip = political_power_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_hirschfeld_token
 		}
 	}	
 	
@@ -408,7 +573,22 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_have_with_hirschfeld }
 		completion_reward = {
-			
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_factory = 0.05
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+            add_to_variable = {
+			    COU_industry_industrial_capacity_dockyard = 0.05
+			 	tooltip = industrial_capacity_dockyard_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_industrial_complex_factor = 0.02
+			 	tooltip = production_speed_industrial_complex_factor_tt
+		    }
 		}
 	}
 	
@@ -426,7 +606,37 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_expansion_of_protectionism }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.03
+			 	tooltip = consumer_goods_factor_tt
+		    }
+            add_to_variable = {
+			    COU_industry_production_factory_start_efficiency_factor = 0.03
+			 	tooltip = production_factory_start_efficiency_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_industrial_capacity_factory = 0.03
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+            add_to_variable = {
+			    COU_industry_industrial_capacity_dockyard = 0.03
+			 	tooltip = industrial_capacity_dockyard_tt
+		    }
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -444,7 +654,28 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_have_with_galopin focus = COU_focus_have_with_hirschfeld }
 		completion_reward = {
-			
+			hidden_effect = {
+				reduce_focus_completion_cost = {
+					focus = COU_focus_order_highlander
+					cost = 70
+				}
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.05
+			 	tooltip = consumer_goods_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_speed_buildings_factor = 0.03
+			 	tooltip = production_speed_buildings_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_conversion_cost_civ_to_mil_factor = -0.15
+			 	tooltip = conversion_cost_civ_to_mil_factor_tt
+		    }
 		}
 	}
 	
@@ -467,26 +698,23 @@ focus_tree = {
 				DYNMOD = COU_industry
 		    }
 			add_to_variable = {
-			    COU_industry_industrial_capacity_factory = 0.05
-			 	tooltip = industrial_capacity_factory_tt
+			    COU_industry_consumer_goods_factor = 0.03
+				tooltip = consumer_goods_factor_tt
 		    }
-            add_to_variable = {
-			    COU_industry_industrial_capacity_dockyard = 0.05
-			 	tooltip = industrial_capacity_dockyard_tt
-		    }
+			 
 			country_event = COU_event_industry.1
 		}
 	}	
 	
 	focus = { #도로 재정비 
         id = COU_focus_rework_our_roads
-        icon = GFX_focus_generic_road_investment
+        icon = GFX_focus_generic_railroad
         x = -3
         y = 6
         cost = 5
 		relative_position_id = COU_focus_after_two_months
         available = {
-           owns_state = 36 
+           owns_state = 977 
         }
         bypass = {
         }
@@ -495,7 +723,43 @@ focus_tree = {
         }
         prerequisite = { focus = COU_establishment_of_federal_industrial_committee }
         completion_reward = {
-            
+            if = {
+				limit = {
+					NOT = { has_tech = basic_train }
+				}
+				set_technology = { 
+					basic_train = 1
+					popup = no
+				}
+			}
+			add_equipment_to_stockpile = { 
+				type = train_equipment_1
+				amount = 30 
+				producer = HTA
+			}
+			add_tech_bonus = {
+				name = COU_focus_rework_our_roads
+				ahead_reduction = 1
+				bonus = 0.5
+				uses = 1
+				category = train_tech
+			}
+
+			977 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			HTA = { 
+			    add_opinion_modifier = {
+					target = COU
+					modifier = large_decrease 
+				}
+			}
         }
     }
 	
@@ -505,7 +769,7 @@ focus_tree = {
 		x = -1
 		y = 5
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -513,43 +777,18 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_currency_unification }
 		completion_reward = {
-			
-		}
-	}
-	
-	focus = { #농업 현대화  
-		id = COU_focus_modernizing_agriculture
-		icon = GFX_focus_generic_modernizing_agriculture
-		x = -1
-		y = 6
-		relative_position_id = COU_focus_after_two_months
-		cost = 5
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-		prerequisite = { focus = COU_focus_abandon_the_gold_standard }
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = { #관광산업 재건 
-		id = COU_focus_reestablish_tourism
-		icon = GFX_focus_BEL_engine_of_the_economy
-		x = 1
-		y = 6
-		relative_position_id = COU_focus_after_two_months
-		cost = 5
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-		prerequisite = { focus = COU_focus_abandon_the_gold_standard }
-		completion_reward = {
-            
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_consumer_goods_factor = -0.1
+				tooltip = consumer_goods_factor_tt
+		    }
+			add_to_variable = {
+			    COU_industry_production_factory_start_efficiency_factor = 0.05
+			 	tooltip = production_factory_start_efficiency_factor_tt
+		    }
 		}
 	}
 	
@@ -567,17 +806,24 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_after_two_months }
 		completion_reward = {
-			
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+			add_to_variable = {
+			    COU_industry_stability_factor = 0.08
+				tooltip = stability_factor_tt
+		    }
 		}
 	}
 	
 	focus = { #북프랑스 평정 
 		id = COU_focus_attack_northern_france
-		icon = GFX_focus_attack_france
+		icon = GFX_focus_chi_reach_out_to_france
 		x = 3
 		y = 2
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 8
 		available = {
 		}
 		search_filters = {
@@ -585,8 +831,15 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_apprenticeship_jordaanoproer }
 		completion_reward = {
-            add_political_power = 25
-            country_event = COU_event_military.1
+            add_state_core = 29
+			29 = {
+				 add_extra_state_shared_building_slots = 3
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -622,7 +875,46 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_reestablish_amsterdam_univ }
 		completion_reward = {
-            
+            add_tech_bonus = {
+				name = COU_focus_hapsung_research
+				bonus = 1.5
+				uses = 2
+				category = synth_resources
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+					NOT = { state = 7 }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+					NOT = { state = 7 }
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -640,7 +932,94 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_attack_northern_france }
 		completion_reward = {
-            
+		     if = {
+				limit = {
+                    7 = { is_fully_controlled_by = ROOT }
+				}
+				7 = {
+                    add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 391 }
+			        }
+					add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 3314 }
+			        }
+				}
+			 }
+		     if = {
+				limit = {
+					35 = { is_fully_controlled_by = ROOT }
+				}
+				35 = {
+                    add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 9498 }
+			        }
+					add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 6496 }
+			        }
+					add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 6500 }
+			        }
+					add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 9574 }
+			        }
+				}
+			}
+			if = {
+				limit = {
+                    36 = { is_fully_controlled_by = ROOT }
+				}
+				36 = {
+                    add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 6336 }
+			        }
+					add_building_construction = {
+					     type = bunker
+					     level = 2
+					     instant_build = yes
+					     province = { id = 6241 }
+			        }
+				}
+				else = {
+				    custom_effect_tooltip = COU_tooltip_construct_bunker_shalle
+					effect_tooltip = {
+					     36 = {
+                             add_building_construction = {
+					             type = bunker
+					             level = 2
+					             instant_build = yes
+					             province = { id = 6336 }
+			                 }
+					         add_building_construction = {
+					             type = bunker
+					            level = 2
+					            instant_build = yes
+					            province = { id = 6241 }
+			                }
+				         }
+					}
+				}
+			 }
 		}
 	}
 	
@@ -669,7 +1048,7 @@ focus_tree = {
 		x = 6
 		y = 2
 		relative_position_id = COU_focus_after_two_months
-		cost = 5
+		cost = 7
 		available = {
 		}
 		search_filters = {
@@ -678,7 +1057,9 @@ focus_tree = {
 		mutually_exclusive = { focus = COU_give_power_to_degrelle }
 		prerequisite = { focus = COU_focus_apprenticeship_jordaanoproer }
 		completion_reward = {
-			
+		    add_political_power = 50
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_jan_baars
 		}
 	}
 	
@@ -700,25 +1081,24 @@ focus_tree = {
 			
 		}
 	}
-	
-	focus = { #갱 자금 압수   
-		id = COU_focus_take_their_money
-		icon = GFX_focus_RAJ_institutional_money_laundering
-		x = 6
+
+    focus = {
+		id = COU_focus_treay_of_amsterdam #암스테르담 선언 
+		icon = GFX_COU_treaty_of_amsterdam
+		x = -3
 		y = 4
-		relative_position_id = COU_focus_after_two_months
 		cost = 5
+		relative_position_id = COU_shaking_royalty
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			 FOCUS_FILTER_INDUSTRY
 		}
-		prerequisite = { focus = COU_focus_stop_our_deals }
+		prerequisite = { focus = COU_focus_stop_our_deals focus = COU_keep_our_deals }
 		completion_reward = {
 			
 		}
 	}
-
 
 
 
@@ -751,8 +1131,7 @@ focus_tree = {
 			 FOCUS_FILTER_MANPOWER
 		}
 		completion_reward = {
-			add_manpower = 25000
-			custom_effect_tooltip = {
+		    custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_Perfidus
 			}
@@ -760,6 +1139,7 @@ focus_tree = {
 				COU_Perfidus_sta = 0.05
 				tooltip = stability_factor_tt
 			}
+			add_manpower = 25000
 			country_event = COU_event_military.3
 		}
 	}
@@ -769,7 +1149,7 @@ focus_tree = {
 		icon = GFX_focus_COU_look_the_mountain
 		x = -2
 		y = 2
-		cost = 8
+		cost = 7
 		relative_position_id = COU_shaking_royalty
 		available = {
 		}
@@ -784,11 +1164,11 @@ focus_tree = {
 				DYNMOD = COU_Perfidus
 			}
 			add_to_variable = {
-				COU_Perfidus_cf = 0.05
+				COU_Perfidus_cf = 0.1
 				tooltip = conscription_factor_tt
 			}
 			add_to_variable = {
-				COU_Perfidus_aof = 0.1
+				COU_Perfidus_aof = 0.03
 				tooltip = army_org_factor_tt
 			}
 			if = {
@@ -801,15 +1181,7 @@ focus_tree = {
 					promote_leader = yes
 				}
 			}
-			every_unit_leader = {
-				limit = {
-					is_character = COU_leon_degrelle
-				}
-				add_skill_level = 1
-				add_attack = 1
-				add_planning = 1
-				add_logistics = 1
-			}
+			add_manpower = 15000
 		}
 	}
 	
@@ -832,24 +1204,6 @@ focus_tree = {
 		}
 	}
 	
-	focus = {
-		id = COU_focus_buy_their_weapon #무기 거래 
-		icon = GFX_focus_generic_money_for_equipment
-		x = -2
-		y = 4
-		cost = 5
-		relative_position_id = COU_shaking_royalty
-		available = {
-		}
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_keep_our_deals }
-		completion_reward = {
-			
-		}
-	}
-	
     ##자유 장교단 무력화 
     focus = {
 		id = COU_reduction_of_administrative_committee_authority
@@ -865,7 +1219,6 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_shaking_royalty }
 		completion_reward = {
-		    army_experience = 15 
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_Perfidus
@@ -878,6 +1231,7 @@ focus_tree = {
 				COU_Perfidus_cf = 0.08
 				tooltip = army_org_factor_tt
 			}
+			army_experience = 15 
 			country_event = COU_event_military.1
 		}
 	}

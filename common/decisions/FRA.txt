@@ -867,17 +867,33 @@ FRA_urbanization = {
 		}
 		visible = {
 			has_completed_focus = FRA_military_minister_to_indochina
-			CAM = {
-				NOT = { is_subject_of = FRA }
+			OR = {
+				AND = {
+					owns_state = 1066
+					owns_state = 1067
+					owns_state = 741
+				}
+				CAM = {
+					is_subject_of = FRA
+					NOT = {
+						has_cosmetic_tag = CAM_french
+					}
+				}
 			}
 		}
 		modifier = {
 			political_power_cost = 0.2
 		}
 		available = {
-			controls_state = 1066
-			controls_state = 1067
-			controls_state = 741
+			1066 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			1067 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			741 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -888,20 +904,26 @@ FRA_urbanization = {
 		}
 		days_remove = 45
 		remove_effect = {
-			1066 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
+			CAM = {
+				transfer_state = 1066
+				transfer_state = 1067
+				transfer_state = 741
+				set_politics = {
+					ruling_party = neutrality
+				}
+				if = {
+					limit = {
+						has_idea = FRA_military_minister
+					}
+					swap_ideas = {
+						remove_idea = FRA_military_minister
+						add_idea = FRA_military_minister_stronger
+					}
 				}
 			}
-			1067 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
-				}
-			}
-			741 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
-				}
+			set_autonomy = {
+				target = CAM
+				autonomy_state = autonomy_integrated_puppet
 			}
 		}
 	}
@@ -915,16 +937,29 @@ FRA_urbanization = {
 		}
 		visible = {
 			has_completed_focus = FRA_military_minister_to_indochina
-			LAO = {
-				NOT = { is_subject_of = FRA }
+			OR = {
+				AND = {
+					owns_state = 670
+					owns_state = 1061
+				}
+				LAO = {
+					is_subject_of = FRA
+					NOT = {
+						has_cosmetic_tag = LAO_french
+					}
+				}
 			}
 		}
 		modifier = {
 			political_power_cost = 0.2
 		}
 		available = {
-			controls_state = 670
-			controls_state = 1061
+			670 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			1061 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -934,15 +969,29 @@ FRA_urbanization = {
 		}
 		days_remove = 45
 		remove_effect = {
-			670 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
+			LAO = {
+				transfer_state = 670
+				transfer_state = 1061
+				set_politics = {
+					ruling_party = neutrality
 				}
+				if = {
+					limit = {
+						has_idea = FRA_military_minister
+					}
+					swap_ideas = {
+						remove_idea = FRA_military_minister
+						add_idea = FRA_military_minister_stronger
+					}
+				}
+				else = {
+					add_ideas = FRA_military_minister_stronger
+				}
+				set_cosmetic_tag = LAO_french
 			}
-			1061 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
-				}
+			set_autonomy = {
+				target = LAO
+				autonomy_state = autonomy_integrated_puppet
 			}
 		}
 	}
@@ -956,17 +1005,33 @@ FRA_urbanization = {
 		}
 		visible = {
 			has_completed_focus = FRA_military_minister_to_indochina
-			VIN = {
-				NOT = { is_subject_of = FRA }
+			OR = {
+				AND = {
+					owns_state = 286
+					owns_state = 1017
+					owns_state = 671
+				}
+				VIN = {
+					is_subject_of = FRA
+					NOT = {
+						has_cosmetic_tag = VIN_french
+					}
+				}
 			}
 		}
 		modifier = {
 			political_power_cost = 0.2
 		}
 		available = {
-			controls_state = 286
-			controls_state = 1017
-			controls_state = 671
+			286 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			1017 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			671 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -977,20 +1042,27 @@ FRA_urbanization = {
 		}
 		days_remove = 45
 		remove_effect = {
-			286 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
+			VIN = {
+				transfer_state = 286
+				transfer_state = 1017
+				transfer_state = 671
+				set_politics = {
+					ruling_party = neutrality
 				}
+				if = {
+					limit = {
+						has_idea = FRA_military_minister
+					}
+					swap_ideas = {
+						remove_idea = FRA_military_minister
+						add_idea = FRA_military_minister_stronger
+					}
+				}
+				set_cosmetic_tag = VIN_french
 			}
-			1017 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
-				}
-			}
-			671 = {
-				add_dynamic_modifier = {
-					modifier = FRA_military_minister_upgrade
-				}
+			set_autonomy = {
+				target = VIN
+				autonomy_state = autonomy_integrated_puppet
 			}
 		}
 	}
@@ -2256,6 +2328,53 @@ FRA_prepare_war = {
 }
 
 FRA_ally = { #외교 정책
+	FRA_suggest_mediterranean_trade_treaty = { #지중해 무역 협정 제안
+		cost = 10
+		ai_will_do = {
+			base = 40
+		}
+		visible = {
+			has_completed_focus = FRA_trade_treaty
+		}
+		icon = GFX_decision_eng_trade_unions_support
+		target_trigger = {
+			FROM = {
+				any_core_state = {
+					state_is_in_the_mediterranean_sea = yes
+				}
+				Kivotos_tag = no
+				NOT = {
+					tag = FRA
+				}
+				NOT = {
+					has_idea = FRA_mediterranean_trade_treaty
+				}
+				NOT = {
+					has_country_flag = FRA_rejected_mediterranean_trade_treaty
+				}
+			}
+		}
+		days_remove = 5
+		complete_effect = {
+			FROM = {
+				country_event = FRA_prov_event.14
+				custom_effect_tooltip = if_they_accept
+				effect_tooltip = {			
+					add_political_power = -30
+					add_ideas = FRA_mediterranean_trade_treaty
+				}
+			}
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				FROM = {
+					capital_scope = {
+						state = PREV.PREV
+					}
+				}
+			}
+		}
+	}
 	FRA_invite_to_southeast_asia_economic_bloc = { #동남아시아 경제 블록에 초대
 		cost = 10
 		ai_will_do = {
@@ -2276,11 +2395,16 @@ FRA_ally = { #외교 정책
 				NOT = {
 					has_country_flag = FRA_rejected_southeast_economic_bloc
 				}
+				NOT = {
+					has_idea = FRA_southeast_asia_economic_bloc
+				}
 			}
 		}
-		days_remove = 5
-		remove_effect = {
-			add_cic = -1000
+		days_remove = 120
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		complete_effect = {
 			FROM = {
 				country_event = FRA_prov_event.11
 				custom_effect_tooltip = if_they_accept
@@ -3884,7 +4008,7 @@ FRA_manage_strike_cat = {
 		complete_effect = {
 			set_country_flag = FRA_made_move_for_strike
 		}
-		days_remove = 5
+		days_remove = 10
 		days_re_enable = 20
 		cost = 15
 	}
@@ -4060,11 +4184,6 @@ FRA_manage_strike_cat = {
 		visible = {
 			has_completed_focus = FRA_focus_garrison_2
 			has_country_flag = FRA_in_general_strike
-			check_variable = {
-				var = FRA_ppna_search
-				value = 100
-				compare = greater_than_or_equals
-			}
 		}
 		available = {
 			custom_trigger_tooltip = {
@@ -4451,6 +4570,33 @@ economy_decisions = {
 		complete_effect = {
 			remove_ideas = FRA_southeast_asia_economic_bloc
 			set_country_flag = FRA_rejected_southeast_economic_bloc
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				has_government = communism
+				add = 10
+			}
+			modifier = {
+				has_war_with = FRA
+				add = 999
+			}
+		}
+	}
+	FRA_break_medi_treaty = { #지중해 무역 협정 파기
+		icon = GFX_decision_generic_break_treaty
+		visible = {
+			has_idea = FRA_mediterranean_trade_treaty
+		}
+		available = {
+			NOT = {
+				is_subject_of = FRA
+			}
+		}
+		complete_effect = {
+			add_political_power = 30
+			remove_ideas = FRA_mediterranean_trade_treaty
+			set_country_flag = FRA_rejected_mediterranean_trade_treaty
 		}
 		ai_will_do = {
 			base = 0

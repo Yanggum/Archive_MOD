@@ -451,7 +451,7 @@ ideas = {
 			picture = FRA_undividable
 			modifier = {
 				army_defence_factor = 0.05
-				master_ideology_drift = 0.01
+				neutrality_drift = 0.01
 				cic_to_overlord_factor = 0.05
 				mic_to_overlord_factor = 0.05
 			}
@@ -459,7 +459,20 @@ ideas = {
 				is_subject_of = FRA
 			}
 		}
-		FRA_southeast_asia_economic_bloc = {
+		FRA_military_minister_stronger = { #프랑스 군정장관
+			name = FRA_military_minister
+			picture = FRA_undividable
+			modifier = {
+				army_defence_factor = 0.05
+				neutrality_drift = 0.05
+				cic_to_overlord_factor = 0.1
+				mic_to_overlord_factor = 0.1
+			}
+			available = {
+				is_subject_of = FRA
+			}
+		}
+		FRA_southeast_asia_economic_bloc = { #동남아시아
 			picture = PER_fund_state_intelligence_idea
 			modifier = {
 				production_speed_industrial_complex_factor = 0.1
@@ -477,6 +490,57 @@ ideas = {
 				}
 			}
 		}
+		FRA_mediterranean_trade_treaty = { #프랑스와의 무역 협정
+			picture = can_wartime_prices_and_trade_board
+			modifier = {
+				trade_opinion_factor = 0.1
+			}
+			targeted_modifier = {
+				tag = FRA
+				extra_trade_to_target_factor = 0.1
+			}
+			on_remove = {
+				FRA = {
+					country_event = {
+						id = FRA_prov_event.15
+					}
+				}
+			}
+		}
+		FRA_granada_declaration = { #그라나다 선언
+			picture = SPR_the_maximum_concession
+			modifier = {
+				war_support_factor = 0.03
+				custom_modifier_tooltip = FRA_granada_declaration_tt
+			}
+			cancel = {
+				OR = {
+					has_war_with = SPR
+					has_war_with = FRA
+				}
+			}
+		}
+		FRA_granada_declaration_stronger = { #그라나다 선언
+			name = FRA_granada_declaration
+			picture = SPR_the_maximum_concession
+			modifier = {
+				war_support_factor = 0.06
+				political_power_factor = 0.05
+				stability_factor = 0.03
+				production_factory_efficiency_gain_factor = 0.03
+				custom_modifier_tooltip = FRA_granada_declaration_tt_1
+			}
+			cancel = {
+				OR = {
+					has_war_with = SPR
+					has_war_with = FRA
+				}
+			}
+		}
+
+
+
+
 
 		FRA_revolution_nationale_charles_de_gaulle_1 = {
 			picture = ARG_growing_nationalism_modifier
@@ -1218,6 +1282,15 @@ ideas = {
 				consumer_goods_expected_value = -0.05
 			}
 		}
+
+
+
+
+
+
+
+
+
 		FRA_student_education = {
 			#학생 재사회화
 			picture = chi_wargaming_division
@@ -1787,141 +1860,6 @@ ideas = {
 			modifier = {
 				naval_invasion_prep_speed = 0.5
 				naval_invasion_penalty = -0.5
-			}
-		}
-		FRA_spciv = {
-			#공화파와 함께
-			picture = SPA_maquis
-			allowed = {
-				original_tag = FRA
-			}
-			available = {
-				OR = {
-					SPA = {
-						OR = {
-							has_war = yes
-							has_civil_war = yes
-						}
-					}
-					SPR = {
-						OR = {
-							has_war = yes
-							has_civil_war = yes
-						}
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = SPA
-				attack_bonus_against = 0.05
-			}
-		}
-		FRA_spciv_d02 = {
-			#국민파와 함께
-			picture = SPR_nationalist_remnants
-			allowed = {
-				original_tag = FRA
-			}
-			available = {
-				OR = {
-					SPA = {
-						OR = {
-							has_war = yes
-							has_civil_war = yes
-						}
-					}
-					SPR = {
-						OR = {
-							has_war = yes
-							has_civil_war = yes
-						}
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = D01
-				attack_bonus_against = 0.05
-			}
-		}
-		FRA_economy_help = {
-			#영불경제협력ㄹ
-			picture = generic_flexible_foreign_policy2
-			allowed = {
-				always = yes
-			}
-			available = {
-			}
-			modifier = {
-				consumer_goods_factor = -0.09
-			}
-			targeted_modifier = {
-				tag = ENG
-				trade_cost_for_target_factor = -0.2
-			}
-		}
-		FRA_ENG_economy_help = {
-			#영불경제협력
-			picture = generic_flexible_foreign_policy2
-			allowed = {
-				always = yes
-			}
-			available = {
-				NOT = {OR={
-					has_war_with = FRA
-					16 = {
-						is_owned_by = FRA
-					}}
-				}
-			}
-			modifier = {
-				consumer_goods_factor = -0.09
-			}
-			targeted_modifier = {
-				tag = FRA
-				trade_cost_for_target_factor = -0.2
-			}
-		}
-		FRA_colony_economy = {
-			#경제적 보상
-			picture = ETH_customs_barrier_ITA
-			allowed = {
-				original_tag = FRA
-			}
-			available = {
-				always = yes
-			}
-			allowed_civil_war = {
-				always = no
-			}
-			modifier = {
-				civilian_factory_use = 5
-			}
-		}
-		FRA_ENG_colony_economy = {
-			#영국 냠냠
-			picture = SPR_relocate_the_gold_reserves
-			allowed = {
-				original_tag = FRA
-			}
-			available = {
-				always = yes
-			}
-			allowed_civil_war = {
-				always = no
-			}
-			modifier = {
-				industrial_factory_donations = 5
-			}
-		}
-		FRA_blitz = {
-			#기습
-			allowed = {
-				original_tag = FRA
-			}
-			targeted_modifier = {
-				tag = CAR
-				army_speed_factor = 0.2
-				army_attack_factor = 0.2
 			}
 		}
 		FRA_legacy_of_war = { #지난 전쟁의 교훈
