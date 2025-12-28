@@ -3384,6 +3384,9 @@ focus_tree = {
 		id = YUG_Peoples_Army_Reorganization
 		icon = GFX_focus_SOV_mobilization_plan
 		cost = 5
+		available = {
+			has_idea = YUG_Yugoslavia_Peoples_Army1
+		}
 		prerequisite = {
 			focus = YUG_federal_defense_council1
 		}
@@ -6597,9 +6600,6 @@ focus = {
 	available = {
 		has_war_with = ITA
 	}
-	allow_branch = {
-		has_war_with = ITA
-	}
 	x = 62
 	y = 0
 	ai_will_do = {
@@ -6627,8 +6627,12 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_timed_idea = {
+			idea = YUG_Idea_National_Emergency 
+			days = 365
+		}
 	}
+
 }
 
 focus = {
@@ -6648,7 +6652,10 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_timed_idea = {
+			idea = YUG_Idea_Hold_the_Line
+			days = 365
+		}
 	}
 }
 
@@ -6669,7 +6676,10 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_timed_idea = {
+			idea = YUG_Idea_Urgent_Mobilization
+			days = 365
+		}
 	}
 }
 
@@ -6690,7 +6700,10 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_timed_idea = {
+			idea = YUG_Idea_Short_Term_Production_Increase
+			days = 60
+		}
 	}
 }
 
@@ -6711,7 +6724,7 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_ideas = YUG_Idea_One_Gun_One_Man
 	}
 }
 
@@ -6732,7 +6745,22 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_equipment_to_stockpile = {
+			type = infantry_equipment_0
+			amount = 3000
+		}
+		add_equipment_to_stockpile = {
+			type = artillery_equipment
+			amount = 250
+		}
+		add_equipment_to_stockpile = {
+			type = support_equipment
+			amount = 300
+		}
+		add_equipment_to_stockpile = {
+			type = motorized_equipment
+			amount = 20
+		}
 	}
 }
 
@@ -6753,7 +6781,97 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		if = {
+				limit = { 
+					OR = {
+						has_full_control_of_state = 103
+						any_other_country = {
+							OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+							has_full_control_of_state = 103
+						}
+					}
+				}
+				103 = {
+					add_building_construction = {
+							type = anti_air_building
+							level = 2
+							instant_build = yes
+						}			
+						add_building_construction = {
+							type = coastal_bunker
+							province = {
+								all_provinces = yes
+								limit_to_naval_base = yes
+							}
+							level = 1
+							instant_build = yes
+						}
+				}
+			}
+
+		if = {
+				limit = { 
+					OR = {
+						has_full_control_of_state = 105
+						any_other_country = {
+							OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+							has_full_control_of_state = 105
+						}
+					} 
+				}
+				105 = {
+					add_building_construction = {
+							type = anti_air_building
+							level = 2
+							instant_build = yes
+						}			
+						add_building_construction = {
+							type = coastal_bunker
+							province = {
+								all_provinces = yes
+								limit_to_naval_base = yes
+							}
+							level = 1
+							instant_build = yes
+						}
+				}
+			}
+		if = {
+				limit = { 
+					OR = {
+						has_full_control_of_state = 163
+						any_other_country = {
+							OR = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+							has_full_control_of_state = 163
+						}
+					} 
+				}
+				163 = {
+					add_building_construction = {
+							type = anti_air_building
+							level = 2
+							instant_build = yes
+						}			
+						add_building_construction = {
+							type = coastal_bunker
+							province = {
+								all_provinces = yes
+								limit_to_naval_base = yes
+							}
+							level = 1
+							instant_build = yes
+						}
+				}
+			}
 	}
 }
 
@@ -6774,7 +6892,10 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		swap_ideas = {
+			remove_idea = YUG_Idea_One_Gun_One_Man
+			add_idea = YUG_Idea_Molotov_Cocktail_Supply
+		}
 	}
 }
 
@@ -6798,7 +6919,21 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		set_technology = { 
+			mountain_gun =  1 
+			popup = no
+		}
+		add_tech_bonus = {
+			bonus = 0.25
+			uses = 2
+			category = artillery
+		}
+		hidden_effect = {
+			set_technology = {
+			    mountain_defensive_training = 1
+			    popup = no
+		    }	
+		}
 	}
 }
 
@@ -6822,7 +6957,12 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_tech_bonus = {
+				bonus = 0.25
+				uses = 2
+				category = electronics
+			}
+		add_ideas = YUG_Idea_Communication_Network
 	}
 }
 
@@ -6846,7 +6986,7 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_ideas = YUG_Idea_Full_Scale_Counterattack
 	}
 }
 
@@ -6867,6 +7007,17 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
+		set_technology = { 
+			mountain_warfare =  1 
+			popup = no
+		}
+		add_ideas = YUG_Idea_Climbing_the_Mountain_Alps
+		hidden_effect = {
+			set_technology = {
+			winter_logistics_support_tech = 1
+			popup = no
+		    }	
+		}
 		
 	}
 }
@@ -6888,7 +7039,14 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		swap_ideas = {
+			remove_idea = YUG_Idea_Climbing_the_Mountain_Alps
+			add_idea = YUG_Idea_Crossing_the_Piave_River
+		}
+		set_technology = {
+			ToA_river_boats_tech = 1
+			popup = no
+		}
 	}
 }
 
@@ -6896,11 +7054,13 @@ focus = {
 	id = YUG_Victory_in_Italy
 	icon = GFX_focus_BEL_v_for_victory
 	cost = 5
+	available = {
+		YUG = {
+			in
+		}
+	}
 	prerequisite = {
 		focus = YUG_Crossing_the_Piave_River
-	}
-	available = {
-		has_war_with = ITA
 	}
 	x = 0
 	y = 8
@@ -6909,16 +7069,18 @@ focus = {
 	}
 	relative_position_id = YUG_War_Against_Italy
 	completion_reward = {
-		
+		add_stability = 0.1
+		country_event = YUG_event.20
 	}
 }
 
 
 
-
-	############################
-	######### INDUSTRY #########
-	############################
+    ################################################################################################################
+	################################################################################################################
+	######### INDUSTRY #############################################################################################
+	################################################################################################################
+	################################################################################################################
 
 	focus = {
 		id = YUG_industrialization_program
