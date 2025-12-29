@@ -6123,6 +6123,9 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_ideas = {
+				SLO_idea_factory_nation
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6580,6 +6583,22 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_ai_strategy = {
+				type = alliance
+				id = SOV
+				value = 1000
+			}
+			SOV = {
+				add_ai_strategy = {
+					type = alliance
+					id = SLO
+					value = 1000
+				}
+				country_event = {
+					id = generic.2
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6772,6 +6791,8 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_stability = -0.1
+			add_war_support = 0.15
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6862,13 +6883,35 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			NOT = {
+				has_completed_focus = SLO_focus_left_and_right_9
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_stability = -0.2
+			add_political_power = 100
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_democratic_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = 0.10
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_communism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = -0.10
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6893,6 +6936,9 @@ focus_tree = {
 			
 		}
 		available = {
+			NOT = {
+				has_completed_focus = SLO_focus_left_and_right_9
+			}
 			
 		}
 
@@ -6900,6 +6946,33 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_political_power = -150
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_democratic_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = 0.10
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = -0.10
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_communism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = -0.10
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = -0.10
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6925,12 +6998,35 @@ focus_tree = {
 		}
 		available = {
 			
+			NOT = {
+				has_completed_focus = SLO_focus_left_and_right_9
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_stability = 0.1
+			add_political_power = -150
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_democratic_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = 0.10
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_communism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = -0.10
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6956,12 +7052,42 @@ focus_tree = {
 		}
 		available = {
 			
+			NOT = {
+				has_completed_focus = SLO_focus_left_and_right_9
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_political_power = 50
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_democratic_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = 0.10
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = 0.05
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_communism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_1
+					value = -0.10
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.05
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6993,12 +7119,54 @@ focus_tree = {
 		}
 		available = {
 			
+			NOT = {
+				has_completed_focus = SLO_focus_left_and_right_9
+			}
+			OR = {
+				power_balance_value = {
+					id = SLO_power_balance_1
+					value < -0.9
+				}
+				power_balance_value = {
+					id = SLO_power_balance_1
+					value > 0.9
+				}
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			remove_power_balance = {
+				id = SLO_power_balance_1
+			}
+			add_stability = 0.15
+			add_political_power = 250
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_democratic_1
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = -1
+				}
+				add_ideas = {
+					SLO_idea_right_win
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_communism_1
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = -1
+				}
+				add_ideas = {
+					SLO_idea_left_win
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7315,6 +7483,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = SLO_idea_cristian
+				add_idea = SLO_idea_cristian_2
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7346,6 +7518,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = SLO_idea_nationalism
+				add_idea = SLO_idea_nationalism_2
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7429,13 +7605,29 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			has_country_flag = SLO_flag_hlinka_dead
+			OR = {
+				power_balance_value = {
+					id = SLO_power_balance_2
+					value < -0.35
+				}
+				NOT = {
+					has_power_balance = {
+						id = SLO_power_balance_2
+					}
+				}
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.25
+			}
+			add_stability = 0.1
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7498,6 +7690,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = SLO_idea_hlinka_guard
+				add_idea = SLO_idea_hlinka_guard_neu_1
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7690,6 +7886,9 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_ideas = {
+				SLO_idea_army_cristian
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -7748,13 +7947,33 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			has_country_flag = SLO_flag_hlinka_dead
+			OR = {
+				power_balance_value = {
+					id = SLO_power_balance_2
+					value > 0.35
+				}
+				NOT = {
+					has_power_balance = {
+						id = SLO_power_balance_2
+					}
+				}
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.25
+			}
+			add_stability = 0.1
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -8068,6 +8287,9 @@ focus_tree = {
 			
 		}
 		available = {
+			NOT = {
+				has_completed_focus = SLO_focus_HSLS_SSNJ_9
+			}
 			
 		}
 
@@ -8075,6 +8297,30 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_stability = -0.05
+			add_political_power = 100
+			add_timed_idea = {
+				idea = SLO_idea_great_purge
+				days = 300
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_fascism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = 0.15
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_neutrality_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = -0.15
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -8099,6 +8345,9 @@ focus_tree = {
 			
 		}
 		available = {
+			NOT = {
+				has_completed_focus = SLO_focus_HSLS_SSNJ_9
+			}
 			
 		}
 
@@ -8106,6 +8355,26 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			add_stability = -0.1
+			add_political_power = 150
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_fascism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = 0.15
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_neutrality_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = -0.15
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -8130,6 +8399,9 @@ focus_tree = {
 			
 		}
 		available = {
+			NOT = {
+				has_completed_focus = SLO_focus_HSLS_SSNJ_9
+			}
 			
 		}
 
@@ -8137,6 +8409,32 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_fascism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = 0.15
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = -0.25
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_neutrality_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = -0.15
+				}
+				add_popularity = {
+					ideology = fascism
+					popularity = -0.25
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -8161,6 +8459,9 @@ focus_tree = {
 			
 		}
 		available = {
+			NOT = {
+				has_completed_focus = SLO_focus_HSLS_SSNJ_9
+			}
 			
 		}
 
@@ -8168,6 +8469,32 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_fascism_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = 0.15
+				}
+				add_popularity = {
+					ideology = fascism
+					popularity = 0.25
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_neutrality_1
+				}
+				add_power_balance_value = {
+					id = SLO_power_balance_2
+					value = -0.15
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.25
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -8198,13 +8525,58 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			NOT = {
+				has_completed_focus = SLO_focus_HSLS_SSNJ_9
+				has_idea = SLO_idea_great_purge
+			}
+			OR = {
+				power_balance_value = {
+					id = SLO_power_balance_2
+					value < -0.9
+				}
+				power_balance_value = {
+					id = SLO_power_balance_2
+					value > 0.9
+				}
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SLO_idea_united_people_party_1
+				}
+				remove_ideas = {
+					SLO_idea_united_people_party_1
+				}
+			}
+			add_stability = 0.2
+			remove_power_balance = {
+				id = SLO_power_balance_2
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_fascism_1
+				}
+				add_country_leader_trait = SLO_trait_fascism
+				add_popularity = {
+					ideology = neutrality
+					popularity = -1
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = SLO_focus_neutrality_1
+				}
+				add_country_leader_trait = SLO_trait_neutrality
+				add_popularity = {
+					ideology = fascism
+					popularity = -1
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
