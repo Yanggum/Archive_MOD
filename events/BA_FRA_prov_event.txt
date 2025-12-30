@@ -99,6 +99,7 @@ country_event = {
 				modifier = FRA_ENA_activities
 			}
 		}
+		custom_effect_tooltip = FRA_disruption_event.3_tt
 	}
 }
 
@@ -1769,6 +1770,10 @@ country_event = {
 	hidden = no
 	option = {
 		name = FRA_prov_event.23.a
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.05
+		}
 		459 = {
 			add_manpower = 20000
 		}
@@ -1998,28 +2003,56 @@ country_event = {
 }
 
 country_event = {
-	#안 씀
+	#프랑스의 공투 요청
 	id = FRA_prov_event.30
 	title = FRA_prov_event.30.t
 	desc = FRA_prov_event.30.d
-	fire_only_once = yes
-	trigger = {
-		KAI = {
-			exists = no
-		}
-		ENG = {
-			exists = yes
-		}
-		NOT = {
-			owns_state = 16
-		}
-		NOT = {
-		}
-		tag = FRA
-	}
+	fire_only_once = no
+	is_triggered_only = yes
+	picture = GFX_report_event_FIN_armistice_of_moscow_negotiations
 	hidden = no
 	option = {
 		name = FRA_prov_event.30.a
+		add_manpower = -2000
+		custom_effect_tooltip = FRA_prov_event.30_tt
+		set_country_flag = FRA_determined_to_help_france
+	}
+	option = {
+		name = FRA_prov_event.30.b
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.22
+				days = 1
+			}
+		}
+	}
+}
+
+country_event = {
+	#공투 요청 수락
+	id = FRA_prov_event.31
+	title = FRA_prov_event.31.t
+	desc = FRA_prov_event.31.d
+	fire_only_once = no
+	is_triggered_only = yes
+	picture = GFX_report_event_FIN_armistice_of_moscow_negotiations
+	hidden = no
+	option = {
+		name = FRA_prov_event.31.a
+		if = {
+			limit = {
+				FROM = {
+					tag = ENG
+				}
+			}
+			custom_effect_tooltip = FRA_italian_joint_struggle_on_kivotos_tt_1
+			effect_tooltip = {
+				
+			}
+		}
+		else = {
+
+		}
 	}
 }
 
@@ -2077,15 +2110,44 @@ country_event = {
 }
 
 country_event = {
-	#스페인 내전 끝 (미사용)
+	#핼리팩스 회담 (프랑스에게)
 	id = FRA_prov_event.36
 	title = FRA_prov_event.36.t
 	desc = FRA_prov_event.36.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_imperial_conference
 	hidden = no
 	option = {
 		name = FRA_prov_event.36.a
+		news_event = FRA_prov_event.71
+	}
+}
+
+country_event = {
+	#핼리팩스 회담 (영국에게)
+	id = FRA_prov_event.37
+	title = FRA_prov_event.37.t
+	desc = FRA_prov_event.36.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_imperial_conference
+	hidden = no
+	option = {
+		name = FRA_prov_event.37.a
+		add_ideas = FRA_mediterranean_trade_treaty
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.36
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = FRA_prov_event.37.b
+		ai_chance = {
+			base = 0
+		}
 	}
 }
 
@@ -3083,12 +3145,12 @@ country_event = {
 }
 
 news_event = {
-	#프랑스와 영국의 협상
+	#핼리팩스 회담 뉴스
 	id = FRA_prov_event.71
 	title = FRA_prov_event.71.t
 	desc = FRA_prov_event.71.d
 	is_triggered_only = yes
-	picture = GFX_event_BA_fra_news_hali
+	picture = GFX_news_event_eng_imperial_conference
 	major = yes
 	option = {
 		name = FRA_prov_event.71.a

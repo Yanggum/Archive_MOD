@@ -1909,7 +1909,7 @@ focus_tree = {
 			add_mastery_bonus = {
 				bonus = 0.1
 				days = 480
-				track = infantry
+				track = combat_support
 				name = FRA_focus_new_arm_5
 			}
 			add_tech_bonus = {
@@ -2781,7 +2781,7 @@ focus_tree = {
 		available = {
 			ENG = {
 				NOT = {
-					owns_state = 126
+					owns_state = 132
 				}
 			}
 		}
@@ -2790,6 +2790,16 @@ focus_tree = {
 		}
 		relative_position_id = FRA_solidarity_between_governments_in_exile
 		completion_reward = {
+			ENG = {
+				country_event = {
+					id = FRA_prov_event.37
+					days = 1
+				}
+				custom_effect_tooltip = if_they_accept
+				effect_tooltip = {
+					add_ideas = FRA_mediterranean_trade_treaty
+				}
+			}
 		}
 	}
 	focus = {
@@ -2813,7 +2823,24 @@ focus_tree = {
 		}
 		relative_position_id = FRA_halifax_conference
 		completion_reward = {
-			
+			ENG = {
+				country_event = {
+					id = FRA_prov_event.30
+					days = 1
+				}
+				custom_effect_tooltip = if_they_accept
+				custom_effect_tooltip = FRA_focus_new_arm_10_tt
+				unlock_decision_tooltip = FRA_support_from_ENG
+			}
+			ITA = {
+				country_event = {
+					id = FRA_prov_event.30
+					days = 1
+				}
+				custom_effect_tooltip = if_they_accept
+				custom_effect_tooltip = FRA_focus_new_arm_10_tt
+				unlock_decision_tooltip = FRA_support_from_ITA
+			}
 		}
 	}
 	focus = {
@@ -2828,6 +2855,18 @@ focus_tree = {
 		}
 		relative_position_id = FRA_halifax_conference
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ENG
+						is_subject_of = ENG
+					}
+				}
+				custom_effect_tooltip = FRA_withdraw_from_indochina_tt
+				FRA = {
+					add_cic = 500
+				}
+			}
 		}
 	}
 	focus = {
@@ -2839,6 +2878,9 @@ focus_tree = {
 		y = 1
 		mutually_exclusive = {
 			focus = FRA_claim_hegemony_on_equatorial_africa
+		}
+		available = {
+			has_country_flag = GAEBALJUNG
 		}
 		prerequisite = {
 			focus = FRA_solidarity_between_governments_in_exile
@@ -2899,6 +2941,9 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = FRA_befriend_with_belgium
 		}
+		available = {
+			has_country_flag = GAEBALJUNG
+		}
 		prerequisite = {
 			focus = FRA_solidarity_between_governments_in_exile
 		}
@@ -2944,8 +2989,22 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_solidarity_between_governments_in_exile
 		}
+		available = {
+			HOL = {
+				has_war_with = INS
+			}
+		}
 		relative_position_id = FRA_solidarity_between_governments_in_exile
 		completion_reward = {
+			add_ai_strategy = {
+				type = send_volunteers_desire
+				id = HOL
+				value = 100
+			}
+			add_timed_idea = {
+				idea = FRA_volunteer_to_HOL
+				days = 360
+			}
 		}
 	}
 	focus = {
