@@ -9275,13 +9275,30 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			POL = {
+				is_in_faction_with = SLO
+			}
+			HUN = {
+				is_in_faction_with = SLO
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = SLO
+						tag = POL
+						tag = HUN
+					}
+				}
+				add_ideas = {
+					SLO_idea_vicegrad_defense
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9313,6 +9330,15 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			70 = {
+				BA_increase_state_category_by_one_level = yes
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex
+					level = 5
+					instant_build = yes
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9337,13 +9363,30 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			POL = {
+				is_in_faction_with = SLO
+			}
+			HUN = {
+				is_in_faction_with = SLO
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = SLO
+						tag = POL
+						tag = HUN
+					}
+				}
+				add_ideas = {
+					SLO_idea_vicegrad_economy
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9368,13 +9411,32 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			HUN = {
+				is_in_faction_with = SLO
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			HUN = {
+				every_state = {
+					limit = {
+						OR = {
+							state = 975
+							state = 45
+							state = 764
+							state = 82
+							state = 83
+							state = 84
+							state = 76
+						}
+					}
+					add_claim_by = HUN
+				}
+			}
+			custom_effect_tooltip = SLO_tt_HUN_core
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9399,13 +9461,21 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			POL = {
+				is_in_faction_with = SLO
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			POL = {
+				country_event = {
+					id = SLO_event.11
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9440,6 +9510,7 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			custom_effect_tooltip = SLO_tt_silesia
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9474,6 +9545,12 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			POL = {
+				country_event = {
+					id = SLO_event.14
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9508,6 +9585,18 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+			ROM = {
+				country_event = {
+					id = BA_HUN_event.1
+					hours = 8
+				}
+			}
+			YUG = {
+				country_event = {
+					id = BA_HUN_event.2
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9532,13 +9621,57 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			POL = { is_puppet_of = SLO }
+			HUN = { is_puppet_of = SLO }
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			set_cosmetic_tag = SLO_greater_slovakia
+			annex_country = { target = POL transfer_troops = yes }
+			annex_country = { target = HUN transfer_troops = yes }
+			if = {
+				limit = {
+					SIL = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							is_core_of = SIL
+						}
+					}
+					add_core_of = SLO
+				}
+				annex_country = { target = SIL transfer_troops = yes }
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = POL
+						is_core_of = HUN
+					}
+				}
+				add_core_of = SLO
+			}
+			every_state = {
+				limit = {
+					OR = {
+						AND = {
+							is_claimed_by = POL
+							is_controlled_by = POL
+						}
+						AND = {
+							is_claimed_by = HUN
+							is_controlled_by = HUN
+						}
+					}
+				}
+				add_core_of = SLO
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9560,7 +9693,9 @@ focus_tree = {
 		y = 6
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			GEH = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9570,6 +9705,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = GEH
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9591,7 +9730,9 @@ focus_tree = {
 		y = 6
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			ITA = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9601,6 +9742,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = ITA
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9622,7 +9767,9 @@ focus_tree = {
 		y = 6
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			SHA = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9632,6 +9779,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = SHA
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9653,7 +9804,9 @@ focus_tree = {
 		y = 7
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			ROM = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9663,6 +9816,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = ROM
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9684,7 +9841,9 @@ focus_tree = {
 		y = 7
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			YUG = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9694,6 +9853,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = YUG
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9721,13 +9884,16 @@ focus_tree = {
 			
 		}
 		available = {
-			
+			is_in_faction_with = SOV
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			add_ideas = {
+				SLO_idea_slovak_soviet_plan
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9752,7 +9918,9 @@ focus_tree = {
 		y = 8
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			BUL = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9762,6 +9930,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = BUL
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9786,7 +9958,9 @@ focus_tree = {
 		y = 8
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
+			GRE = {
+				exists = no
+			}
 		}
 		available = {
 			
@@ -9796,6 +9970,10 @@ focus_tree = {
 			
 		}
 		completion_reward = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = GRE
+            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -9817,16 +9995,361 @@ focus_tree = {
 		y = 9
 		relative_position_id = SLO_focus_communism_1
 		bypass = {
-			
 		}
 		available = {
-			
+			any_country = {
+				is_puppet_of = SLO
+			}
 		}
 
 		select_effect = {
 			
 		}
 		completion_reward = {
+			set_cosmetic_tag = SLO_greater_slovakia
+			custom_effect_tooltip = SLO_tt_danube_core
+			if = {
+				limit = {
+					HUN = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = HUN
+							is_controlled_by = HUN
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = HUN transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					AUS = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = AUS
+							is_controlled_by = AUS
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = AUS transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					BAY = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = BAY
+							is_controlled_by = BAY
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = BAY transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					ROM = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = ROM
+							is_controlled_by = ROM
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = ROM transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					BUL = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = BUL
+							is_controlled_by = BUL
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = BUL transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					GRE = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = GRE
+							is_controlled_by = GRE
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = GRE transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					ALB = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = ALB
+							is_controlled_by = ALB
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = ALB transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					YUG = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = YUG
+							is_controlled_by = YUG
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = YUG transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					SLV = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = SLV
+							is_controlled_by = SLV
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = SLV transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					CRO = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = CRO
+							is_controlled_by = CRO
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = CRO transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					BOS = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = BOS
+							is_controlled_by = BOS
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = BOS transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					HRZ = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = HRZ
+							is_controlled_by = HRZ
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = HRZ transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					TRA = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = TRA
+							is_controlled_by = TRA
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = TRA transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					SER = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = SER
+							is_controlled_by = SER
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = SER transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					KOS = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = KOS
+							is_controlled_by = KOS
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = KOS transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					MAC = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = MAC
+							is_controlled_by = MAC
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = MAC transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					MNT = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = MNT
+							is_controlled_by = MNT
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = MNT transfer_troops = yes }
+				}
+			}
+			if = {
+				limit = {
+					MOL = {
+						is_puppet_of = SLO
+					}
+				}
+				every_state = {
+					limit = {
+						AND = {
+							is_core_of = MOL
+							is_controlled_by = MOL
+						}
+					}
+					add_core_of = SLO
+				}
+				SLO = {
+					annex_country = { target = MOL transfer_troops = yes }
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
