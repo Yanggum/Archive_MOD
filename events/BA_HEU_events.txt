@@ -10145,7 +10145,106 @@ country_event = { # 대영제국의 비극적 몰락
 
 	option = { 
 		name = HEU.diplomacy_event.10.a
-	leave_faction = yes
+		leave_faction = yes
+	}
+}
+
+country_event = { # 주 반환 요청
+	id = HEU.diplomacy_event.11
+	title = HEU.diplomacy_event.11.t
+	desc = HEU.diplomacy_event.11.desc
+	picture = GFX_report_event_aru_memorial
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.11.a
+		ai_chance = {
+			base = 10
+		}
+		effect_tooltip = {
+			FROM.FROM = {
+				transfer_state_to = PREV.FROM
+			}
+		}
+		FROM = {
+			country_event = { id = HEU.diplomacy_event.13 hours = 3 }
+		}
+	}
+	option = { 
+		name = HEU.diplomacy_event.11.b
+		ai_chance = {
+			base = 0.001
+		}
+		hidden_effect = {
+			FROM.FROM = {
+				set_state_flag = HEU_state_return_request_fail_flag
+			}
+		}
+		trigger = {
+			NOT = { is_subject_of = HEU }
+		}
+		FROM = {
+			country_event = { id = HEU.diplomacy_event.12 hours = 3 }
+		}
+	}
+}
+
+country_event = { # 주 반환 거부당했음. 침공하실?
+	id = HEU.diplomacy_event.12
+	title = HEU.diplomacy_event.12.t
+	desc = HEU.diplomacy_event.12.desc
+	picture = GFX_report_event_aru_memorial
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.12.a
+		add_war_support = -0.05
+	}
+	option = { 
+		name = HEU.diplomacy_event.12.b
+		ai_chance = {
+			base = 0.001
+		}
+		if = {
+			limit = {
+				NOT = { is_faction_leader = yes }
+				FROM = { is_in_faction_with = ROOT }
+			}
+			leave_faction = yes
+		}
+		else_if = {
+			limit = {
+				is_faction_leader = yes
+				FROM = { is_in_faction_with = ROOT }
+			}
+			remove_from_faction = FROM
+		}
+
+		add_war_support = 0.05
+		create_wargoal = {
+			target = FROM
+			expire = 90
+			type = annex_everything
+		}
+		FROM.FROM = {
+			add_contested_owner = ROOT
+		}
+	}
+}
+
+country_event = { # 주 반환됨 ㅎ
+	id = HEU.diplomacy_event.13
+	title = HEU.diplomacy_event.13.t
+	desc = HEU.diplomacy_event.13.desc
+	picture = GFX_report_event_aru_memorial
+    is_triggered_only = yes
+
+	option = { 
+		name = HEU.diplomacy_event.13.a
+		add_political_power = 25
+		FROM.FROM = {
+			transfer_state_to = ROOT
+		}
 	}
 }
 
