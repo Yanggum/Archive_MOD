@@ -18,7 +18,7 @@ tags={
 	"Military"
 }
 user_dir="BlueArchive"
-version="0.7.6"
+version="0.7.7"
 picture="thumbnail.png"
 supported_version="1.17.*"
 path="mod/Archive_MOD"
