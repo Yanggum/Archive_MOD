@@ -1301,8 +1301,31 @@ focus_tree = {
 			custom_effect_tooltip = ARI_no_change_tt
 			if = {
 				limit = {
-					always = no
+					has_completed_focus = ARI_guidance_of_the_squad
+					NOT = { has_completed_focus = ARI_third_council }
 				}
+				add_political_power = 60
+				add_stability = 0.10
+				add_power_balance_value = {
+					id = ARI_balance_of_power
+					value = -0.10
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = ARI_guidance_of_the_squad
+					has_completed_focus = ARI_third_council
+				}
+				add_political_power = 60
+				add_stability = 0.10
+				custom_effect_tooltip = enter_tt
+
+				custom_effect_tooltip = ARI_arian_faith_tt
+				add_to_variable = {
+					ARI_arian_drift_defence_factor = 0.20
+					tooltip = drift_defence_factor_tt
+				}
+				
 			}
 			else = {
 				custom_effect_tooltip = ARI_no_change_0_tt
@@ -2583,25 +2606,25 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_military_system_reorganization
 		completion_reward = {
+			
+			add_manpower = 1200
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 
-			if = {
-				limit = {
-					has_template = "Levis Angelorum"
+			random_owned_controlled_state = {
+				prioritize = { 85 }
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 2
+					NAME = "Halo Infantry Division"
 				}
-				delete_unit_template_and_units = {
-					division_template = "Levis Angelorum"
-					disband = yes
-				}
-			}
-			division_template = {
-				name = "Levis Angelorum"
-				division_names_group = ARI_HAL_01
-				#template_counter = 67
-				regiments = {
-					penal_battalion = { x = 0 y = 0 }
-					penal_battalion = { x = 0 y = 1 }
-					penal_battalion = { x = 1 y = 0 }
-					penal_battalion = { x = 1 y = 1 }
+				hidden_effect = {
+					create_unit = {
+						division = "division_template = \"Halo Infantry Division\" start_experience_factor = 0.30 start_equipment_factor = 0.70"
+						owner = ARI
+						count = 2
+					}
 				}
 			}
 		}
@@ -2840,6 +2863,18 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_sunny_place
 		select_effect = {
+			if = { # 나머진 미완성이야 sry~
+				limit = {
+					power_balance_value = {
+						id = ARI_balance_of_power
+						value > -0.39
+					}
+				}
+				add_power_balance_value = {
+					id = ARI_balance_of_power
+					value = -2.00
+				}
+			}
 			
 			custom_effect_tooltip = ARI_third_council_tt
 			if = { # 보수파 승리
@@ -2895,6 +2930,19 @@ focus_tree = {
 		}
 		completion_reward = {
 			effect_tooltip = {
+				if = { # 나머진 미완성이야 sry~
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value > -0.39
+						}
+					}
+					add_power_balance_value = {
+						id = ARI_balance_of_power
+						value = -2.00
+					}
+				}
+
 				custom_effect_tooltip = ARI_third_council_tt
 				if = {
 					limit = {
@@ -2989,6 +3037,13 @@ focus_tree = {
 		available = {
 			has_country_flag = flag_ARI_fortress_arius
 		}
+		offset = {
+			x = -7
+			y = 0
+			trigger = {
+				always = yes
+			}
+		}
 		cost = 5
 		x = 7
 		y = 1
@@ -3022,6 +3077,9 @@ focus_tree = {
 		available = {
 			has_country_flag = flag_ARI_emergency_government
 		}
+		allow_branch = {
+			always = no
+		}
 		cost = 5
 		x = 0
 		y = 1
@@ -3041,6 +3099,9 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = flag_ARI_approval_of_reformist_manifesto
+		}
+		allow_branch = {
+			always = no
 		}
 		cost = 5
 		x = -7
@@ -3498,13 +3559,17 @@ focus_tree = {
 				ARI_arian_production_factory_efficiency_gain_factor = 0.02
 				tooltip = production_factory_efficiency_gain_factor_tt
 			}
+			add_to_variable = {
+				ARI_arian_industry_repair_factor = 0.05
+				tooltip = industry_repair_factor_tt
+			}
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
 
 			add_tech_bonus = {
 				name = ARI_corporate_economy_research
 				bonus = 0.75
-				uses = 2
+				uses = 1
 				category = industry
 			}
 		}
@@ -3834,6 +3899,13 @@ focus_tree = {
 					target = SHA
 					type = puppet_wargoal_focus
 				}
+			}
+			custom_effect_tooltip = enter_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
 			}
 		}
 	}
@@ -4284,6 +4356,10 @@ focus_tree = {
 			add_to_variable = {
 				ARI_militarized_society_training_time_factor = -0.05
 				tooltip = training_time_factor_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_production_speed_buildings_factor = 0.05
+				tooltip = production_speed_buildings_factor_tt
 			}
 			add_to_variable = { 
 				ARI_militarized_society_production_speed_arms_factory_factor = 0.05
