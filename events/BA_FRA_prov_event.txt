@@ -1376,7 +1376,7 @@ country_event = {
 	}
 }
 
-country_event = { #.8부터 .26까지 안 씀
+country_event = { 
 	#외교에 대한 투쟁
 	id = FRA_prov_event.8
 	title = FRA_prov_event.8.t
@@ -1603,10 +1603,17 @@ country_event = {
 	desc = FRA_prov_event.16.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.16.a
 		add_ideas = FRA_granada_declaration
+		hidden_effect = {
+			news_event = {
+				id = BA_news.160
+				days = 1
+			}
+		}
 	}
 }
 
@@ -1617,6 +1624,7 @@ country_event = {
 	desc = FRA_prov_event.17.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty2
 	hidden = no
 	option = {
 		name = FRA_prov_event.17.a
@@ -1676,45 +1684,56 @@ country_event = {
 }
 
 country_event = {
-	#경제적 협력 수락
+	#프랑스 스페인 공동 군사 훈련
 	id = FRA_prov_event.21
 	title = FRA_prov_event.21.t
 	desc = FRA_prov_event.21.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
 	hidden = no
+	picture = GFX_report_event_spr_army_of_africa
 	option = {
 		name = FRA_prov_event.21.a
-		add_political_power = 10
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
+		add_timed_idea = {
+			idea = FRA_army_train_with_spain
+			days = 360
 		}
-		add_to_variable = {
-			FRA_demand_economy = 1
-		}
+		army_experience = 20
 	}
 }
 
 country_event = {
-	#영국에게 군사협력
+	#프랑스와의 우호 조약 (이탈리아에게)
 	id = FRA_prov_event.20
 	title = FRA_prov_event.20.t
 	desc = FRA_prov_event.20.d
 	fire_only_once = yes
+	picture = GFX_report_event_generic_sign_treaty1
 	is_triggered_only = yes
 	hidden = no
 	option = {
-		ai_chance = {
-			base = 5
-		}
 		name = FRA_prov_event.20.a
-		army_experience = 10
-		navy_experience = 10
-		air_experience = 10
-		add_doctrine_cost_reduction = {
-			cost_reduction = 0.1
-			category = land_doctrine
+		diplomatic_relation = {
+			country = FRA
+			relation = non_aggression_pact
+		}
+		hidden_effect = {
+			FRA = {
+				country_event = {
+					id = FRA_prov_event.23
+					days = 16
+				}
+			}
+		}
+	}
+	option = {
+		name = FRA_prov_event.20.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				has_war_with = FRA
+				add = 999
+			}
 		}
 		FRA = {
 			country_event = {
@@ -1723,103 +1742,78 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = FRA_prov_event.20.b
-		FRA = {
-			country_event = {
-				id = FRA_prov_event.23
-				days = 1
-			}
-		}
-	}
 }
 
 country_event = {
-	#군사 협력 수락
+	#이탈리아의 거절 (보편적)
 	id = FRA_prov_event.22
 	title = FRA_prov_event.22.t
 	desc = FRA_prov_event.22.d
-	fire_only_once = yes
+	fire_only_once = no
 	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty1
 	hidden = no
 	option = {
 		name = FRA_prov_event.22.a
-		add_political_power = 10
-		army_experience = 10
-		navy_experience = 10
-		air_experience = 10
-		add_doctrine_cost_reduction = {
-			cost_reduction = 0.1
-			category = naval_doctrine
-		}
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
-		}
-		add_to_variable = {
-			FRA_demand_after_war = 1
-		}
 	}
 }
 
 country_event = {
-	#군사 협력 거절
+	#이탈리아의 망명 협력
 	id = FRA_prov_event.23
 	title = FRA_prov_event.23.t
 	desc = FRA_prov_event.23.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_NOR_royal_family_exiled
 	hidden = no
 	option = {
 		name = FRA_prov_event.23.a
-		add_political_power = -10
-		country_event = {
-			id = FRA_prov_event.12
-			days = 1
+		459 = {
+			add_manpower = 20000
 		}
-		add_to_variable = {
-			FRA_demand_after_war = 1
+		460 = {
+			add_manpower = 15000
 		}
+		458 = {
+			add_manpower = 30000
+		}
+		add_cic = 500
 	}
 }
 
 country_event = {
-	#기술 협력
+	#프랑스의 투자 요청 (이탈리아에게)
 	id = FRA_prov_event.24
 	title = FRA_prov_event.24.t
 	desc = FRA_prov_event.24.d
 	fire_only_once = yes
 	is_triggered_only = yes
+	picture = GFX_report_event_SOV_litvinov_beck
 	hidden = no
 	option = {
-		ai_chance = {
-			factor = 1
-		}
+		name = FRA_prov_event.24.a
+		add_political_power = -35
+		custom_effect_tooltip = FRA_prov_event.24_tt
 		FRA = {
 			country_event = {
-				id = FRA_prov_Event.25
+				id = FRA_prov_event.25
 				days = 1
 			}
-		}
-		name = FRA_prov_event.24.a
-		add_tech_bonus = {
-			category = artillery
-			bonus = 0.1
-			uses = 1
 		}
 	}
 	option = {
 		ai_chance = {
-			factor = 1
+			base = 0
 			modifier = {
-				has_country_flag = MIL_FRA_cut_flag
-				factor = 2
+				has_war_with = FRA
+				add = 999
 			}
 		}
 		name = FRA_prov_event.24.b
 		FRA = {
 			country_event = {
-				id = FRA_prov_Event.26
+				id = FRA_prov_event.22
 				days = 1
 			}
 		}
@@ -1827,48 +1821,137 @@ country_event = {
 }
 
 country_event = {
-	#기술 협력 수락
+	#이탈리아의 투자
 	id = FRA_prov_event.25
 	title = FRA_prov_event.25.t
 	desc = FRA_prov_event.25.d
 	fire_only_once = yes
 	is_triggered_only = yes
 	hidden = no
+	picture = GFX_report_event_SOV_litvinov_beck
 	option = {
 		name = FRA_prov_event.25.a
-		add_political_power = 10
-		add_to_variable = {
-			FRA_demand_entente = 1
-		}
-		country_event = {
-			id = fra_prov_event.12
-			days = 1
-		}
-		add_tech_bonus = {
-			category = electronics
-			bonus = 0.3
-			uses = 1
+		add_cic = 1500
+		458 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+			}
 		}
 	}
 }
 
 country_event = {
-	#기술협력 거절
+	#북아프리카 고속도로 건설 제안
 	id = FRA_prov_event.26
 	title = FRA_prov_event.26.t
 	desc = FRA_prov_event.26.d
-	fire_only_once = yes
+	picture = GFX_report_event_china_ledo_road
+	fire_only_once = no
 	is_triggered_only = yes
 	hidden = no
 	option = {
 		name = FRA_prov_event.26.a
-		add_political_power = -10
-		add_to_variable = {
-			FRA_demand_entente = 1
+		ai_chance = {
+			base = 3
 		}
-		country_event = {
-			id = fra_prov_event.12
-			days = 1
+		if = {
+			limit = {
+				THIS = {
+					tag = SPR
+				}
+			}
+			290 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			461 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+		else = {
+			448 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			665 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.27
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = FRA_prov_event.26.b
+		FRA = {
+			country_event = {
+				id = FRA_prov_event.55
+				days = 1
+			}
+		}
+	}
+}
+
+country_event = {
+	#고속도로 건설
+	id = FRA_prov_event.27
+	title = FRA_prov_event.27.t
+	desc = FRA_prov_event.27.d
+	picture = GFX_report_event_china_ledo_road
+	fire_only_once = no
+	is_triggered_only = yes
+	hidden = no
+	option = {
+		name = FRA_prov_event.27.a
+		effect_tooltip = {
+			if = {
+				limit = {
+					FROM = {
+						tag = SPR
+					}
+				}
+				290 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+				461 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+			}
+			else = {
+				448 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+				665 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+			}
 		}
 	}
 }
