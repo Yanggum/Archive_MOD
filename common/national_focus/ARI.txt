@@ -1301,8 +1301,31 @@ focus_tree = {
 			custom_effect_tooltip = ARI_no_change_tt
 			if = {
 				limit = {
-					always = no
+					has_completed_focus = ARI_guidance_of_the_squad
+					NOT = { has_completed_focus = ARI_third_council }
 				}
+				add_political_power = 60
+				add_stability = 0.10
+				add_power_balance_value = {
+					id = ARI_balance_of_power
+					value = -0.10
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = ARI_guidance_of_the_squad
+					has_completed_focus = ARI_third_council
+				}
+				add_political_power = 60
+				add_stability = 0.10
+				custom_effect_tooltip = enter_tt
+
+				custom_effect_tooltip = ARI_arian_faith_tt
+				add_to_variable = {
+					ARI_arian_drift_defence_factor = 0.20
+					tooltip = drift_defence_factor_tt
+				}
+				
 			}
 			else = {
 				custom_effect_tooltip = ARI_no_change_0_tt
@@ -2380,8 +2403,22 @@ focus_tree = {
 				ARI_arian_army_defence_factor = 0.05
 				tooltip = army_defence_factor_tt
 			}
+
 			custom_effect_tooltip = enter_tt
+
 			add_stability = 0.05
+
+			custom_effect_tooltip = enter_tt
+
+			custom_effect_tooltip = ARI_permanent_anti_trinity_military_operation_tt
+			add_to_variable = {
+				ARI_PATMO_idea_industrial_capacity_dockyard = 0.05
+				tooltip = industrial_capacity_dockyard_tt
+			}
+			add_to_variable = {
+				ARI_PATMO_idea_industrial_capacity_factory = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
 		}
 	}
 	focus = {
@@ -2418,12 +2455,57 @@ focus_tree = {
 				ARI_arian_production_factory_max_efficiency_factor = -0.05
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
+
 			custom_effect_tooltip = enter_tt
+
 			add_timed_idea = {
 				idea = ARI_final_offensive
 				days = 100
 			}
+
 			add_war_support = 0.05
+
+			custom_effect_tooltip = enter_tt
+
+			custom_effect_tooltip = ARI_permanent_anti_trinity_military_operation_tt
+			add_to_variable = {
+				ARI_PATMO_idea_conscription_factor = 0.10
+				tooltip = conscription_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_wartime_workshop_opening
+		icon = GFX_focus_GER_factories_for_resources
+		prerequisite = {
+			focus = ARI_maintaining_continuous_offensive
+			focus = ARI_preparation_for_trinity_counterattack
+		}
+
+		available = {
+			has_war_with = TRM
+		}
+
+		bypass = {
+			NOT = { has_war_with = TRM }
+		}
+		cost = 2
+		x = 3
+		y = 1
+		relative_position_id = ARI_maintaining_continuous_offensive
+		completion_reward = {
+
+			add_command_power = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_ideas = idea_ARI_wartime_workshop_opening
+
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 500
+				producer = ARI
+			}
 		}
 	}
 	focus = {
@@ -2481,14 +2563,14 @@ focus_tree = {
 					custom_effect_tooltip = {
 						localization_key = effect_division_creation_name
 						STATE = "[THIS.GetName]"
-						COUNT = 2
+						COUNT = 4
 						NAME = ARI_holding_arius_council_dv
 					}
 					hidden_effect = {
 						create_unit = {
 							division = "name = \"Arius Vexillatio\" division_template = \"Arius Vexillatio\" start_experience_factor = 0.05 start_equipment_factor = 0.35"
 							owner = ARI
-							count = 2
+							count = 4
 						}
 					}
 				}
@@ -2524,25 +2606,25 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_military_system_reorganization
 		completion_reward = {
+			
+			add_manpower = 1200
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 
-			if = {
-				limit = {
-					has_template = "Levis Angelorum"
+			random_owned_controlled_state = {
+				prioritize = { 85 }
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 2
+					NAME = "Halo Infantry Division"
 				}
-				delete_unit_template_and_units = {
-					division_template = "Levis Angelorum"
-					disband = yes
-				}
-			}
-			division_template = {
-				name = "Levis Angelorum"
-				division_names_group = ARI_HAL_01
-				#template_counter = 67
-				regiments = {
-					penal_battalion = { x = 0 y = 0 }
-					penal_battalion = { x = 0 y = 1 }
-					penal_battalion = { x = 1 y = 0 }
-					penal_battalion = { x = 1 y = 1 }
+				hidden_effect = {
+					create_unit = {
+						division = "division_template = \"Halo Infantry Division\" start_experience_factor = 0.30 start_equipment_factor = 0.70"
+						owner = ARI
+						count = 2
+					}
 				}
 			}
 		}
@@ -2781,6 +2863,18 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_sunny_place
 		select_effect = {
+			if = { # 나머진 미완성이야 sry~
+				limit = {
+					power_balance_value = {
+						id = ARI_balance_of_power
+						value > -0.39
+					}
+				}
+				add_power_balance_value = {
+					id = ARI_balance_of_power
+					value = -2.00
+				}
+			}
 			
 			custom_effect_tooltip = ARI_third_council_tt
 			if = { # 보수파 승리
@@ -2836,6 +2930,19 @@ focus_tree = {
 		}
 		completion_reward = {
 			effect_tooltip = {
+				if = { # 나머진 미완성이야 sry~
+					limit = {
+						power_balance_value = {
+							id = ARI_balance_of_power
+							value > -0.39
+						}
+					}
+					add_power_balance_value = {
+						id = ARI_balance_of_power
+						value = -2.00
+					}
+				}
+
 				custom_effect_tooltip = ARI_third_council_tt
 				if = {
 					limit = {
@@ -2930,6 +3037,13 @@ focus_tree = {
 		available = {
 			has_country_flag = flag_ARI_fortress_arius
 		}
+		offset = {
+			x = -7
+			y = 0
+			trigger = {
+				always = yes
+			}
+		}
 		cost = 5
 		x = 7
 		y = 1
@@ -2963,6 +3077,9 @@ focus_tree = {
 		available = {
 			has_country_flag = flag_ARI_emergency_government
 		}
+		allow_branch = {
+			always = no
+		}
 		cost = 5
 		x = 0
 		y = 1
@@ -2982,6 +3099,9 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = flag_ARI_approval_of_reformist_manifesto
+		}
+		allow_branch = {
+			always = no
 		}
 		cost = 5
 		x = -7
@@ -3212,6 +3332,18 @@ focus_tree = {
 				ARI_arian_production_speed_arms_factory_factor = 0.10
 				tooltip = production_speed_arms_factory_factor_tt
 			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_arius_military_complex
+				bonus = 1
+				uses = 3
+				category = infantry_weapons
+				category = artillery
+				category = cat_anti_air
+				category = cat_anti_tank
+			}
 		}
 	}
 	focus = {
@@ -3427,6 +3559,19 @@ focus_tree = {
 				ARI_arian_production_factory_efficiency_gain_factor = 0.02
 				tooltip = production_factory_efficiency_gain_factor_tt
 			}
+			add_to_variable = {
+				ARI_arian_industry_repair_factor = 0.05
+				tooltip = industry_repair_factor_tt
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_corporate_economy_research
+				bonus = 0.75
+				uses = 1
+				category = industry
+			}
 		}
 	}
 	focus = {
@@ -3476,6 +3621,15 @@ focus_tree = {
 				ARI_arian_production_factory_max_efficiency_factor = 0.05
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_state_capitalism
+				bonus = 1
+				uses = 2
+				category = industry
+			}
 		}
 	}
 	focus = {
@@ -3495,7 +3649,6 @@ focus_tree = {
 					exists = no
 					has_capitulated = yes
 					is_subject_of = ROOT
-					is_in_faction_with = ROOT
 				}
 			}
 			GEM = {
@@ -3503,7 +3656,6 @@ focus_tree = {
 					exists = no
 					has_capitulated = yes
 					is_subject_of = ROOT
-					is_in_faction_with = ROOT
 				}
 			}
 			HEU = {
@@ -3511,7 +3663,6 @@ focus_tree = {
 					exists = no
 					has_capitulated = yes
 					is_subject_of = ROOT
-					is_in_faction_with = ROOT
 				}
 			}
 		}
@@ -3521,6 +3672,7 @@ focus_tree = {
 		relative_position_id = ARI_evil_named_gehenna
 		completion_reward = {
 			remove_ideas = BA_ARI_bitter_revanchism_ns_1
+			country_event = ARI_conservative_event_chain.5
 		}
 	}
 	focus = {
@@ -3648,13 +3800,44 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = ARI_reichskommissariat_germanien
 		}
+
+		bypass = {
+			is_in_faction_with = SHA
+		}
+
 		available = {
+			is_faction_leader = yes
+			is_subject = no
+			NOT = { has_war_with = SHA }
+			SHA = {
+				OR = {
+					has_government = fascism
+					has_government = neutrality
+				}
+				is_subject = no
+			}
 		}
 		cost = 5
 		x = 1
 		y = 2
 		relative_position_id = ARI_arius_above_all_names
 		completion_reward = {
+			SHA = {
+				add_opinion_modifier = { target = ROOT modifier = huge_increase }
+				add_ai_strategy = {
+					type = befriend
+					id = ROOT
+					value = 50
+				}
+				ROOT = {
+					add_ai_strategy = {
+						type = befriend
+						id = PREV
+						value = 100
+					}
+				}
+				country_event = generic.5
+			}
 		}
 	}
 	focus = {
@@ -3664,12 +3847,31 @@ focus_tree = {
 			focus = ARI_arius_above_all_names
 		}
 		available = {
+			is_subject = no
 		}
 		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = ARI_arius_above_all_names
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = { HYA = { is_in_faction_with = ROOT } }
+				}	
+				create_wargoal = {
+					target = HYA
+					type = puppet_wargoal_focus
+				}
+			}
+			if = {
+				limit = {
+					NOT = { ABY = { is_in_faction_with = ROOT } }
+				}	
+				create_wargoal = {
+					target = ABY
+					type = puppet_wargoal_focus
+				}
+			}
 		}
 	}
 	focus = {
@@ -3682,12 +3884,29 @@ focus_tree = {
 			focus = ARI_diplomacy_with_shanhaijing
 		}
 		available = {
+			is_subject = no
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_southern_offensive
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = { SHA = { is_in_faction_with = ROOT } }
+				}	
+				create_wargoal = {
+					target = SHA
+					type = puppet_wargoal_focus
+				}
+			}
+			custom_effect_tooltip = enter_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -3698,12 +3917,25 @@ focus_tree = {
 			focus = ARI_diplomacy_with_shanhaijing
 		}
 		available = {
+			is_subject = no
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_reichskommissariat_germanien
 		completion_reward = {
+			every_other_country = {
+				limit = {
+					has_government = communism
+				}
+				ROOT = {
+					send_embargo = PREV
+				}
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.10
+			}
 		}
 	}
 	focus = {
@@ -3712,13 +3944,70 @@ focus_tree = {
 		prerequisite = {
 			focus = ARI_reinforcement_of_the_anti_communist_citadel
 		}
+
+		will_lead_to_war_with = SOV
+
 		available = {
+			is_puppet = no
 		}
+
+		bypass = {
+			OR = {
+				has_war_with = SOV
+				NOT = { country_exists = SOV }
+				is_in_faction_with = SOV
+			}
+		}
+
+		cancel = {
+			is_subject = yes
+			NOT = { country_exists = SOV }
+		}
+
 		cost = 5
 		x = 0
 		y = 2
 		relative_position_id = ARI_reinforcement_of_the_anti_communist_citadel
+
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				OR = {
+					has_army_manpower = { size < 1199999 }
+					any_home_area_neighbor_country = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				factor = 0 #AI should not pick this focus if it does not share a border with the Soviets
+				NOT = { 
+					any_home_area_neighbor_country = {
+						tag = SOV
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				date < 1940.1.1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+
+		search_filters = {  }
+
 		completion_reward = {
+			create_wargoal = {
+				target = SOV
+				type = puppet_wargoal_focus
+			}
 		}
 	}
 	
@@ -4067,6 +4356,10 @@ focus_tree = {
 			add_to_variable = {
 				ARI_militarized_society_training_time_factor = -0.05
 				tooltip = training_time_factor_tt
+			}
+			add_to_variable = {
+				ARI_militarized_society_production_speed_buildings_factor = 0.05
+				tooltip = production_speed_buildings_factor_tt
 			}
 			add_to_variable = { 
 				ARI_militarized_society_production_speed_arms_factory_factor = 0.05

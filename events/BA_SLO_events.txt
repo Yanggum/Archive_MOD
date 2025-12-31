@@ -175,6 +175,161 @@ country_event = {
 	}
 }
 country_event = { 
+	id = SLO_event.11
+	title = SLO_event.11.t
+	desc = SLO_event.11.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.11.a
+		ai_chance = {
+			base = 10
+		}
+		SLO = {
+			country_event = {
+				id = SLO_event.12
+				hours = 8
+			}
+		}
+	}
+	option = {
+		name = SLO_event.11.b
+		ai_chance = {
+			base = 0
+		}
+		SLO = {
+			country_event = {
+				id = SLO_event.13
+				hours = 8
+			}
+		}
+	}
+}
+country_event = { 
+	id = SLO_event.12
+	title = SLO_event.12.t
+	desc = SLO_event.12.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.12.a
+		ai_chance = {
+			base = 10
+		}
+		POL = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 93
+						state = 94
+						state = 95
+						state = 96
+						state = 784
+					}
+				}
+				remove_core_of = POL
+			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 5
+						state = 763
+						state = 188
+					}
+				}
+				add_claim_by = POL
+			}
+		}
+		custom_effect_tooltip = SLO_tt_POL_core
+	}
+}
+country_event = { 
+	id = SLO_event.13
+	title = SLO_event.13.t
+	desc = SLO_event.13.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.13.a
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+country_event = { 
+	id = SLO_event.14
+	title = SLO_event.14.t
+	desc = SLO_event.14.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.14.a
+		ai_chance = {
+			base = 10
+		}
+		SLO = {
+			country_event = {
+				id = SLO_event.15
+				hours = 8
+			}
+		}
+	}
+	option = {
+		name = SLO_event.14.b
+		ai_chance = {
+			base = 0
+		}
+		SLO = {
+			country_event = {
+				id = SLO_event.16
+				hours = 8
+			}
+		}
+	}
+}
+country_event = { 
+	id = SLO_event.15
+	title = SLO_event.15.t
+	desc = SLO_event.15.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.15.a
+		ai_chance = {
+			base = 10
+		}
+		SLO = {
+			puppet = {
+				target = POL
+			}
+		}
+	}
+}
+country_event = { 
+	id = SLO_event.16
+	title = SLO_event.16.t
+	desc = SLO_event.16.e
+	picture = GFX_report_event_generic_handshake
+    is_triggered_only = yes
+
+	option = {
+		name = SLO_event.16.a
+		ai_chance = {
+			base = 10
+		}
+		leave_faction = yes
+        create_wargoal = {
+            type = puppet_wargoal_focus
+            target = POL
+        }
+	}
+}
+country_event = { 
 	id = SLO_event.21
 	title = SLO_event.21.t
 	desc = SLO_event.21.e
@@ -356,7 +511,11 @@ country_event = {
 
 	option = {
 		name = SLO_event.5.a
-		custom_effect_tooltip = SLO_tt_4
+		SLO = {
+			puppet = {
+				target = ABY
+			}
+		}
 	}
 }
 country_event = { 
@@ -368,7 +527,6 @@ country_event = {
 
 	option = {
 		name = SLO_event.6.a
-		custom_effect_tooltip = SLO_tt_5
 	}
 }
 country_event = { 
@@ -380,12 +538,10 @@ country_event = {
 
 	option = {
 		name = SLO_event.7.a
-		custom_effect_tooltip = SLO_tt_6
-		effect_tooltip = {
-			add_timed_idea = {
-				idea = SLO_slo_worker_idea
-				days = 360
-			}
+		complete_national_focus = SLO_focus_diplomacy_3
+		uncomplete_national_focus = {
+			focus = SLO_focus_diplomacy_2
+			refund_political_power = no
 		}
 	}
 }
@@ -398,8 +554,33 @@ country_event = {
 
 	option = {
 		name = SLO_event.8.a
-		effect_tooltip = {
-			add_ideas = SLO_slo_economic_dependence_idea_ROM
+		ai_chance = {
+			base = 0
+		}
+		ABY = {
+			country_event = {
+				id = SLO_event.5
+				hours = 8
+			}
+		}
+		set_country_flag = SLO_flag_linz_occupy_mission
+		custom_effect_tooltip = SLO_abydos_tt
+	}
+	option = {
+		name = SLO_event.8.b
+		ai_chance = {
+			base = 10
+		}
+		ABY = {
+			country_event = {
+				id = SLO_event.6
+				hours = 8
+			}
+		}
+		complete_national_focus = SLO_focus_diplomacy_3
+		uncomplete_national_focus = {
+			focus = SLO_focus_diplomacy_2
+			refund_political_power = no
 		}
 	}
 }
@@ -416,11 +597,9 @@ country_event = {
 			base = 10
 		}
 		SLO = {
-			set_autonomy = {
-				target = ROOT
-				autonomous_state = autonomy_colony
-				end_wars = no
-				end_civil_wars = no
+			country_event = {
+				id = SLO_event.8
+				hours = 8
 			}
 		}
 	}
@@ -429,70 +608,10 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
-		add_political_power = -200
-		add_stability = -0.10
-		if = {
-			limit = {tag = ROM}
-			remove_ideas = SLO_slo_economic_dependence_idea_ROM
-		}
-		if = {
-			limit = {tag = YUG}
-			remove_ideas = SLO_slo_economic_dependence_idea_YUG
-		}
-		if = {
-			limit = {tag = POL}
-			remove_ideas = SLO_slo_economic_dependence_idea_POL
-		}
-		if = {
-			limit = {tag = HUN}
-			remove_ideas = SLO_slo_economic_dependence_idea_HUN
-		}
-		add_timed_idea = {
-			idea = SLO_slo_economic_chaos_idea
-			days = 720
-		}
-		if = {
-			limit = {
-				tag = ROM
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.91
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = YUG
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.92
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = POL
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.93
-					hours = 6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = HUN
-			}
-			SLO = {
-				country_event = {
-					id = SLO_event.94
-					hours = 6
-				}
+		SLO = {
+			country_event = {
+				id = SLO_event.7
+				hours = 8
 			}
 		}
 	}
@@ -1339,6 +1458,7 @@ country_event = {
 		custom_effect_tooltip = SLO_retire_hlinka_tt
 		hidden_effect = {
 			retire_character = SLO_andrej_hlinka
+			set_country_flag = SLO_flag_hlinka_dead
 		}
 		if = {
 			limit = {
@@ -1347,9 +1467,6 @@ country_event = {
 			remove_ideas = {
 				SLO_idea_hlinka
 			}
-		}
-		add_ideas = {
-			SLO_idea_slovak_father_legecy
 		}
 	}
 }
@@ -1374,6 +1491,9 @@ country_event = {
 		add_popularity = {
 			ideology = democratic
 			popularity = 0.20
+		}
+		add_ideas = {
+			SLO_idea_hlinka
 		}
 		swap_ideas = {
 			remove_idea = SLO_idea_strong_democratic_movement

@@ -2,95 +2,150 @@ political_actions = {
 	SLO_czechoslovakia = {
 		fire_only_once = yes
 		icon = GFX_decision_generic_form_nation
-		allowed = { always = no }
+		allowed = { original_tag = SLO }
+		visible = {
+			has_completed_focus = SLO_focus_diplomacy_1
+		}
 		available = {
 			is_puppet = no
-			controls_state = 69
 			controls_state = 9
-			controls_state = 972
 			controls_state = 75
-			controls_state = 74
 			controls_state = 72
 			controls_state = 70
 			controls_state = 71
-			controls_state = 664
-			controls_state = 73
 		}
 		highlight_states = {
 			highlight_state_targets = {
-				state = 69
 				state = 9
-				state = 972
 				state = 75
-				state = 74
 				state = 72
 				state = 70
 				state = 71
-				state = 664
-				state = 73
 			}
 		}
 		complete_effect = {
 			set_cosmetic_tag = SLO_czechoslovakia_tag
-			add_state_core = 69
 			add_state_core = 9
-			add_state_core = 972
 			add_state_core = 75
-			add_state_core = 74
 			add_state_core = 72
 			add_state_core = 70
 			add_state_core = 71
-			add_state_core = 664
-			add_state_core = 73
-			set_capital = {
+		}
+	}
+	SLO_decision_liberate_silesia = {
+		fire_only_once = yes
+		icon = GFX_decision_generic_form_nation
+		allowed = { original_tag = SLO }
+		visible = {
+			has_completed_focus = SLO_focus_democratic_17
+		}
+		available = {
+			is_puppet = no
+			controls_state = 9
+			controls_state = 75
+		}
+		highlight_states = {
+			highlight_state_targets = {
 				state = 9
-				remember_old_capital = no
+				state = 75
 			}
-			9 = {
-				set_state_name = SLO_czechoslovakia_state_9
+		}
+		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 9
+						state = 75
+					}
+				}
+				transfer_state_to = SIL
 			}
-			75 = {
-				set_state_name = SLO_czechoslovakia_state_75
-			}
-			set_province_name = {
-				id = 11542
-				name = SLO_czechoslovakia_province_11542
-			}
-			set_province_name = {
-				id = 6418
-				name = SLO_czechoslovakia_province_6418
-			}
-			set_province_name = {
-				id = 9569
-				name = SLO_czechoslovakia_province_9569
-			}
-			set_province_name = {
-				id = 3585
-				name = SLO_czechoslovakia_province_3585
-			}
-			set_province_name = {
-				id = 3569
-				name = SLO_czechoslovakia_province_3569
-			}
-			set_province_name = {
-				id = 6562
-				name = SLO_czechoslovakia_province_6562
-			}
-			add_ideas = CZE_skoda_works
-			add_ideas = CZE_divided_nation
-			hidden_effect = {
-				69 = {
-					set_demilitarized_zone = no
+			SLO = {
+				puppet = {
+					target = SIL
 				}
 			}
 		}
 	}
+	SLO_decision_core_czech = {
+		icon = GFX_decision_eng_trade_unions_support
+
+		on_map_mode = map_and_decisions_view
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = { 
+				OR = {
+					state = 9
+					state = 72
+					state = 75
+				}
+			}
+		}
+
+        allowed = {
+            tag = SLO
+        }
+
+		visible = {
+			tag = SLO
+			has_completed_focus = SLO_focus_diplomacy_3
+		}
+
+		available = {
+			FROM = {
+				is_controlled_by = SLO
+			}
+		}
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		remove_effect = {
+			FROM = {
+				add_core_of = SLO
+			}
+		}
+	}
+	SLO_decision_liberate = {
+        priority = 0   
+
+        allowed = {
+            tag = SLO
+        }
+
+		activation = {
+			has_country_flag = SLO_flag_linz_occupy_mission
+		}
+
+		available = {
+			1051 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+    	}
+
+		fire_only_once = yes
+ 
+		days_mission_timeout = 720
+		complete_effect = {
+			add_stability = 0.15
+			custom_effect_tooltip = SLO_complete_tt
+			set_country_flag = SLO_flag_linz_mission_end
+			set_country_flag = SLO_flag_complete
+		}
+		timeout_effect = {
+			add_stability = -0.05
+			set_country_flag = SLO_flag_linz_mission_end
+		}
+    }
 	SLO_czechoslovakia_2 = {
 		fire_only_once = yes
 		icon = GFX_decision_generic_form_nation
 		allowed = { always = no }
 		visible = {
-			#has_idea = CZE_divided_nation
+			has_idea = CZE_divided_nation
 		}
 		available = {
 			has_idea = CZE_divided_nation
@@ -101,4 +156,10 @@ political_actions = {
 		}
 		cost = 200
 	}
+}
+SLO_decision_category_communism = {
+	
+}
+SLO_decision_category_neutrality = {
+	
 }
