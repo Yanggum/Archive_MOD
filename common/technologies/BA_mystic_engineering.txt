@@ -50,12 +50,24 @@ technologies = {
 	}
 	BA_pyroxene_material_semiconductor_engineering = {
 		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
+			has_dlc = "Gotterdammerung"
         }
 		enable_equipments = {
 		}
+
+		on_research_complete = {
+			if = {
+				limit = {
+					has_dlc = "Gotterdammerung"
+				}
+				custom_effect_tooltip = {
+					localization_key = SP_UNLOCK_PROJECT
+					PROJECT = BA_sp_mystic_drone
+				}
+			}
+		}
+
+		research_speed_factor = 0.05
 
 		path = {
 			leads_to_tech = kivotos_dron_tech 
@@ -177,8 +189,21 @@ technologies = {
 			}
         }
 
+		path = {
+			leads_to_tech = kivotos_dron_tech2 
+			research_cost_coeff = 1
+		}
+
+		path = {
+			leads_to_tech = kivotos_pyroxene_main_gun_stabilization_device 
+			research_cost_coeff = 1
+		}
+
+		kivotos_dron = {
+			soft_attack = 0.10
+		}
+
         enable_subunits = {
-			kivotos_dron
         }
 
 		enable_equipments = {
@@ -186,12 +211,53 @@ technologies = {
 
 		folder = {
 			name = mystic_engineering_folder
-			position = { x = 0 y = 14 }
+			position = { x = 0 y = 18 }
 		}
 
         research_cost = 3.5
 
-        start_year = 1941
+        start_year = 1943
+		
+		categories = {
+			mystic_engineering
+		}
+
+        ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
+			}
+			modifier = {
+				factor = 0
+				date < 1944.12.1
+			}
+		}
+    }
+    kivotos_dron_tech2 = {
+		is_special_project_tech = yes
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:BA_sp_mystic_drone
+			}
+        }
+
+        enable_subunits = {
+			
+        }
+
+		enable_equipments = {
+			kivotos_dron_equipment_1
+		}
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 0 y = 23 }
+		}
+
+        research_cost = 2
+
+        start_year = 1948
 		
 		categories = {
 			mystic_engineering
