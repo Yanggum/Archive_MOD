@@ -1,0 +1,680 @@
+add_namespace = TRK_events
+add_namespace = TRK_news_events
+add_namespace = TRK_election_events
+add_namespace = TRK_flavor_events
+
+country_event = {
+	id = TRK_events.1
+	title = TRK_events.1.t
+	desc = TRK_events.1.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	immediate = {
+		clr_global_flag = TRM_auto_conference_1_flag
+	}
+
+	option = { 
+		name = TRK_events.1.a
+	}
+}
+
+country_event = {
+	id = TRK_events.2
+	title = TRK_events.2.t
+	desc = TRK_events.2.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = TRK_start_election_flag
+		set_variable = { TRK_SU_var = 0 }
+		set_variable = { TRK_ST_var = 0 }
+		set_variable = { TRK_FI_var = 0 }
+		set_variable = { TRK_SH_var = 0 }
+	}
+
+	option = { 
+		name = TRK_events.2.a
+		custom_effect_tooltip = tooltip_TRK_people_like_student_union
+		add_to_variable = {
+			var = TRK_SU_var
+			value = 1
+			tooltip = tooltip_TRK_SU_var
+		}
+		custom_effect_tooltip = tooltip_white_line
+		custom_effect_tooltip = tooltip_TRK_people_like_seia
+		add_to_variable = {
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+		custom_effect_tooltip = tooltip_white_line
+		custom_effect_tooltip = tooltip_TRK_people_like_nagisa
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+		custom_effect_tooltip = tooltip_white_line
+		custom_effect_tooltip = tooltip_TRK_people_dont_like_sisterhood
+		add_to_variable = {
+			var = TRK_SH_var
+			value = -1
+			tooltip = tooltip_TRK_SH_var_minus
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			if = {
+				limit = { has_country_flag = TRK_germany_political_rights }
+				country_event = { id = TRK_election_events.5 hours = 02 }
+			}
+			TRN_Urawa_Hanako = {
+				unit_leader_event = { id = TRK_election_events.1 days = 05 } # 하나코의 연설
+			}
+			TRN_Yurizono_Seia = {
+				unit_leader_event = { id = TRK_election_events.2 days = 10 } # 상투스 분파와 구호기사단
+			}
+			TRN_Kirifuji_Nagisa = {
+				unit_leader_event = { id = TRK_election_events.3 days = 15 } # 반게헨나 시위
+			}
+			TRN_Utazumi_Sakurako = {
+				unit_leader_event = { id = TRK_election_events.4 days = 20 } # 구빈 활동
+			}
+			country_event = { id = TRK_election_events.6 days = 25 } # 논란에 휩싸인 유리조노 세이아
+			country_event = { id = TRK_election_events.7 days = 30 } # 학생 연합 열풍
+			country_event = { id = TRK_election_events.8 days = 35 } # 신앙으로 단결
+			country_event = { id = TRK_election_events.9 days = 40 } # 탕아
+			country_event = { id = TRK_election_events.10 days = 45 }
+		}
+	}
+}
+
+country_event = {
+	id = TRK_events.3
+	title = TRK_events.3.t
+	desc = TRK_events.3.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.3.a
+	}
+
+	option = { 
+		name = TRK_events.3.b
+		set_country_flag = TRK_germany_political_rights
+	}
+}
+
+unit_leader_event = { # 하나코
+	id = TRK_election_events.1
+	title = TRK_election_events.1.t
+	desc = TRK_election_events.1.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	immediate = {
+
+	}
+
+	option = { 
+		name = TRK_election_events.1.a
+		add_to_variable = {
+			var = TRK_SU_var
+			value = 1
+			tooltip = tooltip_TRK_SU_var
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.1.b
+		add_to_variable = {
+			var = TRK_SU_var
+			value = -1
+			tooltip = tooltip_TRK_SU_var_minus
+		}
+	}
+}
+
+unit_leader_event = { # 상투스
+	id = TRK_election_events.2
+	title = TRK_election_events.2.t
+	desc = TRK_election_events.2.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	option = {
+		name = TRK_election_events.2.a
+		add_to_variable = {
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+	}
+}
+
+unit_leader_event = { # 필리우스
+	id = TRK_election_events.3
+	title = TRK_election_events.3.t
+	desc = TRK_election_events.3.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	option = {
+		name = TRK_election_events.3.a
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+	}
+	option = {
+		name = TRK_election_events.3.b
+		add_to_variable = {
+			var = TRK_FI_var
+			value = -1
+			tooltip = tooltip_TRK_FI_var_minus
+		}
+	}
+}
+
+unit_leader_event = { # 시스터후드
+	id = TRK_election_events.4
+	title = TRK_election_events.4.t
+	desc = TRK_election_events.4.desc
+
+    	is_triggered_only = yes
+
+	option = {
+		name = TRK_election_events.4.a
+		add_to_variable = {
+			var = TRK_SH_var
+			value = 1
+			tooltip = tooltip_TRK_SH_var
+		}
+	}
+	option = {
+		name = TRK_election_events.4.b
+		add_to_variable = {
+			var = TRK_SH_var
+			value = -1
+			tooltip = tooltip_TRK_SH_var_minus
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.5
+	title = TRK_election_events.5.t
+	desc = TRK_election_events.5.desc
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.5.a
+		set_country_flag = TRK_select_germany_party
+		custom_effect_tooltip = tooltip_TRK_select_germany_party
+	}
+
+	option = { 
+		name = TRK_election_events.5.b
+		add_to_variable = {
+			var = TRK_SU_var
+			value = 1
+			tooltip = tooltip_TRK_SU_var
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.5.c
+		add_to_variable = {
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.5.d
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.6
+	title = TRK_election_events.6.t
+	desc = TRK_election_events.6.desc
+	picture = GFX_report_event_seia_panic
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.6.a
+		add_to_variable = {
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.6.b
+		add_to_variable = {
+			var = TRK_ST_var
+			value = -1
+			tooltip = tooltip_TRK_ST_var_minus
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.7
+	title = TRK_election_events.7.t
+	desc = TRK_election_events.7.desc
+	picture = GFX_report_event_seia_panic
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.7.a
+		add_to_variable = {
+			var = TRK_SU_var
+			value = 1
+			tooltip = tooltip_TRK_SU_var
+		}
+		add_to_variable = {
+			var = TRK_ST_var
+			value = -1
+			tooltip = tooltip_TRK_ST_var_minus
+		}
+		add_to_variable = {
+			var = TRK_FI_var
+			value = -1
+			tooltip = tooltip_TRK_FI_var_minus
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.7.b
+		add_to_variable = {
+			var = TRK_SU_var
+			value = -1
+			tooltip = tooltip_TRK_SU_var_minus
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.8
+	title = TRK_election_events.8.t
+	desc = TRK_election_events.8.desc
+	picture = GFX_report_event_picture_utazumi_sakurako
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.8.a
+		add_to_variable = {
+			var = TRK_SH_var
+			value = 1
+			tooltip = tooltip_TRK_SH_var
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.9
+	title = TRK_election_events.9.t
+	desc = TRK_election_events.9.desc
+	picture = GFX_report_event_nagisa
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.9.a
+		add_to_variable = {
+			var = TRK_FI_var
+			value = -1
+			tooltip = tooltip_TRK_FI_var_minus
+		}
+		add_popularity = { ideology = fascism popularity = 0.05 }
+	}
+
+	option = { 
+		name = TRK_election_events.9.b
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.10
+	title = TRK_election_events.10.t
+	desc = TRK_election_events.10.desc
+	picture = GFX_report_event_nagisa
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.10.a
+		add_to_variable = {
+			var = TRK_SU_var
+			value = 1
+			tooltip = tooltip_TRK_SU_var
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.10.b
+		add_to_variable = {
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+
+	}
+
+	option = { 
+		name = TRK_election_events.10.c
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+
+	}
+
+	option = { 
+		name = TRK_election_events.10.d
+		add_to_variable = {
+			var = TRK_SH_var
+			value = 1
+			tooltip = tooltip_TRK_SH_var
+		}
+	}
+}
+
+country_event = { # 선거 결과
+	id = TRK_election_events.11
+	title = TRK_election_events.11.t
+	desc = TRK_election_events.11.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.11.a
+		trigger = {
+			check_variable = { TRK_SU_var > TRK_ST_var }
+			check_variable = { TRK_SU_var > TRK_FI_var }
+			check_variable = { TRK_SU_var > TRK_SH_var }
+		}
+		TRN_Urawa_Hanako = {
+			unit_leader_event = { id = TRK_election_events.12 }
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.11.b
+		trigger = {
+			check_variable = { TRK_ST_var > TRK_SU_var }
+			check_variable = { TRK_ST_var > TRK_FI_var }
+			check_variable = { TRK_ST_var > TRK_SH_var }
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.11.c
+		trigger = {
+			check_variable = { TRK_FI_var > TRK_SU_var }
+			check_variable = { TRK_FI_var > TRK_ST_var }
+			check_variable = { TRK_FI_var > TRK_SH_var }
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.11.d
+		trigger = {
+			check_variable = { TRK_SH_var > TRK_SU_var }
+			check_variable = { TRK_SH_var > TRK_ST_var }
+			check_variable = { TRK_SH_var > TRK_FI_var }
+		}
+	}
+	option = {
+		name = TRK_election_events.11.e
+		trigger = {
+			NOT = {
+				check_variable = { TRK_SH_var > TRK_SU_var }
+				check_variable = { TRK_SH_var > TRK_ST_var }
+				check_variable = { TRK_SH_var > TRK_FI_var }
+			}
+			NOT = {
+				check_variable = { TRK_FI_var > TRK_SU_var }
+				check_variable = { TRK_FI_var > TRK_ST_var }
+				check_variable = { TRK_FI_var > TRK_SH_var }
+			}
+			NOT = {
+				check_variable = { TRK_ST_var > TRK_SU_var }
+				check_variable = { TRK_ST_var > TRK_FI_var }
+				check_variable = { TRK_ST_var > TRK_SH_var }
+			}
+			NOT = {
+				check_variable = { TRK_SU_var > TRK_ST_var }
+				check_variable = { TRK_SU_var > TRK_FI_var }
+				check_variable = { TRK_SU_var > TRK_SH_var }
+			}
+		}
+		custom_effect_tooltip = tooltip_TRK_election_events_11_e
+		country_event = TRK_election_events.13
+	}
+}
+
+unit_leader_event = { # 취임식 연설
+	id = TRK_election_events.12
+	title = TRK_election_events.12.t
+	desc = {
+		trigger = {
+			check_variable = { TRK_SU_var > TRK_ST_var }
+			check_variable = { TRK_SU_var > TRK_FI_var }
+			check_variable = { TRK_SU_var > TRK_SH_var }
+		}
+		text = TRK_election_events.12.desc.hanako
+	}
+	desc = {
+		trigger = {
+			check_variable = { TRK_ST_var > TRK_SU_var }
+			check_variable = { TRK_ST_var > TRK_FI_var }
+			check_variable = { TRK_ST_var > TRK_SH_var }
+		}
+		text = TRK_election_events.12.desc.seia
+	}
+	desc = {
+		trigger = {
+			check_variable = { TRK_FI_var > TRK_SU_var }
+			check_variable = { TRK_FI_var > TRK_ST_var }
+			check_variable = { TRK_FI_var > TRK_SH_var }
+		}
+		text = TRK_election_events.12.desc.seia
+	}
+	desc = {
+		trigger = {
+			check_variable = { TRK_SH_var > TRK_SU_var }
+			check_variable = { TRK_SH_var > TRK_ST_var }
+			check_variable = { TRK_SH_var > TRK_FI_var }
+		}
+		text = TRK_election_events.12.desc.sakurako
+	}
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.12.a
+		trigger = {
+			check_variable = { TRK_SU_var > TRK_ST_var }
+			check_variable = { TRK_SU_var > TRK_FI_var }
+			check_variable = { TRK_SU_var > TRK_SH_var }
+		}
+		add_country_leader_role = {
+			character = TRN_Urawa_Hanako
+			promote_leader = yes
+			country_leader = {
+				ideology = trinity_social_liberal
+				expire = "1965.1.1.1"
+				traits = { }
+			}
+		}
+		complete_national_focus = TRK_student_union
+		set_party_name = {
+			ideology = democratic
+			long_name = trinity_social_liberal_party_long
+			name = trinity_social_liberal_party
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.12.b 
+		trigger = {
+			check_variable = { TRK_ST_var > TRK_SU_var }
+			check_variable = { TRK_ST_var > TRK_FI_var }
+			check_variable = { TRK_ST_var > TRK_SH_var }
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.12.c 
+		trigger = {
+			check_variable = { TRK_FI_var > TRK_SU_var }
+			check_variable = { TRK_FI_var > TRK_ST_var }
+			check_variable = { TRK_FI_var > TRK_SH_var }
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.12.d
+		trigger = {
+			check_variable = { TRK_SH_var > TRK_SU_var }
+			check_variable = { TRK_SH_var > TRK_ST_var }
+			check_variable = { TRK_SH_var > TRK_FI_var }
+		}
+	}
+}
+
+country_event = {
+	id = TRK_election_events.13
+	title = TRK_election_events.13.t
+	desc = TRK_election_events.13.desc
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_election_events.13.a 
+		set_variable = { TRK_SU_var = 99 }
+	}
+
+	option = { 
+		name = TRK_election_events.13.b
+		set_variable = { TRK_ST_var = 99 }
+	}
+
+	option = { 
+		name = TRK_election_events.13.c 
+		set_variable = { TRK_FI_var = 99 }
+	}
+
+	option = { 
+		name = TRK_election_events.13.d
+		set_variable = { TRK_SH_var = 99 }
+	}
+}
+
+country_event = {
+	id = TRK_flavor_events.1
+	title = TRK_flavor_events.1.t
+	desc = TRK_flavor_events.1.desc
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_flavor_events.1.a 
+	}
+}
+
+country_event = {
+	id = TRK_flavor_events.2
+	title = TRK_flavor_events.2.t
+	desc = TRK_flavor_events.2.desc
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_flavor_events.2.a 
+	}
+}
+
+country_event = {
+	id = TRK_flavor_events.3
+	title = TRK_flavor_events.3.t
+	desc = TRK_flavor_events.3.desc
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_flavor_events.3.a
+	}
+}
+
+country_event = {
+	id = TRK_flavor_events.4
+	title = TRK_flavor_events.4.t
+	desc = TRK_flavor_events.4.desc
+	picture = GFX_report_event_picture_utazumi_sakurako
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_flavor_events.4.a
+	}
+}
+
+
+# 
+news_event = {
+	id = TRK_news_events.1
+	title = TRK_news_events.1.t
+	desc = TRK_news_events.1.desc
+	picture = GFX_news_event_trinity_street_ruin
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = TRK_news_events.1.a
+		trigger = {
+			Kivotos_tag = yes
+		}
+	}
+
+	option = {
+		name = TRK_news_events.1.b
+		trigger = {
+			Kivotos_tag = no
+		}
+	}
+}

@@ -1,4 +1,6 @@
-﻿focus_tree = {
+﻿#!gfx:interface\BA_goals.gfx
+
+focus_tree = {
     id = TRK_generic_focus
 	
 	country = {
@@ -17,14 +19,880 @@
 	reset_on_civilwar = no
 
 	initial_show_position = {
-		focus = TRK_industrial_effort
+		focus = TRK_after_the_dust_settles
 	}
 
 	focus = {
-        id = TRK_army_effort
-        text = army_effort
-		icon = GFX_goal_generic_allies_build_infantry
+		id = TRK_after_the_dust_settles
+		icon = GFX_focus_TRN_cause_of_trinity_no_sword
+		cost = 5
+
+		x = 10
+		y = 0
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { 
+			base = 100 
+		}
+
+		completion_reward = {
+			add_political_power = 100
+			if = {
+				limit = {
+					TRM = {
+						OR = {
+							has_character = TRN_Kirifuji_Nagisa
+							has_character = TRN_Yurizono_Seia
+							has_character = TRN_Kenzaki_Tsurugi
+							has_character = TRN_Hanekawa_Hasumi
+							has_character = TRN_nakamasa_ichika
+							has_character = TRN_shizuyama_mashiro
+							has_character = TRN_shimoe_koharu
+							has_character = TRN_Utazumi_Sakurako
+							has_character = TRN_Wakaba_Hinata
+							has_character = TRN_Iochi_Mari
+							has_character = TRN_Aomori_Mine
+							has_character = TRN_Sumi_Serina
+							has_character = TRN_Asagao_Hanae
+							has_character = TRN_Urawa_Hanako
+							has_character = TRN_Ajitani_Hifumi
+						}
+					}
+				}
+				TRM = {
+					custom_effect_tooltip = tooltip_white_line
+					if = {
+						limit = { has_character = TRN_Kirifuji_Nagisa }
+						TRN_Kirifuji_Nagisa = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Yurizono_Seia }
+						TRN_Yurizono_Seia = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Kenzaki_Tsurugi }
+						TRN_Kenzaki_Tsurugi = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Hanekawa_Hasumi }
+						TRN_Hanekawa_Hasumi = { 
+							hidden_effect = {
+								if = {
+									limit = { has_advisor_role = political_advisor }
+									remove_advisor_role = { slot = political_advisor }
+								}
+							}
+							set_nationality = ROOT 
+						}
+					}
+					if = {
+						limit = { has_character = TRN_nakamasa_ichika }
+						TRN_nakamasa_ichika = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_shizuyama_mashiro }
+						TRN_shizuyama_mashiro = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_shimoe_koharu }
+						TRN_shimoe_koharu = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Utazumi_Sakurako }
+						TRN_Utazumi_Sakurako = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Wakaba_Hinata }
+						TRN_Wakaba_Hinata = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Iochi_Mari }
+						TRN_Iochi_Mari = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Aomori_Mine }
+						TRN_Aomori_Mine = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Sumi_Serina }
+						TRN_Sumi_Serina = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Asagao_Hanae }
+						TRN_Asagao_Hanae = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Urawa_Hanako }
+						TRN_Urawa_Hanako = { set_nationality = ROOT }
+					}
+					if = {
+						limit = { has_character = TRN_Ajitani_Hifumi }
+						TRN_Ajitani_Hifumi = { set_nationality = ROOT }
+					}
+				}
+			}
+			if = {
+				limit = { has_character = TRN_Yurizono_Seia }
+				TRN_Yurizono_Seia = {
+					if = {
+						limit = { has_advisor_role = political_advisor }
+						remove_advisor_role = { slot = political_advisor }
+					}
+					add_advisor_role = {
+						advisor = {
+							slot = political_advisor
+							idea_token = TRN_Yurizono_Seia_political_advisor
+							traits = { TRN_sanctus_faction_head }
+							cost = 150
+							desc = TRK_yurijono_seia_desc
+						}
+					}
+				}
+			}
+			if = {
+				limit = { has_character = TRN_Kirifuji_Nagisa }
+				TRN_Kirifuji_Nagisa = {
+					if = {
+						limit = { has_advisor_role = political_advisor }
+						remove_advisor_role = { slot = political_advisor }
+					}
+					add_advisor_role = {
+						advisor = {
+							slot = political_advisor
+							idea_token = TRN_Kirifuji_Nagisa_political_advisor
+							traits = { TRN_filius_faction_head }
+							cost = 150
+							desc = TRK_kirifuji_Nagisa_desc
+						}
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRK_new_constitution
+		icon = GFX_focus_ARG_defense_and_democracy
+		prerequisite = { focus = TRK_after_the_dust_settles }
+		cost = 5
+
+		relative_position_id = TRK_after_the_dust_settles
+
+		x = 0
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		select_effect = {
+			country_event = { id = TRK_flavor_events.1 days = 05 }
+			country_event = { id = TRK_flavor_events.2 days = 10 }
+			country_event = { id = TRK_flavor_events.3 days = 15 }
+			country_event = { id = TRK_flavor_events.4 days = 20 }
+			country_event = { id = TRK_events.3 days = 25 }
+		}
+
+		completion_reward = {
+			add_ideas = TRK_democratic_government_ns
+		}
+	}
+
+	focus = {
+		id = TRK_host_election
+		icon = GFX_focus_TRK_host_election
+		prerequisite = { focus = TRK_new_constitution }
+		cost = 7.2
+
+		relative_position_id = TRK_new_constitution
+
+		x = 0
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		select_effect = {
+			country_event = TRK_events.2
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = TRK_host_election_tt
+
+			hidden_effect = {
+				country_event = {
+					id = TRK_election_events.11
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRK_student_union
+		icon = GFX_focus_TRN_fate_of_small_club
+		prerequisite = { focus = TRK_host_election }
+		cost = 6
+
+		relative_position_id = TRK_host_election
+
+		x = -6
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
+			IF = {
+				limit = { has_character = TRN_Urawa_Hanako }
+				has_country_leader = {
+					character = TRN_Urawa_Hanako
+					ruling_only = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = TRK_weaks_democratic_government_ns
+				remove_idea = TRK_democratic_government_ns
+			}
+			hidden_effect = {
+				TRN_Urawa_Hanako = {
+					if = {
+						limit = { has_advisor_role = political_advisor }
+						remove_advisor_role = { slot = political_advisor }
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRK_student_union_01
+		icon = GFX_focus_TRN_fate_of_small_club
+		prerequisite = { focus = TRK_student_union }
+		cost = 6
+
+		relative_position_id = TRK_student_union
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRK_student_union_02
+		icon = GFX_focus_TRN_fate_of_small_club
+		prerequisite = { 
+			focus = TRK_student_union
+			focus = TRK_sanctus
+			focus = TRK_filius
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_student_union
+
 		x = 1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRK_student_union_03
+		icon = GFX_focus_TRN_fate_of_small_club
+		prerequisite = { focus = TRK_student_union_01 }
+		prerequisite = { focus = TRK_student_union_02 }
+		cost = 6
+
+		relative_position_id = TRK_student_union
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus
+		icon = GFX_focus_TRK_sanctus
+		prerequisite = { focus = TRK_host_election }
+		cost = 6
+
+		relative_position_id = TRK_host_election
+
+		x = -2
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
+			IF = {
+				limit = { has_character = TRN_Yurizono_Seia }
+				has_country_leader = {
+					character = TRN_Yurizono_Seia
+					ruling_only = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = TRK_weaks_democratic_government_ns
+				remove_idea = TRK_democratic_government_ns
+			}
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus_focus_01
+		icon = GFX_focus_TRK_sanctus
+		prerequisite = { 
+			focus = TRK_sanctus
+			focus = TRK_student_union
+			focus = TRK_filius
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_sanctus
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus_focus_02
+		icon = GFX_focus_TRK_sanctus
+		prerequisite = { focus = TRK_sanctus }
+		prerequisite = { focus = TRK_sanctus_focus_01}
+		cost = 6
+
+		relative_position_id = TRK_sanctus
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus_focus_03
+		icon = GFX_focus_TRK_sanctus
+		prerequisite = { 
+			focus = TRK_sanctus
+			focus = TRK_student_union
+			focus = TRK_filius
+		}
+		cost = 6
+
+		relative_position_id = TRK_sanctus
+
+		x = 1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_filius_focus_01 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus_focus_04
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = { 
+			focus = TRK_sanctus
+			focus = TRK_student_union
+			focus = TRK_filius
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_sanctus
+
+		x = -2
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius
+		icon = GFX_focus_TRK_filius
+		prerequisite = { focus = TRK_host_election }
+		cost = 6
+
+		relative_position_id = TRK_host_election
+
+		x = 2
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
+			IF = {
+				limit = { has_character = TRN_Kirifuji_Nagisa }
+				has_country_leader = {
+					character = TRN_Kirifuji_Nagisa
+					ruling_only = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = TRK_weaks_democratic_government_ns
+				remove_idea = TRK_democratic_government_ns
+			}
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_focus_01
+		icon = GFX_focus_TRK_filius
+		prerequisite = { 
+			focus = TRK_filius
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_filius
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_sanctus_focus_03 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_focus_02
+		icon = GFX_focus_TRK_filius
+		prerequisite = { 
+			focus = TRK_sanctus_focus_03
+			focus = TRK_filius_focus_01
+		}
+		cost = 6
+
+		relative_position_id = TRK_filius
+
+		x = -2
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_focus_03
+		icon = GFX_focus_TRK_filius
+		prerequisite = { focus = TRK_filius }
+		prerequisite = { focus = TRK_filius_focus_01 }
+		cost = 6
+
+		relative_position_id = TRK_filius
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_focus_04
+		icon = GFX_focus_TRK_filius
+		prerequisite = {
+			focus = TRK_filius
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_filius
+
+		x = 1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_focus_05
+		icon = GFX_focus_TRK_filius
+		prerequisite = { focus = TRK_filius_focus_04 }
+		prerequisite = { focus = TRK_sisterhood_focus_01}
+		cost = 6
+
+		relative_position_id = TRK_filius
+
+		x = 2
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sisterhood
+		icon = GFX_focus_TRK_sisterhood
+		prerequisite = { focus = TRK_host_election }
+		cost = 6
+
+		relative_position_id = TRK_host_election
+
+		x = 6
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+			custom_trigger_tooltip = {
+				tooltip = unlock_focuses
+				always = no
+			}
+			IF = {
+				limit = { has_character = TRN_Utazumi_Sakurako }
+				has_country_leader = {
+					character = TRN_Utazumi_Sakurako
+					ruling_only = yes
+				}
+			}
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = TRK_weaks_democratic_government_ns
+				remove_idea = TRK_democratic_government_ns
+			}
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sisterhood_focus_01
+		icon = GFX_focus_TRK_sisterhood
+		prerequisite = { 
+			focus = TRK_sisterhood
+			focus = TRK_sanctus
+			focus = TRK_filius
+		}
+		cost = 6
+
+		relative_position_id = TRK_sisterhood
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sisterhood_focus_02
+		icon = GFX_focus_TRK_sisterhood
+		prerequisite = { 
+			focus = TRK_sisterhood
+		}
+		cost = 6
+
+		relative_position_id = TRK_sisterhood
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sisterhood_focus_03
+		icon = GFX_focus_TRK_sisterhood
+		prerequisite = { focus = TRK_sisterhood_focus_02 focus = TRK_filius_focus_05 focus = TRK_filius_focus_03 }
+		prerequisite = { }
+		cost = 6
+
+		relative_position_id = TRK_sisterhood_focus_02
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_filius_ending_focus_01
+		icon = GFX_focus_TRK_filius
+		prerequisite = { focus = TRK_filius_focus_03 }
+		prerequisite = { focus = TRK_filius_focus_05 }
+		cost = 6
+
+		relative_position_id = TRK_filius_focus_03
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_sanctus_ending_focus_01 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_sanctus_ending_focus_01
+		icon = GFX_focus_TRK_sanctus
+		prerequisite = { 
+			focus = TRK_sanctus_focus_02
+			focus = TRK_student_union_03
+			focus = TRK_filius_focus_03
+		}
+		cost = 6
+
+		relative_position_id = TRK_sanctus_focus_02
+
+		x = 0
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_student_union_ending_focus_01 focus = TRK_filius_ending_focus_01 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_student_union_ending_focus_01
+		icon = GFX_focus_TRN_fate_of_small_club
+		prerequisite = { 
+			focus = TRK_student_union_03
+			focus = TRK_sanctus_focus_02
+		}
+		cost = 6
+
+		relative_position_id = TRK_student_union_03
+
+		x = 1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_sanctus_ending_focus_01 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+        	id = TRK_army_effort
+        	text = army_effort
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 31
 		y = 0
 		cost = 10
 		search_filters = {  FOCUS_FILTER_RESEARCH }
@@ -275,7 +1143,7 @@
         id = TRK_aviation_effort
         text = aviation_effort
 		icon = GFX_goal_generic_build_airforce
-		x = 5
+		x = 35
 		y = 0
 		cost = 10
 		
@@ -589,7 +1457,7 @@
         id = TRK_naval_effort
         text = naval_effort
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 9
+		x = 39
 		y = 0
 		cost = 10
 
@@ -948,7 +1816,7 @@
         id = TRK_industrial_effort
         text = industrial_effort
 		icon = GFX_goal_generic_production
-		x = 13
+		x = 43
 		y = 0
 		cost = 10
 
