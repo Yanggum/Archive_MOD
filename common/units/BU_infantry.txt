@@ -1047,7 +1047,7 @@ sub_units = {
 		combat_width = 0
 	
 		#Size Definitions
-		max_strength = 2
+		max_strength = 8
 		max_organisation = 20
 		default_morale = 0.3
 		manpower = 100
@@ -1107,4 +1107,123 @@ sub_units = {
 		}
 		same_support_type = recon # blocks adding other recon types to template
 	}
+
+	halo_engineer = {
+        abbreviation = "HEN"
+        sprite = halo_infantry # 혹은 Halo_engineer 스프라이트가 있다면 변경
+        map_icon_category = infantry
+        
+        priority = 0
+        ai_priority = 0
+        active = no
+        affects_speed = no
+
+        type = {
+            infantry
+            support
+        }
+        
+        group = support
+        
+        categories = {
+            category_halo
+            category_support_battalions
+            category_front_line
+            category_army
+            category_mythic
+        }
+
+        combat_width = 0
+        
+        # --- Size & Durability (설정 반영: 방탄 피부) ---
+        # 일반 공병(HP 2)보다 훨씬 튼튼하게 설정하여 지원중대임에도 내구도에 기여
+		max_strength = 8
+        max_organisation = 30
+        default_morale = 0.40
+        manpower = 300
+        training_time = 140
+
+        # --- Misc Abilities ---
+        weight = 0.1
+        supply_consumption = 0.03 # 일반 공병(0.02)보다 높음 (특수 종족)
+        
+        entrenchment = 2 # 참호 등급 (일반 공병과 동일)
+        
+        # 보병 전체에 참호 보너스 제공
+        battalion_mult = {
+            category = category_all_infantry
+            entrenchment = 0.20
+            add = yes
+        }
+		
+        # 헤일로랑 같이 사용시 시너지 발생
+        battalion_mult = {
+            category = category_halo
+			soft_attack = 2
+            add = yes
+        }
+
+        # --- Combat Stats (설정 반영: 날렵함 + 방탄) ---
+        defense = 2.0      # 일반 공병(0.1)보다 월등히 높음 (자체 방어력)
+        breakthrough = 1.5 # 일반 공병(0.5)보다 높음 (날렵한 돌파 지원)
+        
+        # 지원중대 특유의 공격력 페널티는 유지하되 조금 완화하거나 그대로 둠
+        soft_attack = -0.2 # 일반(-0.5)보다 덜 깎음 (전투 가능 인원)
+
+        essential = {
+            support_equipment
+        }
+
+        # --- Equipment Cost ---
+        # 일반 보병장비 대신 키보토스 장비 사용
+        need = {
+			infantry_equipment = 10
+            kivotos_infantry_equipment = 15
+            support_equipment = 30
+        }
+
+        can_be_parachuted = yes # 공수 가능
+
+        # --- Terrain Modifiers (공병의 핵심 역할 + 날렵함) ---
+        # 헤일로 보병의 약점(강, 늪지)을 보완하고 강점(요새, 시가지)을 극대화
+
+        fort = {
+            attack = 0.20   # 일반(0.1)보다 높음 (요새 돌파 전문)
+            defence = 0.30  # 일반(0.25)보다 높음
+        }
+
+        urban = {
+            movement = 0.05 # 날렵함 반영
+        }
+
+        river = {
+            defence = 0.25
+            movement = 0.25 # 도하 지원 (일반 공병과 동일)
+            # attack = 0.1 # 필요시 도하 공격력 추가 고려
+        }
+
+        marsh = {
+            defence = 0.25
+            movement = 0.20
+        }
+
+        forest = {
+			defence = 0.25
+			movement = 0.05
+        }
+
+        jungle = {
+            defence = 0.25
+        }
+
+        hills = {
+            defence = 0.10
+        }
+        
+        amphibious = {
+            attack = 0.15 # 상륙 지원
+        }
+
+        same_support_type = engineer # blocks adding other recon types to template
+    }
 }
