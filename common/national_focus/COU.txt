@@ -1185,11 +1185,28 @@ focus_tree = {
 		}
 	}
 	
+	focus = {
+		id = COU_establish_oss #전략사무국
+		icon = GFX_COU_focus_landing_force
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_shaking_royalty }
+		#prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		    
+		}
+	}
+	
     ##자유 장교단 무력화 
     focus = {
 		id = COU_reduction_of_administrative_committee_authority
 		icon = GFX_focus_COU_then_the_ninjas
-		x = 0
+		x = 4
 		y = 1
 		cost = 5
 		relative_position_id = COU_shaking_royalty
@@ -1218,51 +1235,25 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_establish_oss #전략사무국
-		icon = GFX_COU_focus_landing_force
-		x = 6
-		y = 1
-		cost = 5
-		relative_position_id = COU_shaking_royalty
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_shaking_royalty }
-		#prerequisite = { focus = COU_reorganizing_the_defense_office }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = {
-		id = COU_establish_spa #SRT 전략사무국 
-		icon = GFX_focus_COU_rework_srt
-		x = 6
-		y = 2
-		cost = 5
-		relative_position_id = COU_shaking_royalty
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_establish_oss }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = {
 	    id = COU_focus_battle_for_lost_technology #로스트 테크놀로지 현지화 
 		icon = GFX_focus_research2
 		x = 2
 		y = 2
-		cost = 5
+		cost = 8
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH
 		}
-		prerequisite = { focus = COU_establish_oss }
+		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
-		    
+		    add_tech_bonus = {
+                name = mystic_engineering_bonus
+                bonus = 0.5
+                uses = 1
+                category = mystic_engineering
+            }
+			custom_effect_tooltip = enter_tt
+		    add_ideas = COU_local_lost_techonology
 		}
 	}
 	
@@ -1278,7 +1269,10 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_battle_for_lost_technology }
 		completion_reward = {
-		    
+		    swap_ideas = {
+			    remove_idea = COU_local_lost_techonology
+   			    add_idea = COU_local_future_techonology
+			}
 		}
 	}
 	
@@ -1297,6 +1291,7 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_electronics_innovation }
 		completion_reward = {
 			add_stability = 0.05
+			custom_effect_tooltip = enter_tt
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_industry
@@ -1348,7 +1343,7 @@ focus_tree = {
 	focus = {
 		id = COU_focus_ask_to_join_lon #국제연맹 참관 허용 
 		icon = GFX_focus_generic_league_of_nations
-		x = 9
+		x = 5
 		y = 2
 		cost = 5
 		relative_position_id = COU_shaking_royalty
@@ -1356,16 +1351,44 @@ focus_tree = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
 		mutually_exclusive = { focus = COU_focus_burden_of_gsc }
-		prerequisite = { focus = COU_establish_oss }
+		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
-		    
+		    ENG = { 
+			    add_opinion_modifier = {
+					target = COU
+					modifier = medium_increase 
+				}
+			}
+			FRA = { 
+			    add_opinion_modifier = {
+					target = COU
+					modifier = medium_increase 
+				}
+			}
+			SOV = { 
+			    add_opinion_modifier = {
+					target = COU
+					modifier = medium_increase 
+				}
+			}
+			ITA = { 
+			    add_opinion_modifier = {
+					target = COU
+					modifier = medium_increase 
+				}
+			}
+			custom_effect_tooltip = enter_tt
+			add_timed_idea = {
+			    days = 720
+				idea = COU_league_of_nations_spectator
+			}
 		}
 	}
 	
 	focus = {
 		id = COU_focus_burden_of_gsc #총학생회의 짐 
 		icon = GFX_focus_generic_sympathetic_judges
-		x = 11
+		x = 7
 		y = 2
 		cost = 5
 		relative_position_id = COU_shaking_royalty
@@ -1373,7 +1396,7 @@ focus_tree = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
 		mutually_exclusive = { focus = COU_focus_ask_to_join_lon }
-		prerequisite = { focus = COU_establish_oss }
+		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
 		    
 		}
@@ -1382,14 +1405,14 @@ focus_tree = {
 	focus = {
 		id = COU_focus_on_europe #학생회의 권위 이용 
 		icon = GFX_focus_usa_focus_on_europe
-		x = 7
+		x = 6
 		y = 3
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_establish_spa focus = COU_focus_ask_to_join_lon focus = COU_focus_burden_of_gsc }
+		prerequisite = { focus = COU_focus_ask_to_join_lon focus = COU_focus_burden_of_gsc }
 		completion_reward = {
 		    
 		}
@@ -1398,7 +1421,7 @@ focus_tree = {
 	focus = { #크로노스 통제 
 		id = COU_focus_lock_the_kronous
 		icon = GFX_focus_lock_the_news
-		x = 7
+		x = 6
 		y = 4
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1417,7 +1440,7 @@ focus_tree = {
 	focus = { #룩셈부르크를 게헨나에서 분리 
 		id = COU_focus_liberate_luxembourg_from_gehenna
 		icon = GFX_focus_COU_dog_of_flanders
-		x = 5
+		x = 4
 		y = 4
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1435,7 +1458,7 @@ focus_tree = {
 	focus = { #동부 비상사태
 		id = COU_focus_eastern_emergency
 		icon = GFX_goal_tmr_first_focus
-		x = 9
+		x = 8
 		y = 4
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1453,7 +1476,7 @@ focus_tree = {
 	focus = { #색채 대비 
 		id = COU_focus_the_colour_emergency
 		icon = GFX_focus_GEI_arona
-		x = 6
+		x = 5
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1472,7 +1495,7 @@ focus_tree = {
 	focus = { #기계군단에 대응 
 		id = COU_focus_the_decagramaton_emergency
 		icon = GFX_focus_shutup
-		x = 8
+		x = 7
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1485,6 +1508,38 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_liberate_luxembourg_from_gehenna focus = COU_focus_eastern_emergency }
 		completion_reward = {
 			
+		}
+	}
+	
+	focus = {
+		id = COU_establish_spa #폭스소대 사면  
+		icon = GFX_focus_COU_rework_srt
+		x = 9
+		y = 2
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_establish_dietsland_srt #현지인 소대   
+		icon = GFX_focus_generic_flight_instructors
+		x = 9
+		y = 3
+		cost = 5
+		relative_position_id = COU_shaking_royalty
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_establish_spa }
+		completion_reward = {
+		    
 		}
 	}
 
@@ -1527,7 +1582,7 @@ focus_tree = {
 		id = COU_focus_invite_collaboraters_to_high_command #최고사령부에 페르피두스 등용 
 		icon = GFX_focus_generic_military_mission
 		x = 0
-		y = 3
+		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1543,7 +1598,7 @@ focus_tree = {
 		id = COU_focus_bought_their_weapons #현지 군수물자 확보 
 		icon = GFX_focus_generic_money_for_equipment
 		x = -1
-		y = 4
+		y = 5
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1559,7 +1614,7 @@ focus_tree = {
 		id = COU_focus_assumption_of_hemberg_military_factory #헴브뤼흐 조병창 재가동 
 		icon = GFX_focus_generic_reorient_production
 		x = 1
-		y = 4
+		y = 5
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1575,7 +1630,7 @@ focus_tree = {
 		id = COU_focus_order_to_fn_herstal #FN 에르스탈에 지시 
 		icon = GFX_focus_BEL_fn_herstal
 		x = 3
-		y = 4
+		y = 5
 		cost = 10
 		overlay = GFX_focus_fast_overlay_generic_clock
 		relative_position_id = COU_reorganizing_the_defense_office
