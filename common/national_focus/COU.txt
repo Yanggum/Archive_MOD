@@ -1193,12 +1193,26 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_shaking_royalty }
 		#prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-		    
+		    if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				if = {
+					limit = {
+						has_intelligence_agency = no
+					}
+					create_intelligence_agency = yes
+				}
+				add_ideas = COU_establish_oss_idea
+			}
+			else = {
+				add_ideas = COU_establish_oss_idea_vanilla
+			}
 		}
 	}
 	
@@ -1213,7 +1227,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_shaking_royalty }
 		completion_reward = {
@@ -1265,10 +1279,16 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH
 		}
 		prerequisite = { focus = COU_focus_battle_for_lost_technology }
 		completion_reward = {
+		    add_tech_bonus = {
+			    name = COU_focus_electronics_innovation
+                bonus = 1
+                uses = 2
+                category = electronics
+            }
 		    swap_ideas = {
 			    remove_idea = COU_local_lost_techonology
    			    add_idea = COU_local_future_techonology
@@ -1323,7 +1343,7 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH
 		}
 		prerequisite = { focus = COU_focus_battle_for_lost_technology }
 		completion_reward = {
@@ -1348,30 +1368,16 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_POLITICAL
+		}
+		available = {
+		    NOT = { has_global_flag = LoN_disbanded_flag }
 		}
 		mutually_exclusive = { focus = COU_focus_burden_of_gsc }
 		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
-		    ENG = { 
-			    add_opinion_modifier = {
-					target = COU
-					modifier = medium_increase 
-				}
-			}
-			FRA = { 
-			    add_opinion_modifier = {
-					target = COU
-					modifier = medium_increase 
-				}
-			}
-			SOV = { 
-			    add_opinion_modifier = {
-					target = COU
-					modifier = medium_increase 
-				}
-			}
-			ITA = { 
+		    every_country = {
+    			limit = { is_league_of_nations_member = yes}
 			    add_opinion_modifier = {
 					target = COU
 					modifier = medium_increase 
@@ -1382,6 +1388,7 @@ focus_tree = {
 			    days = 720
 				idea = COU_league_of_nations_spectator
 			}
+			country_event = COU_event.8
 		}
 	}
 	
@@ -1393,12 +1400,23 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_POLITICAL
 		}
 		mutually_exclusive = { focus = COU_focus_ask_to_join_lon }
 		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
-		    
+		    every_country = {
+    			limit = { Kivotos_tag = yes }
+			    add_opinion_modifier = {
+					target = COU
+					modifier = medium_increase 
+				}
+			}
+			custom_effect_tooltip = enter_tt
+			add_timed_idea = {
+			    days = 720
+				idea = COU_duty_of_gsc
+			}
 		}
 	}
 	
@@ -1410,11 +1428,14 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_WAR_SUPPORT 
 		}
 		prerequisite = { focus = COU_focus_ask_to_join_lon focus = COU_focus_burden_of_gsc }
 		completion_reward = {
-		    
+		    swap_ideas = {
+			    remove_idea = COU_name_of_the_student_council
+   			    add_idea = COU_name_of_the_student_council_upgraded
+			}
 		}
 	}
 	
@@ -1428,7 +1449,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
@@ -1447,7 +1468,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
@@ -1465,7 +1486,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
@@ -1483,7 +1504,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_POLITICAL
 		}
 		mutually_exclusive = { focus = COU_focus_the_decagramaton_emergency }
 		prerequisite = { focus = COU_focus_liberate_luxembourg_from_gehenna focus = COU_focus_eastern_emergency }
@@ -1502,7 +1523,7 @@ focus_tree = {
 		available = {
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_POLITICAL
 		}
 		mutually_exclusive = { focus = COU_focus_the_colour_emergency }
 		prerequisite = { focus = COU_focus_liberate_luxembourg_from_gehenna focus = COU_focus_eastern_emergency }
@@ -1516,14 +1537,17 @@ focus_tree = {
 		icon = GFX_focus_COU_rework_srt
 		x = 9
 		y = 2
-		cost = 5
+		cost = 8
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_WAR_SUPPORT 
 		}
 		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
-		    
+		    add_political_power = 25 
+			add_war_support = 0.05 
+			country_event = COU_event_military.4
+		    custom_effect_tooltip = COU_tooltip_establish_spa
 		}
 	}
 	
@@ -1535,7 +1559,7 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_MANPOWER
 		}
 		prerequisite = { focus = COU_establish_spa }
 		completion_reward = {
