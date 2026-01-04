@@ -1092,7 +1092,7 @@ country_event = {
 	id = trinity_culture_events.1
 	title = trinity_culture_events.1.t
 	desc = trinity_culture_events.1.desc
-	picture = GFX_report_event_SWE_summer_government
+	picture = GFX_report_event_generic_trinity_front_gate
 	
 	is_triggered_only = yes
     	fire_only_once = no
@@ -1190,33 +1190,17 @@ country_event = {
 	id = trinity_culture_events.4
 	title = trinity_culture_events.4.t
 	desc = trinity_culture_events.4.desc
-	picture = GFX_report_event_ITA_grand_council
+	picture = GFX_report_event_generic_gym
 	
 	is_triggered_only = yes
     	fire_only_once = no
 
 	option = {
 		name = trinity_culture_events.4.a
-		custom_effect_tooltip = {
-			localization_key = tooltip_modify_dynmod
-			DYNMOD = TRN_Trinity_New_Culture_modifier
-		}
-		add_to_variable = {
-			TRN_TNC_modifier_research_speed_factor = 0.05
-			tooltip = research_speed_factor_tt
-		}
 	}
 
 	option = {
 		name = trinity_culture_events.4.b
-		custom_effect_tooltip = {
-			localization_key = tooltip_modify_dynmod
-			DYNMOD = TRN_Trinity_New_Culture_modifier
-		}
-		add_to_variable = {
-			TRN_TNC_modifier_stability_factor = 0.05
-			tooltip = stability_factor_tt
-		}
 	}
 }
 
@@ -2095,7 +2079,20 @@ country_event = { # 파테르의 내홍
 			id = TRM_power_balance
 			modifier = TRN_cooperationist_power_balance
 		}
+	}
+}
 
+country_event = { # 교회투쟁
+	id = trinity_events.59
+	title = trinity_events.59.t
+	desc = trinity_events.59.desc
+	picture = GFX_event_teaparty
+	
+	is_triggered_only = yes
+    	fire_only_once = no
+
+	option = {
+		name = trinity_events.59.a
 	}
 }
 
@@ -6327,6 +6324,158 @@ country_event = { # 양당제
 			id = TRM_nagisa_power_balance
 			modifier = TRM_power_balance_anti_filius
 		}
+	}
+}
+
+country_event = { # 변화
+	id = trinity_events_nagisa.69
+	title = trinity_events_nagisa.69.t
+	desc = trinity_events_nagisa.69.desc
+	picture = GFX_report_event_generic_door
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.69.a 
+		custom_effect_tooltip = trinity_events_nagisa_69_a_tt
+	}
+}
+
+country_event = { #
+	id = trinity_events_nagisa.70
+	title = trinity_events_nagisa.70.t
+	desc = trinity_events_nagisa.70.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.70.a 
+		
+	}
+}
+
+country_event = { # 적격, 부적격
+	id = trinity_events_nagisa.71
+	title = trinity_events_nagisa.71.t
+	desc = trinity_events_nagisa.71.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.71.a 
+		custom_effect_tooltip = trinity_events_nagisa_71_a_tt
+		
+	}
+}
+
+country_event = { # 
+	id = trinity_events_nagisa.72
+	title = trinity_events_nagisa.72.t
+	desc = trinity_events_nagisa.72.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.72.a 
+		if = {
+			limit = {
+				power_balance_value = {
+					id = TRM_nagisa_power_balance
+					value > 0
+				}	
+			}
+			custom_effect_tooltip = trinity_events_nagisa_72_non_coup_tt
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.73 days = 14 } #
+			}
+		}
+		else = {
+			custom_effect_tooltip = trinity_events_nagisa_72_coup_tt
+			set_country_flag = TRM_nagisa_coup_ending_flag
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.74 days = 14 } #
+			}
+		}
+		
+	}
+}
+
+country_event = { # 
+	id = trinity_events_nagisa.73
+	title = trinity_events_nagisa.73.t
+	desc = trinity_events_nagisa.73.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.73.a 
+		
+	}
+}
+
+country_event = { # 
+	id = trinity_events_nagisa.74
+	title = trinity_events_nagisa.74.t
+	desc = trinity_events_nagisa.74.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.74.a 
+		hidden_effect = {
+			TRN_Kirifuji_Nagisa = { set_character_flag = TRN_nagisa_in_jail }
+		}
+
+		add_country_leader_role = {
+			character = TRN_Utazumi_Sakurako
+			promote_leader = yes
+			country_leader = {
+				desc = TRN_sakurako_utazumi_nagisa_route_leader_desc
+				ideology = traditionalism_with_trinity_characteristics_neutrality
+				traits = { TRM_kiosk_hater }
+			}
+		}
+
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = no
+			long_name = TRM_Sisterhood_party_long
+			name = TRM_Sisterhood_party
+		}
+		
+	}
+}
+
+country_event = { # 
+	id = trinity_events_nagisa.75
+	title = trinity_events_nagisa.75.t
+	desc = trinity_events_nagisa.75.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.75.a 
+		
+	}
+}
+
+country_event = { # 
+	id = trinity_events_nagisa.76
+	title = trinity_events_nagisa.76.t
+	desc = trinity_events_nagisa.76.desc
+	picture = GFX_report_event_TRM_sakurako_utazumi
+    	
+	is_triggered_only = yes
+
+	option = { 
+		name = trinity_events_nagisa.76.a 
+		
 	}
 }
 
