@@ -4821,12 +4821,71 @@ focus_tree = {
 			focus = ARI_arius_treaty_organization
 		}
 		available = {
+			is_subject = no
+			Eden_country_defend_trigger = no
+			has_army_manpower = { size > 299999 }
+			has_war_support > 0.4
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+			NOT = { has_non_aggression_pact_with = GEM }
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_arius_treaty_organization
+		will_lead_to_war_with = GEM
+		will_lead_to_war_with = GEH
+		will_lead_to_war_with = HEU
 		completion_reward = {
+			add_opinion_modifier = {
+				target = GEM
+				modifier = BUL_old_enemies
+			}
+			add_opinion_modifier = {
+				target = GEH
+				modifier = BUL_old_enemies
+			}
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = GEM
+						tag = GEH
+					}
+				}
+				display_individual_scopes = yes
+				add_opinion_modifier = { target = ROOT modifier = existential_threat }
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			hidden_effect = {
+				if = {
+					limit = { has_government = fascism }
+					scoped_play_song = "BA_from_the_new"
+				}
+			}
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = GEH
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = HEU
+				type = annex_everything
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			add_timed_idea = {
+				idea = idea_ARI_evil_named_gehenna
+				days = 120
+			}
 		}
 	}
 	
@@ -4843,6 +4902,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_unavoidable_war
 		completion_reward = {
+			remove_ideas = BA_ARI_bitter_revanchism_ns_1
 		}
 	}
 	focus = {
