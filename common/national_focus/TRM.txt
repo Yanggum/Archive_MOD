@@ -10977,7 +10977,47 @@ focus_tree = {
 			country_event = { id = trinity_events_nagisa.36 days = 28 }
 		}
 
+		ai_will_do = {
+			base = 15
+			modifier = {
+				factor = 0.1
+				ARI = { has_completed_focus = ARI_chemical_warfare_preparation }
+			}
+			modifier = {
+				factor = 0.1
+				ARI = { has_completed_focus = ARI_holding_arius_council }
+			}
+			modifier = {
+				factor = 0.5
+				ARI = { has_completed_focus = ARI_eden_treaty_interference }
+			}
+		}
+
 		completion_reward = {
+			custom_effect_tooltip = TRN_five_clan_republic_arius_tt
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_chemical_warfare_preparation }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_1_tt
+				add_stability = -0.2
+			}
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_holding_arius_council }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_2_tt
+				add_stability = -0.15
+			}
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_eden_treaty_interference }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_3_tt
+				add_stability = -0.15
+			}
+			custom_effect_tooltip = enter_tt
+
 			custom_effect_tooltip = TRN_five_clan_republic_tt
 			set_country_flag = nagisa_faction_I_flag
 			set_country_flag = nagisa_faction_I_arius_flag
@@ -11033,6 +11073,10 @@ focus_tree = {
 		select_effect = {
 			country_event = { id = trinity_events_nagisa.34 days = 14 }
 			country_event = { id = trinity_events_nagisa.35 days = 28 }
+		}
+
+		ai_will_do = {
+			base = 15
 		}
 
 		completion_reward = {
@@ -13240,6 +13284,10 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = TRN_hope_light_distant_sky_1_ns
 			remove_country_leader_trait = TRM_cynical_skeptic_nagisa
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.69 }
+			}
 		}
 	}
 	
@@ -13418,6 +13466,10 @@ focus_tree = {
 				ruling_party = neutrality
 				elections_allowed = no
 			}
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.70 days = 3 }
+			}
 		}
 	}
 
@@ -13491,6 +13543,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = TRN_pater_dissolution_tt
 			set_temp_variable = {
 				TRN_pater_temp_var = nagisa_faction_C # 임시 변수에 파테르 변수를 옮김
 			}
@@ -13531,7 +13584,7 @@ focus_tree = {
 		}
 		
 		select_effect = {
-
+			country_event = { id = trinity_events_nagisa.72 days = 3 }
 		}
 
 		ai_will_do = {
@@ -13541,6 +13594,16 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = TRN_nagisa_neutrality_ending_tt
 			mark_focus_tree_layout_dirty = yes
+
+			if = {
+				limit = { 
+					has_country_flag = TRM_nagisa_coup_ending_flag
+				}
+				country_event = { id = trinity_events_nagisa.76 }
+			}
+			else = {
+				country_event = { id = trinity_events_nagisa.75 }
+			}
 		}
 	}
 
