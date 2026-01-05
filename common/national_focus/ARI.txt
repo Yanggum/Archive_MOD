@@ -5081,6 +5081,18 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_establishment_of_republican_constitution
 		completion_reward = {
+			every_other_country = {
+				limit = {
+					has_government = communism
+				}
+				ROOT = {
+					send_embargo = PREV
+				}
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.10
+			}
 		}
 	}
 	focus = {
@@ -5089,13 +5101,66 @@ focus_tree = {
 		prerequisite = {
 			focus = ARI_strengthening_anti_soviet_posture
 		}
+
 		available = {
+			is_puppet = no
+		}
+
+		bypass = {
+			OR = {
+				has_war_with = SOV
+				NOT = { country_exists = SOV }
+				is_in_faction_with = SOV
+			}
+		}
+
+		cancel = {
+			is_subject = yes
+			NOT = { country_exists = SOV }
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_strengthening_anti_soviet_posture
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				OR = {
+					has_army_manpower = { size < 1199999 }
+					any_home_area_neighbor_country = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				factor = 0 #AI should not pick this focus if it does not share a border with the Soviets
+				NOT = { 
+					any_home_area_neighbor_country = {
+						tag = SOV
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				date < 1940.1.1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}
+
+		search_filters = {  }
+
 		completion_reward = {
+			create_wargoal = {
+				target = SOV
+				type = puppet_wargoal_focus
+			}
 		}
 	}
 	focus = {
