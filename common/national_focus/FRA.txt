@@ -6,7 +6,7 @@ focus_tree = {
 			add = 100
 			tag = FRA
 		}
-	} 
+	}
 	inlay_window = {
 		id = fra_inner_circle_inlay_window
 		position = { x = 2140 y = 1800 }
@@ -1877,7 +1877,7 @@ focus_tree = {
 		#화력 지원 교리
 		icon = GFX_goal_FRA_focus_arm5
 		id = FRA_focus_new_arm_5
-		cost = 5
+		cost = 4
 		x = 0
 		y = 1
 		relative_position_id = FRA_focus_arm_3
@@ -1924,7 +1924,7 @@ focus_tree = {
 		#지상 지원
 		icon = GFX_focus_generic_cas_aircraft
 		id = FRA_focus_arm_5
-		cost = 5
+		cost = 4
 		x = 1
 		y = 2
 		relative_position_id = FRA_focus_arm_3
@@ -1965,7 +1965,7 @@ focus_tree = {
 		#함포 사격
 		icon = GFX_focus_SWE_coastal_support
 		id = FRA_focus_new_arm_6
-		cost = 5
+		cost = 4
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_arm_5
@@ -2004,7 +2004,7 @@ focus_tree = {
 		#강력한 화력에의 의지
 		icon = GFX_focus_generic_railway_gun
 		id = FRA_focus_new_arm_9
-		cost = 5
+		cost = 4
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_6
@@ -2090,7 +2090,7 @@ focus_tree = {
 		#상륙 후 거점 방어
 		icon = GFX_focus_BEL_better_than_maginot
 		id = FRA_focus_new_arm_12
-		cost = 5
+		cost = 4
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_arm_15
@@ -2122,7 +2122,7 @@ focus_tree = {
 		#소모전 유도
 		icon = GFX_focus_SWE_hedgehog_defense
 		id = FRA_focus_new_arm_13
-		cost = 5
+		cost = 4
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_12
@@ -2151,7 +2151,7 @@ focus_tree = {
 		#잘 계획된 공세
 		icon = GFX_goal_generic_position_armies
 		id = FRA_focus_new_arm_14
-		cost = 5
+		cost = 4
 		x = 0
 		y = 2
 		relative_position_id = FRA_focus_new_arm_12
@@ -2341,7 +2341,7 @@ focus_tree = {
 		#보병 운용 교리
 		icon = GFX_goal_generic_allies_build_infantry
 		id = FRA_focus_new_arm_1
-		cost = 5
+		cost = 4
 		x = 0
 		y = 1
 		relative_position_id = FRA_focus_arm_2
@@ -2368,7 +2368,7 @@ focus_tree = {
 		#산개 대형
 		icon = GFX_focus_ETH_peacekeeping_forces
 		id = FRA_focus_new_arm_2
-		cost = 5
+		cost = 4
 		x = -3
 		y = 1
 		relative_position_id = FRA_focus_new_arm_1
@@ -2389,7 +2389,7 @@ focus_tree = {
 		#탄막 전개
 		icon = GFX_focus_AUS_frontmiliz_focus
 		id = FRA_focus_new_arm_3
-		cost = 5
+		cost = 4
 		x = -1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_1
@@ -2410,7 +2410,7 @@ focus_tree = {
 		#돌격대
 		icon = GFX_focus_CHL_departemento_de_las_tropas_nacistas_de_asalto
 		id = FRA_focus_arm_13
-		cost = 5
+		cost = 4
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_new_arm_2
@@ -2444,7 +2444,7 @@ focus_tree = {
 		#'엘랑 비탈'
 		icon = GFX_focus_AFG_against_kabul
 		id = FRA_focus_new_arm_8
-		cost = 5
+		cost = 4
 		x = 1
 		y = 1
 		relative_position_id = FRA_focus_arm_13
@@ -2480,7 +2480,7 @@ focus_tree = {
 		id = FRA_mediterranean_diplomacy
 		cost = 4
 		icon = GFX_focus_SWE_Vasa_II
-		x = -7
+		x = -5
 		y = 1
 		prerequisite = {
 			focus = FRA_authenticity_in_the_international_community
@@ -2515,7 +2515,7 @@ focus_tree = {
 		id = FRA_confirm_italian_hegemony
 		cost = 4
 		icon = GFX_focus_ITA_greater_italy
-		x = 3
+		x = 1
 		y = 1
 		prerequisite = {
 			focus = FRA_mediterranean_diplomacy
@@ -2553,10 +2553,64 @@ focus_tree = {
 	focus = {
 		#이탈리아 산업가들의 투자
 		id = FRA_italian_invest
-		cost = 4
-		icon = GFX_SOV_foreign_experts_ccp_2d_sov_compatibility
+		cost = 20
+		icon = GFX_focus_ITA_northern_industry
 		x = -1
 		y = 1
+		text_icon = FRA_innercircle_focus_style
+		prerequisite = {
+			focus = FRA_confirm_italian_hegemony
+		}
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_italian_invest
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ITA
+						FLAG_DAYS = [?progress_flag_FRA_italian_invest:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = ITA
+						FOCUS = FRA_confirm_italian_hegemony
+					}
+					always = no
+				}
+			}
+		}
+		relative_position_id = FRA_confirm_italian_hegemony
+		completion_reward = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ITA
+						is_subject_of = ITA
+					}
+				}
+				custom_effect_tooltip = FRA_withdraw_from_indochina_tt
+				FRA = {
+					add_cic = 1000
+				}
+			}
+		}
+	}
+	focus = {
+		#튀니지 투자권 증여
+		id = FRA_give_tunigia_invesment_right
+		cost = 4
+		icon = GFX_SOV_foreign_experts_ccp_2d_sov_compatibility
+		x = 0
+		y = 2
 		prerequisite = {
 			focus = FRA_confirm_italian_hegemony
 		}
@@ -2579,7 +2633,7 @@ focus_tree = {
 		id = FRA_in_the_same_boat
 		cost = 4
 		icon = GFX_focus_generic_befriend_republican_spain_focus
-		x = 1
+		x = -1
 		y = 1
 		prerequisite = {
 			focus = FRA_mediterranean_diplomacy
@@ -2601,14 +2655,40 @@ focus_tree = {
 	focus = {
 		#이계-볼셰비즘에 맞서는 장벽
 		id = FRA_barrier_against_kivotos-Bolshevism
-		cost = 4
+		cost = 20
 		icon = GFX_focus_ger_bulwark_against_bolshevism
 		x = -1
 		y = 1
 		prerequisite = {
 			focus = FRA_in_the_same_boat
 		}
+		text_icon = FRA_innercircle_focus_style
 		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_barrier_against_kivotos-Bolshevism
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = SPR
+						FLAG_DAYS = [?progress_flag_FRA_barrier_against_kivotos-Bolshevism:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = SPR
+						FOCUS = FRA_in_the_same_boat
+					}
+					always = no
+				}
+			}
 			OR = {
 				has_idea = FRA_granada_declaration
 				has_idea = FRA_granada_declaration_stronger
@@ -2686,7 +2766,7 @@ focus_tree = {
 		id = FRA_trade_treaty
 		cost = 4
 		icon = GFX_focus_generic_merchant_fleet
-		x = -1
+		x = -3
 		y = 1
 		prerequisite = {
 			focus = FRA_mediterranean_diplomacy
@@ -2803,53 +2883,40 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#키보토스에 맞선 공투
-		id = FRA_italian_joint_struggle_on_kivotos
-		cost = 4
-		icon = GFX_focus_focus_fra_ratify_stresa
-		x = -1
-		y = 1
-		prerequisite = {
-			focus = FRA_halifax_conference
-		}
-		prerequisite = {
-			focus = FRA_confirm_italian_hegemony
-		}
-		available = {
-			OR = {	
-				has_idea = PASTA_signatories_of_the_stresa_idea
-				has_idea = PASTA_ratify_the_stresa_front_idea
-			}
-		}
-		relative_position_id = FRA_halifax_conference
-		completion_reward = {
-			ENG = {
-				country_event = {
-					id = FRA_prov_event.30
-					days = 1
-				}
-				custom_effect_tooltip = if_they_accept
-				custom_effect_tooltip = FRA_focus_new_arm_10_tt
-				unlock_decision_tooltip = FRA_support_from_ENG
-			}
-			ITA = {
-				country_event = {
-					id = FRA_prov_event.30
-					days = 1
-				}
-				custom_effect_tooltip = if_they_accept
-				custom_effect_tooltip = FRA_focus_new_arm_10_tt
-				unlock_decision_tooltip = FRA_support_from_ITA
-			}
-		}
-	}
-	focus = {
 		#앵글로계 금융가들의 투자
 		id = FRA_invest_from_anglo_financier
-		cost = 4
+		cost = 20
 		icon = GFX_focus_generic_british_trade
 		x = 0
 		y = 2
+		text_icon = FRA_innercircle_focus_style
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_invest_from_anglo_financier
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = ENG
+						FLAG_DAYS = [?progress_flag_FRA_invest_from_anglo_financier:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = ENG
+						FOCUS = FRA_halifax_conference
+					}
+					always = no
+				}
+			}
+		}
 		prerequisite = {
 			focus = FRA_halifax_conference
 		}
@@ -2880,27 +2947,73 @@ focus_tree = {
 			focus = FRA_claim_hegemony_on_equatorial_africa
 		}
 		available = {
-			has_country_flag = GAEBALJUNG
+			NOT = {
+				has_country_flag = cant_FRA_befriend_with_belgium_flag
+			}
 		}
 		prerequisite = {
 			focus = FRA_solidarity_between_governments_in_exile
 		}
 		relative_position_id = FRA_solidarity_between_governments_in_exile
 		completion_reward = {
+			country_Event = {
+				id = FRA_prov_event.30
+				hours = 6
+			}
 		}
 	}
 	focus = {
 		#부유한 콩고 자본가들의 투자
 		id = FRA_invest_from_belgian_capitalist
-		cost = 4
+		cost = 20
 		icon = GFX_focus_generic_currency_reforms
 		x = -1
 		y = 1
+		text_icon = FRA_innercircle_focus_style
+		available = {
+			if = { #ADVISOR WORKING ON THE FOCUS (Show progress)
+				limit = {
+					has_country_flag = progress_flag_FRA_invest_from_belgian_capitalist
+				}
+				set_temp_variable = { temp_focus_days = 20 } #For tooltip purposes
+				multiply_temp_variable = { temp_focus_days = 7 } #The constant uses focus cost which is in weeks, so convert to days
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_inner_circle_focus_in_progress_tt
+						CHARACTER = BEL
+						FLAG_DAYS = [?progress_flag_FRA_invest_from_belgian_capitalist:days]
+					}
+					always = no 
+				}
+			}
+			else = { #NOT BEEN WORKED ON (Just Explain)
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = GER_focus_can_only_be_completed_by_advisor_tt
+						CHARACTER = BEL
+						FOCUS = FRA_befriend_with_belgium
+					}
+					always = no
+				}
+			}
+		}
 		prerequisite = {
 			focus = FRA_befriend_with_belgium
 		}
 		relative_position_id = FRA_befriend_with_belgium
 		completion_reward = {
+			660 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			772 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
 		}
 	}
 	focus = {
@@ -2915,6 +3028,32 @@ focus_tree = {
 		}
 		relative_position_id = FRA_befriend_with_belgium
 		completion_reward = {
+			660 = {
+				add_dynamic_modifier = {
+					modifier = FRA_rubber_production_with_BEL
+				}
+			}
+			772 = {
+				add_dynamic_modifier = {
+					modifier = FRA_rubber_production_with_BEL
+				}
+			}
+			718 = {
+				add_dynamic_modifier = {
+					modifier = FRA_rubber_production_with_BEL
+				}
+			}
+			538 = {
+				add_dynamic_modifier = {
+					modifier = FRA_rubber_production_with_BEL
+				}
+			}
+			BEL = {
+				country_event = {
+					id = FRA_prov_event.95
+					days = 1
+				}
+			}
 		}
 	}
 	focus = {
@@ -2927,8 +3066,16 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_befriend_with_belgium
 		}
+		available = {
+			has_completed_focus = FRA_focus_12
+		}
 		relative_position_id = FRA_befriend_with_belgium
 		completion_reward = {
+			country_event = {
+				id = FRA_prov_event.96
+				days = 1
+			}
+			unlock_decision_tooltip = FRA_restructuring_administration_equatorial_africa
 		}
 	}
 	focus = {
@@ -4539,7 +4686,7 @@ focus_tree = {
 			cost = 10
 			x = 0
 			y = 1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			relative_position_id = FRA_leading_of_fatherland
 			icon = {
 				trigger = {
@@ -4602,7 +4749,7 @@ focus_tree = {
 			cost = 10
 			x = 0
 			y = 1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			relative_position_id = FRA_petain_focus_0
 			icon = GFX_focus_SWE_counter_revolution
 			prerequisite = {
@@ -4648,7 +4795,7 @@ focus_tree = {
 			x = -1
 			y = 1
 			relative_position_id = FRA_petain_focus_1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_ICE_embrace_the_workers_revolution
 			prerequisite = {
 				focus = FRA_petain_focus_1
@@ -4696,7 +4843,7 @@ focus_tree = {
 			x = 0
 			y = 2
 			relative_position_id = FRA_petain_focus_1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_generic_population_growth
 			prerequisite = {
 				focus = FRA_petain_focus_1
@@ -4752,7 +4899,7 @@ focus_tree = {
 			x = 1
 			y = 1
 			relative_position_id = FRA_petain_focus_1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_generic_vichy_france_triumphant_focus
 			prerequisite = {
 				focus = FRA_petain_focus_1
@@ -4933,7 +5080,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_focus_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -4975,7 +5122,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_focus_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 2
@@ -5187,7 +5334,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -5229,7 +5376,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 2
@@ -5282,7 +5429,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_maurice_gamelin_focus_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 20
 			x = 1
 			y = 1
@@ -5473,7 +5620,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maxime_weygand_focus_1
 			icon = GFX_focus_GER_autonomous_organization_todt
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 40
 			x = 0
 			y = 3
@@ -5507,7 +5654,7 @@ focus_tree = {
 						tooltip = {
 							localization_key = GER_focus_can_only_be_completed_by_advisor_tt
 							CHARACTER = FRA_maxime_weygand
-							FOCUS = FRA_maxime_weygand_focus_1
+							FOCUS = FRA_maxime_weygand_focus_0
 						}
 						always = no
 					}
@@ -5622,7 +5769,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_nogues_focus_1
 			icon = GFX_focus_GER_plenipotentiary_of_armaments
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 40
 			x = 0
 			y = 3
@@ -5828,7 +5975,7 @@ focus_tree = {
 			x = 1
 			y = 1
 			relative_position_id = FRA_darlan_focus_0
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_generic_military_industry
 			prerequisite = {
 				focus = FRA_darlan_focus_0
@@ -5900,7 +6047,7 @@ focus_tree = {
 			x = -1
 			y = 1
 			relative_position_id = FRA_darlan_and_laval_focus_1
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_generic_africa_naval
 			prerequisite = {
 				focus = FRA_darlan_and_laval_focus_1
@@ -5955,7 +6102,7 @@ focus_tree = {
 			x = 0
 			y = 1
 			relative_position_id = FRA_darlan_focus_2
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			icon = GFX_focus_GRE_a_land_of_mountains
 			prerequisite = {
 				focus = FRA_darlan_focus_2
@@ -6141,7 +6288,7 @@ focus_tree = {
 			y = 3
 			relative_position_id = FRA_laval_focus_0
 			icon = GFX_focus_ger_bulwark_against_bolshevism
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			prerequisite = { 
 				focus = FRA_laval_focus_0
 			}
@@ -6925,7 +7072,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_focus_3
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 15
 			x = 1
 			y = 1
@@ -6972,7 +7119,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_focus_4
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 20
 			x = -1
 			y = 1
@@ -7013,7 +7160,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_charles_de_gaulle_focus_5
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 15
 			x = 0
 			y = 3
@@ -7056,7 +7203,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_3
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 15
 			x = -1
 			y = 1
@@ -7104,7 +7251,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_4
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 20
 			x = -1
 			y = 1
@@ -7148,7 +7295,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_5
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 20
 			x = 1
 			y = 1
@@ -7192,7 +7339,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_maurice_gamelin_focus_6
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 15
 			x = 1
 			y = 2
@@ -7372,7 +7519,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_henri_giraud_focus_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -7413,7 +7560,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_henri_giraud_focus_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 2
@@ -7600,7 +7747,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_alphonse_juin_focus_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -7641,7 +7788,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_alphonse_juin_focus_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 2
@@ -7923,7 +8070,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_jacques_chevalier_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -7939,7 +8086,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_jacques_chevalier_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -7974,7 +8121,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_joseph_darnand_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -7990,7 +8137,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_joseph_darnand_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -8026,7 +8173,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_georges_bardeche_1
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -8042,7 +8189,7 @@ focus_tree = {
 		focus = { #
 			id = FRA_georges_bardeche_2
 			icon = GFX_focus_GER_ascension_of_goring
-			text_icon = GER_inner_circle_focus_style
+			text_icon = FRA_innercircle_focus_style
 			cost = 10
 			x = 0
 			y = 1
@@ -8112,6 +8259,10 @@ focus_tree = {
 		}
 		relative_position_id = FRA_focus_12
 		completion_reward = {
+			custom_effect_tooltip = FRA_focus_garrison_0_tt
+			add_to_variable = {
+				FRA_can_put_military = 1
+			}
 			declare_war_on = {
 				target = MIL
 				type = annex_everything
