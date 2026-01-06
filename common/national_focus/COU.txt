@@ -1372,12 +1372,13 @@ focus_tree = {
 		}
 		available = {
 		    NOT = { has_global_flag = LoN_disbanded_flag }
+			has_war = no
 		}
 		mutually_exclusive = { focus = COU_focus_burden_of_gsc }
 		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
 		    every_country = {
-    			limit = { is_league_of_nations_member = yes}
+    			limit = { is_league_of_nations_member = yes }
 			    add_opinion_modifier = {
 					target = COU
 					modifier = medium_increase 
@@ -1389,6 +1390,14 @@ focus_tree = {
 				idea = COU_league_of_nations_spectator
 			}
 			country_event = COU_event.8
+		}
+		
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 10
+				date < 1939.1.1
+			}
 		}
 	}
 	
@@ -1418,6 +1427,14 @@ focus_tree = {
 				idea = COU_duty_of_gsc
 			}
 		}
+		
+		ai_will_do = {
+			base = 5
+			modifier = {
+				factor = 10
+				date > 1939.1.1
+			}
+		}
 	}
 	
 	focus = {
@@ -1430,6 +1447,7 @@ focus_tree = {
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT 
 		}
+		available = { has_idea = COU_name_of_the_student_council }
 		prerequisite = { focus = COU_focus_ask_to_join_lon focus = COU_focus_burden_of_gsc }
 		completion_reward = {
 		    swap_ideas = {
@@ -1542,6 +1560,7 @@ focus_tree = {
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT 
 		}
+		available = { NOT = { has_country_flag = SRT_BANNED } }
 		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
 		completion_reward = {
 		    add_political_power = 25 
@@ -1561,9 +1580,11 @@ focus_tree = {
 		search_filters = {
 			 FOCUS_FILTER_MANPOWER
 		}
+		available = { NOT = { has_country_flag = SRT_BANNED } }
 		prerequisite = { focus = COU_establish_spa }
 		completion_reward = {
-		    
+		    #무슨 효과를 채워야 하죠? 일단 전 모르겟어요
+		    country_event = COU_event_military.5
 		}
 	}
 
@@ -1591,8 +1612,12 @@ focus_tree = {
 		icon = GFX_focus_COU_the_emergency_law
 		x = 31
 		y = 0
-		cost = 5
+		cost = 10
 		available = {
+		   #  has_dynamic_modifier = COU_chronic_principledism
+		}
+		bypass = {
+		    NOT = { has_dynamic_modifier = COU_chronic_principledism }
 		}
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT

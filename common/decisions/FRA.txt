@@ -204,6 +204,7 @@ FRA_urbanization = {
 			stability_weekly = -0.001
 		}
 		remove_effect = {
+			set_country_flag = FRA_alz_kon_flag
 			460 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -285,6 +286,7 @@ FRA_urbanization = {
 			stability_weekly = -0.001
 		}
 		remove_effect = {
+			set_country_flag = FRA_mor_kasa_flag
 			461 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -454,6 +456,7 @@ FRA_urbanization = {
 			stability_weekly = -0.001
 		}
 		remove_effect = {
+			set_country_flag = FRA_tun_kasa_flag
 			458 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -601,7 +604,7 @@ FRA_urbanization = {
 			}
 		}
 	}
-	FRA_control_ENA_state = {
+	FRA_control_ENA_state = { #질서 확립
 		icon = GFX_decision_infiltrate_state
 	
 		allowed = {
@@ -661,7 +664,7 @@ FRA_urbanization = {
 
 		fire_only_once = yes
 
-		days_remove = 60
+		days_remove = 90
 
 		ai_will_do = {
 			base = 150
@@ -711,6 +714,7 @@ FRA_urbanization = {
 	    on_map_mode = map_and_decisions_view 
 		cost = 100
 		available = {
+			has_country_flag = FRA_alz_kon_flag
 			OR = {
 				NOT = {
 					has_country_flag = FRA_in_general_strike
@@ -754,6 +758,7 @@ FRA_urbanization = {
 		}
 		cost = 50
 		available = {
+			has_country_flag = FRA_mor_kasa_flag
 			OR = {
 				NOT = {
 					has_country_flag = FRA_in_general_strike
@@ -813,6 +818,7 @@ FRA_urbanization = {
 			has_completed_focus = FRA_focus_12
 		}
 		available = {
+			has_country_flag = FRA_tun_kasa_flag
 			OR = {
 				NOT = {
 					has_country_flag = FRA_in_general_strike
@@ -853,6 +859,56 @@ FRA_urbanization = {
 			665 = {
 				add_dynamic_modifier = {
 					modifier = FRA_war_administration
+				}
+			}
+		}
+	}
+	FRA_restructuring_administration_equatorial_africa = { #적도 아프리카 행정 재편
+		icon = GFX_decision_SWI_dismiss_council
+	    on_map_mode = map_and_decisions_view 
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 10
+		}
+		cost = 50
+		available = {
+			OR = {
+				NOT = {
+					has_country_flag = FRA_in_general_strike
+				}
+				has_country_flag = FRA_general_strike_over
+			}
+		}
+		visible = {
+			has_completed_focus = FRA_belgian_model
+		}
+		modifier = {
+			political_power_cost = 0.2
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 774
+				state = 773
+				state = 660
+				state = 772
+				state = 539
+			}
+		}
+		days_remove = 60
+		remove_effect = {
+			every_owned_state = {
+				limit = {
+					is_controlled_by = FRA
+					OR = {
+						state = 774
+						state = 773
+						state = 660
+						state = 772
+						state = 539
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = FRA_belgium_colonial_model
 				}
 			}
 		}
@@ -908,22 +964,17 @@ FRA_urbanization = {
 				transfer_state = 1066
 				transfer_state = 1067
 				transfer_state = 741
-				set_politics = {
-					ruling_party = neutrality
-				}
-				if = {
-					limit = {
-						has_idea = FRA_military_minister
-					}
-					swap_ideas = {
-						remove_idea = FRA_military_minister
-						add_idea = FRA_military_minister_stronger
-					}
-				}
 			}
 			set_autonomy = {
 				target = CAM
 				autonomy_state = autonomy_integrated_puppet
+			}
+			CAM = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				add_ideas = FRA_military_minister_stronger
+				set_cosmetic_tag = CAM_french
 			}
 		}
 	}
@@ -975,23 +1026,17 @@ FRA_urbanization = {
 				set_politics = {
 					ruling_party = neutrality
 				}
-				if = {
-					limit = {
-						has_idea = FRA_military_minister
-					}
-					swap_ideas = {
-						remove_idea = FRA_military_minister
-						add_idea = FRA_military_minister_stronger
-					}
-				}
-				else = {
-					add_ideas = FRA_military_minister_stronger
-				}
-				set_cosmetic_tag = LAO_french
 			}
 			set_autonomy = {
 				target = LAO
 				autonomy_state = autonomy_integrated_puppet
+			}
+			LAO = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				add_ideas = FRA_military_minister_stronger
+				set_cosmetic_tag = LAO_french
 			}
 		}
 	}
@@ -1063,6 +1108,14 @@ FRA_urbanization = {
 			set_autonomy = {
 				target = VIN
 				autonomy_state = autonomy_integrated_puppet
+			}
+			VIN = {
+				set_politics = {
+					ruling_party = neutrality
+				}
+				add_ideas = FRA_military_minister_stronger
+				set_cosmetic_tag = VIN_french
+				promote_character = VIN_Rene_Robin
 			}
 		}
 	}
@@ -1334,48 +1387,6 @@ FRA_urbanization = {
 }
 
 FRA_war_dec = { #본토 수복 결전
-	FRA_support_from_ITA = { #영국의 지원
-		icon = GFX_decision_SWE_set_army_budget
-		ai_will_do = {
-			factor = 10
-		}
-		visible = {
-			ITA = {
-				has_country_flag = FRA_determined_to_help_france
-			}
-			has_completed_focus = FRA_focus_resistance_5
-		}
-		cancel_trigger = {
-			has_war_with = ITA
-		}
-		cost = 30
-		days_remove = 360
-		fire_only_once = yes
-		modifier = {
-			weekly_manpower = 500
-		}
-	}
-	FRA_support_from_ENG = { #영국의 지원
-		icon = GFX_decision_generic_naval
-		ai_will_do = {
-			factor = 10
-		}
-		visible = {
-			ENG = {
-				has_country_flag = FRA_determined_to_help_france
-			}
-			has_completed_focus = FRA_focus_resistance_5
-		}
-		cancel_trigger = {
-			has_war_with = ENG
-		}
-		cost = 30
-		days_remove = 360
-		fire_only_once = yes
-		modifier = {
-			naval_invasion_planning_bonus_speed = 0.25
-		}
-	}
 	FRA_recruit_Gumier = { #적도아프리카에서 티라이외르 징집
 		icon = GFX_decision_ITA_reorganize_ascari
 		ai_will_do = {

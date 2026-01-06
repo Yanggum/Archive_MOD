@@ -8140,7 +8140,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			country_event = trinity_events.58 
+			add_political_power = 50
 		}
 	}
 
@@ -8326,7 +8327,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			activate_targeted_decision = { target = TRM decision = TRN_honor_woman_right}
+			activate_targeted_decision = { target = TRM decision = TRN_honor_woman_right }
 			add_war_support = 0.1
 			add_to_variable = {
 				nagisa_faction_J = -2
@@ -8480,7 +8481,7 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = TRN_denazification
-		cost = 15
+		cost = 10
 
 		available = {
 			has_government = fascism
@@ -8490,8 +8491,11 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_stability = 0.10
-			add_war_support = 0.02
+			add_timed_idea = {
+				idea = TRN_denazification_ns
+				days = 365
+			}
+			add_stability = 0.05
 			add_to_variable = {
 				nagisa_faction_C = 2
 				tooltip = nagisa_faction_C_tt
@@ -8609,6 +8613,19 @@ focus_tree = {
 			activate_targeted_decision = { decision = TRN_german_abolition_decision target = TRM }
 			activate_targeted_decision = { decision = TRN_social_edit_textbook_decision target = TRM }
 			activate_targeted_decision = { decision = TRN_social_child_brainwashing_decision target = TRM }
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_Trinity_New_Culture_modifier
+			}
+			add_to_variable = {
+				TRN_TNC_modifier_drift_defence_factor = 0.25
+				tooltip = drift_defence_factor_tt
+			}
+			add_to_variable = {
+				TRN_TNC_modifier_party_popularity_stability_factor = 0.1
+				tooltip = party_popularity_stability_factor_tt
+			}
 		}
 	}
 
@@ -8644,9 +8661,26 @@ focus_tree = {
 			country_event = { id = trinity_events.31 } # 독일 문화의 운명
 
 			set_variable = { TRN_social_causing_regional_conflict_cost = 70 }
-
-			add_stability = 0.05
 			unlock_decision_tooltip = TRN_social_causing_regional_conflict_decision
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = TRN_Trinity_New_Culture_modifier
+			}
+			add_to_variable = {
+				TRN_TNC_modifier_stability_factor = 0.05
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				TRN_TNC_modifier_drift_defence_factor = 0.1
+				tooltip = drift_defence_factor_tt
+			}
+			add_to_variable = {
+				TRN_TNC_modifier_conscription_factor = 0.02
+				tooltip = conscription_factor_tt
+			}
+
+			
 		}
 	}
 
@@ -8700,7 +8734,7 @@ focus_tree = {
 			has_war = no
 		}
 		allow_branch = {
-			NOT = { has_completed_focus = TRN_unprovable_problem }
+			has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
 		}
 
 		ai_will_do = {
@@ -8761,6 +8795,7 @@ focus_tree = {
 		}
 
 		allow_branch = {
+			has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
 			NOT = { 
 				has_completed_focus = TRN_supreme_leader
 				has_completed_focus = TRN_unprovable_problem
@@ -8814,9 +8849,6 @@ focus_tree = {
 			has_government = fascism
 			TRN_Mika_has_good_honor_trigger = yes
 		}
-		allow_branch = {
-			NOT = { has_completed_focus = TRN_unprovable_problem }
-		}
 		ai_will_do = {
 
 		}
@@ -8859,6 +8891,7 @@ focus_tree = {
 		}
 
 		allow_branch = {
+			has_completed_focus = TRN_Kyrie_for_the_forgotten_ones
 			NOT = { 
 				has_completed_focus = TRN_codification_of_regime
 				has_completed_focus = TRN_unprovable_problem
@@ -8916,9 +8949,6 @@ focus_tree = {
 		}
 		ai_will_do = {
 
-		}
-		allow_branch = {
-			NOT = { has_completed_focus = TRN_unprovable_problem }
 		}
 
 		completion_reward = {
@@ -10950,7 +10980,47 @@ focus_tree = {
 			country_event = { id = trinity_events_nagisa.36 days = 28 }
 		}
 
+		ai_will_do = {
+			base = 15
+			modifier = {
+				factor = 0.1
+				ARI = { has_completed_focus = ARI_chemical_warfare_preparation }
+			}
+			modifier = {
+				factor = 0.1
+				ARI = { has_completed_focus = ARI_holding_arius_council }
+			}
+			modifier = {
+				factor = 0.5
+				ARI = { has_completed_focus = ARI_eden_treaty_interference }
+			}
+		}
+
 		completion_reward = {
+			custom_effect_tooltip = TRN_five_clan_republic_arius_tt
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_chemical_warfare_preparation }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_1_tt
+				add_stability = -0.2
+			}
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_holding_arius_council }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_2_tt
+				add_stability = -0.15
+			}
+			if = {
+				limit = {
+					ARI = { has_completed_focus = ARI_eden_treaty_interference }
+				}
+				custom_effect_tooltip = TRN_five_clan_republic_arius_3_tt
+				add_stability = -0.15
+			}
+			custom_effect_tooltip = enter_tt
+
 			custom_effect_tooltip = TRN_five_clan_republic_tt
 			set_country_flag = nagisa_faction_I_flag
 			set_country_flag = nagisa_faction_I_arius_flag
@@ -11006,6 +11076,10 @@ focus_tree = {
 		select_effect = {
 			country_event = { id = trinity_events_nagisa.34 days = 14 }
 			country_event = { id = trinity_events_nagisa.35 days = 28 }
+		}
+
+		ai_will_do = {
+			base = 15
 		}
 
 		completion_reward = {
@@ -13213,6 +13287,10 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = TRN_hope_light_distant_sky_1_ns
 			remove_country_leader_trait = TRM_cynical_skeptic_nagisa
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.69 }
+			}
 		}
 	}
 	
@@ -13391,6 +13469,10 @@ focus_tree = {
 				ruling_party = neutrality
 				elections_allowed = no
 			}
+
+			hidden_effect = {
+				country_event = { id = trinity_events_nagisa.70 days = 3 }
+			}
 		}
 	}
 
@@ -13464,6 +13546,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = TRN_pater_dissolution_tt
 			set_temp_variable = {
 				TRN_pater_temp_var = nagisa_faction_C # 임시 변수에 파테르 변수를 옮김
 			}
@@ -13504,7 +13587,7 @@ focus_tree = {
 		}
 		
 		select_effect = {
-
+			country_event = { id = trinity_events_nagisa.72 days = 3 }
 		}
 
 		ai_will_do = {
@@ -13514,6 +13597,16 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = TRN_nagisa_neutrality_ending_tt
 			mark_focus_tree_layout_dirty = yes
+
+			if = {
+				limit = { 
+					has_country_flag = TRM_nagisa_coup_ending_flag
+				}
+				country_event = { id = trinity_events_nagisa.76 }
+			}
+			else = {
+				country_event = { id = trinity_events_nagisa.75 }
+			}
 		}
 	}
 
@@ -16197,7 +16290,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TRN_flexible_line
-		cost = 10
+		cost = 8
 		available = {
 
 		}
@@ -18449,6 +18542,38 @@ focus_tree = {
 		}
 
 		completion_reward = {
+
+
+			add_breakthrough_progress = {
+				specialization = specialization_nuclear
+				value = 0.75
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.75
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			IF = {
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name = TRN_air_force_focus_11
+					bonus = 0.5
+					uses = 1 # was 2
+					category = nuclear
+				}
+			}
+			add_tech_bonus = {
+				name = TRN_air_force_focus_11
+				bonus = 0.5
+				uses = 1 # was 2
+				category = rocketry
+			}
 
 		}
 	}

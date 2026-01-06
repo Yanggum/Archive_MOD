@@ -171,6 +171,22 @@ COU_Perfidus = { #페르피두스
 	army_org_factor = COU_Perfidus_aof
 	
 }
+COU_chronic_principledism = { #원칙에 의존하는 방위군, 초반 군 페널티용
+	enable = { always = yes }
+
+	icon = GFX_idea_COU_chronic_principledism
+	
+	remove_trigger = { 
+	}
+	
+	#내가 원하는 순서: 육상군 - 항공군 - 해상군 
+	custom_modifier_tooltip = COU_chronic_principledism_tp_army1
+	custom_modifier_tooltip = COU_chronic_principledism_tp_navy1
+	custom_modifier_tooltip = COU_chronic_principledism_tp_air1
+	#현실: 해상군 - 항공군 - 육상군 
+	#배치 바꿔봤는데도 나오는게 똑같은데 도대체 효과의 자율적인 위치는 어떻게 정하지?
+	
+}
 COU_industry = { #총학산업
 	enable = { always = yes }
 
@@ -2080,77 +2096,6 @@ TRN_industry_ns = {
 	production_factory_max_efficiency_factor = TRN_industry_ns_production_factory_max_efficiency_factor
 	industry_air_damage_factor = TRN_industry_ns_industry_air_damage_factor
 }
-TRN_army_ns = { # 트리니티 지상군
-	icon = GFX_idea_TRM_Trinity_Grande_Armee
-	
-	#시작시
-	custom_modifier_tooltip = TRN_armor_doctrine_tooltip
-	planning_speed  = TRN_army_ns_planning_speed
-	army_org_factor = TRN_army_ns_army_org_factor
-	army_attack_factor = TRN_army_ns_army_attack_factor
-	experience_gain_army_factor = TRN_army_ns_experience_gain_army_factor
-	experience_gain_artillery_combat_factor = TRN_army_ns_experience_gain_artillery_combat_factor
-
-	# 중점으로 얻는 효과들
-	max_planning_factor = TRN_army_ns_max_planning_factor
-	army_defence_factor = TRN_army_ns_army_defence_factor
-	army_attack_speed_factor = TRN_army_ns_army_attack_speed_factor
-	army_artillery_attack_factor = TRN_army_ns_army_artillery_attack_factor
-	army_artillery_defence_factor = TRN_army_ns_army_artillery_defence_factor
-	breakthrough_factor = TRN_army_ns_breakthrough_factor
-	org_loss_when_moving = TRN_army_ns_org_loss_when_moving
-	initiative_factor = TRN_army_ns_initiative_factor
-	intel_from_combat_factor = TRN_army_ns_intel_from_combat_factor
-	recon_factor_while_entrenched = TRN_army_ns_recon_factor_while_entrenched
-	army_armor_attack_factor = TRN_army_ns_army_armor_attack_factor
-	motorized_attack_factor = TRN_army_ns_motorized_attack_factor
-	mechanized_attack_factor = TRN_army_ns_mechanized_attack_factor
-	supply_node_range = TRN_army_ns_supply_node_range
-	out_of_supply_factor = TRN_army_ns_out_of_supply_factor
-	experience_loss_factor = TRN_army_ns_experience_loss_factor
-	army_org_regain = TRN_army_ns_army_org_regain
-}
-TRN_navy_ns = { # 트리니티 해군
-	icon = GFX_idea_TRM_Trinity_navy
-	
-	#시작시
-	naval_has_potf_in_combat_attack = TRN_navy_ns_naval_has_potf_in_combat_attack # 0.1
-	experience_gain_navy_factor = TRN_navy_ns_experience_gain_navy_factor # 0.1
-	naval_doctrine_cost_factor = TRN_navy_ns_naval_doctrine_cost_factor # 0.1
-	navy_leader_cost_factor = TRN_navy_ns_navy_leader_cost_factor # -0.1
-	navy_max_range_factor = TRN_navy_ns_navy_max_range_factor # -0.15
-
-	#
-	custom_modifier_tooltip = TRN_military_modifier_tt #Bonuses applied via hidden NS or tech 
-	naval_defense_factor = TRN_navy_ns_naval_defense_factor
-	naval_hit_chance = TRN_navy_ns_naval_hit_chance
-	screening_efficiency = TRN_navy_ns_screening_efficiency
-	naval_heavy_gun_hit_chance_factor = TRN_navy_ns_naval_heavy_gun_hit_chance_factor
-	convoy_raiding_efficiency_factor = TRN_navy_ns_convoy_raiding_efficiency_factor
-	screening_without_screens = TRN_navy_ns_screening_without_screens
-	naval_light_gun_hit_chance_factor = TRN_navy_ns_naval_light_gun_hit_chance_factor
-}
-
-TRN_airforce_ns = {
-    	icon = GFX_idea_TRM_Trinity_air_force
-
-	custom_modifier_tooltip = TRN_air_doctrine_tooltip
-	
-	air_mission_xp_gain_factor = TRN_airforce_ns_air_mission_xp_gain_factor
-	air_accidents_factor = TRN_airforce_ns_air_accidents_factor
-	air_home_defence_factor = TRN_airforce_ns_air_home_defence_factor
-	air_interception_detect_factor = TRN_airforce_ns_air_interception_detect_factor
-	air_intercept_efficiency = TRN_airforce_ns_air_intercept_efficiency
-	air_manpower_requirement_factor = TRN_airforce_ns_air_manpower_requirement_factor
-	air_range_factor = TRN_airforce_ns_air_range_factor
-	air_superiority_bonus_in_combat = TRN_airforce_ns_air_superiority_bonus_in_combat
-	air_strategic_bomber_bombing_factor = TRN_airforce_ns_air_strategic_bomber_bombing_factor
-	port_strike = TRN_airforce_ns_port_strike
-	air_agility_factor = TRN_airforce_ns_air_agility_factor
-	air_mission_efficiency = TRN_airforce_ns_air_mission_efficiency
-
-	sp_air_helicopter_speed_factor = TRN_airforce_ns_sp_air_helicopter_speed_factor
-}
 
 #카이저 코퍼레이션
 
@@ -3552,24 +3497,91 @@ TRM_trinity_social_issues_modifier = { #트리니티 사회문제
 	equipment_conversion_speed = TRM_pro_german_propaganda_equipment_conversion_speed
 	consumer_goods_expected_value = TRM_pro_german_propaganda_consumer_goods_expected_value
 }
+TRN_army_ns = { # 트리니티 지상군
+	icon = GFX_idea_TRM_Trinity_Grande_Armee
+	
+	#시작시
+	custom_modifier_tooltip = TRN_armor_doctrine_tooltip
+	planning_speed  = TRN_army_ns_planning_speed
+	army_org_factor = TRN_army_ns_army_org_factor
+	army_attack_factor = TRN_army_ns_army_attack_factor
+	experience_gain_army_factor = TRN_army_ns_experience_gain_army_factor
+	experience_gain_artillery_combat_factor = TRN_army_ns_experience_gain_artillery_combat_factor
+
+	# 중점으로 얻는 효과들
+	max_planning_factor = TRN_army_ns_max_planning_factor
+	army_defence_factor = TRN_army_ns_army_defence_factor
+	army_attack_speed_factor = TRN_army_ns_army_attack_speed_factor
+	army_artillery_attack_factor = TRN_army_ns_army_artillery_attack_factor
+	army_artillery_defence_factor = TRN_army_ns_army_artillery_defence_factor
+	breakthrough_factor = TRN_army_ns_breakthrough_factor
+	org_loss_when_moving = TRN_army_ns_org_loss_when_moving
+	initiative_factor = TRN_army_ns_initiative_factor
+	intel_from_combat_factor = TRN_army_ns_intel_from_combat_factor
+	recon_factor_while_entrenched = TRN_army_ns_recon_factor_while_entrenched
+	army_armor_attack_factor = TRN_army_ns_army_armor_attack_factor
+	motorized_attack_factor = TRN_army_ns_motorized_attack_factor
+	mechanized_attack_factor = TRN_army_ns_mechanized_attack_factor
+	supply_consumption_factor = TRN_army_ns_supply_consumption_factor
+	out_of_supply_factor = TRN_army_ns_out_of_supply_factor
+	experience_loss_factor = TRN_army_ns_experience_loss_factor
+	army_org_regain = TRN_army_ns_army_org_regain
+}
+TRN_navy_ns = { # 트리니티 해군
+	icon = GFX_idea_TRM_Trinity_navy
+	
+	#시작시
+	naval_has_potf_in_combat_attack = TRN_navy_ns_naval_has_potf_in_combat_attack # 0.1
+	experience_gain_navy_factor = TRN_navy_ns_experience_gain_navy_factor # 0.1
+	naval_doctrine_cost_factor = TRN_navy_ns_naval_doctrine_cost_factor # 0.1
+	navy_leader_cost_factor = TRN_navy_ns_navy_leader_cost_factor # -0.1
+	navy_max_range_factor = TRN_navy_ns_navy_max_range_factor # -0.15
+
+	#
+	custom_modifier_tooltip = TRN_military_modifier_tt #Bonuses applied via hidden NS or tech 
+	naval_defense_factor = TRN_navy_ns_naval_defense_factor
+	naval_hit_chance = TRN_navy_ns_naval_hit_chance
+	screening_efficiency = TRN_navy_ns_screening_efficiency
+	naval_heavy_gun_hit_chance_factor = TRN_navy_ns_naval_heavy_gun_hit_chance_factor
+	convoy_raiding_efficiency_factor = TRN_navy_ns_convoy_raiding_efficiency_factor
+	screening_without_screens = TRN_navy_ns_screening_without_screens
+	naval_light_gun_hit_chance_factor = TRN_navy_ns_naval_light_gun_hit_chance_factor
+}
+TRN_airforce_ns = {
+    	icon = GFX_idea_TRM_Trinity_air_force
+
+	custom_modifier_tooltip = TRN_air_doctrine_tooltip
+	
+	air_mission_xp_gain_factor = TRN_airforce_ns_air_mission_xp_gain_factor
+	air_accidents_factor = TRN_airforce_ns_air_accidents_factor
+	air_home_defence_factor = TRN_airforce_ns_air_home_defence_factor
+	air_interception_detect_factor = TRN_airforce_ns_air_interception_detect_factor
+	air_intercept_efficiency = TRN_airforce_ns_air_intercept_efficiency
+	air_manpower_requirement_factor = TRN_airforce_ns_air_manpower_requirement_factor
+	air_range_factor = TRN_airforce_ns_air_range_factor
+	air_superiority_bonus_in_combat = TRN_airforce_ns_air_superiority_bonus_in_combat
+	air_strategic_bomber_bombing_factor = TRN_airforce_ns_air_strategic_bomber_bombing_factor
+	port_strike = TRN_airforce_ns_port_strike
+	air_agility_factor = TRN_airforce_ns_air_agility_factor
+	air_mission_efficiency = TRN_airforce_ns_air_mission_efficiency
+
+	sp_air_helicopter_speed_factor = TRN_airforce_ns_sp_air_helicopter_speed_factor
+}
 TRN_Trinity_New_Culture_modifier = { # 신 - 트리니티 문화
 	icon = GFX_idea_TRN_Trinity_New_Culture_ns
 
 	production_speed_buildings_factor = TRN_TNC_modifier_production_speed_buildings_factor
 	global_building_slots_factor = TRN_TNC_modifier_global_building_slots_factor
-
 	stability_factor = TRN_TNC_modifier_stability_factor
 	experience_gain_army_factor = TRN_TNC_modifier_experience_gain_army_factor
 	experience_loss_factor = TRN_TNC_modifier_experience_loss_factor
-
 	monthly_population = TRN_TNC_modifier_monthly_population
-
 	weekly_casualties_war_support = TRN_TNC_modifier_weekly_casualties_war_support
 	conscription_factor = TRN_TNC_modifier_conscription_factor
-
 	research_speed_factor = TRN_TNC_modifier_research_speed_factor
-
 	factory_energy_consumption = TRN_TNC_modifier_factory_energy_consumption
+	party_popularity_stability_factor = TRN_TNC_modifier_party_popularity_stability_factor
+	drift_defence_factor = TRN_TNC_modifier_drift_defence_factor
 }
 TRN_german_new_culture_order_modifier = { # 독일의 새로운 문화적 질서 
 	icon = GFX_idea_GEH_prefect_team_culture # 아이콘 만들기 전까지 임시
