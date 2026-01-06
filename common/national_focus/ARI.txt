@@ -2487,6 +2487,16 @@ focus_tree = {
 				country_event = { id = ARI_story_event.5 days = 65 random_hours = 8 }
 				country_event = { id = ARI_story_event.6 days = 25 random_hours = 8 }
 			}
+			every_state = {
+				limit = {
+					BA_trinity_is = yes
+					NOT = { 
+						is_core_of = ROOT
+						is_claimed_by = ROOT
+					}
+				}
+				add_claim_by = ROOT
+			}
 		}
 	}
 	focus = {
@@ -3238,6 +3248,10 @@ focus_tree = {
 			else = {
 				add_country_leader_trait = ARI_arius_squad_left_trait
 			}
+			
+			custom_effect_tooltip = enter_tt
+			
+			add_country_leader_trait = ARI_saori_skepticism_about_reform
 		}
 	}
 # 사오리 루트 - 보수파 승리
@@ -4590,6 +4604,19 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+			remove_ideas = ARI_student_resistance
+			add_timed_idea = {
+				idea = idea_ARI_amnesty_decree
+				days = 120
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_stability_factor = 0.02
+				tooltip = stability_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -4657,6 +4684,48 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_arius_military_complex
+				bonus = 1
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+				category = cat_anti_air
+				category = cat_anti_tank
+			}
 		}
 	}
 	focus = {
@@ -4672,6 +4741,14 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_conversion_of_paramilitary_into_pmc
 		completion_reward = {
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.10
+				tooltip = conscription_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -4687,6 +4764,22 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_abolition_of_origin_distinction
 		completion_reward = {
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription = -0.005
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -4703,6 +4796,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_conversion_of_paramilitary_into_pmc
 		completion_reward = {
+			set_rule = { can_create_factions = yes }
+			create_faction_from_template = BA_faction_template_ARI_arius_treaty_organization
 		}
 	}
 	focus = {
