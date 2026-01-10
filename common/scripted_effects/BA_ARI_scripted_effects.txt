@@ -38,3 +38,48 @@ ARI_spawn_penal_divisions_effect = {
 		set_country_flag = ARI_penal_units_raised_flag
 	}
 }
+
+AASRU_scripted_effect_on_value_change = {
+	set_temp_variable = {
+		AASRU_origin_temp = AASRU_var
+	}
+
+	add_to_temp_variable = {
+		AASRU_origin_temp = AASRU_temp
+	}
+
+	clamp_temp_variable = {
+		var = AASRU_origin_temp
+		min = 0
+		max = 100
+	}
+
+	if = {
+		limit = {
+			has_country_leader_with_trait = ARI_saori_skepticism_about_reform
+			check_variable = {
+				AASRU_origin_temp > 49
+			}
+		}
+		swap_ruler_traits = {
+			remove = ARI_saori_skepticism_about_reform
+			add = ARI_saori_trust_in_reform
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_leader_with_trait = ARI_saori_trust_in_reform
+			check_variable = {
+				AASRU_origin_temp < 50
+			}
+		}
+		swap_ruler_traits = {
+			remove = ARI_saori_trust_in_reform
+			add = ARI_saori_skepticism_about_reform
+		}
+	}
+
+	set_variable = {
+		AASRU_var = AASRU_origin_temp
+	}
+}
