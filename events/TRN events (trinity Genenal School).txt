@@ -3181,6 +3181,98 @@ news_event = { # 에덴 체제 수립
 		}
 	}
 }
+news_event = { # 트리니티 호스트 선거
+	id = trinity_news_events.12
+	title = trinity_news_events.12.t
+	desc = {
+		text = trinity_news_events.12.desc.nagisa
+		trigger = { 
+			TRM = { 
+				has_country_leader = {
+					character = TRN_Kirifuji_Nagisa
+					ruling_only = yes
+				}
+			} 
+		}
+	}
+	
+	desc = {
+		text = trinity_news_events.12.desc.alt
+		trigger = { 
+			TRM = { 
+				NOT = {
+					has_country_leader = {
+						character = TRN_Kirifuji_Nagisa
+						ruling_only = yes
+					} 
+				}
+			} 
+		}
+	}
+
+	picture = GFX_news_event_generic_sign_treaty2
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = trinity_news_events.12.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+
+	option = {
+		name = trinity_news_events.12.b
+		trigger = {
+			NOT = { tag = TRM }
+			Kivotos_school_tag = yes
+		}
+	}
+
+	option = {
+		name = trinity_news_events.12.c
+		trigger = {
+			NOT = {
+				Kivotos_school_tag = yes
+			}
+		}
+	}
+}
+news_event = { # 트리니티 쿠데타
+	id = trinity_news_events.13
+	title = trinity_news_events.13.t
+	desc = trinity_news_events.13.desc
+
+	picture = GFX_news_event_generic_riot
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = trinity_news_events.13.a
+		trigger = {
+			TAG = TRM
+		}
+	}
+
+	option = {
+		name = trinity_news_events.13.b
+		trigger = {
+			NOT = { tag = TRM }
+			Kivotos_school_tag = yes
+		}
+	}
+
+	option = {
+		name = trinity_news_events.13.c
+		trigger = {
+			NOT = {
+				Kivotos_school_tag = yes
+			}
+		}
+	}
+}
 
 unit_leader_event = { # 아이돌 마리 - 1
 	id = trinity_flavor_events.1000
@@ -6475,7 +6567,12 @@ country_event = { #
 
 	option = { 
 		name = trinity_events_nagisa.76.a 
+
+		add_ideas = TRN_seia_host_ns
 		
+		hidden_effect = {
+			news_event = { id = trinity_news_events.13 hours = 3 }
+		}
 	}
 }
 
@@ -8421,6 +8518,7 @@ country_event = { # [GetYear]년 콘클라베
 		hidden_effect = {
 			country_event = { id = trinity_events_nagisa.54 hours = 8 }
 			country_event = { id = trinity_events_nagisa.55 hours = 8 }
+			news_event = { id = trinity_news_events.12 hours = 3 }
 			set_global_flag = TRM_democratic_nagisa_ending_flag
 		}
 	}
