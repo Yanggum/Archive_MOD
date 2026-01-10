@@ -1631,10 +1631,10 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_invite_collaboraters_to_high_command #최고사령부에 페르피두스 등용 
-		icon = GFX_focus_generic_military_mission
+		id = COU_focus_introduction_of_defendu #디펜두 도입  
+		icon = GFX_focus_generic_urban_training
 		x = 0
-		y = 5
+		y = 1
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1647,9 +1647,41 @@ focus_tree = {
 	}
 	
 	focus = {
+		id = COU_focus_invite_collaboraters_to_high_command #최고사령부에 페르피두스 등용 
+		icon = GFX_focus_generic_military_mission
+		x = 0
+		y = 5
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_introduction_of_defendu }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
 		id = COU_focus_bought_their_weapons #현지 군수물자 확보 
 		icon = GFX_focus_generic_money_for_equipment
-		x = -1
+		x = 0
+		y = 6
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_goal_generic_build_tank #방위산업체에 촉구 
+		icon = GFX_goal_generic_build_tank
+		x = 2
 		y = 6
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
@@ -1666,13 +1698,13 @@ focus_tree = {
 		id = COU_focus_assumption_of_hemberg_military_factory #헴브뤼흐 조병창 재가동 
 		icon = GFX_focus_generic_reorient_production
 		x = 1
-		y = 6
+		y = 7
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		prerequisite = { focus = COU_focus_goal_generic_build_tank }
 		completion_reward = {
 		    
 		}
@@ -1682,14 +1714,14 @@ focus_tree = {
 		id = COU_focus_order_to_fn_herstal #FN 에르스탈에 지시 
 		icon = GFX_focus_BEL_fn_herstal
 		x = 3
-		y = 6
+		y = 7
 		cost = 10
 		overlay = GFX_focus_fast_overlay_generic_clock
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		prerequisite = { focus = COU_focus_goal_generic_build_tank }
 		completion_reward = {
 		    custom_effect_tooltip = enter_tt
 			if = {
@@ -1707,19 +1739,34 @@ focus_tree = {
 		}
 	}
 	
-	
-	##육군 
 	focus = {
-		id = COU_focus_defensive2 #상황적 특이성을 인정 
-		icon = GFX_COU_transportoffice
-		x = 4
+		id = COU_focus_annex_small_armies #소규모 자치군 편입 
+		icon = GFX_focus_generic_annex_country_2
+		x = 7
 		y = 1
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		mutually_exclusive = { focus = COU_focus_offensive }
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		    
+		}
+	}
+	
+	
+	##육군 
+	focus = {
+		id = COU_focus_build_military_culture #방위군 규율 강화
+		icon = GFX_focus_COU_the_last_fate
+		x = 9
+		y = 1
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
 		prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
 		    
@@ -1727,32 +1774,17 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_ready_for_tank_assembly #전차 대량양산 준비 
-		icon = GFX_focus_generic_tank_assembly
-		x = 5
+		id = COU_focus_defensive2 #상황적 특이성을 인정 
+		icon = GFX_COU_transportoffice
+		x = 3
 		y = 2
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_defensive2 focus = COU_focus_offensive }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = {
-		id = COU_focus_more_tank_production_line #생산라인 증설
-		icon = GFX_focus_generic_tank_production
-		x = 5
-		y = 3
-		cost = 5
-		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_focus_ready_for_tank_assembly }
+		mutually_exclusive = { focus = COU_focus_offensive }
+		prerequisite = { focus = COU_focus_build_military_culture }
 		completion_reward = {
 		    
 		}
@@ -1762,7 +1794,7 @@ focus_tree = {
 		id = COU_focus_replan_vastion_holland #베스팅 홀란트 재개
 		icon = GFX_goal_generic_construct_military
 		x = 2
-		y = 2
+		y = 3
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1777,8 +1809,8 @@ focus_tree = {
 	focus = {
 		id = COU_focus_great_operation_system #철저한 작전 체계
 		icon = GFX_goal_TRM_Operation_Description
-		x = 2
-		y = 3
+		x = 3
+		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1793,46 +1825,14 @@ focus_tree = {
 	focus = {
 		id = COU_focus_offensive #정신 개조 
 		icon = GFX_COU_focus_offensive
-		x = 12
-		y = 1
-		cost = 5
-		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		mutually_exclusive = { focus = COU_focus_defensive2 }
-		prerequisite = { focus = COU_reorganizing_the_defense_office }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = {
-		id = COU_focus_build_military_culture #방위군 규율 강화
-		icon = GFX_focus_COU_the_last_fate
-		x = 11
+		x = 13
 		y = 2
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_defensive2 focus = COU_focus_offensive }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = {
-		id = COU_focus_shock_infantry_battalion #충격보병 대대 
-		icon = GFX_goal_generic_major_war
-		x = 11
-		y = 3
-		cost = 5
-		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
+		mutually_exclusive = { focus = COU_focus_defensive2 }
 		prerequisite = { focus = COU_focus_build_military_culture }
 		completion_reward = {
 		    
@@ -1843,7 +1843,7 @@ focus_tree = {
 		id = COU_focus_spirit_of_chasseurs_ardennais #샤쇠르 아르데나의 정신 
 		icon = GFX_focus_BEL_resist_and_bite
 		x = 14
-		y = 2
+		y = 3
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1856,10 +1856,10 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_moving_railway_gun #기동형 포대
-		icon = GFX_focus_generic_railway_gun 
-		x = 14
-		y = 3
+		id = COU_focus_shock_infantry_battalion #충격보병 대대 
+		icon = GFX_goal_generic_major_war
+		x = 13
+		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1872,10 +1872,26 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_annex_small_armies #소규모 자치군 편입 
-		icon = GFX_focus_generic_annex_country_2
+		id = COU_focus_army_labortary #육군연구소 
+		icon = GFX_focus_SOV_merge_plants
 		x = 8
-		y = 2
+		y = 5
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_great_operation_system focus = COU_focus_shock_infantry_battalion }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_rework_artillery #포병대 개혁 
+		icon = GFX_goal_generic_army_artillery2
+		x = 6
+		y = 3
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
@@ -1888,32 +1904,32 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_goal_generic_build_tank #방위산업체에 촉구 
-		icon = GFX_goal_generic_build_tank
-		x = 7
-		y = 3
+		id = COU_focus_antitank_artillery #대전차포대 
+		icon = GFX_focus_generic_anti_tank_guns
+		x = 5
+		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_annex_small_armies }
+		prerequisite = { focus = COU_focus_rework_artillery }
 		completion_reward = {
 		    
 		}
 	}
 	
 	focus = {
-		id = COU_focus_introduction_of_defendu #디펜두 도입  
-		icon = GFX_focus_generic_urban_training
-		x = 9
+		id = COU_focus_central_military_reserach #기계화 포커스 
+		icon = GFX_focus_generic_mechanized
+		x = 10
 		y = 3
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_focus_annex_small_armies }
+		prerequisite = { focus = COU_focus_defensive2 focus = COU_focus_offensive }
 		completion_reward = {
 		    
 		}
