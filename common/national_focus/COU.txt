@@ -1556,7 +1556,7 @@ focus_tree = {
 	
 	focus = { #기계군단에 대응 
 		id = COU_focus_the_decagramaton_emergency
-		icon = GFX_focus_shutup
+		icon = GFX_focus_GEI_tablet
 		x = 7
 		y = 5
 		relative_position_id = COU_shaking_royalty
@@ -1631,11 +1631,11 @@ focus_tree = {
 #        
 
     focus = {
-		id = COU_reorganizing_the_defense_office #방위군 편성
+		id = COU_reorganizing_the_defense_office #방위군 재편
 		icon = GFX_focus_COU_the_emergency_law
 		x = 29
 		y = 0
-		cost = 10
+		cost = 5
 		available = {
 		   #  has_dynamic_modifier = COU_chronic_principledism
 		   has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
@@ -1647,7 +1647,13 @@ focus_tree = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
 		completion_reward = {
-		    
+		    add_war_support = 0.05
+			COU_HAINE = { unit_leader_event = { id = COU_event_military.6 } }
+			custom_effect_tooltip = enter_tt
+		    add_timed_idea = {
+			     idea = COU_reworked_army
+				 days = 360
+			}
 		}
 	}
 	
@@ -1694,6 +1700,22 @@ focus_tree = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
 		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_annex_small_armies #지휘체계 인수 
+		icon = GFX_focus_generic_annex_country_2
+		x = -1
+		y = 7
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_bought_their_weapons }
 		completion_reward = {
 		    
 		}
@@ -1762,16 +1784,16 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_annex_small_armies #소규모 자치군 편입 
-		icon = GFX_focus_generic_annex_country_2
-		x = 7
-		y = 1
+		id = COU_focus_unification_ammunition_process #탄약공정 통일
+		icon = GFX_goal_generic_small_arms
+		x = 1
+		y = 8
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
-		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		prerequisite = { focus = COU_focus_annex_small_armies focus = COU_focus_order_to_fn_herstal }
 		completion_reward = {
 		    
 		}
@@ -1782,16 +1804,31 @@ focus_tree = {
 	focus = {
 		id = COU_focus_build_military_culture #방위군 규율 강화
 		icon = GFX_focus_COU_the_last_fate
-		x = 9
+		x = 8
 		y = 1
-		cost = 5
+		cost = 8
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_ARMY_XP
 		}
 		prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-		    
+		     army_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_navy
+						 has_idea = CCP_COU_chronic_principledism_tp_air
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_army }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_army 
+			 }
 		}
 	}
 	
@@ -2056,9 +2093,9 @@ focus_tree = {
 	}
 	
 	focus = {
-        id = COU_focus_moving_railway_gun #기동형 포대
-        icon = GFX_focus_generic_railway_gun 
-        x = 6
+        id = COU_focus_road_of_survive #생존의 길
+        icon = GFX_focus_SOV_the_road_of_life
+        x = 5
         y = 6
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
@@ -2070,6 +2107,183 @@ focus_tree = {
 
         }
     }
+	
+	focus = {
+        id = COU_focus_military_radio_first #군 통신망 우선 
+        icon = GFX_goal_generic_radar
+        x = 5
+        y = 7
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_road_of_survive }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_guarantee_support_weapons #보급 물자 보장  
+        icon = GFX_focus_generic_reinforcing_the_supply_network
+        x = 7
+        y = 7
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_road_of_survive }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_moving_railway_gun #기동형 포대
+        icon = GFX_focus_generic_railway_gun 
+        x = 7
+        y = 6
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_army_labortary }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_rocketry_weapon #로켓 무기 
+        icon = GFX_focus_rocketry
+        x = 9
+        y = 6
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_army_labortary }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+		id = COU_focus_kivotos_drone #잘썼어요 
+		icon = GFX_focus_generic_drone_2
+		prerequisite = {
+			focus = COU_focus_army_labortary 
+		}
+		x = 11
+		y = 6
+		relative_position_id = COU_reorganizing_the_defense_office
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			set_technology = { kivotos_dron_tech = 1 }
+			hidden_effect = { set_technology = { BA_drone_bonus_tech = 1 popup = no } }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_kivotos_helicopter #헬리콥터 재분석 
+		icon = GFX_goal_Helicopter
+		prerequisite = {
+			focus = COU_focus_kivotos_drone 
+		}
+		x = 11
+		y = 7
+		relative_position_id = COU_reorganizing_the_defense_office
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+	
+	
+	##공군 
+	focus = {
+		id = COU_focus_expand_air_experience #항공 훈련 계획 확장
+		icon = GFX_COU_arbitrationoffice
+		x = 22
+		y = 1
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_AIR_XP
+		}
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		     air_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_navy
+						 has_idea = CCP_COU_chronic_principledism_tp_army
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_air }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_air 
+			 }
+		}
+	}
+	
+	
+	##해군 
+	focus = {
+		id = COU_focus_petition_45 #45인의 탄원서 수용 
+		icon = GFX_COU_focus_establishment_of_fleet
+		x = 32
+		y = 1
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_NAVY_XP
+		}
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		     navy_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_air
+						 has_idea = CCP_COU_chronic_principledism_tp_air
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_navy }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_navy 
+			 }
+		}
+	}
+	
+	
 	
 	
 	
@@ -2098,7 +2312,7 @@ focus_tree = {
 	focus = { #시작 중점, 건들거임 
 		id = COU_establishment_of_emergency_measures_committee_NOT
 		icon = GFX_focus_COU_get_some_helps_ok
-		x = 65
+		x = 81
 		y = 0
 		cost = 5
 		available = {
