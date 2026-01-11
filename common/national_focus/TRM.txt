@@ -10319,6 +10319,7 @@ focus_tree = {
 			NOT = { country_exists = GEH }
 			owns_state = 52
 			agency_upgrade_number > 4
+			has_completed_focus = TRN_nagisa_justice_task_force
 			NOT = { has_completed_focus = TRN_nagisa_support_for_the_JTF }
 		}
 
@@ -13320,6 +13321,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			IF = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+					is_faction_leader = yes
+				}
+				add_faction_initiative = 1
+			}
 
 			add_to_variable = {
 				nagisa_faction_F = 1
@@ -13514,7 +13522,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			if = {
+				limit = { NOT = { has_country_flag = TRM_nagisa_constitution_anti_democracy_holy_war_flag }  }
+				custom_effect_tooltip = TRN_bill_of_attainder_default_tt
+			}
+			else = {
+				TRM_nagisa_bop_low_decrease_effect = yes
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRM_nagisa_constitution_modifier_change
+				add_to_variable = {
+					TRM_nagisa_constitution_political_power_factor = 0.05
+					tooltip = political_power_factor_tt
+				}
+				add_stability = 0.1
+			}
 		}
 	}
 
