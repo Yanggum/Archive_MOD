@@ -8581,28 +8581,82 @@ TRN_economic_evelopment_department = {
 		}
 	}
 	
-	TRN_armor_factory_decision  = {
+	TRN_improv_supply_efficiency_decision  = {
 		priority = 90
-		icon = GFX_decision_generic_merge_plant_aircraft
+		icon = GFX_decision_generic_factory
 
 		ai_will_do = { 
 			base = 40 
 			modifier = {
-				arms_factory < 50
-				add = 100
+				has_political_power > 99
+				add = 40
 			}
 		}
 		allowed = { original_tag = TRM }
 
 		visible = {
-			has_completed_focus = TRN_armor_refit
+			has_completed_focus = TRN_military_factory_maintenance
+			check_variable = { 
+				var = TRN_army_ns_supply_consumption_factor
+				value = 0
+				compare = greater_than
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TRN_improv_supply_efficiency_decision_trigger_tooltip
+				check_variable = { 
+					var = TRN_army_ns_supply_consumption_factor
+					value = 0
+					compare = greater_than
+				}
+			}
+		}
+
+		cost = 20
+		days_remove = 20
+
+		modifier = {
+
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = {
+				TRN_army_ns_supply_consumption_factor = -0.02
+				tooltip = supply_consumption_factor_tt
+			}
+		}
+
+		remove_effect = {
+
+		}
+	}
+	
+	TRN_brabag_decision  = {
+		priority = 90
+		icon = GFX_decision_generic_merge_plant_aircraft
+
+		ai_will_do = { 
+			base = 20
+		}
+		allowed = { original_tag = TRM }
+
+		visible = {
+			has_completed_focus = TRN_igfarben
 		}
 
 		available = {
 		}
 
 		cost = 35
-		days_remove = 70
+		days_remove = 35
 
 		modifier = {
 
@@ -8615,27 +8669,7 @@ TRN_economic_evelopment_department = {
 		}
 
 		remove_effect = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}	
-			}
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = air_equipment
-			}
+
 		}
 	}
 }
