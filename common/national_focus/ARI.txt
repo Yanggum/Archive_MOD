@@ -2325,6 +2325,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
+				prioritize = { 85 }
 				custom_effect_tooltip = {
 					localization_key = effect_division_creation_name
 					STATE = "[THIS.GetName]"
@@ -2380,6 +2381,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
+				prioritize = { 85 }
 				custom_effect_tooltip = {
 					localization_key = effect_division_creation_name
 					STATE = "[THIS.GetName]"
@@ -2690,6 +2692,7 @@ focus_tree = {
 					NOT = { has_completed_focus = ARI_sunny_place }
 				}
 				random_controlled_state = {
+					prioritize = { 85 }
 					custom_effect_tooltip = {
 						localization_key = effect_division_creation_name
 						STATE = "[THIS.GetName]"
@@ -3252,6 +3255,8 @@ focus_tree = {
 			custom_effect_tooltip = enter_tt
 			
 			add_country_leader_trait = ARI_saori_skepticism_about_reform
+
+			set_variable = { AASRU_main_value = 1 }
 		}
 	}
 # 사오리 루트 - 보수파 승리
@@ -4922,6 +4927,29 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = ARI_azusa_reform
+
+		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL}
+
+		select_effect = {
+			set_variable = { ARI_initialize_five_year_plan_goal_civ_factories = num_of_civilian_factories }
+			multiply_variable = {
+				var = ARI_initialize_five_year_plan_goal_civ_factories
+				value = 1.8
+			}
+			round_variable = ARI_initialize_five_year_plan_goal_civ_factories
+
+			set_variable = { ARI_initialize_five_year_plan_goal_mil_factories = num_of_military_factories }
+			multiply_variable = {
+				var = ARI_initialize_five_year_plan_goal_mil_factories
+				value = 1.2
+			}
+			round_variable = ARI_initialize_five_year_plan_goal_mil_factories
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		completion_reward = {
 
 			set_temp_variable = {
@@ -4929,6 +4957,31 @@ focus_tree = {
 				tooltip = _AASRU_var_tt
 			}
 			AASRU_scripted_effect_on_value_change = yes
+			
+			## Gain NS 
+			add_timed_idea = {
+				idea = PRC_five_year_plan
+				days = 1825
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			
+			custom_effect_tooltip = ARI_five_year_plan_for_economic_reorganization_tt
+		
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			## Start mission
+			activate_mission = ARI_initialize_five_year_plan_mission
+			
+			## For localisation reasons
+			set_variable = {
+				temp_var_PRC_deadline_five_year_plan_selected = [GetDate]
+			}
+			add_to_variable = {
+				temp_var_PRC_deadline_five_year_plan_selected = 1825
+			}
+
 		}
 	}
 	focus = {
@@ -5007,6 +5060,54 @@ focus_tree = {
 				tooltip = _AASRU_var_tt
 			}
 			AASRU_scripted_effect_on_value_change = yes
+
+			custom_effect_tooltip = enter_tt
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 85 }
+				
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny"}
+
+				custom_effect_tooltip = enter_tt
+
+				mio:ARI_3rd_classroom = {
+					set_mio_name_key = ARI_3rd_classroom_transition
+					add_mio_size = 2
+					add_mio_research_bonus = 0.05
+				}
+
+				mio:ARI_7th_classroom = {
+					set_mio_name_key = ARI_7th_classroom_transition
+					add_mio_size = 2
+					add_mio_research_bonus = 0.05
+				}
+			}
+
+			if = {
+				limit = { has_character = ARI_joumae_saori }
+
+				custom_effect_tooltip = enter_tt
+
+				ARI_joumae_saori = {
+					unit_leader_event = ARI_reformist_event_chain.1
+				}
+			}
 		}
 	}
 	focus = {

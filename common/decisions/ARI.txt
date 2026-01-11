@@ -3440,6 +3440,62 @@ ARI_end_of_pacifism = {
 }
 
 ARI_azusa_and_saori_relationship = {
+	
+	ARI_initialize_five_year_plan_mission = {
+		icon = GFX_decision_generic_factory 
+
+		is_good = no
+
+		days_mission_timeout = 1825
+
+		fire_only_once = yes
+
+		activation = {
+			has_completed_focus = ARI_five_year_plan_for_economic_reorganization
+		}
+
+		available = {
+			AND = {
+				num_of_civilian_factories > ARI_initialize_five_year_plan_goal_civ_factories 
+				num_of_military_factories > ARI_initialize_five_year_plan_goal_mil_factories 
+			}
+		}
+
+
+
+		complete_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = flag_AASRU_progressbar_end } }
+				set_temp_variable = {
+					AASRU_temp = 12
+					tooltip = AASRU_var_tt
+				}
+				AASRU_scripted_effect_on_value_change = yes
+			}
+
+			add_ideas = ARI_five_year_plan_completed
+			## If completed then get slight perfament bonus
+		}
+
+		timeout_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = flag_AASRU_progressbar_end } }
+				set_temp_variable = {
+					AASRU_temp = -12
+					tooltip = _AASRU_var_tt
+				}
+				AASRU_scripted_effect_on_value_change = yes
+			}
+
+			#When reach 0, fail - if fail get a Missed Five Year Plan Goal NS for 2 years with -10% in a bunch of stuff. 
+			add_timed_idea = {
+				idea = ARI_five_year_plan_failed
+				days = 730
+			}
+		}
+
+
+	}
 	ARI_AASRU_sending_light_gift = {
 		icon = GFX_decision_generic_consumer_goods
 		priority = 100
