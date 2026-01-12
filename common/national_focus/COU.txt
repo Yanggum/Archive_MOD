@@ -1665,11 +1665,16 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH 
 		}
 		prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+			    localization_key = generic_enables_tech_tt
+			    TECH_EFFECT = tech_effect|urban_training_tech
+			    TECH_NAME = urban_training_tech
+		    }
+		    hidden_effect = { set_technology = { urban_training_tech = 1 } }
 		}
 	}
 	
@@ -1680,12 +1685,19 @@ focus_tree = {
 		y = 5
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
+		available = { has_dynamic_modifier = COU_land_defence_force }
 		prerequisite = { focus = COU_focus_introduction_of_defendu }
 		completion_reward = {
-		    
+		    add_command_power = 25
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_planning_speed = 0.1
+			 	tooltip = planning_speed_tt
+		    }
 		}
 	}
 	
@@ -1694,14 +1706,28 @@ focus_tree = {
 		icon = GFX_goal_generic_small_arms
 		x = -1
 		y = 6
-		cost = 5
+		cost = 8
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
 		completion_reward = {
-		    
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = COU_focus_unification_ammunition_process
+				bonus = 1.0
+				uses = 2
+				category = infantry_weapons
+			}
 		}
 	}
 	
@@ -1712,12 +1738,25 @@ focus_tree = {
 		y = 7
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		prerequisite = { focus = COU_focus_unification_ammunition_process }
 		completion_reward = {
-		    
+		    add_manpower = 5000
+			set_variable = { BA_halo_infantry_cap_edit_var = 3 }
+			BA_halo_infantry_cap_edit_effect = yes
+			custom_effect_tooltip = kivotos_halo_add3_tt
+			custom_effect_tooltip = enter_tt
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -1790,7 +1829,7 @@ focus_tree = {
 		icon = GFX_focus_COU_the_last_fate
 		x = 8
 		y = 1
-		cost = 8
+		cost = 10
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_ARMY_XP
@@ -1808,28 +1847,54 @@ focus_tree = {
 				 }
 				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
 				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_army }
+				 add_dynamic_modifier = { modifier = COU_land_defence_force }
+				 add_to_variable = {
+			         COU_land_defence_force_org_loss_when_moving = -0.05
+			 	     tooltip = org_loss_when_moving_tt
+		         }
 			 }
 			 else = {
 			     custom_effect_tooltip = COU_CPT_tooltip
 			     remove_ideas = CCP_COU_chronic_principledism_tp_army 
+				 add_dynamic_modifier = { modifier = COU_land_defence_force }
+				 add_to_variable = {
+			         COU_land_defence_force_org_loss_when_moving = -0.05
+			 	     tooltip = org_loss_when_moving_tt
+		         }
 			 }
 		}
 	}
 	
 	focus = {
-		id = COU_focus_defensive2 #상황적 특이성을 인정 
+		id = COU_focus_defensive2 #특이 상황을 인정 
 		icon = GFX_COU_transportoffice
 		x = 3
 		y = 2
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		mutually_exclusive = { focus = COU_focus_offensive }
 		prerequisite = { focus = COU_focus_build_military_culture }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_army_org_factor = 0.05
+			 	tooltip = army_org_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_org_regain = 0.03
+			 	tooltip = army_org_regain_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_defence_factor = -0.05
+			 	tooltip = army_defence_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_experience_loss_factor = -0.05
+			 	tooltip = experience_loss_factor_tt
+		    }
 		}
 	}
 	
@@ -1841,11 +1906,25 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_ARMY_XP 
 		}
 		prerequisite = { focus = COU_focus_defensive2 }
 		completion_reward = {
-		    
+		    army_experience = 10
+			set_technology = { basic_fortification_tech = 1 }
+			custom_effect_tooltip = enter_tt
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_max_planning_factor = 0.05
+			 	tooltip = max_planning_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_command_power_gain_mult = 0.05
+			 	tooltip = command_power_gain_mult_tt
+		    }
 		}
 	}
 	
@@ -1856,12 +1935,20 @@ focus_tree = {
 		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		prerequisite = { focus = COU_focus_replan_vastion_holland }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_planning_speed = 0.1
+			 	tooltip = planning_speed_tt
+		    }
+		    add_to_variable = {
+			    COU_land_defence_force_max_planning_factor = 0.05
+			 	tooltip = max_planning_factor_tt
+		    }
 		}
 	}
 	
@@ -1870,14 +1957,39 @@ focus_tree = {
 		icon = GFX_focus_generic_mechanized
 		x = 4
 		y = 3
-		cost = 5
+		cost = 10
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH
 		}
 		prerequisite = { focus = COU_focus_defensive2 }
 		completion_reward = {
-		    
+		    add_tech_bonus = {
+				name = COU_focus_central_military_reserach
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+			add_mastery_bonus = {
+				name = COU_focus_tank_assembly
+				bonus = 0.1
+				days = 200
+				track = armor
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_mechanized_attack_factor = 0.1
+			 	tooltip = mechanized_attack_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_motorized_attack_factor = 0.1
+			 	tooltip = motorized_attack_factor_tt
+		    }
 		}
 	}
 	
@@ -1889,11 +2001,35 @@ focus_tree = {
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = COU_focus_central_military_reserach }
 		completion_reward = {
-		    
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_production_factory_max_efficiency_factor = 0.05
+			 	tooltip = production_factory_max_efficiency_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_industrial_capacity_factory = 0.03
+			 	tooltip = industrial_capacity_factory_tt
+		    }
 		}
 	}
 	
@@ -1904,13 +2040,24 @@ focus_tree = {
 		y = 5
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		prerequisite = { focus = COU_focus_great_operation_system }
 		#prerequisite = { focus = COU_focus_tank_assembly }
 		completion_reward = {
-		    
+		    random_army_leader = {
+			    add_planning = 1
+		    }
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_land_reinforce_rate = 0.1
+			 	tooltip = land_reinforce_rate_tt
+		    }
+			add_to_variable = {
+			    supply_consumption_factor = -0.05
+			 	tooltip = supply_consumption_factor_tt
+		    }
 		}
 	}
 	
@@ -1921,13 +2068,25 @@ focus_tree = {
 		y = 2
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		mutually_exclusive = { focus = COU_focus_defensive2 }
 		prerequisite = { focus = COU_focus_build_military_culture }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_breakthrough_factor_factor = 0.08
+			 	tooltip = breakthrough_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_attack_factor = 0.05
+			 	tooltip = army_attack_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_experience_loss_factor = 0.05
+			 	tooltip = experience_loss_factor_tt
+		    }
 		}
 	}
 	
@@ -2079,7 +2238,7 @@ focus_tree = {
 	focus = {
         id = COU_focus_road_of_survive #생존의 길
         icon = GFX_focus_SOV_the_road_of_life
-        x = 5
+        x = 6
         y = 6
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
@@ -2127,7 +2286,7 @@ focus_tree = {
 	focus = {
         id = COU_focus_moving_railway_gun #기동형 포대
         icon = GFX_focus_generic_railway_gun 
-        x = 7
+        x = 9
         y = 6
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
@@ -2144,13 +2303,13 @@ focus_tree = {
         id = COU_focus_rocketry_weapon #로켓 무기 
         icon = GFX_focus_rocketry
         x = 9
-        y = 6
+        y = 7
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
         search_filters = {
              FOCUS_FILTER_WAR_SUPPORT
         }
-        prerequisite = { focus = COU_focus_army_labortary }
+        prerequisite = { focus = COU_focus_moving_railway_gun }
         completion_reward = {
 
         }
@@ -2226,10 +2385,20 @@ focus_tree = {
 				 }
 				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
 				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_air }
+				 add_dynamic_modifier = { modifier = COU_air_defence_force }
+				 add_to_variable = {
+			         COU_air_defence_force_air_mission_xp_gain_factor = 0.05
+			 	     tooltip = air_mission_xp_gain_factor_tt
+		         }
 			 }
 			 else = {
 			     custom_effect_tooltip = COU_CPT_tooltip
 			     remove_ideas = CCP_COU_chronic_principledism_tp_air 
+				 add_dynamic_modifier = { modifier = COU_air_defence_force }
+				 add_to_variable = {
+			         COU_air_defence_force_air_mission_xp_gain_factor = 0.05
+			 	     tooltip = air_mission_xp_gain_factor_tt
+		         }
 			 }
 		}
 	}
@@ -2259,10 +2428,20 @@ focus_tree = {
 				 }
 				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
 				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_navy }
+				 add_dynamic_modifier = { modifier = COU_naval_defence_force }
+				 add_to_variable = {
+			         COU_naval_defence_force_refit_speed = 0.05
+			 	     tooltip = refit_speed_tt
+		         }
 			 }
 			 else = {
 			     custom_effect_tooltip = COU_CPT_tooltip
 			     remove_ideas = CCP_COU_chronic_principledism_tp_navy 
+				 add_dynamic_modifier = { modifier = COU_naval_defence_force }
+				 add_to_variable = {
+			         COU_naval_defence_force_repair_speed_factor = 0.05
+			 	     tooltip = repair_speed_factor_tt
+		         }
 			 }
 		}
 	}
@@ -2346,7 +2525,7 @@ focus_tree = {
 
 		cancelable = no
 		completion_reward = {
-			add_dynamic_modifier = { modifier = COU_emergency_measures_committee }
+			#add_dynamic_modifier = { modifier = COU_emergency_measures_committee }
 			add_political_power = 100
 			add_stability = 0.1
 			effect_tooltip = {
