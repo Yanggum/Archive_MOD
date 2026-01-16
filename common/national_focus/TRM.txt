@@ -16792,34 +16792,89 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_escort_force_expansion
-		icon = GFX_focus_generic_army_tanks_3
-		prerequisite = { focus = TRN_army_review }
+		id = TRN_research_armor_doctrine
+		icon = GFX_focus_generic_tank_assault
+		prerequisite = { 
+			focus = TRN_army_review
+		}
 		x = -2
 		y = 1
 		relative_position_id = TRN_army_review
-		cost = 5
+		cost = 6
 		available = {
 
 		}
 		ai_will_do = {
 
 		}
-		mutually_exclusive = { focus = TRN_small_attack_groups }
+		#mutually_exclusive = { focus = TRN_small_attack_groups }
 
 		completion_reward = {
+			add_mastery_bonus = {
+				name = TRN_small_attack_groups
+				bonus = 0.1
+				days = 365
+				track = armor
+			}
+			custom_effect_tooltip = tooltip_white_line
 
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
+
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = TRN_Ajitani_Hifumi_high_command
+
+			#custom_effect_tooltip = {
+			#	localization_key = tooltip_modify_dynmod 
+			#	DYNMOD = TRN_army_ns
+			#}
+			#add_to_variable = {
+			#	TRN_army_ns_org_loss_when_moving = -0.05
+			#	tooltip = org_loss_when_moving_tt
+			#}
+			#add_to_variable = {
+			#	TRN_army_ns_breakthrough_factor = 0.05
+			#	tooltip = breakthrough_factor_tt
+			#}
+			if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_1_ns }
+				swap_ideas = {
+					remove_idea = TRN_hidden_armor_doctrine_1_ns
+					add_idea = TRN_hidden_armor_doctrine_4_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_2_ns }
+				swap_ideas = {
+					remove_idea = TRN_hidden_armor_doctrine_2_ns
+					add_idea = TRN_hidden_armor_doctrine_6_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_3_ns }
+				swap_ideas = {
+					remove_idea = TRN_hidden_armor_doctrine_3_ns
+					add_idea = TRN_hidden_armor_doctrine_7_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_5_ns }
+				swap_ideas = {
+					remove_idea = TRN_hidden_armor_doctrine_5_ns
+					add_idea = TRN_hidden_armor_doctrine_8_ns
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = TRN_mechanized_division
 		icon = GFX_focus_generic_mechanized
-		prerequisite = { focus = TRN_escort_force_expansion }
+		prerequisite = { focus = TRN_research_armor_doctrine }
 		x = -1
 		y = 1
-		relative_position_id = TRN_escort_force_expansion
-		cost = 6
+		relative_position_id = TRN_research_armor_doctrine
+		cost = 5
 		available = {
 
 		}
@@ -16878,19 +16933,28 @@ focus_tree = {
 	focus = {
 		id = TRN_armored_corps_training_center
 		icon = GFX_focus_generic_army_tanks_2
-		prerequisite = { focus = TRN_escort_force_expansion }
+		prerequisite = { focus = TRN_research_armor_doctrine }
 		x = 1
 		y = 1
-		relative_position_id = TRN_escort_force_expansion
-		cost = 6
+		relative_position_id = TRN_research_armor_doctrine
+		cost = 5
 		available = {
-
+			
 		}
 		ai_will_do = {
 
 		}
 
 		completion_reward = {
+			army_experience = 20
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = {
+				TRN_army_ns_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
 
 		}
 	}
@@ -16911,16 +16975,123 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = {
+				TRN_army_ns_coordination_bonus = 0.05
+				tooltip = coordination_bonus_tt
+			}
 		}
 	}
 
 	focus = {
-		id = TRN_2
-		icon = GFX_focus_generic_army_tanks_2
+		id = TRN_vanguard_armed
+		icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
+		prerequisite = { focus = TRN_mechanized_division }
 		prerequisite = { focus = TRN_armored_corps_training_center }
 		x = -3
 		y = 1
+		relative_position_id = TRN_armored_corps_training_center
+		cost = 6
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			IF = {
+				limit = { has_doctrine = armored_spearhead }
+				add_daily_mastery = {
+					amount = 1
+					days = 75
+					name =  TRN_mission_command
+					track = operations
+				}
+
+			}
+			ELSE_IF = {
+				limit ={ has_subdoctrine_in_track = operations }
+				add_daily_mastery = {
+					amount = 1
+					days = 50
+					name =  TRN_mission_command
+					track = operations
+				}
+			}
+			ELSE = { set_sub_doctrine = armored_spearhead }
+			custom_effect_tooltip = tooltip_white_line
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod 
+				DYNMOD = TRN_army_ns
+			}
+			add_to_variable = {
+				TRN_army_ns_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
+			custom_effect_tooltip = tooltip_white_line
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Trinity Spearhead Division"
+					LINE_1 = { localization_key = line_battalion_tt NAME = motorized ICON = GFX_unit_motorized_icon_small COUNT = 8 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = medium_armor ICON = GFX_unit_medium_armor_icon_small COUNT = 10 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = artillery ICON = GFX_unit_artillery_icon_small }
+					SUPPORT_2 = { localization_key = support_battalion_tt NAME = engineer ICON = GFX_unit_engineer_icon_small }
+					SUPPORT_3 = { localization_key = support_battalion_tt NAME = logistics_company ICON = GFX_unit_logistics_company_icon_small }
+					SUPPORT_4 = { localization_key = support_battalion_tt NAME = maintenance_company ICON = GFX_unit_maintenance_company_icon_small }
+					SUPPORT_5 = { localization_key = support_battalion_tt NAME = signal_company ICON = GFX_unit_signal_company_icon_small }
+				}
+				if = {
+					limit = { has_template = "Trinity Spearhead Division" }
+					delete_unit_template_and_units = { division_template = "Trinity Spearhead Division" disband = yes } # 치트 좀 쓰지마
+				}
+				division_template = {
+					name = "Trinity Spearhead Division"
+					division_names_group = TRM_ARM_01
+					regiments = {
+						motorized = { x = 0 y = 0 }
+						motorized = { x = 0 y = 1 }
+						motorized = { x = 0 y = 2 }
+						motorized = { x = 0 y = 3 }
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						motorized = { x = 2 y = 2 }
+						motorized = { x = 2 y = 3 }
+						medium_armor = { x = 1 y = 0 }
+						medium_armor = { x = 1 y = 1 }
+						medium_armor = { x = 1 y = 2 }
+						medium_armor = { x = 1 y = 3 }
+						medium_armor = { x = 3 y = 0 }
+						medium_armor = { x = 3 y = 1 }
+						medium_armor = { x = 3 y = 2 }
+						medium_armor = { x = 3 y = 3 }
+						medium_armor = { x = 4 y = 0 }
+						medium_armor = { x = 4 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						logistics_company = { x = 0 y = 2 }
+						maintenance_company = { x = 0 y = 3 }
+						signal_company = { x = 0 y = 4 }
+					}
+					priority = 2
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = TRN_3
+		icon = GFX_focus_generic_army_tanks_2
+		prerequisite = { focus = TRN_mechanized_division }
+		prerequisite = { focus = TRN_armored_corps_training_center }
+		x = -2
+		y = 2
 		relative_position_id = TRN_armored_corps_training_center
 		cost = 6
 		available = {
@@ -16950,7 +17121,7 @@ focus_tree = {
 
 		}
 
-		mutually_exclusive = { focus = TRN_escort_force_expansion }
+		#mutually_exclusive = { focus = TRN_research_armor_doctrine }
 
 		completion_reward = {
 			add_command_power = 25
@@ -17152,7 +17323,7 @@ focus_tree = {
 
 	focus = {
 		id = TRN_doctrine_established
-		icon = GFX_focus_generic_military_mission
+		icon = GFX_focus_TRN_doctrine_established
 		prerequisite =  { focus = TRN_tactical_operational_strategic_training }
 		prerequisite =  { focus = TRN_mission_command }
 		x = 0
@@ -17175,15 +17346,15 @@ focus_tree = {
 				tooltip = max_planning_factor_tt
 			}
 			add_to_variable = {
-				TRN_army_ns_coordination_bonus = 0.1
+				TRN_army_ns_coordination_bonus = 0.05
 				tooltip = coordination_bonus_tt
 			}
 		}
 	}
 
 	focus = {
-		id = TRN_research_armor_doctrine
-		icon = GFX_focus_generic_tank_assault
+		id = TRN_escort_force_expansion
+		icon = GFX_focus_generic_army_tanks_3
 		prerequisite = { 
 			focus = TRN_hammer_of_gideon
 			focus = TRN_armored_corps_training_center
@@ -17191,7 +17362,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TRN_hammer_of_gideon
-		cost = 6
+		cost = 5
 		available = {
 
 		}
@@ -17200,63 +17371,142 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
-			add_daily_mastery = {
-				amount = 0.1
-				days = 90	
-				name =  TRN_research_armor_doctrine
-				folder = land
-				track = armor
-			}
-
-			custom_effect_tooltip = tooltip_white_line
-
-			custom_effect_tooltip = available_theorist
-			show_ideas_tooltip = TRN_Ajitani_Hifumi_theorist
-
-			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = TRN_Ajitani_Hifumi_high_command
-
-			#custom_effect_tooltip = {
-			#	localization_key = tooltip_modify_dynmod 
-			#	DYNMOD = TRN_army_ns
-			#}
-			#add_to_variable = {
-			#	TRN_army_ns_org_loss_when_moving = -0.05
-			#	tooltip = org_loss_when_moving_tt
-			#}
-			#add_to_variable = {
-			#	TRN_army_ns_breakthrough_factor = 0.05
-			#	tooltip = breakthrough_factor_tt
-			#}
-			if = {
-				limit = { has_idea = TRN_hidden_armor_doctrine_1_ns }
-				swap_ideas = {
-					remove_idea = TRN_hidden_armor_doctrine_1_ns
-					add_idea = TRN_hidden_armor_doctrine_4_ns
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Teaparty Escort division"
+					LINE_1 = { localization_key = line_battalion_tt NAME = infantry ICON = GFX_unit_infantry_icon_small COUNT = 12 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = artillery_brigade ICON = GFX_unit_artillery_brigade_icon_small COUNT = 4 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = artillery ICON = GFX_unit_artillery_icon_small }
+					SUPPORT_2 = { localization_key = support_battalion_tt NAME = mot_recon ICON = GFX_unit_mot_recon_icon_small }
+					SUPPORT_3 = { localization_key = support_battalion_tt NAME = engineer ICON = GFX_unit_engineer_icon_small }
+				}
+				if = {
+					limit = { has_template = "Teaparty Escort division" }
+					delete_unit_template_and_units = { division_template = "Teaparty Escort division" disband = yes } # 치트 좀 쓰지마
+				}
+				division_template = {
+					name = "Teaparty Escort division"
+					division_names_group = TRM_INF_02
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						infantry = { x = 2 y = 2 }
+						infantry = { x = 2 y = 3 }
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						artillery_brigade = { x = 3 y = 3 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						mot_recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
 				}
 			}
-			else_if = {
-				limit = { has_idea = TRN_hidden_armor_doctrine_2_ns }
-				swap_ideas = {
-					remove_idea = TRN_hidden_armor_doctrine_2_ns
-					add_idea = TRN_hidden_armor_doctrine_6_ns
+			capital_scope = {
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_spawn_units
+						COUNT = 4
+						TYPE = "Teaparty Escort division"
+					}
+					create_unit = {
+						division = "division_template = \"Teaparty Escort division\" start_experience_factor = 3.0"
+						owner = ROOT
+						count = 4
+					}
 				}
 			}
-			else_if = {
-				limit = { has_idea = TRN_hidden_armor_doctrine_3_ns }
-				swap_ideas = {
-					remove_idea = TRN_hidden_armor_doctrine_3_ns
-					add_idea = TRN_hidden_armor_doctrine_7_ns
+			create_equipment_variant = {
+				name = "Crusader MK.01"
+				type = medium_tank_chassis_1
+				design_team = mio:TRM_vickers_armstrong_eng_organization #We feed on your tears
+				parent_version = 0
+				modules = {
+					main_armament_slot = tank_high_velocity_cannon
+					turret_type_slot = tank_medium_three_man_tank_turret
+					suspension_type_slot = tank_bogie_suspension
+					armor_type_slot = tank_welded_armor
+					engine_type_slot = tank_gasoline_engine
+					special_type_slot_1 = tank_radio_1
+					special_type_slot_2 = smoke_launchers
+				}
+				upgrades = {
+					tank_nsb_engine_upgrade = 6
+					tank_nsb_armor_upgrade = 3
+				}
+				icon = "GFX_TRM_basic_medium_tank"
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Teaparty Escort Mechanization Division"
+					LINE_1 = { localization_key = line_battalion_tt NAME = motorized ICON = GFX_unit_motorized_icon_small COUNT = 5 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = medium_armor ICON = GFX_unit_medium_armor_icon_small COUNT = 4 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = artillery ICON = GFX_unit_artillery_icon_small }
+					SUPPORT_2 = { localization_key = support_battalion_tt NAME = engineer ICON = GFX_unit_engineer_icon_small }
+					SUPPORT_3 = { localization_key = support_battalion_tt NAME = logistics_company ICON = GFX_unit_logistics_company_icon_small }
+					SUPPORT_4 = { localization_key = support_battalion_tt NAME = maintenance_company ICON = GFX_unit_maintenance_company_icon_small }
+					SUPPORT_5 = { localization_key = support_battalion_tt NAME = signal_company ICON = GFX_unit_signal_company_icon_small }
+				}
+				if = {
+					limit = { has_template = "Teaparty Escort Mechanization Division" }
+					delete_unit_template_and_units = { division_template = "Teaparty Escort Mechanization Division" disband = yes } # 치트 좀 쓰지마
+				}
+				division_template = {
+					name = "Teaparty Escort Mechanization Division"
+					division_names_group = TRM_INF_02
+					regiments = {
+						motorized = { x = 0 y = 0 }
+						motorized = { x = 0 y = 1 }
+						motorized = { x = 0 y = 2 }
+						motorized = { x = 1 y = 0 }
+						motorized = { x = 1 y = 1 }
+						medium_armor = { x = 2 y = 0 }
+						medium_armor = { x = 2 y = 1 }
+						medium_armor = { x = 2 y = 2 }
+						medium_armor = { x = 2 y = 3 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						logistics_company = { x = 0 y = 2 }
+						maintenance_company = { x = 0 y = 3 }
+						signal_company = { x = 0 y = 4 }
+					}
+					priority = 2
 				}
 			}
-			else_if = {
-				limit = { has_idea = TRN_hidden_armor_doctrine_5_ns }
-				swap_ideas = {
-					remove_idea = TRN_hidden_armor_doctrine_5_ns
-					add_idea = TRN_hidden_armor_doctrine_8_ns
+			random_owned_controlled_state = {
+				prioritize = { 64 }
+				limit = {
+					is_in_home_area = yes
+					impassable = no
+				}
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_spawn_units
+						COUNT = 2
+						TYPE = "Teaparty Escort Mechanization Division"
+					}
+					create_unit = {
+						division = "division_template = \"Teaparty Escort Mechanization Division\" start_experience_factor = 0.2"
+						owner = ROOT
+						count = 2
+					}
 				}
 			}
+
 		}
 	}
 
