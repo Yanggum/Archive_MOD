@@ -1308,6 +1308,16 @@ focus_tree = {
 			    remove_idea = COU_local_lost_techonology
    			    add_idea = COU_local_future_techonology
 			}
+			hidden_effect = {
+				reduce_focus_completion_cost = {
+					focus = COU_focus_kivotos_helicopter
+					cost = 70
+				}
+				reduce_focus_completion_cost = {
+					focus = COU_focus_rereserarch_kivotos_jet
+					cost = 70
+				}
+			}
 		}
 	}
 	
@@ -1928,7 +1938,7 @@ focus_tree = {
 			 	tooltip = max_planning_factor_tt
 		    }
 			add_to_variable = {
-			    COU_land_defence_force_command_power_gain_mult = 0.05
+			    COU_land_defence_force_command_power_gain_mult = 0.08
 			 	tooltip = command_power_gain_mult_tt
 		    }
 			add_to_variable = {
@@ -1956,12 +1966,8 @@ focus_tree = {
 			 	tooltip = planning_speed_tt
 		    }
 		    add_to_variable = {
-			    COU_land_defence_force_max_planning_factor = 0.05
-			 	tooltip = max_planning_factor_tt
-		    }
-			add_to_variable = {
-			    COU_land_defence_force_army_org_factor = 0.03
-			 	tooltip = army_org_factor_tt
+			    COU_land_defence_force_experience_loss_factor = -0.15
+			 	tooltip = experience_loss_factor_tt
 		    }
 		}
 	}
@@ -2053,7 +2059,7 @@ focus_tree = {
 		icon = GFX_focus_PHI_war_plan_orange
 		x = 3
 		y = 5
-		cost = 5
+		cost = 8
 		relative_position_id = COU_reorganizing_the_defense_office
 		prerequisite = { focus = COU_focus_great_operation_system }
 		#prerequisite = { focus = COU_focus_tank_assembly }
@@ -2074,8 +2080,8 @@ focus_tree = {
 			 	tooltip = army_defence_factor_tt
 		    }
 			add_to_variable = {
-			    supply_consumption_factor = -0.07
-			 	tooltip = supply_consumption_factor_tt
+			    COU_land_defence_force_army_org_factor = 0.1
+			 	tooltip = army_org_factor_tt
 		    }
 		}
 	}
@@ -2104,7 +2110,7 @@ focus_tree = {
 			 	tooltip = HEU_rikuhachimaism_focus_3_1_tt
 		    }
 			add_to_variable = {
-			    COU_land_defence_force_experience_loss_factor = 0.1
+			    COU_land_defence_force_experience_loss_factor = 0.15
 			 	tooltip = experience_loss_factor_tt
 		    }
 		}
@@ -2200,7 +2206,7 @@ focus_tree = {
 		icon = GFX_focus_generic_anti_tank_guns
 		x = 12
 		y = 4
-		cost = 5
+		cost = 8
 		relative_position_id = COU_reorganizing_the_defense_office
 		prerequisite = { focus = COU_focus_rework_artillery }
 		completion_reward = {
@@ -2249,10 +2255,6 @@ focus_tree = {
 				DYNMOD = COU_land_defence_force
 			}
 			add_to_variable = {
-			    COU_land_defence_force_initiative_factor = 0.05
-			 	tooltip = initiative_factor_tt
-		    }
-			add_to_variable = {
 			    COU_land_defence_force_conscription_factor = 0.05
 			 	tooltip = conscription_factor_tt
 		    }
@@ -2272,14 +2274,37 @@ focus_tree = {
 		icon = GFX_goal_generic_army_doctrines
 		x = 8
 		y = 3
-		cost = 5
+		cost = 7
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_ARMY_XP
 		}
 		prerequisite = { focus = COU_focus_defensive2 focus = COU_focus_offensive }
 		completion_reward = {
-		    
+		    army_experience = 15
+			add_doctrine_cost_reduction = {
+				name = COU_focus_rework_kivotos_doctrines
+				cost_reduction = 0.5
+				uses = 3
+				category = land_doctrine
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_mobilization_laws_cost_factor = -0.15
+			 	tooltip = mobilization_laws_cost_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_sub_unit_halo_infantry_attack_factor = 0.05
+			 	tooltip = HEU_rikuhachimaism_focus_3_1_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_sub_unit_halo_infantry_defence_factor = 0.05
+			 	tooltip = HEU_rikuhachimaism_focus_3_2_tt
+		    }
 		}
 	}
 	
@@ -2290,12 +2315,20 @@ focus_tree = {
 		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
 		prerequisite = { focus = COU_focus_rework_kivotos_doctrines }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_supply_consumption_factor = -0.05
+			 	tooltip = supply_consumption_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_land_doctrine_cost_factor = -0.05
+			 	tooltip = land_doctrine_cost_factor_tt
+		    }
 		}
 	}
 	
@@ -2311,7 +2344,10 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_rework_kivotos_doctrines }
 		completion_reward = {
-		    
+		    add_timed_idea = {
+			     idea = COU_focus_the_defense_budget_idea
+				 days = 720
+			}
 		}
 	}
 	
@@ -2320,14 +2356,17 @@ focus_tree = {
 		icon = GFX_focus_SOV_merge_plants
 		x = 8
 		y = 5
-		cost = 5
+		cost = 7
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_RESEARCH
 		}
+		available = { controls_province = 391 }
 		prerequisite = { focus = COU_focus_3levels_training focus = COU_focus_the_defense_budget }
 		completion_reward = {
-		    
+		    7 = {
+				construct_building_in_random_province = { land_facility = 1 }
+			}
 		}
 	}
 	
@@ -2336,14 +2375,33 @@ focus_tree = {
         icon = GFX_focus_SOV_the_road_of_life
         x = 6
         y = 6
-        cost = 5
+        cost = 8
         relative_position_id = COU_reorganizing_the_defense_office
-        search_filters = {
-             FOCUS_FILTER_WAR_SUPPORT
-        }
         prerequisite = { focus = COU_focus_army_labortary }
         completion_reward = {
-
+		    add_tech_bonus = {
+				name = COU_focus_road_of_survive
+				bonus = 0.5
+				uses = 1
+				category = motorized_equipment
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 100
+			}
+			custom_effect_tooltip = enter_tt
+            custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_acclimatization_cold_climate_gain_factor = 0.1
+			 	tooltip = acclimatization_cold_climate_gain_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_supply_consumption_factor = -0.05
+			 	tooltip = supply_consumption_factor_tt
+		    }
         }
     }
 	
@@ -2354,107 +2412,137 @@ focus_tree = {
         y = 7
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
-        search_filters = {
-             FOCUS_FILTER_WAR_SUPPORT
-        }
         prerequisite = { focus = COU_focus_road_of_survive }
         completion_reward = {
-
+		    if = {
+				limit = { NOT = { has_tech = radio } }
+				set_technology = { radio = 1 }
+			}
+            custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_initiative_factor = 0.1
+			 	tooltip = initiative_factor_tt
+		    }
         }
     }
 	
 	focus = {
-        id = COU_focus_guarantee_support_weapons #보급 물자 보장  
+        id = COU_focus_guarantee_support_weapons #보급 물자 비축  
         icon = GFX_focus_generic_reinforcing_the_supply_network
         x = 7
         y = 7
-        cost = 5
+        cost = 10
         relative_position_id = COU_reorganizing_the_defense_office
-        search_filters = {
-             FOCUS_FILTER_WAR_SUPPORT
-        }
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
         prerequisite = { focus = COU_focus_road_of_survive }
         completion_reward = {
-
+		    add_war_support = 0.05
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1200
+			}
+			add_equipment_to_stockpile = {
+				type = kivotos_infantry_equipment
+				amount = 450
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 120
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment
+				amount = 80
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_supply_consumption_factor = -0.05
+			 	tooltip = supply_consumption_factor_tt
+		    }
         }
     }
 	
 	focus = {
         id = COU_focus_moving_railway_gun #기동형 포대
         icon = GFX_focus_generic_railway_gun 
-        x = 9
+        x = 10
         y = 6
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
-        search_filters = {
-             FOCUS_FILTER_WAR_SUPPORT
-        }
+		search_filters = {
+			 FOCUS_FILTER_RESEARCH
+		}
         prerequisite = { focus = COU_focus_army_labortary }
         completion_reward = {
-
+            if = {
+				limit = { has_dlc_nsb = yes }
+				if = {
+					limit = { NOT = { has_tech = railway_gun } }
+					set_technology = { railway_gun = 1 }
+				}
+				create_railway_gun = {
+					equipment = railway_gun_equipment_1
+				}
+				create_railway_gun = {
+					equipment = railway_gun_equipment_1
+				}
+			}
+			else = { 
+			    custom_effect_tooltip = COU_tooltip_jurun
+				custom_effect_tooltip = {
+				    localization_key = tooltip_modify_dynmod
+				    DYNMOD = COU_land_defence_force
+			    }
+			    add_to_variable = {
+			        COU_land_defence_force_army_artillery_attack_factor = 0.05
+			 	    tooltip = army_artillery_attack_factor_tt
+		        }
+			    add_to_variable = {
+			        COU_land_defence_force_army_artillery_defence_factor = 0.05
+			 	    tooltip = army_artillery_defence_factor_tt
+		        }
+				add_doctrine_cost_reduction = {
+				    name = COU_focus_rework_kivotos_doctrines
+				    cost_reduction = 0.2
+				    uses = 1
+				    category = land_doctrine
+			    }
+			}
         }
     }
 	
 	focus = {
         id = COU_focus_rocketry_weapon #로켓 무기 
         icon = GFX_focus_rocketry
-        x = 9
+        x = 10
         y = 7
-        cost = 5
+        cost = 8
         relative_position_id = COU_reorganizing_the_defense_office
         search_filters = {
-             FOCUS_FILTER_WAR_SUPPORT
+             FOCUS_FILTER_RESEARCH
         }
         prerequisite = { focus = COU_focus_moving_railway_gun }
         completion_reward = {
-
+            add_tech_bonus = {
+				name = GER_aerodynamic_research_institute
+				bonus = 2
+				uses = 1
+				category = rocketry
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.75
+			}
         }
     }
-	
-	focus = {
-		id = COU_focus_kivotos_drone #잘썼어요 
-		icon = GFX_focus_generic_drone_2
-		prerequisite = {
-			focus = COU_focus_army_labortary 
-		}
-		x = 11
-		y = 6
-		relative_position_id = COU_reorganizing_the_defense_office
-		cost = 5
-		available = {
-
-		}
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			set_technology = { kivotos_dron_tech = 1 }
-			hidden_effect = { set_technology = { BA_drone_bonus_tech = 1 popup = no } }
-		}
-	}
-	
-	focus = {
-		id = COU_focus_kivotos_helicopter #헬리콥터 재분석 
-		icon = GFX_goal_Helicopter
-		prerequisite = {
-			focus = COU_focus_kivotos_drone 
-		}
-		x = 11
-		y = 7
-		relative_position_id = COU_reorganizing_the_defense_office
-		cost = 5
-		available = {
-
-		}
-		ai_will_do = {
-
-		}
-
-		completion_reward = {
-			
-		}
-	}
 	
 	
 	##공군 
@@ -2463,7 +2551,7 @@ focus_tree = {
 		icon = GFX_COU_arbitrationoffice
 		x = 22
 		y = 1
-		cost = 8
+		cost = 10
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_AIR_XP
@@ -2499,6 +2587,376 @@ focus_tree = {
 		}
 	}
 	
+	focus = {
+		id = COU_focus_establish_air_labortary #항공전문연구소 설립 
+		icon = GFX_focus_generic_air_research_boost
+		x = -4
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_expand_air_experience }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_pilot_teacher #파일럿 교관 
+		icon = GFX_focus_generic_pilot_training
+		x = -4
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_establish_air_labortary }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_flying_is_maybe_sports #비행은 일종의 체육 
+		icon = GFX_focus_SOV_women_in_aviation
+		x = -4
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_pilot_teacher }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_communicate_with_land_defence_force #육상방위군과의 협력 
+		icon = GFX_focus_generic_tank_air_support
+		x = -6
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_build_military_culture }
+		prerequisite = { focus = COU_focus_establish_air_labortary }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_kivotos_drone #잘썼어요 
+		icon = GFX_focus_generic_drone_2
+		prerequisite = {
+			focus = COU_focus_communicate_with_land_defence_force 
+		}
+		x = -6
+		y = 5
+		relative_position_id = COU_focus_expand_air_experience
+		search_filters = {
+             FOCUS_FILTER_RESEARCH
+        }
+		cost = 10
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			set_technology = { kivotos_dron_tech = 1 }
+			custom_effect_tooltip = {
+				localization_key = generic_enables_tech_tt
+				TECH_EFFECT = tech_effect|BA_drone_bonus_tech
+				TECH_NAME = BA_drone_bonus_tech
+			}
+			hidden_effect = { set_technology = { BA_drone_bonus_tech = 1 popup = no } }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_kivotos_helicopter #헬리콥터 재분석 
+		icon = GFX_goal_Helicopter
+		prerequisite = {
+			focus = COU_focus_kivotos_drone 
+		}
+		x = -7
+		y = 6
+		relative_position_id = COU_focus_expand_air_experience
+		search_filters = {
+             FOCUS_FILTER_RESEARCH
+        }
+		cost = 30
+		overlay = GFX_focus_fast_overlay_generic_clock
+		available = {
+            custom_trigger_tooltip = {
+				tooltip = "COU_tooltip_tech_rework_add"
+				always = no
+			}
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			complete_special_project = {
+				project = sp:sp_air_helicopter
+			}
+			complete_special_project = {
+				project = sp:BA_sp_air_helicopter
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = COU_focus_electronics_innovation
+					}
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = COU_focus_electronics_innovation
+					TIME = 70
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_rereserarch_kivotos_jet #제트기체 재연구 
+		icon = GFX_focus_generic_jet_planes
+		prerequisite = {
+			focus = COU_focus_kivotos_drone 
+		}
+		x = -5
+		y = 6
+		relative_position_id = COU_focus_expand_air_experience
+		search_filters = {
+             FOCUS_FILTER_RESEARCH
+        }
+		cost = 30
+		overlay = GFX_focus_fast_overlay_generic_clock
+		available = {
+            custom_trigger_tooltip = {
+				tooltip = "COU_tooltip_tech_rework_add"
+				always = no
+			}
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = COU_focus_electronics_innovation
+					}
+				}
+				custom_effect_tooltip = {
+					localization_key = tooltip_reduce_focus_cost 
+					FOCUS = COU_focus_electronics_innovation
+					TIME = 70
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_paratroopers #공수부대 창설 
+		icon = GFX_focus_eng_special_air_service
+		x = -1
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_expand_air_experience }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_encouragement_of_flying #민간 비행 장려 
+		icon = GFX_focus_generic_air_bases
+		x = 1
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_expand_air_experience }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_focus_on_light_aircraft #작전상의 무결성 
+		icon = GFX_focus_generic_cas_aircraft
+		x = -2
+		y = 2
+		cost = 10
+		mutually_exclusive = { focus = COU_focus_focus_on_heavy_aircraft }
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_encouragement_of_flying }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_the_air_winner #영공 장악을 위한 투쟁 
+		icon = GFX_focus_FIN_expand_air_force_academy
+		x = -2
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_focus_on_light_aircraft }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_focus_on_heavy_aircraft #전략적 파괴
+		icon = GFX_focus_generic_multi_role_aircraft
+		x = 2
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		mutually_exclusive = { focus = COU_focus_focus_on_light_aircraft }
+		prerequisite = { focus = COU_focus_encouragement_of_flying }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_generic_armored_air_support #지상폭격
+		icon = GFX_focus_generic_armored_air_support
+		x = 2
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_focus_on_heavy_aircraft }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_anti_air_weapons #대공화기 보급  
+		icon = GFX_focus_PRC_anti_air_effort
+		x = 0
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_focus_on_light_aircraft focus = COU_focus_focus_on_heavy_aircraft }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_radio_com_security #통신보안  
+		icon = GFX_focus_generic_radio_communication
+		x = -1
+		y = 4
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_anti_air_weapons }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_air_doctrine #항공교리 개혁  
+		icon = GFX_goal_generic_air_doctrine
+		x = 1
+		y = 4
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_anti_air_weapons }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_plane_for_naval #해상용 항공기 
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 5
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_expand_air_experience }
+		prerequisite = { focus = COU_focus_petition_45 }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_air_command_coppens #코펀스 지지
+		icon = GFX_focus_COU_kaya_with_generals
+		x = -3
+		y = 5
+		cost = 10
+		mutually_exclusive = { focus = COU_focus_air_command_donnet }
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_establish_air_labortary }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_test_kivotos_new_plane #분석과 연구 
+		icon = GFX_focus_generic_copy_plane_designs
+		x = -3
+		y = 6
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_air_command_coppens }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_air_command_donnet #도네 지지
+		icon = GFX_COU_choice_KAYA
+		x = 3
+		y = 5
+		cost = 10
+		mutually_exclusive = { focus = COU_focus_air_command_coppens }
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_encouragement_of_flying }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_air_plane_produciton_line #전문 생산라인 
+		icon = GFX_focus_generic_aircraft_production
+		x = 3
+		y = 6
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_air_command_donnet }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_invest_air_force #항공방위군 투자 
+		icon = GFX_focus_SMB_purchase_aircraft
+		x = 0
+		y = 6
+		cost = 10
+		relative_position_id = COU_focus_expand_air_experience
+		prerequisite = { focus = COU_focus_air_command_coppens focus = COU_focus_air_command_donnet }
+		completion_reward = {
+		     
+		}
+	}
+	
 	
 	##해군 
 	focus = {
@@ -2506,7 +2964,7 @@ focus_tree = {
 		icon = GFX_COU_focus_establishment_of_fleet
 		x = 32
 		y = 1
-		cost = 8
+		cost = 10
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_NAVY_XP
@@ -2539,6 +2997,260 @@ focus_tree = {
 			 	     tooltip = repair_speed_factor_tt
 		         }
 			 }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_dutch_naval_succession #네덜란드 함대 계승
+		icon = GFX_focus_hol_continue_the_war_in_batavia
+		x = -2
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_petition_45 }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_research_air_carrier #항공모함 실전배치  
+		icon = GFX_goal_generic_navy_carrier
+		x = -5
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_plane_for_naval }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_goal_generic_navy_submarine #비대칭전력 
+		icon = GFX_focus_generic_destroyer
+		x = -3
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_dutch_naval_succession }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_undersea_wars #해저 전쟁
+		icon = GFX_goal_generic_navy_submarine
+		x = -5
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		mutually_exclusive = { focus = COU_focus_outersea_wars }
+		prerequisite = { focus = COU_focus_goal_generic_navy_submarine }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_outersea_wars #수상 전쟁
+		icon = GFX_goal_generic_navy_cruiser
+		x = -3
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		mutually_exclusive = { focus = COU_focus_undersea_wars }
+		prerequisite = { focus = COU_focus_goal_generic_navy_submarine }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_guarantee_win #승리 보장
+		icon = GFX_focus_generic_large_navy
+		x = -4
+		y = 4
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_undersea_wars focus = COU_focus_outersea_wars }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_wolfs_of_undersea #해저의 늑대
+		icon = GFX_goal_generic_navy_anti_submarine
+		x = -5
+		y = 5
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_undersea_wars }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_fleet_escort_force #호위함대 
+		icon = GFX_focus_GER_panzerschiff
+		x = -3
+		y = 5
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_outersea_wars }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_establish_marines #해병대 창설
+		icon = GFX_goal_generic_amphibious_assault
+		x = -4
+		y = 6
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_wolfs_of_undersea focus = COU_focus_fleet_escort_force }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_scraping_the_blueprint #청사진 긁어오기 
+		icon = GFX_focus_generic_navy_research_bonus
+		x = 0
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_NAVY_XP
+		}
+		prerequisite = { focus = COU_focus_dutch_naval_succession focus = COU_focus_fleet_worthy_of_its_dignity }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_restore_dockyards #조선시설 복원
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = -1
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_scraping_the_blueprint }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_pressure_cockerill #코커릴 압박 
+		icon = GFX_focus_BEL_cockerill_shipyards
+		x = 1
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_scraping_the_blueprint }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_focus_generic_naval_discipline #네덜란드 해군사관학교 재개관  
+		icon = GFX_focus_generic_naval_discipline
+		x = 0
+		y = 4
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_restore_dockyards focus = COU_focus_pressure_cockerill }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_complete_naval_doctrine #해군교리 완성 
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 0
+		y = 5
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_focus_generic_naval_discipline }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_fleet_worthy_of_its_dignity #품위에 걸맞는 함대 
+		icon = GFX_focus_JAP_naval_armaments_program
+		x = 2
+		y = 1
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		search_filters = {
+			 FOCUS_FILTER_NAVY_XP
+		}
+		prerequisite = { focus = COU_focus_petition_45 }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_i_dream_jollacun_fleet #나는 대함대의 꿈을 꾼다 
+		icon = GFX_focus_PHI_gunboat_diplomacy
+		x = 4
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_fleet_worthy_of_its_dignity }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_on_heavy_nav_gun #중함포 강조 
+		icon = GFX_focus_generic_battleship_guns
+		x = 4
+		y = 3
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_i_dream_jollacun_fleet }
+		completion_reward = {
+		     
+		}
+	}
+	
+	focus = {
+		id = COU_focus_new_naval_tradition #새로운 해군 전통 
+		icon = GFX_focus_generic_sway_navy
+		x = 2
+		y = 2
+		cost = 10
+		relative_position_id = COU_focus_petition_45
+		prerequisite = { focus = COU_focus_fleet_worthy_of_its_dignity }
+		completion_reward = {
+		     
 		}
 	}
 	
