@@ -74,6 +74,11 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
+		path = {
+			leads_to_tech = BA_pyroxene_aerodynamics
+			research_cost_coeff = 1
+		}
+
 		#	path = {
 		#		leads_to_tech = kivotos_halo_upgrade 
 		#		research_cost_coeff = 1
@@ -98,6 +103,47 @@ technologies = {
 		folder = {
 			name = mystic_engineering_folder
 			position = { x = 0 y = 10 }
+		}
+		
+		categories = {
+			mystic_engineering
+		}
+	}
+	BA_pyroxene_aerodynamics = {
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_land_land_cruiser
+			}
+        }
+		enable_equipments = {
+		}
+
+		special_project_specialization = { specialization_air }
+
+		path = {
+			leads_to_tech = BA_UCAV_aircraft 
+			research_cost_coeff = 1
+		}
+
+		on_research_complete = {
+		}
+		
+		
+		ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
+			}
+		}
+		
+		research_cost = 2
+		
+		start_year = 1940
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 2 y = 12 }
 		}
 		
 		categories = {
@@ -151,10 +197,10 @@ technologies = {
 		enable_equipments = {
 		}
 
-		#	path = {
-		#		leads_to_tech = kivotos_halo_upgrade 
-		#		research_cost_coeff = 1
-		#	}
+		path = {
+			leads_to_tech = BA_millennium_style_railgun 
+			research_cost_coeff = 1
+		}
 
 		on_research_complete = {
 		}
@@ -184,9 +230,7 @@ technologies = {
     kivotos_dron_tech = {
 		is_special_project_tech = yes
 		allow = {
-			ROOT = {
-				is_special_project_completed = sp:BA_sp_mystic_drone
-			}
+			has_dlc = "Gotterdammerung"
         }
 
 		path = {
@@ -200,7 +244,16 @@ technologies = {
 		}
 
 		kivotos_dron = {
+			reliability = 0.10
 			soft_attack = 0.10
+		}
+
+		juggernaut_pioneer = {
+			reliability = 0.10
+		}
+
+		juggernaut = {
+			reliability = 0.10
 		}
 
         enable_subunits = {
@@ -234,6 +287,89 @@ technologies = {
 			}
 		}
     }
+	kivotos_pyroxene_main_gun_stabilization_device = {
+		allow = {
+			ROOT = {
+				is_special_project_completed = sp:sp_land_land_cruiser
+			}
+        }
+		enable_equipment_modules = {
+			stabilizer_2
+		}
+
+		#	path = {
+		#		leads_to_tech = kivotos_halo_upgrade 
+		#		research_cost_coeff = 1
+		#	}
+
+		on_research_complete = {
+		}
+		
+		
+		ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
+			}
+		}
+		
+		research_cost = 2
+		
+		start_year = 1939
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 1 y = 20 }
+		}
+		
+		categories = {
+			mystic_engineering
+		}
+	}
+	BA_UCAV_aircraft = {
+		is_special_project_tech = yes
+		allow = {
+			ROOT = {
+				has_tech = kivotos_dron_tech
+			}
+        }
+		enable_equipments = {
+			UCAV_equipment_0
+		}
+
+		special_project_specialization = { specialization_air }
+		
+		#	path = {
+		#		leads_to_tech = kivotos_halo_upgrade 
+		#		research_cost_coeff = 1
+		#	}
+
+		on_research_complete = {
+		}
+		
+		
+		ai_will_do = {
+			factor = 2000
+			modifier = {
+				factor = 0
+				is_puppet = yes
+			}
+		}
+		
+		research_cost = 2
+		
+		start_year = 1948
+
+		folder = {
+			name = mystic_engineering_folder
+			position = { x = 2 y = 23 }
+		}
+		
+		categories = {
+			mystic_engineering
+		}
+	}
     kivotos_dron_tech2 = {
 		is_special_project_tech = yes
 		allow = {
@@ -278,6 +414,7 @@ technologies = {
 	
 	BA_plasma_condensation_battery = {
 		allow = {
+			has_dlc = "Gotterdammerung"
 			ROOT = {
 				is_special_project_completed = sp:sp_land_super_heavy_railway_gun
 			}
@@ -297,6 +434,15 @@ technologies = {
 		}
 
 		on_research_complete = {
+			if = {
+				limit = {
+					has_dlc = "Gotterdammerung"
+				}
+				custom_effect_tooltip = {
+					localization_key = SP_UNLOCK_PROJECT
+					PROJECT = BA_sp_mystic_syemmata_railway_gun
+				}
+			}
 		}
 		
 		
@@ -314,214 +460,7 @@ technologies = {
 
 		folder = {
 			name = mystic_engineering_folder
-			position = { x = 0 y = 0 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
-	BA_semi_automated_railway_gun = {
-		show_effect_as_desc = yes
-		allow = {
-        }
-		enable_equipments = {
-			
-		}
-
-
-		path = {
-			leads_to_tech = BA_ultra_high_output_engine_design 
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = BA_recoil_control
-			research_cost_coeff = 1
-		}
-
-		path = {
-			leads_to_tech = BA_operation_automation
-			research_cost_coeff = 1
-		}
-
-		super_heavy_railway_gun = {
-			max_strength = 0.50
-		}
-
-		on_research_complete = {
-			add_equipment_bonus = {
-				name = sp_earthshaker_bomb_naval_targetting
-				bonus = {
-					super_heavy_railway_gun_equipment = {
-						maximum_speed = 0.15
-						build_cost_ic = -0.10
-            			railway_gun_attack = 0.25
-					}
-				}
-			}
-		}
-		
-		
-		ai_will_do = {
-			factor = 2000
-			modifier = {
-				factor = 0
-				is_puppet = yes
-			}
-		}
-		
-		research_cost = 2
-		
-		start_year = 1944
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = 0 y = 4 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
-	BA_ultra_high_output_engine_design = {
-		allow = {
-        }
-		enable_equipments = {
-		}
-
-		path = {
-			leads_to_tech = BA_fire_bombardment_control 
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-		}
-		
-		
-		ai_will_do = {
-			factor = 2000
-			modifier = {
-				factor = 0
-				is_puppet = yes
-			}
-		}
-		
-		research_cost = 2
-		
-		start_year = 1945
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = 2 y = 6 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
-	BA_recoil_control = {
-		allow = {
-        }
-		enable_equipments = {
-		}
-
-		path = {
-			leads_to_tech = BA_fire_bombardment_control 
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-		}
-		
-		
-		ai_will_do = {
-			factor = 2000
-			modifier = {
-				factor = 0
-				is_puppet = yes
-			}
-		}
-		
-		research_cost = 2
-		
-		start_year = 1945
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = 0 y = 6 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
-	BA_operation_automation = {
-		allow = {
-        }
-		enable_equipments = {
-		}
-
-		path = {
-			leads_to_tech = BA_fire_bombardment_control 
-			research_cost_coeff = 1
-		}
-
-		on_research_complete = {
-		}
-		
-		
-		ai_will_do = {
-			factor = 2000
-			modifier = {
-				factor = 0
-				is_puppet = yes
-			}
-		}
-		
-		research_cost = 2
-		
-		start_year = 1945
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = -2 y = 6 }
-		}
-		
-		categories = {
-			mystic_engineering
-		}
-	}
-	BA_fire_bombardment_control = {
-		allow = {
-        }
-		enable_equipments = {
-		}
-
-		#path = {
-		#	leads_to_tech = kivotos_halo_upgrade 
-		#	research_cost_coeff = 1
-		#}
-
-		on_research_complete = {
-		}
-		
-		
-		ai_will_do = {
-			factor = 2000
-			modifier = {
-				factor = 0
-				is_puppet = yes
-			}
-		}
-		
-		research_cost = 2
-		
-		start_year = 1949
-
-		folder = {
-			name = mystic_engineering_folder
-			position = { x = 0 y = 8 }
+			position = { x = 0 y = 1 }
 		}
 		
 		categories = {
