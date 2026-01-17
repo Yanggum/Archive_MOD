@@ -2325,6 +2325,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
+				prioritize = { 85 }
 				custom_effect_tooltip = {
 					localization_key = effect_division_creation_name
 					STATE = "[THIS.GetName]"
@@ -2380,6 +2381,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = enter_tt
 			random_controlled_state = {
+				prioritize = { 85 }
 				custom_effect_tooltip = {
 					localization_key = effect_division_creation_name
 					STATE = "[THIS.GetName]"
@@ -2486,6 +2488,16 @@ focus_tree = {
 				country_event = { id = ARI_story_event.4 days = 5 random_hours = 8 }
 				country_event = { id = ARI_story_event.5 days = 65 random_hours = 8 }
 				country_event = { id = ARI_story_event.6 days = 25 random_hours = 8 }
+			}
+			every_state = {
+				limit = {
+					BA_trinity_is = yes
+					NOT = { 
+						is_core_of = ROOT
+						is_claimed_by = ROOT
+					}
+				}
+				add_claim_by = ROOT
 			}
 		}
 	}
@@ -2680,6 +2692,7 @@ focus_tree = {
 					NOT = { has_completed_focus = ARI_sunny_place }
 				}
 				random_controlled_state = {
+					prioritize = { 85 }
 					custom_effect_tooltip = {
 						localization_key = effect_division_creation_name
 						STATE = "[THIS.GetName]"
@@ -3237,6 +3250,21 @@ focus_tree = {
 			}
 			else = {
 				add_country_leader_trait = ARI_arius_squad_left_trait
+			}
+			
+			custom_effect_tooltip = enter_tt
+			
+			add_country_leader_trait = ARI_saori_skepticism_about_reform
+
+			set_variable = { AASRU_main_value = 1 }
+			set_variable = { AASRU_var = 30 }
+
+			hidden_effect = {
+				country_event = { id = ARI_reformist_event_chain.5 days = 25 random_hours = 8 }
+
+				## 치안 이벤트
+				country_event = { id = ARI_reformist_event_chain.10 days = 60 random_hours = 8 }
+				country_event = { id = ARI_reformist_event_chain.11 days = 120 random_hours = 8 }
 			}
 		}
 	}
@@ -4569,12 +4597,24 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 65
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -10
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 	}
 	focus = {
@@ -4584,30 +4624,65 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 75
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = -4
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -14
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			remove_ideas = ARI_student_resistance
+			add_timed_idea = {
+				idea = idea_ARI_amnesty_decree
+				days = 120
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_stability_factor = 0.02
+				tooltip = stability_factor_tt
+			}
 		}
 	}
 	focus = {
-		id = ARI_religious_plurality
-		icon = GFX_focus_TRN_alliance_of_faith
+		id = ARI_judicial_separation
+		icon = GFX_focus_PER_communist_afghanistan_intervention
 		prerequisite = {
 			focus = ARI_amnesty_decree
 		}
-		mutually_exclusive = {
-			focus = ARI_freedom_under_conversion
-		}
 		available = {
+			check_variable = {
+				AASRU_var > 25
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = ARI_amnesty_decree
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -6
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 	}
 	focus = {
@@ -4616,23 +4691,34 @@ focus_tree = {
 		prerequisite = {
 			focus = ARI_amnesty_decree
 		}
-		mutually_exclusive = {
-			focus = ARI_religious_plurality
-		}
 		available = {
+			check_variable = {
+				AASRU_var > 50
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_amnesty_decree
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -8
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 	}
 	focus = {
-		id = ARI_patriotic_religion
-		icon = GFX_focus_BEL_christian_corporatism
+		id = ARI_establishment_of_rule_of_law
+		icon = GFX_focus_BRA_tribunal
 		prerequisite = {
-			focus = ARI_religious_plurality
+			focus = ARI_judicial_separation
+		}
+		prerequisite = {
 			focus = ARI_freedom_under_conversion
 		}
 		available = {
@@ -4640,7 +4726,7 @@ focus_tree = {
 		cost = 5
 		x = 1
 		y = 1
-		relative_position_id = ARI_religious_plurality
+		relative_position_id = ARI_judicial_separation
 		completion_reward = {
 		}
 	}
@@ -4651,12 +4737,67 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 75
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -12
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_arius_military_complex
+				bonus = 1
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+				category = cat_anti_air
+				category = cat_anti_tank
+			}
 		}
 	}
 	focus = {
@@ -4666,12 +4807,30 @@ focus_tree = {
 			focus = ARI_conversion_of_paramilitary_into_pmc
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 75
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_conversion_of_paramilitary_into_pmc
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -12
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.15
+				tooltip = conscription_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -4681,12 +4840,48 @@ focus_tree = {
 			focus = ARI_abolition_of_origin_distinction
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 80
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = -1
 		y = 1
 		relative_position_id = ARI_abolition_of_origin_distinction
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -18
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_production_factory_efficiency_gain_factor = 0.02
+				tooltip = production_factory_efficiency_gain_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription = -0.005
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+
+			if = {
+				limit = { has_character = ARI_joumae_saori }
+
+				custom_effect_tooltip = enter_tt
+
+				ARI_joumae_saori = {
+					unit_leader_event = ARI_reformist_event_chain.3
+				}
+			}
 		}
 	}
 	focus = {
@@ -4703,6 +4898,8 @@ focus_tree = {
 		y = 2
 		relative_position_id = ARI_conversion_of_paramilitary_into_pmc
 		completion_reward = {
+			set_rule = { can_create_factions = yes }
+			create_faction_from_template = BA_faction_template_ARI_arius_treaty_organization
 		}
 	}
 	focus = {
@@ -4712,12 +4909,25 @@ focus_tree = {
 			focus = ARI_approval_of_reformist_manifesto
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 25
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 3
 		y = 1
 		relative_position_id = ARI_approval_of_reformist_manifesto
 		completion_reward = {
+			set_temp_variable = {
+				AASRU_temp = -4
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+
+			hidden_effect = {
+				country_event = { id = ARI_reformist_event_chain.12 days = 25 random_hours = 8 }
+			}
 		}
 	}
 	focus = {
@@ -4727,12 +4937,75 @@ focus_tree = {
 			focus = ARI_azusa_reform
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 25
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_azusa_reform
+
+		search_filters = {
+			
+		}
+
+		select_effect = {
+			set_variable = { ARI_initialize_five_year_plan_goal_civ_factories = num_of_civilian_factories }
+			multiply_variable = {
+				var = ARI_initialize_five_year_plan_goal_civ_factories
+				value = 1.8
+			}
+			round_variable = ARI_initialize_five_year_plan_goal_civ_factories
+
+			set_variable = { ARI_initialize_five_year_plan_goal_mil_factories = num_of_military_factories }
+			multiply_variable = {
+				var = ARI_initialize_five_year_plan_goal_mil_factories
+				value = 1.2
+			}
+			round_variable = ARI_initialize_five_year_plan_goal_mil_factories
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -4
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			
+			## Gain NS 
+			add_timed_idea = {
+				idea = PRC_five_year_plan
+				days = 1825
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			
+			custom_effect_tooltip = ARI_five_year_plan_for_economic_reorganization_tt
+		
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			## Start mission
+			activate_mission = ARI_initialize_five_year_plan_mission
+			
+			## For localisation reasons
+			set_variable = {
+				temp_var_PRC_deadline_five_year_plan_selected = [GetDate]
+			}
+			add_to_variable = {
+				temp_var_PRC_deadline_five_year_plan_selected = 1825
+			}
+
+			hidden_effect = {
+				country_event = { id = ARI_reformist_event_chain.13 days = 25 random_hours = 8 }
+			}
 		}
 	}
 	focus = {
@@ -4742,32 +5015,54 @@ focus_tree = {
 			focus = ARI_five_year_plan_for_economic_reorganization
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 50
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 5
 		x = 1
 		y = 1
 		relative_position_id = ARI_five_year_plan_for_economic_reorganization
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -8
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
 		}
 	}
 	focus = {
 		id = ARI_abolition_of_german_corporate_privileges
 		icon = GFX_focus_GER_integrated_economies
+		overlay = GFX_focus_fast_overlay_generic_clock
 		prerequisite = {
 			focus = ARI_five_year_plan_for_economic_reorganization
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 25
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
-		cost = 5
+		cost = 10
 		x = 0
 		y = 2
 		relative_position_id = ARI_five_year_plan_for_economic_reorganization
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -8
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
 		}
 	}
 	focus = {
 		id = ARI_classroom_transition
 		icon = GFX_focus_generic_industry_3
+		overlay = GFX_focus_fast_overlay_generic_clock
 		prerequisite = {
 			focus = ARI_abolition_of_german_corporate_privileges
 		}
@@ -4775,12 +5070,70 @@ focus_tree = {
 			focus = ARI_liberalization_of_food_and_agriculture_sector
 		}
 		available = {
+			check_variable = {
+				AASRU_var > 75
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
-		cost = 5
+		cost = 15
 		x = 1
 		y = 1
 		relative_position_id = ARI_abolition_of_german_corporate_privileges
 		completion_reward = {
+
+			set_temp_variable = {
+				AASRU_temp = -14
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+
+			custom_effect_tooltip = enter_tt
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 85 }
+				
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny"}
+
+				custom_effect_tooltip = enter_tt
+
+				mio:ARI_3rd_classroom = {
+					set_mio_name_key = ARI_3rd_classroom_transition
+					add_mio_size = 2
+					add_mio_research_bonus = 0.05
+				}
+
+				mio:ARI_7th_classroom = {
+					set_mio_name_key = ARI_7th_classroom_transition
+					add_mio_size = 2
+					add_mio_research_bonus = 0.05
+				}
+			}
+
+			if = {
+				limit = { has_character = ARI_joumae_saori }
+
+				custom_effect_tooltip = enter_tt
+
+				ARI_joumae_saori = {
+					unit_leader_event = ARI_reformist_event_chain.1
+				}
+			}
 		}
 	}
 	focus = {
@@ -4811,6 +5164,24 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_cessation_of_cultural_censorship
 		completion_reward = {
+
+			add_stability = 0.05
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_political_power_gain = 0.05
+				tooltip = political_power_gain_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			country_event = ARI_reformist_event_chain.2
 		}
 	}
 
@@ -4886,6 +5257,8 @@ focus_tree = {
 				idea = idea_ARI_evil_named_gehenna
 				days = 120
 			}
+
+			country_event = ARI_reformist_event_chain.4
 		}
 	}
 	
@@ -4896,12 +5269,44 @@ focus_tree = {
 			focus = ARI_unavoidable_war
 		}
 		available = {
+			is_puppet = no
+			GEH = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+				}
+			}
+			GEM = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+				}
+			}
+			HEU = {
+				OR = {
+					exists = no
+					has_capitulated = yes
+					is_subject_of = ROOT
+				}
+			}
+			check_variable = {
+				AASRU_var > 95
+				tooltip = trigger_AASRU_var_tt
+			}
 		}
 		cost = 2
 		x = 0
 		y = 2
 		relative_position_id = ARI_unavoidable_war
 		completion_reward = {
+			hidden_effect = {
+				set_country_flag = flag_AASRU_progressbar_end
+			}
+
+			custom_effect_tooltip = enter_tt
+
 			remove_ideas = BA_ARI_bitter_revanchism_ns_1
 		}
 	}

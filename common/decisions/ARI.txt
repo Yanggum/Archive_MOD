@@ -3438,3 +3438,256 @@ ARI_end_of_pacifism = {
 		}
 	}
 }
+
+ARI_azusa_and_saori_relationship = {
+	
+	ARI_initialize_five_year_plan_mission = {
+		icon = GFX_decision_generic_factory 
+
+		is_good = no
+
+		days_mission_timeout = 1825
+
+		fire_only_once = yes
+
+		activation = {
+			has_completed_focus = ARI_five_year_plan_for_economic_reorganization
+		}
+
+		available = {
+			AND = {
+				num_of_civilian_factories > ARI_initialize_five_year_plan_goal_civ_factories 
+				num_of_military_factories > ARI_initialize_five_year_plan_goal_mil_factories 
+			}
+		}
+
+
+
+		complete_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = flag_AASRU_progressbar_end } }
+				set_temp_variable = {
+					AASRU_temp = 12
+					tooltip = AASRU_var_tt
+				}
+				AASRU_scripted_effect_on_value_change = yes
+			}
+
+			add_ideas = ARI_five_year_plan_completed
+			## If completed then get slight perfament bonus
+		}
+
+		timeout_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = flag_AASRU_progressbar_end } }
+				set_temp_variable = {
+					AASRU_temp = -12
+					tooltip = _AASRU_var_tt
+				}
+				AASRU_scripted_effect_on_value_change = yes
+			}
+
+			#When reach 0, fail - if fail get a Missed Five Year Plan Goal NS for 2 years with -10% in a bunch of stuff. 
+			add_timed_idea = {
+				idea = ARI_five_year_plan_failed
+				days = 730
+			}
+		}
+
+
+	}
+	ARI_AASRU_sending_light_gift = {
+		icon = GFX_decision_generic_consumer_goods
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+		}
+
+		visible = {
+		}
+
+		available = {
+			NOT = { has_decision = ARI_AASRU_sending_large_gift }
+			check_variable = {
+				AASRU_var < 100
+				tooltip = _trigger_AASRU_var_tt
+			}
+			OR = {
+				political_power_daily > 0.30
+				has_political_power > 5
+			}
+		}
+
+		days_remove = 14
+
+		modifier = {
+			political_power_cost = 0.30
+		}
+
+		remove_effect = {
+			set_temp_variable = {
+				AASRU_temp = 6
+				tooltip = AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+		}
+	}
+	ARI_AASRU_sending_large_gift = {
+		icon = GFX_decision_generic_consumer_goods
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+		}
+
+		visible = {
+		}
+
+		available = {
+			NOT = { has_decision = ARI_AASRU_sending_light_gift }
+			check_variable = {
+				AASRU_var < 100
+				tooltip = _trigger_AASRU_var_tt
+			}
+			OR = {
+				political_power_daily > 0.75
+				has_political_power > 16
+			}
+		}
+
+		days_remove = 21
+
+		modifier = {
+			political_power_cost = 0.75
+		}
+
+		remove_effect = {
+			set_temp_variable = {
+				AASRU_temp = 12
+				tooltip = AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+		}
+	}
+	ARI_AASRU_using_acquaintance = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+		priority = 100
+
+		ai_will_do = {
+			base = 20
+		}
+
+		visible = {
+		}
+
+		available = {
+			check_variable = {
+				AASRU_var < 100
+				tooltip = _trigger_AASRU_var_tt
+			}
+		}
+
+		cost = 75
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_temp_variable = {
+				AASRU_temp = 18
+				tooltip = AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+			country_event = ARI_reformist_event_chain.8
+		}
+	}
+	ARI_AASRU_additional_industrial_reform_subsidies = {
+		icon = GFX_decision_ger_mefo_bills
+		priority = 100
+
+		ai_will_do = {
+			base = 20
+		}
+
+		visible = {
+		}
+
+		available = {
+			check_variable = {
+				AASRU_var > 7
+				tooltip = trigger_AASRU_var_tt
+			}
+			check_variable = {
+				AASRU_var < 100
+				tooltip = _trigger_AASRU_var_tt
+			}
+			
+		}
+
+		cost = 25
+
+		modifier = {
+			consumer_goods_factor = -0.15
+		}
+
+		days_re_enable = 120
+		days_remove = 90
+
+		complete_effect = {
+			set_temp_variable = {
+				AASRU_temp = -8
+				tooltip = _AASRU_var_tt
+			}
+			AASRU_scripted_effect_on_value_change = yes
+		}
+	}
+	ARI_AASRU_direct_persuasion = {
+		icon = GFX_decision_infiltrate_state
+		priority = 100
+
+		ai_will_do = {
+			base = 20
+		}
+
+		visible = {
+		}
+
+		available = {
+			check_variable = {
+				AASRU_var < 100
+				tooltip = _trigger_AASRU_var_tt
+			}
+		}
+
+		cost = 15
+
+		days_re_enable = 31
+
+		complete_effect = {
+			random_list = {
+				1 = {
+					set_temp_variable = {
+						AASRU_temp = 5
+						tooltip = AASRU_var_tt
+					}
+					AASRU_scripted_effect_on_value_change = yes
+				}
+				1 = {
+					set_temp_variable = {
+						AASRU_temp = 10
+						tooltip = AASRU_var_tt
+					}
+					AASRU_scripted_effect_on_value_change = yes
+				}
+			}
+		}
+	}
+}

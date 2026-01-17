@@ -9,6 +9,27 @@ focus_tree = {
 		}
 	}
 	
+	initial_show_position = {
+		focus = COU_establishment_of_emergency_measures_committee_NOT
+	}
+	
+	shortcut = {
+		name = COU_shortcut_industry
+		target = COU_focus_after_two_months
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = COU_shortcut_military
+		target = COU_reorganizing_the_defense_office
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	#정치 숏컷은 정치 뼈대 짜고 넣을게요 
 
 #                                                                                                                                                       
 #                                                                                                                                                       
@@ -35,6 +56,7 @@ focus_tree = {
 		y = 0
 		cost = 10
 		available = {
+		    has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
 		}
 		bypass = {
 		}
@@ -244,8 +266,6 @@ focus_tree = {
                     BA_highlander_invest = 3
                 }
             }
-			
-            add_state_core = 977
 			custom_effect_tooltip = enter_tt
 			if = {
 				limit = {
@@ -660,15 +680,9 @@ focus_tree = {
 				DYNMOD = COU_industry
 		    }
 			add_to_variable = {
-			    COU_industry_consumer_goods_factor = 0.03
+			    COU_industry_consumer_goods_factor = 0.08
 				tooltip = consumer_goods_factor_tt
 		    }
-			hidden_effect = {
-				reduce_focus_completion_cost = {
-					focus = COU_focus_order_to_fn_herstal
-					cost = 35
-				}
-			}
 			country_event = COU_event_industry.1
 		}
 	}	
@@ -1091,6 +1105,7 @@ focus_tree = {
 		y = 0
 		cost = 5
 		available = {
+		     has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
 		}
 		search_filters = {
 			 FOCUS_FILTER_MANPOWER
@@ -1472,7 +1487,6 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
 			add_stability = 0.05
-            add_state_core = 6
 		}
 	}
 	
@@ -1533,7 +1547,7 @@ focus_tree = {
 	
 	focus = { #기계군단에 대응 
 		id = COU_focus_the_decagramaton_emergency
-		icon = GFX_focus_shutup
+		icon = GFX_focus_GEI_tablet
 		x = 7
 		y = 5
 		relative_position_id = COU_shaking_royalty
@@ -1608,13 +1622,14 @@ focus_tree = {
 #        
 
     focus = {
-		id = COU_reorganizing_the_defense_office #방위군 편성
+		id = COU_reorganizing_the_defense_office #방위군 재편
 		icon = GFX_focus_COU_the_emergency_law
-		x = 31
+		x = 29
 		y = 0
-		cost = 10
+		cost = 5
 		available = {
 		   #  has_dynamic_modifier = COU_chronic_principledism
+		   has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
 		}
 		bypass = {
 		    NOT = { has_dynamic_modifier = COU_chronic_principledism }
@@ -1623,7 +1638,34 @@ focus_tree = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
 		completion_reward = {
-		    
+		    add_war_support = 0.05
+			COU_HAINE = { unit_leader_event = { id = COU_event_military.6 } }
+			custom_effect_tooltip = enter_tt
+		    add_timed_idea = {
+			     idea = COU_reworked_army
+				 days = 360
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_introduction_of_defendu #디펜두 도입  
+		icon = GFX_focus_generic_urban_training
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_RESEARCH 
+		}
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		    custom_effect_tooltip = {
+			    localization_key = generic_enables_tech_tt
+			    TECH_EFFECT = tech_effect|urban_training_tech
+			    TECH_NAME = urban_training_tech
+		    }
+		    hidden_effect = { set_technology = { urban_training_tech = 1 } }
 		}
 	}
 	
@@ -1631,78 +1673,878 @@ focus_tree = {
 		id = COU_focus_invite_collaboraters_to_high_command #최고사령부에 페르피두스 등용 
 		icon = GFX_focus_generic_military_mission
 		x = 0
+		y = 5
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		available = { has_dynamic_modifier = COU_land_defence_force }
+		prerequisite = { focus = COU_focus_introduction_of_defendu }
+		completion_reward = {
+		    add_command_power = 25
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_planning_speed = 0.1
+			 	tooltip = planning_speed_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_leon_degrelle_army
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_lucien_lippert_army
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = COU_conrad_helfrich_navy
+		}
+	}
+	
+	focus = {
+		id = COU_focus_annex_small_armies #지휘체계 인수 
+		icon = GFX_focus_generic_annex_country_2
+		x = 0
+		y = 6
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		completion_reward = {
+		    add_manpower = 5000
+			set_variable = { BA_halo_infantry_cap_edit_var = 3 }
+			BA_halo_infantry_cap_edit_effect = yes
+			custom_effect_tooltip = kivotos_halo_add3_tt
+			custom_effect_tooltip = enter_tt
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_unification_ammunition_process #탄약공정 통일
+		icon = GFX_goal_generic_small_arms
+		x = 2
+		y = 6
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		completion_reward = {
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = COU_focus_unification_ammunition_process
+				bonus = 1.0
+				uses = 2
+				category = infantry_weapons
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_assumption_of_hemberg_military_factory #햄브뤼흐 조병창 재가동 
+		icon = GFX_focus_generic_reorient_production
+		x = 1
+		y = 7
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		available = { has_completed_focus = COU_establishment_of_federal_industrial_committee }
+		prerequisite = { focus = COU_focus_unification_ammunition_process }
+		completion_reward = {
+		    add_tech_bonus = {
+				name = COU_focus_assumption_of_hemberg_military_factory
+				bonus = 0.5
+				uses = 2
+				category = artillery
+			}
+			add_tech_bonus = {
+				name = COU_focus_assumption_of_hemberg_military_factory
+				bonus = 0.5
+				uses = 1
+				category = infantry_weapons
+			}
+			mio:COU_artillerie_inrichtingen_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.3
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_order_to_fn_herstal #방위조병창 점검 
+		icon = GFX_COU_remove_the_line
+		x = 3
+		y = 7
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_unification_ammunition_process }
+		prerequisite = { focus = COU_focus_army_labortary }
+		completion_reward = {
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		    mio:COU_superior_infantry = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+	
+	
+	##육군 
+	focus = {
+		id = COU_focus_build_military_culture #방위군 규율 강화
+		icon = GFX_focus_COU_the_last_fate
+		x = 8
+		y = 1
+		cost = 10
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_ARMY_XP
+		}
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
+		completion_reward = {
+		     army_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_navy
+						 has_idea = CCP_COU_chronic_principledism_tp_air
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_army }
+				 add_dynamic_modifier = { modifier = COU_land_defence_force }
+				 add_to_variable = {
+			         COU_land_defence_force_org_loss_when_moving = -0.05
+			 	     tooltip = org_loss_when_moving_tt
+		         }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_army 
+				 add_dynamic_modifier = { modifier = COU_land_defence_force }
+				 add_to_variable = {
+			         COU_land_defence_force_org_loss_when_moving = -0.05
+			 	     tooltip = org_loss_when_moving_tt
+		         }
+			 }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_defensive2 #특이 상황을 인정 
+		icon = GFX_COU_transportoffice
+		x = 3
+		y = 2
+		cost = 7
+		relative_position_id = COU_reorganizing_the_defense_office
+		mutually_exclusive = { focus = COU_focus_offensive }
+		prerequisite = { focus = COU_focus_build_military_culture }
+		completion_reward = {
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_army_org_factor = 0.05
+			 	tooltip = army_org_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_org_regain = 0.1
+			 	tooltip = army_org_regain_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_defence_factor = -0.05
+			 	tooltip = army_defence_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_experience_loss_factor = -0.05
+			 	tooltip = experience_loss_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_replan_vastion_holland #베스팅 홀란트 재개
+		icon = GFX_goal_generic_construct_military
+		x = 2
+		y = 3
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_defensive2 }
+		completion_reward = {
+		    if = {
+			    limit = { NOT = { has_tech = basic_fortification_tech } }
+			    set_technology = { basic_fortification_tech = 1 }
+			}
+			else = {
+			    army_experience = 15 
+			}
+			custom_effect_tooltip = enter_tt
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_max_planning_factor = 0.05
+			 	tooltip = max_planning_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_command_power_gain_mult = 0.05
+			 	tooltip = command_power_gain_mult_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_production_speed_bunker_factor = 0.1
+			 	tooltip = production_speed_bunker_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_great_operation_system #철저한 작전 체계
+		icon = GFX_goal_TRN_operation_description
+		x = 2
+		y = 4
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_replan_vastion_holland }
+		completion_reward = {
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_planning_speed = 0.1
+			 	tooltip = planning_speed_tt
+		    }
+		    add_to_variable = {
+			    COU_land_defence_force_max_planning_factor = 0.05
+			 	tooltip = max_planning_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_org_factor = 0.03
+			 	tooltip = army_org_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_central_military_reserach #기계화 포커스 
+		icon = GFX_focus_generic_mechanized
+		x = 4
+		y = 3
+		cost = 10
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = COU_focus_defensive2 }
+		completion_reward = {
+		    add_tech_bonus = {
+				name = COU_focus_central_military_reserach
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+			add_mastery_bonus = {
+				name = COU_focus_tank_assembly
+				bonus = 0.1
+				days = 250
+				track = armor
+			}
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_mechanized_attack_factor = 0.1
+			 	tooltip = mechanized_attack_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_motorized_attack_factor = 0.1
+			 	tooltip = motorized_attack_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_tank_assembly #조립 공정 
+		icon = GFX_focus_generic_tank_assembly
+		x = 4
+		y = 4
+		cost = 10
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = COU_focus_central_military_reserach }
+		completion_reward = {
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt
+			add_ideas = COU_focus_tank_assembly_idea
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_production_factory_max_efficiency_factor = 0.05
+			 	tooltip = production_factory_max_efficiency_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_industrial_capacity_factory = 0.03
+			 	tooltip = industrial_capacity_factory_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_tactical_advantage #전술적 우위 
+		icon = GFX_focus_PHI_war_plan_orange
+		x = 3
+		y = 5
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_great_operation_system }
+		#prerequisite = { focus = COU_focus_tank_assembly }
+		completion_reward = {
+		    random_army_leader = {
+			    add_planning = 2
+		    }
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_land_reinforce_rate = 0.1
+			 	tooltip = land_reinforce_rate_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_defence_factor = 0.05
+			 	tooltip = army_defence_factor_tt
+		    }
+			add_to_variable = {
+			    supply_consumption_factor = -0.07
+			 	tooltip = supply_consumption_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_offensive #정신 개조 
+		icon = GFX_COU_focus_offensive
+		x = 13
+		y = 2
+		cost = 7
+		relative_position_id = COU_reorganizing_the_defense_office
+		mutually_exclusive = { focus = COU_focus_defensive2 }
+		prerequisite = { focus = COU_focus_build_military_culture }
+		completion_reward = {
+		    add_war_support = -0.05
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+		    add_to_variable = {
+			    COU_land_defence_force_breakthrough_factor_factor = 0.1
+			 	tooltip = breakthrough_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_sub_unit_halo_infantry_attack_factor = 0.05
+			 	tooltip = HEU_rikuhachimaism_focus_3_1_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_experience_loss_factor = 0.1
+			 	tooltip = experience_loss_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_spirit_of_chasseurs_ardennais #샤쇠르 아르데나의 정신 
+		icon = GFX_focus_BEL_resist_and_bite
+		x = 14
+		y = 3
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_offensive }
+		completion_reward = {
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_army_org_factor = 0.05
+			 	tooltip = army_org_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_attack_factor = 0.05
+			 	tooltip = army_attack_factor_tt
+		    }
+		    add_to_variable = {
+			    COU_land_defence_force_org_loss_when_moving = -0.03
+			 	tooltip = org_loss_when_moving_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_shock_infantry_battalion #충격보병 대대 
+		icon = GFX_goal_generic_major_war
+		x = 14
+		y = 4
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_spirit_of_chasseurs_ardennais }
+		completion_reward = {
+		    custom_effect_tooltip = GER_sturmtruppe_battalion_tt
+			hidden_effect = {
+				set_technology = { sturmtruppe_battalion_tech = 1 popup = no }
+			}
+		}
+	}
+	
+	focus = {
+		id = COU_focus_rework_artillery #포병대 개혁 
+		icon = GFX_goal_generic_army_artillery2
+		x = 12
+		y = 3
+		cost = 10
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_RESEARCH 
+		}
+		prerequisite = { focus = COU_focus_offensive }
+		completion_reward = {
+			add_tech_bonus = {
+				name = COU_focus_rework_artillery
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = artillery
+			}
+			add_mastery_bonus = {
+				name = COU_focus_rework_artillery
+				bonus = 0.1
+				days = 250
+				track = infantry
+			}
+			custom_effect_tooltip = enter_tt
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_army_artillery_attack_factor = 0.1
+			 	tooltip = army_artillery_attack_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_artillery_defence_factor = 0.1
+			 	tooltip = army_artillery_defence_factor_tt
+		    }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_antitank_artillery #대전차포대 
+		icon = GFX_focus_generic_anti_tank_guns
+		x = 12
+		y = 4
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_rework_artillery }
+		completion_reward = {
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt
+		    if = { 
+				limit = {
+					has_tech = interwar_antitank
+				}
+				set_technology = { antitank1 = 1 }
+			}
+			else = {
+				set_technology = { interwar_antitank = 1 }
+			}
+		    add_ideas = COU_focus_antitank_artillery_idea
+		}
+	}
+	
+	focus = {
+		id = COU_focus_kyrie_for_brave_guys #용감한 이들을 위한 키리에
+		icon = GFX_focus_COU_charge_charge_charge
+		x = 13
+		y = 5
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		#prerequisite = { focus = COU_focus_antitank_artillery }
+		prerequisite = { focus = COU_focus_shock_infantry_battalion }
+		completion_reward = {
+		    add_war_support = 0.1
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_initiative_factor = 0.05
+			 	tooltip = initiative_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_conscription_factor = 0.05
+			 	tooltip = conscription_factor_tt
+		    }
+			add_to_variable = {
+			    COU_land_defence_force_army_attack_factor = 0.05
+			 	tooltip = army_attack_factor_tt
+		    }
+			hidden_effect = {
+			    unlock_tactic = tactic_shock
+			}
+			custom_effect_tooltip = COU_tooltip_unlock_tactic_shock
+		}
+	}
+	
+	focus = {
+		id = COU_focus_rework_kivotos_doctrines #키보토스 교리 개혁 
+		icon = GFX_goal_generic_army_doctrines
+		x = 8
+		y = 3
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_defensive2 focus = COU_focus_offensive }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_3levels_training #3단계 훈련 
+		icon = GFX_focus_COU_get_some_break
+		x = 7
 		y = 4
 		cost = 5
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_WAR_SUPPORT
 		}
+		prerequisite = { focus = COU_focus_rework_kivotos_doctrines }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_the_defense_budget #방위예산 할당
+		icon = GFX_goal_generic_consumer_goods
+		x = 9
+		y = 4
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_rework_kivotos_doctrines }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+		id = COU_focus_army_labortary #육군연구소 
+		icon = GFX_focus_SOV_merge_plants
+		x = 8
+		y = 5
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = COU_focus_3levels_training focus = COU_focus_the_defense_budget }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = {
+        id = COU_focus_road_of_survive #생존의 길
+        icon = GFX_focus_SOV_the_road_of_life
+        x = 6
+        y = 6
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_army_labortary }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_military_radio_first #군 통신망 우선 
+        icon = GFX_goal_generic_radar
+        x = 5
+        y = 7
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_road_of_survive }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_guarantee_support_weapons #보급 물자 보장  
+        icon = GFX_focus_generic_reinforcing_the_supply_network
+        x = 7
+        y = 7
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_road_of_survive }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_moving_railway_gun #기동형 포대
+        icon = GFX_focus_generic_railway_gun 
+        x = 9
+        y = 6
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_army_labortary }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+        id = COU_focus_rocketry_weapon #로켓 무기 
+        icon = GFX_focus_rocketry
+        x = 9
+        y = 7
+        cost = 5
+        relative_position_id = COU_reorganizing_the_defense_office
+        search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT
+        }
+        prerequisite = { focus = COU_focus_moving_railway_gun }
+        completion_reward = {
+
+        }
+    }
+	
+	focus = {
+		id = COU_focus_kivotos_drone #잘썼어요 
+		icon = GFX_focus_generic_drone_2
+		prerequisite = {
+			focus = COU_focus_army_labortary 
+		}
+		x = 11
+		y = 6
+		relative_position_id = COU_reorganizing_the_defense_office
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			set_technology = { kivotos_dron_tech = 1 }
+			hidden_effect = { set_technology = { BA_drone_bonus_tech = 1 popup = no } }
+		}
+	}
+	
+	focus = {
+		id = COU_focus_kivotos_helicopter #헬리콥터 재분석 
+		icon = GFX_goal_Helicopter
+		prerequisite = {
+			focus = COU_focus_kivotos_drone 
+		}
+		x = 11
+		y = 7
+		relative_position_id = COU_reorganizing_the_defense_office
+		cost = 5
+		available = {
+
+		}
+		ai_will_do = {
+
+		}
+
+		completion_reward = {
+			
+		}
+	}
+	
+	
+	##공군 
+	focus = {
+		id = COU_focus_expand_air_experience #항공 훈련 계획 확장
+		icon = GFX_COU_arbitrationoffice
+		x = 22
+		y = 1
+		cost = 8
+		relative_position_id = COU_reorganizing_the_defense_office
+		search_filters = {
+			 FOCUS_FILTER_AIR_XP
+		}
 		prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-		    
+		     air_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_navy
+						 has_idea = CCP_COU_chronic_principledism_tp_army
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_air }
+				 add_dynamic_modifier = { modifier = COU_air_defence_force }
+				 add_to_variable = {
+			         COU_air_defence_force_air_mission_xp_gain_factor = 0.05
+			 	     tooltip = air_mission_xp_gain_factor_tt
+		         }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_air 
+				 add_dynamic_modifier = { modifier = COU_air_defence_force }
+				 add_to_variable = {
+			         COU_air_defence_force_air_mission_xp_gain_factor = 0.05
+			 	     tooltip = air_mission_xp_gain_factor_tt
+		         }
+			 }
 		}
 	}
 	
+	
+	##해군 
 	focus = {
-		id = COU_focus_bought_their_weapons #현지 군수물자 확보 
-		icon = GFX_focus_generic_money_for_equipment
-		x = -1
-		y = 5
-		cost = 5
+		id = COU_focus_petition_45 #45인의 탄원서 수용 
+		icon = GFX_COU_focus_establishment_of_fleet
+		x = 32
+		y = 1
+		cost = 8
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
+			 FOCUS_FILTER_NAVY_XP
 		}
-		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
+		prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-		    
+		     navy_experience = 15
+			 custom_effect_tooltip = enter_tt
+		     if = {
+			     limit = { 
+				     NOT = {
+					     has_idea = CCP_COU_chronic_principledism_tp_air
+						 has_idea = CCP_COU_chronic_principledism_tp_air
+					 }
+				 }
+				 remove_dynamic_modifier = { modifier = COU_chronic_principledism } 
+				 hidden_effect = { remove_ideas = CCP_COU_chronic_principledism_tp_navy }
+				 add_dynamic_modifier = { modifier = COU_naval_defence_force }
+				 add_to_variable = {
+			         COU_naval_defence_force_refit_speed = 0.05
+			 	     tooltip = refit_speed_tt
+		         }
+			 }
+			 else = {
+			     custom_effect_tooltip = COU_CPT_tooltip
+			     remove_ideas = CCP_COU_chronic_principledism_tp_navy 
+				 add_dynamic_modifier = { modifier = COU_naval_defence_force }
+				 add_to_variable = {
+			         COU_naval_defence_force_repair_speed_factor = 0.05
+			 	     tooltip = repair_speed_factor_tt
+		         }
+			 }
 		}
 	}
 	
-	focus = {
-		id = COU_focus_assumption_of_hemberg_military_factory #헴브뤼흐 조병창 재가동 
-		icon = GFX_focus_generic_reorient_production
-		x = 1
-		y = 5
-		cost = 5
-		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
-		completion_reward = {
-		    
-		}
-	}
 	
-	focus = {
-		id = COU_focus_order_to_fn_herstal #FN 에르스탈에 지시 
-		icon = GFX_focus_BEL_fn_herstal
-		x = 3
-		y = 5
-		cost = 10
-		overlay = GFX_focus_fast_overlay_generic_clock
-		relative_position_id = COU_reorganizing_the_defense_office
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT
-		}
-		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
-		completion_reward = {
-		    custom_effect_tooltip = enter_tt
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = COU_establishment_of_federal_industrial_committee
-					}
-				}
-				custom_effect_tooltip = {
-					localization_key = tooltip_reduce_focus_cost 
-					FOCUS = COU_establishment_of_federal_industrial_committee
-					TIME = 35
-				}
-			}
-		}
-	}
+	
+	
 	
 
 
@@ -1726,247 +2568,23 @@ focus_tree = {
 #                                                                                                                         
 	
 	
-	focus = { #시작 중점
+	focus = { #시작 중점, 건들거임 
 		id = COU_establishment_of_emergency_measures_committee_NOT
 		icon = GFX_focus_COU_get_some_helps_ok
-		x = 65
+		x = 81
 		y = 0
-		cost = 0.5
-		allow_branch = {
-			NOT = { has_country_flag = MISSINGGSCP }
-		}
+		cost = 5
 		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
+			has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
 		}
-		search_filters = {
-			
-						FOCUS_FILTER_POLITICAL
-					
-		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
 		ai_will_do = {
 			factor = 4000
 		}
 
-		cancelable = no
+		#cancelable = no
 		completion_reward = {
 			add_political_power = 25
-		}
-	}
-	
-	#린 - 모모카 루트 가기 
-	focus = { 
-		id = COU_support_nanagami
-		icon = GFX_COU_road_ot_choin
-		x = -5
-		y = 1
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_establishment_of_emergency_measures_committee_NOT }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_united_netherlands_law
-		icon = GFX_focus_COU_the_united_ntehralnds
-		x = -6
-		y = 2
-		cost = 0.5
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_nanagami }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_survivor_of_kivotos
-		icon = GFX_focus_generic_swooping_falcon
-		x = -4
-		y = 2
-		cost = 0.5
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_nanagami }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	#아오이 루트 가기 
-	focus = { 
-		id = COU_support_oki
-		icon = GFX_focus_COU_king
-		x = 0
-		y = 1
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_establishment_of_emergency_measures_committee_NOT }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_expropriate_industrialist
-		icon = GFX_focus_generic_expropriate_industrialist
-		x = -1
-		y = 2
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_oki }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_integration_of_puppet_economies
-		icon = GFX_focus_GER_integration_of_puppet_economies
-		x = 1
-		y = 2
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_oki }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	#카야 루트 가기 
-	focus = { 
-		id = COU_support_shiranui
-		icon = GFX_COU_kaya_dictatership_on
-		x = 5
-		y = 1
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_establishment_of_emergency_measures_committee_NOT }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_the_belgian_crusade
-		icon = GFX_focus_BEL_the_european_crusade
-		x = 4
-		y = 2
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_shiranui }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_kill_the_medusa
-		icon = GFX_focus_COU_nothing
-		x = 6
-		y = 2
-		cost = 1
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_support_shiranui }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	##
-	focus = { 
-		id = COU_our_plan_treaty
-		icon = GFX_focus_generic_treaty
-		x = -3
-		y = 3
-		cost = 10
-		mutually_exclusive = { focus = COU_our_plan_war }
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_expropriate_industrialist focus = COU_integration_of_puppet_economies focus = COU_united_netherlands_law focus = COU_survivor_of_kivotos }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
-		}
-	}
-	
-	focus = { 
-		id = COU_our_plan_war
-		icon = GFX_goal_generic_major_war
-		x = 3
-		y = 3
-		cost = 10
-		mutually_exclusive = { focus = COU_our_plan_treaty }
-		relative_position_id = COU_establishment_of_emergency_measures_committee_NOT
-		prerequisite = { focus = COU_expropriate_industrialist focus = COU_integration_of_puppet_economies focus = COU_the_belgian_crusade focus = COU_kill_the_medusa }
-		available = {
-			hidden_trigger = {
-				NOT = { has_country_flag = MISSINGGSCP }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		completion_reward = {
-			custom_effect_tooltip = COU_tooltip_after_complete_sojip
 		}
 	}
 	
@@ -2003,7 +2621,7 @@ focus_tree = {
 
 		cancelable = no
 		completion_reward = {
-			add_dynamic_modifier = { modifier = COU_emergency_measures_committee }
+			#add_dynamic_modifier = { modifier = COU_emergency_measures_committee }
 			add_political_power = 100
 			add_stability = 0.1
 			effect_tooltip = {
@@ -2025,10 +2643,6 @@ focus_tree = {
 					ideology = communism
 					popularity = 0.20
 				}
-			}
-			swap_ideas = {
-				remove_idea = COU_dutch_collaboraters
-				add_idea = COU_dutch_collaboraters_no_kaya_debuff
 			}
 			custom_effect_tooltip = COU_the_dead_flower_tooltip
 			add_to_variable = {
@@ -2217,7 +2831,7 @@ focus_tree = {
 				ideology = democratic
 				popularity = 0.10
 			}
-			COU_cut_tower_down_effect = yes
+			#COU_cut_tower_down_effect = yes
 		}
 	}
 
