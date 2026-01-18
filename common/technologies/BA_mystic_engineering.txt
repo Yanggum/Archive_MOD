@@ -25,7 +25,9 @@ technologies = {
 			leads_to_tech = BA_heavy_artillery_battery
 			research_cost_coeff = 1
 		}
-		
+
+		industrial_capacity_factory = 0.02
+		industrial_capacity_dockyard = 0.02
 		
 		ai_will_do = {
 			factor = 2000
@@ -118,6 +120,8 @@ technologies = {
 		enable_equipments = {
 		}
 
+		research_speed_factor = 0.02
+
 		special_project_specialization = { specialization_air }
 
 		path = {
@@ -126,6 +130,15 @@ technologies = {
 		}
 
 		on_research_complete = {
+			if = {
+				limit = {
+					has_dlc = "Gotterdammerung"
+				}
+				custom_effect_tooltip = {
+					localization_key = SP_UNLOCK_PROJECT
+					PROJECT = BA_sp_mystic_UCAV
+				}
+			}
 		}
 		
 		
@@ -152,9 +165,6 @@ technologies = {
 	}
 	BA_mystic_engine_technology = {
 		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
         }
 		enable_equipments = {
 		}
@@ -190,9 +200,6 @@ technologies = {
 	}
 	BA_heavy_artillery_battery = {
 		allow = {
-			ROOT = {
-				is_special_project_completed = sp:sp_land_land_cruiser
-			}
         }
 		enable_equipments = {
 		}
@@ -244,16 +251,21 @@ technologies = {
 		}
 
 		kivotos_dron = {
-			reliability = 0.10
+			reliability = 0.05
 			soft_attack = 0.10
 		}
 
 		juggernaut_pioneer = {
-			reliability = 0.10
+			reliability = 0.05
 		}
 
 		juggernaut = {
-			reliability = 0.10
+			reliability = 0.05
+		}
+
+		UCAV = {
+			reliability = 0.05
+			air_defence = 0.10
 		}
 
         enable_subunits = {
@@ -331,11 +343,11 @@ technologies = {
 		is_special_project_tech = yes
 		allow = {
 			ROOT = {
-				has_tech = kivotos_dron_tech
+				is_special_project_completed = sp:BA_sp_mystic_UCAV
 			}
         }
 		enable_equipments = {
-			UCAV_equipment_0
+			UCAV_equipment_1
 		}
 
 		special_project_specialization = { specialization_air }
