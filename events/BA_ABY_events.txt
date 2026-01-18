@@ -14940,7 +14940,7 @@ country_event = {
 		retire_character = ABY_czech_EV
 		retire_character = ABY_czech_SO
 		retire_character = ABY_czech_PC
-		#retire_character = ABY_czech_SKN
+		retire_character = ABY_czech_SKN
 		retire_character = ABY_czech_YT
 		#retire_character = ABY_czech_GH
 		retire_character = ABY_czech_KB
@@ -20545,6 +20545,10 @@ country_event = {
 
 	option = {
 		name = ABY_communism_event.1.a
+		SOV = {
+			annex_country = { target = ABY transfer_troops = yes }
+		}
+		custom_effect_tooltip = ABY_final_tt
 	}
 }
 country_event = {
@@ -20557,6 +20561,40 @@ country_event = {
 
 	option = {
 		name = ABY_communism_event.2.a
+		add_ruling_to_neu = yes
+		set_politics = {
+			ruling_party = neutrality
+		} 
+		SOV = {
+			set_autonomy = {
+				target = ABY
+				autonomy_state = autonomy_free
+			}
+			remove_from_faction = ABY
+		}
+		country_event = {
+			id = ABY_communism_event.4
+		}
+		start_civil_war = {
+			ideology = communism 
+			size = 0.9
+			army_ratio = 0.1
+			keep_all_characters = yes
+			set_cosmetic_tag = ABY_united_states_com
+			ABY_czech_SKN = { set_nationality = PREV }
+			SOV = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_integrated_puppet
+					end_wars = no
+					end_civil_wars = no
+				}
+				declare_war_on = {
+					target = ABY
+					type = annex_everything
+				}
+			}
+		}
 	}
 }
 country_event = {
@@ -20569,6 +20607,11 @@ country_event = {
 
 	option = { 
 		name = ABY_communism_event.3.a
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.1
+		}
+		add_manpower = -500
 	}
 }
 country_event = {
@@ -20593,6 +20636,23 @@ country_event = {
 
 	option = {
 		name = ABY_communism_event.5.a
+		random_list = {
+			49 = {
+				country_event = {
+					id = ABY_communism_event.6
+					hours = 8
+				}
+			}
+			51 = {
+				country_event = {
+					id = ABY_communism_event.7
+					hours = 8
+				}
+			}
+		}
+	}
+	option = {
+		name = ABY_communism_event.5.b
 	}
 }
 country_event = {
@@ -20605,6 +20665,22 @@ country_event = {
 
 	option = {
 		name = ABY_communism_event.6.a
+		set_politics = {
+			ruling_party = communism
+		} 
+		SOV = {
+			puppet = ABY
+		}
+		set_power_balance = {
+			id = ABY_power_balance
+            left_side = ABY_government_side
+            right_side = ABY_neptis_side
+			set_default = yes # whether or not to reset the power balance to the initial value, default = no
+		}
+		swap_ideas = {
+			remove_idea = ABY_idea_communism_rabel_3
+			add_idea = ABY_idea_communism_rabel_4
+		}
 	}
 }
 country_event = {
@@ -20617,6 +20693,36 @@ country_event = {
 
 	option = {
 		name = ABY_communism_event.7.a
+		set_politics = {
+			ruling_party = communism
+		} 
+		set_cosmetic_tag = ABY_republic
+		set_power_balance = {
+			id = ABY_power_balance
+            left_side = ABY_government_side
+            right_side = ABY_neptis_side
+			set_default = yes # whether or not to reset the power balance to the initial value, default = no
+		}
+		swap_ideas = {
+			remove_idea = ABY_idea_communism_rabel_3
+			add_idea = ABY_idea_communism_rabel_4
+		}
+		start_civil_war = {
+			ideology = fascism 
+			size = 0.5
+			army_ratio = 0.5
+			keep_all_characters = yes
+			set_cosmetic_tag = ABY_SCHOOL
+			ABY_Sou = { set_nationality = PREV }
+		}
+		SOV = {
+			set_autonomy = {
+				target = ABY
+				autonomy_state = autonomy_puppet
+				end_wars = no
+				end_civil_wars = no
+			}
+		}
 	}
 }
 country_event = {
@@ -20625,10 +20731,19 @@ country_event = {
 	desc = ABY_communism_event.8.d
 
 	fire_only_once = yes
-	is_triggered_only = yes
+	trigger = {
+		tag = ABY
+		has_completed_focus = ABY_focus_communism_29
+		has_completed_focus = ABY_focus_communism_30
+		has_completed_focus = ABY_focus_communism_31
+	}
 
 	option = {
 		name = ABY_communism_event.8.a
+		country_event = {
+			id = ABY_communism_event.6
+			hours = 8
+		}
 	}
 }
 country_event = {
