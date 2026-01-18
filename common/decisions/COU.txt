@@ -749,12 +749,151 @@ COU_decision_cat_perfidus = {
 		
 		is_good = no
 
-		days_mission_timeout = 120
+		days_mission_timeout = 180
 
 		timeout_effect = {
 			 COU_perfidus_random_nerf_list = yes 
 		}
 	}
+	
+	##뽀찌 주기 
+	COU_perfidus_give_cp = { #지휘력을(를) 주지 
+	    
+		icon = generic_prepare_civil_war
+
+		ai_will_do = {
+			base = 48
+			#변수 생각해보기 
+			#쉬었음 청년일 경우엔 visible을 끕시다 
+		}
+		
+		visible = { NOT = { has_country_flag = COU_perfidus_happy_yay } }
+		
+		fire_only_once = no
+		
+		custom_cost_trigger = {
+			command_power > 49
+		}
+		custom_cost_text = decision_cost_CP_50
+        
+		days_remove = 30
+		days_re_enable = 60
+		
+		complete_effect = { 
+			 set_country_flag = COU_perfidus_happy_yay
+			 hidden_effect = { add_command_power = -50 }
+		}
+		
+		remove_effect = {
+		     clr_country_flag = COU_perfidus_happy_yay
+		     activate_mission = COU_collaboraters_wants_political_money
+		}
+	}
+	
+	COU_perfidus_give_cg = { #소비재을(를) 주지 
+	    
+		icon = generic_consumer_goods
+
+		ai_will_do = {
+			base = 48
+			#변수 생각해보기 
+			#쉬었음 청년일 경우엔 visible을 끕시다 
+		}
+		
+		visible = { NOT = { has_country_flag = COU_perfidus_happy_yay } }
+		
+		fire_only_once = no
+		
+		cost = 25
+        
+		days_remove = 45
+		days_re_enable = 75
+		
+		complete_effect = { 
+			 set_country_flag = COU_perfidus_happy_yay
+		}
+		
+		modifier = {
+		     consumer_goods_expected_value = 0.08
+		}
+		
+		remove_effect = {
+		     clr_country_flag = COU_perfidus_happy_yay
+		     activate_mission = COU_collaboraters_wants_political_money
+		}
+	}
+	
+	COU_perfidus_give_pp = { #정치력을(를) 주지 
+	    
+		icon = generic_political_discourse
+
+		ai_will_do = {
+			base = 48
+			#변수 생각해보기 
+			#쉬었음 청년일 경우엔 visible을 끕시다 
+		}
+		
+		visible = { NOT = { has_country_flag = COU_perfidus_happy_yay } }
+		
+		fire_only_once = no
+		
+		cost = 80
+        
+		days_remove = 60
+		days_re_enable = 90
+		
+		complete_effect = { 
+			 set_country_flag = COU_perfidus_happy_yay
+		}
+		
+		remove_effect = {
+		     clr_country_flag = COU_perfidus_happy_yay
+		     activate_mission = COU_collaboraters_wants_political_money
+		}
+	}
+	
+	COU_perfidus_give_mil = { #군수공장을 주지 
+	    
+		icon = ger_military_buildup
+
+		ai_will_do = {
+			base = 1
+			#쉬었음 청년일 경우엔 visible을 끕시다 
+		}
+		
+		visible = { NOT = { has_country_flag = COU_perfidus_happy_yay } }
+		
+		fire_only_once = no
+		
+		custom_cost_trigger = {
+			num_of_military_factories > 1
+		}
+		custom_cost_text = COU_custom_cost_mil1
+        
+		days_remove = 120
+		days_re_enable = 180
+		
+		complete_effect = { 
+			 set_country_flag = COU_perfidus_happy_yay
+			 every_state = {
+			     limit = { 
+				     is_controlled_by = COU 
+					 arms_factory > 1
+				 }
+				 remove_building = {
+				    type = arms_factory
+				    level = 1
+				}
+			 }
+		}
+		
+		remove_effect = {
+		     clr_country_flag = COU_perfidus_happy_yay
+		     activate_mission = COU_collaboraters_wants_political_money
+		}
+	}
+	
+	
 }
 
 
