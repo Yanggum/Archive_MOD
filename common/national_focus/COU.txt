@@ -642,20 +642,33 @@ focus_tree = {
 					cost = 70
 				}
 			}
+			if = {
+				limit = { 
+				    HEU = { exists = yes } 
+				    NOT = { 
+					    has_war_with = HEU
+						HEU = { has_completed_focus = HEU_general_student_council_aru }
+					}
+				}
+			    HEU = { country_event = { id = COU_event_diplomancy.1 days = 7 } }
+				custom_effect_tooltip = enter_tt
+			}
+			country_event = COU_event_industry.3
+			custom_effect_tooltip = enter_tt 
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_industry
 		    }
 			add_to_variable = {
-			    COU_industry_consumer_goods_factor = -0.08
+			    COU_industry_consumer_goods_factor = -0.2
 			 	tooltip = consumer_goods_factor_tt
 		    }
 			add_to_variable = {
-			    COU_industry_production_speed_buildings_factor = 0.03
+			    COU_industry_production_factory_max_efficiency_factor = 0.08
 			 	tooltip = production_speed_buildings_factor_tt
 		    }
 			add_to_variable = {
-			    COU_industry_conversion_cost_civ_to_mil_factor = -0.15
+			    COU_industry_conversion_cost_civ_to_mil_factor = -0.3
 			 	tooltip = conversion_cost_civ_to_mil_factor_tt
 		    }
 		}
@@ -680,7 +693,7 @@ focus_tree = {
 				DYNMOD = COU_industry
 		    }
 			add_to_variable = {
-			    COU_industry_consumer_goods_factor = 0.08
+			    COU_industry_consumer_goods_factor = 0.1
 				tooltip = consumer_goods_factor_tt
 		    }
 			country_event = COU_event_industry.1
@@ -2356,7 +2369,7 @@ focus_tree = {
 		icon = GFX_focus_SOV_merge_plants
 		x = 8
 		y = 5
-		cost = 7
+		cost = 10
 		relative_position_id = COU_reorganizing_the_defense_office
 		search_filters = {
 			 FOCUS_FILTER_RESEARCH
@@ -2364,9 +2377,13 @@ focus_tree = {
 		available = { controls_province = 391 }
 		prerequisite = { focus = COU_focus_3levels_training focus = COU_focus_the_defense_budget }
 		completion_reward = {
-		    7 = {
-				construct_building_in_random_province = { land_facility = 1 }
-			}
+			random_owned_controlled_state = {
+				  limit = {
+					  is_core_of = ROOT
+					  can_construct_building = land_facility
+				   }
+				   construct_building_in_random_province = { land_facility = 1 }
+			 }
 		}
 	}
 	
@@ -2471,9 +2488,29 @@ focus_tree = {
     }
 	
 	focus = {
+		id = COU_focus_radio_com_security #통신보안  
+		icon = GFX_focus_generic_radio_communication
+		x = 9
+		y = 7
+		cost = 5
+		relative_position_id = COU_reorganizing_the_defense_office
+		prerequisite = { focus = COU_focus_road_of_survive }
+		completion_reward = {
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_land_defence_force
+			}
+			add_to_variable = {
+			    COU_land_defence_force_army_intel_to_others = -20
+			 	tooltip = army_intel_to_others_tt
+		    }
+		}
+	}
+	
+	focus = {
         id = COU_focus_moving_railway_gun #기동형 포대
         icon = GFX_focus_generic_railway_gun 
-        x = 10
+        x = 11
         y = 6
         cost = 5
         relative_position_id = COU_reorganizing_the_defense_office
@@ -2522,7 +2559,7 @@ focus_tree = {
 	focus = {
         id = COU_focus_rocketry_weapon #로켓 무기 
         icon = GFX_focus_rocketry
-        x = 10
+        x = 11
         y = 7
         cost = 8
         relative_position_id = COU_reorganizing_the_defense_office
@@ -2596,7 +2633,13 @@ focus_tree = {
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_expand_air_experience }
 		completion_reward = {
-		     
+			 random_owned_controlled_state = {
+				  limit = {
+					  is_core_of = ROOT
+					  can_construct_building = air_facility
+				   }
+				   construct_building_in_random_province = { air_facility = 1 }
+			 }
 		}
 	}
 	
@@ -2605,11 +2648,22 @@ focus_tree = {
 		icon = GFX_focus_generic_pilot_training
 		x = -4
 		y = 2
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_establish_air_labortary }
 		completion_reward = {
-		     
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			}
+			add_to_variable = {
+			    COU_air_defence_force_air_accidents_factor = -0.15
+			 	tooltip = air_accidents_factor_tt
+		    }
+			add_to_variable = {
+			    COU_air_defence_force_air_range_factor = 0.05
+			 	tooltip = air_range_factor_tt
+		    }
 		}
 	}
 	
@@ -2618,11 +2672,18 @@ focus_tree = {
 		icon = GFX_focus_SOV_women_in_aviation
 		x = -4
 		y = 3
-		cost = 10
+		cost = 5
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_pilot_teacher }
 		completion_reward = {
-		     
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_air_manpower_requirement_factor = -0.1
+			 	 tooltip = air_manpower_requirement_factor_tt
+		     }
 		}
 	}
 	
@@ -2631,12 +2692,23 @@ focus_tree = {
 		icon = GFX_focus_generic_tank_air_support
 		x = -6
 		y = 2
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_build_military_culture }
 		prerequisite = { focus = COU_focus_establish_air_labortary }
 		completion_reward = {
-		     
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			}
+			add_to_variable = {
+			    COU_air_defence_force_ground_attack_factor = 0.05
+			 	tooltip = ground_attack_factor_tt
+		    }
+			add_to_variable = {
+			    COU_air_defence_force_air_mission_xp_gain_factor = 0.1
+			 	tooltip = air_mission_xp_gain_factor_tt
+		    }
 		}
 	}
 	
@@ -2758,15 +2830,32 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_paratroopers #공수부대 창설 
+		id = COU_focus_paratroopers #공수부대 창설   
 		icon = GFX_focus_eng_special_air_service
 		x = -1
 		y = 1
-		cost = 10
+		cost = 5
+		available = { NOT = { has_tech = paratroopers } }
+        bypass = { has_tech = paratroopers }
 		relative_position_id = COU_focus_expand_air_experience
+		search_filters = {
+             FOCUS_FILTER_RESEARCH
+        }
 		prerequisite = { focus = COU_focus_expand_air_experience }
 		completion_reward = {
-		     
+		     set_technology = { paratroopers = 1 }
+		     add_tech_bonus = {
+				name = COU_focus_paratroopers
+				bonus = 1
+				uses = 1
+				category = para_tech
+			 }
+			 add_doctrine_cost_reduction = {
+				 name = COU_focus_paratroopers
+				 cost_reduction = 0.3
+				 uses = 1
+				 category = special_forces_doctrine
+			 }
 		}
 	}
 	
@@ -2775,11 +2864,32 @@ focus_tree = {
 		icon = GFX_focus_generic_air_bases
 		x = 1
 		y = 1
-		cost = 10
+		cost = 5
+		search_filters = {
+             AIR_XP 
+        }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_expand_air_experience }
 		completion_reward = {
-		     
+		    air_experience = 10
+		    add_doctrine_cost_reduction = {
+				name = COU_focus_encouragement_of_flying
+				cost_reduction = 1
+				uses = 1
+				category = air_doctrine
+			} #이걸로 교리를 찍으세용 
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			}
+			add_to_variable = {
+			    COU_air_defence_force_air_mission_efficiency = 0.05
+			 	tooltip = air_mission_efficiency_tt
+		    }
+			add_to_variable = {
+			    COU_air_defence_force_air_manpower_requirement_factor = -0.05
+			 	tooltip = air_manpower_requirement_factor_tt
+		    }
 		}
 	}
 	
@@ -2789,11 +2899,36 @@ focus_tree = {
 		x = -2
 		y = 2
 		cost = 10
+		available = { has_doctrine = new_operational_integrity }
 		mutually_exclusive = { focus = COU_focus_focus_on_heavy_aircraft }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_encouragement_of_flying }
 		completion_reward = {
-		     
+			 add_tech_bonus = {
+				name = COU_focus_focus_on_light_aircraft
+				bonus = 0.5
+				uses = 2
+				category = light_air
+			 }
+			 add_daily_mastery = {
+				amount = 1
+				days = 90
+				name =  COU_focus_focus_on_light_aircraft
+				track = fighter_aircraft
+			 }
+			 custom_effect_tooltip = enter_tt 
+			 custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_air_interception_detect_factor = 0.1
+			 	 tooltip = air_interception_detect_factor_tt
+		     }
+			 add_to_variable = {
+			     COU_air_defence_force_air_home_defence_factor = 0.15
+			 	 tooltip = air_home_defence_factor_tt
+		     }
 		}
 	}
 	
@@ -2802,11 +2937,20 @@ focus_tree = {
 		icon = GFX_focus_FIN_expand_air_force_academy
 		x = -2
 		y = 3
-		cost = 10
+		cost = 7
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_focus_on_light_aircraft }
 		completion_reward = {
-		     
+		     set_sub_doctrine = air_subdoctrine_tactical_flexibility
+			 custom_effect_tooltip = enter_tt
+			 custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_air_agility_factor = 0.1
+			 	 tooltip = air_agility_factor_tt
+		     }
 		}
 	}
 	
@@ -2816,11 +2960,36 @@ focus_tree = {
 		x = 2
 		y = 2
 		cost = 10
+		available = { has_doctrine = new_strategic_destruction }
 		relative_position_id = COU_focus_expand_air_experience
 		mutually_exclusive = { focus = COU_focus_focus_on_light_aircraft }
 		prerequisite = { focus = COU_focus_encouragement_of_flying }
 		completion_reward = {
-		     
+			 add_tech_bonus = {
+				name = COU_focus_focus_on_heavy_aircraft
+				bonus = 0.5
+				uses = 2
+				category = heavy_air
+			 }
+			 add_daily_mastery = {
+				amount = 1
+				days = 90
+				name =  COU_focus_focus_on_light_aircraft
+				track = heavy_aircraft
+			 }
+			 custom_effect_tooltip = enter_tt 
+			 custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_air_agility_factor = 0.05
+			 	 tooltip = air_agility_factor_tt
+		     }
+			 add_to_variable = {
+			     COU_air_defence_force_air_strategic_bomber_bombing_factor = 0.15
+			 	 tooltip = air_strategic_bomber_bombing_factor_tt
+		     }
 		}
 	}
 	
@@ -2829,50 +2998,97 @@ focus_tree = {
 		icon = GFX_focus_generic_armored_air_support
 		x = 2
 		y = 3
-		cost = 10
+		cost = 7
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_focus_on_heavy_aircraft }
 		completion_reward = {
-		     
+		     set_sub_doctrine = air_subdoctrine_flying_fortresses
+			 custom_effect_tooltip = enter_tt
+			 custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_air_mission_efficiency = 0.05
+			 	 tooltip = air_mission_efficiency_tt
+		     }
+			 add_to_variable = {
+			     COU_air_defence_force_ground_attack_factor = 0.05
+			 	 tooltip = ground_attack_factor_tt
+		     }
 		}
 	}
 	
 	focus = {
-		id = COU_focus_anti_air_weapons #대공화기 보급  
+		id = COU_focus_anti_air_weapons #대공포 배치 
 		icon = GFX_focus_PRC_anti_air_effort
 		x = 0
 		y = 3
 		cost = 10
+		search_filters = {
+             FOCUS_FILTER_WAR_SUPPORT 
+        }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_focus_on_light_aircraft focus = COU_focus_focus_on_heavy_aircraft }
 		completion_reward = {
-		     
+		    add_war_support = 0.05
+		    add_tech_bonus = {
+				name = SWI_defend_the_skies
+				bonus = 1  
+				uses = 2 
+				category = cat_anti_air
+			}
+			custom_effect_tooltip = enter_tt
+            custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			 }
+			 add_to_variable = {
+			     COU_air_defence_force_industry_air_damage_factor = -0.1
+			 	 tooltip = industry_air_damage_factor_tt
+		     }			
+			custom_effect_tooltip = enter_tt 
+			every_owned_state = {
+				limit = {
+				    is_core_of = COU 
+					free_building_slots = {
+						building = anti_air_building 
+						size > 1 
+					}
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}					
+			}
 		}
 	}
 	
 	focus = {
-		id = COU_focus_radio_com_security #통신보안  
-		icon = GFX_focus_generic_radio_communication
-		x = -1
-		y = 4
-		cost = 10
-		relative_position_id = COU_focus_expand_air_experience
-		prerequisite = { focus = COU_focus_anti_air_weapons }
-		completion_reward = {
-		     
-		}
-	}
-	
-	focus = {
-		id = COU_focus_air_doctrine #항공교리 개혁  
+		id = COU_focus_air_doctrine #항공교리 개편  
 		icon = GFX_goal_generic_air_doctrine
-		x = 1
+		x = 0
 		y = 4
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_anti_air_weapons }
 		completion_reward = {
-		     
+		    add_doctrine_cost_reduction = {
+				name = COU_focus_air_doctrine
+				cost_reduction = 0.75
+				uses = 3
+				category = air_doctrine
+			}
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_air_defence_force
+			}
+		    add_to_variable = {
+			    COU_air_defence_force_air_doctrine_cost_factor = -0.1
+			    tooltip = air_doctrine_cost_factor_tt
+		    }
 		}
 	}
 	
@@ -2881,12 +3097,41 @@ focus_tree = {
 		icon = GFX_goal_generic_air_naval_bomber
 		x = 5
 		y = 1
-		cost = 10
+		cost = 8
+		search_filters = {
+             FOCUS_FILTER_RESEARCH 
+        }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_expand_air_experience }
 		prerequisite = { focus = COU_focus_petition_45 }
 		completion_reward = {
-		     
+		     IF = {
+				limit = {
+					NOT = {
+						has_dlc = "By Blood Alone"
+					}
+				}
+				add_tech_bonus = {
+					name = COU_focus_plane_for_naval
+					bonus = 1.0
+					uses = 1				
+					category = naval_bomber
+				}
+			}
+			ELSE = {
+				add_tech_bonus = {
+					name = COU_focus_plane_for_naval
+					bonus = 0.5
+					uses = 1				
+					category = light_air
+				}
+				add_tech_bonus = {
+					name = COU_focus_plane_for_naval
+					bonus = 0.75
+					uses = 1				
+					category = cat_air_bombs
+				}
+			}
 		}
 	}
 	
@@ -2896,11 +3141,41 @@ focus_tree = {
 		x = -3
 		y = 5
 		cost = 10
+		search_filters = {
+             FOCUS_FILTER_RESEARCH 
+        }
 		mutually_exclusive = { focus = COU_focus_air_command_donnet }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_establish_air_labortary }
 		completion_reward = {
-		     
+			 add_tech_bonus = {
+				name = COU_focus_air_command_coppens
+				bonus = 0.75
+				uses = 2
+				category = light_air
+			}
+			add_tech_bonus = {
+				name = COU_focus_air_command_coppens
+				bonus = 0.75
+				uses = 2
+				category = medium_air
+			}
+			add_tech_bonus = {
+				name = COU_focus_air_command_coppens
+				bonus = 0.75
+				uses = 2
+				category = heavy_air
+			}
+			 activate_advisor = COU_willy_coppens
+			 custom_effect_tooltip = enter_tt
+             custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+             add_to_variable = {
+			     COU_air_defence_force_air_superiority_bonus_in_combat = 0.08
+			 	 tooltip = air_superiority_bonus_in_combat_tt
+		     }			 
 		}
 	}
 	
@@ -2913,7 +3188,24 @@ focus_tree = {
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_air_command_coppens }
 		completion_reward = {
-		     
+		     add_tech_bonus = {
+				name = COU_focus_test_kivotos_new_plane
+				bonus = 0.25
+				uses = 1
+				category = light_air
+			 }
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+             add_to_variable = {
+			     COU_air_defence_force_air_superiority_bonus_in_combat = 0.07
+			 	 tooltip = air_superiority_bonus_in_combat_tt
+		     }	
+			 add_to_variable = {
+			     COU_air_defence_force_air_mission_efficiency = 0.1
+			 	 tooltip = air_mission_efficiency_tt
+		     }	
 		}
 	}
 	
@@ -2927,7 +3219,17 @@ focus_tree = {
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_encouragement_of_flying }
 		completion_reward = {
-		     
+		     add_ideas = COU_focus_focus_on_plane_production
+		     activate_advisor = COU_mike_donnet
+			 custom_effect_tooltip = enter_tt
+             custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+		     add_to_variable = {
+			     COU_air_defence_force_air_superiority_efficiency = 0.08
+			 	 tooltip = air_superiority_efficiency_tt
+		     }
 		}
 	}
 	
@@ -2936,11 +3238,55 @@ focus_tree = {
 		icon = GFX_focus_generic_aircraft_production
 		x = 3
 		y = 6
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_air_command_donnet }
 		completion_reward = {
-		     
+		     random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt
+             custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+		     add_to_variable = {
+			     COU_air_defence_force_materiel_manufacturer_cost_factor = -0.15
+			 	 tooltip = materiel_manufacturer_cost_factor_tt
+		     }
 		}
 	}
 	
@@ -2949,11 +3295,40 @@ focus_tree = {
 		icon = GFX_focus_SMB_purchase_aircraft
 		x = 0
 		y = 6
-		cost = 10
+		cost = 8
+		available = { has_completed_focus = COU_establishment_of_federal_industrial_committee }
 		relative_position_id = COU_focus_expand_air_experience
 		prerequisite = { focus = COU_focus_air_command_coppens focus = COU_focus_air_command_donnet }
 		completion_reward = {
-		     
+		     if = {
+			     limit = { has_dlc = "Gotterdammerung" }
+		         mio:COU_renard_organization = {
+				    add_mio_funds = 1000 
+			     }
+			 }
+			 else = {
+			     mio:COU_renard_organization_no_wuw = {
+				    add_mio_funds = 1000 
+			     }
+			 }
+			 mio:COU_avions_fairey = {
+				add_mio_funds = 1000 
+			 }
+			 mio:COU_fokker_organization = {
+				add_mio_funds = 1000 
+			 }
+			 mio:COU_koolhoven_organization = {
+				add_mio_funds = 1000 
+			 }
+			 custom_effect_tooltip = enter_tt 
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_air_defence_force
+			 }
+		     add_to_variable = {
+			     COU_air_defence_force_materiel_manufacturer_cost_factor = -0.05
+			 	 tooltip = materiel_manufacturer_cost_factor_tt
+		     }
 		}
 	}
 	
@@ -3005,11 +3380,32 @@ focus_tree = {
 		icon = GFX_focus_hol_continue_the_war_in_batavia
 		x = -2
 		y = 1
-		cost = 10
+		cost = 5
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_petition_45 }
 		completion_reward = {
-		     
+		     random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+					is_coastal = yes 
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt 
+		    custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_screening_efficiency = 0.05
+			 	 tooltip = screening_efficiency_tt
+		     }
 		}
 	}
 	
@@ -3022,7 +3418,100 @@ focus_tree = {
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_plane_for_naval }
 		completion_reward = {
-		     
+				custom_effect_tooltip = GER_carrier_variants_tt #독일아 고맙다 
+				if = { 
+					limit = {
+						NOT = {
+							has_tech = basic_ship_hull_carrier
+							has_tech = improved_ship_hull_carrier
+						}
+					}
+					create_equipment_variant = {
+						name = "Utnapishtim's Ship"				
+						name_group = HOL_CV_HISTORICAL
+						type = ship_hull_carrier_conversion_ca
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_1
+							fixed_ship_engine_slot = cruiser_ship_engine_2
+							fixed_ship_secondaries_slot = empty
+						}
+					}
+					add_equipment_production = { #You get a Converted Carrier
+						equipment = {
+							type = ship_hull_carrier_conversion_ca
+							creator = "COU"
+							version_name = "Utnapishtim's Ship"
+						}
+						name = "GSC Utnapishtim's Ship"
+						requested_factories = 1
+						progress = 0.5
+						amount = 1
+					}
+				}
+				if = { 
+					limit = {
+						has_tech = basic_ship_hull_carrier
+						NOT = {
+							has_tech = improved_ship_hull_carrier
+						}
+					}
+					create_equipment_variant = {
+						name = "Utnapishtim's Ship"				
+						name_group = HOL_CV_HISTORICAL
+						type = ship_hull_carrier_1
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_1
+							fixed_ship_engine_slot = carrier_ship_engine_3
+							fixed_ship_secondaries_slot = empty
+							front_1_custom_slot = ship_deck_space
+						}
+					}		
+					add_equipment_production = {
+						equipment = {
+							type = ship_hull_carrier_1
+							creator = "COU"
+							version_name = "Utnapishtim's Ship"
+						}
+						name = "GSC Utnapishtim's Ship"
+						requested_factories = 1
+						progress = 0.5
+						amount = 1
+					}
+				}
+				if = { 
+					limit = {
+						has_tech = improved_ship_hull_carrier
+					}
+					create_equipment_variant = {
+						name = "Utnapishtim's Ship"				
+						name_group = HOL_CV_HISTORICAL
+						type = ship_hull_carrier_2
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_2
+							fixed_ship_engine_slot = carrier_ship_engine_2
+							fixed_ship_secondaries_slot = empty
+							front_1_custom_slot = ship_deck_space
+							mid_1_custom_slot = ship_deck_space
+						}
+					}
+					add_equipment_production = {
+						equipment = {
+							type = ship_hull_carrier_2
+							creator = "COU"
+							version_name = "Utnapishtim's Ship"
+						}
+						name = "GSC Utnapishtim's Ship"
+						requested_factories = 1
+						progress = 0.5
+						amount = 1
+					}
+				}
 		}
 	}
 	
@@ -3035,7 +3524,20 @@ focus_tree = {
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_dutch_naval_succession }
 		completion_reward = {
-		     
+		     add_tech_bonus = {
+				name = COU_focus_goal_generic_navy_submarine
+				bonus = 0.75
+				uses = 2
+				category = support_tech
+			 }
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_convoy_escort_efficiency = 0.05
+			 	 tooltip = convoy_escort_efficiency_tt
+		     }
 		}
 	}
 	
@@ -3049,7 +3551,32 @@ focus_tree = {
 		mutually_exclusive = { focus = COU_focus_outersea_wars }
 		prerequisite = { focus = COU_focus_goal_generic_navy_submarine }
 		completion_reward = {
-		     
+		    add_tech_bonus = {
+				name = COU_focus_undersea_wars
+				bonus = 0.75
+				uses = 2
+				category = ss_tech
+		    }
+		    custom_effect_tooltip = GER_submarine_max_speed_small_tt
+			hidden_effect = {
+				add_equipment_bonus = {
+					name = COU_focus_undersea_wars
+					bonus = {
+						ship_hull_submarine = {
+							naval_speed = 0.05 #WARNING! If you change this value, you need to update GER_submarine_max_speed_small_tt
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_convoy_raiding_efficiency_factor = 0.1
+			 	 tooltip = convoy_raiding_efficiency_factor_tt
+		     }
 		}
 	}
 	
@@ -3063,20 +3590,47 @@ focus_tree = {
 		mutually_exclusive = { focus = COU_focus_undersea_wars }
 		prerequisite = { focus = COU_focus_goal_generic_navy_submarine }
 		completion_reward = {
-		     
+		     add_tech_bonus = {
+				name = COU_focus_outersea_wars
+				bonus = 0.75
+				uses = 2
+				category = dd_tech
+		    }
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_spotting_chance = 0.1
+			 	 tooltip = spotting_chance_tt
+		     }
 		}
 	}
 	
 	focus = {
-		id = COU_focus_guarantee_win #승리 보장
+		id = COU_focus_guarantee_win #연안함대 장거리 훈련 
 		icon = GFX_focus_generic_large_navy
 		x = -4
 		y = 4
-		cost = 10
+		cost = 7
+		search_filters = {
+			 FOCUS_FILTER_NAVY_XP
+		}
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_undersea_wars focus = COU_focus_outersea_wars }
 		completion_reward = {
-		     
+		     navy_experience = 15 
+			 COU_conrad_helfrich = { unit_leader_event = { id = COU_event_military.7 } }
+			 custom_effect_tooltip = enter_tt 
+			 custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_navy_max_range_factor = 0.1
+			 	 tooltip = navy_max_range_factor_tt
+		     }
 		}
 	}
 	
@@ -3085,16 +3639,50 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_anti_submarine
 		x = -5
 		y = 5
-		cost = 10
+		cost = 10 
+		available = { has_completed_focus = COU_establishment_of_federal_industrial_committee }
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_undersea_wars }
 		completion_reward = {
-		     
+		     if = {
+				limit = {
+					has_doctrine = wolfpacks
+				}
+				add_mastery_bonus = {
+					name = COU_focus_wolfs_of_undersea
+					bonus = 0.2
+					days = 250
+					sub_doctrine = wolfpacks
+				}
+				else = {
+					add_mastery_bonus = {
+						name = COU_focus_wolfs_of_undersea
+						bonus = 0.1
+						days = 250
+						track = submarines
+					}
+				}
+			}
+			mio:COU_nsm_amsterdam_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
+				add_mio_funds = 1000
+			}
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_torpedo_hit_chance_factor = 0.05
+			 	 tooltip = naval_torpedo_hit_chance_factor_tt
+		     }
 		}
 	}
 	
 	focus = {
-		id = COU_focus_fleet_escort_force #호위함대 
+		id = COU_focus_fleet_escort_force #호위함대 집중
 		icon = GFX_focus_GER_panzerschiff
 		x = -3
 		y = 5
@@ -3102,7 +3690,22 @@ focus_tree = {
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_outersea_wars }
 		completion_reward = {
-		     
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_refit_speed = 0.05
+			 	 tooltip = refit_speed_tt
+		     }
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_hit_chance = 0.05
+			 	 tooltip = naval_hit_chance_tt
+		     }
+			 add_to_variable = {
+			     COU_naval_defence_force_screening_efficiency = 0.1
+			 	 tooltip = screening_efficiency_tt
+		     }
 		}
 	}
 	
@@ -3112,26 +3715,54 @@ focus_tree = {
 		x = -4
 		y = 6
 		cost = 10
+		available = { NOT = { has_tech = marines } }
+        bypass = { has_tech = marines }
+		search_filters = {
+             FOCUS_FILTER_RESEARCH
+        }
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_wolfs_of_undersea focus = COU_focus_fleet_escort_force }
 		completion_reward = {
-		     
+		     set_technology = { marines = 1 }
+		     add_tech_bonus = {
+				name = COU_focus_establish_marines
+				bonus = 1
+				uses = 1
+				category = marine_tech
+			 }
+			 add_doctrine_cost_reduction = {
+				 name = COU_focus_establish_marines
+				 cost_reduction = 0.3
+				 uses = 1
+				 category = special_forces_doctrine
+			 }
 		}
 	}
 	
 	focus = {
-		id = COU_focus_scraping_the_blueprint #청사진 긁어오기 
+		id = COU_focus_scraping_the_blueprint #정밀한 설계  
 		icon = GFX_focus_generic_navy_research_bonus
 		x = 0
 		y = 2
-		cost = 10
+		cost = 5
 		relative_position_id = COU_focus_petition_45
 		search_filters = {
 			 FOCUS_FILTER_NAVY_XP
 		}
 		prerequisite = { focus = COU_focus_dutch_naval_succession focus = COU_focus_fleet_worthy_of_its_dignity }
 		completion_reward = {
-		     
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 }
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_defense_factor = 0.05
+			 	 tooltip = naval_defense_factor_tt
+		     }
+			 add_to_variable = {
+			     COU_naval_defence_force_refit_speed = 0.15
+			 	 tooltip = refit_speed_tt
+		     }
 		}
 	}
 	
@@ -3147,7 +3778,32 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_scraping_the_blueprint }
 		completion_reward = {
-		     
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+					is_coastal = yes 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+					is_coastal = yes 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -3156,14 +3812,43 @@ focus_tree = {
 		icon = GFX_focus_BEL_cockerill_shipyards
 		x = 1
 		y = 3
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_petition_45
 		search_filters = {
 			 FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = COU_focus_scraping_the_blueprint }
 		completion_reward = {
-		     
+		     random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+					is_coastal = yes 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			if = { 
+			    limit = { has_dlc = "Gotterdammerung" } 
+			    mio:COU_cockerill_shipyards_organization = {
+				    add_mio_size = 1
+				    add_mio_funds_gain_factor = 0.25
+				    add_mio_research_bonus = 0.05
+				    add_mio_funds = 1000
+			    }
+			}
+			else = {
+			    mio:COU_cockerill_shipyards_no_wuw = {
+				    add_mio_size = 1
+				    add_mio_funds_gain_factor = 0.25
+				    add_mio_research_bonus = 0.05
+				    add_mio_funds = 1000
+			    }
+			}
 		}
 	}
 	
@@ -3174,12 +3859,15 @@ focus_tree = {
 		y = 4
 		cost = 10
 		relative_position_id = COU_focus_petition_45
-		search_filters = {
-			 FOCUS_FILTER_INDUSTRY
-		}
 		prerequisite = { focus = COU_focus_restore_dockyards focus = COU_focus_pressure_cockerill }
 		completion_reward = {
-		     
+		     random_owned_controlled_state = {
+				  limit = {
+					  is_core_of = ROOT
+					  can_construct_building = naval_facility
+				   }
+				   construct_building_in_random_province = { naval_facility = 1 }
+			 }
 		}
 	}
 	
@@ -3188,14 +3876,25 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		x = 0
 		y = 5
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_petition_45
-		search_filters = {
-			 FOCUS_FILTER_INDUSTRY
-		}
 		prerequisite = { focus = COU_focus_focus_generic_naval_discipline }
 		completion_reward = {
-		     
+		     add_doctrine_cost_reduction = {
+				name = COU_focus_complete_naval_doctrine
+				cost_reduction = 0.75
+				uses = 3
+				category = naval_doctrine
+			 }
+			 custom_effect_tooltip = enter_tt 
+			 custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 } 
+		     add_to_variable = {
+			     COU_focus_complete_naval_doctrine = -0.1
+			     tooltip = naval_doctrine_cost_factor_tt
+		     }
 		}
 	}
 	
@@ -3220,11 +3919,67 @@ focus_tree = {
 		icon = GFX_focus_PHI_gunboat_diplomacy
 		x = 4
 		y = 2
-		cost = 10
+		cost = 8
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_fleet_worthy_of_its_dignity }
 		completion_reward = {
-		     
+			add_tech_bonus = {
+				name = COU_focus_i_dream_jollacun_fleet
+				bonus = 1
+				uses = 3
+				category = bb_tech
+			}
+			create_equipment_variant = {
+				name = "Sanctum Tower Class"				
+				name_group = HOL_BB_HISTORICAL
+				type = ship_hull_heavy_2
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_2
+					fixed_ship_anti_air_slot = ship_anti_air_1
+					fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+					fixed_ship_radar_slot = empty
+					fixed_ship_engine_slot = heavy_ship_engine_2
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_2
+					front_1_custom_slot = ship_anti_air_1
+					mid_1_custom_slot = ship_airplane_launcher_1
+					mid_2_custom_slot = ship_secondaries_1
+					rear_1_custom_slot = ship_heavy_battery_2
+				}
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_2
+					creator = "COU"
+				}
+				name = "Sanctum Tower"
+				requested_factories = 1
+				progress = 0.35
+				amount = 1
+			}
+			custom_effect_tooltip = enter_tt 
+			random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+					NOT = { state = 7 } #얘가 건슬이 언제터질줄 몰라서 
+					is_coastal = yes 
+			     }
+				 add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 } 
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_heavy_gun_hit_chance_factor = 0.05
+			     tooltip = naval_heavy_gun_hit_chance_factor_tt
+		     }
 		}
 	}
 	
@@ -3233,11 +3988,25 @@ focus_tree = {
 		icon = GFX_focus_generic_battleship_guns
 		x = 4
 		y = 3
-		cost = 10
+		cost = 5
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_i_dream_jollacun_fleet }
 		completion_reward = {
-		     
+		    add_tech_bonus = {
+				name = COU_focus_on_heavy_nav_gun
+				bonus = 1
+				uses = 1
+				category = cat_ship_heavy_battery
+			}	
+			custom_effect_tooltip = enter_tt 
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 } 
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_heavy_gun_hit_chance_factor = 0.1
+			     tooltip = naval_heavy_gun_hit_chance_factor_tt
+		     }
 		}
 	}
 	
@@ -3250,7 +4019,18 @@ focus_tree = {
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_fleet_worthy_of_its_dignity }
 		completion_reward = {
-		     
+		     custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_naval_defence_force
+			 } 
+			 add_to_variable = {
+			     COU_naval_defence_force_naval_morale_factor = 0.1
+			     tooltip = naval_morale_factor_tt
+		     }
+		     add_to_variable = {
+			     COU_naval_defence_force_experience_gain_navy = 0.15
+			     tooltip = experience_gain_navy_tt
+		     }
 		}
 	}
 	

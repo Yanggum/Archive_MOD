@@ -333,6 +333,48 @@ country_event = { #회복된 학생회의 권위
 ####외교####
 ###########
 
+country_event = { #흥신소에 제안: 저희 같은 통화 쓰실래요?
+	id = COU_event_diplomancy.1
+	title = COU_event_diplomancy.1.t
+	desc = COU_event_diplomancy.1.desc
+	picture = GFX_report_event_picture_the_letter
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { #싫은데 
+		name = COU_event_diplomancy.1.a
+		add_political_power = 10 
+		add_stability = 0.01 
+		custom_effect_tooltip = COU_tooltip_COU_event_diplomancy_1
+		ai_chance = {
+			base = 5
+			modifier = {
+				HEU = { has_completed_focus = HEU_BLEU_left }
+			}
+			factor = 1
+		}
+	}
+	
+	option = { #그럴까요?
+   	    name = COU_event_diplomancy.1.b
+		add_political_power = -10 
+		add_stability = -0.01 
+		add_timed_idea = {
+		    idea = HEU_exchange_some_currencies
+		    days = 90
+		}
+		custom_effect_tooltip = COU_tooltip_COU_event_diplomancy_2
+		ai_chance = {
+			base = 5
+			modifier = {
+				HEU = { has_completed_focus = HEU_BLEU_right }
+			}
+			factor = 1
+		}
+	    trigger = { HEU = { NOT = { has_completed_focus = HEU_general_student_council_aru } } }
+	}
+}
 
 
 
@@ -380,6 +422,33 @@ country_event = {
 	option = { 
 		name = COU_event_industry.2.a
 		custom_effect_tooltip = COU_event_industry_2_tooltip
+	}
+}
+
+##통화 통일의 여파 
+country_event = { 
+	id = COU_event_industry.3
+	title = COU_event_industry.3.t
+	desc = COU_event_industry.3.desc
+	picture = GFX_COU_event_meetingroom
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = { 
+		name = COU_event_industry.3.a
+		#하하 속았지? 사실 12%지롱 
+		custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_industry
+		    }
+		add_to_variable = {
+			    COU_industry_consumer_goods_factor = 0.08
+			 	tooltip = consumer_goods_factor_tt
+		    }
 	}
 }
 
@@ -497,6 +566,19 @@ unit_leader_event = {
 
 	option = {
 		name = COU_event_military.6.a
+	}
+}
+
+##장거리 훈련 결과 보고 - 헬프리흐 
+unit_leader_event = { 
+	id = COU_event_military.7
+	title = COU_event_military.7.t
+	desc = COU_event_military.7.desc
+
+    is_triggered_only = yes
+
+	option = {
+		name = COU_event_military.7.a
 	}
 }
 
