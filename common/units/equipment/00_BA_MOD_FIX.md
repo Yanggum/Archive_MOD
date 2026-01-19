@@ -371,3 +371,26 @@ interface\replace\BA_module.gfx
 	}
 
 ```
+
+# 키보토스식 열차 추가를 위해 다음과 같은 파일을 수정함
+## common\units\equipment\trains.txt
+
+```
+	# BA trains
+	train_equipment_4 = {
+		year = 1936
+
+		archetype = train_equipment
+		parent = train_equipment_3
+		priority = 40
+
+		armor_value = 360 # HP = BASE_TRAIN_HP + armor_value
+		air_attack = 36
+
+		build_cost_ic = 125
+		resources = {
+			steel = 2
+			pyroxenes = 2
+		}
+	}
+```
