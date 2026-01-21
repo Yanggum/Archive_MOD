@@ -3982,7 +3982,8 @@ country_event = {
 	option = { #
 		name = ABY_new_event.121.a
 		white_peace = SOV
-		ABY_scripted_effect_divide_SOV_2 = yes 
+		ABY_scripted_effect_divide_SOV_2 = yes
+		custom_effect_tooltip = ABY_soviet_win_tt 
 		set_country_flag = ABY_flag_soviet_puppet
 	}
 	option = { #
@@ -18495,6 +18496,16 @@ country_event = {
 		set_politics = {
 			ruling_party = democratic
 		}
+		add_country_leader_role = {
+			character = ABYDO_Shiroko
+			promote_leader = yes
+			country_leader = {
+				ideology = Civil_nationalism
+				expire = "1965.1.1.1"
+				traits = { ABY_trait_school_leader ABY_trait_school_leader_3 }
+			}
+
+		}
 		set_party_name = {
     		ideology = democratic
     		long_name = ABY_democratic_party_3_long
@@ -20409,7 +20420,19 @@ country_event = {
 
 	option = {
 		name = ABY_core_event.21.a
-		ai_chance = { factor = 100 }
+		ai_chance = {
+			base = 100
+			modifier = {
+				add = -100
+				ROOT = {
+					OR = {
+						original_tag = GEH
+						is_puppet = yes
+						is_in_faction = yes
+					}
+				}
+			}
+		}
 		ABY = {
 			country_event = {
 				id = ABY_core_event.22
@@ -20419,7 +20442,19 @@ country_event = {
 	}
 	option = {
 		name = ABY_core_event.21.b
-		ai_chance = { factor = 0 }
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 100
+				ROOT = {
+					OR = {
+						original_tag = GEH
+						is_puppet = yes
+						is_in_faction = yes
+					}
+				}
+			}
+		}
 		ABY = {
 			country_event = {
 				id = ABY_core_event.23
@@ -20438,7 +20473,7 @@ country_event = {
 
 	option = {
 		name = ABY_core_event.22.a
-		annex_country = { target = SWI transfer_troops = yes }
+		annex_country = { target = FROM transfer_troops = yes }
 	}
 }
 country_event = { #사용되지 않음
@@ -20452,7 +20487,7 @@ country_event = { #사용되지 않음
 		name = ABY_core_event.23.a
 		create_wargoal = {
 			type = annex_everything
-			target = SWI
+			target = FROM
 		}
 	}
 }
@@ -21905,6 +21940,13 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.2.a
+		set_cosmetic_tag = ABY_united_states
+		hidden_effect = {
+			news_event = {
+				id = ABY_news_event.9
+				hours = 8
+			}
+		}
 	}
 }
 country_event = {
@@ -21929,6 +21971,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.4.a
+		custom_effect_tooltip = ABY_tt_ethics_6_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_conscription_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_party_popularity_stability_factor = 0.05 }
+			add_to_variable = { ABY_var_ethics_political_power_cost = 0.1 }
+		}
 	}
 }
 country_event = {
@@ -21941,6 +21989,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.5.a
+		custom_effect_tooltip = ABY_tt_ethics_4_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_local_resources_factor = 0.05 }
+			add_to_variable = { ABY_var_ethics_production_speed_buildings_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_war_support_factor = -0.025 }
+		}
 	}
 }
 country_event = {
@@ -21953,6 +22007,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.6.a
+		custom_effect_tooltip = ABY_tt_ethics_3_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_non_core_manpower = 0.02 }
+			add_to_variable = { ABY_var_ethics_research_speed_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_industrial_capacity_factory = -0.025 }
+		}
 	}
 }
 country_event = {
@@ -21965,6 +22025,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.7.a
+		custom_effect_tooltip = ABY_tt_ethics_7_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_stability_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_political_power_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_drift_defence_factor = -0.075 }
+		}
 	}
 }
 country_event = {
@@ -21977,6 +22043,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.8.a
+		custom_effect_tooltip = ABY_tt_ethics_5_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_offensive_war_stability_factor = 0.05 }
+			add_to_variable = { ABY_var_ethics_defensive_war_stability_factor = 0.05 }
+			add_to_variable = { ABY_var_ethics_production_factory_start_efficiency_factor = -0.025 }
+		}
 	}
 }
 country_event = {
@@ -21989,6 +22061,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.9.a
+		custom_effect_tooltip = ABY_tt_ethics_2_up
+		hidden_effect = {
+			add_to_variable = { ABY_var_ethics_production_factory_max_efficiency_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_production_factory_efficiency_gain_factor = 0.025 }
+			add_to_variable = { ABY_var_ethics_consumer_goods_factor = 0.05 }
+		}
 	}
 }
 country_event = {
@@ -22001,6 +22079,7 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.10.a
+		add_political_power = 200
 	}
 }
 
@@ -22026,6 +22105,7 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.12.a
+		add_country_leader_trait = ABY_trait_real_god
 	}
 }
 country_event = {
@@ -22038,6 +22118,7 @@ country_event = {
 
 	option = { 
 		name = ABY_shiroko_dem_event.13.a
+		create_faction_from_template = BA_faction_template_ABY_shiroko_dem
 	}
 }
 country_event = {
@@ -22050,6 +22131,9 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.14.a
+		ABY = {
+			add_stability = 0.25
+		}
 	}
 }
 country_event = {
