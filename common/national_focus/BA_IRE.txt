@@ -36,9 +36,137 @@ focus_tree = {
 				}
 			}
 			leave_faction = yes
+			add_ideas = IRE_new_constitution_idea
 		}
 		select_effect = {
 			add_political_power = 0
+		}
+	}
+	focus = { # 조약항 접수
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_treaty_port_reception
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = IRE_focus_the_falling_empire }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 1
+		cost = 1.5
+		search_filters = {}
+		available = {
+			controls_state = 134
+			controls_state = 135
+		} 
+		bypass = {
+			NOT = {
+				controls_state = 134
+				controls_state = 135
+			}
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 300
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1
+				amount = 300
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 90
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_1
+				amount = 29
+				producer = ENG
+			}
+			134 = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 9405
+				}
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 7394
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 9405
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 7394
+				}
+			}
+			135 = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 337
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 337
+				}
+			}
+		}
+	}
+	focus = { # 얼스터를 향한 진군
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_steps_towards_n_ireland
+		icon = GFX_focus_attack_britain
+		prerequisite = { focus = IRE_focus_the_falling_empire }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 1
+		cost = 1.5
+		search_filters = {}
+		available = {
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			transfer_state = 119
+			119 = {
+				set_state_name = IRE_name_state_119
+			}
+			swap_ideas = {
+				remove_idea = IRE_agricultural_society_1_idea
+				add_idea = IRE_agricultural_society_2_idea
+			}
+		}
+	}
+	focus = { # 내부 충격에 대비
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_prepare_for_internal_shocks
+		icon = GFX_focus_generic_self_management
+		prerequisite = { focus = IRE_focus_treaty_port_reception }
+		prerequisite = { focus = IRE_focus_steps_towards_n_ireland }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0 
+		y = 2
+		cost = 1.5
+		search_filters = {}
+		available = {
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
 		}
 	}
 }
