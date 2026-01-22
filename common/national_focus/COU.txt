@@ -10,7 +10,7 @@ focus_tree = {
 	}
 	
 	initial_show_position = {
-		focus = COU_focus_debug_show_political_focus
+		focus = COU_focus_against_the_protocol
 	}
 	
 	shortcut = {
@@ -24,6 +24,22 @@ focus_tree = {
 	shortcut = {
 		name = COU_shortcut_military
 		target = COU_reorganizing_the_defense_office
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = COU_shortcut_political_RIN
+		target = COU_focus_confidence_and_supply
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
+		name = COU_shortcut_political_kaya
+		target = COU_focus_black_coffee
 		scroll_wheel_factor = 0.654
 		trigger = {
 			always = yes
@@ -1574,44 +1590,6 @@ focus_tree = {
 			
 		}
 	}
-	
-	focus = {
-		id = COU_establish_spa #폭스소대 사면  
-		icon = GFX_focus_COU_rework_srt
-		x = 9
-		y = 2
-		cost = 8
-		relative_position_id = COU_shaking_royalty
-		search_filters = {
-			 FOCUS_FILTER_WAR_SUPPORT 
-		}
-		available = { NOT = { has_country_flag = SRT_BANNED } }
-		prerequisite = { focus = COU_reduction_of_administrative_committee_authority }
-		completion_reward = {
-		    add_political_power = 25 
-			add_war_support = 0.05 
-			country_event = COU_event_military.4
-		    custom_effect_tooltip = COU_tooltip_establish_spa
-		}
-	}
-	
-	focus = {
-		id = COU_establish_dietsland_srt #현지인 소대   
-		icon = GFX_focus_generic_flight_instructors
-		x = 9
-		y = 3
-		cost = 5
-		relative_position_id = COU_shaking_royalty
-		search_filters = {
-			 FOCUS_FILTER_MANPOWER
-		}
-		available = { NOT = { has_country_flag = SRT_BANNED } }
-		prerequisite = { focus = COU_establish_spa }
-		completion_reward = {
-		    #무슨 효과를 채워야 하죠? 일단 전 모르겟어요
-		    country_event = COU_event_military.5
-		}
-	}
 
 
 
@@ -1625,7 +1603,7 @@ focus_tree = {
     focus = {
 		id = COU_reorganizing_the_defense_office #방위군 재편
 		icon = GFX_focus_COU_the_emergency_law
-		x = 29
+		x = 28
 		y = 0
 		cost = 5
 		available = {
@@ -4023,14 +4001,15 @@ focus_tree = {
 	
 	
 	#카야 루트 
-	focus = { #블랙 커피 
+	focus = { #변하지 않는 것 
 		id = COU_focus_black_coffee
 		icon = GFX_focus_COU_get_some_helps_ok
 		x = 78
 		y = 0
 		cost = 5
 		available = {
-			has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
+			has_country_flag = COU_political_shock 
+			has_country_flag = GAEBALJUNG 
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		#ai_will_do = {
@@ -4039,7 +4018,9 @@ focus_tree = {
         mutually_exclusive = { focus = COU_focus_confidence_and_supply }
 		#cancelable = no
 		completion_reward = {
-			add_political_power = 25
+			country_event = COU_event_kaya.1
+			#add_to_variable = { NORIN_stab_percent = -10 }
+			#custom_effect_tooltip = COU_NORIN_stab_percent_badten
 		}
 	}
 	
@@ -4049,14 +4030,15 @@ focus_tree = {
 	
 	
 	#린 루트 
-	focus = { #신뢰와 공급
+	focus = { #신임과 보완 
 		id = COU_focus_confidence_and_supply
 		icon = GFX_focus_COU_establishment_of_emergency_measures_committee
 		x = 22
 		y = 0
 		cost = 5
 		available = {
-			has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
+			#has_country_flag = COU_political_shock 
+			has_country_flag = GAEBALJUNG 
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
@@ -4066,11 +4048,53 @@ focus_tree = {
 		}
 	}
 	
+	focus = { #방위실 달래기 
+		id = COU_focus_alliance_with_kaya
+		icon = GFX_COU_kaya_dictatership_on
+		x = -1
+		y = 1
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_confidence_and_supply
+        prerequisite = { focus = COU_focus_confidence_and_supply }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #총학생회장의 후계자  
+		id = COU_focus_successor_of_arona
+		icon = GFX_COU_choice_RIN
+		x = 0
+		y = 4
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_confidence_and_supply
+        prerequisite = { focus = COU_focus_confidence_and_supply }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { #재무실 요구 수용  
+		id = COU_focus_alliance_with_aoi
+		icon = GFX_focus_COU_king
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_confidence_and_supply
+        prerequisite = { focus = COU_focus_confidence_and_supply }
+		completion_reward = {
+			
+		}
+	}
+	
 	
 
 
     
-	#반대파 결집 
+	#반대파 결집: 린 루트 안쪽에 '삽입' 하자 
 	
 	
 	
@@ -4086,7 +4110,7 @@ focus_tree = {
 		id = COU_focus_against_the_protocol #프로토콜에 대항 
 		icon = GFX_focus_COU_sasang_nugak
 		x = 11
-		y = 4
+		y = 1
 		cost = 1.5
 		relative_position_id = COU_focus_black_coffee
 		available = { has_country_flag = COU_protocol_activated_flag }
@@ -4153,11 +4177,11 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = COU_focus_fix_ai_problem #인공지능 결함 수정    
+		id = COU_focus_fix_ai_problem #아로나와의 대면  
 		icon = GFX_SHE_jaga_kodeu_gaeseon
 		x = 0
 		y = 2
-		cost = 5
+		cost = 2
 		search_filters = {
 			 FOCUS_FILTER_POLITICAL 
 		}
@@ -4165,31 +4189,13 @@ focus_tree = {
 		available = { controls_state = 36 }
 		prerequisite = { focus = COU_focus_focus_on_illegal_occupy focus = COU_focus_avoid_splatting_collaboraters }
 		completion_reward = {
-		     
+		     country_event = COU_event.5
 		}
 	}
 	
 	
 	
 	
-####################
-focus = {
-	id = COU_focus_debug_show_political_focus #얘는 정치중점 보이게 어그로끄는 용도 
-	icon = GFX_focus_COU_sasang_nugak
-	x = 11
-	y = 1
-	cost = 0
-	relative_position_id = COU_focus_black_coffee
-	available = { always = no }
-		#bypass = { SHE = { exists = no } }
-		#search_filters = {
-		#	 FOCUS_FILTER_POLITICAL 
-		#}
-	allow_branch = { always = no }
-	completion_reward = {
-		    
-	}
-}
 
 #에러 방지용 구 포커스 
 ##린 루트 

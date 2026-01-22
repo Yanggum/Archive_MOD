@@ -4,6 +4,8 @@ add_namespace = COU_event_diplomancy
 add_namespace = COU_event_industry
 add_namespace = COU_event_military
 
+add_namespace = COU_event_kaya
+
 add_namespace = COU_kivotos_alliance
 #add_namespace = COU_event_normal_days
 
@@ -122,6 +124,7 @@ country_event = { #샬레 살인면허
 		name = COU_event.2.a
 		set_country_flag = COU_protocol_activated_flag
 		effect_tooltip = { activate_mission = COU_SHE_declare_war_timeout } 
+		hidden_effect = { country_event = { id = COU_event.6 days = 7 } }
 	}
 	
 }
@@ -150,63 +153,55 @@ country_event = { #샬레 최후통첩스
 	}
 	
 }
-country_event = { #경쟁의 결과
+country_event = { #싯딤의 상자 확보 
 	id = COU_event.4
 	title = COU_event.4.t
 	desc = COU_event.4.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
+	picture = GFX_report_event_she_ipad
 	
 	fire_only_once = yes
 	is_triggered_only = yes
 
 	option = { 
 		name = COU_event.4.a
-		clr_global_flag = COU_division_of_military_flag
-		clr_global_flag = KSP_division_of_military_flag
-
-		set_temp_variable = {
-			TEMP_KSP_division_of_military_value = global.KSP_division_of_military_value
-		}
-		multiply_temp_variable = { TEMP_KSP_division_of_military_value = 0.01 }
-		transfer_units_fraction = {
-			target = KSP
-			size = var:TEMP_KSP_division_of_military_value
-			navy_ratio = 0
-			air_ratio = 0
-			keep_unit_leaders_trigger = {
-				always = yes
-			}
-		}
-
-		set_temp_variable = {
-			TEMP_SHE_division_of_military_value = global.SHE_division_of_military_value
-		}
-		multiply_temp_variable = { TEMP_SHE_division_of_military_value = 0.01 }
-		transfer_units_fraction= {
-			target = SHE
-			size = var:TEMP_SHE_division_of_military_value
-			navy_ratio = 0
-			air_ratio = 0
-			keep_unit_leaders_trigger = {
-				always = yes
-			}
-		}
+		#set_country_flag = COU_political_shock
+		#custom_effect_tooltip = COU_event_4_tooltip
 	}
 	
 }
 
-country_event = { #협력자 문제
+country_event = { #손 빌리기
+	id = COU_event.5
+	title = COU_event.5.t
+	desc = COU_event.5.desc
+	picture = GFX_report_event_she_arona
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event.5.a
+		add_political_power = 150
+	}
+}
+
+country_event = { #대행 정통성에 대한 의문 
 	id = COU_event.6
 	title = COU_event.6.t
 	desc = COU_event.6.desc
-	picture = GFX_report_event_fascist_militia
+	picture = GFX_COU_event_218
 	
 	fire_only_once = yes
 	is_triggered_only = yes
 
 	option = { 
 		name = COU_event.6.a
-		add_stability = -0.05
+		add_country_leader_trait = COU_power_struggle
+		set_country_flag = COU_political_shock
+		unlock_decision_category_tooltip = COU_getout_rin_decision
+		set_variable = { NORIN_stab_percent = 60 }
+		custom_effect_tooltip = COU_event_4_tooltip
+		hidden_effect = { activate_mission = COU_norin_movement_of_opposition }
 	}
 }
 
@@ -245,6 +240,25 @@ country_event = { #회복된 학생회의 권위
 		}
 	}
 }
+
+
+
+###카야루트###
+country_event = { #블랙 커피 
+	id = COU_event_kaya.1
+	title = COU_event_kaya.1.t
+	desc = COU_event_kaya.1.desc
+	picture = GFX_report_event_picture_arrest_ayumu
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.1.a
+		add_political_power = 75
+	}
+}
+
 
 
 
