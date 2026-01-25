@@ -172,6 +172,7 @@ focus_tree = {
 					}
 				}
 			}
+			TRK_add_core_of_trinity_state = yes
 		}
 	}
 
@@ -307,7 +308,9 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-
+			add_political_power = 75
+			add_ideas = TRK_freedom_of_religion_ns
+			hidden_effect = { country_event = { id = TRK_events.4 days = 15 } } 
 		}
 	}
 
@@ -336,7 +339,7 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-
+			add_ideas = TRK_welfare_state_01_ns
 		}
 	}
 
@@ -361,7 +364,10 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-
+			swap_ideas = {
+				add_idea = TRK_hanakos_democratic_government_ns
+				remove_idea = TRK_weaks_democratic_government_ns
+			}
 		}
 	}
 
@@ -429,6 +435,7 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
+			add_stability = 0.1
 			
 		}
 	}
@@ -454,7 +461,10 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-			
+			every_core_state = {
+				limit = { is_owned_by = ROOT }
+				add_dynamic_modifier = { modifier = TRK_local_government }
+			}
 		}
 	}
 
@@ -483,7 +493,10 @@ focus_tree = {
 		mutually_exclusive = { focus = TRK_filius_focus_01 }
 
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = TRK_economic_collapse_ns
+				add_idea = TRK_new_trinity_capitalism_ns
+			}
 		}
 	}
 
@@ -512,7 +525,11 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-			
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+			add_ideas = TRK_labor_union_ns
 		}
 	}
 
@@ -799,6 +816,7 @@ focus_tree = {
 		}
 
 		ai_will_do = { base = 100 }
+		mutually_exclusive = { focus = TRK_filius_ending_focus_01 }
 
 		completion_reward = {
 			
@@ -824,7 +842,7 @@ focus_tree = {
 		}
 
 		ai_will_do = { base = 100 }
-		mutually_exclusive = { focus = TRK_sanctus_ending_focus_01 }
+		mutually_exclusive = { focus = TRK_sanctus_ending_focus_01 focus = TRK_sisterhood_focus_03 }
 
 		completion_reward = {
 			
@@ -850,6 +868,10 @@ focus_tree = {
 
 		available = {
 			NOT = { has_government = fascism }
+			if = {
+				limit = { has_completed_focus = TRK_filius }
+				NOT = { has_completed_focus = TRK_filius_focus_05 }
+			}
 		}
 
 		ai_will_do = { base = 100 }
