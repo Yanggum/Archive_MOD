@@ -4017,9 +4017,176 @@ focus_tree = {
         mutually_exclusive = { focus = COU_focus_confidence_and_supply }
 		#cancelable = no
 		completion_reward = {
+		    set_country_flag = KAYA_activate_anti_decision
+		    unlock_decision_tooltip = COU_motivate_anti_movement
+			#unlock_decision_tooltip = COU_activate_my_trap_card
+			#unlock_decision_tooltip = COU_warn_to_rin_royalists
 			country_event = COU_event_kaya.1
-			#add_to_variable = { NORIN_stab_percent = -10 }
-			#custom_effect_tooltip = COU_NORIN_stab_percent_badten
+			hidden_effect = { COU_RIN = { unit_leader_event = { id = COU_event_kaya.2 days = 5 } } }
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_questions_about_the_handover_procedure #인계 절차에 관한 의문 
+		icon = GFX_COU_AOI_exclude_RIN
+		x = -2
+		y = 1
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_black_coffee }
+		completion_reward = {
+			activate_mission = COU_norin_movement_of_opposition
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_without_rin_royalists #통괄실 배제 
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		x = -3
+		y = 2
+		cost = 2
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_contact_with_verdinaso #베르디나소 지도부 사면 
+		icon = GFX_focus_COU_meet
+		x = -1
+		y = 2
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure focus = COU_focus_talk_with_aoi }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_rins_savagery #나나가미 린의 야만 
+		icon = GFX_focus_generic_turning_a_blind_eye
+		x = -2
+		y = 3
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_without_rin_royalists }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_talk_with_aoi #아오이와의 만남
+		icon = GFX_COU_choice_AOI
+		x = 1
+		y = 1
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_black_coffee }
+		completion_reward = {
+			COU_AOI = { unit_leader_event = { id = COU_event_kaya.3  } }
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_intentional_manipulation #의도적 조작 
+		icon = GFX_focus_COU_all_notbad
+		x = 1
+		y = 2
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_talk_with_aoi }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_refusal_to_cooperate #협조 거부 
+		icon = GFX_COU_focus_investment_in_chosun
+		x = 2
+		y = 3
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_intentional_manipulation }
+		prerequisite = { focus = COU_recruit_fox_srt }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_recruit_fox_srt #폭스 소대 동원
+		icon = GFX_focus_COU_rework_srt
+		x = 3
+		y = 2
+		cost = 1.5
+		available = {
+			has_country_flag = COU_political_shock 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_black_coffee }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_rin_getout_please #탄핵 결의
+		icon = GFX_COU_unarrest_mussert
+		x = 0
+		y = 4
+		cost = 5
+		available = {
+			has_country_flag = COU_political_shock 
+			check_variable = { NORIN_stab_percent < 10 }
+			custom_trigger_tooltip = {
+				tooltip = COU_stab_percent_ten_minus
+				check_variable = { NORIN_stab_percent < 10 }
+			}
+		}
+		
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_rins_savagery }
+		prerequisite = { focus = COU_focus_refusal_to_cooperate }
+		completion_reward = {
+			
 		}
 	}
 	
@@ -4032,7 +4199,7 @@ focus_tree = {
 	focus = { #신임과 보완 
 		id = COU_focus_confidence_and_supply
 		icon = GFX_focus_COU_establishment_of_emergency_measures_committee
-		x = 22
+		x = 18
 		y = 0
 		cost = 5
 		available = {
@@ -4108,7 +4275,7 @@ focus_tree = {
 	 focus = {
 		id = COU_focus_against_the_protocol #프로토콜에 대항 
 		icon = GFX_focus_COU_sasang_nugak
-		x = 11
+		x = 9
 		y = 1
 		cost = 1.5
 		relative_position_id = COU_focus_black_coffee
