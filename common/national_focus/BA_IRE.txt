@@ -1,11 +1,15 @@
 focus_tree = {
 	id = BA_IRE_focus_Tree
-		country = {
+	country = {
 		factor = 0
 		modifier = {
 			add = 10
 			tag = IRE
 		}
+	}
+	continuous_focus_position = {
+		x = 100
+		y = 100
 	}
 	focus = { # 무너지는 제국
 		#relative_position_id = IRE_focus_
@@ -53,6 +57,9 @@ focus_tree = {
 		cost = 1.5
 		search_filters = {}
 		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
 			controls_state = 134
 			controls_state = 135
 		} 
@@ -124,6 +131,7 @@ focus_tree = {
 				}
 			}
 		}
+		continue_if_invalid = yes
 	}
 	focus = { # 얼스터를 향한 진군
 		relative_position_id = IRE_focus_the_falling_empire
@@ -131,11 +139,14 @@ focus_tree = {
 		icon = GFX_focus_attack_britain
 		prerequisite = { focus = IRE_focus_the_falling_empire }
 		#mutually_exclusive = { focus = IRE_focus_ }
-		x = 0
-		y = 2
+		x = 1
+		y = 1
 		cost = 1.5
 		search_filters = {}
 		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
 		} 
 		bypass = {
 		}
@@ -148,7 +159,14 @@ focus_tree = {
 				remove_idea = IRE_agricultural_society_1_idea
 				add_idea = IRE_agricultural_society_2_idea
 			}
+			ENG = {
+				add_opinion_modifier = {
+					target = IRE
+					modifier = ENG_to_IRE_Betray
+				}
+			}
 		}
+		continue_if_invalid = yes
 	}
 	focus = { # 내부 충격에 대비
 		relative_position_id = IRE_focus_the_falling_empire
@@ -156,11 +174,14 @@ focus_tree = {
 		icon = GFX_focus_generic_self_management
 		prerequisite = { focus = IRE_focus_steps_towards_n_ireland }
 		mutually_exclusive = { focus = IRE_focus_isle_of_man_raid }
-		x = -1
-		y = 3
-		cost = 1.5
+		x = 0
+		y = 2
+		cost = 2.9
 		search_filters = {}
 		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
 		} 
 		bypass = {
 		}
@@ -169,6 +190,29 @@ focus_tree = {
 			custom_effect_tooltip = IRE_tt_2
 			set_country_flag = IRE_flag_prepare_for_internal_shocks
 		}
+		continue_if_invalid = yes
+	}
+	focus = { # 아일랜드 재정 긴축
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_fiscal_austerity
+		icon = GFX_focus_ETH_adopt_the_lira
+		prerequisite = { focus = IRE_focus_prepare_for_internal_shocks }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 3
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_ideas = IRE_fiscal_austerity_idea
+		}
+		continue_if_invalid = yes
 	}
 	focus = { # 맨섬 급습
 		relative_position_id = IRE_focus_the_falling_empire
@@ -176,11 +220,14 @@ focus_tree = {
 		icon = GFX_focus_generic_naval_invasion
 		prerequisite = { focus = IRE_focus_steps_towards_n_ireland }
 		mutually_exclusive = { focus = IRE_focus_prepare_for_internal_shocks }
-		x = 1
-		y = 3
-		cost = 1.5
+		x = 2
+		y = 2
+		cost = 2.9
 		search_filters = {}
 		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
 		} 
 		bypass = {
 		}
@@ -192,6 +239,130 @@ focus_tree = {
 					set_compliance = 70
 				}
 			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 대서양의 전초기지
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_atlantic_outpost
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = IRE_focus_isle_of_man_raid }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 3
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+			controls_state = 932
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			932 = {
+				strategic_province_location = {
+					defensible_coastline = 3311
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					instant_build = yes
+					province = 3311
+				}
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_fortification
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 두 번째 대위기
+		#relative_position_id = IRE_focus_
+		id = IRE_focus_second_great_crisis
+		icon = GFX_focus_SWE_neither_death_nor_dishonor
+		#prerequisite = { focus = IRE_focus_ }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 10
+		y = 5
+		cost = 0
+		search_filters = {}
+		available = {
+			has_global_flag = unlock_focuses
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			effect_tooltip = {
+				add_stability = -0.05
+				custom_effect_tooltip = IRE_DM_tt_1
+				if = {
+					limit = {
+						has_country_flag = IRE_flag_prepare_for_internal_shocks
+					}
+					custom_effect_tooltip = IRE_DM_tt_2
+				}
+			}
+		}
+	}
+	focus = { # 피어너 팔 내각
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_FF
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = IRE_focus_second_great_crisis }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 120
+			custom_effect_tooltip = IRE_DM_tt_3
+			add_to_variable = { IRE_DM1_political_power_cost = -0.20 }
+			add_to_variable = { IRE_DM1_stability_factor = 0.05 }
+		}
+	}
+	focus = { # 무소속 의원 포섭
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_involvement_of_independent_lawmakers
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = IRE_focus_FF }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = IRE_LT_tt_1
+				check_variable = { parliament_seat_array^3 > 29 }
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_to_variable = {
+				tooltip = IRE_LE_tt_1
+				var = parliament_seat_array^3
+				value = -30
+			}
+			add_to_variable = {
+				var = parliament_seat_array^1
+				value = 30
+			}
+			reload_parliament_gui = yes
 		}
 	}
 }

@@ -1,20 +1,58 @@
 add_namespace = IRE_event
 
 
-country_event = { # 북 아일랜드 문제
+country_event = { # 두 번째 대위기
 	id = IRE_event.1
 	title = IRE_event.1.t
 	desc = IRE_event.1.d
-	picture = GFX_event_none_picture
-	
-    is_triggered_only = yes
+	picture = GFX_report_event_generic_ruins
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	trigger = {
+		tag = IRE
+		has_global_flag = ENG_lose_global_flag
+	}
 	
 	option = { 
 		name = IRE_event.1.a
-		add_stability = 0.05
-	}
-	option = { 
-		name = IRE_event.1.b
-		add_stability = 0.05
+		hidden_effect = {
+			remove_dynamic_modifier = {
+				modifier = IRE_engire_trade_war_idea
+			}
+			add_dynamic_modifier = {
+				modifier = IRE_engire_trade_war_idea2
+			}
+			if = {
+				limit = {
+					has_country_flag = IRE_flag_prepare_for_internal_shocks
+				}
+				add_to_variable = { IRE_DM1_political_power_cost = 0.70 }
+				add_to_variable = { IRE_DM1_consumer_goods_factor = 0.60 }
+				add_to_variable = { IRE_DM1_monthly_population = -1 }
+				add_to_variable = { IRE_DM1_production_speed_buildings_factor = -0.40 }
+				add_to_variable = { IRE_DM1_stability_factor = -0.35 }
+			}
+			else = {
+				add_to_variable = { IRE_DM1_political_power_cost = 0.80 }
+				add_to_variable = { IRE_DM1_consumer_goods_factor = 0.65 }
+				add_to_variable = { IRE_DM1_monthly_population = -1 }
+				add_to_variable = { IRE_DM1_production_speed_buildings_factor = -0.40 }
+				add_to_variable = { IRE_DM1_stability_factor = -0.45 }
+			}
+		}
+		add_stability = -0.05
+		custom_effect_tooltip = IRE_DM_tt_1
+		if = {
+			limit = {
+				has_country_flag = IRE_flag_prepare_for_internal_shocks
+			}
+			custom_effect_tooltip = IRE_DM_tt_2
+		}
+		complete_national_focus = IRE_focus_second_great_crisis
 	}
 } 
