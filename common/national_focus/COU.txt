@@ -1120,7 +1120,7 @@ focus_tree = {
 		icon = GFX_focus_COU_meet_the_dutchs
 		x = 17
 		y = 0
-		cost = 5
+		cost = 3
 		available = {
 		 #    has_country_flag = COU_political_shock #샬레전 이후까지 못 찍게 하기 
 		}
@@ -1499,46 +1499,10 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #크로노스 통제 
-		id = COU_focus_lock_the_kronous
-		icon = GFX_focus_lock_the_news
-		x = 6
-		y = 4
-		relative_position_id = COU_shaking_royalty
-		cost = 5
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-		prerequisite = { focus = COU_focus_on_europe }
-		completion_reward = {
-			add_stability = 0.05
-		}
-	}
-	
 	focus = { #룩셈부르크를 게헨나에서 분리 
 		id = COU_focus_liberate_luxembourg_from_gehenna
 		icon = GFX_focus_COU_dog_of_flanders
-		x = 4
-		y = 4
-		relative_position_id = COU_shaking_royalty
-		cost = 5
-		available = {
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-		prerequisite = { focus = COU_focus_on_europe }
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = { #동부 비상사태
-		id = COU_focus_eastern_emergency
-		icon = GFX_goal_tmr_first_focus
-		x = 8
+		x = 6
 		y = 4
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1556,7 +1520,7 @@ focus_tree = {
 	focus = { #색채 대비 
 		id = COU_focus_the_colour_emergency
 		icon = GFX_focus_GEI_arona
-		x = 5
+		x = 4
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1566,7 +1530,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		mutually_exclusive = { focus = COU_focus_the_decagramaton_emergency }
-		prerequisite = { focus = COU_focus_liberate_luxembourg_from_gehenna focus = COU_focus_eastern_emergency }
+		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
 			
 		}
@@ -1575,7 +1539,7 @@ focus_tree = {
 	focus = { #기계군단에 대응 
 		id = COU_focus_the_decagramaton_emergency
 		icon = GFX_focus_GEI_tablet
-		x = 7
+		x = 8
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
@@ -1585,7 +1549,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		mutually_exclusive = { focus = COU_focus_the_colour_emergency }
-		prerequisite = { focus = COU_focus_liberate_luxembourg_from_gehenna focus = COU_focus_eastern_emergency }
+		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
 			
 		}
@@ -4003,7 +3967,7 @@ focus_tree = {
 	focus = { #변하지 않는 것 
 		id = COU_focus_black_coffee
 		icon = GFX_focus_COU_get_some_helps_ok
-		x = 78
+		x = 72
 		y = 0
 		cost = 5
 		available = {
@@ -4015,7 +3979,17 @@ focus_tree = {
 		#	factor = 4000
 		#}
         mutually_exclusive = { focus = COU_focus_confidence_and_supply }
-		#cancelable = no
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = COU_focus_confidence_and_supply }
+			}
+		}
 		completion_reward = {
 		    set_country_flag = KAYA_activate_anti_decision
 		    unlock_decision_tooltip = COU_use_collaboraters_for_antirin_movementt
@@ -4023,15 +3997,22 @@ focus_tree = {
 			#unlock_decision_tooltip = COU_warn_to_rin_royalists
 			country_event = COU_event_kaya.1
 			hidden_effect = { COU_RIN = { unit_leader_event = { id = COU_event_kaya.2 days = 5 } } }
+			hidden_effect = {
+			    load_focus_tree = {
+				    tree = COU_focus_tree
+				    keep_completed = yes
+			    }
+			}
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	
 	focus = { 
-    	id = COU_focus_questions_about_the_handover_procedure #인계 절차에 관한 의문 
+    	id = COU_focus_questions_about_the_handover_procedure #인계 절차에 관한 의문 제기
 		icon = GFX_COU_AOI_exclude_RIN
-		x = -2
+		x = 0
 		y = 1
-		cost = 1.5
+		cost = 2
 		available = {
 			has_country_flag = COU_political_shock 
 		}
@@ -4040,9 +4021,10 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_black_coffee }
 		completion_reward = {  
 		    add_popularity = {
-				ideology = democratic
-				popularity = -0.1
+				ideology = fascism
+				popularity = 0.1
 			}
+			add_political_power = 25
 		    COU_rin_getout_percent_bad_onefive = yes 
 			activate_mission = COU_norin_movement_of_opposition
 			country_event = COU_event_kaya.4
@@ -4063,8 +4045,8 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure }
 		completion_reward = {
 		    add_popularity = {
-				ideology = democratic
-				popularity = -0.15
+				ideology = fascism
+				popularity = 0.05
 			}
 			add_political_power = 25 
 		    COU_rin_getout_percent_bad_ten = yes 
@@ -4074,14 +4056,14 @@ focus_tree = {
 			}
 			add_days_mission_timeout = {
 				mission = COU_motivate_royalists_movement
-				days = 60
+				days = 15
 			}
 		}
 	}
 	
 	focus = { 
-    	id = COU_recruit_fox_srt #폭스 소대 동원
-		icon = GFX_focus_COU_rework_srt
+    	id = COU_focus_talk_with_aoi #아오이와의 만남
+		icon = GFX_COU_choice_AOI
 		x = 0
 		y = 2
 		cost = 1.5
@@ -4090,27 +4072,20 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
-		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure focus = COU_focus_talk_with_aoi }
-		completion_reward = {
-			
-		}
-	}
-	
-	focus = { 
-    	id = COU_focus_talk_with_aoi #아오이와의 만남
-		icon = GFX_COU_choice_AOI
-		x = 2
-		y = 1
-		cost = 1.5
-		available = {
-			has_country_flag = COU_political_shock 
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		relative_position_id = COU_focus_black_coffee
-		prerequisite = { focus = COU_focus_black_coffee }
+		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure }
 		bypass = { has_country_flag = KAYA_PASS_AOI_FOCUS }
 		completion_reward = {
-			COU_AOI = { unit_leader_event = { id = COU_event_kaya.3  } }
+		    add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.15
+			}
+		    add_political_power = 25
+			COU_rin_getout_percent_bad_ten = yes 
+			COU_AOI = { unit_leader_event = { id = COU_event_kaya.3 } }
 		}
 	}
 	
@@ -4119,15 +4094,20 @@ focus_tree = {
 		icon = GFX_focus_COU_all_notbad
 		x = 2
 		y = 2
-		cost = 1.5
+		cost = 2
 		available = {
 			has_country_flag = COU_political_shock 
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
-		prerequisite = { focus = COU_focus_talk_with_aoi }
+		prerequisite = { focus = COU_focus_questions_about_the_handover_procedure }
 		bypass = { has_country_flag = KAYA_PASS_AOI_FOCUS }
 		completion_reward = {
+		    add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+		    add_political_power = 25
 			COU_rin_getout_percent_bad_ten = yes 
 		}
 	}
@@ -4153,7 +4133,105 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_without_rin_royalists }
+		prerequisite = { focus = COU_focus_talk_with_aoi }
 		prerequisite = { focus = COU_focus_intentional_manipulation }
+		completion_reward = {
+		    add_popularity = {
+				ideology = fascism
+				popularity = 0.15
+			}
+			country_event = COU_event_kaya.6
+			set_country_flag = COU_political_shock_end
+			clr_country_flag = COU_political_shock
+			custom_effect_tooltip = COU_tooltip_end_rin_system
+		}
+	}
+	
+	focus = { 
+    	id = COU_recruit_purge_our_antifans #반대파 숙청
+		icon = GFX_focus_COU_nothing
+		x = -3
+		y = 4
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_rin_getout_please }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_recontrol_valkyrie #발키리 재통제 
+		icon = GFX_focus_COU_fate_of_arona
+		x = -6
+		y = 6
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_recruit_purge_our_antifans }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_control_kronos_news #크로노스 스쿨 장악 
+		icon = GFX_focus_lock_the_news
+		x = -3
+		y = 5
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_recruit_purge_our_antifans }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_digital_hallucination #디지털 환상 
+		icon = GFX_focus_COU_cheers_for_the_our_future
+		x = -4
+		y = 6
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_control_kronos_news }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_control_local_news #여론통제 
+		icon = GFX_focus_SWE_radiotjanst
+		x = -2
+		y = 6
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_focus_control_kronos_news }
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = { 
+    	id = COU_recruit_fox_srt #폭스 소대 동원
+		icon = GFX_focus_COU_rework_srt
+		x = -1
+		y = 5
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_recruit_purge_our_antifans }
 		completion_reward = {
 			
 		}
@@ -4162,16 +4240,65 @@ focus_tree = {
 	focus = { 
     	id = COU_focus_contact_with_verdinaso #베르디나소 지도부 사면 
 		icon = GFX_focus_COU_meet
-		x = -1
+		x = 2
 		y = 4
 		cost = 5
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
+		available = { has_country_leader = { character = COU_KAYA } }
 		prerequisite = { focus = COU_focus_rin_getout_please }
 		completion_reward = {
 		    add_political_power = 50 
+		    country_event = COU_event_kaya.5
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = COU_joris_van_severen_advisor
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_upgrade_power_of_collabs #협력자 권한 강화 
+		icon = GFX_focus_generic_full_social_mobilization
+		x = 4
+		y = 4
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		available = { has_country_leader = { character = COU_KAYA } }
+		prerequisite = { focus = COU_focus_rin_getout_please }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_executive_order_3511 #행정명령 3511호 파기 
+		icon = GFX_focus_generic_treaty
+		x = 3
+		y = 5
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		available = { has_country_leader = { character = COU_KAYA } }
+		prerequisite = { focus = COU_focus_contact_with_verdinaso }
+		prerequisite = { focus = COU_focus_upgrade_power_of_collabs }
+		completion_reward = {
+		    
+		}
+	}
+	
+	focus = { 
+    	id = COU_focus_conservative_revolution #순수 키보토스의 꿈 
+		icon = GFX_COU_what_the_fuck_is_fascism
+		x = 1
+		y = 6
+		cost = 5
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+		prerequisite = { focus = COU_recruit_fox_srt }
+		prerequisite = { focus = COU_focus_executive_order_3511 }
+		completion_reward = {
+			
 		}
 	}
 	
@@ -4194,8 +4321,37 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
         mutually_exclusive = { focus = COU_focus_black_coffee }
+		allow_branch = {
+			IF = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = { has_completed_focus = COU_focus_black_coffee }
+			}
+		}
+		offset = {
+			x = -18
+			y = 0
+			trigger = {
+				has_completed_focus = COU_focus_confidence_and_supply
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+			}
+		}
 		completion_reward = {
 			add_political_power = 25
+			hidden_effect = {
+			    load_focus_tree = {
+				    tree = COU_focus_tree
+				    keep_completed = yes
+			    }
+			}
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	
@@ -4213,11 +4369,11 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #구조적 개편 
+	focus = { #음모론 척결
 		id = COU_focus_successor_of_arona
 		icon = GFX_COU_road_ot_choin
 		x = 0
-		y = 4
+		y = 3
 		cost = 5
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_confidence_and_supply
@@ -4245,8 +4401,24 @@ focus_tree = {
 
 
     
-	#반대파 결집: 린 루트 안쪽에 '삽입' 하자 
-	
+	#집단지도체제 
+	focus = { 
+		id = COU_focus_dual_leader_system 
+		icon = GFX_focus_aoi_momoka_dual_leader_system
+		x = 32
+		y = 5
+		cost = 5
+		available = {
+			#has_country_flag = COU_political_shock 
+			has_country_flag = GAEBALJUNG 
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_black_coffee
+        prerequisite = { focus = COU_focus_confidence_and_supply }
+		completion_reward = {
+			add_political_power = 25
+		}
+	}
 	
 	
 	
