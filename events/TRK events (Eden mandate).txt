@@ -172,6 +172,149 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = TRK_events.6
+	title = TRK_events.6.t
+	desc = TRK_events.6.desc
+	picture = GFX_report_event_british_artillery
+
+    fire_only_once = yes
+
+	trigger = {
+		OR = {
+			original_tag = GEM
+			original_tag = GEH
+		}
+		country_exists = TRK
+
+		BA_gehennea_core_control = yes
+
+		OR = {
+			AND = {
+				country_exists = GEM
+				NOT = { country_exists = GEH }
+			}
+			AND = {
+				country_exists = GEH
+				NOT = { country_exists = GEM }
+			}
+		}
+	}
+
+	option = { 
+		name = TRK_events.6.a
+		add_war_support = -0.05
+		set_variable = { global.TRK_owner = ROOT }
+		random_country = {
+			limit = { has_idea = TRK_gehenna_puppet }
+			swap_ideas = {
+				remove_idea = TRK_gehenna_puppet
+				add_idea = TRK_gehenna_puppet_next
+			}
+		}
+
+		TRK = { country_event = { id = TRK_events.5 hours = 2 } }
+
+		if = {
+			limit = {
+				ARI = {
+					exists = yes
+					has_capitulated = no
+					NOT = {
+						has_war_with = GEH
+						has_war_with = GEM
+						has_war_with = TRK
+					}
+					NOT = {
+						BA_prussian_territory_control = yes
+					}
+				}
+			}
+			ARI = { country_event = { id = TRK_events.7 hours = 2 } }
+		}
+	}
+}
+
+country_event = { # 기본 요구
+	id = TRK_events.7
+	title = TRK_events.7.t
+	desc = TRK_events.7.desc
+	picture = GFX_report_event_british_artillery
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.7.a
+		TRK = { country_event = { id = TRK_events.8 hours = 2 } }
+	}
+	option = { 
+		name = TRK_events.7.b
+		add_stability = 0.05
+	}
+}
+
+country_event = { # 7에 대한 a수락 b거부
+	id = TRK_events.8
+	title = TRK_events.8.t
+	desc = TRK_events.8.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.8.a
+		FROM = { country_event = { id = TRK_events.9 hours = 2 } }
+	}
+	option = { 
+		name = TRK_events.8.b
+		FROM = { country_event = { id = TRK_events.10 hours = 2 } }
+	}
+}
+
+country_event = { # 8 - a에 대한 반응
+	id = TRK_events.9
+	title = TRK_events.9.t
+	desc = TRK_events.9.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = excellent
+		every_state = {
+			limit = {
+				BA_prussian_territory_is = yes
+				is_controlled_by = TRK
+			}
+			transfer_state_to = ROOT
+		}
+	}
+}
+
+# excellent: "훌륭하군."
+# unfortunate: "유감스럽군."
+# traitors: "배신자들 같으니!"
+
+country_event = { # 8 - b에 대한 반응
+	id = TRK_events.10
+	title = TRK_events.10.t
+	desc = TRK_events.10.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.10.a
+		create_wargoal = {
+			target = TRK
+			type = annex_everything
+		}
+	}
+	option = { 
+		name = unfortunate
+	}
+}
+
 # ================================================
 # 선거 이벤트 (Election Events)
 # ================================================
