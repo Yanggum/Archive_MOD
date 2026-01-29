@@ -201,12 +201,12 @@ shared_focus = { #에덴 조약기구 수립
 					}
 					complete_national_focus = Eden_formation_of_alliance_treaty_organization
 
-					set_variable = { Eden_modifier_alliance_leader_research_speed_factor = 0 }
-					set_variable = { Eden_modifier_alliance_leader_training_time_factor = 0 }
-					set_variable = { Eden_modifier_alliance_leader_war_support_factor = 0 }
-					set_variable = { Eden_modifier_alliance_leader_production_factory_start_efficiency_factor = 0 }
-					set_variable = { Eden_modifier_alliance_leader_production_factory_efficiency_gain_factor = 0 }
-					set_variable = { Eden_modifier_alliance_leader_production_factory_max_efficiency_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_research_speed_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_training_time_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_war_support_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_production_factory_start_efficiency_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_production_factory_efficiency_gain_factor = 0 }
+					set_variable = { Eden_modifier_alliance_member_production_factory_max_efficiency_factor = 0 }
 			
 					add_dynamic_modifier = { modifier = Eden_modifier_alliance_member }
 				}
@@ -808,7 +808,7 @@ shared_focus = {
 	}
 }
 
-joint_focus = { #에덴 연방
+joint_focus = { #에덴 중앙화
 	id = Eden_centralized_eden_treaty
 	icon = GFX_goal_TRN_hwahawe_with_gehhena
 	
@@ -841,41 +841,50 @@ joint_focus = { #에덴 연방
 
 
 	completion_reward = {
-		set_rule = { can_create_factions = yes }
-
-		#unlock_decision_category_tooltip = SWE_coax_nordic_defense_council_cat
-		hidden_effect = {
-			if = {
-				limit = {
-					has_idea = neutrality_idea
-				}
-				remove_ideas = neutrality_idea
-			}
-		}
-		
-		for_each_scope_loop = {
-			array = SWE_nordic_defense_council_members
-
-			if = {
-				limit = { 
-					has_capitulated = no 
-					is_subject_of = ROOT
-				}
-				add_ideas = SWE_nordic_centralized_army
-			}
-		}
-
-		#custom_effect_tooltip = SWE_central_nordic_army_command_tt
-		show_ideas_tooltip = SWE_nordic_centralized_army
-		custom_effect_tooltip = SWE_central_nordic_army_command_tt_2
 	}
 
 	completion_reward_joint_originator = {
-		add_political_power = 100
+		set_variable = {
+			global.Eden_centralized_eden_treaty_originator = ROOT
+		}
+		IF = {
+			limit = {
+				has_dlc = "No Compromise, No Surrender"
+			}
+			add_faction_goal_slot = {
+				category  = long_term 
+				value = 1 
+			}
+		}
+		add_political_power = 75
+		add_stability = 0.05
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		custom_effect_tooltip = Eden_centralized_eden_treaty_tt
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+		
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = Eden_modifier_alliance_leader
+		}
+		add_to_variable = {
+			Eden_modifier_alliance_leader_production_factory_start_efficiency_factor = 0.05
+			tooltip = production_factory_start_efficiency_factor_tt
+		}
+		add_to_variable = {
+			Eden_modifier_alliance_leader_production_factory_efficiency_gain_factor = 0.05
+			tooltip = production_factory_efficiency_gain_factor_tt
+		}
+		add_to_variable = {
+			Eden_modifier_alliance_leader_production_factory_max_efficiency_factor = 0.05
+			tooltip = production_factory_max_efficiency_factor_tt
+		}
 	}
 
 	completion_reward_joint_member = {
-		country_event = { id = Eden_event.1 hours = 8 }
+		country_event = { id = Eden_event.4 hours = 8 }
 	}
 
 }
@@ -1225,6 +1234,36 @@ shared_focus = {
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
 	completion_reward = {
+
+		for_each_scope_loop = {
+			array = Eden_centralized_eden_treaty_members
+
+			if = {
+				limit = { 
+					has_capitulated = no 
+					is_subject_of = ROOT
+				}
+				add_manpower = 5000 
+				ROOT = { add_manpower = 5000 }
+			}
+		}
+
+		custom_effect_tooltip = Eden_eden_central_army_tt
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+		
+		custom_effect_tooltip = {
+			localization_key = tooltip_modify_dynmod
+			DYNMOD = Eden_modifier_alliance_leader
+		}
+		add_to_variable = {
+			Eden_modifier_alliance_leader_research_speed_factor = 0.05
+			tooltip = research_speed_factor_tt
+		}
+		add_to_variable = {
+			Eden_modifier_alliance_leader_training_time_factor = -0.05
+			tooltip = training_time_factor_tt
+		}
 	}
 }
 shared_focus = {
@@ -1244,6 +1283,26 @@ shared_focus = {
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
 	completion_reward = {
+		for_each_scope_loop = {
+			array = Eden_centralized_eden_treaty_members
+
+			if = {
+				limit = { 
+					has_capitulated = no 
+					is_subject_of = ROOT
+					NOT = { original_tag = var:global.Eden_centralized_eden_treaty_originator }
+				}
+				transfer_units_fraction = {
+					target = ROOT         # the recipient
+					size = 1             # [0,1] Default value for the ratio below if they are not specified
+					stockpile_ratio = 1  # [0,1] Overrides size modifier for the stockpiled equipment and fuel
+					army_ratio = 0       # [0,1] Overrides size modifier for army
+					navy_ratio = 0      # [0,1] Overrides size modifier for navy
+					air_ratio = 1        # [0,1] Overrides size modifier for air
+				}
+			}
+		}
+		custom_effect_tooltip = Eden_eden_air_force_command_tt
 	}
 }
 shared_focus = {
@@ -1264,7 +1323,7 @@ shared_focus = {
 	relative_position_id = Eden_centralized_eden_treaty
 	completion_reward = {
 		for_each_scope_loop = {
-			array = SWE_nordic_defense_council_members
+			array = Eden_centralized_eden_treaty_members
 			if = {
 				limit = { 
 					has_capitulated = no 
@@ -1276,7 +1335,9 @@ shared_focus = {
 			}
 		}
 
-		custom_effect_tooltip = SWE_nordic_defense_fleet_tt
+		custom_effect_tooltip = Eden_central_european_fleet_tt
+
+		custom_effect_tooltip = Eden_eden_central_army_tt
 	}
 }
 shared_focus = {
@@ -1359,5 +1420,53 @@ shared_focus = {
 	y = 3
 	relative_position_id = Eden_eden_central_army
 	completion_reward = {
+		set_variable = { Eden_iron_and_blood_army_core_defence_factor = 0 }
+	  	set_variable = { Eden_iron_and_blood_army_core_attack_factor = 0 } 
+	  	set_variable = { Eden_iron_and_blood_industrial_capacity_factory = 0 }
+	  	set_variable = { Eden_iron_and_blood_industrial_capacity_dockyard = 0 }
+		set_variable = { council_member_value = 0 }
+
+		if = {
+			limit = {
+				NOT = {
+					is_in_array = {
+						array = Eden_centralized_eden_treaty_members
+						value = THIS
+					}
+				}
+			}
+			add_to_array = { Eden_centralized_eden_treaty_members = THIS }
+		}
+
+		effect_tooltip = {
+			add_dynamic_modifier = {
+				modifier = Eden_treaty_written_in_iron_and_blood_ns
+			}
+		}
+	  	custom_effect_tooltip = Eden_central_european_integration_tt
+		for_each_scope_loop = {
+			array = Eden_centralized_eden_treaty_members
+			ROOT = {
+				set_variable = { council_member_value = 0.04 }
+				multiply_variable = { council_member_value = Eden_centralized_eden_treaty_members^num }
+			}
+		}
+
+
+		hidden_effect = {
+			for_each_scope_loop = {
+				array = Eden_centralized_eden_treaty_members
+
+	  			set_variable = { Eden_iron_and_blood_army_core_defence_factor = ROOT.council_member_value }
+	  			set_variable = { Eden_iron_and_blood_army_core_attack_factor = ROOT.council_member_value }
+	  			set_variable = { Eden_iron_and_blood_industrial_capacity_factory = ROOT.council_member_value }
+	  			set_variable = { Eden_iron_and_blood_industrial_capacity_dockyard = ROOT.council_member_value }
+				
+
+				add_dynamic_modifier = {
+					modifier = Eden_treaty_written_in_iron_and_blood_ns
+				}
+			}
+		}
 	}
 }

@@ -80,7 +80,7 @@ country_event = {
 
 	immediate = {
         hidden_effect = {
-            set_variable = { temp_opinion = ROOT.opinion@FROM }
+            set_variable = { temp_opinion = ROOT.opinion@var:global.Eden_centralized_eden_treaty_originator }
             multiply_variable = { temp_opinion = 0.1 }
         }
     }
@@ -95,9 +95,9 @@ country_event = {
 			}
 		}
 
-		FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.3 hours = 3 } }
+		var:global.Eden_centralized_eden_treaty_originator = { country_event = { id = Eden_event.6 hours = 3 } }
 		
-		FROM = {
+		var:global.Eden_centralized_eden_treaty_originator = {
             create_wargoal = {
                 type = puppet_wargoal_focus
                 target = ROOT
@@ -109,7 +109,7 @@ country_event = {
 		ai_chance = {
 			base = 1
 			modifier = {
-				FROM = {
+				var:global.Eden_centralized_eden_treaty_originator = {
 					is_ai = yes
 				}
 				factor = 1.2
@@ -121,18 +121,12 @@ country_event = {
 			}
 
 			modifier = {
-				is_guaranteed_by = FROM
+				has_war_together_with = var:global.Eden_centralized_eden_treaty_originator
 				factor = 1.5
 			}
 
 			modifier = {
-				OR = {
-					has_government = FROM
-					AND = {
-						original_tag = FIN
-						has_government = neutrality 
-					}
-				}
+				has_government = var:global.Eden_centralized_eden_treaty_originator
 				factor = 2
 			}
 			
@@ -142,32 +136,36 @@ country_event = {
             }
 			
 			modifier = {
-				strength_ratio = {
-					tag = FROM
-					ratio < 0.65
+				var:global.Eden_centralized_eden_treaty_originator = {
+					strength_ratio = {
+						tag = PREV
+						ratio > 1.50
+					}
 				}
 				add = 6
 			}
 
 			modifier = {
-				strength_ratio = {
-					tag = FROM
-					ratio < 0.25
+				var:global.Eden_centralized_eden_treaty_originator = {
+					strength_ratio = {
+						tag = PREV
+						ratio > 4.0
+					}
 				}
 				add = 20
 			}
 		}
 
-		GEM = {
+		var:global.Eden_centralized_eden_treaty_originator= {
 			add_to_array = {
 				array = Eden_centralized_eden_treaty_members
 				value = PREV #optional, if not defined adds scope
 			}
-			country_event = { id = AAT_Sweden_nordic_defense_council.2 hours = 6 }
+			country_event = { id = Eden_event.5 hours = 6 }
 			puppet = PREV
 			set_autonomy = {
 			 	target = PREV
-			 	autonomy_state = eden_centralized_eden_treaty_member
+			 	autonomy_state = autonomy_eden_centralized_eden_treaty_member
 			 	freedom_level = 0 # 0-1 
 			}
 		}
@@ -206,61 +204,41 @@ country_event = {
 		#	}
 		#}
 
-		# Transfer Army
-        if = {
-        	limit = {
-        		FROM = {
-        			NOT = {
-        				has_template = "Nordic Defense Force"
-        			}
-        		}
-        	}
-        	FROM = {
-				division_template = {
-					name = "Nordic Defense Force"
-					is_locked = no
-					priority = 1# optional 
-					template_counter = 72 # optional
-					regiments = {
-						infantry={ x=0 y=0 }
-						infantry={ x=0 y=1 }
-						infantry={ x=0 y=2 }
-						infantry={ x=0 y=3 }
-						infantry={ x=1 y=0 }
-						infantry={ x=1 y=1 }
-						infantry={ x=1 y=2 }
-						infantry={ x=1 y=3 }
-						infantry={ x=2 y=0 }
-						infantry={ x=2 y=1 }
-						infantry={ x=2 y=2 }
-						infantry={ x=2 y=3 }
-						artillery_brigade={ x=3 y=0 }
-						artillery_brigade={ x=3 y=1 }
-						
-					}
-					support = {
-						engineer = { x = 0 y = 0 }
-						artillery = { x = 0 y = 1 }
-						anti_air = { x = 0 y = 2 }
-					}
-				}
+		hidden_effect = {
+			if = {
+				limit = {  }
 			}
-        }
-        FROM = {
-			random_core_state = {
-				limit = {
-					is_fully_controlled_by = FROM
-				}
-				create_unit = {
-					division = "name = \"Nordic Defense Force\" division_template = \"Nordic Defense Force\" start_experience_factor = 1 start_equipment_factor = 1 start_manpower_factor = 1"
-					owner = FROM
-					allow_spawning_on_enemy_provs = no  
-					count = 5  
-				}
-			}
-	  	}
+		}
 	}
 	after = {
         clear_variable = ROOT.temp_opinion
 	}
+}
+
+#Nordic country accepts
+country_event = {
+	id = Eden_event.5
+	title = Eden_event.5.t
+	desc = Eden_event.5.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = Eden_event.5.a
+	}
+
+}
+
+#Nordic country rejects
+country_event = {
+	id = Eden_event.6
+	title = Eden_event.6.t
+	desc = Eden_event.6.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = Eden_event.6.a
+	}
+
 }
