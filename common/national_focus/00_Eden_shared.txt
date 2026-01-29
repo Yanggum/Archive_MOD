@@ -825,10 +825,6 @@ joint_focus = { #에덴 중앙화
 	text_icon = NORDIC_focus_style
 
 	available = {
-		custom_trigger_tooltip = {
-			tooltip = THIS_IS_WIP_TT
-			has_country_flag = GAEBALJUNG
-		}
 		Eden_basic_available_trigger = yes
 		is_faction_leader = yes
 	}
@@ -847,6 +843,7 @@ joint_focus = { #에덴 중앙화
 		set_variable = {
 			global.Eden_centralized_eden_treaty_originator = ROOT
 		}
+		set_country_flag = Eden_centralized_eden_treaty_flag
 		IF = {
 			limit = {
 				has_dlc = "No Compromise, No Surrender"
@@ -885,6 +882,13 @@ joint_focus = { #에덴 중앙화
 
 	completion_reward_joint_member = {
 		country_event = { id = Eden_event.4 hours = 8 }
+		hidden_effect = {
+			set_country_flag = {
+				flag = Eden_waiting_flag
+				value = 1
+				days = 14
+			}
+		}
 	}
 
 }
@@ -1217,7 +1221,7 @@ joint_focus = {
 }
 
 
-shared_focus = {
+joint_focus = {
 	id = Eden_eden_central_army
 	icon = GFX_focus_generic_manpower
 	cost = 5
@@ -1226,6 +1230,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1233,7 +1238,16 @@ shared_focus = {
 	x = -3
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
+	
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+
 	completion_reward = {
+	}
+
+	completion_reward_joint_originator = {
 
 		for_each_scope_loop = {
 			array = Eden_centralized_eden_treaty_members
@@ -1265,8 +1279,12 @@ shared_focus = {
 			tooltip = training_time_factor_tt
 		}
 	}
+
+	completion_reward_joint_member = {
+
+	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_eden_air_force_command
 	icon = GFX_focus_usa_escort_fighters
 	cost = 5
@@ -1275,6 +1293,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1282,7 +1301,16 @@ shared_focus = {
 	x = -1
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+
 	completion_reward = {
+	}
+
+	completion_reward_joint_originator = {
 		for_each_scope_loop = {
 			array = Eden_centralized_eden_treaty_members
 
@@ -1304,8 +1332,12 @@ shared_focus = {
 		}
 		custom_effect_tooltip = Eden_eden_air_force_command_tt
 	}
+
+	completion_reward_joint_member = {
+
+	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_central_european_fleet
 	icon = GFX_focus_generic_navy_battleship2
 	cost = 5
@@ -1314,6 +1346,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1321,7 +1354,16 @@ shared_focus = {
 	x = 1
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+
 	completion_reward = {
+	}
+
+	completion_reward_joint_originator = {
 		for_each_scope_loop = {
 			array = Eden_centralized_eden_treaty_members
 			if = {
@@ -1336,19 +1378,19 @@ shared_focus = {
 		}
 
 		custom_effect_tooltip = Eden_central_european_fleet_tt
-
-		custom_effect_tooltip = Eden_eden_central_army_tt
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_golden_fleet_project
 	icon = GFX_goal_generic_navy_battleship
-	cost = 5
+	cost = 10
 	prerequisite = {
 		focus = Eden_central_european_fleet
 	}
 	available = {
 		is_subject = no
+		is_special_project_completed = sp:sp_naval_super_heavy_battleship
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1356,10 +1398,99 @@ shared_focus = {
 	x = -1
 	y = 1
 	relative_position_id = Eden_central_european_fleet
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+
 	completion_reward = {
 	}
+
+	completion_reward_joint_originator = {
+		if = {
+			limit = {
+				has_dlc ="Man the Guns"
+			}
+
+			create_equipment_variant = {
+				name = "Zwielicht"
+				type = ship_hull_super_heavy_1
+				parent_version = 0
+				modules = {
+					fixed_ship_anti_air_slot=ship_anti_air_2
+					fixed_ship_radar_slot=ship_radar_2
+					fixed_ship_engine_slot=heavy_ship_engine_2
+					fixed_ship_secondaries_slot=ship_secondaries_2
+					fixed_ship_armor_slot=ship_armor_shbb
+					front_1_custom_slot=ship_super_heavy_battery_1
+					rear_1_custom_slot=ship_anti_air_2
+					fixed_ship_battery_slot=ship_super_heavy_battery_1
+					fixed_ship_fire_control_system_slot=ship_fire_control_system_2
+					rear_2_custom_slot=ship_super_heavy_battery_1
+					front_2_custom_slot=ship_super_heavy_battery_1
+				}
+			}
+
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_super_heavy_1
+					version_name = "Zwielicht"
+				}
+				requested_factories = 5
+				progress = 0.75 
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_production_line_perfection
+				PER = "75"
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_super_heavy_1
+					version_name = "Zwielicht"
+				}
+				requested_factories = 5
+				progress = 0.6 
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_production_line_perfection
+				PER = "60"
+			}
+		}
+
+		else = {
+			add_equipment_production = {
+				equipment = {
+					type = SH_battleship_1
+					version_name = "Zwielicht" 
+				}
+				requested_factories = 1
+				progress = 0.75
+				amount = 1
+			}
+		
+			custom_effect_tooltip = {
+				localization_key = tooltip_production_line_perfection
+				PER = "75"
+			}
+			add_equipment_production = {
+				equipment = {
+					type = SH_battleship_1
+					version_name = "Zwielicht" 
+				}
+				requested_factories = 1
+				progress = 0.60
+				amount = 1
+			}
+		
+			custom_effect_tooltip = {
+				localization_key = tooltip_production_line_perfection
+				PER = "60"
+			}
+		}
+	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_eden_central_planning_committee
 	icon = GFX_goal_generic_construct_mil_factory
 	cost = 5
@@ -1368,6 +1499,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1375,10 +1507,61 @@ shared_focus = {
 	x = 2
 	y = 2
 	relative_position_id = Eden_centralized_eden_treaty
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+	}
+
+	complete_tooltip = {
+		every_state = {
+			limit = { has_state_flag = Eden_eden_central_planning_committee_flag }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+
 	completion_reward = {
 	}
+
+	completion_reward_joint_originator = {
+		every_owned_state = {
+			limit = {
+				is_core_of = PREV
+				is_fully_controlled_by = PREV
+			}
+			random_select_amount = 3
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+			set_state_flag = Eden_eden_central_planning_committee_flag
+		}
+	}
+
+	completion_reward_joint_member = {
+		every_owned_state = {
+			limit = {
+				is_core_of = PREV
+				is_fully_controlled_by = PREV
+			}
+			random_select_amount = 2
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+			set_state_flag = Eden_eden_central_planning_committee_flag
+		}
+	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_central_european_unified_command
 	icon = GFX_focus_generic_little_entente
 	cost = 5
@@ -1387,6 +1570,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1394,10 +1578,74 @@ shared_focus = {
 	x = 0
 	y = 1
 	relative_position_id = Eden_eden_central_planning_committee
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes
+		OR = {
+			has_country_flag = Eden_centralized_eden_treaty_flag
+			has_autonomy_state = autonomy_eden_centralized_eden_treaty_member
+		}
+	}
+
+
 	completion_reward = {
 	}
+
+	completion_reward_joint_originator = {
+		random_core_state = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		for_each_scope_loop = {
+			array = Eden_centralized_eden_treaty_members
+			if = {
+				limit = { 
+					has_capitulated = no
+				}
+
+				if = {
+					limit = {
+						OR = {
+							has_idea = volunteer_only
+							has_idea = limited_conscription
+							has_idea = disarmed_nation 
+						}
+					}
+
+					add_ideas = extensive_conscription
+				}
+			}
+		}
+		custom_effect_tooltip = SWE_decentralized_nordic_army_command_tt
+	}
+
+	completion_reward_joint_member = {
+		if = {
+			limit = { has_autonomy_state = autonomy_eden_centralized_eden_treaty_member }
+			add_ideas = idea_Eden_central_european_unified_command
+		}
+		random_core_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 0
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
 }
-shared_focus = {
+joint_focus = {
 	id = Eden_central_european_integration
 	icon = GFX_focus_GER_weltpolitik
 	cost = 5
@@ -1412,6 +1660,7 @@ shared_focus = {
 	}
 	available = {
 		is_subject = no
+		has_country_flag = Eden_centralized_eden_treaty_flag
 	}
 
 	text_icon = NORDIC_focus_style
@@ -1419,7 +1668,20 @@ shared_focus = {
 	x = 2
 	y = 3
 	relative_position_id = Eden_eden_central_army
+
+	joint_trigger = {
+		Eden_basic_joint_trigger = yes 
+		OR = {
+			has_country_flag = Eden_centralized_eden_treaty_flag
+			has_autonomy_state = autonomy_eden_centralized_eden_treaty_member
+		}
+	}
+
+
 	completion_reward = {
+	}
+
+	completion_reward_joint_originator = {
 		set_variable = { Eden_iron_and_blood_army_core_defence_factor = 0 }
 	  	set_variable = { Eden_iron_and_blood_army_core_attack_factor = 0 } 
 	  	set_variable = { Eden_iron_and_blood_industrial_capacity_factory = 0 }
@@ -1467,6 +1729,15 @@ shared_focus = {
 					modifier = Eden_treaty_written_in_iron_and_blood_ns
 				}
 			}
+		}
+	}
+
+	completion_reward_joint_member = {
+		effect_tooltip = {
+			add_dynamic_modifier = {
+				modifier = Eden_treaty_written_in_iron_and_blood_ns
+			}
+	  		custom_effect_tooltip = Eden_central_european_integration_tt
 		}
 	}
 }
