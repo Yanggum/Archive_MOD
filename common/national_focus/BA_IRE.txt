@@ -338,7 +338,7 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-		}  
+		} 
 		bypass = {
 		}
 		completion_reward = {
@@ -423,6 +423,31 @@ focus_tree = {
 				days = 90
 			}
 			custom_effect_tooltip = IRE_tt_5
+		}
+	}
+	focus = { # 재외동포에게 호소
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_appeal_to_our_compatriots
+		icon = GFX_focus_generic_befriend_usa
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_war_with = USA
+			}
+		}
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = IRE_DM_tt_12
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.10 }
+			add_to_variable = { IRE_DM1_monthly_population = 0.20 }
 		}
 	}
 	focus = { # 핵심 산업 통제
@@ -536,6 +561,35 @@ focus_tree = {
 					ideology = communism 
 					popularity = 0.05
 				}
+			}
+		}
+	}
+	focus = { # 섀넌 계획의 지속
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_shannon
+		icon = GFX_focus_generic_hydroelectric_energy
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 5
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			controls_state = 135
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_10
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_to_variable = { IRE_DM1_stability_factor = 0.05 }
+			add_popularity = { 
+				ideology = democratic 
+				popularity = 0.05
+			}
+			add_timed_idea = {
+				idea = IRE_shannon_idea
+				days = 400
 			}
 		}
 	}
@@ -725,9 +779,12 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 2
-		cost = 5
+		cost = 10
 		search_filters = {}
 		available = {
+			NOT = {
+				has_war_with = SOV
+			}
 			has_country_flag = IRE_FF_with_LP
 			if = {
 				limit = { has_country_flag = IRE_FF_with_LP }
@@ -746,7 +803,13 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
-
+			SOV = {
+				country_event = {
+					id = IRE_event.9
+					hours = 12
+				}
+			}
+			country_event = IRE_event.8
 		}
 	}
 }

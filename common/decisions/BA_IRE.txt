@@ -1,3 +1,176 @@
 IRE_dail_eireann = {
-	
+	IRE_dissolution = {
+		icon = GFX_decision_SWI_no_elected_president
+		ai_will_do = {
+			base = 0
+		}
+		available = {
+			NOT = {
+				has_country_flag = IRE_dissolution_time
+			}
+		}
+		visible = {
+		}
+		cost = 200
+		complete_effect = {
+			add_stability = -0.02
+			custom_effect_tooltip = IRE_tt_7
+			hidden_effect = {
+				add_days_mission_timeout = { 
+					mission = IRE_upcoming_elections 
+					days = -2000
+				}
+			}
+			set_country_flag = {
+				flag = IRE_dissolution_time
+				days = 30
+			}
+		}
+	}
+	IRE_upcoming_elections = {
+		icon = GFX_decision_generic_political_discourse
+		available = {
+			has_country_flag = IRE_NO_congress
+		}
+		activation = {
+		}
+		days_mission_timeout = 1800
+		fire_only_once = no
+		is_good = yes
+		timeout_effect = {
+			set_variable = {
+				var = LP_support
+				value = party_popularity@communism
+			}
+			set_variable = {
+				var = FF_support
+				value = party_popularity@democratic
+			}
+			set_variable = {
+				var = FG_support
+				value = party_popularity@neutrality
+			}
+			set_variable = {
+				var = N_support
+				value = party_popularity@fascism
+			}
+			multiply_variable = {
+				var = LP_support
+				value = 200
+			}
+			multiply_variable = {
+				var = FF_support
+				value = 200
+			}
+			multiply_variable = {
+				var = FG_support
+				value = 200
+			}
+			multiply_variable = {
+				var = N_support
+				value = 200
+			}
+			round_variable = LP_support
+			round_variable = FF_support
+			round_variable = FG_support
+			round_variable = N_support
+			set_variable = { var = plus_support value = 0 }
+			add_to_variable = { plus_support = var:LP_support }
+			add_to_variable = { plus_support = var:FF_support }
+			add_to_variable = { plus_support = var:FG_support }
+			add_to_variable = { plus_support = var:N_support }
+			if = {
+				limit = {
+					check_variable = { plus_support > 200 }
+				}
+				if = {
+					limit = {
+						check_variable = { FG_support > 0 }
+					}
+					add_to_variable = { FG_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { FF_support > 0 }
+					}
+					add_to_variable = { FF_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { LP_support > 0 }
+					}
+					add_to_variable = { LP_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { N_support > 0 }
+					}
+					add_to_variable = { N_support = -1 }
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = { plus_support > 200 }
+				}
+				if = {
+					limit = {
+						check_variable = { FG_support > 0 }
+					}
+					add_to_variable = { FG_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { FF_support > 0 }
+					}
+					add_to_variable = { FF_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { LP_support > 0 }
+					}
+					add_to_variable = { LP_support = -1 }
+				}
+				else_if = {
+					limit = {
+						check_variable = { N_support > 0 }
+					}
+					add_to_variable = { N_support = -1 }
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { plus_support < 200 }
+				}
+				add_to_variable = { N_support = 1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { plus_support < 200 }
+				}
+				add_to_variable = { N_support = 1 }
+			}
+			set_variable = {
+				var = IRE_parliament_seat_array^0
+				value = LP_support
+			}
+			set_variable = {
+				var = IRE_parliament_seat_array^1
+				value = FF_support
+			}
+			set_variable = {
+				var = IRE_parliament_seat_array^2
+				value = FG_support
+			}
+			set_variable = {
+				var = IRE_parliament_seat_array^3
+				value = N_support
+			}
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+			country_event = {
+				id = IRE_event.3
+				hours = 6
+			}
+		}
+	}
 }

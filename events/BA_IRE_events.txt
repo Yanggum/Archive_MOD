@@ -231,3 +231,341 @@ country_event = { # 심화되는 인플레이션
 		clr_country_flag = IRE_inflation_up
 	}
 }
+
+country_event = { # [GetYear]년 아일랜드 선거
+	id = IRE_event.3
+	title = IRE_event.3.t
+	desc = IRE_event.3.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.3.a
+		custom_effect_tooltip = IRE_Party_tt
+		if = {
+			limit = { 
+				OR = {
+					AND = {
+						has_government = communism 
+						check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^1 compare = greater_than_or_equals }
+						check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
+					}
+					AND = {
+						has_government = democratic
+						check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
+						check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
+					}
+					AND = {
+						has_government = neutrality
+						check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
+						check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^1 compare = greater_than_or_equals }
+					}
+				}
+			}
+			country_event = {
+				id = IRE_event.4
+				hours = 6
+			}
+		}
+		else_if = {
+			limit = { 
+				check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^1 compare = greater_than }
+				check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^2 compare = greater_than }
+			}
+			country_event = {
+				id = IRE_event.5
+				hours = 6
+			}
+		}
+		else_if = {
+			limit = { 
+				check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^0 compare = greater_than }
+				check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^2 compare = greater_than }
+			}
+			country_event = {
+				id = IRE_event.6
+				hours = 6
+			}
+		}
+		else_if = {
+			limit = { 
+				check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^0 compare = greater_than }
+				check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^1 compare = greater_than }
+			}
+			country_event = {
+				id = IRE_event.7
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = { # 여당의 승리
+	id = IRE_event.4
+	title = IRE_event.4.t
+	desc = IRE_event.4.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.4.a
+		add_stability = 0.10
+	}
+}
+country_event = { # 노동당의 승리
+	id = IRE_event.5
+	title = IRE_event.5.t
+	desc = IRE_event.5.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.5.a
+		set_politics = {
+			ruling_party = communism
+			elections_allowed = yes
+		}
+	}
+}
+country_event = { # 피어너 팔의 승리
+	id = IRE_event.6
+	title = IRE_event.6.t
+	desc = IRE_event.6.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.6.a
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = yes
+		}
+	}
+}
+country_event = { # 피너 게일의 승리
+	id = IRE_event.7
+	title = IRE_event.7.t
+	desc = IRE_event.7.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.7.a
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = yes
+		}
+	}
+}
+country_event = { # 우익 세력의 항의
+	id = IRE_event.8
+	title = IRE_event.8.t
+	desc = IRE_event.8.d
+	picture = GFX_report_event_american_hunger_march
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.8.a
+		add_stability = -0.05
+		add_popularity = { 
+			ideology = fascism
+			popularity = 0.10
+		}
+	}
+	option = { 
+		name = IRE_event.8.b
+		add_political_power = -120
+	}
+}
+country_event = { # 모스크바에 도착한 아일랜드 대표단
+	id = IRE_event.9
+	title = IRE_event.9.t
+	desc = IRE_event.9.d
+	picture = GFX_report_event_generic_handshake
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.9.a
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 7
+				SOV = {
+					has_opinion = {
+						target = IRE
+						value > 70
+					}
+				}
+			}
+			modifier = {
+				factor = 3
+				SOV = {
+					has_non_aggression_pact_with = IRE
+				}
+			}
+			modifier = {
+				factor = 3
+				IRE = {
+					communism > 0.20
+				}
+			}
+			modifier = {
+				factor = 3
+				IRE = {
+					communism > 0.10
+				}
+			}
+			modifier = {
+				factor = 100
+				IRE = {
+					is_in_faction_with = SOV
+				}
+			}
+		}
+		add_timed_idea = {
+			idea = IRE_aid_soviet_22_idea
+			days = 1080
+		}
+		IRE = {
+			country_event = {
+				id = IRE_event.9001
+				hours = 12
+			}
+		}
+		effect_tooltip = {
+			IRE = {
+				add_timed_idea = {
+					idea = IRE_aid_soviet_2_idea
+					days = 1080
+				}
+				add_popularity = { 
+					ideology = communism
+					popularity = 0.05
+				}
+			}
+		}
+	}
+	option = { 
+		name = IRE_event.9.b
+		ai_chance = {
+			base = 2
+			modifier = {
+				factor = 5
+				SOV = {
+					has_opinion = {
+						target = IRE
+						value > 50
+					}
+				}
+			}
+			modifier = {
+				factor = 5
+				SOV = {
+					has_opinion = {
+						target = IRE
+						value > 70
+					}
+				}
+			}
+			modifier = {
+				factor = 3
+				IRE = {
+					communism > 0.10
+				}
+			}
+		}
+		add_timed_idea = {
+			idea = IRE_aid_soviet_11_idea
+			days = 1080
+		}
+		IRE = {
+			country_event = {
+				id = IRE_event.9002
+				hours = 12
+			}
+		}
+		effect_tooltip = {
+			IRE = {
+				add_timed_idea = {
+					idea = IRE_aid_soviet_1_idea
+					days = 1080
+				}
+			}
+		}
+	}
+	option = { 
+		ai_chance = {
+			base = 5
+			modifier = {
+				factor = 30
+				SOV = {
+					has_opinion = {
+						target = IRE
+						value < -50
+					}
+				}
+			}
+		}
+		name = IRE_event.9.c
+		IRE = {
+			country_event = {
+				id = IRE_event.9003
+				hours = 12
+			}
+		}
+	}
+}
+country_event = { # 소련의 대규모 원조
+	id = IRE_event.9001
+	title = IRE_event.9001.t
+	desc = IRE_event.9001.d
+	picture = GFX_report_event_generic_handshake
+
+	option = { 
+		name = IRE_event.9001.a
+		add_timed_idea = {
+			idea = IRE_aid_soviet_2_idea
+			days = 1080
+		}
+		add_popularity = { 
+			ideology = communism
+			popularity = 0.05
+		}
+	}
+}
+country_event = { # 소련의 소규모 원조
+	id = IRE_event.9002
+	title = IRE_event.9002.t
+	desc = IRE_event.9002.d
+	picture = GFX_report_event_generic_handshake
+
+	option = { 
+		name = IRE_event.9002.a
+		add_timed_idea = {
+			idea = IRE_aid_soviet_1_idea
+			days = 1080
+		}
+	}
+}
+country_event = { # 소련의 원조 거부
+	id = IRE_event.9003
+	title = IRE_event.9003.t
+	desc = IRE_event.9003.d
+	picture = GFX_report_event_generic_handshake
+
+	option = { 
+		name = IRE_event.9003.a
+		add_political_power = -75
+		add_popularity = { 
+			ideology = communism
+			popularity = -0.05
+		}
+	}
+}
