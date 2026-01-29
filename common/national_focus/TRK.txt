@@ -468,11 +468,8 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-			every_core_state = {
-				limit = { 
-					is_owned_by = ROOT 
-					NOT = { state = 64} 
-				}
+			every_owned_state = {
+				limit = { is_core_of = TRM }
 				add_dynamic_modifier = { modifier = TRK_local_government }
 			}
 		}
@@ -480,7 +477,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_sanctus_focus_03
-		icon = GFX_focus_TRK_sanctus
+		icon = GFX_focus_TRN_improving_academy_industry_alt
 		prerequisite = { 
 			focus = TRK_sanctus
 			focus = TRK_student_union
@@ -596,7 +593,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_filius_focus_01
-		icon = GFX_focus_TRK_filius
+		icon = GFX_focus_TRN_improving_academy_industry
 		prerequisite = { 
 			focus = TRK_filius
 			focus = TRK_sisterhood
@@ -719,7 +716,22 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-			
+			add_political_power = 100
+			add_stability = 0.1
+			add_war_support = 0.05
+			if = {
+				limit = { has_completed_focus = TRK_filius }
+				set_party_name = {
+					ideology = democratic
+					long_name = trinity_conservative_bloc_filius
+					name = trinity_conservative_bloc
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = trinity_conservative_bloc_sisterhood
+					name = trinity_conservative_bloc
+				}
+			}
 		}
 	}
 
@@ -789,7 +801,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_sisterhood_focus_01
-		icon = GFX_focus_TRK_sisterhood
+		icon = GFX_focus_PHI_philippine_independent_church
 		prerequisite = { 
 			focus = TRK_sisterhood
 			focus = TRK_sanctus
@@ -922,7 +934,11 @@ focus_tree = {
 		mutually_exclusive = { focus = TRK_student_union_ending_focus_01 focus = TRK_filius_ending_focus_01 }
 
 		completion_reward = {
-			
+			swap_ideas = {
+				add_idea = TRK_seias_democratic_government_ns
+				remove_idea = TRK_weaks_democratic_government_ns
+			}
+			set_country_leader_ideology = KR_social_democrat
 		}
 	}
 
