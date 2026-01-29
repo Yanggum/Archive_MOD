@@ -69,3 +69,198 @@ country_event = {
 		}
 	}
 }
+
+country_event = {
+	id = Eden_event.4
+	title = Eden_event.4.t
+	desc = Eden_event.4.desc
+	picture = GFX_event_Eden_event
+
+    is_triggered_only = yes
+
+	immediate = {
+        hidden_effect = {
+            set_variable = { temp_opinion = ROOT.opinion@FROM }
+            multiply_variable = { temp_opinion = 0.1 }
+        }
+    }
+
+	option = { # NO
+		name = Eden_event.4.a
+		ai_chance = {
+			base = 5
+			modifier = {
+				is_subject = yes
+				add = 100
+			}
+		}
+
+		FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.3 hours = 3 } }
+		
+		FROM = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = ROOT
+            }
+		}
+	}
+	option = {
+		name = Eden_event.4.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				FROM = {
+					is_ai = yes
+				}
+				factor = 1.2
+			}
+
+			modifier = {
+				is_subject = yes
+				factor = 0
+			}
+
+			modifier = {
+				is_guaranteed_by = FROM
+				factor = 1.5
+			}
+
+			modifier = {
+				OR = {
+					has_government = FROM
+					AND = {
+						original_tag = FIN
+						has_government = neutrality 
+					}
+				}
+				factor = 2
+			}
+			
+			modifier = {
+                always = yes 
+                add = ROOT.temp_opinion
+            }
+			
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 0.65
+				}
+				add = 6
+			}
+
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 0.25
+				}
+				add = 20
+			}
+		}
+
+		GEM = {
+			add_to_array = {
+				array = Eden_centralized_eden_treaty_members
+				value = PREV #optional, if not defined adds scope
+			}
+			country_event = { id = AAT_Sweden_nordic_defense_council.2 hours = 6 }
+			puppet = PREV
+			set_autonomy = {
+			 	target = PREV
+			 	autonomy_state = eden_centralized_eden_treaty_member
+			 	freedom_level = 0 # 0-1 
+			}
+		}
+		#if = {
+		#	limit = {
+		#		is_ai = yes
+		#	}
+		#	if = {
+		#		limit = {
+		#			original_tag = FIN
+		#		}
+		#		FIN_erik_heinrichs = { set_nationality = SWE }
+		#		FIN_vilho_petter_nenonen = { set_nationality = SWE }
+		#		FIN_woldemar_hagglund = { set_nationality = SWE }
+		#		FIN_aarne_juutilainen = { set_nationality = SWE }
+		#		FIN_karl_oesch = { set_nationality = SWE } 
+		#		FIN_wiljo_einar_tuompo = { set_nationality = SWE }
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			original_tag = DEN
+		#		}
+		#		
+		#		DEN_charles_henry_rye = { set_nationality = SWE  }
+		#		DEN_erik_with = { set_nationality = SWE  }
+		#		DEN_paul_ramm = { set_nationality = SWE  }
+		#		DEN_frederik_christian_essemann = { set_nationality = SWE  }
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			original_tag = NOR
+		#		}
+		#		NOR_jacob_hivden_haug = { set_nationality = SWE }
+		#		NOR_jacob_ager_laurantzon = { set_nationality = SWE }
+		#	
+		#	}
+		#}
+
+		# Transfer Army
+        if = {
+        	limit = {
+        		FROM = {
+        			NOT = {
+        				has_template = "Nordic Defense Force"
+        			}
+        		}
+        	}
+        	FROM = {
+				division_template = {
+					name = "Nordic Defense Force"
+					is_locked = no
+					priority = 1# optional 
+					template_counter = 72 # optional
+					regiments = {
+						infantry={ x=0 y=0 }
+						infantry={ x=0 y=1 }
+						infantry={ x=0 y=2 }
+						infantry={ x=0 y=3 }
+						infantry={ x=1 y=0 }
+						infantry={ x=1 y=1 }
+						infantry={ x=1 y=2 }
+						infantry={ x=1 y=3 }
+						infantry={ x=2 y=0 }
+						infantry={ x=2 y=1 }
+						infantry={ x=2 y=2 }
+						infantry={ x=2 y=3 }
+						artillery_brigade={ x=3 y=0 }
+						artillery_brigade={ x=3 y=1 }
+						
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						artillery = { x = 0 y = 1 }
+						anti_air = { x = 0 y = 2 }
+					}
+				}
+			}
+        }
+        FROM = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = FROM
+				}
+				create_unit = {
+					division = "name = \"Nordic Defense Force\" division_template = \"Nordic Defense Force\" start_experience_factor = 1 start_equipment_factor = 1 start_manpower_factor = 1"
+					owner = FROM
+					allow_spawning_on_enemy_provs = no  
+					count = 5  
+				}
+			}
+	  	}
+	}
+	after = {
+        clear_variable = ROOT.temp_opinion
+	}
+}

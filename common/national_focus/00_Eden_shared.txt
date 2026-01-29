@@ -550,7 +550,7 @@ shared_focus = {
 	}
 	
 	x = 0
-	y = 3
+	y = 2
 	relative_position_id = Eden_united_state_Eden
 	cost = 10
 
@@ -841,6 +841,33 @@ joint_focus = { #에덴 연방
 
 
 	completion_reward = {
+		set_rule = { can_create_factions = yes }
+
+		#unlock_decision_category_tooltip = SWE_coax_nordic_defense_council_cat
+		hidden_effect = {
+			if = {
+				limit = {
+					has_idea = neutrality_idea
+				}
+				remove_ideas = neutrality_idea
+			}
+		}
+		
+		for_each_scope_loop = {
+			array = SWE_nordic_defense_council_members
+
+			if = {
+				limit = { 
+					has_capitulated = no 
+					is_subject_of = ROOT
+				}
+				add_ideas = SWE_nordic_centralized_army
+			}
+		}
+
+		#custom_effect_tooltip = SWE_central_nordic_army_command_tt
+		show_ideas_tooltip = SWE_nordic_centralized_army
+		custom_effect_tooltip = SWE_central_nordic_army_command_tt_2
 	}
 
 	completion_reward_joint_originator = {
@@ -1236,6 +1263,20 @@ shared_focus = {
 	y = 1
 	relative_position_id = Eden_centralized_eden_treaty
 	completion_reward = {
+		for_each_scope_loop = {
+			array = SWE_nordic_defense_council_members
+			if = {
+				limit = { 
+					has_capitulated = no 
+					is_subject_of = ROOT
+				}
+				transfer_navy = {
+					target = ROOT
+				}
+			}
+		}
+
+		custom_effect_tooltip = SWE_nordic_defense_fleet_tt
 	}
 }
 shared_focus = {
@@ -1251,7 +1292,7 @@ shared_focus = {
 
 	text_icon = NORDIC_focus_style
 	
-	x = 0
+	x = -1
 	y = 1
 	relative_position_id = Eden_central_european_fleet
 	completion_reward = {
@@ -1270,15 +1311,15 @@ shared_focus = {
 
 	text_icon = NORDIC_focus_style
 	
-	x = -4
+	x = 2
 	y = 2
 	relative_position_id = Eden_centralized_eden_treaty
 	completion_reward = {
 	}
 }
 shared_focus = {
-	id = Eden_military_industrial_complex_merger
-	icon = GFX_focus_generic_annex_country
+	id = Eden_central_european_unified_command
+	icon = GFX_focus_generic_little_entente
 	cost = 5
 	prerequisite = {
 		focus = Eden_eden_central_planning_committee
@@ -1292,25 +1333,6 @@ shared_focus = {
 	x = 0
 	y = 1
 	relative_position_id = Eden_eden_central_planning_committee
-	completion_reward = {
-	}
-}
-shared_focus = {
-	id = Eden_central_european_unified_command
-	icon = GFX_focus_generic_little_entente
-	cost = 5
-	prerequisite = {
-		focus = Eden_military_industrial_complex_merger
-	}
-	available = {
-		is_subject = no
-	}
-
-	text_icon = NORDIC_focus_style
-	
-	x = 0
-	y = 1
-	relative_position_id = Eden_military_industrial_complex_merger
 	completion_reward = {
 	}
 }
@@ -1334,7 +1356,7 @@ shared_focus = {
 	text_icon = NORDIC_focus_style
 	
 	x = 2
-	y = 4
+	y = 3
 	relative_position_id = Eden_eden_central_army
 	completion_reward = {
 	}
