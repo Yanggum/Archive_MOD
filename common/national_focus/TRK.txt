@@ -236,9 +236,8 @@ focus_tree = {
 			custom_effect_tooltip = TRK_host_election_tt
 
 			hidden_effect = {
-				country_event = {
-					id = TRK_election_events.11
-				}
+				country_event = { id = TRK_election_events.11 hours = 02 }
+				country_event = { id = TRK_events.4 days = 25 }
 			}
 		}
 	}
@@ -312,7 +311,6 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 75
 			add_ideas = TRK_freedom_of_religion_ns
-			hidden_effect = { country_event = { id = TRK_events.4 days = 15 } } 
 		}
 	}
 
@@ -471,6 +469,10 @@ focus_tree = {
 			every_owned_state = {
 				limit = { is_core_of = TRM }
 				add_dynamic_modifier = { modifier = TRK_local_government }
+			}
+			swap_ideas = {
+				add_idea = TRK_seias_democratic_government_ns
+				remove_idea = TRK_weaks_democratic_government_ns
 			}
 		}
 	}
@@ -731,6 +733,39 @@ focus_tree = {
 					long_name = trinity_conservative_bloc_sisterhood
 					name = trinity_conservative_bloc
 				}
+				set_country_leader_ideology = KR_social_conservative
+				add_country_leader_role = {
+					character = TRN_Utazumi_Sakurako
+					promote_leader = yes
+					country_leader = {
+						ideology = KR_social_conservative_neutrality
+						expire = 1965.1.1.1
+						traits = { } 
+					}
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = TRK_sisterhood }
+				set_party_name = {
+					ideology = democratic
+					long_name = trinity_conservative_bloc_sisterhood
+					name = trinity_conservative_bloc
+				}
+				set_party_name = {
+					ideology = neutrality
+					long_name = trinity_conservative_bloc_filius
+					name = trinity_conservative_bloc
+				}
+				set_country_leader_ideology = KR_social_conservative
+				add_country_leader_role = {
+					character = TRN_Kirifuji_Nagisa
+					promote_leader = yes
+					country_leader = {
+						ideology = KR_social_conservative_neutrality
+						expire = 1965.1.1.1
+						traits = { } 
+					}
+				}
 			}
 		}
 	}
@@ -856,8 +891,15 @@ focus_tree = {
 	focus = {
 		id = TRK_sisterhood_focus_03
 		icon = GFX_focus_TRK_sisterhood
-		prerequisite = { focus = TRK_sisterhood_focus_02 focus = TRK_filius_focus_05 focus = TRK_filius_focus_03 }
-		prerequisite = { }
+		prerequisite = { 
+			focus = TRK_sisterhood_focus_02 
+			focus = TRK_filius_focus_05 
+		}
+		prerequisite = {
+			focus = TRK_sisterhood_focus_02 
+			focus = TRK_filius_focus_03 
+			
+		}
 		cost = 6
 
 		relative_position_id = TRK_sisterhood_focus_02
@@ -868,7 +910,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			NOT = { has_government = fascism }
+			NOT = { 
+				has_government = fascism 
+				has_idea = TRK_economic_collapse_ns
+			}
 		}
 
 		ai_will_do = { base = 100 }
@@ -894,7 +939,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			NOT = { has_government = fascism }
+			NOT = { 
+				has_government = fascism 
+				has_idea = TRK_economic_collapse_ns
+			}
 		}
 
 		ai_will_do = { base = 100 }
@@ -923,7 +971,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			NOT = { has_government = fascism }
+			NOT = { 
+				has_government = fascism 
+				has_idea = TRK_economic_collapse_ns
+			}
 			if = {
 				limit = { has_completed_focus = TRK_filius }
 				NOT = { has_completed_focus = TRK_filius_focus_05 }
@@ -934,11 +985,7 @@ focus_tree = {
 		mutually_exclusive = { focus = TRK_student_union_ending_focus_01 focus = TRK_filius_ending_focus_01 }
 
 		completion_reward = {
-			swap_ideas = {
-				add_idea = TRK_seias_democratic_government_ns
-				remove_idea = TRK_weaks_democratic_government_ns
-			}
-			set_country_leader_ideology = KR_social_democrat
+			#set_country_leader_ideology = KR_social_democrat
 		}
 	}
 
@@ -959,7 +1006,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			NOT = { has_government = fascism }
+			NOT = { 
+				has_government = fascism
+				has_idea = TRK_economic_collapse_ns
+			}
 		}
 
 		ai_will_do = { base = 100 }
