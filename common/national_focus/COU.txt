@@ -30,6 +30,14 @@ focus_tree = {
 		}
 	}
 	shortcut = {
+		name = COU_shortcut_political_others
+		target = COU_focus_dual_leader_system
+		scroll_wheel_factor = 0.654
+		trigger = {
+			always = yes
+		}
+	}
+	shortcut = {
 		name = COU_shortcut_political_RIN
 		target = COU_focus_confidence_and_supply
 		scroll_wheel_factor = 0.654
@@ -4155,7 +4163,7 @@ focus_tree = {
 		completion_reward = {
 		    add_popularity = {
 				ideology = fascism
-				popularity = 0.15
+				popularity = 0.1
 			}
 			country_event = COU_event_kaya.6
 			set_country_flag = COU_political_shock_end
@@ -4171,7 +4179,7 @@ focus_tree = {
 	}
 	
 	focus = { 
-    	id = COU_recruit_purge_our_antifans #11월의 실수 되짚기
+    	id = COU_recruit_purge_our_antifans #공포정치 
 		icon = GFX_focus_COU_nothing
 		x = -3
 		y = 4
@@ -4181,7 +4189,7 @@ focus_tree = {
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_rin_getout_please }
 		completion_reward = {
-			
+			country_event = COU_event_kaya.11
 		}
 	}
 	
@@ -4289,7 +4297,22 @@ focus_tree = {
 		available = { has_country_leader = { character = COU_KAYA } }
 		prerequisite = { focus = COU_focus_rin_getout_please }
 		completion_reward = {
-		    
+		    custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_Perfidus
+			} 
+			add_to_variable = {
+			     COU_Perfidus_ttf = -0.15
+			     tooltip = training_time_factor_tt
+		    }
+			add_to_variable = {
+			     COU_Perfidus_ms = -0.1
+			     tooltip = mobilization_speed_tt
+		    }
+			add_to_variable = {
+			     COU_Perfidus_cf = 0.05
+			     tooltip = conscription_factor_tt
+		    }
 		}
 	}
 	
@@ -4298,24 +4321,42 @@ focus_tree = {
 		icon = GFX_goal_generic_forceful_treaty
 		x = 3
 		y = 5
-		cost = 5
+		cost = 8
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		available = { has_country_leader = { character = COU_KAYA } }
 		prerequisite = { focus = COU_focus_contact_with_verdinaso }
 		prerequisite = { focus = COU_focus_upgrade_power_of_collabs }
 		completion_reward = {
-		    
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			custom_effect_tooltip = {
+				 localization_key = tooltip_modify_dynmod
+				 DYNMOD = COU_Perfidus
+			} 
+			add_to_variable = {
+			     COU_Perfidus_sta = 0.05
+			     tooltip = stability_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = COU_tooltip_end_perfidus_system
+			set_country_flag = COU_perfidus_happy_yay
 		}
 	}
 	
 	focus = { 
-    	id = COU_focus_conservative_revolution #순수 키보토스의 꿈 
-		icon = GFX_COU_what_the_fuck_is_fascism
+    	id = COU_focus_gonna_gsc_leader #총학생회장 취임 
+		icon = GFX_COU_in_the_darkness
 		x = 1
 		y = 6
 		cost = 5
-		available = { has_country_leader = { character = COU_KAYA } }
+		available = { 
+		    has_country_leader = { character = COU_KAYA } 
+			has_stability > 0.6
+		    fascism > 0.6
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_recruit_fox_srt }
