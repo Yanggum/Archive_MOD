@@ -1,4 +1,4 @@
-#!gfx:interface\BA_goals.gfx
+#!gfx:interface\BlueArchive\01 goals.gfx
 
 focus_tree = {
 	id = TRM_focus_tree
@@ -1293,12 +1293,6 @@ focus_tree = {
 		y = 1
 		completion_reward = {
 			create_faction = TRINITY_AXIS_FACTION
-            random_country = {
-				limit = {
-					tag = global.kivotos_alliance_leader
-				}
-				country_event = { id = COU_event.3 hours = 8 }
-			}
 		}
 	}
 
@@ -6665,7 +6659,7 @@ focus_tree = {
 		modifier = {
 			add = 99
 			tag = TRM
-			is_debug = yes
+			has_country_flag = TRN_trinity_rework_flag
 		}
 	}
 	continuous_focus_position = { x = 100 y = 50 }
@@ -16898,6 +16892,13 @@ focus_tree = {
 						add_idea = TRN_hidden_armor_doctrine_8_ns
 					}
 				}
+				else_if = {
+					limit = { has_idea = TRN_hidden_armor_doctrine_9_ns }
+					swap_ideas = {
+						add_idea = TRN_hidden_armor_doctrine_10_ns
+						remove_idea = TRN_hidden_armor_doctrine_9_ns
+					}
+				}
 			}
 
 		}
@@ -16933,9 +16934,10 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_
-		icon = GFX_focus_generic_army_tanks_2
+		id = TRN_mass_production_line
+		icon = GFX_focus_generic_mass_production_line
 		prerequisite = { focus = TRN_armored_corps_training_center }
+		mutually_exclusive = { focus = TRN_customized_production_method }
 		x = -1
 		y = 1
 		relative_position_id = TRN_armored_corps_training_center
@@ -16984,8 +16986,8 @@ focus_tree = {
 		icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
 		prerequisite = { focus = TRN_mechanized_division }
 		prerequisite = { focus = TRN_armored_corps_training_center }
-		x = -3
-		y = 1
+		x = -2
+		y = 2
 		relative_position_id = TRN_armored_corps_training_center
 		cost = 6
 		available = {
@@ -17079,12 +17081,12 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRN_3
-		icon = GFX_focus_generic_army_tanks_2
-		prerequisite = { focus = TRN_mechanized_division }
+		id = TRN_customized_production_method
+		icon = GFX_focus_gemeric_customized_production
 		prerequisite = { focus = TRN_armored_corps_training_center }
-		x = -2
-		y = 2
+		mutually_exclusive = { focus = TRN_mass_production_line }
+		x = -3
+		y = 1
 		relative_position_id = TRN_armored_corps_training_center
 		cost = 6
 		available = {
@@ -17095,7 +17097,35 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			if = {
+				limit = {
+					has_idea = TRN_hidden_armor_doctrine_4_ns
+				}
+				swap_ideas = {
+					add_idea = TRN_hidden_armor_doctrine_9_ns
+					remove_idea = TRN_hidden_armor_doctrine_4_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_6_ns }
+				swap_ideas = {
+					add_idea = TRN_hidden_armor_doctrine_10_ns
+					remove_idea = TRN_hidden_armor_doctrine_6_ns
+				}
+			}
+			else_if = {
+				limit = { has_idea = TRN_hidden_armor_doctrine_2_ns }
+				swap_ideas = {
+					add_idea = TRN_hidden_armor_doctrine_12_ns
+					remove_idea = TRN_hidden_armor_doctrine_2_ns
+				}
+			}
+			else = {
+				swap_ideas = {
+					add_idea = TRN_hidden_armor_doctrine_11_ns
+					remove_idea = TRN_hidden_armor_doctrine_1_ns
+				}
+			}
 		}
 	}
 
@@ -17548,6 +17578,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = TRN_rocket_technology
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = rocketry
+			}
 
 			add_mastery_bonus = {
 				bonus = 0.1

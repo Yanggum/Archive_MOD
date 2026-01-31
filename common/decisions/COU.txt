@@ -1,7 +1,35 @@
-#디버그 디시전 카테고리를 넣어야 하는데 귀찮아서 안 넣었어요
+#디버그 디시전
+debug_decisions = {
+    debug_COU_dual_leader_system = {
+	    allowed = {
+		    tag = COU 
+		}
+		
+		visible = { is_debug = yes }
+		available = { is_ai = no }
+		
+		complete_effect = {
+		    set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no 
+			}
+			retire_country_leader = yes 
+			COU_dual_leader_system = {
+				    add_country_leader_role = {
+				    promote_leader = yes
+				        country_leader = {
+					    ideology = cou_ideology_the_elevens_neutrality
+					    expire = "1965.1.1.1"
+					    traits = {}
+				    }
+			    }
+			}
+		}
+	}
+}
 
 political_actions = {
-    COU_we_fucked = { #정보 누설 
+    COU_we_fucked = { #실종 폭로 
 		icon = generic_political_address
 		allowed = {
 			tag = COU
@@ -21,504 +49,68 @@ political_actions = {
 		days_mission_timeout = 10
 
 		timeout_effect = {
-			 add_stability = -0.1
-			 news_event = { hours = 6 id = BA_news.1 } #꺄악 
+			 country_event = COU_event.10
 			 hidden_effect = { 
 			     news_event = { id = BA_news.76 days = 7 } #일곱 죄수의 탈옥 
-			     country_event = { id = COU_event.2 days = 2 } #프로토콜 통보 
+				 SHE = { country_event = { id = COU_event_diplomancy.2 days = 2 } } #총학 살인면허 작동 
 			 }
 		}
 	}
 }
+
+#저지대 전쟁 
 COU_division_of_military = {
-    COU_strengthening_influence_pp = {
-		icon = GFX_decision_eng_propaganda_campaigns
+    COU_SHE_declare_war_timeout = { #살인면허 작동 
+		icon = generic_break_treaty
 		allowed = {
-			original_tag = COU
+			tag = COU
+			tag = SHE 
 		}
 
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 20
-			modifier = {
-				has_political_power > 50
-				factor = 1.5
-			}
-			modifier = {
-				has_political_power > 100
-				factor = 2.0
-			}
-			modifier = {
-				has_political_power < 30
-				factor = 0.5
-			}
-		}
-
-		days_remove = 25
-
-		cost = 25
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = 5 }
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-		
-		ai_will_do = {
-			base = 10000
-		}
-	}
-    COU_strengthening_influence_cp = {
-		icon = GFX_decision_generic_army_support
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 40
-		}
-
-		days_remove = 25
-
-		custom_cost_text = COU_strengthening_influence_cp_tt
-		custom_cost_trigger = {
-			command_power > 9.9
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_command_power = -20
-			}
-		}
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = 5 }
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-	}
-    COU_strengthening_influence_stv = {
-		icon = GFX_decision_generic_political_rally
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 20
-			modifier = {
-				has_stability < 0.40
-				factor = 0
-			}
-		}
-
-		days_remove = 25
-
-		custom_cost_text = COU_strengthening_influence_stv_tt
-		custom_cost_trigger = {
-			has_stability > 0.049
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_stability = -0.05
-			}
-		}
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = 5 }
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-	}
-    SHE_strengthening_influence_pp = {
-		icon = GFX_decision_eng_propaganda_campaigns
-		allowed = {
-			original_tag = SHE
-		}
-
-		ai_will_do = {
-			base = 20
-			modifier = {
-				has_political_power > 50
-				factor = 1.5
-			}
-			modifier = {
-				has_political_power > 100
-				factor = 2.0
-			}
-			modifier = {
-				has_political_power < 30
-				factor = 0.5
-			}
-		}
-
-		available = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			custom_trigger_tooltip = {
-				tooltip = SHE_strengthening_influence_trigger_tooltip
-				check_variable = {
-					global.COU_division_of_military_value > she_var_temp
-				}
-			}
-		}
-
-		cancel_trigger = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			check_variable = {
-				global.COU_division_of_military_value < she_var_temp
-			}
-		}
-
-		visible = {
-		}
-
-		days_remove = 25
-
-		cost = 25
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = -5 }
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-	}
-    SHE_strengthening_influence_cp = {
-		icon = GFX_decision_generic_army_support
-		allowed = {
-			original_tag = SHE
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 40
-		}
-
-		available = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			custom_trigger_tooltip = {
-				tooltip = SHE_strengthening_influence_trigger_tooltip
-				check_variable = {
-					global.COU_division_of_military_value > she_var_temp
-				}
-			}
-		}
-
-		cancel_trigger = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			check_variable = {
-				global.COU_division_of_military_value < she_var_temp
-			}
-		}
-
-		days_remove = 25
-
-		custom_cost_text = COU_strengthening_influence_cp_tt
-		custom_cost_trigger = {
-			command_power > 9.9
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_command_power = -20
-			}
-		}
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = -5 }
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-	}
-    SHE_strengthening_influence_stv = {
-		icon = GFX_decision_generic_political_rally
-		allowed = {
-			original_tag = SHE
-		}
-
-		visible = {
-		}
+		available = { always = no }
 
-		ai_will_do = {
-			base = 20
-			modifier = {
-				has_stability < 0.40
-				factor = 0
-			}
-		}
-
-		available = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			custom_trigger_tooltip = {
-				tooltip = SHE_strengthening_influence_trigger_tooltip
-				check_variable = {
-					global.COU_division_of_military_value > she_var_temp
-				}
-			}
-		}
-
-		cancel_trigger = {
-			set_temp_variable = { she_var_temp = global.KSP_division_of_military_value }
-			multiply_temp_variable = { she_var_temp = 2.5 }
-			check_variable = {
-				global.COU_division_of_military_value < she_var_temp
-			}
-		}
-
-		days_remove = 25
-
-		custom_cost_text = COU_strengthening_influence_stv_tt
-		custom_cost_trigger = {
-			has_stability > 0.049
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_stability = -0.05
-			}
-		}
-
-		remove_effect = {
-			custom_effect_tooltip = COU_strengthening_influence_tt
-
-			add_to_variable = { global.COU_division_of_military_value = -5 }
-
-			clamp_variable = {
-				var = global.COU_division_of_military_value
-				min = 0
-				max = 100
-			}
-
-			set_temp_variable = { TEMP_division_of_military_value = 100 }
-			subtract_from_temp_variable = { TEMP_division_of_military_value = global.COU_division_of_military_value }
-			set_variable = { global.SHE_division_of_military_value = TEMP_division_of_military_value }
-		}
-		
-		ai_will_do = {
-			base = 10
-		}
-	}
-}
-COU_nation_moving_forward = {
-    COU_democratic_centralism = {
-		icon = GFX_decision_SOV_place_hq
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 20
-			modifier = {
-				has_stability < 0.40
-				factor = 0
-			}
-		}
-
-		days_re_enable = 35
-
-		custom_cost_text = COU_strengthening_influence_stv_tt
-		custom_cost_trigger = {
-			has_stability > 0.049
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_stability = -0.05
-			}
-			add_political_power = 50
-		}
-	}
-    COU_production_revolution = {
-		icon = GFX_decision_generic_merge_plant_materiel
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		available = {
-			#has_completed_focus = COU_permanent_revolution
-		}
-
-		ai_will_do = {
-			base = 20
-		}
-
-		days_re_enable = 120
-
-		cost = 100
-
-		complete_effect = {
-			custom_effect_tooltip = COU_production_revolution_tt
-			add_to_variable = { COU_class_struggle_production_factory_efficiency_gain_factor = 0.03 }
-		}
-	}
-    COU_system_revolution = {
-		icon = GFX_decision_generic_merge_plant_materiel
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		available = {
-			#has_completed_focus = COU_permanent_revolution
-		}
-
-		ai_will_do = {
-			base = 20
-		}
-
-		days_re_enable = 120
-
-		cost = 100
-
-		complete_effect = {
-			custom_effect_tooltip = COU_system_revolution_tt
-			add_to_variable = { COU_class_struggle_factory_max_efficiency_factor = 0.03 }
-		}
-	}
-    COU_social_revolution = {
-		icon = GFX_decision_generic_merge_plant_materiel
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		available = {
-			#has_completed_focus = COU_permanent_revolution
-		}
-
-		ai_will_do = {
-			base = 20
-		}
-
-		days_re_enable = 120
-
-		cost = 100
-
-		complete_effect = {
-			custom_effect_tooltip = COU_social_revolution_tt
-			add_to_variable = { COU_class_struggle_global_building_slots_factor = 0.05 }
-			add_to_variable = { COU_class_struggle_consumer_goods_factor = -0.05 }
-		}
-	}
-    COU_scientific_socialism = {
-		icon = GFX_decision_generic_research
-		allowed = {
-			original_tag = COU
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 20
-		}
-
-		days_remove = 120
-		days_re_enable = 120
-
-		cost = 50
-
-		modifier = {
-			stability_weekly = 0.001
-			research_speed_factor = 0.05
-			communism_drift = 0.03
-		}
-	}
-    COU_abolition_of_the_state = {
-		icon = GFX_decision_generic_form_nation
-		allowed = {
-			original_tag = COU
-		}
-
-		available = {
-			#has_completed_focus = COU_welcome_the_next_era
-			all_state = {
-				is_controlled_by = ROOT
-			}
-		}
-
-		visible = {
-		}
-
-		ai_will_do = {
-			base = 20
-		}
+		activation = { always = no }
 		
 		fire_only_once = yes
+		
+		is_good = no
 
-		cost = 300
+		days_mission_timeout = 30
 
-		complete_effect = {
-			set_cosmetic_tag = COU_go_to_left_left_world_2
+		timeout_effect = {
+			 if = {
+			     limit = { tag = SHE } 
+				 country_event = COU_event_diplomancy.3
+			 }
+			 if = {
+			     limit = { tag = COU }
+				 country_event = COU_event.3
+				 if = {
+				     limit = { is_ai = yes }
+					 add_ideas = COU_fk_anti_sh
+				 }
+			 }
+		}
+	}
+	
+	COU_loss_of_justification = { #명분 소실  
+		icon = generic_ignite_civil_war
+		allowed = {
+			tag = COU
+		}
+
+		available = { NOT = { has_war_with = SHE } }
+
+		activation = { always = no }
+		
+		fire_only_once = yes
+		
+		is_good = no
+
+		days_mission_timeout = 180
+
+		timeout_effect = {
+			 add_ideas = COU_fk_anti_sh
 		}
 	}
 }
@@ -786,7 +378,10 @@ COU_decision_cat_perfidus = {
 		
 		remove_effect = {
 		     clr_country_flag = COU_perfidus_happy_yay
-		     activate_mission = COU_collaboraters_wants_political_money
+		     if = { 
+			     limit = { NOT = { has_completed_focus = COU_focus_executive_order_3511 } }
+		         activate_mission = COU_collaboraters_wants_political_money
+			 }
 		}
 	}
 	
@@ -819,7 +414,10 @@ COU_decision_cat_perfidus = {
 		
 		remove_effect = {
 		     clr_country_flag = COU_perfidus_happy_yay
-		     activate_mission = COU_collaboraters_wants_political_money
+		     if = { 
+			     limit = { NOT = { has_completed_focus = COU_focus_executive_order_3511 } }
+		         activate_mission = COU_collaboraters_wants_political_money
+			 }
 		}
 	}
 	
@@ -848,7 +446,10 @@ COU_decision_cat_perfidus = {
 		
 		remove_effect = {
 		     clr_country_flag = COU_perfidus_happy_yay
-		     activate_mission = COU_collaboraters_wants_political_money
+		     if = { 
+			     limit = { NOT = { has_completed_focus = COU_focus_executive_order_3511 } }
+		         activate_mission = COU_collaboraters_wants_political_money
+			 }
 		}
 	}
 	
@@ -857,7 +458,8 @@ COU_decision_cat_perfidus = {
 		icon = ger_military_buildup
 
 		ai_will_do = {
-			base = 1
+			base = 0
+			#AI는 찍지 말죠 걍 
 			#쉬었음 청년일 경우엔 visible을 끕시다 
 		}
 		
@@ -889,7 +491,10 @@ COU_decision_cat_perfidus = {
 		
 		remove_effect = {
 		     clr_country_flag = COU_perfidus_happy_yay
-		     activate_mission = COU_collaboraters_wants_political_money
+		     if = { 
+			     limit = { NOT = { has_completed_focus = COU_focus_executive_order_3511 } }
+		         activate_mission = COU_collaboraters_wants_political_money
+			 }
 		}
 	}
 	
@@ -1563,588 +1168,241 @@ COU_decision_the_student_council = {
 			base = 0
 		}
 	}
-	
-	##데카르트-srt 재판은 정치 개발할때 같이 할게요
-    
-	
-	COU_the_normal_days_of_cou = {
+}
 
-		 icon = generic_political_address
 
-		 allowed = { 
-		    original_tag = COU
-		    always = no
-		 }
+##린 대행의 신임 
+COU_getout_rin_decision = {
+     COU_getout_rin_debug = {
+	    
+		#icon = generic_ap
 		
-		 available = { 
-			 #NOT = { always = yes }
-			 always = no ##좀 많이 건들자
-		 }
+		visible = { is_debug = yes }
+
+		available = {
+			 is_debug = yes 
+		}
+
+		ai_will_do = { 
+			base = 0
+		}
 		
-		 days_mission_timeout = 100
+		fire_only_once = no
+
+		cost = 0
 		
-		 is_good = no
-				
-		 activation = { always = no }
-		
-		 timeout_effect = {
-		      custom_effect_tooltip = COU_tooltip_some_normal_days_event
-			  hidden_effect = {
-			      random_list = {
-					  1 = {
-						  country_event = { id = COU_event_normal_days.1 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.2 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.3 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.4 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.5 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.6 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.7 }
-					  }
-					  1 = {
-						  country_event = { id = COU_event_normal_days.8 }
-					  }
-					  
-				  }
-				  if = {
-				     limit = { has_idea = COU_philips }
-					 random_list = {
-					     ##안네 프랑크 
-					     0.1 = {
-						    COU_ANNE_FRANK = { unit_leader_event = { id = COU_event_normal_days.1000 } }
-					     }
-					 }
-				  }
-			  }
-		      hidden_effect = { activate_mission = COU_the_normal_days_of_cou }
-		 }
+		complete_effect = { 
+		     set_variable = { NORIN_stab_percent = 60 }
+		}
 	}
 	
 	##
-}
-
-
-##린 탄핵 
-COU_getout_rin_decision = {
-     COU_rin_getout_kaya = {
-
+	
+	COU_norin_movement_of_opposition = { #반대파의 활동
 		icon = generic_civil_support
+		allowed = {
+			tag = COU
+			always = no
+		}
 
-		 allowed = { 
-		    original_tag = COU
-		    always = no
-		 }
-		
-		 available = { 
-			 NOT = { has_country_flag = COU_flag_acivate_norin_decision }
-		 }
-		
-		 days_mission_timeout = 60
-		
-		 is_good = no
-				
-		 activation = { always = no }
-		
-		 timeout_effect = {
-		      country_event = COU_event.9
-		 }
-	}
-	COU_increasing_the_crisis = {
+		available = {
+		    has_country_flag = COU_political_shock_end 
+		}
 
-		icon = generic_ignite_civil_war
+		activation = { always = no }
+		
+		is_good = no
 
-		 allowed = { 
-		    original_tag = COU
-		    always = no
-		 }
-		
-		 available = { 
-			 NOT = { has_country_flag = COU_flag_acivate_norin_decision }
-		 }
-		
-		 days_mission_timeout = 30
-		
-		 is_good = no
-				
-		 activation = { always = no }
-		
-		 timeout_effect = {
-		      add_political_power = -45
-			  add_command_power = -5
-			  hidden_effect = {
-			      activate_mission = COU_increasing_the_crisis
-			  }
-		 }
-	}
-	COU_demand_establish_humans_land = {
+		days_mission_timeout = 30
 
-		icon = generic_confiscation
-
-		 allowed = { 
-		    original_tag = COU
-		    always = no
-		 }
-		
-		 available = { 
-			 #has_completed_focus = COU_establishment_of_human_rights_committee
-		 }
-		
-		 days_mission_timeout = 60
-		
-		 is_good = no
-				
-		 activation = { always = no }
-		
-		 timeout_effect = {
-		      add_stability = -0.05
-			  add_political_power = -150
-			  custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		      add_to_variable = { var = COU_rin_percen value = 10 }
-		 }
-		 
-		 complete_effect = {
-		    custom_effect_tooltip = COU_tooltip_high_ten_kim_daejung_agrees
-		    add_to_variable = { var = COU_rin_percen value = 10 }
-		 }
-	}
-	##실장 2명 회유 
-	COU_gets_aoi_first_eco_crisis = {
-
-		icon = meet_with_the_aoi
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-			 has_country_flag = COU_unlock_hwaeu_aoi_smomo
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 7
-		 fire_only_once = yes
-		 #days_re_enable = 30
-		
-		 cost = 50
-		 
-		 modifier = {
-		     consumer_goods_expected_value = 0.05
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.23
-			 set_country_flag = COU_unlock_aoi_two
-		 }
-		 
-		 ai_will_do = {
-			base = 20000
-		 }
+		timeout_effect = {
+		     COU_rin_getout_percent_bad_five = yes 
+			 hidden_effect = { activate_mission = COU_norin_movement_of_opposition }
+		}
 	}
 	
-	COU_gets_aoi_second_letsgo = {
+	#친린파 
+	COU_motivate_royalists_movement = {
+		icon = generic_military
+		
+		visible = {
+		    has_country_flag = RIN_royalists_activated
+		}
+		
+		available = { has_completed_focus = COU_focus_rin_getout_please } 
 
-		icon = meet_with_the_aoi
+		activation = { always = no }
+		
+		is_good = no
 
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_mission_timeout = 30
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-			 has_country_flag = COU_unlock_hwaeu_aoi_smomo
-			 has_country_flag = COU_unlock_aoi_two
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 10
-		 fire_only_once = yes
-		 #days_re_enable = 30
-		
-		 cost = 75
-		 
-		 modifier = {
-		     consumer_goods_expected_value = 0.1
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.25
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
+		timeout_effect = {
+			COU_rin_getout_percent_good_five = yes 
+			activate_mission = COU_motivate_royalists_movement
+		}
 	}
 	
-	COU_gets_smomo_cou_supports_kaya = {
+	COU_rin_completeing_focus_prokaya = {
+		icon = ger_military_buildup
+		
+		visible = {
+		    has_country_flag = RIN_royalists_activated
+		}
+		
+		available = { 
+		    has_completed_focus = COU_focus_questions_about_the_handover_procedure
+		} 
 
-		icon = meet_with_the_smomo
+		activation = { always = no }
+		
+		is_good = no
 
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_mission_timeout = 35
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-			 has_country_flag = COU_unlock_hwaeu_aoi_smomo
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 14
-		 fire_only_once = yes
-		 #days_re_enable = 30
-		
-		 cost = 100
-		 
-		 modifier = {
-		     
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.24
-			 set_country_flag = SMOMO_AGREE
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
+		timeout_effect = {
+		    add_political_power = -25 
+			add_stability = -0.025
+			COU_rin_getout_percent_good_onefive = yes 
+		}
 	}
 	
-	COU_dutch_law_letsgo = {
+	COU_rin_completeing_focus_proaoi = {
+		icon = generic_fundraising
+		
+		visible = {
+		    has_country_flag = RIN_royalists_activated
+		}
+		
+		available = { has_completed_focus = COU_focus_talk_with_aoi } 
 
-		 icon = COU_the_duch_law
+		activation = { always = no }
+		
+		is_good = no
 
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_mission_timeout = 21
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-			 has_country_flag = AOI_AGREED
-			 has_country_flag = SMOMO_AGREE
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 14
-		 fire_only_once = yes
-		 #days_re_enable = 30
-		
-		 cost = 75
-		 
-		 modifier = {
-		     political_power_factor = -0.1
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.20
-			 add_popularity = { 
-		        ideology = fascism
-		        popularity = 0.15
-		     }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
-	}
-	##SRT 분탕 
-	COU_SRT_buntang_rabbits_first = {
-
-		icon = srt_icon
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		     has_country_flag = SRT_STARTED_BUNTANGS_KAYA
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 3
-		 fire_only_once = yes
-		 #days_re_enable = 45
-		
-		 cost = 0
-		
-		 remove_effect = {
-		     country_event = COU_event.36
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
+		timeout_effect = {
+		    add_political_power = -75
+			COU_rin_getout_percent_good_onefive = yes 
+			set_country_flag = KAYA_PASS_AOI_FOCUS
+		}
 	}
 	
-	COU_SRT_FOX_attack_good_rins = {
+	COU_rin_completeing_focus_prorin = {
+		icon = generic_wreckers
+		
+		visible = {
+		    has_country_flag = RIN_royalists_activated
+		}
+		
+		available = { has_completed_focus = COU_focus_intentional_manipulation } 
 
-		icon = srt_icon
+		activation = { always = no }
+		
+		is_good = no
 
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_mission_timeout = 14
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		     has_country_flag = COU_tooltip_rabbit_join_fox
-		 }
+		timeout_effect = {
+		    add_political_power = -25
+			COU_rin_getout_percent_good_onefive = yes 
+		}
+	}
+     
+	
+	#안티파 
+	COU_use_collaboraters_for_antirin_movementt = {
+		icon = generic_political_rally
 		
-		 is_good = no
-		 
-		 days_remove = 7
-		 fire_only_once = yes
-		 #days_re_enable = 45
+		visible = {
+		    has_country_flag = KAYA_activate_anti_decision
+		}
 		
-		 cost = 25
+		cost = 75
+
+		days_remove = 14
 		
-		 remove_effect = {  
-		     add_stability = -0.05
-		     add_days_mission_timeout = {
-			     mission = COU_rin_getout_kaya
-		         days = 50
-	         }
-		     COU_YUKINO = { unit_leader_event = { id = COU_event.45 } }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
+		available = { has_country_flag = COU_perfidus_happy_yay }
+		
+		fire_only_once = no
+		
+		ai_will_do = {
+			base = 1000
+		}
+		
+		days_re_enable = 30
+		remove_effect = {
+			COU_rin_getout_percent_bad_ten = yes 
+		}
 	}
 	
-	COU_SRT_RABBITS_attack_good_rins = {
+	COU_motivate_anti_movement = {
+		icon = eng_blackshirt_march
+		
+		visible = {
+		    has_country_flag = KAYA_activate_anti_decision
+		}
+		
+		cost = 25
 
-		icon = srt_icon
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_remove = 14
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		     has_country_flag = COU_tooltip_rabbit_join_fox
-		 }
+		fire_only_once = no
 		
-		 is_good = no
-		 
-		 days_remove = 7
-		 fire_only_once = yes
-		 #days_re_enable = 45
+		ai_will_do = {
+			base = 1000
+		}
 		
-		 cost = 25
-		
-		 remove_effect = {
-		     add_stability = -0.01
-		     add_days_mission_timeout = {
-			     mission = COU_rin_getout_kaya
-		         days = 50
-	         }
-			 COU_MIYAKO = { unit_leader_event = { id = COU_event.44 } }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
+		days_re_enable = 30
+		remove_effect = {
+			COU_rin_getout_percent_bad_five = yes 
+		}
 	}
 	
-	##린 탄핵 - 기간 연장하기
-	COU_attack_the_cou_workers = {
+	COU_activate_my_trap_card = {
+		icon = advanced_activity_report
+		
+		visible = {
+		    has_completed_focus = COU_focus_intentional_manipulation
+		}
+		
+		cost = 25
 
+		days_remove = 14
+		
+		fire_only_once = yes
+		
+		ai_will_do = {
+			base = 1000
+		}
+		
+		remove_effect = {
+			COU_rin_getout_percent_bad_five = yes 
+		}
+	}
+	
+	COU_warn_to_rin_royalists = {
 		icon = generic_assassination
+		
+		visible = {
+		    has_completed_focus = COU_focus_without_rin_royalists
+		}
+		
+		cost = 50
 
-		 allowed = { 
-		    original_tag = COU 
-		 }
+		days_remove = 21
 		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		 }
+		fire_only_once = yes
 		
-		 is_good = no
-		 
-		 days_remove = 10
-		 fire_only_once = yes
-		 #days_re_enable = 45
+		ai_will_do = {
+			base = 1000
+		}
 		
-		 cost = 50
-		 
-		 modifier = {
-		     political_power_factor = -0.05
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.21
-		     add_days_mission_timeout = {
-			     mission = COU_rin_getout_kaya
-		         days = 90
-	         }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
-	}
-	
-	COU_use_fascist_militas = {
-
-		icon = generic_independence
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 14
-		 days_re_enable = 45
-		
-		 custom_cost_trigger = {
-			 command_power > 24
-		 }
-
-		 custom_cost_text = decision_cost_CP_25 
-		 
-		 modifier = {
-		     stability_weekly = -0.01
-		 }
-		
-		 remove_effect = {
-		     add_political_power = 30
-			 add_popularity = { 
-		        ideology = fascism
-		        popularity = 0.05
-		     }
-		     add_days_mission_timeout = {
-			     mission = COU_rin_getout_kaya
-		         days = 50
-	         }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
-	}
-	
-    COU_workers_notworks_bruh = {
-
-		icon = generic_civil_support
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 14
-		 days_re_enable = 30
-		
-		 cost = 45
-		 
-		 modifier = {
-		     industrial_capacity_factory = -0.05
-			 industrial_capacity_dockyard = -0.05
-		 }
-		
-		 remove_effect = {
-		     add_political_power = -25
-		     add_days_mission_timeout = {
-			     mission = COU_rin_getout_kaya
-		         days = 45
-	         }
-		 }
-		 ai_will_do = {
-			base = 20000
-		 }
-	}
-	
-	##탄핵안 제출 
-	COU_getout_rin_right_now = {
-
-		 icon = generic_break_treaty
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     has_country_flag = COU_flag_acivate_norin_decision
-			 has_country_flag = START_RIN_TANHAK
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 3
-		 fire_only_once = yes
-		 #days_re_enable = 30
-		
-		 cost = 100
-		 
-		 modifier = {
-		     political_power_factor = 0.1
-		 }
-		 
-		 complete_effect = {
-		 }
-		
-		 remove_effect = {
-		     country_event = COU_event.46
-			 clr_country_flag = COU_flag_acivate_norin_decision
-		 }
-		 
-		 ai_will_do = {
-			base = 20000
-		 }
+		remove_effect = {
+			COU_rin_getout_percent_bad_ten = yes 
+		}
 	}
 }
 
 	
-	
-##카야의 상태
-COU_situation_of_the_kaya = {
-	COU_workers_notworks_bruh222 = {
-
-		icon = generic_civil_support
-
-		 allowed = { 
-		    original_tag = COU 
-		 }
-		
-		 visible = { 
-		     #has_country_flag = COU_flag_acivate_norin_decision
-		 }
-		
-		 is_good = no
-		 
-		 days_remove = 14
-		 days_re_enable = 30
-		
-		 cost = 45
-		 
-		 modifier = {
-		     industrial_capacity_factory = -0.05
-			 industrial_capacity_dockyard = -0.05
-		 }
-		
-		 remove_effect = {
-		 }
-		 ai_will_do = {
-			base = 0
-		 }
-	}
-}

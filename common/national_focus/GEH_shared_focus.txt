@@ -1,4 +1,4 @@
-#!gfx:interface\BA_goals.gfx
+#!gfx:interface\BlueArchive\01 goals.gfx
 shared_focus = {
 	id = GEH_unified_gehenna
 
@@ -78,14 +78,6 @@ shared_focus = {
 	x = 8
 	y = 0
 	completion_reward = {
-		set_variable = { global.TRK_owner = ROOT }
-		random_country = {
-			limit = { has_idea = TRK_gehenna_puppet }
-			swap_ideas = {
-				remove_idea = TRK_gehenna_puppet
-				add_idea = TRK_gehenna_puppet_next
-			}
-		}
 		set_variable = {
 			BA_halo_infantry_cap_edit_var = 3
 			tooltip = kivotos_halo_add_tt
@@ -324,53 +316,11 @@ shared_focus = {
 	}
 }
 shared_focus = {
-	id = GEH_centralized_eden_treaty
-	icon = GFX_goal_TRN_hwahawe_with_gehhena
-	cost = 5
-	prerequisite = {
-		focus = GEH_repudiation_of_the_eden_treaty
-	}
-	mutually_exclusive = {
-		focus = GEH_decentralized_eden_treaty
-	}
-	available = {
-		custom_trigger_tooltip = {
-			tooltip = THIS_IS_WIP_TT
-			is_debug = yes
-		}
-		is_subject = no 
-		OR = {
-			any_country = {
-				OR = {
-					original_tag = TRM
-					original_tag = ARI
-				}
-				is_subject_of = ROOT
-				has_capitulated = no
-			}
-			any_country = {
-				original_tag = TRK
-				is_subject = no
-				has_capitulated = no
-				is_in_faction = no
-			}
-		}
-	}
-	x = -2
-	y = 1
-	relative_position_id = GEH_repudiation_of_the_eden_treaty
-	completion_reward = {
-	}
-}
-shared_focus = {
 	id = GEH_decentralized_eden_treaty
 	icon = GFX_goal_TRN_eden_pacts_letsgo
 	cost = 5
 	prerequisite = {
 		focus = GEH_repudiation_of_the_eden_treaty
-	}
-	mutually_exclusive = {
-		focus = GEH_centralized_eden_treaty
 	}
 	available = {
 		is_subject = no 
@@ -392,17 +342,14 @@ shared_focus = {
 			}
 		}
 	}
-	x = 2
-	y = 1
+	x = 0
+	y = 2
 	relative_position_id = GEH_repudiation_of_the_eden_treaty
 	completion_reward = {
 		create_faction = TRM_Treaty_of_Eden_faction
 		if = {
 			limit = { country_exists = TRK }
 			add_to_faction = TRK
-			TRK = {
-				remove_ideas = TRK_economic_collapse
-			}
 		}
 		if = {
 			limit = {
@@ -491,6 +438,7 @@ shared_focus = {
 		every_country = {
 			limit = {
 				OR = {
+					original_tag = TRK
 					original_tag = TRM
 					original_tag = ARI
 				}
@@ -504,23 +452,6 @@ shared_focus = {
 				}
 			}
 		}
-	}
-}
-shared_focus = {
-	id = GEH_trinity_war_crime_trial
-	icon = GFX_goal_TRN_operation_description
-	cost = 2
-	prerequisite = {
-		focus = GEH_forced_integration
-	}
-	available = {
-		is_subject = no 
-	}
-	x = 0
-	y = 2
-	relative_position_id = GEH_forced_integration
-	completion_reward = {
-		country_event = GEHENNA_event.1
 	}
 }
 

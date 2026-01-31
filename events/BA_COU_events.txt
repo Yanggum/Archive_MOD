@@ -4,6 +4,8 @@ add_namespace = COU_event_diplomancy
 add_namespace = COU_event_industry
 add_namespace = COU_event_military
 
+add_namespace = COU_event_kaya
+
 add_namespace = COU_kivotos_alliance
 #add_namespace = COU_event_normal_days
 
@@ -109,7 +111,7 @@ country_event = { #앰씹들켰다!!!!!!!!!!!!!!!!!
 	
 }
 
-country_event = { #샬레랑 경쟁시키기
+country_event = { #샬레 살인면허 
 	id = COU_event.2
 	title = COU_event.2.t
 	desc = COU_event.2.desc
@@ -120,173 +122,104 @@ country_event = { #샬레랑 경쟁시키기
 
 	option = { 
 		name = COU_event.2.a
-		set_global_flag = COU_division_of_military_flag
-		
-		#KSP = { country_event = { id = KSP_event.18 hours = 8 } } #이건 로어랑 안 맞아서 뺄게요 
-		unlock_decision_category_tooltip = COU_division_of_military
-		unlock_decision_tooltip = COU_strengthening_influence_pp
-		unlock_decision_tooltip = COU_strengthening_influence_cp
-		unlock_decision_tooltip = COU_strengthening_influence_stv
+		set_country_flag = COU_protocol_activated_flag
+		effect_tooltip = { activate_mission = COU_SHE_declare_war_timeout } 
+		hidden_effect = { country_event = { id = COU_event.6 days = 7 } }
 	}
 	
 }
-country_event = { #전쟁 남
+country_event = { #샬레 최후통첩스 
 	id = COU_event.3
 	title = COU_event.3.t
 	desc = COU_event.3.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
+	picture = GFX_report_event_picture_the_letter
 	
 	fire_only_once = yes
 	is_triggered_only = yes
 
 	option = { 
 		name = COU_event.3.a
-		trigger = {
-			any_country = {
-				OR = {
-					original_tag = GEM
-					original_tag = GEH
-				}
-				exists = yes
-				NOT = {
-					has_war_with = ROOT
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
-				}
-			}
-		}
-		ai_chance = {
-			base = 10
-			modifier = {
-				original_tag = SHE
-				is_historical_focus_on = yes
-				OR = {
-					has_government = fascism
-					has_government = neutrality
-				}
-				factor = 0
-			}
-			modifier = {
-				has_government = democratic
-				factor = 1.3
-			}
-			modifier = {
-				has_government = fascism
-				factor = 0.5
-			}
-			modifier = {
-				has_government = communism
-				factor = 0.8
-			}
-		}
-		add_political_power = -50
-		add_war_support = 0.05
-		every_country = {
-			limit = {
-				OR = {
-					original_tag = GEM
-					original_tag = GEH
-				}
-				exists = yes
-				NOT = {
-					has_war_with = ROOT
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
-				}
-			}
-			ROOT = {
-				give_guarantee = PREV
-			}
-		}
-	}
-	option = { 
-		name = COU_event.3.b
-		ai_chance = {
-			base = 10
-		}
-		add_political_power = 20
-		if = {
-			limit = {
-				TRM = { has_government = fascism }
-				OR = {
-					has_government = fascism
-					has_government = neutrality
-				}
-				KAI = { NOT = { is_in_faction_with = TRM } }
-			}
-			add_ai_strategy = {
-				type = alliance
-				id = TRM
-				value = 100
-			}
-		}
-		else = {
-			add_ai_strategy = {
-				type = alliance
-				id = TRM
-				value = -25
-			}
+		add_war_support = 0.05 
+		effect_tooltip = {
+		    news_event = { id = BA_news.131 hours = 6 }
+			SHE = { 
+		      create_wargoal = {
+			      type = take_state_focus
+			      target = COU
+			      generator = { 7 35 6 29 }
+		      }
+		   }
 		}
 	}
 	
 }
-country_event = { #경쟁의 결과
+country_event = { #싯딤의 상자 확보 
 	id = COU_event.4
 	title = COU_event.4.t
 	desc = COU_event.4.desc
-	picture = GFX_report_event_SOV_national_academy_of_sciences
+	picture = GFX_report_event_she_ipad
 	
 	fire_only_once = yes
 	is_triggered_only = yes
 
 	option = { 
 		name = COU_event.4.a
-		clr_global_flag = COU_division_of_military_flag
-		clr_global_flag = KSP_division_of_military_flag
-
-		set_temp_variable = {
-			TEMP_KSP_division_of_military_value = global.KSP_division_of_military_value
-		}
-		multiply_temp_variable = { TEMP_KSP_division_of_military_value = 0.01 }
-		transfer_units_fraction = {
-			target = KSP
-			size = var:TEMP_KSP_division_of_military_value
-			navy_ratio = 0
-			air_ratio = 0
-			keep_unit_leaders_trigger = {
-				always = yes
-			}
-		}
-
-		set_temp_variable = {
-			TEMP_SHE_division_of_military_value = global.SHE_division_of_military_value
-		}
-		multiply_temp_variable = { TEMP_SHE_division_of_military_value = 0.01 }
-		transfer_units_fraction= {
-			target = SHE
-			size = var:TEMP_SHE_division_of_military_value
-			navy_ratio = 0
-			air_ratio = 0
-			keep_unit_leaders_trigger = {
-				always = yes
-			}
-		}
+		#set_country_flag = COU_political_shock
+		#custom_effect_tooltip = COU_event_4_tooltip
 	}
 	
 }
 
-country_event = { #협력자 문제
+country_event = { #손 빌리기
+	id = COU_event.5
+	title = COU_event.5.t
+	desc = COU_event.5.desc
+	picture = GFX_report_event_she_arona
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event.5.a
+		add_political_power = 150
+	}
+}
+
+country_event = { #대행 정통성에 대한 의문 
 	id = COU_event.6
 	title = COU_event.6.t
 	desc = COU_event.6.desc
-	picture = GFX_report_event_fascist_militia
+	picture = GFX_COU_event_218
 	
 	fire_only_once = yes
 	is_triggered_only = yes
 
 	option = { 
 		name = COU_event.6.a
-		add_stability = -0.05
+		add_country_leader_trait = COU_power_struggle
+		set_country_flag = COU_political_shock
+		unlock_decision_category_tooltip = COU_getout_rin_decision
+		set_variable = { NORIN_stab_percent = 75 } #신임 초기값 설정 
+		custom_effect_tooltip = COU_event_4_tooltip
+		#hidden_effect = { activate_mission = COU_norin_movement_of_opposition } #중점으로 발동하도록 변경 
+	}
+}
+
+country_event = { #데카르트 파업 대소동!!!! (짱무서움)
+	id = COU_event.7
+	title = COU_event.7.t
+	desc = COU_event.7.desc
+	picture = GFX_report_event_picture_decart
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event.7.a
+		add_stability = -0.01
+		set_country_flag = COU_DECART_PROBLEM_yes
+		custom_effect_tooltip = available_political_advisor
+		show_ideas_tooltip = decart_thisistoken
 	}
 }
 
@@ -325,6 +258,238 @@ country_event = { #회복된 학생회의 권위
 		}
 	}
 }
+
+country_event = { #기자회견 
+	id = COU_event.10
+	title = COU_event.10.t
+	desc = COU_event.10.desc
+	picture = GFX_COU_event_start_report
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	    hidden_effect = { news_event = { hours = 6 id = BA_news.1 } }
+	}
+
+	option = { 
+		name = COU_event.10.a
+		#add_stability = -0.1
+		custom_effect_tooltip = COU_tooltip_COU_event_10
+		effect_tooltip = { news_event = { id = BA_news.1 } }
+	}
+}
+
+country_event = { #마지막 헌화 
+	id = COU_event.11
+	title = COU_event.11.t
+	desc = COU_event.11.desc
+	picture = GFX_event_mega_cities_SRT
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event.11.a
+		COU_MIYAKO = { remove_unit_leader_trait = COU_rabbit_ptsd }
+		COU_SAKI = { remove_unit_leader_trait = COU_rabbit_ptsd }
+		COU_MOE = { remove_unit_leader_trait = COU_rabbit_ptsd }
+		COU_MIYU = { remove_unit_leader_trait = COU_rabbit_ptsd }
+	}
+}
+
+
+
+###카야루트###
+country_event = { #블랙 커피 
+	id = COU_event_kaya.1
+	title = COU_event_kaya.1.t
+	desc = COU_event_kaya.1.desc
+	picture = GFX_report_event_picture_arrest_ayumu
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.1.a
+		add_political_power = 100
+	}
+}
+
+unit_leader_event = { #린: 당신은 장애가 있습니까? (90일의 타임리밋을 가진 한계 디시전 3개 발동 (각각 10%씩 올려줌 꺄악!)
+	id = COU_event_kaya.2
+	title = COU_event_kaya.2.t
+	desc = COU_event_kaya.2.desc
+
+    is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.2.a
+		activate_mission = COU_motivate_royalists_movement
+		activate_mission = COU_rin_completeing_focus_prorin
+		activate_mission = COU_rin_completeing_focus_proaoi
+		activate_mission = COU_rin_completeing_focus_prokaya
+		set_country_flag = RIN_royalists_activated
+	}
+}
+
+unit_leader_event = { #아오이와의 만남 
+	id = COU_event_kaya.3
+	title = COU_event_kaya.3.t
+	desc = COU_event_kaya.3.desc
+
+    is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.3.a
+		custom_effect_tooltip = COU_event_kaya_3_tooltip
+	}
+}
+
+country_event = { #인계 절차에 대한 의문 
+	id = COU_event_kaya.4
+	title = COU_event_kaya.4.t
+	desc = COU_event_kaya.4.desc
+	picture = GFX_COU_event_gsc_meetingroom
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.4.a
+		custom_effect_tooltip = COU_event_kaya_4_tooltip
+	}
+}
+
+country_event = { #베르디나소 지도부 사면 
+	id = COU_event_kaya.5
+	title = COU_event_kaya.5.t
+	desc = COU_event_kaya.5.desc
+	picture = GFX_report_event_generic_handshake
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.5.a
+	}
+}
+
+country_event = { #린 탄핵
+	id = COU_event_kaya.6
+	title = COU_event_kaya.6.t
+	desc = COU_event_kaya.6.desc
+	picture = GFX_report_event_picture_kaya_3
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	    hidden_effect = {
+		    set_politics = {
+			    ruling_party = fascism 
+			    elections_allowed = no 
+		    }
+		}
+	}
+
+	option = { 
+		name = COU_event_kaya.6.a
+		add_political_power = 100 
+		effect_tooltip = { 
+		    set_politics = {
+			    ruling_party = fascism 
+			    elections_allowed = no 
+		    }
+		}
+		news_event = { id = BA_news.161 hours = 6 }
+	}
+}
+
+country_event = { #통괄실의 음모
+	id = COU_event_kaya.7
+	title = COU_event_kaya.7.t
+	desc = COU_event_kaya.7.desc
+	picture = GFX_report_event_picture_arrest_momoka
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.7.a
+		add_ideas = COU_plot_of_rin
+	}
+}
+
+country_event = { #예상치 못한 상황 
+	id = COU_event_kaya.8
+	title = COU_event_kaya.8.t
+	desc = COU_event_kaya.8.desc
+	picture = GFX_report_event_picture_kaya_2
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.8.a
+		add_country_leader_trait = COU_ohno_so_many_works
+	}
+}
+
+country_event = { #임시 연대 세력의 붕괴 
+	id = COU_event_kaya.9
+	title = COU_event_kaya.9.t
+	desc = COU_event_kaya.9.desc
+	picture = GFX_COU_event_gsc_receptionroom
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.9.a
+		add_political_power = -50
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.05
+		}
+		swap_ideas = {
+		    remove_idea = COU_plot_of_rin
+			add_idea = COU_plot_of_rin_2
+		}
+	}
+}
+
+country_event = { #신규 행정명령들의 효력 발휘
+	id = COU_event_kaya.10
+	title = COU_event_kaya.10.t
+	desc = COU_event_kaya.10.desc
+	picture = GFX_report_event_picture_pen_and_papeer
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.10.a
+		add_political_power = 25
+		add_stability = 0.05
+	}
+}
+
+country_event = { #공포정치
+	id = COU_event_kaya.11
+	title = COU_event_kaya.11.t
+	desc = COU_event_kaya.11.desc
+	picture = GFX_report_event_picture_kaya_1
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.11.a
+        add_political_power = 100
+	}
+}
+
 
 
 
@@ -375,6 +540,47 @@ country_event = { #흥신소에 제안: 저희 같은 통화 쓰실래요?
 	    trigger = { HEU = { NOT = { has_completed_focus = HEU_general_student_council_aru } } }
 	}
 }
+
+country_event = { #샬레 이벤트: 살인면허 작동 ON 
+	id = COU_event_diplomancy.2
+	title = COU_event_diplomancy.2.t
+	desc = COU_event_diplomancy.2.desc
+	picture = GFX_COU_event_meetingroom
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_diplomancy.2.a
+		activate_mission = COU_SHE_declare_war_timeout
+		COU = { 
+		    country_event = { id = COU_event.2 } 
+		    activate_mission = COU_SHE_declare_war_timeout
+		}
+		set_global_flag = COU_division_of_military_flag
+	}
+}
+
+country_event = { #샬레 이벤트: 총학생회에 선전포고하기  
+	id = COU_event_diplomancy.3
+	title = COU_event_diplomancy.3.t
+	desc = COU_event_diplomancy.3.desc
+	picture = GFX_report_event_she_arona_notgood
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_diplomancy.3.a
+		news_event = { id = BA_news.131 hours = 6 }
+		create_wargoal = {
+			type = take_state_focus
+			target = COU
+			generator = { 7 35 6 29 }
+		}
+	}
+}
+
 
 
 
@@ -581,50 +787,6 @@ unit_leader_event = {
 		name = COU_event_military.7.a
 	}
 }
-
-
-
-
-###########
-####정치####
-###########
-
-##린##
-
-
-##아오이##
-
-
-##카야## 
-country_event = { 
-	id = COU_event.7
-	title = COU_event.7.t
-	desc = COU_event.7.desc
-	picture = GFX_report_event_picture_kaya_1
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-		name = COU_event.7.a
-		set_country_flag = UNLOCK_KAYA_CONTENTS
-		custom_effect_tooltip = COU_tooltip_kaya_get_moved
-		hidden_effect = { #collapse focus tree
-			load_focus_tree = {
-				tree = COU_focus_tree
-				keep_completed = yes
-			}
-			mark_focus_tree_layout_dirty = yes
-			country_event = { id = COU_event.31 hours = 6 }
-	    }
-	}
-}
-
-
-
-
-##모모카##
-
 
 
 

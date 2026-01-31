@@ -1,3 +1,87 @@
+Eden_pact_reset = {
+	log = "Eden_pact_reset"
+	if = {
+		limit = {
+			Eden_basic_joint_trigger = yes
+		}
+		if = {
+			limit = {
+				has_completed_focus = Eden_formation_of_alliance_treaty_organization
+				NOT = { has_dynamic_modifier = Eden_modifier_alliance_leader }
+				NOT = { has_dynamic_modifier = Eden_modifier_alliance_member }
+			}
+			add_dynamic_modifier = { modifier = Eden_modifier_alliance_member }
+		}
+
+		if = {
+			limit = {
+				has_completed_focus = Eden_military_academy
+				NOT = { has_idea = Eden_command_ns_exp }
+				NOT = { has_idea = Eden_command_ns }
+			}
+			add_ideas = Eden_command_ns_exp
+		}
+		else_if = {
+			limit = {
+				has_completed_focus = Eden_command
+				NOT = { has_idea = Eden_command_ns_exp }
+				NOT = { has_idea = Eden_command_ns }
+			}
+			add_ideas = Eden_command_ns
+		}
+		else_if = {
+			limit = {
+				has_completed_focus = Eden_military_academy
+				has_idea = Eden_command_ns
+			}
+			swap_ideas = {
+				remove_idea = Eden_command_ns
+				add_idea = Eden_command_ns_exp
+			}
+		}
+		
+		if = {
+			limit = {
+				has_completed_focus = Eden_economic_cooperation
+				NOT = { has_idea = Eden_economic_union_ns }
+			}
+			add_ideas = Eden_economic_union_ns
+		}
+		
+		if = {
+			limit = {
+				has_completed_focus = Eden_no_tariff_measure
+				NOT = { has_idea = Eden_no_tariff_measure }
+			}
+			add_ideas = Eden_no_tariff_measure
+		}
+		
+		if = {
+			limit = {
+				has_completed_focus = Eden_basic_research
+				NOT = { is_in_tech_sharing_group = Eden_research_tech_sharing }
+			}
+			add_to_tech_sharing_group = Eden_research_tech_sharing
+		}
+	}
+}
+
+TRK_debug_effect = {
+	set_variable = { TRK_industry_ns_consumer_goods_factor = 0.50 }
+	set_variable = { TRK_industry_ns_production_speed_industrial_complex_factor = 0.05 }
+	set_variable = { TRK_industry_ns_production_speed_arms_factory_factor = -0.25 }
+	set_variable = { TRK_industry_ns_industrial_capacity_factory = 0 }
+	set_variable = { TRK_industry_ns_production_factory_efficiency_gain_factor = 0 }
+	set_variable = { TRK_industry_ns_conversion_cost_civ_to_mil_factor = 0.2 }
+	set_variable = { TRK_industry_ns_production_speed_buildings_factor = 0.00 }
+	set_variable = { TRK_industry_ns_industrial_capacity_dockyard = 0 }
+	set_variable = { TRK_industry_ns_production_factory_start_efficiency_factor = 0 }
+	set_variable = { TRK_industry_ns_production_factory_max_efficiency_factor = 0 }
+	set_variable = { TRK_industry_ns_line_change_production_efficiency_factor = 0 }
+	set_variable = { TRK_industry_ns_industry_air_damage_factor = 0 }
+	set_variable = { TRK_industry_ns_local_resources_factor = 0 }
+	set_variable = { TRK_industry_ns_research_speed_factor = 0 }
+}
 TRM_debug_kpd_effect = {
 	set_variable = { TRM_anti_trinity_game_KPD_side_TRM_var = global.TRM_KPD_country_collapse_decisions_rps }
 	set_variable = { TRM_anti_trinity_game_KPD_side_KPD_var = global.KPD_country_collapse_decisions_rps }
@@ -1873,6 +1957,7 @@ TRN_Social_Problem_effect = {
 
 
 TRN_init_rework_setting_effect = {
+	set_country_flag = TRN_trinity_rework_flag
 	load_focus_tree = Trinity_focus
 	TRM_remove_inner_faction = yes
 	TRN_Kozeki_Ui = {

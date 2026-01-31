@@ -728,9 +728,61 @@ on_actions = {
 				}
 				if = {
 					limit = { country_exists = TRK }
-					#TRK = { country_event = { id = TRK_events.0 days = 28 } }
 					TRK = { country_event = { id = TRK_events.1 days = 1 } }
 				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					ROOT  = {
+						original_tag = var:global.Eden_centralized_eden_treaty_originator
+						has_completed_focus = Eden_centralized_eden_treaty		
+					}
+					FROM = {
+						is_subject_of = ROOT
+						OR = {
+							original_tag = ARI
+							original_tag = TRK
+							original_tag = TRM
+							original_tag = HEU
+							original_tag = GEH
+							original_tag = GEM
+						}
+						NOT = {
+							has_autonomy_state = autonomy_eden_centralized_eden_treaty_member
+						}
+					}
+				}
+
+				set_autonomy = {
+					target=FROM
+					autonomy_state = autonomy_eden_centralized_eden_treaty_member
+					freedom_level = 0 # 0-1 
+					end_wars  = no # default yes. will not cancel non civil wars if set to no
+					end_civil_wars = no # default yes. will not cancel civil wars if set to no
+				}
+				if = {
+					limit = {
+						NOT = {
+							var:global.Eden_centralized_eden_treaty_originator = {
+								is_in_array = {
+									array = Eden_centralized_eden_treaty_members
+									value = FROM
+								}
+							}
+						}
+					}
+
+					var:global.Eden_centralized_eden_treaty_originator = {
+						add_to_array = {
+							array = Eden_centralized_eden_treaty_members
+							value = FROM 
+						}
+					}
+				}
+				
+				Eden_pact_reset = yes
 			}
 		}
 	}

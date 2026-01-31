@@ -1,0 +1,1005 @@
+focus_tree = {
+	id = BA_IRE_focus_Tree
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = IRE
+		}
+	}
+	continuous_focus_position = {
+		x = 100
+		y = 100
+	}
+	focus = { # 무너지는 제국
+		#relative_position_id = IRE_focus_
+		id = IRE_focus_the_falling_empire
+		icon = GFX_focus_eng_decolonization
+		#prerequisite = { focus = IRE_focus_ }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 10
+		y = 0
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 50
+			swap_ideas = {
+				remove_idea = IRE_freestate_danger_idea
+				add_idea = IRE_unstable_republic_idea
+			}
+			custom_effect_tooltip = IRE_tt_1
+			ENG = {
+				set_autonomy = {
+					target = IRE
+					autonomous_state = autonomy_free
+					end_wars = yes
+				}
+			}
+			leave_faction = yes
+			add_ideas = IRE_new_constitution_idea
+		}
+		select_effect = {
+			add_political_power = 0
+		}
+	}
+	focus = { # 조약항 접수
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_treaty_port_reception
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = IRE_focus_the_falling_empire }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 1
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+			controls_state = 134
+			controls_state = 135
+		} 
+		bypass = {
+			NOT = {
+				controls_state = 134
+				controls_state = 135
+			}
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 300
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1
+				amount = 300
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 90
+				producer = ENG
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_1
+				amount = 29
+				producer = ENG
+			}
+			134 = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 9405
+				}
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 7394
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 9405
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 7394
+				}
+			}
+			135 = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = 337
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = 337
+				}
+			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 얼스터를 향한 진군
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_steps_towards_n_ireland
+		icon = GFX_focus_attack_britain
+		prerequisite = { focus = IRE_focus_the_falling_empire }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 1
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			transfer_state = 119
+			119 = {
+				set_state_name = IRE_name_state_119
+			}
+			ENG = {
+				add_opinion_modifier = {
+					target = IRE
+					modifier = ENG_to_IRE_Betray
+				}
+			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 내부 충격에 대비
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_prepare_for_internal_shocks
+		icon = GFX_focus_generic_self_management
+		prerequisite = { focus = IRE_focus_steps_towards_n_ireland }
+		mutually_exclusive = { focus = IRE_focus_isle_of_man_raid }
+		x = 0
+		y = 2
+		cost = 2.9
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = IRE_tt_2
+			set_country_flag = IRE_flag_prepare_for_internal_shocks
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 아일랜드 재정 긴축
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_fiscal_austerity
+		icon = GFX_focus_ETH_adopt_the_lira
+		prerequisite = { focus = IRE_focus_prepare_for_internal_shocks }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 3
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_ideas = IRE_fiscal_austerity_idea
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 맨섬 급습
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_isle_of_man_raid
+		icon = GFX_focus_generic_naval_invasion
+		prerequisite = { focus = IRE_focus_steps_towards_n_ireland }
+		mutually_exclusive = { focus = IRE_focus_prepare_for_internal_shocks }
+		x = 2
+		y = 2
+		cost = 2.9
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_state_claim = 932
+			transfer_state = 932
+			hidden_effect = {
+				932 = {
+					set_compliance = 70
+				}
+			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 대서양의 전초기지
+		relative_position_id = IRE_focus_the_falling_empire
+		id = IRE_focus_atlantic_outpost
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = IRE_focus_isle_of_man_raid }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 3
+		cost = 1.5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_global_flag = ENG_lose_global_flag
+			}
+			controls_state = 932
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			932 = {
+				strategic_province_location = {
+					defensible_coastline = 3311
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 3
+					instant_build = yes
+					province = 3311
+				}
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = cat_fortification
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = marine_tech
+			}
+		}
+		continue_if_invalid = yes
+	}
+	focus = { # 두 번째 대위기
+		#relative_position_id = IRE_focus_
+		id = IRE_focus_second_great_crisis
+		icon = GFX_focus_SWE_neither_death_nor_dishonor
+		#prerequisite = { focus = IRE_focus_ }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 10
+		y = 5
+		cost = 0
+		search_filters = {}
+		available = {
+			has_global_flag = unlock_focuses
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			effect_tooltip = {
+				add_stability = -0.05
+				custom_effect_tooltip = IRE_DM_tt_1
+				if = {
+					limit = {
+						has_country_flag = IRE_flag_prepare_for_internal_shocks
+					}
+					custom_effect_tooltip = IRE_DM_tt_2
+				}
+			}
+		}
+	}
+	focus = { # 피어너 팔 내각
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_FF
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = IRE_focus_second_great_crisis }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = { # 비상대책위원회 구성
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_formation_of_an_emergency_response_committee
+		icon = GFX_goal_reichsautobahn
+		prerequisite = { focus = IRE_focus_FF }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+		} 
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 50
+			custom_effect_tooltip = IRE_DM_tt_4
+			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 부유세
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_wealth_tax
+		icon = GFX_focus_mex_privatisation
+		prerequisite = { focus = IRE_focus_cooperation_with_LP }
+		mutually_exclusive = { focus = IRE_focus_turn_the_rotary_press }
+		x = -2
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_popularity = { 
+				ideology = communism 
+				popularity = 0.05 
+			}
+			custom_effect_tooltip = IRE_DM_tt_8
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.15 }
+			add_to_variable = {
+				tooltip = IRE_LE_tt_2
+				var = IRE_parliament_seat_array^1
+				value = -10
+			}
+			add_to_variable = {
+				var = IRE_parliament_seat_array^3
+				value = 10
+			}
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 윤전기를 돌려라!
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_turn_the_rotary_press
+		icon = GFX_focus_generic_currency_reforms
+		prerequisite = { focus = IRE_focus_FF }
+		mutually_exclusive = { focus = IRE_focus_wealth_tax }
+		x = 0
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_popularity = { 
+				ideology = democratic 
+				popularity = 0.10
+			}
+			custom_effect_tooltip = IRE_DM_tt_11
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.20 }
+			add_timed_idea = {
+				idea = IRE_inflation_1_idea
+				days = 90
+			}
+			custom_effect_tooltip = IRE_tt_5
+		}
+	}
+	focus = { # 재외동포에게 호소
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_appeal_to_our_compatriots
+		icon = GFX_focus_generic_befriend_usa
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_war_with = USA
+			}
+		}
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = IRE_DM_tt_12
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.10 }
+			add_to_variable = { IRE_DM1_monthly_population = 0.20 }
+		}
+	}
+	focus = { # 핵심 산업 통제
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_control_of_key_industries
+		icon = GFX_focus_generic_price_controls
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_6
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
+			add_to_variable = { IRE_DM1_stability_factor = 0.10 }
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+		}
+	}
+	focus = { # 협동조합 확대
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_expanding_cooperatives
+		icon = GFX_goal_generic_national_unity
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 3
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_5
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
+		}
+	}
+	focus = { # 농산물 가격 보장
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_agricultural_product_price_guarantee
+		icon = GFX_focus_generic_farmland
+		prerequisite = { focus = IRE_focus_control_of_key_industries }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 5
+		cost = 5
+		search_filters = {}
+		available = {
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_popularity = { 
+				ideology = democratic 
+				popularity = 0.05
+			}
+			custom_effect_tooltip = IRE_DM_tt_6
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
+			add_to_variable = { IRE_DM1_stability_factor = 0.10 }
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			if = {
+				limit = {
+					has_country_flag = IRE_FF_with_LP
+				}
+				add_popularity = { 
+					ideology = communism 
+					popularity = 0.05
+				}
+			}
+		}
+	}
+	focus = { # 섀넌 계획의 지속
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_shannon
+		icon = GFX_focus_generic_hydroelectric_energy
+		prerequisite = { focus = IRE_focus_formation_of_an_emergency_response_committee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 5
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			controls_state = 135
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_popularity = { 
+				ideology = democratic 
+				popularity = 0.05
+			}
+			custom_effect_tooltip = IRE_DM_tt_10
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_to_variable = { IRE_DM1_stability_factor = 0.05 }
+			add_timed_idea = {
+				idea = IRE_shannon_idea
+				days = 400
+			}
+		}
+	}
+	focus = { # 협동조합과의 협력
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_with_cooperatives
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = IRE_focus_expanding_cooperatives }
+		prerequisite = { focus = IRE_focus_shannon }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 5
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			custom_effect_tooltip = IRE_DM_tt_4
+			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 토지개간사업
+		relative_position_id = IRE_focus_second_great_crisis
+		id = IRE_focus_land_reclamation_project
+		icon = GFX_focus_generic_land_reclamation
+		prerequisite = { focus = IRE_focus_with_cooperatives }
+		prerequisite = { focus = IRE_focus_agricultural_product_price_guarantee }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 3
+		y = 6
+		cost = 10
+		search_filters = {}
+		available = {
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+			}
+			custom_effect_tooltip = IRE_DM_tt_13
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.15 }
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 무소속 의원 포섭
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_involvement_of_independent_lawmakers
+		icon = GFX_goal_generic_intelligence_exchange
+		prerequisite = { focus = IRE_focus_FF }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = IRE_LT_tt_1
+				check_variable = { IRE_parliament_seat_array^3 > 29 }
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 50
+			add_to_variable = {
+				tooltip = IRE_LE_tt_1
+				var = IRE_parliament_seat_array^3
+				value = -30
+			}
+			add_to_variable = {
+				var = IRE_parliament_seat_array^1
+				value = 30
+			}
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 노동당과의 협력
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_cooperation_with_LP
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = { focus = IRE_focus_FF }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -5
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 50
+			custom_effect_tooltip = IRE_tt_3
+			add_to_variable = {
+				tooltip = IRE_LE_tt_2
+				var = IRE_parliament_seat_array^1
+				value = -10
+			}
+			add_to_variable = {
+				var = IRE_parliament_seat_array^3
+				value = 10
+			}
+			set_country_flag = IRE_FF_with_LP
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 철도 산업 국유화
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_nationalization_of_railway_industry
+		icon = GFX_focus_generic_railroad
+		prerequisite = { focus = IRE_focus_cooperation_with_LP }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_LP
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = IRE_nationalized_railways_1_idea
+				days = 120
+			}
+			custom_effect_tooltip = IRE_DM_tt_7
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
+			add_to_variable = {
+				tooltip = IRE_LE_tt_2
+				var = IRE_parliament_seat_array^1
+				value = -10
+			}
+			add_to_variable = {
+				var = IRE_parliament_seat_array^3
+				value = 10
+			}
+			reload_parliament_gui = yes
+			IRE_FF_with_LP_calculate = yes
+		}
+	}
+	focus = { # 국가의 농산물 매입
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_purchase_of_national_agricultural_products
+		icon = GFX_focus_prc_agrarian_socialism
+		prerequisite = { focus = IRE_focus_cooperation_with_LP }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 2
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_LP
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_10
+			add_to_variable = { IRE_DM1_stability_factor = 0.05 }
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_popularity = { 
+				ideology = democratic 
+				popularity = 0.05
+			}
+			add_popularity = { 
+				ideology = communism 
+				popularity = 0.10
+			}
+		}
+	}
+	focus = { # 식량 배급
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_food_rationing
+		icon = GFX_focus_HUN_goulash_communism
+		prerequisite = { focus = IRE_focus_purchase_of_national_agricultural_products }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -2
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_LP
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			custom_effect_tooltip = IRE_DM_tt_9
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
+			add_to_variable = { IRE_DM1_monthly_population = 0.50 }
+		}
+	}
+	focus = { # 모스크바에 접촉
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_sabasaba_with_soviet
+		icon = GFX_focus_chi_mission_to_the_soviet_union
+		prerequisite = { focus = IRE_focus_cooperation_with_LP }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 2
+		cost = 10
+		search_filters = {}
+		available = {
+			NOT = {
+				has_war_with = SOV
+			}
+			has_country_flag = IRE_FF_with_LP
+			if = {
+				limit = { has_country_flag = IRE_FF_with_LP }
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_FF_plus_LP > 100 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_2
+					check_variable = { IRE_parliament_seat_array^1 > 100 }
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			SOV = {
+				country_event = {
+					id = IRE_event.9
+					hours = 12
+				}
+			}
+			country_event = IRE_event.8
+		}
+	}
+	focus = { # 협동조합주의
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_cooperativeism
+		icon = GFX_goal_generic_soviet_construction
+		prerequisite = { focus = IRE_focus_cooperation_with_LP }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_LP
+			has_completed_focus = IRE_focus_expanding_cooperatives
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.05
+			custom_effect_tooltip = IRE_DM_tt_14
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_to_variable = { IRE_DM1_political_power_cost = -0.20 }
+			country_event = IRE_event.8
+		}
+	}
+	focus = { # 아일랜드 특색 협동조합주의
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_ire_cooperativeism
+		icon = GFX_focus_por_workers_of_iberia
+		prerequisite = { focus = IRE_focus_cooperativeism }
+		prerequisite = { focus = IRE_focus_purchase_of_national_agricultural_products }
+		mutually_exclusive = { focus = IRE_focus_sov_economy }
+		x = 0
+		y = 3
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_LP
+			has_completed_focus = IRE_focus_expanding_cooperatives
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_ideas = IRE_ire_economy_idea
+			custom_effect_tooltip = IRE_DM_tt_15
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
+			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
+			country_event = IRE_event.8
+		}
+	}
+	focus = { # 동방에서의 학습
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_sov_economy
+		icon = GFX_focus_generic_communist_industry
+		prerequisite = { focus = IRE_focus_sabasaba_with_soviet }
+		mutually_exclusive = { focus = IRE_focus_ire_cooperativeism }
+		x = 2
+		y = 3
+		cost = 10
+		search_filters = {}
+		available = {
+			NOT = {
+				has_war_with = SOV
+			}
+			SOV = {
+				has_government = communism
+			}
+			has_country_flag = IRE_FF_with_LP
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_ideas = IRE_sov_economy_idea
+			custom_effect_tooltip = IRE_DM_tt_15
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
+			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
+			country_event = IRE_event.8
+		}
+	}
+	focus = { # 회복하는 경제
+		relative_position_id = IRE_focus_cooperation_with_LP
+		id = IRE_focus_recovering_economy
+		icon = GFX_focus_generic_economic_recovery
+		prerequisite = { focus = IRE_focus_ire_cooperativeism focus = IRE_focus_sov_economy }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = IRE_recovering_economy_idea
+				days = 360
+			}
+		}
+	}
+	focus = { # 위기 극복 선언
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_declaration_of_overcoming_crisis
+		icon = GFX_focus_generic_the_giant_wakes
+		prerequisite = { focus = IRE_focus_recovering_economy }
+		prerequisite = { focus = IRE_focus_land_reclamation_project }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 6
+		cost = 5
+		search_filters = {}
+		available = {
+			NOT = {
+				has_idea = IRE_recovering_economy_idea
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.10
+			remove_dynamic_modifier = {
+				modifier = IRE_engire_trade_war_idea2
+			}
+			remove_ideas = IRE_agricultural_society_1_idea ##일단 임시로
+		}
+	}
+}

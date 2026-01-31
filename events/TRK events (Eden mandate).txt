@@ -3,6 +3,9 @@ add_namespace = TRK_news_events
 add_namespace = TRK_election_events
 add_namespace = TRK_flavor_events
 
+# ================================================
+# 일반 이벤트
+# ================================================
 country_event = {
 	id = TRK_events.1
 	title = TRK_events.1.t
@@ -112,6 +115,212 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = TRK_events.4
+	title = TRK_events.4.t
+	desc = TRK_events.4.desc
+	picture = GFX_report_event_picture_peroro
+
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.4.a
+	}
+}
+
+country_event = {
+	id = TRK_events.5
+	title = TRK_events.5.t
+	desc = TRK_events.5.desc
+	picture = GFX_report_event_british_artillery
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.5.a
+		add_manpower = 120000
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 3000
+			producer = GEM
+		}
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 1500
+			producer = GEH
+		}
+		add_equipment_to_stockpile = {
+			type = kivotos_infantry_equipment
+			amount = 750
+			producer = GEM
+		}
+		add_equipment_to_stockpile = {
+			type = kivotos_infantry_equipment
+			amount = 500
+			producer = GEH
+		}
+		add_equipment_to_stockpile = {
+			type = artillery_equipment
+			amount = 300
+			producer = GEM
+		}
+		add_equipment_to_stockpile = {
+			type = artillery_equipment
+			amount = 150
+			producer = GEH
+		}
+	}
+}
+
+country_event = {
+	id = TRK_events.6
+	title = TRK_events.6.t
+	desc = TRK_events.6.desc
+	picture = GFX_report_event_british_artillery
+
+    fire_only_once = yes
+
+	trigger = {
+		OR = {
+			original_tag = GEM
+			original_tag = GEH
+		}
+		country_exists = TRK
+
+		BA_gehennea_core_control = yes
+
+		OR = {
+			AND = {
+				country_exists = GEM
+				NOT = { country_exists = GEH }
+			}
+			AND = {
+				country_exists = GEH
+				NOT = { country_exists = GEM }
+			}
+		}
+	}
+
+	option = { 
+		name = TRK_events.6.a
+		add_war_support = -0.05
+		set_variable = { global.TRK_owner = ROOT }
+		random_country = {
+			limit = { has_idea = TRK_gehenna_puppet }
+			swap_ideas = {
+				remove_idea = TRK_gehenna_puppet
+				add_idea = TRK_gehenna_puppet_next
+			}
+		}
+
+		TRK = { country_event = { id = TRK_events.5 hours = 2 } }
+
+		if = {
+			limit = {
+				ARI = {
+					exists = yes
+					has_capitulated = no
+					NOT = {
+						has_war_with = GEH
+						has_war_with = GEM
+						has_war_with = TRK
+					}
+					NOT = {
+						BA_prussian_territory_control = yes
+					}
+				}
+			}
+			ARI = { country_event = { id = TRK_events.7 hours = 2 } }
+		}
+	}
+}
+
+country_event = { # 기본 요구
+	id = TRK_events.7
+	title = TRK_events.7.t
+	desc = TRK_events.7.desc
+	picture = GFX_report_event_british_artillery
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.7.a
+		TRK = { country_event = { id = TRK_events.8 hours = 2 } }
+	}
+	option = { 
+		name = TRK_events.7.b
+		add_stability = 0.05
+	}
+}
+
+country_event = { # 7에 대한 a수락 b거부
+	id = TRK_events.8
+	title = TRK_events.8.t
+	desc = TRK_events.8.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.8.a
+		ai_chance = {
+			factor = 4000
+		}
+		FROM = { country_event = { id = TRK_events.9 hours = 2 } }
+	}
+	option = { 
+		name = TRK_events.8.b
+		FROM = { country_event = { id = TRK_events.10 hours = 2 } }
+	}
+}
+
+country_event = { # 8 - a에 대한 반응
+	id = TRK_events.9
+	title = TRK_events.9.t
+	desc = TRK_events.9.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = excellent
+		every_state = {
+			limit = {
+				BA_prussian_territory_is = yes
+				is_controlled_by = TRK
+			}
+			transfer_state_to = ROOT
+		}
+	}
+}
+
+# excellent: "훌륭하군."
+# unfortunate: "유감스럽군."
+# traitors: "배신자들 같으니!"
+
+country_event = { # 8 - b에 대한 반응
+	id = TRK_events.10
+	title = TRK_events.10.t
+	desc = TRK_events.10.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.10.a
+		create_wargoal = {
+			target = TRK
+			type = annex_everything
+		}
+	}
+	option = { 
+		name = unfortunate
+	}
+}
+
+# ================================================
+# 선거 이벤트 (Election Events)
+# ================================================
 unit_leader_event = { # 하나코
 	id = TRK_election_events.1
 	title = TRK_election_events.1.t
@@ -284,7 +493,7 @@ country_event = {
 	id = TRK_election_events.7
 	title = TRK_election_events.7.t
 	desc = TRK_election_events.7.desc
-	picture = GFX_report_event_seia_panic
+	picture = GFX_report_event_picture_urawa_hanako
 
     	is_triggered_only = yes
 
@@ -437,6 +646,9 @@ country_event = { # 선거 결과
 			check_variable = { TRK_ST_var > TRK_FI_var }
 			check_variable = { TRK_ST_var > TRK_SH_var }
 		}
+		TRN_Yurizono_Seia = {
+			unit_leader_event = { id = TRK_election_events.12 }
+		}
 	}
 
 	option = { 
@@ -446,6 +658,9 @@ country_event = { # 선거 결과
 			check_variable = { TRK_FI_var > TRK_ST_var }
 			check_variable = { TRK_FI_var > TRK_SH_var }
 		}
+		TRN_Kirifuji_Nagisa = {
+			unit_leader_event = { id = TRK_election_events.12 }
+		}
 	}
 
 	option = { 
@@ -454,6 +669,9 @@ country_event = { # 선거 결과
 			check_variable = { TRK_SH_var > TRK_SU_var }
 			check_variable = { TRK_SH_var > TRK_ST_var }
 			check_variable = { TRK_SH_var > TRK_FI_var }
+		}
+		TRN_Utazumi_Sakurako = {
+			unit_leader_event = { id = TRK_election_events.12 }
 		}
 	}
 	option = {
@@ -510,7 +728,7 @@ unit_leader_event = { # 취임식 연설
 			check_variable = { TRK_FI_var > TRK_ST_var }
 			check_variable = { TRK_FI_var > TRK_SH_var }
 		}
-		text = TRK_election_events.12.desc.seia
+		text = TRK_election_events.12.desc.nagisa
 	}
 	desc = {
 		trigger = {
@@ -530,11 +748,12 @@ unit_leader_event = { # 취임식 연설
 			check_variable = { TRK_SU_var > TRK_FI_var }
 			check_variable = { TRK_SU_var > TRK_SH_var }
 		}
+		set_variable = { TRK_host_var = 1 }
 		add_country_leader_role = {
 			character = TRN_Urawa_Hanako
 			promote_leader = yes
 			country_leader = {
-				ideology = trinity_social_liberal
+				ideology = KR_social_liberal
 				expire = "1965.1.1.1"
 				traits = { }
 			}
@@ -542,8 +761,8 @@ unit_leader_event = { # 취임식 연설
 		complete_national_focus = TRK_student_union
 		set_party_name = {
 			ideology = democratic
-			long_name = trinity_social_liberal_party_long
-			name = trinity_social_liberal_party
+			long_name = trinity_student_coalition_long
+			name = trinity_student_coalition
 		}
 	}
 
@@ -554,6 +773,22 @@ unit_leader_event = { # 취임식 연설
 			check_variable = { TRK_ST_var > TRK_FI_var }
 			check_variable = { TRK_ST_var > TRK_SH_var }
 		}
+		set_variable = { TRK_host_var = 2 }
+		add_country_leader_role = {
+			character = TRN_Yurizono_Seia
+			promote_leader = yes
+			country_leader = {
+				ideology = KR_social_democrat
+				expire = "1965.1.1.1"
+				traits = { }
+			}
+		}
+		complete_national_focus = TRK_sanctus
+		set_party_name = {
+			ideology = democratic
+			name = trinity_sanctus_party
+			long_name = trinity_sanctus_party_long
+		}
 	}
 
 	option = { 
@@ -563,6 +798,22 @@ unit_leader_event = { # 취임식 연설
 			check_variable = { TRK_FI_var > TRK_ST_var }
 			check_variable = { TRK_FI_var > TRK_SH_var }
 		}
+		set_variable = { TRK_host_var = 3 }
+		add_country_leader_role = {
+			character = TRN_Kirifuji_Nagisa
+			promote_leader = yes
+			country_leader = {
+				ideology = KR_social_liberal
+				expire = "1965.1.1.1"
+				traits = { }
+			}
+		}
+		complete_national_focus = TRK_filius
+		set_party_name = {
+			ideology = democratic
+			name = trinity_filius_party
+			long_name = trinity_filius_party_long
+		}
 	}
 
 	option = { 
@@ -571,6 +822,28 @@ unit_leader_event = { # 취임식 연설
 			check_variable = { TRK_SH_var > TRK_SU_var }
 			check_variable = { TRK_SH_var > TRK_ST_var }
 			check_variable = { TRK_SH_var > TRK_FI_var }
+		}
+		set_variable = { TRK_host_var = 4 }
+		add_country_leader_role = {
+			character = TRN_Utazumi_Sakurako
+			promote_leader = yes
+			country_leader = {
+				ideology = KR_social_conservative
+				expire = "1965.1.1.1"
+				traits = { }
+			}
+		}
+		complete_national_focus = TRK_sisterhood
+		set_party_name = {
+			ideology = democratic
+			name = trinity_sisterhood_party
+			long_name = trinity_sisterhood_party_long
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			news_event = { id = TRK_news_events.1 hours = 02 }
 		}
 	}
 }
@@ -585,29 +858,44 @@ country_event = {
 	option = { 
 		name = TRK_election_events.13.a 
 		set_variable = { TRK_SU_var = 99 }
+		set_variable = { TRK_ST_var = 0 }
+		set_variable = { TRK_FI_var = 0 }
+		set_variable = { TRK_SH_var = 0 }
 	}
 
 	option = { 
 		name = TRK_election_events.13.b
+		set_variable = { TRK_SU_var = 0 }
 		set_variable = { TRK_ST_var = 99 }
+		set_variable = { TRK_FI_var = 0 }
+		set_variable = { TRK_SH_var = 0 }
 	}
 
 	option = { 
 		name = TRK_election_events.13.c 
+		set_variable = { TRK_SU_var = 0 }
+		set_variable = { TRK_ST_var = 0 }
 		set_variable = { TRK_FI_var = 99 }
+		set_variable = { TRK_SH_var = 0 }
 	}
 
 	option = { 
 		name = TRK_election_events.13.d
+		set_variable = { TRK_SU_var = 0 }
+		set_variable = { TRK_ST_var = 0 }
+		set_variable = { TRK_FI_var = 0 }
 		set_variable = { TRK_SH_var = 99 }
 	}
 }
 
+# ================================================
+# 풍미 이벤트 (Flavor Events)
+# ================================================
 country_event = {
 	id = TRK_flavor_events.1
 	title = TRK_flavor_events.1.t
 	desc = TRK_flavor_events.1.desc
-	picture = GFX_report_event_generic_trinity_front_gate
+	picture = GFX_report_event_picture_swim_nagisa
 
     	is_triggered_only = yes
 
@@ -620,6 +908,7 @@ country_event = {
 	id = TRK_flavor_events.2
 	title = TRK_flavor_events.2.t
 	desc = TRK_flavor_events.2.desc
+	picture = GFX_report_event_picture_swim_seia
 
     	is_triggered_only = yes
 
@@ -632,6 +921,7 @@ country_event = {
 	id = TRK_flavor_events.3
 	title = TRK_flavor_events.3.t
 	desc = TRK_flavor_events.3.desc
+	picture = GFX_report_event_picture_urawa_hanako
 
     	is_triggered_only = yes
 
@@ -653,13 +943,28 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = TRK_flavor_events.5
+	title = TRK_flavor_events.5.t
+	desc = TRK_flavor_events.5.desc
+	picture = GFX_report_event_picture_urawa_hanako
 
-# 
+    	is_triggered_only = yes
+
+	option = { 
+		name = TRK_flavor_events.5.a
+	}
+}
+
+
+# ================================================
+# 뉴스 이벤트 (News Events)
+# ================================================
 news_event = {
 	id = TRK_news_events.1
-	title = TRK_news_events.1.t
-	desc = TRK_news_events.1.desc
-	picture = GFX_news_event_trinity_street_ruin
+	title = [GetTrkHostNewsTitle]
+	desc = [GetTrkHostNewsDesc]
+	picture = [GetTrkHostPicture]
 	
 	major = yes
 	is_triggered_only = yes
@@ -667,14 +972,44 @@ news_event = {
 	option = {
 		name = TRK_news_events.1.a
 		trigger = {
-			Kivotos_tag = yes
+			tag = TRK
 		}
 	}
 
 	option = {
 		name = TRK_news_events.1.b
 		trigger = {
+			OR = {
+				tag = GEM
+				tag = GEH
+				tag = HEU
+			}
+		}
+	}
+
+	option = {
+		name = TRK_news_events.1.c
+		trigger = {
+			NOT = {
+				tag = TRK 
+				tag = GEM
+				tag = GEH
+				tag = HEU
+			}
+			Kivotos_tag = yes
+		}
+	}
+	
+	option = {
+		name = news.28.a
+		trigger = {
 			Kivotos_tag = no
+			OR = {
+				check_variable = { TRK.TRK_host_var = 1 }
+				check_variable = { TRK.TRK_host_var = 2 }
+				check_variable = { TRK.TRK_host_var = 3 }
+				check_variable = { TRK.TRK_host_var = 4 }
+			}
 		}
 	}
 }

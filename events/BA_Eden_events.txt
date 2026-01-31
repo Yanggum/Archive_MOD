@@ -11,6 +11,9 @@ country_event = {
 
 	option = {
 		name = Eden_event.1.a
+		ai_chance = {
+			factor = 0.001
+		}
 		custom_effect_tooltip = GAME_OVER_TT
 		var:global.Eden_alliance_leader = {
 			country_event = { id = Eden_event.2 hours = 8 }
@@ -65,4 +68,173 @@ country_event = {
 			type = annex_everything
 		}
 	}
+}
+
+country_event = {
+	id = Eden_event.4
+	title = Eden_event.4.t
+	desc = Eden_event.4.desc
+	picture = GFX_event_Eden_event
+
+    is_triggered_only = yes
+
+	immediate = {
+        hidden_effect = {
+            set_variable = { temp_opinion = ROOT.opinion@var:global.Eden_centralized_eden_treaty_originator }
+            multiply_variable = { temp_opinion = 0.1 }
+        }
+    }
+
+	option = { # NO
+		name = Eden_event.4.a
+		ai_chance = {
+			base = 5
+			modifier = {
+				is_subject = yes
+				add = 100
+			}
+		}
+
+		var:global.Eden_centralized_eden_treaty_originator = { country_event = { id = Eden_event.6 hours = 3 } }
+		
+		var:global.Eden_centralized_eden_treaty_originator = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = ROOT
+            }
+		}
+	}
+	option = {
+		name = Eden_event.4.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				var:global.Eden_centralized_eden_treaty_originator = {
+					is_ai = yes
+				}
+				factor = 1.2
+			}
+
+			modifier = {
+				is_subject = yes
+				factor = 0
+			}
+
+			modifier = {
+				has_war_together_with = var:global.Eden_centralized_eden_treaty_originator
+				factor = 1.5
+			}
+
+			modifier = {
+				has_government = var:global.Eden_centralized_eden_treaty_originator
+				factor = 2
+			}
+			
+			modifier = {
+                always = yes 
+                add = ROOT.temp_opinion
+            }
+			
+			modifier = {
+				var:global.Eden_centralized_eden_treaty_originator = {
+					strength_ratio = {
+						tag = PREV
+						ratio > 1.50
+					}
+				}
+				add = 6
+			}
+
+			modifier = {
+				var:global.Eden_centralized_eden_treaty_originator = {
+					strength_ratio = {
+						tag = PREV
+						ratio > 4.0
+					}
+				}
+				add = 20
+			}
+		}
+
+		var:global.Eden_centralized_eden_treaty_originator= {
+			add_to_array = {
+				array = Eden_centralized_eden_treaty_members
+				value = PREV #optional, if not defined adds scope
+			}
+			country_event = { id = Eden_event.5 hours = 6 }
+			puppet = PREV
+			set_autonomy = {
+			 	target = PREV
+			 	autonomy_state = autonomy_eden_centralized_eden_treaty_member
+			 	freedom_level = 0 # 0-1 
+			}
+		}
+		#if = {
+		#	limit = {
+		#		is_ai = yes
+		#	}
+		#	if = {
+		#		limit = {
+		#			original_tag = FIN
+		#		}
+		#		FIN_erik_heinrichs = { set_nationality = SWE }
+		#		FIN_vilho_petter_nenonen = { set_nationality = SWE }
+		#		FIN_woldemar_hagglund = { set_nationality = SWE }
+		#		FIN_aarne_juutilainen = { set_nationality = SWE }
+		#		FIN_karl_oesch = { set_nationality = SWE } 
+		#		FIN_wiljo_einar_tuompo = { set_nationality = SWE }
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			original_tag = DEN
+		#		}
+		#		
+		#		DEN_charles_henry_rye = { set_nationality = SWE  }
+		#		DEN_erik_with = { set_nationality = SWE  }
+		#		DEN_paul_ramm = { set_nationality = SWE  }
+		#		DEN_frederik_christian_essemann = { set_nationality = SWE  }
+		#	}
+		#	else_if = {
+		#		limit = {
+		#			original_tag = NOR
+		#		}
+		#		NOR_jacob_hivden_haug = { set_nationality = SWE }
+		#		NOR_jacob_ager_laurantzon = { set_nationality = SWE }
+		#	
+		#	}
+		#}
+
+		Eden_pact_reset = yes
+	}
+	after = {
+        clear_variable = ROOT.temp_opinion
+	}
+}
+
+#Nordic country accepts
+country_event = {
+	id = Eden_event.5
+	title = Eden_event.5.t
+	desc = Eden_event.5.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = Eden_event.5.a
+	}
+
+}
+
+#Nordic country rejects
+country_event = {
+	id = Eden_event.6
+	title = Eden_event.6.t
+	desc = Eden_event.6.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = Eden_event.6.a
+	}
+
 }

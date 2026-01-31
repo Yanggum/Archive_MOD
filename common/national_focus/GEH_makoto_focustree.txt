@@ -1,4 +1,4 @@
-#!gfx:interface\BA_goals.gfx
+#!gfx:interface\BlueArchive\01 goals.gfx
 focus_tree = {
 	id = GEH_makoto_focustree
 
@@ -67,7 +67,7 @@ focus_tree = {
 			tag = GEM
 		}
 	}
-	continuous_focus_position = { x = 800 y = 900 }
+	continuous_focus_position = { x = 800 y = 1200 }
 	initial_show_position = {
 		x = 10
 		y = 0
@@ -2041,11 +2041,17 @@ focus_tree = {
 		available = {
 			is_puppet = no
 			NOT = { is_in_faction_with = TRM }
-			has_army_manpower = { size > 399999 }
-			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
-			custom_trigger_tooltip = {
-				tooltip = TRN_gehenna_eq_trigger_tt
+			if = {
+				limit = { has_country_flag = ARI_diplomatic_event_1_flag }
+				has_army_manpower = { size > 129999 }
+			}
+			else = {
+				has_army_manpower = { size > 399999 }
 				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+				custom_trigger_tooltip = {
+					tooltip = TRN_gehenna_eq_trigger_tt
+					check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+				}
 			}
 		}
 
@@ -2054,6 +2060,7 @@ focus_tree = {
 			modifier = {
 				factor = 0
 				date < 1942.6.1
+				NOT = { has_country_flag = ARI_diplomatic_event_1_flag }
 			}
         }
 
@@ -2077,6 +2084,17 @@ focus_tree = {
 			else = {
 				activate_mission = GEH_preparations_for_operation_fall_of_angel
 				custom_effect_tooltip = GEH_preparations_for_operation_fall_of_angel_tt
+			}
+
+			if = {
+				limit = { has_country_flag = ARI_diplomatic_event_1_flag }
+				custom_effect_tooltip = ARI_diplomatic_event_1_a_tt
+				add_stability = 0.10
+
+				add_timed_idea = {
+					idea = ARI_diplomatic_event_1_a_idea
+					days = 200
+				}
 			}
 		}
 	}
@@ -2739,6 +2757,39 @@ focus_tree = {
 		}
 	}
 # 삼자 동맹 이후 /
+
+	focus = {
+		id = GEM_maginot_line_stabilization
+		icon = GFX_focus_attack_france
+		cost = 5.00
+		prerequisite = { focus = GEM_victory_from_trinity }
+		mutually_exclusive = {
+		}
+		available = {
+			is_subject = no
+			OR = {
+				has_idea = GEM_maginot_line_french_army
+				country_exists = FRM
+			}
+		}
+		available_if_capitulated = no
+		x = -4
+		y = 1
+		relative_position_id = GEM_victory_from_trinity
+		completion_reward = {
+			if = {
+				limit = { has_idea = GEM_maginot_line_french_army }
+				remove_ideas = GEM_maginot_line_french_army
+			}
+			if = {
+				limit = { country_exists = FRM }
+				create_wargoal = {
+					target = FRM
+					type = annex_everything
+				}
+			}
+		}
+	}
 
 	focus = {
 		id = GEM_friendship_with_japan
