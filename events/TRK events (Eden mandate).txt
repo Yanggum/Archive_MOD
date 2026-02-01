@@ -41,33 +41,6 @@ country_event = {
 
 	option = { 
 		name = TRK_events.2.a
-		custom_effect_tooltip = tooltip_TRK_people_like_student_union
-		add_to_variable = {
-			var = TRK_SU_var
-			value = 1
-			tooltip = tooltip_TRK_SU_var
-		}
-		custom_effect_tooltip = tooltip_white_line
-		custom_effect_tooltip = tooltip_TRK_people_like_seia
-		add_to_variable = {
-			var = TRK_ST_var
-			value = 1
-			tooltip = tooltip_TRK_ST_var
-		}
-		custom_effect_tooltip = tooltip_white_line
-		custom_effect_tooltip = tooltip_TRK_people_like_nagisa
-		add_to_variable = {
-			var = TRK_FI_var
-			value = 1
-			tooltip = tooltip_TRK_FI_var
-		}
-		custom_effect_tooltip = tooltip_white_line
-		custom_effect_tooltip = tooltip_TRK_people_dont_like_sisterhood
-		add_to_variable = {
-			var = TRK_SH_var
-			value = -1
-			tooltip = tooltip_TRK_SH_var_minus
-		}
 	}
 
 	after = {
@@ -86,11 +59,11 @@ country_event = {
 				unit_leader_event = { id = TRK_election_events.3 days = 15 } # 반게헨나 시위
 			}
 			TRN_Utazumi_Sakurako = {
-				unit_leader_event = { id = TRK_election_events.4 days = 20 } # 구빈 활동
+				unit_leader_event = { id = TRK_election_events.4 days = 20 } # 시스터후드는 누구 지지할까요
 			}
 			country_event = { id = TRK_election_events.6 days = 25 } # 논란에 휩싸인 유리조노 세이아
 			country_event = { id = TRK_election_events.7 days = 30 } # 학생 연합 열풍
-			country_event = { id = TRK_election_events.8 days = 35 } # 신앙으로 단결
+			#country_event = { id = TRK_election_events.8 days = 35 } # 신앙으로 단결
 			country_event = { id = TRK_election_events.9 days = 40 } # 탕아
 			country_event = { id = TRK_election_events.10 days = 45 }
 		}
@@ -396,27 +369,52 @@ unit_leader_event = { # 필리우스
 	}
 }
 
-unit_leader_event = { # 시스터후드
+country_event = { # 시스터후드
 	id = TRK_election_events.4
 	title = TRK_election_events.4.t
 	desc = TRK_election_events.4.desc
+	picture = GFX_report_event_picture_utazumi_sakurako
 
     	is_triggered_only = yes
 
 	option = {
+		name = TRK_election_events.4.d
+		set_variable = { TRK_sisterhood_support = 0 }
+	}
+
+	option = {
 		name = TRK_election_events.4.a
 		add_to_variable = {
-			var = TRK_SH_var
+			var = TRK_SU_var
 			value = 1
-			tooltip = tooltip_TRK_SH_var
+			tooltip = tooltip_TRK_SU_var
 		}
+		set_variable = { TRK_sisterhood_support = 1 }
 	}
+
 	option = {
 		name = TRK_election_events.4.b
 		add_to_variable = {
-			var = TRK_SH_var
-			value = -1
-			tooltip = tooltip_TRK_SH_var_minus
+			var = TRK_ST_var
+			value = 1
+			tooltip = tooltip_TRK_ST_var
+		}
+		set_variable = { TRK_sisterhood_support = 2 }
+	}
+
+	option = {
+		name = TRK_election_events.4.c
+		add_to_variable = {
+			var = TRK_FI_var
+			value = 1
+			tooltip = tooltip_TRK_FI_var
+		}
+		set_variable = { TRK_sisterhood_support = 3 }
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = { id = TRK_election_events.8 days = 15 }
 		}
 	}
 }
@@ -427,12 +425,6 @@ country_event = {
 	desc = TRK_election_events.5.desc
 
     	is_triggered_only = yes
-
-	option = { 
-		name = TRK_election_events.5.a
-		set_country_flag = TRK_select_germany_party
-		custom_effect_tooltip = tooltip_TRK_select_germany_party
-	}
 
 	option = { 
 		name = TRK_election_events.5.b
@@ -536,10 +528,21 @@ country_event = {
 
 	option = { 
 		name = TRK_election_events.8.a
-		add_to_variable = {
-			var = TRK_SH_var
-			value = 1
-			tooltip = tooltip_TRK_SH_var
+		custom_effect_tooltip = tooltip_TRK_get_sisterhood_support_party
+		if = {
+			limit = { check_variable = { TRK_sisterhood_support = 1 } }
+			custom_effect_tooltip = tooltip_TRK_SU_var
+			add_to_variable = { TRK_SU_var = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { TRK_sisterhood_support = 2 } }
+			custom_effect_tooltip = tooltip_TRK_ST_var
+			add_to_variable = { TRK_ST_var = 1 }
+		}
+		else_if = {
+			limit = { check_variable = { TRK_sisterhood_support = 3 } }
+			custom_effect_tooltip = tooltip_TRK_FI_var
+			add_to_variable = { TRK_FI_var = 1 }
 		}
 	}
 }
@@ -758,7 +761,6 @@ unit_leader_event = { # 취임식 연설
 				traits = { }
 			}
 		}
-		complete_national_focus = TRK_student_union
 		set_party_name = {
 			ideology = democratic
 			long_name = trinity_student_coalition_long
@@ -783,7 +785,6 @@ unit_leader_event = { # 취임식 연설
 				traits = { }
 			}
 		}
-		complete_national_focus = TRK_sanctus
 		set_party_name = {
 			ideology = democratic
 			name = trinity_sanctus_party
@@ -808,7 +809,6 @@ unit_leader_event = { # 취임식 연설
 				traits = { }
 			}
 		}
-		complete_national_focus = TRK_filius
 		set_party_name = {
 			ideology = democratic
 			name = trinity_filius_party
@@ -833,7 +833,6 @@ unit_leader_event = { # 취임식 연설
 				traits = { }
 			}
 		}
-		complete_national_focus = TRK_sisterhood
 		set_party_name = {
 			ideology = democratic
 			name = trinity_sisterhood_party
@@ -842,6 +841,10 @@ unit_leader_event = { # 취임식 연설
 	}
 
 	after = {
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = yes
+		}
 		hidden_effect = {
 			news_event = { id = TRK_news_events.1 hours = 02 }
 		}
@@ -885,6 +888,137 @@ country_event = {
 		set_variable = { TRK_ST_var = 0 }
 		set_variable = { TRK_FI_var = 0 }
 		set_variable = { TRK_SH_var = 99 }
+	}
+}
+
+country_event = {
+	id = TRK_election_events.14
+	title = TRK_election_events.t.14
+	desc = TRK_election_events.desc.14
+    	is_triggered_only = yes
+
+	trigger = {
+		original_tag = TRK
+		has_completed_focus = TRK_host_election
+
+	}
+
+	option = { 
+		name = TRK_election_events.a.14
+		if = {
+			limit = {
+				has_country_leader = {
+					character = TRN_Urawa_Hanako
+					ruling_only = yes
+				}
+			}
+			add_political_power = 25
+		}
+		else_if = {
+			limit = { can_be_country_leader = TRN_Urawa_Hanako }
+			promote_character = { 
+				character = TRN_Urawa_Hanako
+				ideology = KR_social_liberal
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Urawa_Hanako
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_liberal
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+		set_party_name = {
+			ideology = democratic
+			long_name = trinity_student_coalition_long
+			name = trinity_student_coalition
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.b.14
+		if = {
+			limit = {
+				has_country_leader = {
+					character = TRN_Yurizono_Seia
+					ruling_only = yes
+				}
+			}
+			add_political_power = 25
+		}
+		else_if = {
+			limit = { can_be_country_leader = TRN_Yurizono_Seia }
+			promote_character = { 
+				character = TRN_Yurizono_Seia
+				ideology = KR_social_democrat
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Yurizono_Seia
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_democrat
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+		set_party_name = {
+			ideology = democratic
+			name = trinity_sanctus_party
+			long_name = trinity_sanctus_party_long
+		}
+	}
+
+	option = { 
+		name = TRK_election_events.c.14
+		if = {
+			limit = {
+				has_country_leader = {
+					character = TRN_Kirifuji_Nagisa
+					ruling_only = yes
+				}
+			}
+			add_political_power = 25
+		}
+		else_if = {
+			limit = { can_be_country_leader = TRN_Kirifuji_Nagisa }
+			promote_character = { 
+				character = TRN_Kirifuji_Nagisa
+				ideology = KR_social_liberal
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Kirifuji_Nagisa
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_liberal
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+		if = {
+			limit = { has_completed_focus = TRK_conservatism_bloc }
+			set_party_name = {
+				ideology = democratic
+				name = trinity_conservative_bloc
+				long_name = trinity_conservative_bloc_filius
+			}
+		}
+		else = {
+			set_party_name = {
+				ideology = democratic
+				name = trinity_filius_party
+				long_name = trinity_filius_party_long
+			}
+		}
 	}
 }
 
