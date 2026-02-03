@@ -135,26 +135,6 @@ on_actions = {
 			}
 		}
 		effect = {
-			#COU dynamic modifiers, 일단 로컬 레지스탕스는 쓸 방법을 좀 생각해 볼께요;;;
-			36 = { 
-			    add_dynamic_modifier = { modifier = COU_the_dead_land } 
-			}
-			7 = { 
-			    add_dynamic_modifier = { modifier = COU_the_dead_land } 
-			  #  add_dynamic_modifier = { modifier = COU_local_resistance } 
-			} 
-			COU = { country_event = COU_event.1 } #앰씹들켰다 
-		}
-		effect = { 
-		    #COU decision start, 일단 리워크하느라 예외처리함
-		    COU = { 
-			    #activate_mission = COU_the_srt_problem 
-				activate_mission = COU_collaboraters_wants_political_money
-				#activate_mission = COU_the_normal_days_of_cou
-			    #activate_mission = COU_regain_schedule_ticket
-			}
-		}
-		effect = {
 			every_state = {
 				limit = { 
 					OR = {
@@ -537,25 +517,6 @@ on_actions = {
 				}
 				ROOT = { drop_cosmetic_tag = yes }
 			}
-			if = {
-				limit = { # 총학의 일방적 합병 
-				    AND = {
-				       ROOT = { original_tag = SHE }
-				       FROM = { original_tag = COU }
-			        }
-				}
-				COU = { annex_country = { target = SHE } }
-				COU = { country_event = COU_event.4 }
-			}
-			if = {
-				limit = { # 샬레의 일방적 합병 
-				    AND = {
-				       ROOT = { original_tag = COU }
-				       FROM = { original_tag = SHE }
-			        }
-				}
-				SHE = { annex_country = { target = COU } }
-			}
 		}
 	}
 	on_state_control_changed = {
@@ -863,18 +824,6 @@ on_actions = {
 				add_war_support = 0.05
 				hidden_effect = {
 					country_event = { id = BA_japan.29 days = 15 }
-				}
-			}
-			if = {
-				limit = {
-					tag = SHE 
-					FROM = {
-						tag = COU 
-					}
-					has_global_flag = COU_division_of_military_flag
-				}
-				COU = {
-				    activate_mission = COU_loss_of_justification
 				}
 			}
 			if = {
