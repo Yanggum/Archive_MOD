@@ -854,6 +854,10 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			if = {
+			    limit = { controls_state = 1048 }
+				add_state_core = 1048
+			}
 		}
 	}
 	
@@ -4169,6 +4173,8 @@ focus_tree = {
 			country_event = COU_event_kaya.6
 			set_country_flag = COU_political_shock_end
 			clr_country_flag = COU_political_shock
+			set_country_flag = RIN_ARREST
+			custom_effect_tooltip = COU_RIN_ARREST_tt
 			custom_effect_tooltip = COU_tooltip_end_rin_system
 			hidden_effect = {
 			    country_event = { id = COU_event_kaya.8 days = 3 } #예상은 했었지만 
@@ -4286,9 +4292,28 @@ focus_tree = {
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
+		cancel = {
+			is_subject = yes
+			NOT = { country_exists = KSP }
+		}
+		will_lead_to_war_with = KSP 
 		prerequisite = { focus = COU_recruit_purge_our_antifans }
 		completion_reward = {
-			
+			add_state_core = 34 
+			if = {
+			    limit = { has_completed_focus = COU_focus_attack_northern_france }
+				add_state_core = 1048
+			}
+			else = {
+			    add_state_claim = 1048
+			}
+			add_state_claim = 980
+			add_state_claim = 1054
+			create_wargoal = {
+				type = annex_everything
+				target = KSP 
+				expire = 0
+			}
 		}
 	}
 	
@@ -4304,6 +4329,7 @@ focus_tree = {
 		prerequisite = { focus = COU_recruit_purge_our_antifans }
 		completion_reward = {
 			add_ideas = COU_control_media_1
+			country_event = COU_event_kaya.15
 		}
 	}
 	
@@ -4397,6 +4423,18 @@ focus_tree = {
 			   ideology = neutrality
 			   popularity = -0.15
 		    }
+			set_party_name = {
+			    ideology = democratic
+			    long_name = DONDOTHAT_short
+			    name = DONDOTHAT_short
+		    }
+			set_party_name = {
+			    ideology = communism
+			    long_name = DONDOTHAT_short
+			    name = DONDOTHAT_short
+		    }
+			set_country_flag = BA_ban_democratic_parties_flag
+            set_country_flag = BA_ban_communism_parties_flag
 			country_event = COU_event_kaya.12
 		}
 	}
@@ -4417,13 +4455,14 @@ focus_tree = {
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_forced_oath_of_allegiance }
 		completion_reward = {
-			
+		    country_event = COU_event_kaya.18
+			custom_effect_tooltip = COU_tooltip_gonna_gsc_leader
 		}
 	}
 	
 	
 	focus = { 
-    	id = COU_focus_rework_of_gsc_system #일원적 구조 완화 
+    	id = COU_focus_rework_of_gsc_system #효율적인 행정 처리 
 		icon = GFX_focus_generic_self_management
 		x = -1
 		y = 8
