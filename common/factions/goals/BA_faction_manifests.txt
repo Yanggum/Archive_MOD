@@ -135,3 +135,40 @@ faction_manifest_united_kivotos = {
 		}
 	}
 }
+
+# 주변국 지배를 통한 안보 (Security via Buffer Zones)
+faction_manifest_FRA_BA_buffer_zone_security_goal = {
+    name = FRA_BA_buffer_zone_security_goal_name
+    description = FRA_BA_buffer_zone_security_goal_desc
+    is_manifest = yes
+    
+    ratio_progress = {
+        # '보호해야 할 특정 영토'에 인접한 모든 주의 총합
+        total_amount_collection = collection:controllable_all_states_adjacent_to_1930_france
+        
+        # 그 중 현재 팩션이 지배(점유) 중인 주의 수
+        completed_amount_collection = collection:faction_controlled_all_states_adjacent_to_1930_france
+        
+        range = {
+            max = 1 
+        }
+        
+        # 진행도에 따라 서서히 증가하는 효과 (완충지대 확보 효율)
+        scale = {
+            stability_factor = 0.10            # 국내 안정성 강화
+            resistance_target = -0.10      # 점령지 저항군 억제
+        }
+        
+        progress_sections = {
+            # 매니페스트 달성 시 (75% 이상 점유 시) 터지는 강력한 보너스
+            manifest_fulfilled = {
+                min = @manifest_fulfilled_value
+    
+                modifier = {
+                    army_core_defence_factor = 0.05     # 본토 방어력 급증
+                    justify_war_goal_time = -0.20       # 예방 전쟁 명분 정당화 시간 감소
+                }           
+            }
+        }
+    }
+}

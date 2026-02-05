@@ -196,3 +196,57 @@ faction_goal_LUX_defeat_gehenna = {
 		}
 	}
 }
+
+faction_goal_FRA_BA_restoration_of_france_treaty_of_paris = {
+	# 흥신소 68 전용 '게헨나 침공' 중기 목표
+	name = faction_goal_FRA_BA_restoration_of_france_treaty_of_paris_name
+	description = faction_goal_FRA_BA_restoration_of_france_treaty_of_paris_desc
+	category = medium_term
+	group = FOCUS_FILTER_ANNEXATION
+	allowed = {
+	}
+	visible = {
+		FROM = {
+			original_tag = FRA
+		}
+	}
+	completed = {
+		collection_size = {
+			input = {
+				input = collection:controllable_all_states_to_1930_france
+				operators = {
+					limit = {
+						NOT = { is_controlled_by = FRA }
+					}
+					controlled_states
+				}
+				name = COLLECTION_STATES_TO_1930_FRA
+			}
+			value < 1
+		}
+	}
+	complete_effect = {
+		add_faction_power_projection = 100
+		custom_effect_tooltip = generic_skip_one_line_tt
+		custom_effect_tooltip = THE_FACTION_LEADER
+		add_faction_initiative = 1
+		every_collection_element = {
+			input = {
+				input = game:scope
+				operators =  { 
+					faction_members 
+				}
+				name = ALL_FACTION_MEMBERS
+			}
+			custom_effect_tooltip = ALL_FACTION_MEMBERS
+			army_experience = 50 
+		}
+	}
+	ai_will_do = {
+		base = 1
+		modifier = {
+			add = 9 # Early game prio
+			date < 1941.1.1
+		}
+	}
+}
