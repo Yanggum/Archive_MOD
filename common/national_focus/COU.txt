@@ -4444,7 +4444,7 @@ focus_tree = {
 		icon = GFX_COU_in_the_darkness
 		x = 0
 		y = 7
-		cost = 5
+		cost = 10
 		available = { 
 		    has_country_leader = { character = COU_KAYA } 
 			has_stability > 0.5
@@ -4456,7 +4456,14 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_forced_oath_of_allegiance }
 		completion_reward = {
 		    country_event = COU_event_kaya.18
+			add_dynamic_modifier = { modifier = COU_kaya_conservative_revolution }
 			custom_effect_tooltip = COU_tooltip_gonna_gsc_leader
+			#자, 이제 이벤트 존나게 띄울 시간이다, 이 쌀레야  
+			#30일, 100일, 200일, 300일
+			hidden_effect = {
+			    COU_KAYA = { unit_leader_event = { id = COU_event_kaya.19 days = 30 } }
+				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.20 days = 100 } }
+			}
 		}
 	}
 	
@@ -4466,42 +4473,75 @@ focus_tree = {
 		x = 3
 		y = 8
 		cost = 5
-		available = { has_country_leader = { character = COU_KAYA } }
+		available = { 
+		    has_country_leader = { character = COU_KAYA } 
+		    has_country_flag = COU_kaya_mental_condition_active_flag
+		} 
+		allow_branch = { has_country_flag = COU_kaya_mental_condition_active_flag }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
-			
+		    add_political_power = 25
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.15
+	            }
+			}
+			unlock_decision_tooltip = COU_mc_get_some_break
 		}
 	}
 	
 	focus = { 
-    	id = COU_focus_three_years_plan #3개년 계획
+    	id = COU_focus_three_years_plan #4개년 계획 (사실 폴란드 돚거할려고 3->4로 변경함ㅎ 
 		icon = GFX_goal_generic_production
 		x = -4
 		y = 9
-		cost = 5
+		cost = 8
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
-			
+		    random_core_state = {
+			    limit = {
+				    is_owned_and_controlled_by = ROOT
+			     }
+				 add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		    add_timed_idea = {
+				idea = POL_four_year_plan_idea
+				days = 1460
+			}
 		}
 	}
 	
 	focus = { 
-    	id = COU_focus_ready_for_reunification #재통일 준비
+    	id = COU_focus_ready_for_reunification #국방학원
 		icon = GFX_goal_generic_territory_or_war
 		x = -4
 		y = 10
 		cost = 5
-		available = { has_country_leader = { character = COU_KAYA } }
+		available = {
+		    has_country_leader = { character = COU_KAYA }
+			is_subject = no
+			OR = {
+				has_war_with_major = yes
+				has_war_support > 0.75
+			}
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_three_years_plan }
 		completion_reward = {
-			
+			add_ideas = national_defense_state
 		}
 	}
 	
@@ -4516,7 +4556,31 @@ focus_tree = {
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
-			
+			add_political_power = 150 
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_kaya_conservative_revolution
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_political_power_factor = 0.05
+			 	tooltip = political_power_factor_tt
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_party_popularity_stability_factor = 0.5
+			 	tooltip = party_popularity_stability_factor_tt
+		    }
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = COU_kaya_change_ideology
+			#얘도 툴팁써주라고?
+            set_country_leader_ideology = cou_kaya_dictatorship
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = 0.2
+	            }
+			}
 		}
 	}
 	
@@ -4532,6 +4596,14 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
 			remove_country_leader_trait = COU_ohno_so_many_works
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            }
+			}
 		}
 	}
 	
@@ -4546,7 +4618,26 @@ focus_tree = {
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
-			
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_kaya_conservative_revolution
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_stability_factor = 0.15
+			 	tooltip = stability_factor_tt
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_production_speed_buildings_factor = 0.05
+			 	tooltip = production_speed_buildings_factor_tt
+		    }
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            }
+			}
 		}
 	}
 	
@@ -4562,7 +4653,17 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_rework_of_gsc_system }
 		prerequisite = { focus = COU_focus_corperate_with_catholic }
 		completion_reward = {
-			
+			add_political_power = 75 
+			add_ideas = COU_kivotos_apartheid
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            }
+			}
+			#이벤트: 분리되어서 정말 기쁨 (진)
 		}
 	}
 	
@@ -4576,8 +4677,26 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
-		completion_reward = {
-			
+		completion_reward = { 
+		    add_political_power = 100
+		    add_war_support = 0.15
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_kaya_conservative_revolution
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_political_power_factor = 0.1
+			 	tooltip = political_power_factor_tt
+		    }
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = 0.1
+	            }
+			}
+			#이벤트: 특별행정조치 라 쓰고 계엄이라고 읽어요. 
 		}
 	}
 	

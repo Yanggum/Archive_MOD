@@ -48,6 +48,213 @@ debug_decisions = {
 				elections_allowed = no 
 			}
 			add_country_leader_trait = COU_kaya_mental_condition
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.19 } }
+		}
+	}
+}
+
+#BoP
+COU_kaya_mental_condition ={
+    debug_test_mc_logitec = {
+	    icon = generic_political_address
+	    allowed = {
+		    tag = COU 
+		}
+		
+		visible = { is_debug = yes }
+		available = { is_ai = no }
+		
+		complete_effect = {
+		    set_variable = { COU_mc_gsb_cost = 30 }
+			set_variable = { COU_mc_wsv_cost = 30 }
+			set_variable = { COU_mc_otk_cost = 45 }
+			set_variable = { COU_mc_ltd_cost = 50 }
+			set_variable = { COU_mc_mwr_cost = 75 }
+		}
+	}
+	debug_test_mc_logitec2 = { 
+	    icon = generic_political_address
+		allowed = {
+			tag = COU
+			always = no
+		}
+
+		available = {
+            always = no 
+		}
+
+		activation = { always = no }
+		
+		fire_only_once = yes
+		
+		is_good = no
+
+		days_mission_timeout = 10
+
+		timeout_effect = {
+			 
+		}
+	}
+	
+	COU_mc_get_some_break = {
+	    icon = SOV_place_hq
+	    allowed = {
+		    tag = COU 
+		}
+		
+		available = { has_completed_focus = COU_focus_get_some_break_bro }
+		
+		cost = COU_mc_gsb_cost
+		
+		days_remove = 30
+		days_re_enable = 30 
+		
+		remove_effect = {
+		    if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.05
+	            }
+			}
+		}
+	}
+	
+	COU_mc_watch_some_videos = {
+	    icon = generic_disband_irregulars
+	    allowed = {
+		    tag = COU 
+		}
+		
+		cost = COU_mc_wsv_cost
+		
+		days_remove = 30
+		days_re_enable = 30 
+		
+		remove_effect = {
+		    if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.05
+	            }
+			}
+		}
+	}
+	
+	COU_mc_order_to_kronos = {
+	    icon = hol_radio_oranje
+	    allowed = {
+		    tag = COU 
+		}
+		
+		cost = COU_mc_otk_cost
+		
+		days_remove = 30
+		days_re_enable = 60
+		
+		available = { controls_state = 6 }
+		
+		modifier = {
+		    political_power_factor = 0.03
+			stability_factor = -0.03
+		}
+		
+		remove_effect = {
+		    if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.05
+	            }
+			}
+		}
+	}
+	
+	COU_mc_lock_the_doors = {
+	    icon = generic_fortification
+	    allowed = {
+		    tag = COU 
+		}
+		
+		cost = COU_mc_ltd_cost
+		
+		days_remove = 50
+		days_re_enable = 90
+		
+		modifier = {
+		    political_power_factor = -0.05
+		}
+		
+		remove_effect = {
+		    if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            }
+			}
+		}
+	}
+	
+	COU_mc_meet_with_rin = {
+	    icon = generic_political_discourse
+	    allowed = {
+		    tag = COU 
+		}
+		
+		cost = COU_mc_mwr_cost
+		
+		days_remove = 60
+		days_re_enable = 90
+		
+		remove_effect = {
+		    if = {
+			    limit = {  
+                    power_balance_value = {
+					    id = COU_kaya_mental_condition
+					    value < 0.15
+				    } #만약 카야가 아직은 괜찮을 경우 
+				}
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.15
+	            }
+				#린과 만나서 으스대기 ㅎㅎ 
+			}
+			if = {
+			    limit = {  
+                    power_balance_value = {
+					    id = COU_kaya_mental_condition
+					    value > 0.15
+				    } #만약 카야가 아직은 나름 괜찮을 경우 
+					power_balance_value = {
+					    id = COU_kaya_mental_condition
+					    value < 0.6
+				    }
+				}
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            } 
+			}
+			if = {
+			    limit = {  
+					power_balance_value = {
+					    id = COU_kaya_mental_condition
+					    value > 0.6
+				    } #만약 카야가 안 괜찮을 경우 
+					power_balance_value = {
+					    id = COU_kaya_mental_condition
+					    value < 1
+				    }
+				}
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.05
+	            }
+				#이미 다 좆됐어    
+			}
 		}
 	}
 }
