@@ -700,14 +700,6 @@ focus_tree = {
 		}
 		prerequisite = { focus = COU_focus_currency_unification }
 		completion_reward = { 
-		    custom_effect_tooltip = {
-				localization_key = tooltip_modify_dynmod
-				DYNMOD = COU_industry
-		    }
-			add_to_variable = {
-			    COU_industry_consumer_goods_factor = 0.1
-				tooltip = consumer_goods_factor_tt
-		    }
 			country_event = COU_event_industry.1
 		}
 	}	
@@ -3873,7 +3865,7 @@ focus_tree = {
 		icon = GFX_focus_PHI_gunboat_diplomacy
 		x = 4
 		y = 2
-		cost = 8
+		cost = 10
 		relative_position_id = COU_focus_petition_45
 		prerequisite = { focus = COU_focus_fleet_worthy_of_its_dignity }
 		completion_reward = {
@@ -4486,12 +4478,12 @@ focus_tree = {
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_focus_gonna_gsc_leader }
 		completion_reward = {
-		    add_political_power = 25
+		    add_political_power = 75
 			if = {
 			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
 				add_power_balance_value = {
 		            id = COU_kaya_mental_condition 
-		            value = -0.15
+		            value = -0.3
 	            }
 			}
 			unlock_decision_tooltip = COU_mc_get_some_break
@@ -4608,6 +4600,7 @@ focus_tree = {
 		            value = -0.1
 	            }
 			}
+			country_event = COU_event_kaya.25
 		}
 	}
 	
@@ -4682,10 +4675,9 @@ focus_tree = {
 				custom_effect_tooltip = enter_tt
 				add_power_balance_value = {
 		            id = COU_kaya_mental_condition 
-		            value = -0.2
+		            value = -0.15
 	            }
 			}
-			#이벤트: 분리되어서 정말 기쁨 (진)
 		}
 	}
 	
@@ -4702,6 +4694,7 @@ focus_tree = {
 		completion_reward = { 
 		    add_political_power = 100
 		    add_war_support = 0.15
+			country_event = COU_event_kaya.26
 			custom_effect_tooltip = {
 				localization_key = tooltip_modify_dynmod
 				DYNMOD = COU_kaya_conservative_revolution
@@ -4715,10 +4708,9 @@ focus_tree = {
 				custom_effect_tooltip = enter_tt
 				add_power_balance_value = {
 		            id = COU_kaya_mental_condition 
-		            value = 0.15
+		            value = -0.1
 	            }
 			}
-			#이벤트: 특별행정조치 라 쓰고 계엄이라고 읽어요. 
 		}
 	}
 	
@@ -4734,8 +4726,46 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_remove_democratic_system }
 		prerequisite = { focus = COU_focus_special_martial_law }
 		completion_reward = {
+		    add_political_power = 150 
+		    custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = COU_kaya_conservative_revolution
+		    }
+			add_to_variable = {
+			    COU_kaya_conservative_revolution_justify_war_goal_time = -0.3
+			 	tooltip = justify_war_goal_time_tt
+		    }
+			custom_effect_tooltip = enter_tt
 		    set_rule = { can_declare_war_without_wargoal_when_in_war = yes }
 			set_rule = { can_join_factions = no }   
+			every_state = {
+			     limit = {
+				     OR = { 
+				     is_core_of = GEH
+					 is_core_of = GEM 
+					 is_core_of = TRM 
+					 is_core_of = ABY 
+					 is_core_of = SHA
+					 is_core_of = SHE
+					 is_core_of = HYA
+					 is_core_of = HEU
+					 is_core_of = MIL
+					 is_core_of = BLM 
+					 is_core_of = WHY
+					 is_core_of = RED 
+					 }
+				 }
+				 add_claim_by = COU 
+			}
+			news_event = { id = BA_news.126 hours = 6 }
+			if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				custom_effect_tooltip = enter_tt
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.1
+	            }
+			}
 		}
 	}
 	
