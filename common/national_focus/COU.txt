@@ -4393,12 +4393,13 @@ focus_tree = {
 	}
 	
 	focus = { 
-    	id = COU_focus_forced_oath_of_allegiance #충성 서약 강제 
+    	id = COU_focus_forced_oath_of_allegiance #충성 강제 
 		icon = GFX_focus_COU_nothing
 		x = 0
 		y = 6
 		cost = 5
 		cancelable = no
+		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_black_coffee
 		prerequisite = { focus = COU_recruit_fox_srt }
@@ -4449,16 +4450,12 @@ focus_tree = {
 		completion_reward = {
 		    country_event = COU_event_kaya.18
 			add_dynamic_modifier = { modifier = COU_kaya_conservative_revolution }
-			custom_effect_tooltip = COU_tooltip_gonna_gsc_leader
-			#자, 이제 이벤트 존나게 띄울 시간이다, 이 쌀레야  
-			#80일 간격
+			custom_effect_tooltip = COU_tooltip_gonna_gsc_leader 
+			#120일 간격: 해피엔딩 분기는 21번 이벤트 
 			hidden_effect = {
-			    COU_KAYA = { unit_leader_event = { id = COU_event_kaya.19 days = 80 } }
-				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.20 days = 160 } }
-				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.21 days = 240 } }
-				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.22 days = 350 } }
-				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.24 days = 480 } }
-				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.23 days = 560 } }
+			    COU_KAYA = { unit_leader_event = { id = COU_event_kaya.19 days = 120 } }
+				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.20 days = 240 } }
+				COU_KAYA = { unit_leader_event = { id = COU_event_kaya.21 days = 360 } }
 			}
 		}
 	}
@@ -4737,7 +4734,8 @@ focus_tree = {
 		    }
 			custom_effect_tooltip = enter_tt
 		    set_rule = { can_declare_war_without_wargoal_when_in_war = yes }
-			set_rule = { can_join_factions = no }   
+			set_rule = { can_join_factions = no }  
+            custom_effect_tooltip = enter_tt 			
 			every_state = {
 			     limit = {
 				     OR = { 
@@ -4757,6 +4755,8 @@ focus_tree = {
 				 }
 				 add_claim_by = COU 
 			}
+			custom_effect_tooltip = enter_tt 
+			BA_end_of_the_kivotos_alliance = yes 
 			news_event = { id = BA_news.126 hours = 6 }
 			if = {
 			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
