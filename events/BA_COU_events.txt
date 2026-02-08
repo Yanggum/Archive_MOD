@@ -699,6 +699,11 @@ unit_leader_event = { #흩뿌려진 먼지처럼
 		    remove_country_leader_trait = COU_kaya_mental_condition
 			add_country_leader_trait = COU_kaya_mental_condition2
 		}
+		hidden_effect = {
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.22 days = 120 } }
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.24 days = 240 } }
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.23 days = 360 } }
+		}
 		add_power_balance_value = {
 		    id = COU_kaya_mental_condition 
 		    value = 0.2
@@ -706,6 +711,9 @@ unit_leader_event = { #흩뿌려진 먼지처럼
 		if = {
 		    limit = { has_political_power < 150 } 
 			custom_effect_tooltip = COU_tooltip_whatifpoliticalpower100
+		}
+		trigger = { 
+		   NOT = { has_country_flag = KAYA_happy_ending_flag }
 		}
 	}
 	
@@ -715,6 +723,11 @@ unit_leader_event = { #흩뿌려진 먼지처럼
 		    remove_country_leader_trait = COU_kaya_mental_condition
 			add_country_leader_trait = COU_kaya_mental_condition2
 		}
+		hidden_effect = {
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.22 days = 120 } }
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.24 days = 240 } }
+			COU_KAYA = { unit_leader_event = { id = COU_event_kaya.23 days = 360 } }
+		}
 		add_political_power = -150
 		add_power_balance_value = {
 		    id = COU_kaya_mental_condition 
@@ -723,6 +736,17 @@ unit_leader_event = { #흩뿌려진 먼지처럼
 		custom_effect_tooltip = COU_tooltip_forpoliticalpower100
 		trigger = {
 		   has_political_power > 150 
+		   NOT = { has_country_flag = KAYA_happy_ending_flag }
+		}
+	}
+	
+	option = {
+		name = COU_event_kaya.21.c
+		add_political_power = -300
+		country_event = { id = COU_event_kaya.30 days = 30 }
+		trigger = {
+		   has_political_power > 300
+		   has_country_flag = KAYA_happy_ending_flag
 		}
 	}
 }
@@ -784,7 +808,7 @@ unit_leader_event = { #얼굴
 		name = COU_event_kaya.23.a
 		add_power_balance_value = {
 		    id = COU_kaya_mental_condition 
-		    value = 0.3
+		    value = 0.5
 	    }
 	}
 }
@@ -867,6 +891,46 @@ country_event = { #BoP용: 파랑새
 	option = { 
 		name = COU_event_kaya.28.a
 		custom_effect_tooltip = COU_tooltip_COU_event_kaya_28 
+	}
+}
+
+country_event = { #BoP용: 웃음
+	id = COU_event_kaya.29
+	title = COU_event_kaya.29.t
+	desc = COU_event_kaya.29.desc
+	picture = GFX_COU_event_216
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.29.a
+		custom_effect_tooltip = COU_tooltip_COU_event_kaya_29 
+		set_country_flag = KAYA_happy_ending_flag
+	}
+}
+
+country_event = { #초인의 비상 
+	id = COU_event_kaya.30
+	title = COU_event_kaya.30.t
+	desc = COU_event_kaya.30.desc
+	picture = GFX_report_event_picture_the_du
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.30.a
+		add_political_power = 150
+		custom_effect_tooltip = COU_tooltip_COU_event_kaya_30
+		remove_power_balance = { id = COU_kaya_mental_condition }
+		hidden_effect = {
+		     remove_country_leader_trait = COU_kaya_mental_condition
+		     remove_country_leader_trait = COU_kaya_mental_condition2
+		     remove_country_leader_trait = COU_kaya_superhuman_1
+			 add_country_leader_trait = COU_kaya_superhuman_2
+			 set_country_leader_description = { desc = COU_KAYA_desc_good }
+		}
 	}
 }
 
