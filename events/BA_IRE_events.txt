@@ -56,15 +56,16 @@ country_event = { # 두 번째 대위기
 		if = {
 			limit = {
 				check_variable = {
-					IRE_IFA_popularity > -20
+					IRE_IFA_loyalty > -20
 				}
 			}
 			set_variable = {
-				var = IRE_IFA_popularity
+				var = IRE_IFA_loyalty
 				value = -20
 				tooltip = IFA_mset_l20
 			}
 		}
+		IRE_politics_allinone = yes
 		complete_national_focus = IRE_focus_second_great_crisis
 	}
 } 
@@ -585,5 +586,44 @@ country_event = { # 소련의 원조 거부
 			ideology = communism
 			popularity = -0.05
 		}
+	}
+}
+country_event = { # 여당 의원에 대한 추문
+	id = IRE_event.8001
+	title = IRE_event.8001.t
+	desc = IRE_event.8001.d
+	picture = GFX_report_event_generic_ruins
+
+	fire_only_once = no
+
+	mean_time_to_happen = {
+		days = 180
+	}
+
+	trigger = {
+		tag = IRE
+		NOT = {
+			has_country_flag = IRE_NO_congress
+		}
+		check_variable = { IRE_parliament_seat_array^1 > 0 }
+	}
+	option = { 
+		name = IRE_event.8001.a
+		add_popularity = { 
+			ideology = democratic 
+			popularity = -0.03
+		}
+	}
+	option = {
+		name = IRE_event.8001.b
+		add_to_variable = {
+			var = IRE_parliament_seat_array^1
+			value = -1
+		}
+		add_to_variable = {
+			var = IRE_parliament_seat_array^3
+			value = 1
+		}
+		reload_parliament_gui = yes
 	}
 }

@@ -40,7 +40,6 @@ focus_tree = {
 				}
 			}
 			leave_faction = yes
-			add_ideas = IRE_new_constitution_idea
 		}
 		select_effect = {
 			add_political_power = 0
@@ -362,11 +361,11 @@ focus_tree = {
 				if = {
 					limit = {
 						check_variable = {
-							IRE_IFA_popularity > -20
+							IRE_IFA_loyalty > -20
 						}
 					}
 					set_variable = {
-						var = IRE_IFA_popularity
+						var = IRE_IFA_loyalty
 						value = -20
 						tooltip = IFA_mset_l20
 					}
@@ -423,26 +422,14 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+
 		}  
 		bypass = {
 		}
 		completion_reward = {
 			add_popularity = { 
 				ideology = communism 
-				popularity = 0.05 
+				popularity = 0.02
 			}
 			custom_effect_tooltip = IRE_DM_tt_8
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.15 }
@@ -455,8 +442,29 @@ focus_tree = {
 				var = IRE_parliament_seat_array^3
 				value = 10
 			}
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = -10
+				tooltip = IFA_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -10
+				tooltip = CAT_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_popularity
+				value = 10
+				tooltip = SOC_add_p10
+			}
 			reload_parliament_gui = yes
 			IRE_FF_with_LP_calculate = yes
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 윤전기를 돌려라!
@@ -477,7 +485,7 @@ focus_tree = {
 			add_stability = 0.05
 			add_popularity = { 
 				ideology = democratic 
-				popularity = 0.10
+				popularity = 0.04
 			}
 			custom_effect_tooltip = IRE_DM_tt_11
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.20 }
@@ -524,19 +532,7 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -545,6 +541,17 @@ focus_tree = {
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
 			add_to_variable = { IRE_DM1_stability_factor = 0.10 }
 			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 5
+				tooltip = IFA_add_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 협동조합 확대
@@ -558,19 +565,7 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -591,40 +586,25 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
 		completion_reward = {
 			add_popularity = { 
 				ideology = democratic 
-				popularity = 0.05
+				popularity = 0.02
 			}
 			custom_effect_tooltip = IRE_DM_tt_6
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
 			add_to_variable = { IRE_DM1_stability_factor = 0.10 }
 			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
-			if = {
-				limit = {
-					has_country_flag = IRE_FF_with_LP
-				}
-				add_popularity = { 
-					ideology = communism 
-					popularity = 0.05
-				}
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 10
+				tooltip = IFA_add_l10
 			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 섀넌 계획의 지속
@@ -645,7 +625,7 @@ focus_tree = {
 		completion_reward = {
 			add_popularity = { 
 				ideology = democratic 
-				popularity = 0.05
+				popularity = 0.02
 			}
 			custom_effect_tooltip = IRE_DM_tt_10
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
@@ -676,6 +656,12 @@ focus_tree = {
 			add_war_support = 0.05
 			custom_effect_tooltip = IRE_DM_tt_4
 			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 5
+				tooltip = IFA_add_l5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 토지개간사업
@@ -690,19 +676,7 @@ focus_tree = {
 		cost = 10
 		search_filters = {}
 		available = {
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -715,6 +689,17 @@ focus_tree = {
 			}
 			custom_effect_tooltip = IRE_DM_tt_13
 			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.15 }
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 10
+				tooltip = IFA_add_l10
+			}
+			add_to_variable = {
+				var = IRE_IFA_popularity
+				value = 5
+				tooltip = IFA_add_p5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 무소속 의원 포섭
@@ -761,6 +746,9 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
+			NOT = {
+				has_completed_focus = IRE_focus_big_coalition
+			}
 		}  
 		bypass = {
 		}
@@ -777,8 +765,19 @@ focus_tree = {
 				value = 10
 			}
 			set_country_flag = IRE_FF_with_LP
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -5
+				tooltip = CAT_madd_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 20
+				tooltip = SOC_add_l20
+			}
 			reload_parliament_gui = yes
 			IRE_FF_with_LP_calculate = yes
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 철도 산업 국유화
@@ -793,19 +792,7 @@ focus_tree = {
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_LP
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -825,8 +812,19 @@ focus_tree = {
 				var = IRE_parliament_seat_array^3
 				value = 10
 			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_popularity
+				value = 5
+				tooltip = SOC_add_p5
+			}
 			reload_parliament_gui = yes
 			IRE_FF_with_LP_calculate = yes
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 국가의 농산물 매입
@@ -841,19 +839,7 @@ focus_tree = {
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_LP
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -863,12 +849,28 @@ focus_tree = {
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
 			add_popularity = { 
 				ideology = democratic 
-				popularity = 0.05
+				popularity = 0.02
 			}
 			add_popularity = { 
 				ideology = communism 
-				popularity = 0.10
+				popularity = 0.04
 			}
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 10
+				tooltip = IFA_add_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_popularity
+				value = 5
+				tooltip = SOC_add_p5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 식량 배급
@@ -910,19 +912,7 @@ focus_tree = {
 				has_war_with = SOV
 			}
 			has_country_flag = IRE_FF_with_LP
-			if = {
-				limit = { has_country_flag = IRE_FF_with_LP }
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_FF_plus_LP > 100 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = IRE_LT_tt_2
-					check_variable = { IRE_parliament_seat_array^1 > 100 }
-				}
-			}
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -934,6 +924,21 @@ focus_tree = {
 				}
 			}
 			country_event = IRE_event.8
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = -5
+				tooltip = IFA_madd_l5
+			}
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -10
+				tooltip = CAT_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
 		}
 	}
 	focus = { # 협동조합주의
@@ -958,6 +963,17 @@ focus_tree = {
 			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
 			add_to_variable = { IRE_DM1_political_power_cost = -0.20 }
 			country_event = IRE_event.8
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 10
+				tooltip = SOC_add_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_popularity
+				value = 5
+				tooltip = SOC_add_p5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 아일랜드 특색 협동조합주의
@@ -983,6 +999,16 @@ focus_tree = {
 			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
 			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
 			country_event = IRE_event.8
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -5
+				tooltip = CAT_madd_l5
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
 		}
 	}
 	focus = { # 동방에서의 학습
@@ -1012,6 +1038,22 @@ focus_tree = {
 			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
 			add_to_variable = { IRE_DM1_political_power_cost = -0.30 }
 			country_event = IRE_event.8
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = -5
+				tooltip = IFA_madd_l5
+			}
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -10
+				tooltip = CAT_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			IRE_politics_allinone = yes
 		}
 	}
 	focus = { # 회복하는 경제
@@ -1033,6 +1075,46 @@ focus_tree = {
 				idea = IRE_recovering_economy_idea
 				days = 360
 			}
+		}
+	}
+	focus = { # 대연정
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_big_coalition
+		icon = GFX_focus_AUS_lawmaking_leniency
+		prerequisite = { focus = IRE_focus_FF }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 7
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			NOT = {
+				has_completed_focus = IRE_focus_cooperation_with_LP
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_tt_9
+			add_to_variable = {
+				tooltip = IRE_LE_tt_3
+				var = IRE_parliament_seat_array^1
+				value = -25
+			}
+			add_to_variable = {
+				var = IRE_parliament_seat_array^3
+				value = 25
+			}
+			set_country_flag = IRE_FF_with_FG
+			add_popularity = { 
+				ideology = democratic 
+				popularity = -0.15
+			}
+			add_popularity = { 
+				ideology = neutrality
+				popularity = -0.10
+			}
+			reload_parliament_gui = yes
 		}
 	}
 	focus = { # 위기 극복 선언
