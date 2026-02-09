@@ -895,12 +895,14 @@ country_event = {
 	id = TRK_election_events.14
 	title = TRK_election_events.t.14
 	desc = TRK_election_events.desc.14
+	picture = GFX_report_event_generic_trinity_front_gate
+
     	is_triggered_only = yes
 
 	trigger = {
 		original_tag = TRK
 		has_completed_focus = TRK_host_election
-
+		NOT = { has_completed_focus = TRK_teaparty_reform }
 	}
 
 	option = { 
@@ -1022,6 +1024,86 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = TRK_election_events.15
+	title = TRK_election_events.t.15
+	desc = TRK_election_events.desc.15
+	picture = GFX_report_event_generic_trinity_front_gate
+
+    	is_triggered_only = yes
+
+	trigger = {
+		original_tag = TRK
+		has_completed_focus = TRK_host_election
+		has_completed_focus = TRK_teaparty_reform
+	}
+
+	option = { 
+		name = TRK_election_events.a.14
+		if = {
+			limit = { can_be_country_leader = TRN_Urawa_Hanako }
+			promote_character = { 
+				character = TRN_Urawa_Hanako
+				ideology = KR_social_liberal
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Urawa_Hanako
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_liberal
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = TRK_election_events.b.14
+		if = {
+			limit = { can_be_country_leader = TRN_Yurizono_Seia }
+			promote_character = { 
+				character = TRN_Yurizono_Seia
+				ideology = KR_social_democrat
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Yurizono_Seia
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_democrat
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = TRK_election_events.c.14
+		if = {
+			limit = { can_be_country_leader = TRN_Kirifuji_Nagisa }
+			promote_character = { 
+				character = TRN_Kirifuji_Nagisa
+				ideology = KR_social_liberal
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = TRN_Kirifuji_Nagisa
+				promote_leader = yes
+				country_leader = {
+					ideology = KR_social_liberal
+					expire = "1965.1.1.1"
+					traits = { }
+				}
+			}
+		}
+	}
+}
 # ================================================
 # 풍미 이벤트 (Flavor Events)
 # ================================================
@@ -1129,6 +1211,27 @@ news_event = {
 				tag = GEM
 				tag = GEH
 				tag = HEU
+			}
+			OR = {
+				has_government = democratic
+				has_government = communism
+			}
+			Kivotos_tag = yes
+		}
+	}
+
+	option = {
+		name = TRK_news_events.1.d
+		trigger = {
+			NOT = {
+				tag = TRK 
+				tag = GEM
+				tag = GEH
+				tag = HEU
+			}
+			NOT = {
+				has_government = democratic
+				has_government = communism
 			}
 			Kivotos_tag = yes
 		}

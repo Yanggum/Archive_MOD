@@ -209,7 +209,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_new_constitution
-		icon = GFX_focus_ARG_defense_and_democracy
+		icon = GFX_focus_TRN_control_tea_party
 		prerequisite = { focus = TRK_after_the_dust_settles }
 		cost = 5
 
@@ -417,7 +417,7 @@ focus_tree = {
 		id = TRK_student_union
 		icon = GFX_focus_TRN_fate_of_small_club
 		prerequisite = { focus = TRK_host_election }
-		cost = 6
+		cost = 1
 
 		relative_position_id = TRK_host_election
 
@@ -458,7 +458,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_direct_legislation
-		icon = GFX_goal_lol_focus_2
+		icon = GFX_focus_generic_elections_KR
 		prerequisite = { focus = TRK_student_union }
 		cost = 6
 
@@ -482,7 +482,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_proportional_representation
-		icon = GFX_goal_lol_focus_2
+		icon = GFX_focus_generic_industrialists
 		prerequisite = { focus = TRK_student_union }
 		cost = 6
 
@@ -505,8 +505,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = TRK_student_union_02
-		icon = GFX_goal_support_democracy
+		id = TRK_establish_of_welfare_state
+		icon = GFX_focus_generic_welfare
 		prerequisite = { 
 			focus = TRK_student_union
 			focus = TRK_sanctus
@@ -528,12 +528,38 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = TRK_welfare_state_ns
+			
+		}
+	}
+
+	focus = {
+		id = TRK_liberal_welfare_state
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = TRK_student_union }
+		prerequisite = { focus = TRK_establish_of_welfare_state }
+		cost = 6
+
+		relative_position_id = TRK_student_union
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
 		}
 	}
 
 	focus = {
 		id = TRK_democracy_supplement
-		icon = GFX_goal_lol_focus_2
+		icon = GFX_focus_generic_election
 		prerequisite = { focus = TRK_proportional_representation }
 		prerequisite = { focus = TRK_direct_legislation }
 		cost = 6
@@ -557,10 +583,62 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRK_hanako_ending
+		icon = GFX_focus_generic_election
+		prerequisite = { focus = TRK_democracy_supplement }
+		prerequisite = { focus = TRK_liberal_welfare_state }
+		cost = 6
+
+		relative_position_id = TRK_democracy_supplement
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = TRK_social_liberal
+		icon = GFX_focus_generic_social_liberal
+		prerequisite = { focus = TRK_hanako_ending }
+		cost = 6
+		overlay = GFX_focus_fast_overlay_america
+
+		relative_position_id = TRK_hanako_ending
+
+		x = 1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		mutually_exclusive = { focus = TRK_coalition_government_of_idealists }
+
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
 		id = TRK_sanctus
 		icon = GFX_focus_TRK_sanctus
 		prerequisite = { focus = TRK_host_election }
-		cost = 6
+		cost = 1
 
 		relative_position_id = TRK_host_election
 
@@ -627,7 +705,7 @@ focus_tree = {
 
 		relative_position_id = TRK_sanctus
 
-		x = 1
+		x = -1
 		y = 2
 
 		available_if_capitulated = yes
@@ -644,19 +722,23 @@ focus_tree = {
 				ideology = ROOT
 				popularity = 0.05
 			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.03
+			}
 			add_stability = -0.05
 		}
 	}
 
 	focus = {
-		id = TRK_trinity_charter
-		icon = GFX_focus_TRN_contact_SPD
+		id = TRK_teaparty_reform
+		icon = GFX_focus_TRN_new_order_movement
 		prerequisite = { focus = TRK_sanctus }
 		cost = 6
 
 		relative_position_id = TRK_sanctus
 
-		x = -1
+		x = 1
 		y = 2
 
 		available_if_capitulated = yes
@@ -673,10 +755,93 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRK_coalition_government_of_idealists
+		icon = GFX_focus_TRK_coalition_government_of_idealists
+		prerequisite = { 
+			focus = TRK_seia_ending
+			focus = TRK_hanako_ending
+		}
+		cost = 6
+		overlay = GFX_focus_fast_overlay_america
+
+		relative_position_id = TRK_teaparty_reform
+
+		x = 1
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		mutually_exclusive = { focus = TRK_social_democrat focus = TRK_social_liberal }
+
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+
+	focus = {
+		id = TRK_seia_ending
+		icon = GFX_focus_TRN_new_order_movement
+		prerequisite = { focus = TRK_teaparty_reform }
+		prerequisite = { focus = TRK_coop_with_SPD }
+		cost = 6
+
+		relative_position_id = TRK_teaparty_reform
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+
+	focus = {
+		id = TRK_social_democrat
+		icon = GFX_focus_PER_strengthen_the_tudeh
+		prerequisite = { focus = TRK_seia_ending }
+		prerequisite = { focus = TRK_adherent_of_parliamentarianism }
+		cost = 6
+		overlay = GFX_focus_fast_overlay_america
+
+		relative_position_id = TRK_seia_ending
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		mutually_exclusive = { focus = TRK_coalition_government_of_idealists }
+
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+
+	focus = {
 		id = TRK_filius
 		icon = GFX_focus_TRK_filius
 		prerequisite = { focus = TRK_host_election }
-		cost = 5
+		cost = 1
 
 		relative_position_id = TRK_host_election
 
@@ -757,7 +922,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_conservatism_bloc
-		icon = GFX_goal_lol_focus_2
+		icon = GFX_focus_TRK_conservatism_bloc
 		prerequisite = {
 			focus = TRK_gradually_supplementing_system
 			focus = TRK_host_empowerment
@@ -818,7 +983,7 @@ focus_tree = {
 		icon = GFX_focus_TRK_adherent_of_parliamentarianism
 		prerequisite = { 
 			focus = TRK_gradually_supplementing_system
-			focus = TRK_trinity_charter
+			focus = TRK_coop_with_SPD
 		}
 		cost = 6
 
@@ -842,7 +1007,7 @@ focus_tree = {
 
 	focus = {
 		id = TRK_antitrust_law
-		icon = GFX_goal_lol_focus_2
+		icon = GFX_focus_GER_factories_for_resources
 		prerequisite = { 
 			focus = TRK_host_empowerment
 		}
@@ -870,6 +1035,32 @@ focus_tree = {
 					days = 365
 				}
 			}
+		}
+	}
+
+	focus = {
+		id = TRK_christian_democracy
+		icon = GFX_focus_BEL_christian_corporatism
+		prerequisite = { focus = TRK_adherent_of_parliamentarianism }
+		prerequisite = { focus = TRK_antitrust_law }
+		cost = 6
+		overlay = GFX_focus_fast_overlay_america
+
+		relative_position_id = TRK_adherent_of_parliamentarianism
+
+		x = -1
+		y = 1
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
 		}
 	}
 
