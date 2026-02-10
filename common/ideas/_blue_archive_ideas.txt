@@ -673,7 +673,7 @@ ideas = {
 			}
 	}
 	industrial_concern = {
-		NC_airship_department = {
+		NC_airship_department = { # 크로노스 스쿨 
 
 			picture = BA_kronos
 			
@@ -702,7 +702,7 @@ ideas = {
 			}
 		}
 
-		MIL_laboratory = { #NORTH
+		MIL_laboratory = { # 밀레니엄 
 			picture = gre_phaliron_aircraft
 			allowed = {
 				Kivotos_tag = yes
@@ -756,6 +756,55 @@ ideas = {
 				support_equipment = {
 					reliability = 0.05
 					instant = yes
+				}
+			}
+		}
+		
+		BA_kaiser_construction = { # 카이저 컨스트럭션
+			allowed = {
+				Kivotos_school_tag = yes
+			}
+
+			available = {
+				NOT = { has_war_with = KAI }
+			}
+			
+			cost = 100
+			removal_cost = 10
+
+			research_bonus = {
+				industry = 0.12
+			}
+
+			traits = { industrial_concern }
+			modifier = {
+				political_power_gain = -0.25
+				stability_factor = -0.02
+			}
+			
+			on_add = {
+			    if = { 
+				    limit = { KAI = { exists = yes } }
+				    KAI = { add_offsite_building = { type = industrial_complex level = 1 } }
+				}
+			}
+			
+			on_remove = {
+			    if = { 
+				    limit = { KAI = { exists = yes } }
+				    KAI = { add_offsite_building = { type = industrial_complex level = -1 } }
+				}
+			}
+			
+			ai_will_do = {
+				factor = 0.5
+				modifier = {
+					factor = 100
+					tag = KAI 
+				}
+				modifier = {
+					factor = 5
+					tag = COU 
 				}
 			}
 		}
