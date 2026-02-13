@@ -73,137 +73,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
-			if = {
-				limit = {
-					TRM = {
-						OR = {
-							has_character = TRN_Kirifuji_Nagisa
-							has_character = TRN_Yurizono_Seia
-							has_character = TRN_Kenzaki_Tsurugi
-							has_character = TRN_Hanekawa_Hasumi
-							has_character = TRN_nakamasa_ichika
-							has_character = TRN_shizuyama_mashiro
-							has_character = TRN_shimoe_koharu
-							has_character = TRN_Utazumi_Sakurako
-							has_character = TRN_Wakaba_Hinata
-							has_character = TRN_Iochi_Mari
-							has_character = TRN_Aomori_Mine
-							has_character = TRN_Sumi_Serina
-							has_character = TRN_Asagao_Hanae
-							has_character = TRN_Urawa_Hanako
-							has_character = TRN_Ajitani_Hifumi
-						}
-					}
-				}
-				TRM = {
-					custom_effect_tooltip = tooltip_white_line
-					if = {
-						limit = { has_character = TRN_Kirifuji_Nagisa }
-						TRN_Kirifuji_Nagisa = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Yurizono_Seia }
-						TRN_Yurizono_Seia = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Kenzaki_Tsurugi }
-						TRN_Kenzaki_Tsurugi = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Hanekawa_Hasumi }
-						TRN_Hanekawa_Hasumi = { 
-							hidden_effect = {
-								if = {
-									limit = { has_advisor_role = political_advisor }
-									remove_advisor_role = { slot = political_advisor }
-								}
-							}
-							set_nationality = ROOT 
-						}
-					}
-					if = {
-						limit = { has_character = TRN_nakamasa_ichika }
-						TRN_nakamasa_ichika = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_shizuyama_mashiro }
-						TRN_shizuyama_mashiro = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_shimoe_koharu }
-						TRN_shimoe_koharu = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Utazumi_Sakurako }
-						TRN_Utazumi_Sakurako = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Wakaba_Hinata }
-						TRN_Wakaba_Hinata = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Iochi_Mari }
-						TRN_Iochi_Mari = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Aomori_Mine }
-						TRN_Aomori_Mine = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Sumi_Serina }
-						TRN_Sumi_Serina = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Asagao_Hanae }
-						TRN_Asagao_Hanae = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Urawa_Hanako }
-						TRN_Urawa_Hanako = { set_nationality = ROOT }
-					}
-					if = {
-						limit = { has_character = TRN_Ajitani_Hifumi }
-						TRN_Ajitani_Hifumi = { set_nationality = ROOT }
-					}
-				}
-			}
-			if = {
-				limit = { has_character = TRN_Yurizono_Seia }
-				TRN_Yurizono_Seia = {
-					if = {
-						limit = { has_advisor_role = political_advisor }
-						remove_advisor_role = { slot = political_advisor }
-					}
-					add_advisor_role = {
-						advisor = {
-							slot = political_advisor
-							idea_token = TRN_Yurizono_Seia_political_advisor
-							traits = { TRN_sanctus_faction_head }
-							cost = 150
-							desc = TRK_yurijono_seia_desc
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_character = TRN_Kirifuji_Nagisa }
-				TRN_Kirifuji_Nagisa = {
-					if = {
-						limit = { has_advisor_role = political_advisor }
-						remove_advisor_role = { slot = political_advisor }
-					}
-					add_advisor_role = {
-						advisor = {
-							slot = political_advisor
-							idea_token = TRN_Kirifuji_Nagisa_political_advisor
-							traits = { TRN_filius_faction_head }
-							cost = 150
-							desc = TRK_kirifuji_Nagisa_desc
-						}
-					}
-				}
-			}
-			TRK_add_core_of_trinity_state = yes
+			TRK_init_effect = yes
 		}
 	}
 
@@ -289,6 +159,10 @@ focus_tree = {
 
 		available = {
 			NOT = { has_government = fascism }
+			OR = {
+				has_completed_focus = TRK_student_union
+				has_completed_focus = TRK_sanctus
+			}
 		}
 
 		ai_will_do = { base = 100 }
@@ -331,6 +205,10 @@ focus_tree = {
 
 		available = {
 			NOT = { has_government = fascism }
+			OR = {
+				has_completed_focus = TRK_filius
+				has_completed_focus = TRK_sanctus
+			}
 		}
 
 		ai_will_do = { base = 100 }
@@ -916,7 +794,7 @@ focus_tree = {
 		ai_will_do = { base = 100 }
 
 		completion_reward = {
-			
+			add_country_leader_trait = TRK_powerful_host
 		}
 	}
 
@@ -983,6 +861,30 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TRK_coop_between_party
+		icon = GFX_goal_generic_neutrality_focus
+		prerequisite = { focus = TRK_host_empowerment }
+		cost = 6
+
+		relative_position_id = TRK_host_empowerment
+
+		x = 0
+		y = 2
+
+		available_if_capitulated = yes
+
+		available = {
+			NOT = { has_government = fascism }
+		}
+
+		ai_will_do = { base = 100 }
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
 		id = TRK_adherent_of_parliamentarianism
 		icon = GFX_focus_TRK_adherent_of_parliamentarianism
 		prerequisite = { 
@@ -1013,14 +915,15 @@ focus_tree = {
 		id = TRK_antitrust_law
 		icon = GFX_focus_GER_factories_for_resources
 		prerequisite = { 
+			focus = TRK_gradually_supplementing_system
 			focus = TRK_host_empowerment
 		}
 		cost = 6
 
 		relative_position_id = TRK_host_empowerment
 
-		x = 0
-		y = 2
+		x = -1
+		y = 1
 
 		available_if_capitulated = yes
 
@@ -1046,7 +949,7 @@ focus_tree = {
 		id = TRK_christian_democracy
 		icon = GFX_focus_BEL_christian_corporatism
 		prerequisite = { focus = TRK_adherent_of_parliamentarianism }
-		prerequisite = { focus = TRK_antitrust_law }
+		prerequisite = { focus = TRK_coop_between_party }
 		cost = 6
 		overlay = GFX_focus_fast_overlay_america
 
