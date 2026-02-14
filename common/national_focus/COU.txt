@@ -636,7 +636,7 @@ focus_tree = {
 	
 	focus = { #통화 통일 
 		id = COU_focus_currency_unification
-		icon = GFX_focus_BEL_benelux_union
+		icon = GFX_COU_ayumu_arrest
 		x = -2
 		y = 4
 		relative_position_id = COU_focus_after_two_months
@@ -4823,49 +4823,57 @@ focus_tree = {
 	focus = { 
 		id = COU_focus_free_woman_corps #자유여성군단 
 		icon = GFX_focus_iphone
-		x = -3
-		y = 2
-		cost = 10
+		x = -2
+		y = 3
+		cost = 8
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_liberate_womans }
 		completion_reward = {
-		    
-		}
-	}
-	
-	focus = { 
-		id = COU_focus_more_perfidus_yay #범유럽적인 협력자 등용
-		icon = GFX_focus_generic_the_council_of_europe
-		x = -2
-		y = 3
-		cost = 10
-		available = { has_country_leader = { character = COU_KAYA } }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		relative_position_id = COU_focus_conservative_revolution
-		prerequisite = { focus = COU_focus_free_woman_corps }
-		completion_reward = {
-		    
-		}
-	}
-	
-	focus = { 
-		id = COU_focus_support_second_reconquista #레콩키스타 지원 약속
-		icon = GFX_focus_spr_maintain_the_republic
-		x = -2
-		y = 4
-		cost = 10
-		available = { 
-		    has_country_leader = { character = COU_KAYA } 
-		    NOT = { SPR = { has_war_with = WHY } }
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		relative_position_id = COU_focus_conservative_revolution
-		bypass= { SPR = { has_war_with = WHY } }
-		prerequisite = { focus = COU_focus_more_perfidus_yay }
-		completion_reward = {
-		    
+		    custom_effect_tooltip = ITA_battaglioni_d_assalto_tt
+			custom_effect_tooltip = COU_tooltip_recruit_woman_divisions
+			hidden_effect = {
+				set_technology = { blackshirt_assault_battalion_tech = 1 popup = no }
+			    division_template = {
+				     name = "Corpus Mulierum Liberarum"
+				     priority = 1
+				     division_names_group = HOL_INF_01
+				     regiments = {
+					     infantry = { x = 0 y = 0 }
+				         infantry = { x = 0 y = 1 }
+					     infantry = { x = 0 y = 2 }
+					
+					     infantry = { x = 1 y = 0 }
+				         infantry = { x = 1 y = 1 }
+					     infantry = { x = 1 y = 2 }
+					
+					     infantry = { x = 2 y = 0 }
+				         infantry = { x = 2 y = 1 }
+					     infantry = { x = 2 y = 2 }
+				     }
+				     support = {
+					     blackshirt_assault_battalion = { x = 0 y = 0 }
+				         artillery = { x = 0 y = 1 }
+				     }
+		        }
+			    random_owned_controlled_state = {
+				     limit = { ROOT = { has_full_control_of_state = PREV } }
+				     prioritize = { 7 }
+				     create_unit = {
+					      division = "name = \"Corpus Mulierum Liberarum\" division_template = \"Corpus Mulierum Liberarum\"   start_experience_factor = 0.7 start_equipment_factor = 1" 
+					      owner = COU
+				     }
+					 create_unit = {
+					      division = "name = \"Corpus Mulierum Liberarum\" division_template = \"Corpus Mulierum Liberarum\"   start_experience_factor = 0.7 start_equipment_factor = 1" 
+					      owner = COU
+				     }
+					 create_unit = {
+					      division = "name = \"Corpus Mulierum Liberarum\" division_template = \"Corpus Mulierum Liberarum\"   start_experience_factor = 0.7 start_equipment_factor = 1" 
+					      owner = COU
+				     }
+		        }
+			}
 		}
 	}
 	
@@ -4904,6 +4912,7 @@ focus_tree = {
 			     COU_Perfidus_cg = 0.1
 			     tooltip = compliance_growth_tt
 		    }
+			unlock_decision_category_tooltip = COU_kivotos_nationalism_decision
 		}
 	}
 	
@@ -4926,6 +4935,10 @@ focus_tree = {
 			    COU_kaya_conservative_revolution_justify_war_goal_time = -0.3
 			 	tooltip = justify_war_goal_time_tt
 		    }
+			if = { 
+			    limit = { has_completed_focus = COU_focus_kivotos_nationalism }
+			    unlock_decision_tooltip = COU_our_sacred_war
+			}
 		}
 	}
 	
@@ -4962,7 +4975,11 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_destroy_luxemburg }
 		completion_reward = {
-		    
+		    create_wargoal = {
+				type = annex_everything 
+				target = ABY 
+				expire = 0
+			}
 		}
 	}
 	
@@ -4979,7 +4996,21 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_destroy_luxemburg }
 		completion_reward = {
-		    
+		    create_wargoal = {
+				type = annex_everything 
+				target = TRM  
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = GEH  
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = GEM 
+				expire = 0
+			}
 		}
 	}
 	
@@ -4995,7 +5026,11 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_eastern_offensive }
 		completion_reward = {
-		    
+		    create_wargoal = {
+				type = annex_everything 
+				target = RED
+				expire = 0
+			}
 		}
 	}
 	
@@ -5011,7 +5046,21 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_eastern_offensive }
 		completion_reward = {
-		    
+		    create_wargoal = {
+				type = annex_everything 
+				target = MIL 
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = BLM 
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = WHY  
+				expire = 0
+			}
 		}
 	}
 	
