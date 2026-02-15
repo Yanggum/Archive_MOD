@@ -339,6 +339,20 @@ country_event = { #용역부 대금 문제
 	}
 }
 
+country_event = { #폭스 소대 공판 
+	id = COU_event.14
+	title = COU_event.14.t
+	desc = COU_event.14.desc
+	picture = GFX_report_event_she_srt_integration
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event.14.a
+	}
+}
+
 
 
 ###카야루트###
@@ -1029,6 +1043,29 @@ country_event = { #닥쳐이새끼야
 	}
 }
 
+country_event = { #성 미카엘 대천사 기도 
+	id = COU_event_kaya.34
+	title = COU_event_kaya.34.t
+	desc = COU_event_kaya.34.desc
+	picture = GFX_report_event_generic_library
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_kaya.34.a
+		custom_effect_tooltip = COU_tooltip_COU_event_kaya_34
+		add_political_power = 25 
+		if = {
+		    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+		    add_power_balance_value = {
+		        id = COU_kaya_mental_condition 
+		        value = -0.1
+	        }
+		}
+	}
+}
+
 
 
 
@@ -1159,6 +1196,92 @@ country_event = { #시발안돼 내 발키리가!!!!!!!!!!!!!!!!!!!!!!!
 			target = KSP 
 			modifier = ENG_to_IRE_Betray
 	    }
+	}
+}
+
+country_event = { #카이저 코퍼레이션에게: 저희 동맹 할까요...? (Shiranui Kaya)
+	id = COU_event_diplomancy.6
+	title = COU_event_diplomancy.6.t
+	desc = COU_event_diplomancy.6.desc
+	picture = GFX_report_event_picture_kaya_3
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_diplomancy.6.a
+		add_ideas = COU_KAI_alliance_idea
+		COU = { 
+		    add_ideas = COU_KAI_alliance_idea 
+		    add_to_faction = KAI 
+			add_ai_strategy = {
+				type = befriend
+				id = KAI 
+				value = 100
+			}
+		}
+		add_ai_strategy = {
+			type = befriend
+			id = COU 
+			value = 100
+		}
+		COU = { country_event = { id = COU_event_diplomancy.7 hours = 12 } }
+		ai_chance = {
+			base = 0.5
+			modifier = {
+				COU = { has_war = no }
+			}
+			factor = 1
+		}
+	}
+	
+	option = { 
+		name = COU_event_diplomancy.6.b
+		COU = { country_event = { id = COU_event_diplomancy.8 hours = 12 } }
+		ai_chance = {
+			base = 0.5
+			modifier = {
+				COU = { has_war = no }
+			}
+			factor = 0
+		}
+	}
+}
+
+country_event = { #반응1: 굿~ 
+	id = COU_event_diplomancy.7
+	title = COU_event_diplomancy.7.t
+	desc = COU_event_diplomancy.7.desc
+	picture = GFX_report_event_picture_kaya_3
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_diplomancy.7.a
+		effect_tooltip = { add_ideas = COU_KAI_alliance_idea }
+		if = {
+		    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+		    add_power_balance_value = {
+		        id = COU_kaya_mental_condition 
+		        value = -0.1
+	        }
+		}
+	}
+}
+
+country_event = { #반응2: 아이씨발
+	id = COU_event_diplomancy.8
+	title = COU_event_diplomancy.8.t
+	desc = COU_event_diplomancy.8.desc
+	picture = GFX_report_event_picture_kaya_3
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = { 
+		name = COU_event_diplomancy.8.a
+		add_political_power = -25
 	}
 }
 

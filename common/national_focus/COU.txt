@@ -1511,6 +1511,7 @@ focus_tree = {
 		relative_position_id = COU_shaking_royalty
 		cost = 5
 		available = {
+		    has_country_flag = GAEBALJUNG 
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1529,6 +1530,7 @@ focus_tree = {
 		relative_position_id = COU_shaking_royalty
 		cost = 5
 		available = {
+		    has_country_flag = GAEBALJUNG 
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1547,7 +1549,8 @@ focus_tree = {
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
-		available = {
+		available = { 
+		    has_country_flag = GAEBALJUNG 
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -4790,6 +4793,22 @@ focus_tree = {
 		}
 	}
 	
+	focus = {  
+		id = COU_focus_our_saint_michael #성 미카엘 대천사 기도 
+		icon = GFX_focus_COU_focus_saint_michael
+		x = 0
+		y = 1
+		cost = 10
+		available = { has_country_leader = { character = COU_KAYA } }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = COU_focus_conservative_revolution
+		prerequisite = { focus = COU_focus_conservative_revolution }
+		completion_reward = {
+		    add_country_leader_trait = COU_kaya_saint_michael
+			country_event = COU_event_kaya.34
+		}
+	}
+	
 	focus = { 
 		id = COU_focus_liberate_womans #여성해방 
 		icon = GFX_focus_PRC_rally_the_women
@@ -4972,12 +4991,24 @@ focus_tree = {
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		will_lead_to_war_with = ABY 
+		will_lead_to_war_with = SHA 
+		will_lead_to_war_with = HYA 
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_destroy_luxemburg }
 		completion_reward = {
 		    create_wargoal = {
 				type = annex_everything 
 				target = ABY 
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = SHA  
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything 
+				target = HYA 
 				expire = 0
 			}
 		}
@@ -4991,6 +5022,7 @@ focus_tree = {
 		cost = 5
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
+		will_lead_to_war_with = TRM 
 		will_lead_to_war_with = GEM 
 		will_lead_to_war_with = GEH 
 		relative_position_id = COU_focus_conservative_revolution
@@ -5043,6 +5075,8 @@ focus_tree = {
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		will_lead_to_war_with = MIL 
+		will_lead_to_war_with = BLM 
+		will_lead_to_war_with = WHY 
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_eastern_offensive }
 		completion_reward = {
@@ -5075,7 +5109,11 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_kivotos_nationalism }
 		completion_reward = {
-		    
+		    unlock_decision_tooltip = COU_kaya_core_redwinter
+			unlock_decision_tooltip = COU_kaya_core_abydos
+			unlock_decision_tooltip = COU_kaya_core_gehenna
+			unlock_decision_tooltip = COU_kaya_core_trinnity
+		    unlock_decision_tooltip = COU_kaya_core_millenium
 		}
 	}
 	
@@ -5085,27 +5123,29 @@ focus_tree = {
 		x = 7
 		y = 2
 		cost = 5
-		available = { has_country_leader = { character = COU_KAYA } }
+		available = { 
+		    has_country_leader = { character = COU_KAYA } 
+			KAI = { exists = yes }
+		    KAI = { is_in_faction = no }
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_kivotos_nationalism }
 		completion_reward = {
-		    
+		    KAI = { country_event = { id = COU_event_diplomancy.6 hours = 6 } }
+			custom_effect_tooltip = COU_tooltip_when_we_peace_percent_up
 		}
-	}
-	
-	focus = { 
-		id = COU_focus_seek_alliance_with_nagisa #동쪽의 동맹 모색
-		icon = GFX_focus_TRN_kirifuji_nagisa
-		x = 7
-		y = 3
-		cost = 5
-		available = { has_country_leader = { character = COU_KAYA } }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		relative_position_id = COU_focus_conservative_revolution
-		prerequisite = { focus = COU_focus_seek_alliance_with_kaiser }
-		completion_reward = {
-		    
+		
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 0
+				KAI = { surrender_limit < 0.5 }
+			}
+			modifier = {
+				factor = 0
+				GEI = { has_war_with = GEI }
+			}
 		}
 	}
 	
@@ -5148,15 +5188,24 @@ focus_tree = {
 		continue_if_invalid = yes
 		
 		relative_position_id = COU_focus_conservative_revolution
-		prerequisite = { focus = COU_focus_conservative_revolution }
+		prerequisite = { focus = COU_focus_our_saint_michael }
 		completion_reward = {
 		    add_stability = 0.3
 			add_war_support = 0.3
 			add_political_power = 300
 			custom_effect_tooltip = COU_tooltip_kaya_real_end
+			if = { 
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				clr_country_flag = COU_kaya_mental_condition_active_flag
+				remove_power_balance = { id = COU_kaya_mental_condition }
+				hidden_effect = { 
+				    remove_country_leader_trait = COU_kaya_mental_condition
+		            remove_country_leader_trait = COU_kaya_mental_condition2
+				}
+			}
 			#이벤트 쓰기 
 			hidden_effect = {
-			    
+				
 			}
 		}
 	}
