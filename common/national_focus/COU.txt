@@ -5199,6 +5199,7 @@ focus_tree = {
 			if = { 
 			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
 				clr_country_flag = COU_kaya_mental_condition_active_flag
+				set_country_flag = wtfending_flag
 				remove_power_balance = { id = COU_kaya_mental_condition }
 				hidden_effect = { 
 				    remove_country_leader_trait = COU_kaya_mental_condition
@@ -5207,7 +5208,21 @@ focus_tree = {
 			}
 			#이벤트 쓰기 
 			hidden_effect = {
-				
+				country_event = COU_event_kaya.40
+				if = {
+				    limit = { has_country_flag = KAYA_happy_ending_flag }
+					country_event = { id = COU_event_kaya.37 hours = 6 }
+					set_portraits = {
+					    civilian = {
+						    large="GFX_leaders_kayaface_sunglasses"
+					    }
+				    }
+				}
+				else_if = {
+				    limit = { has_country_flag = wtfending_flag }
+				    country_event = { id = COU_event_kaya.38 hours = 6 }
+				}
+				else = { country_event = { id = COU_event_kaya.39 hours = 6 } }
 			}
 		}
 	}
