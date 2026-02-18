@@ -777,9 +777,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-
-
-			GER_add_or_modify_politburo = yes
+			KPD_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_mobilization_laws_cost_factor = -0.15 tooltip = mobilization_laws_cost_factor_tt }
 			add_to_variable = { GER_politburo_conscription_factor = 0.05 tooltip = conscription_factor_tt }
 
@@ -789,8 +787,6 @@ focus_tree = {
 			add_to_variable = { GER_military_mobilization_speed = 0.1 tooltip = mobilization_speed_tt }
 			add_to_variable = { GER_military_experience_gain_army_factor = -0.1 tooltip = experience_gain_army_factor_tt }
 			add_to_variable = { GER_military_minimum_training_level = -0.1 tooltip = minimum_training_level_tt }
-
-			
 		}
 	}
 
@@ -1050,7 +1046,7 @@ focus_tree = {
 				show_ideas_tooltip = GER_otto_ruhle
 			}
 
-			GER_add_or_modify_politburo = yes
+			KPD_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_party_popularity_stability_factor = 0.05 tooltip = party_popularity_stability_factor_tt }
 			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.05 tooltip = defensive_war_stability_factor_tt }
 		}
@@ -1089,7 +1085,7 @@ focus_tree = {
 				name = TRK_communism_party
 			}
 
-			GER_add_or_modify_politburo = yes
+			KPD_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
 			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
 		}
@@ -1111,6 +1107,12 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_party_popularity_stability_factor = 0.05
+				tooltip = party_popularity_stability_factor_tt
+			}
 
 		}
 	}
@@ -1275,6 +1277,17 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+			add_political_power = 100
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GER_politburo_drift_defence_factor = 0.50
+				tooltip = drift_defence_factor_tt
+			}
 		}
 	}
 	focus = {
@@ -1292,6 +1305,18 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+
+			add_political_power = 50
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GER_politburo_max_surrender_limit_offset = 0.05
+				tooltip = max_surrender_limit_offset_tt
+			}
 		}
 	}
 	focus = {
@@ -1326,6 +1351,49 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_equipment_subsidy = {
+				cic = 500
+				equipment_type = light_tank_chassis
+				seller_tags = { SOV } 
+			}
+			add_equipment_subsidy = {
+				cic = 500
+				equipment_type = infantry_equipment
+				seller_tags  = { SOV }
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			every_owned_state = {
+				limit = {
+					BA_trinity_is = yes
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -2139,7 +2207,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = KPD_nationalization_of_industries
-		cost = 10
+		cost = 5
 		available = {
 			OR = {
 				has_completed_focus = GEAF_prioritize_economic_growth
@@ -2151,12 +2219,13 @@ focus_tree = {
 
 		completion_reward = {
 
-			every_core_state = {
+			every_owned_state = {
 				limit = {
+					BA_trinity_is = yes
 					is_fully_controlled_by = ROOT
 					free_building_slots = {
 						building = industrial_complex
-						size > 1
+						size > 0
 						include_locked = yes
 					}
 				}
