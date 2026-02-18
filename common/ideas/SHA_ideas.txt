@@ -1301,6 +1301,91 @@ ideas = {
 
 	}
 	country = {
+		
+		# 붕괴한 경제
+		SHA_collapsed_economy = {
+			allowed = { always = no }
+
+			modifier = {
+				consumer_goods_factor = 0.2
+				production_speed_buildings_factor = -0.1
+				production_factory_efficiency_gain_factor = -0.1
+				production_factory_max_efficiency_factor = -0.1
+			}
+		}
+
+		SHA_collapsed_economy_idea2 = {
+			picture = SHA_collapsed_economy
+			allowed = { always = no }
+
+			modifier = {
+				consumer_goods_factor = 0.1
+				production_speed_buildings_factor = -0.1
+				production_factory_efficiency_gain_factor = -0.05
+				production_factory_max_efficiency_factor = -0.05
+			}
+		}
+
+		# 오스트리아인 실업
+		SHA_austrian_unemployment_idea = {
+			picture = generic_disjointed_gov
+			allowed = { always = no }
+
+			modifier = {
+				political_power_factor = -0.1
+				stability_factor = -0.15
+				war_support_factor = -0.2
+			}
+		}
+		SHA_austrian_unemployment_idea2 = {
+			name = SHA_austrian_unemployment_idea
+			picture = generic_disjointed_gov
+			allowed = { always = no }
+
+			modifier = {
+				stability_factor = -0.05
+				war_support_factor = -0.1
+			}
+		}
+
+		SHA_increased_taxes_idea = {
+			picture = PRC_silver_dollar_promoted
+			allowed = { always = no }
+
+			modifier = {
+				stability_weekly = -0.003
+				war_support_weekly = -0.003
+			}
+		}
+
+		SHA_pare_military_spending_idea = {
+			picture = BEL_scars_of_ww1
+			allowed = { always = no }
+			modifier = {
+				experience_gain_army_factor = -0.5
+				command_power_gain_mult = -0.5
+			}
+		}
+
+		SHA_industrial_relief_idea = {
+			picture = GER_recovering_economy
+			allowed = { always = no }
+			modifier = {
+				consumer_goods_factor = 0.1
+			}
+		}
+		
+		SHA_three_year_plan_idea = {
+			picture = ARG_economic_reactivation
+			allowed = { always = no }
+			modifier = {
+				political_power_factor = -0.05
+				consumer_goods_factor = -0.15
+				stability_factor = -0.05
+				industrial_capacity_factory = 0.10
+			}
+		}
+
 		# 산해경 고립
 		SHA_shanhaijing_isolation = {
 			allowed = {	always = no	}
@@ -1312,7 +1397,6 @@ ideas = {
 				join_faction_tension = 1.00
 				guarantee_tension = 1.0
 				embargo_threshold_factor = 2.5
-				consumer_goods_factor = 0.15
 				generate_wargoal_tension = 0.75
 				justify_war_goal_time = 0.50
 				send_volunteers_tension = 0.20
@@ -1386,52 +1470,6 @@ ideas = {
 			picture = SHA_Peking_Opera
 			modifier = {
 				stability_factor = 0.05
-			}
-		}
-		# 연단방
-		SHA_Eastern_Alchemy_Society_super_low = {
-			picture = SHA_IdeaG_11
-			allowed = { always = no }
-			allowed_civil_war = { always = yes }
-			
-			modifier = {
-				political_power_cost = -0.35
-				research_speed_factor = -0.05
-			}
-		}
-		# 연단방
-		SHA_Eastern_Alchemy_Society_low = {
-			picture = SHA_IdeaG_11
-			allowed = { always = no }
-			allowed_civil_war = { always = yes }
-			
-			modifier = {
-				political_power_cost = 0.1
-				research_speed_factor = 0.05
-			}
-		}
-		# 연단방 - 높은 예산
-		SHA_Eastern_Alchemy_Society_medium = {
-			picture = SHA_IdeaG_11
-			allowed = { always = no }
-			allowed_civil_war = { always = yes }
-			
-			modifier = {
-				political_power_cost = 0.5
-				research_speed_factor = 0.10
-			}
-		}
-		# 연단방 - 매우 높은 예산
-		SHA_Eastern_Alchemy_Society_high = {
-			picture = SHA_IdeaG_11
-			allowed = { always = no }
-			allowed_civil_war = { always = yes }
-			
-			modifier = {
-				political_power_factor = -0.15
-				political_power_cost = 1
-				stability_factor = -0.1
-				research_speed_factor = 0.3
 			}
 		}
 		# 급진파 결집
@@ -1807,22 +1845,6 @@ ideas = {
 				research_speed_factor = 0.05
 				production_factory_max_efficiency_factor = 0.05
 				consumer_goods_factor = -0.1
-			}
-		}
-		
-		# 오스트리아 실업자 문제
-		SHA_austria_unemployment_problem = {
-			picture = generic_disjointed_gov
-			allowed = {	always = no	}
-			allowed_civil_war = { always = yes }
-			on_add = {
-				add_dynamic_modifier = { modifier = SHA_aup_modifier }
-			}
-			on_remove = {
-				remove_dynamic_modifier = { modifier = SHA_aup_modifier }
-			}
-			modifier = {
-				custom_modifier_tooltip = SHA_austria_unemployment_problem_tt
 			}
 		}
 		
@@ -2251,7 +2273,7 @@ ideas = {
 	}
 	industrial_concern = {
 
-		SHA_bbo_improved = {
+		SHA_obb_improved = {
 			name = AUS_bbo_improved
 			picture = AUS_bbo
 
@@ -2264,7 +2286,10 @@ ideas = {
 			}
 
 			visible = {
-				has_completed_focus = SHA_Federal_Railroad_Absorption
+				OR = {
+					has_completed_focus = SHA_obb_argument
+					has_completed_focus = SHA_Federal_Railroad_Absorption
+				}
 			}
 
 			ai_will_do = {
