@@ -690,9 +690,9 @@ ideas = {
 			}
 	}
 	industrial_concern = {
-		NC_airship_department = {
+		NC_airship_department = { # 크로노스 스쿨 
 
-			picture = por_ogma
+			picture = BA_kronos
 			
 			allowed = {
 				Kivotos_tag = yes
@@ -703,7 +703,6 @@ ideas = {
 			}
 			
 			research_bonus = {
-				air_equipment = 0.05
 			}
 
 			modifier = {	
@@ -713,17 +712,18 @@ ideas = {
 			
 			traits = { cronos_school }
 			
-			# assembled hawk II and hawk III fighter bombers as well as the Vultee V-11 ground attackers
+			# assembled hawk II and hawk III fighter bombers as well as the Vultee V-11 ground attackers <-- 이건뭐임 
 						
 			ai_will_do = {
 				factor = 1
 			}
 		}
 
-		MIL_laboratory = { #NORTH
-			picture = gre_phaliron_aircraft
+		MIL_laboratory = { # 밀레니엄 
+			picture = BA_millenium_research
 			allowed = {
 				Kivotos_tag = yes
+				NOT = { tag = MIL }
 			}
 			
 			available = {
@@ -731,8 +731,7 @@ ideas = {
 			}
 			
 			modifier = {
-				research_speed_factor = 0.05
-				weekly_manpower = 500
+				
 			}
 			traits = { MIL_automaton_manufacturer }
 
@@ -775,6 +774,55 @@ ideas = {
 				support_equipment = {
 					reliability = 0.05
 					instant = yes
+				}
+			}
+		}
+		
+		BA_kaiser_construction = { # 카이저 컨스트럭션
+			allowed = {
+				Kivotos_school_tag = yes
+			}
+
+			available = {
+				NOT = { has_war_with = KAI }
+			}
+			
+			cost = 100
+			removal_cost = 10
+
+			research_bonus = {
+				industry = 0.15
+			}
+
+			traits = { industrial_concern }
+			modifier = {
+				political_power_gain = -0.25
+				stability_factor = -0.02
+			}
+			
+			on_add = {
+			    if = { 
+				    limit = { KAI = { exists = yes } }
+				    KAI = { add_offsite_building = { type = industrial_complex level = 1 } }
+				}
+			}
+			
+			on_remove = {
+			    if = { 
+				    limit = { KAI = { exists = yes } }
+				    KAI = { add_offsite_building = { type = industrial_complex level = -1 } }
+				}
+			}
+			
+			ai_will_do = {
+				factor = 0.5
+				modifier = {
+					factor = 100
+					tag = KAI 
+				}
+				modifier = {
+					factor = 5
+					tag = COU 
 				}
 			}
 		}

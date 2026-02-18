@@ -1878,60 +1878,6 @@ FRA_war_dec = { #본토 수복 결전
 			factor = 100
 		}
 	}
-	FRA_total_lib = {
-		icon = GFX_decision_hol_war_on_pacifism
-		fire_only_once = yes
-		visible = {
-			has_completed_focus = FRA_focus_resistance_5
-		}
-		available = {
-			NOT = {
-				has_war_with = MIL
-			}
-			16 = {
-				is_owned_and_controlled_by = FRA
-			}
-		}
-		complete_effect = {
-			if = {
-				limit = {
-					FRA_philippe_petain = {
-						is_country_leader = yes
-					}
-				}
-				hidden_effect = {
-					country_event = {
-						id = FRA_ex_event.15
-					}
-				}
-			}
-			news_event = {
-				id = FRA_prov_event.38
-				days = 3
-			}
-			set_capital = {
-				state = 16
-				remember_old_capital = no
-			}
-			clear_variable = FRA_dec
-			annex_country = {
-				target = FRM
-			}
-			hidden_effect = {
-				country_event = {
-					id = FRA_ex_event.17
-					hours = 24
-				}
-				country_event = {
-					id = FRA_ex_event.18
-					days = 8
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-	}
 	FRA_change_paris = { #파리로 수도 이전
 		icon = GFX_decision_eng_trade_unions_demand
 		visible = {
@@ -3384,6 +3330,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3425,6 +3372,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3470,6 +3418,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3511,6 +3460,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3551,6 +3501,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3577,8 +3528,9 @@ FRA_propaganda = {
 			political_power_gain = 0.35
 		}
 		visible = {
-			FRA_philippe_petain = {
-				is_country_leader = yes
+			has_country_leader = {
+				character = FRA_philippe_petain
+				ruling_only = yes
 			}
 		}
 		available = {
@@ -3593,6 +3545,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3630,6 +3583,7 @@ FRA_propaganda = {
 						has_country_flag = FRA_propaganda_5_flag
 						has_country_flag = FRA_propaganda_6_flag
 						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
 					}
 				}
 			}
@@ -3640,6 +3594,58 @@ FRA_propaganda = {
 		modifier = {
 			production_factory_efficiency_gain_factor = 0.05
 			production_speed_arms_factory_factor = 0.1
+		}
+	}
+	FRA_propaganda_8 = { #자유를 쟁취하자!
+		icon = GFX_decision_eng_propaganda_campaigns
+		complete_effect = {
+			set_country_flag = FRA_propaganda_8_flag
+			hidden_effect = {
+				country_event = {
+					id = FRA_pro.1
+					days = 120
+				}
+			}
+		}
+		ai_will_do = {
+			base = 10
+		}
+		visible = {
+			has_completed_focus = FRA_maurice_gamelin_focus_6
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_propaganda_tt
+				NOT = {
+					OR = {
+						has_country_flag = FRA_propaganda_flag
+						has_country_flag = FRA_propaganda_2_flag
+						has_country_flag = FRA_propaganda_3_flag
+						has_country_flag = FRA_propaganda_4_flag
+						has_country_flag = FRA_propaganda_5_flag
+						has_country_flag = FRA_propaganda_6_flag
+						has_country_flag = FRA_propaganda_7_flag
+						has_country_flag = FRA_propaganda_8_flag
+					}
+				}
+			}
+		}
+		days_re_enable = 60
+		days_remove = 120
+		cost = 15
+		modifier = {
+			resistance_growth = -0.05
+			resistance_activity = -0.05
+		}
+		complete_effect = {
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = ROOT }
+					is_on_continent = africa
+					has_resistance = yes
+				}
+				add_resistance = -0.05
+			}
 		}
 	}
 }
@@ -4640,6 +4646,444 @@ economy_decisions = {
 				has_war_with = FRA
 				add = 999
 			}
+		}
+	}
+}
+
+
+FPP_reconstruction_of_order_in_paris = {
+	
+	FPP_reconstruction_of_rural_pastoral_order = {
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 1
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_removal_of_radical_technocracy_traces = {
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_garden_city = {
+		icon = GFX_decision_generic_construction
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+			always = no
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_french_language_education = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_seminary_and_new_education
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_french_history_education = {
+		icon = GFX_decision_generic_decision
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_seminary_and_new_education
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_recruitment_authorization = {
+		icon = GFX_decision_SWE_set_army_budget
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_reaffirmation_of_the_french_nation_state
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_incorporation_of_new_states = {
+		icon = GFX_decision_infiltrate_state
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_reaffirmation_of_natural_borders
+			has_completed_focus = FPP_reaffirmation_of_the_french_nation_state
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+	
+	FPP_expansion_of_the_paris_academy = {
+		icon = GFX_decision_generic_research
+
+		allowed = {
+			original_tag = FRA
+		}
+
+		visible = {
+			has_completed_focus = FPP_eradication_of_millennium_culture
+		}
+
+		available = {
+			has_completed_focus = FPP_reaffirmation_of_the_french_nation_state
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+
+		fire_only_once = yes
+
+		cost = 25
+		
+		days_remove = 78
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		complete_effect = {
+			add_political_power = 120
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = europe
+					arms_factory > 0
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		
+		remove_effect = {
 		}
 	}
 }

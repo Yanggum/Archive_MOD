@@ -594,3 +594,141 @@ IRE_FF_with_LP_calculate = {
 		value = var:IRE_parliament_seat_array^0 #LP
 	}
 }
+
+IRE_FF_with_FG_calculate = {
+	set_variable = { 
+		var = IRE_FF_plus_FG
+		value = var:IRE_parliament_seat_array^1 #FF
+	}
+	add_to_variable = { 
+		var = IRE_FF_plus_FG 
+		value = var:IRE_parliament_seat_array^2 #FG
+	}
+}
+
+IRE_politics_allinone = {
+	clamp_variable = {
+		var = IRE_IFA_loyalty
+		min = -50
+		max = 50
+	}
+	clamp_variable = {
+		var = IRE_CAT_loyalty
+		min = -50
+		max = 50
+	}
+	clamp_variable = {
+		var = IRE_IRA_loyalty
+		min = -50
+		max = 50
+	}
+	clamp_variable = {
+		var = IRE_SOC_loyalty
+		min = -50
+		max = 50
+	}
+	clamp_variable = {
+		var = IRE_IFA_popularity
+		min = 0
+		max = 100
+	}
+	clamp_variable = {
+		var = IRE_CAT_popularity
+		min = 0
+		max = 100
+	}
+	clamp_variable = {
+		var = IRE_IRA_popularity
+		min = 0
+		max = 100
+	}
+	clamp_variable = {
+		var = IRE_SOC_popularity
+		min = 0
+		max = 100
+	}
+	set_variable = { IRE_IFA_loyaly_1 = IRE_IFA_loyalty }
+	set_variable = { IRE_IFA_loyaly_2 = IRE_IFA_loyalty }
+	set_variable = { IRE_IFA_loyaly_3 = IRE_IFA_loyalty }
+	set_variable = { IRE_CAT_loyalty_1 = IRE_CAT_loyalty }
+	set_variable = { IRE_IRA_loyalty_1 = IRE_IRA_loyalty }
+	set_variable = { IRE_IRA_loyalty_2 = IRE_IRA_loyalty }
+	set_variable = { IRE_SOC_loyalty_1 = IRE_SOC_loyalty }
+	set_variable = { IRE_SOC_loyalty_2 = IRE_SOC_loyalty }
+	multiply_variable = { IRE_IFA_loyaly_1 = -0.004 }
+	multiply_variable = { IRE_IFA_loyaly_2 = 0.006 }
+	multiply_variable = { IRE_IFA_loyaly_3 = 0.00006 }
+	multiply_variable = { IRE_CAT_loyalty_1 = 0.006 }
+	multiply_variable = { IRE_IRA_loyalty_1 = 0.006 }
+	multiply_variable = { IRE_IRA_loyalty_2 = -0.006 }
+	multiply_variable = { IRE_SOC_loyalty_1 = 0.006 }
+	multiply_variable = { IRE_SOC_loyalty_2 = 0.003 }
+	set_variable = { IRE_IFA_popularity_1 = IRE_IFA_popularity }
+	set_variable = { IRE_CAT_popularity_1 = IRE_CAT_popularity }
+	set_variable = { IRE_IRA_popularity_1 = IRE_IRA_popularity }
+	set_variable = { IRE_SOC_popularity_1 = IRE_SOC_popularity }
+	set_variable = { IRE_IFA_popularity_2 = 0.5 }
+	set_variable = { IRE_CAT_popularity_2 = 0.5 }
+	set_variable = { IRE_IRA_popularity_2 = 0.5 }
+	set_variable = { IRE_SOC_popularity_2 = 0.5 }
+	multiply_variable = { IRE_IFA_popularity_1 = 0.005 }
+	multiply_variable = { IRE_CAT_popularity_1 = 0.005 }
+	multiply_variable = { IRE_IRA_popularity_1 = 0.005 }
+	multiply_variable = { IRE_SOC_popularity_1 = 0.005 }
+	add_to_variable = { IRE_IFA_popularity_2 = IRE_IFA_popularity_1 }
+	add_to_variable = { IRE_CAT_popularity_2 = IRE_CAT_popularity_1 }
+	add_to_variable = { IRE_IRA_popularity_2 = IRE_IRA_popularity_1 }
+	add_to_variable = { IRE_SOC_popularity_2 = IRE_SOC_popularity_1 }
+	multiply_variable = { IRE_IFA_loyaly_1 = IRE_IFA_popularity_2 }
+	multiply_variable = { IRE_IFA_loyaly_2 = IRE_IFA_popularity_2 }
+	multiply_variable = { IRE_IFA_loyaly_3 = IRE_IFA_popularity_2 }
+	multiply_variable = { IRE_CAT_loyalty_1 = IRE_CAT_popularity_2 }
+	multiply_variable = { IRE_IRA_loyalty_1 = IRE_IRA_popularity_2 }
+	multiply_variable = { IRE_IRA_loyalty_2 = IRE_IRA_popularity_2 }
+	multiply_variable = { IRE_SOC_loyalty_1 = IRE_SOC_popularity_2 }
+	multiply_variable = { IRE_SOC_loyalty_2 = IRE_SOC_popularity_2 }
+	set_variable = { IRE_DM0_consumer_goods_factor = IRE_IFA_loyaly_1 }
+	set_variable = { IRE_DM0_conscription_factor = IRE_IFA_loyaly_2 }
+	set_variable = { IRE_DM0_stability_weekly = IRE_IFA_loyaly_3 }
+	set_variable = { IRE_DM0_political_power_factor = IRE_CAT_loyalty_1 }
+	set_variable = { IRE_DM0_stability_factor = IRE_CAT_loyalty_1 }
+	set_variable = { IRE_DM0_war_support_factor = IRE_CAT_loyalty_1 }
+	set_variable = { IRE_DM0_army_attack_factor = IRE_IRA_loyalty_1 }
+	set_variable = { IRE_DM0_army_defence_factor = IRE_IRA_loyalty_1 }
+	set_variable = { IRE_DM0_training_time_army_factor = IRE_IRA_loyalty_2 }
+	set_variable = { IRE_DM0_industrial_capacity_factory = IRE_SOC_loyalty_1 }
+	set_variable = { IRE_DM0_industrial_capacity_dockyard = IRE_SOC_loyalty_1 }
+	set_variable = { IRE_DM0_production_speed_buildings_factor = IRE_SOC_loyalty_2 }
+	if = {
+		limit = {
+			check_variable = { IRE_IFA_popularity_1 = 0 }
+		}
+		set_variable = { IRE_DM0_consumer_goods_factor = 0 }
+		set_variable = { IRE_DM0_conscription_factor = 0 }
+		set_variable = { IRE_DM0_stability_weekly = 0 }
+	}
+	if = {
+		limit = {
+			check_variable = { IRE_CAT_popularity_1 = 0 }
+		}
+		set_variable = { IRE_DM0_political_power_factor = 0 }
+		set_variable = { IRE_DM0_stability_factor = 0 }
+		set_variable = { IRE_DM0_war_support_factor = 0 }
+	}
+	if = {
+		limit = {
+			check_variable = { IRE_IRA_popularity_1 = 0 }
+		}
+		set_variable = { IRE_DM0_army_attack_factor = 0 }
+		set_variable = { IRE_DM0_army_defence_factor = 0 }
+		set_variable = { IRE_DM0_training_time_army_factor = 0 }
+	}
+	if = {
+		limit = {
+			check_variable = { IRE_SOC_popularity_1 = 0 }
+		}
+		set_variable = { IRE_DM0_industrial_capacity_factory = 0 }
+		set_variable = { IRE_DM0_industrial_capacity_dockyard = 0 }
+		set_variable = { IRE_DM0_production_speed_buildings_factor = 0 }
+	}
+}

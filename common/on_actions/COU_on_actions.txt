@@ -1,0 +1,82 @@
+on_actions = {
+    on_startup = {
+		effect = {
+			#COU dynamic modifiers, 일단 로컬 레지스탕스는 쓸 방법을 좀 생각해 볼께요;;;
+			36 = { 
+			    add_dynamic_modifier = { modifier = COU_the_dead_land } 
+			}
+			7 = { 
+			    add_dynamic_modifier = { modifier = COU_the_dead_land } 
+			  #  add_dynamic_modifier = { modifier = COU_local_resistance } 
+			} 
+			COU = { country_event = COU_event.1 } #앰씹들켰다 
+		}
+		effect = { 
+		    #COU decision start, 일단 리워크하느라 예외처리함
+		    COU = { 
+			    #activate_mission = COU_the_srt_problem 
+				activate_mission = COU_collaboraters_wants_political_money
+				#activate_mission = COU_the_normal_days_of_cou
+			    #activate_mission = COU_regain_schedule_ticket
+			}
+		}
+	}
+	
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = { # 총학의 일방적 합병 
+				    AND = {
+				       ROOT = { original_tag = SHE }
+				       FROM = { original_tag = COU }
+			        }
+				}
+				COU = { annex_country = { target = SHE } }
+				COU = { country_event = COU_event.4 }
+				COU = { 
+				    set_division_template_lock = {
+			            division_template = "Local Defense Brigade"
+			            is_locked = no
+		            }
+				}
+			}
+			if = {
+				limit = { # 샬레의 일방적 합병 
+				    AND = {
+				       ROOT = { original_tag = COU }
+				       FROM = { original_tag = SHE }
+			        }
+				}
+				SHE = { annex_country = { target = COU } }
+			}
+		}
+	}
+	
+	on_declare_war = {
+		effect = {
+		    if = {
+				limit = {
+					tag = SHE 
+					FROM = {
+						tag = COU 
+					}
+					has_global_flag = COU_division_of_military_flag
+				}
+				COU = {
+				    activate_mission = COU_loss_of_justification
+				}
+			}
+		}
+	}
+	
+	on_weekly_COU = {
+	    effect = {
+		    if = { #카야 멘탈 관리 활성화
+				limit = {
+					has_country_flag = COU_kaya_mental_condition_active_flag
+				}
+				COU_kaya_mental_condition_decrease_effect = yes
+			}
+		}
+	}
+}

@@ -1,3 +1,4 @@
+#!gfx:interface\BlueArchive\01 goals.gfx
 focus_tree = {
 	id = FRA_focus
 	country = {
@@ -9,11 +10,11 @@ focus_tree = {
 	}
 	inlay_window = {
 		id = fra_inner_circle_inlay_window
-		position = { x = 2140 y = 1800 }
+		position = { x = 4840 y = 1000 }
 	}
 	continuous_focus_position = {
-		x = 1300
-		y = 1800
+		x = 600
+		y = 800
 	}
 	initial_show_position = {
         x = 10
@@ -26,7 +27,7 @@ focus_tree = {
 	#}
 	shortcut = {
 		name = FRA_focus_shortcut_diplomacy
-		target = FRA_an_unexpected_ally
+		target = FRA_mediterranean_economic_bloc
 		scroll_wheel_factor = 0.9
 	} 
 	shortcut = {
@@ -60,11 +61,12 @@ focus_tree = {
 		id = FRA_focus.1
 		cost = 4
 		icon = GFX_goal_FRA_focus_resistance
-		x = 15
+		x = 32
 		y = 0
 		available = {
-			FRA_philippe_petain = {
-				is_country_leader = yes
+			has_country_leader = {
+				character = FRA_philippe_petain
+				ruling_only = yes
 			}
 		}
 		completion_reward = {
@@ -614,7 +616,7 @@ focus_tree = {
 		id = FRA_focus_arm_1
 		icon = GFX_goal_fra_endex
 		cost = 2
-		x = 24
+		x = 47
 		y = 1
 		relative_position_id = FRA_focus.1
 		ai_will_do = {
@@ -2465,8 +2467,8 @@ focus_tree = {
 		id = FRA_authenticity_in_the_international_community
 		cost = 2
 		icon = GFX_focus_generic_league_of_nations
-		x = -4
-		y = 8
+		x = -23
+		y = 0
 		available = {
 			has_country_flag = unlock_focuses
 		}
@@ -4185,7 +4187,7 @@ focus_tree = {
 		id = FRA_focus_garrison_0
 		icon = GFX_goal_generic_constitutional_guarantees
 		cost = 4
-		x = 13
+		x = 16
 		y = 1
 		relative_position_id = FRA_focus.1
 		prerequisite = {
@@ -4381,7 +4383,10 @@ focus_tree = {
 					tooltip = FRA_FRA_CGT_org_tt
 				}
 			}
-			unlock_decision_tooltip = FRA_crush_strike
+			unlock_decision_tooltip = {
+				decision = FRA_crush_strike
+				show_effect_tooltip = yes
+			}
 		}
 	}
 	focus = {
@@ -4663,8 +4668,9 @@ focus_tree = {
 					always = no
 				}
 			}
-			x = 33
-			y = 7
+			x = 30
+			y = 1
+			relative_position_id = FRA_focus.1
 			icon = GFX_focus_generic_industrialists
 			completion_reward = {
 				add_political_power = 100
@@ -6579,6 +6585,32 @@ focus_tree = {
 					ideology = neutrality
 					popularity = 0.05
 				}
+				if = {
+					limit = {
+						has_country_leader = {
+							character = FRA_charles_maurras
+							ruling_only = no
+						}
+					}
+					promote_character = FRA_charles_maurras
+				}
+				else = {
+					add_country_leader_role = {
+						character = FRA_charles_maurras
+						promote_leader = yes
+						country_leader = {
+							ideology = fascism_ideology
+							traits = {
+								FRA_retro_revivalist
+							}
+						}
+					}
+				}
+				set_party_name = {
+					ideology = fascism
+					long_name = FRA_action_france_long
+					name = FRA_action_france
+				}
 			}
 		}
 
@@ -6864,6 +6896,32 @@ focus_tree = {
 					ideology = neutrality
 					popularity = 0.05
 				}
+				if = {
+					limit = {
+						has_country_leader = {
+							character = FRA_francois_de_la_rocque
+							ruling_only = no
+						}
+					}
+					promote_character = FRA_francois_de_la_rocque
+				}
+				else = {
+					add_country_leader_role = {
+						character = FRA_francois_de_la_rocque
+						promote_leader = yes
+						country_leader = {
+							ideology = fascism_ideology
+							traits = {
+								retired_officer
+							}
+						}
+					}
+				}
+				set_party_name = {
+					ideology = fascism
+					long_name = FRA_PSF_long
+					name = FRA_PSF
+				}
 			}
 		}
 
@@ -7004,6 +7062,7 @@ focus_tree = {
 				hidden_effect = {
 					if = {
 						limit = { has_completed_focus = FRA_charles_de_gaulle_focus_2 }
+						add_political_power = 120
 						add_country_leader_trait = FRA_military_reformer
 					}
 				}
@@ -7062,6 +7121,7 @@ focus_tree = {
 				hidden_effect = {
 					if = {
 						limit = { has_completed_focus = FRA_maurice_gamelin_focus_2 }
+						add_political_power = 120
 						add_country_leader_trait = FRA_republican_officer
 					}
 				}
@@ -7290,6 +7350,10 @@ focus_tree = {
 				}
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = FRA_revolution_nationale_maurice_gamelin_1
+					add_idea = FRA_revolution_nationale_maurice_gamelin_2
+				}
 			}
 		}
 		focus = { #
@@ -7334,6 +7398,10 @@ focus_tree = {
 				}
 			}
 			completion_reward = {
+				swap_ideas = {
+					remove_idea = FRA_revolution_nationale_maurice_gamelin_1
+					add_idea = FRA_revolution_nationale_maurice_gamelin_3
+				}
 			}
 		}
 		focus = { #
@@ -7376,6 +7444,8 @@ focus_tree = {
 				}
 			}
 			completion_reward = {
+				custom_effect_tooltip = FRA_new_propaganda
+				unlock_decision_tooltip = FRA_propaganda_8
 			}
 		}
 	#</모리스 가믈랭>
@@ -7898,11 +7968,66 @@ focus_tree = {
 				}
 			}
 			completion_reward = {
+				add_political_power = 25
+				#hidden_effect = {
+				#	country_event = {
+				#		id = FRA_inner_circle_petain.1
+				#		days = 25
+				#	}
+				#}
+				set_politics = {
+					ruling_party = fascism
+				}
+				if = {
+					limit = {
+						has_country_leader = {
+							character = FRA_charles_maurras
+							ruling_only = no
+						}
+					}
+					promote_character = FRA_charles_maurras
+				}
+				else = {
+					add_country_leader_role = {
+						character = FRA_charles_maurras
+						promote_leader = yes
+						country_leader = {
+							ideology = fascism_ideology
+							traits = {
+								FRA_retro_revivalist
+							}
+						}
+					}
+				}
+				set_party_name = {
+					ideology = fascism
+					long_name = FRA_action_france_long
+					name = FRA_action_france
+				}
+				custom_effect_tooltip = {
+					localization_key = GER_ascension_of_character_focus_tt
+					CHARACTER = FRA_charles_maurras
+				}
+				custom_effect_tooltip = {
+					localization_key = focus_completed_trigger_modify_effect_tt
+					FOCUS = FRA_charles_maurras_focus_2
+				}
+				effect_tooltip = {
+					add_political_power = 50
+					add_country_leader_trait = FRA_protector_of_faith
+				}
+				hidden_effect = {
+					if = {
+						limit = { has_completed_focus = FRA_charles_maurras_focus_2 }
+						add_political_power = 50
+						add_country_leader_trait = FRA_protector_of_faith
+					}
+				}
 			}
 		}
 		focus = { #
 			id = FRA_charles_maurras_focus_5
-			icon = GFX_focus_renounce_the_treaty_of_trianon
+			icon = GFX_focus_GER_monarchy_compromise
 			cost = 5
 			x = -3
 			y = 1
@@ -7972,6 +8097,56 @@ focus_tree = {
 			completion_reward = {
 			}
 		}
+		focus = { #
+			id = FRA_charles_maurras_focus_9
+			icon = GFX_focus_generic_monarchist_sentiment
+			cost = 5
+			x = -1
+			y = 2
+			relative_position_id = FRA_charles_maurras_focus_5
+			prerequisite = {
+				focus = FRA_charles_maurras_focus_6
+				focus = FRA_charles_maurras_focus_7
+				focus = FRA_charles_maurras_focus_8
+			}
+			available = {
+			}
+			completion_reward = {
+			}
+		}
+		focus = { #
+			id = FRA_charles_maurras_focus_10
+			icon = GFX_focus_generic_monarchy_1
+			cost = 5
+			x = 1
+			y = 2
+			relative_position_id = FRA_charles_maurras_focus_5
+			prerequisite = {
+				focus = FRA_charles_maurras_focus_6
+				focus = FRA_charles_maurras_focus_7
+				focus = FRA_charles_maurras_focus_8
+			}
+			available = {
+			}
+			completion_reward = {
+			}
+		}
+		focus = { #
+			id = FRA_charles_maurras_focus_11
+			icon = GFX_goal_tfv_strengthen_commonwealth_ties
+			cost = 5
+			x = 0
+			y = 3
+			relative_position_id = FRA_charles_maurras_focus_5
+			prerequisite = {
+				focus = FRA_charles_maurras_focus_9
+				focus = FRA_charles_maurras_focus_10
+			}
+			available = {
+			}
+			completion_reward = {
+			}
+		}
 	#</샤를 모라스>
 	#<프랑수아 드 라 로크>
 		focus = { #
@@ -7995,11 +8170,66 @@ focus_tree = {
 				}
 			}
 			completion_reward = {
+				add_political_power = 25
+				#hidden_effect = {
+				#	country_event = {
+				#		id = FRA_inner_circle_petain.1
+				#		days = 25
+				#	}
+				#}
+				set_politics = {
+					ruling_party = fascism
+				}
+				if = {
+					limit = {
+						has_country_leader = {
+							character = FRA_francois_de_la_rocque
+							ruling_only = no
+						}
+					}
+					promote_character = FRA_francois_de_la_rocque
+				}
+				else = {
+					add_country_leader_role = {
+						character = FRA_francois_de_la_rocque
+						promote_leader = yes
+						country_leader = {
+							ideology = fascism_ideology
+							traits = {
+								retired_officer
+							}
+						}
+					}
+				}
+				set_party_name = {
+					ideology = fascism
+					long_name = FRA_PSF_long
+					name = FRA_PSF
+				}
+				custom_effect_tooltip = {
+					localization_key = GER_ascension_of_character_focus_tt
+					CHARACTER = FRA_francois_de_la_rocque
+				}
+				custom_effect_tooltip = {
+					localization_key = focus_completed_trigger_modify_effect_tt
+					FOCUS = FRA_francois_de_la_rocque_focus_2
+				}
+				effect_tooltip = {
+					add_political_power = 50
+					add_country_leader_trait = FRA_young_revolutionary
+				}
+				hidden_effect = {
+					if = {
+						limit = { has_completed_focus = FRA_francois_de_la_rocque_focus_2 }
+						add_political_power = 50
+						add_country_leader_trait = FRA_young_revolutionary
+					}
+				}
 			}
 		}
 		focus = { #
 			id = FRA_francois_de_la_rocque_focus_5
-			icon = GFX_focus_renounce_the_treaty_of_trianon
+			icon = GFX_focus_GER_autarky_achieved
 			cost = 5
 			x = 3
 			y = 1
@@ -8016,14 +8246,11 @@ focus_tree = {
 			id = FRA_francois_de_la_rocque_focus_6
 			icon = GFX_goal_generic_dangerous_deal
 			cost = 5
-			x = -2
+			x = -1
 			y = 1
 			relative_position_id = FRA_francois_de_la_rocque_focus_5
 			prerequisite = {
 				focus = FRA_francois_de_la_rocque_focus_5
-			}
-			mutually_exclusive = {
-				focus = FRA_francois_de_la_rocque_focus_7
 			}
 			available = {
 			}
@@ -8034,14 +8261,29 @@ focus_tree = {
 			id = FRA_francois_de_la_rocque_focus_7
 			icon = GFX_goal_tripartite_pact
 			cost = 5
-			x = 2
+			x = 1
 			y = 1
 			relative_position_id = FRA_francois_de_la_rocque_focus_5
 			prerequisite = {
 				focus = FRA_francois_de_la_rocque_focus_5
 			}
-			mutually_exclusive = {
+			available = {
+			}
+			completion_reward = {
+			}
+		}
+		focus = { #
+			id = FRA_francois_de_la_rocque_focus_8
+			icon = GFX_focus_fra_french_union
+			cost = 5
+			x = 0
+			y = 3
+			relative_position_id = FRA_francois_de_la_rocque_focus_5
+			prerequisite = {
 				focus = FRA_francois_de_la_rocque_focus_6
+			}
+			prerequisite = {
+				focus = FRA_francois_de_la_rocque_focus_7
 			}
 			available = {
 			}
@@ -8206,6 +8448,59 @@ focus_tree = {
 #</3분기 이너써클 자리>
 
 
+#<4분기 자리>
+	#<시작>
+		focus = { #프랑스의 봄
+			id = FRA_french_spring
+			icon = GFX_focus_focus_fra_revolution_utmost
+			text_icon = fixed_focus_style
+			cost = 5
+			relative_position_id = FRA_national_revolutionary_committee_regime_overthrow
+			prerequisite = {
+				focus = FRA_charles_maurras_focus_11
+				focus = FRA_francois_de_la_rocque_focus_8
+			}
+			mutually_exclusive = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_three_change_tt
+					always = no
+				}
+			}
+			x = 0
+			y = 6
+			completion_reward = {
+				add_political_power = 100
+				custom_effect_tooltip = enter_tt
+				set_temp_variable = { temp_FRA_change_to_disruption = -4 }
+				FRA_change_to_disruption_level = yes
+			}
+		}
+		focus = { #프랑스의 봄
+			id = FRA_north_africa_free_election
+			icon = GFX_focus_generic_social_democracy
+			text_icon = fixed_focus_style
+			cost = 5
+			relative_position_id = FRA_french_spring
+			prerequisite = {
+				focus = FRA_french_spring
+			}
+			mutually_exclusive = {
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = FRA_disruption_three_change_tt
+					always = no
+				}
+			}
+			x = 0
+			y = 2
+			completion_reward = {
+			}
+		}
+	#</시작>
+#</4분기 자리>
 
 	focus = {	
 		#식민지부 재건
@@ -8218,7 +8513,7 @@ focus_tree = {
 		ai_will_do = {
 			base = 20
 		}
-		x = 0
+		x = 8
 		y = 1
 		relative_position_id = FRA_focus_resistance_1
 		ai_will_do = {
@@ -8245,8 +8540,18 @@ focus_tree = {
 		icon = GFX_goal_fra_cozy
 		id = FRA_focus_resistance_5
 		cost = 6
-		x = 0
-		y = 1
+		x = 1
+		y = 3
+		available = {
+			is_puppet = no
+			NOT = {
+				MIL = {
+					exists = no
+					has_capitulated = yes
+				}
+			}
+			has_army_manpower = { size > 149999 }
+		}
 		ai_will_do = {
 			base = 0
 			modifier = {
@@ -8279,12 +8584,10 @@ focus_tree = {
 				}
 			}
 			unlock_decision_category_tooltip = FRA_war_dec
-			hidden_effect = {
-				complete_national_focus = FRA_focus_war_1
-				news_event = {
-					id = BA_news.21
-					days = 3
-				}
+			complete_national_focus = FRA_focus_war_1
+			news_event = {
+				id = BA_news.21
+				days = 3
 			}
 		}
 	}
@@ -8294,11 +8597,19 @@ focus_tree = {
 		#본토 수복 전쟁
 		icon = GFX_goal_FRA_peupeongjo5
 		id = FRA_focus_war_1
-		cost = 1
-		x = 5
-		y = 14
+		text_icon = fixed_focus_style
+		cost = 10
+		relative_position_id = FRA_focus_resistance_5
+		prerequisite = {
+			focus = FRA_focus_resistance_5
+		}
+		x = 0
+		y = 2
 		available = {
-			always = no
+			custom_trigger_tooltip = {
+				tooltip = FRA_focus_war_1_tt
+				always = no
+			}
 		}
 		completion_reward = {
 			add_victory_points = {
@@ -8424,57 +8735,6 @@ focus_tree = {
 			}
 			FRA = {
 				puppet = FRM
-			}
-		}
-	}
-	focus = {
-		#승리
-		id = FRA_focus_war_5
-		icon = GFX_goal_FRA_peupeongjoa
-		cost = 4
-		x = 0
-		y = 4
-		relative_position_id = FRA_focus_war_1
-		available = {
-			16 = {
-				is_owned_by = FRA
-			}
-		}
-		prerequisite = {
-			focus = FRA_focus_war_9
-			focus = FRA_focus_war_10
-		}
-		prerequisite = {
-			focus = FRA_focus_war_11
-			focus = FRA_focus_war_12
-		}
-		prerequisite = {
-			focus = FRA_focus_war_7
-			focus = FRA_focus_war_8
-		}
-		completion_reward = {
-			set_province_name = {
-				id = 11506
-				name = FRA_paris
-			}
-			activate_mission = FRA_rebuild_dec
-			hidden_effect = {
-				country_event = {
-					id = FRA_recover.4
-					days = 50
-				}
-				load_focus_tree = FRA_focus_win
-				clr_country_flag = FRA_propaganda_available
-				if = {
-					limit = {
-						has_country_flag = FRA_fascist_on
-					}
-					set_party_name = {
-						ideology = communism
-						long_name = FRA_communism_party
-						name = FRA_communism_party
-					}
-				}
 			}
 		}
 	}
@@ -8685,18 +8945,1034 @@ focus_tree = {
 		}
 	}
 	focus = {
-		#예상치 못한 동맹
-		icon = GFX_goal_generic_dangerous_deal
-		id = FRA_an_unexpected_ally
-		cost = 6
-		x = 11
-		y = 14
+		#승리
+		id = FRA_focus_war_5
+		icon = GFX_goal_FRA_peupeongjoa
+		cost = 4
+		x = 0
+		y = 4
+		relative_position_id = FRA_focus_war_1
 		available = {
-			is_ally_with = MIL
+			16 = {
+				is_owned_and_controlled_by = FRA
+			}
+			custom_trigger_tooltip = {
+				tooltip = FRA_focus_war_5_tt
+				NOT = {
+					any_state = {
+						BA_millennium_is = yes
+						is_controlled_by = MIL
+					}
+				}
+			}
+		}
+		prerequisite = {
+			focus = FRA_focus_war_9
+			focus = FRA_focus_war_10
+		}
+		prerequisite = {
+			focus = FRA_focus_war_11
+			focus = FRA_focus_war_12
+		}
+		prerequisite = {
+			focus = FRA_focus_war_7
+			focus = FRA_focus_war_8
 		}
 		completion_reward = {
-			add_stability = -0.05
-			add_war_support = -0.30
+			remove_dynamic_modifier = {
+				modifier = FRA_resistance_of_locals_modifier
+			}
+			set_variable = {
+				FRA_disruption_level = 0
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_ideas = FRA_admin_not_good
+
+			news_event = {
+				id = FRA_prov_event.38
+				days = 3
+			}
+			set_capital = {
+				state = 16
+				remember_old_capital = no
+			}
+			set_province_name = {
+				id = 11506
+				name = FRA_paris
+			}
+			hidden_effect = {
+
+				country_event = {
+					id = FRA_recover.4
+					days = 50
+				}
+				clr_country_flag = FRA_propaganda_available
+
+				if = {
+					limit = {
+						FRA_philippe_petain = {
+							is_country_leader = yes
+						}
+					}
+					country_event = {
+						id = FRA_ex_event.15
+					}
+				}
+				country_event = {
+					id = FRA_ex_event.17
+					hours = 24
+				}
+				country_event = {
+					id = FRA_ex_event.18
+					days = 8
+				}
+			}
 		}
 	}
+# /필리프 페탱의 프랑스
+	focus = { 
+		id = FRA_philippe_petain_france # (FPP)
+		icon = GFX_focus_hol_liberation
+		cost = 5
+		mutually_exclusive = {
+			focus = FRA_charles_de_gaulle_france
+			focus = FRA_maurice_gamelin_france
+		}
+		relative_position_id = FRA_focus_war_5
+		x = 6
+		y = 2
+		available = {
+			has_completed_focus = FRA_focus_war_5
+			has_country_leader = {
+				character = FRA_philippe_petain
+				ruling_only = yes
+			}
+		}
+		completion_reward = {
+			add_stability = 0.1
+			hidden_effect = {
+				country_event = {
+					id = FRA_recover.1
+					days = 5
+				}
+				set_capital = {
+					state = 16
+				}
+			}
+			if = {
+				limit = {
+					has_idea = FRA_pessimism
+				}
+				remove_ideas = FRA_pessimism
+			}
+		}
+	}
+	focus = { 
+		id = FPP_administrative_restoration
+		icon = GFX_focus_generic_improve_the_administration
+		cost = 5
+		prerequisite = {
+			focus = FRA_philippe_petain_france
+		}
+		relative_position_id = FRA_philippe_petain_france
+		x = -2
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			FRA_admin_not_good_down_effect = yes
+			hidden_effect = {
+				country_event = {
+					id = FRA_prov_event.93
+					days = 9
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_refugee_camps_and_unemployment_issues
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5
+		prerequisite = {
+			focus = FPP_administrative_restoration
+		}
+		relative_position_id = FPP_administrative_restoration
+		x = 0
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			FRA_admin_not_good_down_effect = yes
+		}
+	}
+	focus = { 
+		id = FPP_state_purchase_of_crops
+		icon = GFX_focus_generic_farmland
+		cost = 5
+		prerequisite = {
+			focus = FPP_refugee_camps_and_unemployment_issues
+		}
+		relative_position_id = FPP_refugee_camps_and_unemployment_issues
+		x = 0
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			FRA_admin_not_good_down_effect = yes
+			26 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			22 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			25 = {
+				BA_increase_state_category_by_one_level = yes
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_return_of_exiles
+		icon = GFX_goal_FRA_pays_reel
+		cost = 5
+		prerequisite = {
+			focus = FRA_philippe_petain_france
+		}
+		relative_position_id = FRA_philippe_petain_france
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = africa
+				}
+				random_select_amount = 10
+				add_manpower = -1500
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_on_continent = europe
+				}
+				random_select_amount = 15
+				add_manpower = 1750
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_government = communism
+							has_idea = FRA_alg_civil
+							has_idea = FRA_ally_int
+						}
+					}
+				}
+				every_core_state = {
+					limit = {
+						NOT = {
+							is_on_continent = europe
+						}
+					}
+					remove_core_of = FRA
+				}
+			}
+			add_popularity = {
+				ideology = var:current_party_ideology_group
+				popularity = 0.05
+			}
+			hidden_effect = {
+				country_event = {
+					id = FRA_recover.6
+					days = 5
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_relocation_of_african_industry
+		icon = GFX_focus_generic_africa_factory
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_exiles
+		}
+		relative_position_id = FPP_return_of_exiles
+		x = -1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = africa
+					arms_factory > 0
+				}
+				random_select_amount = 5
+				add_extra_state_shared_building_slots = -1
+				add_building_construction = {
+					type = arms_factory
+					level = -1
+				}
+			}
+			every_owned_state = {
+				limit = {
+					is_owned_by = FRA
+					is_on_continent = africa
+					industrial_complex > 0
+				}
+				random_select_amount = 5
+				add_extra_state_shared_building_slots = -1
+				add_building_construction = {
+					type = industrial_complex
+					level = -1
+				}
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_on_continent = europe
+				}
+				random_select_amount = 8
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			add_tech_bonus = {
+				name = FPP_relocation_of_african_industry
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+		}
+	}
+	focus = { 
+		id = FPP_fate_of_french_colonies
+		icon = GFX_focus_generic_treaty
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_exiles
+		}
+		relative_position_id = FPP_return_of_exiles
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_investigation_of_collaborators
+		icon = GFX_focus_SOV_penal_battalions
+		cost = 5
+		prerequisite = {
+			focus = FPP_relocation_of_african_industry
+		}
+		prerequisite = {
+			focus = FPP_fate_of_french_colonies
+		}
+		relative_position_id = FPP_relocation_of_african_industry
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			country_event = {
+				id = FRA_recover.5
+				days = 4
+			}
+		}
+	}
+	focus = { 
+		id = FPP_military_demobilization
+		icon = GFX_goal_generic_improve_relations
+		cost = 5
+		prerequisite = {
+			focus = FRA_philippe_petain_france
+		}
+		relative_position_id = FRA_philippe_petain_france
+		x = 3
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			FRA_admin_not_good_down_effect = yes
+			add_ideas = export_focus
+			add_ideas = civilian_economy
+		}
+	}
+	focus = { 
+		id = FPP_reconstruction_of_france
+		icon = GFX_focus_generic_modernize_industry
+		cost = 5
+		prerequisite = {
+			focus = FPP_military_demobilization
+		}
+		relative_position_id = FPP_military_demobilization
+		x = 0
+		y = 2
+		available = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = FRA_rebuild
+				days = 100
+			}
+			1050 = {
+				BA_increase_state_category_by_one_level = yes
+			}
+			1049 = {
+				BA_increase_state_category_by_one_level = yes
+			}
+			16 = {
+				BA_increase_state_category_by_one_level = yes
+			}
+			country_event = {
+				id = FRA_prov_event.73
+				days = 4
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = FRA
+					is_on_continent = europe
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_return_of_order_in_paris
+		icon = GFX_focus_SWI_fortify_border_with_france
+		cost = 5
+		prerequisite = {
+			focus = FPP_state_purchase_of_crops
+		}
+		prerequisite = {
+			focus = FPP_investigation_of_collaborators
+		}
+		prerequisite = {
+			focus = FPP_reconstruction_of_france
+		}
+		relative_position_id = FPP_state_purchase_of_crops
+		x = 2
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			FRA_admin_not_good_down_effect = yes
+			FRA_philippe_petain = {
+				swap_country_leader_traits = {
+					remove = FRA_war_hero
+					add = FRA_war_hero_1
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_eradication_of_millennium_culture
+		icon = GFX_focus_MIL_building_a_bureaucracy
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_order_in_paris
+		}
+		relative_position_id = FPP_return_of_order_in_paris
+		x = 4
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_seminary_and_new_education
+		icon = GFX_focus_SWE_education_reform
+		cost = 5
+		prerequisite = {
+			focus = FPP_eradication_of_millennium_culture
+		}
+		relative_position_id = FPP_eradication_of_millennium_culture
+		x = -1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_renaming_to_paris_academy
+		icon = GFX_MIL_Science_ctiy
+		cost = 5
+		prerequisite = {
+			focus = FPP_eradication_of_millennium_culture
+		}
+		relative_position_id = FPP_eradication_of_millennium_culture
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_reaffirmation_of_the_french_nation_state
+		icon = GFX_focus_generic_vichy_france_triumphant_focus
+		cost = 5
+		prerequisite = {
+			focus = FPP_seminary_and_new_education
+		}
+		prerequisite = {
+			focus = FPP_renaming_to_paris_academy
+		}
+		relative_position_id = FPP_seminary_and_new_education
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_nationalistic_ideals_of_france
+		icon = GFX_focus_focus_fra_maquis
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_order_in_paris
+		}
+		relative_position_id = FPP_return_of_order_in_paris
+		x = -4
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			add_war_support = 0.05
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_dynamic_modifier = {
+				modifier = FRA_french_nationalism_modifier
+			}
+		}
+	}
+	focus = { 
+		id = FPP_reaffirmation_of_natural_borders
+		icon = GFX_focus_focus_fra_border
+		cost = 5
+		prerequisite = {
+			focus = FPP_nationalistic_ideals_of_france
+		}
+		relative_position_id = FPP_nationalistic_ideals_of_france
+		x = 0
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			every_state = {
+				limit = {
+					BA_natural_borders_of_france_territory_is = yes
+				}
+				add_claim_by = ROOT
+			}
+
+			every_other_country = {
+				limit = {
+					any_controlled_state = {
+						BA_natural_borders_of_france_territory_is = yes
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = FPP_reaffirmation_of_natural_borders_opinion_modifier
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_trade_embargo_on_hostile_nations
+		icon = GFX_focus_generic_total_war
+		cost = 5
+		prerequisite = {
+			focus = FPP_reaffirmation_of_natural_borders
+		}
+		relative_position_id = FPP_reaffirmation_of_natural_borders
+		x = 0
+		y = 2
+		available = {
+		}
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				random_select_amount = 4
+				add_extra_state_shared_building_slots = 1
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = GER_autarky_efforts
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = GER_gain_autarkic_economy_lock_free_trade_tt
+			add_ideas = FPP_self_sufficiency_economy
+		}
+	}
+	focus = { 
+		id = FPP_establishment_of_war_theory
+		icon = GFX_goal_generic_army_doctrines
+		cost = 5
+		prerequisite = {
+			focus = FPP_nationalistic_ideals_of_france
+		}
+		relative_position_id = FPP_nationalistic_ideals_of_france
+		x = -1
+		y = 2
+		available = {
+		}
+		completion_reward = {
+
+			add_command_power = 25
+			army_experience = 25
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery = {
+				amount = 250
+				track = infantry
+			}
+			add_mastery = {
+				amount = 150
+				track = armor
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = FRA_french_nationalism_modifier
+			}
+			add_to_variable = {
+				FRA_french_nationalism_modifier_experience_gain_army_factor = 0.10
+				tooltip = experience_gain_army_factor_tt
+			}
+			add_to_variable = {
+				FRA_french_nationalism_modifier_experience_gain_army = 0.05
+				tooltip = experience_gain_army_tt
+			}
+			add_to_variable = {
+				FRA_french_nationalism_modifier_army_attack_against_major_factor = 0.05
+				tooltip = army_attack_against_major_factor_tt
+			}
+		}
+	}
+	focus = { 
+		id = FPP_sponsoring_fascist_militias
+		icon = GFX_focus_focus_fra_national_resistance_council
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_order_in_paris
+		}
+		relative_position_id = FPP_return_of_order_in_paris
+		x = -1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			add_political_power = 120
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+		}
+	}
+	focus = { 
+		id = FPP_disarmament_of_the_resistance
+		icon = GFX_goal_anti_comintern_pact
+		cost = 5
+		prerequisite = {
+			focus = FPP_return_of_order_in_paris
+		}
+		relative_position_id = FPP_return_of_order_in_paris
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_popularity = {
+				ideology = communism
+				popularity = -0.10
+			}
+		}
+	}
+	focus = { 
+		id = FPP_single_vocational_union
+		icon = GFX_focus_focus_fra_down_marianne
+		cost = 5
+		prerequisite = {
+			focus = FPP_sponsoring_fascist_militias
+		}
+		prerequisite = {
+			focus = FPP_disarmament_of_the_resistance
+		}
+		relative_position_id = FPP_sponsoring_fascist_militias
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			add_ideas = FPP_single_vocational_union
+			FRA_philippe_petain = {
+				swap_country_leader_traits = {
+					remove = FRA_leader
+					add = FRA_leader_1
+				}
+			}
+		}
+	}
+	focus = { 
+		id = FPP_paris_system
+		icon = GFX_focus_chi_reach_out_to_france
+		cost = 5
+		prerequisite = {
+			focus = FPP_single_vocational_union
+		}
+		mutually_exclusive = {
+			focus = FPP_enforcement_of_stresa_front
+		}
+		relative_position_id = FPP_single_vocational_union
+		x = -2
+		y = 1
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = { has_idea = PASTA_signatories_of_the_stresa_idea }
+				remove_ideas = PASTA_signatories_of_the_stresa_idea
+			}
+			set_rule = {
+				can_create_factions = yes
+			}
+			create_faction_from_template = faction_template_FRA_BA_the_paris_system
+		}
+	}
+	focus = { 
+		id = FPP_enforcement_of_stresa_front
+		icon = GFX_focus_focus_fra_ratify_stresa
+		cost = 5
+		prerequisite = {
+			focus = FPP_single_vocational_union
+		}
+		mutually_exclusive = {
+			focus = FPP_paris_system
+		}
+		relative_position_id = FPP_single_vocational_union
+		x = 2
+		y = 1
+		available = {
+			
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_stresa_research_cooperation_treaty
+		icon = GFX_focus_research2
+		cost = 5
+		prerequisite = {
+			focus = FPP_enforcement_of_stresa_front
+		}
+		relative_position_id = FPP_enforcement_of_stresa_front
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_miracle_weapon
+		icon = GFX_focus_wonderweapons
+		cost = 5
+		prerequisite = {
+			focus = FPP_stresa_research_cooperation_treaty
+		}
+		relative_position_id = FPP_stresa_research_cooperation_treaty
+		x = 0
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_invitation_of_portugal
+		icon = GFX_focus_generic_befriend_portugal
+		cost = 5
+		prerequisite = {
+			focus = FPP_paris_system
+		}
+		relative_position_id = FPP_paris_system
+		x = 0
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_strategic_autonomy
+		icon = GFX_focus_generic_armored_air_support
+		cost = 5
+		prerequisite = {
+			focus = FPP_paris_system
+		}
+		relative_position_id = FPP_paris_system
+		x = 1
+		y = 2
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_nuclear_weapons_development
+		icon = GFX_focus_wonderweapons
+		cost = 5
+		prerequisite = {
+			focus = FPP_strategic_autonomy
+		}
+		relative_position_id = FPP_strategic_autonomy
+		x = 0
+		y = 2
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_return_of_italian_occupied_territories
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		cost = 5
+		prerequisite = {
+			focus = FPP_paris_system
+			focus = FPP_enforcement_of_stresa_front
+		}
+		relative_position_id = FPP_paris_system
+		x = 2
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_forced_implementation_of_the_treaty_of_paris
+		icon = GFX_focus_usa_focus_on_europe
+		cost = 5
+		prerequisite = {
+			focus = FPP_paris_system
+			focus = FPP_enforcement_of_stresa_front
+		}
+		relative_position_id = FPP_enforcement_of_stresa_front
+		x = -1
+		y = 2
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_pacification_of_the_low_countries
+		icon = GFX_focus_BEL_our_southern_neighbour
+		cost = 5
+		prerequisite = {
+			focus = FPP_forced_implementation_of_the_treaty_of_paris
+		}
+		relative_position_id = FPP_forced_implementation_of_the_treaty_of_paris
+		x = -1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_demand_for_the_return_of_alsace_lorraine
+		icon = GFX_focus_GER_remilitarize_the_rhineland
+		cost = 5
+		prerequisite = {
+			focus = FPP_forced_implementation_of_the_treaty_of_paris
+		}
+		relative_position_id = FPP_forced_implementation_of_the_treaty_of_paris
+		x = 1
+		y = 1
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = { 
+		id = FPP_preemptive_strike
+		icon = GFX_goal_generic_territory_or_war
+		cost = 5
+		prerequisite = {
+			focus = FPP_pacification_of_the_low_countries
+		}
+		prerequisite = {
+			focus = FPP_demand_for_the_return_of_alsace_lorraine
+		}
+		relative_position_id = FPP_pacification_of_the_low_countries
+		x = 1
+		y = 2
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+# 필리프 페탱의 프랑스/
+# /샤를 드 골의 프랑스
+	focus = { 
+		id = FRA_charles_de_gaulle_france # (FCDG)
+		icon = GFX_focus_hol_liberation
+		cost = 6
+		mutually_exclusive = {
+			focus = FRA_philippe_petain_france
+			focus = FRA_maurice_gamelin_france
+		}
+		relative_position_id = FRA_focus_war_5
+		x = -2
+		y = 2
+		available = {
+			has_completed_focus = FRA_focus_war_5
+			has_country_leader = {
+				character = FRA_charles_de_gaulle
+				ruling_only = yes
+			}
+		}
+		completion_reward = {
+			add_stability = 0.1
+			hidden_effect = {
+				country_event = {
+					id = FRA_recover.1
+					days = 5
+				}
+				set_capital = {
+					state = 16
+				}
+			}
+			if = {
+				limit = {
+					has_idea = FRA_pessimism
+				}
+				remove_ideas = FRA_pessimism
+			}
+		}
+	}
+# 샤를 드 골의 프랑스/
+# /모리스 가믈랭의 프랑스
+	focus = { 
+		id = FRA_maurice_gamelin_france # (FMG)
+		icon = GFX_focus_hol_liberation
+		cost = 6
+		mutually_exclusive = {
+			focus = FRA_philippe_petain_france
+			focus = FRA_charles_de_gaulle_france
+		}
+		relative_position_id = FRA_focus_war_5
+		x = -10
+		y = 2
+		available = {
+			has_completed_focus = FRA_focus_war_5
+			has_country_leader = {
+				character = FRA_maurice_gamelin
+				ruling_only = yes
+			}
+		}
+		completion_reward = {
+			add_stability = 0.1
+			hidden_effect = {
+				country_event = {
+					id = FRA_recover.1
+					days = 5
+				}
+				set_capital = {
+					state = 16
+				}
+			}
+			if = {
+				limit = {
+					has_idea = FRA_pessimism
+				}
+				remove_ideas = FRA_pessimism
+			}
+		}
+	}
+# 모리스 가믈랭의 프랑스/
 }

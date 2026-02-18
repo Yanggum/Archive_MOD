@@ -125,7 +125,6 @@ country_event = {
 			}
 		}
 		add_threat = 2
-		set_global_flag = GFLAG_BAKSANWAR_END
 		FROM = { country_event = { id = HYA_event.16 hours = 2 } }
 	}
 }
@@ -556,11 +555,10 @@ country_event = {
 			}
 		}
 		add_threat = 2
-		set_global_flag = CFLAG_BAKSANWAR_END
 		FROM = { country_event = { id = HYA_event.16 hours = 2 } }
 	}
 }
-country_event = { 
+country_event = {
 	id = HYA_event.16
 	title = HYA_event.16.t
 	desc = HYA_event.16.desc
@@ -568,7 +566,6 @@ country_event = {
 	is_triggered_only = yes
 	option = { 
 		name = HYA_event.16.a
-		set_variable = { global.BAKSANWAR_on_war_relation_added_tag = ROOT }
 		if = {
 			limit = {
 				NOT = { tag = var:global.BAKSANWAR_on_war_relation_added_tag }
@@ -576,6 +573,14 @@ country_event = {
 			}
 			add_war_support = 0.10
 			add_ideas = HYA_event_idea_16
+		}
+
+		custom_effect_tooltip = TOTAL_WAR_BAKSANWAR_tt
+		if = {
+			limit = { NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR } }
+			set_global_flag = TOTAL_WAR_BAKSANWAR
+			HYA = { country_event = HYA_event.20 }
+			SHA = { country_event = HYA_event.20 }
 		}
 	}
 }
@@ -648,5 +653,20 @@ country_event = { # 백귀야행에 돌아온 아야메
 
 	option = {
 		name = HYA_event.19.a
+	}
+}
+
+country_event = { # 백귀야행에 돌아온 아야메
+	id = HYA_event.20
+	title = HYA_event.20.t
+	desc = HYA_event.20.desc
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = HYA_event.20.a
+		add_war_support = 0.05
+		mark_focus_tree_layout_dirty = yes
 	}
 }

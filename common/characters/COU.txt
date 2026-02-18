@@ -103,6 +103,9 @@ characters={
 				COU_AOI_SET1 
 			}
 			cost = 150
+			ai_will_do = {
+				base = 1.000
+			}
 		}
 		corps_commander={ #유닛 리더 이벤트용 
 			traits = { }
@@ -120,6 +123,10 @@ characters={
 			civilian={
 				large="GFX_leaders_Kaya" 
 				small="GFX_Kaya"
+			}
+			army = {
+			    large="GFX_leaders_Kaya"
+				small="GFX_Kaya_Army"
 			}
 		}
 		gender = female
@@ -1091,13 +1098,15 @@ characters={
 			
 			advisor={
 			    slot = political_advisor
-			    idea_token = COU_leon_degrelle
+			    idea_token = COU_leon_degrelle_token
+				desc = COU_leon_degrelle_desc
 			    allowed  = { tag  = COU }
 			    available = {
     				NOT = { has_government = communism }
 				}
+				cost = 150
 				visible = { has_dynamic_modifier = { modifier = COU_Perfidus } } 
-			    traits  = { BEL_belgian_inquisitor }
+			    traits  = { COU_LEON_TRAIT }
 		    }
 			
             advisor = {
@@ -1118,13 +1127,17 @@ characters={
 			    }
 			    cost = 100
 			    ai_will_do = {
-				    base = 5.000
+				    base = 3.000
+					modifier = {
+					    factor = 10
+						has_completed_focus = COU_focus_black_coffee
+				    }
 			    }
 		    }
 			 
 			corps_commander={
 			    visible = { has_dynamic_modifier = { modifier = COU_Perfidus } } 
-			    traits = { COU_collaboraters politically_connected militias_officer }
+			    traits = { COU_collaboraters politically_connected infantry_officer }
 			    skill=2
 			    attack_skill=2
 			    defense_skill=2
@@ -1147,20 +1160,10 @@ characters={
 			allowed = {
 				original_tag = COU
 			}
-			available = { has_completed_focus = COU_focus_contact_with_verdinaso } 
+			visible = { has_completed_focus = COU_focus_contact_with_verdinaso } 
 			traits = {
 				COU_SEVERN_TRAIT
 			}
-		}
-		
-		corps_commander = {
-		    visible = { has_completed_focus = COU_focus_contact_with_verdinaso } 
-			traits = { COU_collaboraters }
-			skill = 1
-			attack_skill = 1
-			defense_skill = 1
-			planning_skill = 3
-			logistics_skill = 2
 		}
 	}
 	
@@ -1245,6 +1248,7 @@ characters={
 		advisor={
 			slot = political_advisor
 			idea_token = COU_cornelis_van_geelkerken
+			desc = COU_cornelis_van_geelkerken_desc
 			allowed  = {
 				tag  = COU
 			}
@@ -1256,23 +1260,87 @@ characters={
 				prince_of_terror 
 			}
 		}
-		corps_commander = {
-			visible = { 
-			    has_completed_focus = COU_shaking_royalty 
-				has_dynamic_modifier = { modifier = COU_Perfidus }
-			} 
-			traits = { COU_collaboraters }
-			skill = 2
-			attack_skill = 3
-			defense_skill = 1
-			planning_skill = 2
-			logistics_skill = 2
-		}
 		name=HOL_cornelis_van_geelkerken
 		portraits = {
 			army = {
 			    large="GFX_leader_COU_cornelis_van_geelkerken"
 				small="GFX_idea_COU_cornelis_van_geelkerken"
+			}
+		}
+	}
+	
+	COU_corrie_ten_boom={
+		advisor={
+			slot = political_advisor
+			idea_token = COU_corrie_ten_boom_token
+			allowed  = {
+				tag  = COU
+			}
+			visible = { has_dynamic_modifier = { modifier = COU_Perfidus } } 
+			available = {
+    			NOT = { has_government = communism }
+			}
+			traits  = {
+				COU_BOOM_TRAIT
+			}
+		}
+		name=COU_corrie_ten_boom
+		portraits = {
+			army = {
+				small="GFX_idea_COU_corrie_ten_boom"
+			}
+		}
+	}
+	
+	COU_jozef_ernst_van_roey={
+		advisor={
+			slot = political_advisor
+			idea_token = COU_jozef_ernst_van_roey
+			allowed  = {
+				tag  = COU
+			}
+			visible = { 
+			    has_dynamic_modifier = { modifier = COU_Perfidus } 
+			    has_country_flag = COU_ernst_van_roey_activated
+			} 
+			available = {
+    			NOT = { has_government = communism }
+			}
+			traits  = {
+				kivotos_du_archbishop
+			}
+			ai_will_do = {
+				base = 10.000
+			}
+		}
+		name=COU_jozef_ernst_van_roey
+		portraits = {
+			army = {
+				small="GFX_idea_jozef_ernst_van_roey"
+			}
+		}
+	}
+	
+	#나나가미린/집정관 루트 개발시 효과 채울게요
+	COU_johannes_de_jong={
+		advisor={
+			slot = political_advisor
+			idea_token = COU_johannes_de_jong
+			allowed  = {
+				tag  = COU
+			}
+			visible = { always = no } 
+			available = {
+    			NOT = { has_government = communism }
+			}
+			traits  = {
+				
+			}
+		}
+		name=COU_johannes_de_jong
+		portraits = {
+			army = {
+				small="GFX_idea_johannes_de_jong"
 			}
 		}
 	}

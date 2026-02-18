@@ -10044,7 +10044,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_german_labor_front_succession
-		icon = GFX_goal_generic_union_agreement
+		icon = GFX_focus_GEH_german_labor_front_succession
 		cost = 5
 
 		relative_position_id = GEH_gehenna_national_harmony_solidarity
@@ -10123,7 +10123,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_weakening_big_capitalists
-		icon = GFX_focus_generic_modernize_industry
+		icon = GFX_focus_GEH_weakening_big_capitalists
 		cost = 5
 
 		relative_position_id = GEH_gehenna_national_harmony_solidarity
@@ -14082,7 +14082,7 @@ focus_tree = {
 	}
     focus = {
 		id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_revolution_accomplished
-		icon = GFX_goal_GEH_take_Benriya
+		icon = GFX_focus_GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2_revolution_accomplished
 		cost = 5
 
 		relative_position_id = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2
@@ -15456,7 +15456,15 @@ focus_tree = {
 					}
 				}
 			}
-			else = {
+			else_if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = GEH_dldhfl
+							ruling_only = yes
+						}
+					}
+				}
 				promote_character = GEH_dldhfl
 			}
 			set_party_name = {
@@ -15477,16 +15485,34 @@ focus_tree = {
 				}
 			}
 
+			custom_effect_tooltip = enter_tt
 			add_ideas = GEH_kriegsrecht
 
 			country_event = GEH_iori_despotic_story_event.1
+			effect_tooltip = {
+				if = {
+					limit = { has_character = GEH_dkzh }
+					custom_effect_tooltip = enter_tt
+					custom_effect_tooltip = remove_political_advisor
+					show_ideas_tooltip = GEH_dkzh_idea
+					custom_effect_tooltip = remove_military_high_command
+					show_ideas_tooltip = GEH_dkzh_high_command
+					GEH_dkzh = { remove_unit_leader_role = yes }
+				}
+			}
+
+			hidden_effect = {
+				set_portraits = {
+					character = GEH_dldhfl
+					civilian = { large ="GFX_portrait_GEH_irori_shiromi_director" }
+				}
+			}
 
 			custom_effect_tooltip = enter_tt
-			custom_effect_tooltip = remove_political_advisor
-			show_ideas_tooltip = GEH_dkzh_idea
-			custom_effect_tooltip = remove_military_high_command
-			show_ideas_tooltip = GEH_dkzh_high_command
-			if = { limit = { has_character = GEH_dkzh } GEH_dkzh = { remove_unit_leader_role = yes } }
+			unlock_decision_tooltip = {
+				decision = GEH_discipline_system_military_deployment
+				show_effect_tooltip = yes
+			}
 		}
 	}
 
@@ -15544,6 +15570,12 @@ focus_tree = {
 					remove = GEH_blame_director
 					add = GEH_blame_director_3
 				}
+			}
+
+			custom_effect_tooltip = enter_tt
+			unlock_decision_tooltip = {
+				decision = GEH_discipline_system_militia_mobilization
+				show_effect_tooltip = yes
 			}
 		}
 	}
@@ -16044,6 +16076,9 @@ focus_tree = {
             GEH_popular_support_up_effect = yes
 			add_political_power = 40
 			add_stability = 0.05
+
+			custom_effect_tooltip = enter_tt
+			country_event = GEH_iori_despotic_story_event.8
 		}
 	}
 

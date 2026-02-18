@@ -388,6 +388,7 @@ focus_tree = {
 			add_ideas = HYA_ghkreoehlswldqudeotkd
 		}
 	}
+# 패전 중점도
 	focus = { # 패전
 		relative_position_id = HYA_focus_12
 		id = HYA_focus_scattered_cherry_blossoms
@@ -853,6 +854,9 @@ focus_tree = {
 			unlock_decision_tooltip = HYA_revenge_drama_dd
 		}
 	}
+# 패전 중점도/
+
+# 승전 중점도
 	focus = { # 승전
 		relative_position_id = HYA_focus_12
 		id = HYA_focus_victory
@@ -861,6 +865,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = HYA_focus_ }
 		allow_branch = {
 			NOT = { has_global_flag = CFLAG_BAKSANWAR_END }
+			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
 		}
 		x = 0
 		y = 2
@@ -932,6 +937,340 @@ focus_tree = {
 			}
 		}
 	}
+	focus = { # 백화요란의 귀환
+		id = HYA_focus_119
+		icon = GFX_goal_HYA_Hyakkaryouran_head_return
+		prerequisite = { focus = HYA_focus_victory }
+		x = 0
+		y = 1
+		relative_position_id = HYA_focus_victory
+		cost = 5
+		completion_reward={
+			promote_character = HYA_Nanakado_Ayame
+			add_field_marshal_role = {
+				Character = HYA_Nanakado_Ayame
+				traits = {
+				}
+				skill=3
+				attack_skill=1
+				defense_skill=5
+				planning_skill=5
+				logistics_skill=7
+			}
+			country_event = { id = HYA_event.19 hours = 2 }
+	    }
+		available = {
+			has_global_flag = GFLAG_BAKSANWAR_END
+			has_government = neutrality
+			power_balance_value = {
+				id = HYA_centralization_bop
+				value < -0.75
+			}
+		}   
+		bypass = {
+		}
+	}
+
+	focus = { # 모두를 지켜보는 눈
+		id = HYA_focus_121
+		icon = GFX_goal_HYA_Eyes_Everyone
+		prerequisite = { focus = HYA_focus_123 }
+		x = -1
+		y = 2
+		relative_position_id = HYA_focus_119
+		cost = 5
+		completion_reward = {
+			add_ideas = HYA_Observe_Eye
+		}
+	}
+
+	focus = { # 백화요란에 증오를
+		id = HYA_focus_122
+		icon = GFX_goal_HYA_Hyakkaryouran_Hatred
+		prerequisite = { focus = HYA_focus_123 }
+		x = 1
+		y = 2
+		relative_position_id = HYA_focus_119
+		cost = 5
+	}
+
+	focus = { # 백련의 계승자
+		id = HYA_focus_123
+		icon = GFX_goal_HYA_White_Lotus
+		prerequisite = { focus = HYA_focus_119 }
+		x = 0
+		y = 1
+		relative_position_id = HYA_focus_119
+		cost = 5
+		completion_reward={
+			add_war_support = 0.10
+			add_country_leader_trait = HYA_hyakkaryouran_resolution_council_chairman
+	    }
+	}
+
+	focus = { # 황혼의 아야메
+		id = HYA_focus_124
+		icon = GFX_goal_HYA_twilight_Ayame
+		prerequisite = { focus = HYA_focus_121 }
+		prerequisite = { focus = HYA_focus_122 }
+		x = 1
+		y = 1
+		relative_position_id = HYA_focus_121
+		cost = 5
+		completion_reward={
+			if = {
+				limit = { 
+					NOT = { has_government = fascism }
+				}
+				set_politics = {
+					ruling_party = fascism
+					elections_allowed = no
+					election_frequency = 48
+				}
+			}
+			set_party_name = {
+				ideology = fascism
+				long_name = HYA_fascism_win_party
+				name = HYA_fascism_win_party_long
+			}
+			promote_character = HYA_Nanakado_Ayame_1
+	    }
+	}
+
+	focus = { # 황혼의 힘을 세계에 향하여
+		id = HYA_focus_126
+		icon = GFX_goal_HYA_Twilight_Force_World
+		prerequisite = { focus = HYA_focus_124 }
+		x = 0
+		y = 1
+		relative_position_id = HYA_focus_124
+		cost = 5
+	}
+
+	focus = { # 황혼의 구원자
+		id = HYA_focus_127
+		icon = GFX_goal_HYA_Twilight_Savior
+		prerequisite = { focus = HYA_focus_126 }
+		x = 0
+		y = 2
+		relative_position_id = HYA_focus_126
+		cost = 5
+		completion_reward={
+			add_country_leader_trait = HYA_Twilight_Savior
+	    }
+	}
+# 승전 중점도/
+# 총력전 중점도
+	focus = { # 총력전
+		relative_position_id = HYA_focus_12
+		id = HYA_military_mobilization
+		text = HYASHA_military_mobilization
+		icon = GFX_focus_generic_total_war
+		prerequisite = { focus = HYA_focus_13 }
+		#mutually_exclusive = { focus = HYA_focus_ }
+		allow_branch = {
+			has_global_flag = TOTAL_WAR_BAKSANWAR
+		}
+		x = 0
+		y = 3
+		cost = 2
+		available = {
+			has_global_flag = TOTAL_WAR_BAKSANWAR
+		}   
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.05
+
+			if = {
+				limit = {
+					OR = {
+						has_idea = volunteer_only
+						has_idea = limited_conscription
+						has_idea = disarmed_nation 
+					}
+				}
+
+				add_ideas = extensive_conscription
+			}
+
+			if = {
+				limit = {
+					OR = {
+						has_idea = civilian_economy
+						has_idea = low_economic_mobilisation
+						has_idea = partial_economic_mobilisation 
+					}
+				}
+
+				add_ideas = war_economy
+			}
+		}
+	}
+	
+	focus = {
+		id = HYA_end_of_factionalism
+		text = STH_end_of_factionalism
+		icon = GFX_focus_hol_war_on_pacifism
+		x = -1
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = HYA_military_mobilization }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		bypass = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = HYA_military_mobilization
+		
+		completion_reward = {
+			add_timed_idea = {
+				idea = STH_end_of_factionalism
+				days = 210
+			}
+			add_country_leader_trait = STH_dictator
+		}
+	}
+	
+	focus = {
+		id = HYA_crop_requisition
+		text = STH_crop_requisition
+		icon = GFX_focus_RAJ_war_taxes
+		x = 1
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = HYA_military_mobilization }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		bypass = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = HYA_military_mobilization
+		
+		completion_reward = {
+			add_stability = -0.02
+			add_war_support = 0.08
+			every_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = HYA_total_destruction
+		text = STH_total_destruction
+		icon = GFX_focus_SWE_refuge_from_war
+		x = 0
+		y = 3
+		cost = 2
+
+		prerequisite = { focus = HYA_end_of_factionalism }
+		prerequisite = { focus = HYA_crop_requisition }
+		mutually_exclusive = {  }
+
+		available = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = HYA_military_mobilization
+		
+		completion_reward = {
+			add_stability = 0.03
+		}
+	}
+	
+	focus = {
+		id = HYA_victory_on_the_ashes
+		text = STH_victory_on_the_ashes
+		icon = GFX_focus_BEL_legacy_of_the_great_war
+		x = 0
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = HYA_total_destruction }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		relative_position_id = HYA_total_destruction
+		
+		completion_reward = {
+			clr_global_flag = TOTAL_WAR_BAKSANWAR
+			set_global_flag = GFLAG_BAKSANWAR_END
+			mark_focus_tree_layout_dirty = yes
+			custom_effect_tooltip = STH_victory_on_the_ashes_tt
+		}
+	}
+# 총력전 중점도/
+
 	focus = { #
 		relative_position_id = HYA_focus_victory
 		id = HYA_focus_exploitative_industrial_reconstruction
@@ -2227,6 +2566,32 @@ focus_tree = {
 			}
 		}
 	}
+	focus = { # 아야메 회유
+		id = HYA_focus_120
+		icon = GFX_goal_demand_sudetenland
+		prerequisite = { focus = HYA_focus_63 focus = HYA_focus_62 }
+		x = 1
+		y = 1
+		relative_position_id = HYA_focus_63
+		cost = 5
+		allow_branch = {
+			NOT = { has_global_flag = CFLAG_BAKSANWAR_END }
+		}
+		available = {
+			has_global_flag = GFLAG_BAKSANWAR_END
+		}   
+		bypass = {
+		}
+	}
+	focus = {
+		id = HYA_focus_125
+		icon = GFX_goal_demand_sudetenland
+		prerequisite = { focus = HYA_focus_120 }
+		x = 0
+		y = 1
+		relative_position_id = HYA_focus_120
+		cost = 5
+	}
 	focus = { #
 		relative_position_id = HYA_focus_46
 		id = HYA_focus_47
@@ -3364,7 +3729,7 @@ focus_tree = {
 	focus = { # 권위 해방
 		relative_position_id = HYA_focus_87
 		id = HYA_focus_88
-		icon = GFX_focus_generic_support_the_left_right
+		icon = GFX_goal_HYA_liberation_authority
 		prerequisite = { focus = HYA_focus_87 }
 		mutually_exclusive = { focus = HYA_focus_89 }
 		x = 0
@@ -3404,7 +3769,7 @@ focus_tree = {
 	focus = { # 아나키즘 수용
 		relative_position_id = HYA_focus_88
 		id = HYA_focus_90
-		icon = GFX_focus_spr_anarchism_knows_no_borders
+		icon = GFX_goal_HYA_Anarchist
 		prerequisite = { focus = HYA_focus_88 }
 		mutually_exclusive = { focus = HYA_focus_91 }
 		x = -1
@@ -3440,7 +3805,7 @@ focus_tree = {
 	focus = { # 망량즈 체계화
 		relative_position_id = HYA_focus_88
 		id = HYA_focus_91
-		icon = GFX_goal_generic_military_sphere
+		icon = GFX_goal_HYA_monsters_ghosts
 		prerequisite = { focus = HYA_focus_88 focus = HYA_focus_89 }
 		mutually_exclusive = { focus = HYA_focus_90 }
 		x = 1
@@ -3471,7 +3836,7 @@ focus_tree = {
 	focus = { # 국경 제압
 		relative_position_id = HYA_focus_89
 		id = HYA_focus_92
-		icon = GFX_goal_generic_occupy_states_ongoing_war
+		icon = GFX_goal_HYA_suppression_border
 		prerequisite = { focus = HYA_focus_87 }
 		#mutually_exclusive = { focus = HYA_focus_89 }
 		x = 1
@@ -4714,159 +5079,5 @@ focus_tree = {
 				}
 			}
 		}
-	}
-
-	focus = { # 백화요란의 귀환
-		id = HYA_focus_119
-		icon = GFX_goal_HYA_Hyakkaryouran_head_return
-		prerequisite = { focus = HYA_focus_victory }
-		x = 0
-		y = 1
-		relative_position_id = HYA_focus_victory
-		cost = 5
-		completion_reward={
-			promote_character = HYA_Nanakado_Ayame
-			add_field_marshal_role = {
-				Character = HYA_Nanakado_Ayame
-				traits = {
-				}
-				skill=3
-				attack_skill=1
-				defense_skill=5
-				planning_skill=5
-				logistics_skill=7
-			}
-			country_event = { id = HYA_event.19 hours = 2 }
-	    }
-		allow_branch = {
-			NOT = { has_global_flag = CFLAG_BAKSANWAR_END }
-		}
-		available = {
-			has_global_flag = GFLAG_BAKSANWAR_END
-			has_government = neutrality
-			power_balance_value = {
-				id = HYA_centralization_bop
-				value < -0.75
-			}
-		}   
-		bypass = {
-		}
-	}
-
-	focus = { # 아야메 회유
-		id = HYA_focus_120
-		icon = GFX_goal_demand_sudetenland
-		prerequisite = { focus = HYA_focus_63 focus = HYA_focus_62 }
-		x = 1
-		y = 1
-		relative_position_id = HYA_focus_63
-		cost = 5
-		allow_branch = {
-			NOT = { has_global_flag = CFLAG_BAKSANWAR_END }
-		}
-		available = {
-			has_global_flag = GFLAG_BAKSANWAR_END
-		}   
-		bypass = {
-		}
-	}
-
-	focus = { # 모두를 지켜보는 눈
-		id = HYA_focus_121
-		icon = GFX_goal_HYA_Eyes_Everyone
-		prerequisite = { focus = HYA_focus_123 }
-		x = -1
-		y = 2
-		relative_position_id = HYA_focus_119
-		cost = 5
-		completion_reward = {
-			add_ideas = HYA_Observe_Eye
-		}
-	}
-
-	focus = { # 백화요란에 증오를
-		id = HYA_focus_122
-		icon = GFX_goal_HYA_Hyakkaryouran_Hatred
-		prerequisite = { focus = HYA_focus_123 }
-		x = 1
-		y = 2
-		relative_position_id = HYA_focus_119
-		cost = 5
-	}
-
-	focus = { # 백련의 계승자
-		id = HYA_focus_123
-		icon = GFX_goal_HYA_White_Lotus
-		prerequisite = { focus = HYA_focus_119 }
-		x = 0
-		y = 1
-		relative_position_id = HYA_focus_119
-		cost = 5
-		completion_reward={
-			add_war_support = 0.10
-			add_country_leader_trait = HYA_hyakkaryouran_resolution_council_chairman
-	    }
-	}
-
-	focus = { # 황혼의 아야메
-		id = HYA_focus_124
-		icon = GFX_goal_HYA_twilight_Ayame
-		prerequisite = { focus = HYA_focus_121 }
-		prerequisite = { focus = HYA_focus_122 }
-		x = 1
-		y = 1
-		relative_position_id = HYA_focus_121
-		cost = 5
-		completion_reward={
-			if = {
-				limit = { 
-					NOT = { has_government = fascism }
-				}
-				set_politics = {
-					ruling_party = fascism
-					elections_allowed = no
-					election_frequency = 48
-				}
-			}
-			set_party_name = {
-				ideology = fascism
-				long_name = HYA_fascism_win_party
-				name = HYA_fascism_win_party_long
-			}
-			promote_character = HYA_Nanakado_Ayame_1
-	    }
-	}
-
-	focus = {
-		id = HYA_focus_125
-		icon = GFX_goal_demand_sudetenland
-		prerequisite = { focus = HYA_focus_120 }
-		x = 0
-		y = 1
-		relative_position_id = HYA_focus_120
-		cost = 5
-	}
-
-	focus = { # 황혼의 힘을 세계에 향하여
-		id = HYA_focus_126
-		icon = GFX_goal_HYA_Twilight_Force_World
-		prerequisite = { focus = HYA_focus_124 }
-		x = 0
-		y = 1
-		relative_position_id = HYA_focus_124
-		cost = 5
-	}
-
-	focus = { # 황혼의 구원자
-		id = HYA_focus_127
-		icon = GFX_goal_HYA_Twilight_Savior
-		prerequisite = { focus = HYA_focus_126 }
-		x = 0
-		y = 2
-		relative_position_id = HYA_focus_126
-		cost = 5
-		completion_reward={
-			add_country_leader_trait = HYA_Twilight_Savior
-	    }
 	}
 }

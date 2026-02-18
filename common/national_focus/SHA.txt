@@ -3195,11 +3195,12 @@ focus_tree = {
 		available = {
 			owns_state = 1051
 			owns_state = 972
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			has_global_flag = CFLAG_BAKSANWAR_END
 		}
 		bypass = { }
 		allow_branch = {
 			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
 			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 
@@ -3306,11 +3307,7 @@ focus_tree = {
 		mutually_exclusive = {  }
 
 		available = {
-			OR = {
-				NOT = { country_exists = HYA  }
-				owns_state = 972
-			}
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			has_global_flag = CFLAG_BAKSANWAR_END
 		}
 		bypass = {
 
@@ -3318,6 +3315,7 @@ focus_tree = {
 		
 		allow_branch = {
 			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
 			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 
@@ -3350,6 +3348,7 @@ focus_tree = {
 		}
 		allow_branch = {
 			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
 			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 		bypass = { }
@@ -3376,10 +3375,6 @@ focus_tree = {
 
 		available = { 
 			
-		}
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 		bypass = { }
 
@@ -3552,11 +3547,6 @@ focus_tree = {
 			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
 		}
 		bypass = { }
-
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
-		}
 
 		relative_position_id = SHA_the_third_kivotos
 
@@ -3837,11 +3827,6 @@ focus_tree = {
 			has_completed_focus = SHA_Kaguya_ousted
 		}
 		bypass = { }
-		
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
-		}
 
 		relative_position_id = SHA_the_third_kivotos
 
@@ -4081,7 +4066,7 @@ focus_tree = {
 	##################
 	
 
-	# 학원 영토 수복
+	# 용의 추락
 	focus = {
 		id = SHA_fall_of_dragon
 		icon = GFX_focus_SHA_fall_of_dragon
@@ -4535,6 +4520,244 @@ focus_tree = {
 	##################
 
 	##################
+	#### 산해경 총력전 국면 루트 ####
+	##################
+
+	focus = {
+		id = SHA_military_mobilization
+		text = STH_military_mobilization
+		icon = GFX_focus_generic_total_war
+		x = 0
+		y = 2
+		cost = 2
+
+		prerequisite = { focus = SHA_invade_of_Hyakkiyako }
+		mutually_exclusive = {  }
+
+		allow_branch = {
+			has_global_flag = TOTAL_WAR_BAKSANWAR
+		}
+
+		available = {
+			has_global_flag = TOTAL_WAR_BAKSANWAR
+		}  
+
+		bypass = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = SHA_invade_of_Hyakkiyako
+		
+		completion_reward = {
+			add_war_support = 0.05
+
+			if = {
+				limit = {
+					OR = {
+						has_idea = volunteer_only
+						has_idea = limited_conscription
+						has_idea = disarmed_nation 
+					}
+				}
+
+				add_ideas = extensive_conscription
+			}
+
+			if = {
+				limit = {
+					OR = {
+						has_idea = civilian_economy
+						has_idea = low_economic_mobilisation
+						has_idea = partial_economic_mobilisation 
+					}
+				}
+
+				add_ideas = war_economy
+			}
+		}
+	}
+	
+	focus = {
+		id = SHA_end_of_factionalism
+		text = STH_end_of_factionalism
+		icon = GFX_focus_hol_war_on_pacifism
+		x = -1
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = SHA_military_mobilization }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		bypass = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = SHA_military_mobilization
+		
+		completion_reward = {
+			add_timed_idea = {
+				idea = STH_end_of_factionalism
+				days = 210
+			}
+			add_country_leader_trait = STH_dictator
+		}
+	}
+	
+	focus = {
+		id = SHA_crop_requisition
+		text = STH_crop_requisition
+		icon = GFX_focus_RAJ_war_taxes
+		x = 1
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = SHA_military_mobilization }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		bypass = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = SHA_military_mobilization
+		
+		completion_reward = {
+			add_stability = -0.02
+			add_war_support = 0.08
+			every_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = SHA_total_destruction
+		text = STH_total_destruction
+		icon = GFX_focus_SWE_refuge_from_war
+		x = 0
+		y = 3
+		cost = 2
+
+		prerequisite = { focus = SHA_end_of_factionalism }
+		prerequisite = { focus = SHA_crop_requisition }
+		mutually_exclusive = {  }
+
+		available = {
+			OR = {
+				HYA = {
+					OR = {
+						exists = no
+						has_capitulated = yes
+					}
+				}
+				AND = {
+					controls_state = 9
+					controls_state = 75
+					controls_state = 972
+					controls_state = 74
+					controls_state = 72
+				}
+			}
+		}
+
+		relative_position_id = SHA_military_mobilization
+		
+		completion_reward = {
+			add_stability = 0.03
+		}
+	}
+	
+	focus = {
+		id = SHA_victory_on_the_ashes
+		text = STH_victory_on_the_ashes
+		icon = GFX_focus_BEL_legacy_of_the_great_war
+		x = 0
+		y = 1
+		cost = 5
+
+		prerequisite = { focus = SHA_total_destruction }
+		mutually_exclusive = {  }
+
+		available = {
+
+		}
+
+		relative_position_id = SHA_total_destruction
+		
+		completion_reward = {
+			clr_global_flag = TOTAL_WAR_BAKSANWAR
+			set_global_flag = CFLAG_BAKSANWAR_END
+			mark_focus_tree_layout_dirty = yes
+			custom_effect_tooltip = STH_victory_on_the_ashes_tt
+		}
+	}
+
+	##################
+	#### 산해경 총력전 국면 루트 ####
+	##################
+
+	##################
 	#### 산해경 공산 외교 중점 ####
 	##################
 	
@@ -4558,7 +4781,10 @@ focus_tree = {
 		}
 		bypass = { }
 
-		allow_branch = { has_country_flag = SHA_communist_focus_in_progress 
+
+		allow_branch = {
+			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			has_country_flag = SHA_communist_focus_in_progress 
 		}
 
 		mutually_exclusive = {
@@ -4918,7 +5144,9 @@ focus_tree = {
 		}
 		bypass = { }
 
-		allow_branch = { has_country_flag = SHA_communist_focus_in_progress 
+		allow_branch = {
+			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			has_country_flag = SHA_communist_focus_in_progress 
 		}
 
 		relative_position_id = SHA_invade_of_Hyakkiyako
@@ -5306,7 +5534,10 @@ focus_tree = {
 		}
 		bypass = { }
 
-		allow_branch = { has_country_flag = SHA_communist_focus_in_progress 
+
+		allow_branch = {
+			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
+			has_country_flag = SHA_communist_focus_in_progress 
 		}
 
 		relative_position_id = SHA_invade_of_Hyakkiyako

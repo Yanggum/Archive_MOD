@@ -1,3 +1,4 @@
+#!gfx:interface\BlueArchive\01 goals.gfx
 focus_tree = {
 	id = KPD_focus_tree
 	shared_focus = TCA_invite_foreign_investors
@@ -776,9 +777,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-
-
-			GER_add_or_modify_politburo = yes
+			KPD_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_mobilization_laws_cost_factor = -0.15 tooltip = mobilization_laws_cost_factor_tt }
 			add_to_variable = { GER_politburo_conscription_factor = 0.05 tooltip = conscription_factor_tt }
 
@@ -788,8 +787,6 @@ focus_tree = {
 			add_to_variable = { GER_military_mobilization_speed = 0.1 tooltip = mobilization_speed_tt }
 			add_to_variable = { GER_military_experience_gain_army_factor = -0.1 tooltip = experience_gain_army_factor_tt }
 			add_to_variable = { GER_military_minimum_training_level = -0.1 tooltip = minimum_training_level_tt }
-
-			
 		}
 	}
 
@@ -1017,18 +1014,17 @@ focus_tree = {
 					days = 15
 				}
 			}
-			set_cosmetic_tag = TRM_collapse_win
 		}
 	}
-	focus = { #스탈린주의자 숙청
-		id = KPD_expulsion_of_stalinists
+	focus = { # 모스크바에 저항
+		id = KPD_resistance_to_moscow
 		icon = GFX_focus_GER_legacy_of_the_spartacus_league
 		cost = 5
 		prerequisite = {
 			focus = KPD_dissolution_of_joint_supreme_command
 		}
 		mutually_exclusive = {
-			focus = KPD_purge_of_anti_leftists
+			focus = KPD_all_power_to_the_party
 		}
 		x = -5
 		y = 1
@@ -1039,59 +1035,31 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
-			set_cosmetic_tag = GER_peoples_republic
-
 			add_political_power = 50
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			set_politics = {
-				ruling_party = communism
-				elections_allowed = no
-				last_election = "1933.3.5"
-				election_frequency = 48
-				long_name = GER_communism_arbeit_party_long
-				name = GER_communism_arbeit_party
-			}
-
-			custom_effect_tooltip = generic_skip_one_line_tt
-
-			custom_effect_tooltip = generic_skip_one_line_tt
-
 			country_event = { id = GE2_event.1 hours = 8 }
-			
-
 			if = {
 				limit = { has_character = GEK_otto_ruhle }
 				custom_effect_tooltip = available_political_advisor
 				show_ideas_tooltip = GER_otto_ruhle
 			}
-			
-			if = { limit = { has_character = KPD_thalman } KPD_thalman = { retire = yes } }
-			if = { limit = { has_character = KPD_richard_sorge } KPD_richard_sorge = { retire = yes } }
-			if = {
-				limit = { has_idea = KPD_conflict_with_the_social_democratic_left }
-				remove_ideas = KPD_conflict_with_the_social_democratic_left
-			}
-			if = {
-				limit = { has_idea = KPD_coalition_split_accelerates }
-				remove_ideas = KPD_coalition_split_accelerates
-			}
 
-			GER_add_or_modify_politburo = yes
+			KPD_add_or_modify_politburo = yes
 			add_to_variable = { GER_politburo_party_popularity_stability_factor = 0.05 tooltip = party_popularity_stability_factor_tt }
 			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.05 tooltip = defensive_war_stability_factor_tt }
 		}
 	}
-	focus = { #반대 좌파 숙청
-		id = KPD_purge_of_anti_leftists
-		icon = GFX_focus_GER_proletarian_dictatorship
+	focus = { # 모든 권력을 당으로
+		id = KPD_all_power_to_the_party
+		icon = GFX_focus_AFG_defender_of_central_asia
 		cost = 5
 		prerequisite = {
 			focus = KPD_dissolution_of_joint_supreme_command
 		}
 		mutually_exclusive = {
-			focus = KPD_expulsion_of_stalinists
+			focus = KPD_resistance_to_moscow
 		}
 		x = 5
 		y = 1
@@ -1102,26 +1070,810 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
+			set_cosmetic_tag = KPD_deutsche_demokratische_republik
+
 			add_political_power = 50
-			add_war_support = 0.05
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+				last_election = "1933.3.5"
+				election_frequency = 48
+				long_name = TRK_communism_party_long
+				name = TRK_communism_party
+			}
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
+			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
+		}
+	}
+	focus = { # 독일 민주주의 회복
+		id = KPD_restoration_of_german_democracy
+		icon = GFX_focus_generic_soviet_politics
+		cost = 5
+		prerequisite = {
+			focus = KPD_resistance_to_moscow
+			focus = KPD_all_power_to_the_party
+		}
+		x = 5
+		y = 1
+		relative_position_id = KPD_resistance_to_moscow
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_party_popularity_stability_factor = 0.05
+				tooltip = party_popularity_stability_factor_tt
+			}
+
+		}
+	}
+	focus = { # 독일 민주주의 회복
+		id = KPD_prevention_of_second_nazism
+		icon = GFX_focus_generic_communism_anti_fascism
+		cost = 5
+		prerequisite = {
+			focus = KPD_restoration_of_german_democracy
+		}
+		x = 1
+		y = 1
+		relative_position_id = KPD_restoration_of_german_democracy
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+
+		}
+	}
+	focus = { # 독일 민주주의 회복
+		id = KPD_confiscation_of_trinity_capital
+		icon = GFX_focus_generic_military_industry
+		cost = 5
+		prerequisite = {
+			focus = KPD_restoration_of_german_democracy
+		}
+		x = -1
+		y = 1
+		relative_position_id = KPD_restoration_of_german_democracy
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+
+		}
+	}
+	focus = { #스탈린주의자 숙청
+		id = KPD_expulsion_of_stalinists
+		icon = GFX_focus_KPD_expulsion_of_stalinists
+		cost = 5
+		prerequisite = {
+			focus = KPD_resistance_to_moscow
+		}
+		mutually_exclusive = {
+			focus = KPD_purge_of_anti_leftists
+			focus = KPD_construction_of_inner_party_democracy
+		}
+		x = 1
+		y = 3
+		relative_position_id = KPD_resistance_to_moscow
+		available = {
+			NOT = {
+				has_country_leader = {
+					character = KPD_thalman
+					ruling_only = yes
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+			
+			if = { limit = { has_character = KPD_thalman } KPD_thalman = { retire = yes } }
+			if = { limit = { has_character = KPD_richard_sorge } KPD_richard_sorge = { retire = yes } }
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			effect_tooltip = {
+				remove_ideas = KPD_coalition_split_accelerates
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_idea = KPD_conflict_with_the_social_democratic_left }
+					remove_ideas = KPD_conflict_with_the_social_democratic_left
+				}
+				if = {
+					limit = { has_idea = KPD_coalition_split_accelerates }
+					remove_ideas = KPD_coalition_split_accelerates
+				}
+			}
+		}
+	}
+	focus = { # 반대 좌파 숙청
+		id = KPD_purge_of_anti_leftists
+		icon = GFX_focus_SOV_purge_trotskyists
+		cost = 5
+		prerequisite = {
+			focus = KPD_all_power_to_the_party
+		}
+		mutually_exclusive = {
+			focus = KPD_expulsion_of_stalinists
+			focus = KPD_construction_of_inner_party_democracy
+		}
+		x = -1
+		y = 3
+		relative_position_id = KPD_all_power_to_the_party
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
 			if = { limit = { has_character = KPD_max_seydewitz } KPD_max_seydewitz = { retire = yes } }
 			if = { limit = { has_character = KPD_heinrich_brandler } KPD_heinrich_brandler = { retire = yes } }
 			if = { limit = { has_character = KPD_wilhelm_reich } KPD_wilhelm_reich = { retire = yes } }
-			if = {
-				limit = { has_idea = KPD_conflict_with_the_social_democratic_left }
-				remove_ideas = KPD_conflict_with_the_social_democratic_left
-			}
-			if = {
-				limit = { has_idea = KPD_coalition_split_accelerates }
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			effect_tooltip = {
 				remove_ideas = KPD_coalition_split_accelerates
 			}
+			hidden_effect = {
+				if = {
+					limit = { has_idea = KPD_conflict_with_the_social_democratic_left }
+					remove_ideas = KPD_conflict_with_the_social_democratic_left
+				}
+				if = {
+					limit = { has_idea = KPD_coalition_split_accelerates }
+					remove_ideas = KPD_coalition_split_accelerates
+				}
+			}
+		}
+	}
+	focus = { # 당 내 민주주의 건설
+		id = KPD_construction_of_inner_party_democracy
+		icon = GFX_goal_generic_national_unity
+		cost = 5
+		prerequisite = {
+			focus = KPD_restoration_of_german_democracy
+		}
+		mutually_exclusive = {
+			focus = KPD_purge_of_anti_leftists
+			focus = KPD_expulsion_of_stalinists
+		}
+		x = 0
+		y = 2
+		relative_position_id = KPD_restoration_of_german_democracy
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_thaelmann_constitution
+		icon = GFX_goal_generic_war_with_comintern
+		prerequisite = { focus = KPD_all_power_to_the_party }
 
-			GER_add_or_modify_politburo = yes
-			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
-			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
+		x = 2
+		y = 1
+		relative_position_id = KPD_all_power_to_the_party
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+			add_political_power = 100
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GER_politburo_drift_defence_factor = 0.50
+				tooltip = drift_defence_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = KPD_establishment_of_proletarian_dictatorship
+		icon = GFX_focus_GER_proletarian_dictatorship
+		prerequisite = { focus = KPD_thaelmann_constitution }
+
+		x = 1
+		y = 2
+		relative_position_id = KPD_thaelmann_constitution
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+
+			add_political_power = 50
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_political_power_factor = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				GER_politburo_max_surrender_limit_offset = 0.05
+				tooltip = max_surrender_limit_offset_tt
+			}
+		}
+	}
+	focus = {
+		id = KPD_close_ties_with_soviet_union
+		icon = GFX_focus_chi_mission_to_the_soviet_union
+		prerequisite = { focus = KPD_all_power_to_the_party }
+
+		x = 0
+		y = 2
+		relative_position_id = KPD_all_power_to_the_party
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_red_industrial_aid
+		icon = GFX_goal_generic_soviet_construction
+		prerequisite = { focus = KPD_close_ties_with_soviet_union }
+
+		x = 1
+		y = 1
+		relative_position_id = KPD_close_ties_with_soviet_union
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_equipment_subsidy = {
+				cic = 500
+				equipment_type = light_tank_chassis
+				seller_tags = { SOV } 
+			}
+			add_equipment_subsidy = {
+				cic = 500
+				equipment_type = infantry_equipment
+				seller_tags  = { SOV }
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			every_owned_state = {
+				limit = {
+					BA_trinity_is = yes
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 3
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = KPD_joining_the_comintern
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = KPD_close_ties_with_soviet_union }
+		mutually_exclusive = {
+			focus = KPD_vanguard_of_the_most_advanced_revolution
+		}
+
+		x = 0
+		y = 2
+		relative_position_id = KPD_close_ties_with_soviet_union
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_shield_of_revolution_strategy
+		icon = GFX_focus_SOV_the_defense_of_moscow
+		prerequisite = { focus = KPD_joining_the_comintern }
+
+		x = 0
+		y = 1
+		relative_position_id = KPD_joining_the_comintern
+		cost = 10
+		available = {
+		}
+
+		search_filters = {  }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_vanguard_of_the_most_advanced_revolution
+		icon = GFX_focus_GER_spheres_of_influence
+		prerequisite = { focus = KPD_establishment_of_proletarian_dictatorship }
+		mutually_exclusive = {
+			focus = KPD_joining_the_comintern
+		}
+		x = 0
+		y = 1
+		relative_position_id = KPD_establishment_of_proletarian_dictatorship
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = KPD_west_germany_liberation_war
+		icon = GFX_focus_KPD_west_germany_liberation_war
+		prerequisite = { focus = KPD_vanguard_of_the_most_advanced_revolution }
+		mutually_exclusive = {
+		}
+		x = -1
+		y = 1
+		relative_position_id = KPD_vanguard_of_the_most_advanced_revolution
+		cost = 10
+
+		available = {
+			is_subject = no
+			OR = {
+				NOT = { has_war_with = GEM }
+				NOT = { has_war_with = GEH }
+			}
+			GEM = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				BA_gehennea_core_OR_control = yes
+			}
+			GEH = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				BA_gehennea_core_OR_control = yes
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = GEM } 
+				has_war_with = GEM
+				GEM = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = { BA_gehennea_core_OR_control = yes }
+				}
+			}	
+			OR = {
+				NOT = { country_exists = GEH } 
+				has_war_with = GEH
+				GEH = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = { BA_gehennea_core_OR_control = yes }
+				}
+			}	
+		}
+
+		will_lead_to_war_with = POL
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			if = {
+				limit = {
+					GEM = {
+						BA_gehennea_core_OR_control = yes
+					}
+				}
+				create_wargoal = {
+					target = GEM
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = GEM
+					value = 50
+				}
+			}
+			if = {
+				limit = {
+					GEH = {
+						BA_gehennea_core_OR_control = yes
+					}
+				}
+				create_wargoal = {
+					target = GEH
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = GEH
+					value = 50
+				}
+			}
+
+			add_threat = 3
+		}
+	}
+	focus = {
+		id = KPD_export_of_revolution_to_the_south
+		icon = GFX_focus_KPD_export_of_revolution_to_the_south
+		prerequisite = { focus = KPD_vanguard_of_the_most_advanced_revolution }
+		mutually_exclusive = {
+		}
+		x = 1
+		y = 1
+		relative_position_id = KPD_vanguard_of_the_most_advanced_revolution
+		cost = 10
+		available = {
+			is_subject = no
+			OR = {
+				NOT = { has_war_with = ABY }
+				NOT = { has_war_with = HYA }
+				NOT = { has_war_with = SHA }
+			}
+			ABY = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+			HYA = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+			SHA = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = ABY } 
+				has_war_with = ABY
+				ABY = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}	
+			OR = {
+				NOT = { country_exists = HYA } 
+				has_war_with = HYA
+				HYA = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}
+			OR = {
+				NOT = { country_exists = SHA } 
+				has_war_with = SHA
+				SHA = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}		
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			if = {
+				limit = {
+					ABY = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = ABY
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = ABY
+					value = 50
+				}
+			}
+			if = {
+				limit = {
+					HYA = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = HYA
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = HYA
+					value = 50
+				}
+			}
+			if = {
+				limit = {
+					SHA = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = SHA
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = SHA
+					value = 50
+				}
+			}
+
+			add_threat = 2
+		}
+	}
+	focus = {
+		id = KPD_expulsion_of_false_prophets
+		icon = GFX_focus_KPD_expulsion_of_false_prophets
+		prerequisite = { focus = KPD_west_germany_liberation_war }
+		prerequisite = { focus = KPD_export_of_revolution_to_the_south }
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 2
+		relative_position_id = KPD_vanguard_of_the_most_advanced_revolution
+		cost = 10
+		available = {
+			is_subject = no
+			NOT = { has_war_with = RED }
+			RED = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				BA_redwinter_core_OR_control = yes
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = RED } 
+				has_war_with = RED
+				RED = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_redwinter_core_OR_control = yes
+					}
+				}
+			}	
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			create_wargoal = {
+				target = RED
+				type = annex_everything
+			}
+
+			add_ai_strategy = {
+				type = antagonize
+				id = RED
+				value = 50
+			}
+		}
+	}
+	focus = {
+		id = KPD_greater_german_proletarian_state
+		icon = GFX_focus_GER_hegemony_over_europe
+		prerequisite = { focus = KPD_expulsion_of_false_prophets }
+		mutually_exclusive = {
+		}
+		x = 0
+		y = 1
+		relative_position_id = KPD_expulsion_of_false_prophets
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
 		}
 	}
 
@@ -1374,14 +2126,13 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civ_factory
 		cost = 10
 		prerequisite = {
-			focus = KPD_expulsion_of_stalinists
-			focus = KPD_purge_of_anti_leftists
+			focus = KPD_dissolution_of_joint_supreme_command
 		}
 		mutually_exclusive = {
 			focus = KPD_establishment_of_factory_councils
 		}
-		x = -1
-		y = 2
+		x = 8
+		y = 1
 		relative_position_id = KPD_dissolution_of_joint_supreme_command
 		available = {
 			has_political_power > 100
@@ -1409,14 +2160,13 @@ focus_tree = {
 		icon = GFX_focus_FIN_socialist_welfare
 		cost = 5
 		prerequisite = {
-			focus = KPD_expulsion_of_stalinists
-			focus = KPD_purge_of_anti_leftists
+			focus = KPD_dissolution_of_joint_supreme_command
 		}
 		mutually_exclusive = {
 			focus = KPD_nationalization_of_industries
 		}
-		x = 1
-		y = 2
+		x = 10
+		y = 1
 		relative_position_id = KPD_dissolution_of_joint_supreme_command
 		available = {
 		}
@@ -1455,9 +2205,9 @@ focus_tree = {
 		prerequisite = { focus = KPD_nationalization_of_industries focus = KPD_establishment_of_factory_councils }
 
 		x = 1
-		y = 2
+		y = 1
 		relative_position_id = KPD_nationalization_of_industries
-		cost = 10
+		cost = 5
 		available = {
 			OR = {
 				has_completed_focus = GEAF_prioritize_economic_growth
@@ -1469,12 +2219,13 @@ focus_tree = {
 
 		completion_reward = {
 
-			every_core_state = {
+			every_owned_state = {
 				limit = {
+					BA_trinity_is = yes
 					is_fully_controlled_by = ROOT
 					free_building_slots = {
 						building = industrial_complex
-						size > 1
+						size > 0
 						include_locked = yes
 					}
 				}
@@ -1526,11 +2277,11 @@ focus_tree = {
 	focus = {
 		id = KPD_free_organization_of_unions
 		icon = GFX_focus_AFG_education_reform
-		prerequisite = { focus = KPD_expulsion_of_stalinists }
+		prerequisite = { focus = KPD_resistance_to_moscow }
 
 		x = 2
 		y = 1
-		relative_position_id = KPD_expulsion_of_stalinists
+		relative_position_id = KPD_resistance_to_moscow
 		cost = 10
 		available = {
 		}
@@ -1538,19 +2289,19 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
-			add_ideas = idea_KPD_free_organization_of_unions
-			custom_effect_tooltip = generic_skip_one_line_tt
 			country_event = KPD_antileft_event.1
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_ideas = idea_KPD_free_organization_of_unions
 		}
 	}
 	focus = {
 		id = KPD_trade_union_integration
 		icon = GFX_focus_PER_communist_afghanistan_intervention
-		prerequisite = { focus = KPD_purge_of_anti_leftists }
+		prerequisite = { focus = KPD_all_power_to_the_party }
 
 		x = -2
 		y = 1
-		relative_position_id = KPD_purge_of_anti_leftists
+		relative_position_id = KPD_all_power_to_the_party
 		cost = 10
 		available = {
 		}
@@ -1558,6 +2309,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+			country_event = KPD_soviet_event.1
+			custom_effect_tooltip = generic_skip_one_line_tt
 			add_ideas = idea_KPD_trade_union_integration
 			every_core_state = {
 				limit = {
@@ -1576,52 +2329,121 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			country_event = KPD_soviet_event.1
 		}
 	}
+
 	focus = {
-		id = KPD_economic_reform_from_below
-		icon = GFX_focus_DEN_no_regulations
-		prerequisite = { focus = KPD_free_organization_of_unions }
-
-		x = 1
-		y = 2
-		relative_position_id = KPD_free_organization_of_unions
-		cost = 10
-		available = {
-		}
-
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
-
-		completion_reward = {
-		}
-	}
-	focus = {
-		id = KPD_economic_reform_from_above
-		icon = GFX_focus_DEN_heavy_regulations
+		id = KPD_the_german_stakhanovite_movement
+		icon = GFX_focus_GER_stakhanovite_movement
 		prerequisite = { focus = KPD_trade_union_integration }
 
-		x = -1
-		y = 2
+		x = 0
+		y = 1
 		relative_position_id = KPD_trade_union_integration
-		cost = 10
+		cost = 5
 		available = {
+			OR = {
+				has_completed_focus = GEAF_establish_the_reichswerke
+				has_completed_focus = GEAF_invest_in_vereinigte_stahlwerke
+			}
 		}
 
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
+			add_stability = -0.05
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			IF = {
+				limit = {
+					65 = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+
+				65 = {
+					add_resource = {
+						type = steel
+						amount = 6
+					}
+					add_resource = {
+						type = tungsten
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 3
+					}
+				}
+			}
+			else = {
+				random_core_state = {
+					limit = {
+						is_fully_controlled_by = ROOT
+						has_resources_amount = {
+							resource = steel
+							amount > 4
+							delivered = no
+						}
+					}
+					prioritize = { 51 60 }
+					add_resource = {
+						type = steel
+						amount = 6
+					}
+					add_resource = {
+						type = tungsten
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 3
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = GEAF_establish_the_reichswerke
+						has_completed_focus = GEAF_invest_in_vereinigte_stahlwerke
+					}
+				}
+				custom_effect_tooltip = GER_the_german_stakhanovite_movement_tt
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = GEAF_establish_the_reichswerke
+				}
+				custom_effect_tooltip = GER_modify_wehrwirtschaft_modifier_tt
+				add_to_variable = { 
+					GER_wehrwirtschaft_local_resources_factor = 0.05
+					tooltip = local_resources_factor_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = GEAF_invest_in_vereinigte_stahlwerke
+				}
+				GER_modify_industrial_modifier = yes
+				add_to_variable = { 
+					GER_recovering_economy_modifier_local_resources_factor = 0.05
+					tooltip = local_resources_factor_tt
+				}
+			}
+
 		}
 	}
 	focus = {
 		id = KPD_risen_from_ruins
 		icon = GFX_focus_AFG_helmand_river_authority
-		prerequisite = { focus = KPD_economic_reform_from_above focus = KPD_economic_reform_from_below }
 		prerequisite = { focus = KPD_nationalize_industries }
 
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = KPD_nationalize_industries
 		cost = 10
 		available = {
