@@ -7,7 +7,7 @@ focus_tree = {
 	shared_focus = GE2_start_focus
 	continuous_focus_position = {
 		x = 130
-		y = 900
+		y = 960
 	}
 	country = {
 		factor = 0
@@ -31,9 +31,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			army_experience = 25
-			add_dynamic_modifier = {
-				modifier = KPD_army_dynamic_modifier
-			}
+			KPD_modify_army = yes
 			hidden_effect = {
 				country_event = {
 					id = KPD_event.13
@@ -70,6 +68,7 @@ focus_tree = {
 					modifier = KPD_the_red_army_dynamic_modifier
 				}
 			}
+
 			custom_effect_tooltip = KPD_germany_red_army_tt
 			add_to_variable = {
 				GER_military_mobilization_speed = 0.05
@@ -123,13 +122,14 @@ focus_tree = {
 					modifier = KPD_prussian_army_dynamic_modifier
 				}
 			}
+
 			custom_effect_tooltip = KPD_prussian_army_tt
 			add_to_variable = {
 				GER_military_mobilization_speed = -0.05
 				tooltip = mobilization_speed_tt
 			}
 			add_to_variable = {
-				KPD_army_conscription = 0.01
+				KPD_army_conscription = 0.005
 				tooltip = conscription_tt
 			}
 			add_to_variable = {
@@ -172,7 +172,8 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = KPD_army_dynamic_modifier_tt
+			
+			KPD_modify_army = yes
 			add_to_variable = {
 				KPD_army_experience_loss_factor = -0.1
 				tooltip = experience_loss_factor_tt
@@ -269,7 +270,8 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
-			custom_effect_tooltip = KPD_army_dynamic_modifier_tt
+			
+			KPD_modify_army = yes
 			add_to_variable = {
 				KPD_army_winter_attrition_factor = -0.05
 				tooltip = winter_attrition_factor_tt
@@ -305,7 +307,8 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
-			custom_effect_tooltip = KPD_army_dynamic_modifier_tt
+			
+			KPD_modify_army = yes
 			add_to_variable = {
 				KPD_army_conscription_factor = 0.03
 				tooltip = conscription_factor_tt
@@ -402,6 +405,11 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_mystic_engineering
+				value = 1
+			}
+
 			add_tech_bonus = {
 				name = KPD_reeducation_camp
 				bonus = 2.0
@@ -432,7 +440,8 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
-			custom_effect_tooltip = KPD_army_dynamic_modifier_tt
+			
+			KPD_modify_army = yes
 			add_to_variable = {
 				KPD_army_conscription_factor = 0.03
 				tooltip = conscription_factor_tt
@@ -473,7 +482,8 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
-			custom_effect_tooltip = KPD_army_dynamic_modifier_tt
+			
+			KPD_modify_army = yes
 			add_to_variable = {
 				GER_military_army_org_factor = 0.05
 				tooltip = army_org_factor_tt
@@ -578,12 +588,10 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_XP
 		}
 		completion_reward = {
-			effect_tooltip = {
-				swap_ideas = {
-					remove_idea = KPD_no_rank_army_1
-					add_idea = SOV_politicized_military
-				}
-			}
+					swap_ideas = {
+						remove_idea = KPD_no_rank_army_1
+						add_idea = SOV_politicized_military_swap
+					}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -591,9 +599,228 @@ focus_tree = {
 					}
 					swap_ideas = {
 						remove_idea = KPD_no_rank_army_1
-						add_idea = SOV_politicized_military
+						add_idea = SOV_politicized_military_swap
 					}
 				}
+			}
+		}
+	}
+	focus = {
+		#군 정치장교 장려
+		id = KPD_party_army
+		icon = GFX_focus_SOV_builder_of_the_red_army
+		cost = 10
+		prerequisite = {
+			focus = KPD_expansion_of_political_officers
+		}
+		mutually_exclusive = {
+			focus = KPD_revival_of_mission_type_tactics
+			focus = KPD_principle_of_human_leadership
+		}
+		available = {
+		}
+		relative_position_id = KPD_expansion_of_political_officers
+		x = 0
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_ARMY_XP
+		}
+		completion_reward = {
+			add_political_power = 120
+			add_war_support = 0.05
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.05
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery = {
+				amount = 100
+				track = infantry
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = KPD_the_red_army_dynamic_modifier
+				}
+				remove_dynamic_modifier = {
+					modifier = KPD_prussian_army_dynamic_modifier
+				}
+				add_dynamic_modifier = {
+					modifier = KPD_national_peoples_army_dynamic_modifier
+				}
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_the_red_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_the_red_army_dynamic_modifier_swap_national_peoples_army_dynamic_modifier_tt
+			}
+			else_if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_prussian_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_prussian_army_dynamic_modifier_swap_national_peoples_army_dynamic_modifier_tt
+			}
+			else = {
+				custom_effect_tooltip = KPD_army_dynamic_modifier_swap_national_peoples_army_dynamic_modifier_tt
+			}
+			add_to_variable = {
+				KPD_army_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+			add_to_variable = {
+				GER_military_mobilization_speed = 0.10
+				tooltip = mobilization_speed_tt
+			}
+			add_to_variable = {
+				KPD_army_mobilization_laws_cost_factor = -0.05
+				tooltip = mobilization_laws_cost_factor_tt
+			}
+		}
+	}
+	focus = {
+		#군 정치장교 장려
+		id = KPD_principle_of_human_leadership
+		icon = GFX_focus_GER_defender_of_democracy
+		cost = 10
+		prerequisite = {
+			focus = KPD_political_officers_disbanded
+		}
+		mutually_exclusive = {
+			focus = KPD_revival_of_mission_type_tactics
+			focus = KPD_party_army
+		}
+		available = {
+		}
+		relative_position_id = KPD_political_officers_disbanded
+		x = 0
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_ARMY_XP
+		}
+		completion_reward = {
+			add_political_power = 35
+			add_war_support = 0.05
+			add_stability = 0.05
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery = {
+				amount = 100
+				track = infantry
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = KPD_the_red_army_dynamic_modifier
+				}
+				remove_dynamic_modifier = {
+					modifier = KPD_prussian_army_dynamic_modifier
+				}
+				add_dynamic_modifier = {
+					modifier = KPD_citizens_in_uniform_dynamic_modifier
+				}
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_the_red_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_the_red_army_dynamic_modifier_swap_citizens_in_uniform_dynamic_modifier_tt
+			}
+			else_if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_prussian_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_prussian_army_dynamic_modifier_swap_citizens_in_uniform_dynamic_modifier_tt
+			}
+			else = {
+				custom_effect_tooltip = KPD_army_dynamic_modifier_swap_citizens_in_uniform_dynamic_modifier_tt
+			}
+			add_to_variable = {
+				KPD_army_army_org_regain = 0.10
+				tooltip = army_org_regain_tt
+			}
+			add_to_variable = {
+				KPD_army_experience_loss_factor = -0.1
+				tooltip = experience_loss_factor_tt
+			}
+			add_to_variable = {
+				GER_military_special_forces_cap = 0.1
+				tooltip = special_forces_cap_tt
+			}
+		}
+	}
+	focus = {
+		#군 정치장교 장려
+		id = KPD_revival_of_mission_type_tactics
+		icon = GFX_focus_chi_army_reform
+		cost = 10
+		prerequisite = {
+			focus = KPD_political_officers_disbanded
+		}
+		mutually_exclusive = {
+			focus = KPD_principle_of_human_leadership
+			focus = KPD_party_army
+		}
+		available = {
+		}
+		relative_position_id = KPD_political_officers_disbanded
+		x = -2
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_ARMY_XP
+		}
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery = {
+				amount = 150
+				track = infantry
+			}
+
+			add_doctrine_cost_reduction = {
+				name = KPD_revival_of_mission_type_tactics
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = KPD_the_red_army_dynamic_modifier
+				}
+				remove_dynamic_modifier = {
+					modifier = KPD_prussian_army_dynamic_modifier
+				}
+				add_dynamic_modifier = {
+					modifier = KPD_national_defense_force_dynamic_modifier
+				}
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_the_red_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_the_red_army_dynamic_modifier_swap_national_defense_force_dynamic_modifier_tt
+			}
+			else_if = {
+				limit = { has_dynamic_modifier = { modifier = KPD_prussian_army_dynamic_modifier } }
+				custom_effect_tooltip = KPD_prussian_army_dynamic_modifier_swap_national_defense_force_dynamic_modifier_tt
+			}
+			else = {
+				custom_effect_tooltip = KPD_army_dynamic_modifier_swap_national_defense_force_dynamic_modifier_tt
+			}
+			add_to_variable = {
+				KPD_army_conscription = 0.005
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				GER_military_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+			add_to_variable = {
+				KPD_army_max_command_power_mult = 0.1
+				tooltip = max_command_power_mult_tt
 			}
 		}
 	}
@@ -1456,6 +1683,18 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+			set_rule = {
+				can_create_factions = yes
+			}
+			create_faction_from_template = BA_faction_template_KPD_european_communist_international
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_offensive_war_stability_factor = 0.05
+				tooltip = offensive_war_stability_factor_tt
+			}
 		}
 	}
 	focus = {
