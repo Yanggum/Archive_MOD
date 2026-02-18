@@ -553,6 +553,8 @@ country_event = { #쇼타임
 	
 	fire_only_once = yes
 	is_triggered_only = yes
+	
+	immediate = { hidden_effect = { load_oob = COU_focus_kaya_auto3 } }
 
 	option = { 
 		name = COU_event_kaya.12.a
@@ -700,7 +702,7 @@ unit_leader_event = { #나 멘탈 깨질게 ㅅㄱ
 		set_variable = { COU_mc_wsv_cost = 25 }
 		set_variable = { COU_mc_otk_cost = 25 }
 		set_variable = { COU_mc_ltd_cost = 45 }
-		set_variable = { COU_mc_mwr_cost = 75 }
+		set_variable = { COU_mc_mwr_cost = 50 }
 	    load_focus_tree = {
 			 tree = COU_focus_tree
 		     keep_completed = yes
@@ -827,7 +829,7 @@ unit_leader_event = { #거울
 		add_to_variable = { COU_mc_wsv_cost = 25 }
 		add_to_variable = { COU_mc_otk_cost = 25 }
 		add_to_variable = { COU_mc_ltd_cost = 45 }
-		add_to_variable = { COU_mc_mwr_cost = 75 }
+		add_to_variable = { COU_mc_mwr_cost = 50 }
 		if = {
 		    limit = { has_political_power < 150 } 
 			custom_effect_tooltip = COU_tooltip_whatifpoliticalpower100
@@ -846,7 +848,7 @@ unit_leader_event = { #거울
 		add_to_variable = { COU_mc_wsv_cost = 25 }
 		add_to_variable = { COU_mc_otk_cost = 25 }
 		add_to_variable = { COU_mc_ltd_cost = 45 }
-		add_to_variable = { COU_mc_mwr_cost = 75 }
+		add_to_variable = { COU_mc_mwr_cost = 50 }
 		custom_effect_tooltip = enter_tt
 		custom_effect_tooltip = COU_tooltip_forpoliticalpower100
 		trigger = {
@@ -898,10 +900,13 @@ country_event = { #아오이-카야 대화 (mental 회복)
 
 	option = { 
 		name = COU_event_kaya.25.a
-		add_power_balance_value = {
-		    id = COU_kaya_mental_condition 
-		    value = -0.15
-	    }
+		if = {
+			    limit = { has_country_flag = COU_kaya_mental_condition_active_flag }
+				add_power_balance_value = {
+		            id = COU_kaya_mental_condition 
+		            value = -0.15
+	            }
+			}
 	}
 }
 
@@ -969,7 +974,7 @@ country_event = { #BoP용: 웃음
 		    id = COU_kaya_mental_condition 
 		    value = -0.5
 	    }
-		add_ideas = COU_KAYA_FOR_GOOD_ENDING
+		hidden_effect = { add_ideas = COU_KAYA_FOR_GOOD_ENDING }
 	}
 }
 
