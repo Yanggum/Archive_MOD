@@ -1018,7 +1018,6 @@ focus_tree = {
 					days = 15
 				}
 			}
-			set_cosmetic_tag = TRM_collapse_win
 		}
 	}
 	focus = { # 모스크바에 저항
@@ -1040,20 +1039,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
-			set_cosmetic_tag = GER_peoples_republic
-
 			add_political_power = 50
-
-			custom_effect_tooltip = generic_skip_one_line_tt
-
-			set_politics = {
-				ruling_party = communism
-				elections_allowed = no
-				last_election = "1933.3.5"
-				election_frequency = 48
-				long_name = GER_communism_arbeit_party_long
-				name = GER_communism_arbeit_party
-			}
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -1063,6 +1049,10 @@ focus_tree = {
 				custom_effect_tooltip = available_political_advisor
 				show_ideas_tooltip = GER_otto_ruhle
 			}
+
+			GER_add_or_modify_politburo = yes
+			add_to_variable = { GER_politburo_party_popularity_stability_factor = 0.05 tooltip = party_popularity_stability_factor_tt }
+			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.05 tooltip = defensive_war_stability_factor_tt }
 		}
 	}
 	focus = { # 모든 권력을 당으로
@@ -1084,6 +1074,24 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
+			set_cosmetic_tag = KPD_deutsche_demokratische_republik
+
+			add_political_power = 50
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+				last_election = "1933.3.5"
+				election_frequency = 48
+				long_name = TRK_communism_party_long
+				name = TRK_communism_party
+			}
+
+			GER_add_or_modify_politburo = yes
+			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
+			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
 		}
 	}
 	focus = { # 독일 민주주의 회복
@@ -1159,6 +1167,12 @@ focus_tree = {
 		y = 3
 		relative_position_id = KPD_resistance_to_moscow
 		available = {
+			NOT = {
+				has_country_leader = {
+					character = KPD_thalman
+					ruling_only = yes
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1182,10 +1196,6 @@ focus_tree = {
 					remove_ideas = KPD_coalition_split_accelerates
 				}
 			}
-
-			GER_add_or_modify_politburo = yes
-			add_to_variable = { GER_politburo_party_popularity_stability_factor = 0.05 tooltip = party_popularity_stability_factor_tt }
-			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.05 tooltip = defensive_war_stability_factor_tt }
 		}
 	}
 	focus = { # 반대 좌파 숙청
@@ -1208,14 +1218,11 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
-			add_political_power = 50
-			add_war_support = 0.05
-
-			custom_effect_tooltip = generic_skip_one_line_tt
-
 			if = { limit = { has_character = KPD_max_seydewitz } KPD_max_seydewitz = { retire = yes } }
 			if = { limit = { has_character = KPD_heinrich_brandler } KPD_heinrich_brandler = { retire = yes } }
 			if = { limit = { has_character = KPD_wilhelm_reich } KPD_wilhelm_reich = { retire = yes } }
+
+			custom_effect_tooltip = generic_skip_one_line_tt
 			effect_tooltip = {
 				remove_ideas = KPD_coalition_split_accelerates
 			}
@@ -1229,10 +1236,6 @@ focus_tree = {
 					remove_ideas = KPD_coalition_split_accelerates
 				}
 			}
-
-			GER_add_or_modify_politburo = yes
-			add_to_variable = { GER_politburo_defensive_war_stability_factor = 0.1 tooltip = defensive_war_stability_factor_tt }
-			add_to_variable = { GER_politburo_offensive_war_stability_factor = 0.2 tooltip = offensive_war_stability_factor_tt }
 		}
 	}
 	focus = { # 당 내 민주주의 건설
@@ -1401,26 +1404,42 @@ focus_tree = {
 			GEM = {
 				OR = {
 					is_subject = no
-					OVERLORD = {
-						OR = {
-							tag = ROOT
-							NOT = { is_in_faction_with = ROOT }
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
 						}
 					}
 				}
-				BA_gehennea_core_or_control = yes
+				BA_gehennea_core_OR_control = yes
 			}
 			GEH = {
 				OR = {
 					is_subject = no
-					OVERLORD = {
-						OR = {
-							tag = ROOT
-							NOT = { is_in_faction_with = ROOT }
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
 						}
 					}
 				}
-				BA_gehennea_core_or_control = yes
+				BA_gehennea_core_OR_control = yes
 			}
 		}
 
@@ -1435,7 +1454,7 @@ focus_tree = {
 							is_in_faction_with = ROOT
 						}
 					}
-					NOT = { BA_gehennea_core_or_control = yes }
+					NOT = { BA_gehennea_core_OR_control = yes }
 				}
 			}	
 			OR = {
@@ -1448,7 +1467,7 @@ focus_tree = {
 							is_in_faction_with = ROOT
 						}
 					}
-					NOT = { BA_gehennea_core_or_control = yes }
+					NOT = { BA_gehennea_core_OR_control = yes }
 				}
 			}	
 		}
@@ -1461,7 +1480,7 @@ focus_tree = {
 			if = {
 				limit = {
 					GEM = {
-						BA_gehennea_core_or_control = yes
+						BA_gehennea_core_OR_control = yes
 					}
 				}
 				create_wargoal = {
@@ -1478,7 +1497,7 @@ focus_tree = {
 			if = {
 				limit = {
 					GEH = {
-						BA_gehennea_core_or_control = yes
+						BA_gehennea_core_OR_control = yes
 					}
 				}
 				create_wargoal = {
@@ -1507,11 +1526,199 @@ focus_tree = {
 		relative_position_id = KPD_vanguard_of_the_most_advanced_revolution
 		cost = 10
 		available = {
+			is_subject = no
+			OR = {
+				NOT = { has_war_with = ABY }
+				NOT = { has_war_with = HYA }
+				NOT = { has_war_with = SHA }
+			}
+			ABY = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+			HYA = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+			SHA = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				OR = {
+					BA_sha_core_OR_control = yes
+					BA_cze_core_OR_control = yes
+				}
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = ABY } 
+				has_war_with = ABY
+				ABY = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}	
+			OR = {
+				NOT = { country_exists = HYA } 
+				has_war_with = HYA
+				HYA = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}
+			OR = {
+				NOT = { country_exists = SHA } 
+				has_war_with = SHA
+				SHA = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_sha_core_OR_control = yes
+						BA_cze_core_OR_control = yes
+					}
+				}
+			}		
 		}
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
+			if = {
+				limit = {
+					ABY = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = ABY
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = ABY
+					value = 50
+				}
+			}
+			if = {
+				limit = {
+					HYA = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = HYA
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = HYA
+					value = 50
+				}
+			}
+			if = {
+				limit = {
+					SHA = {
+						OR = {
+							BA_sha_core_OR_control = yes
+							BA_cze_core_OR_control = yes
+						}
+					}
+				}
+				create_wargoal = {
+					target = SHA
+					type = annex_everything
+				}
+
+				add_ai_strategy = {
+					type = antagonize
+					id = SHA
+					value = 50
+				}
+			}
+
+			add_threat = 2
 		}
 	}
 	focus = {
@@ -1526,11 +1733,61 @@ focus_tree = {
 		relative_position_id = KPD_vanguard_of_the_most_advanced_revolution
 		cost = 10
 		available = {
+			is_subject = no
+			NOT = { has_war_with = RED }
+			RED = {
+				OR = {
+					is_subject = no
+					if = {
+						limit = { is_subject = yes }
+						OVERLORD = {
+							OR = {
+								tag = ROOT
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}
+					else = {
+						hidden_trigger = {
+							always = no
+						}
+					}
+				}
+				BA_redwinter_core_OR_control = yes
+			}
+		}
+
+		bypass = {
+			OR = {
+				NOT = { country_exists = RED } 
+				has_war_with = RED
+				RED = {
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_in_faction_with = ROOT
+						}
+					}
+					NOT = {
+						BA_redwinter_core_OR_control = yes
+					}
+				}
+			}	
 		}
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
 		completion_reward = {
+			create_wargoal = {
+				target = RED
+				type = annex_everything
+			}
+
+			add_ai_strategy = {
+				type = antagonize
+				id = RED
+				value = 50
+			}
 		}
 	}
 	focus = {
