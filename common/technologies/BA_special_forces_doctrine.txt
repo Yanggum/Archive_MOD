@@ -1,9 +1,15 @@
+#!gfx:interface\BlueArchive\10 Technologies.gfx
+#!gfx:interface\BlueArchive\30 cavalryspecial.gfx
 technologies = {
 
     ###Hako
 
 	special_forces_cavalry = {
 		doctrine_name = "CAVALRY_DOCTRINE"
+
+		allow_branch = {
+			has_dlc = "Arms Against Tyranny"
+		}
 
 		research_cost = 2.5
 		xp_research_type = army
@@ -13,27 +19,18 @@ technologies = {
 		#xor = { special_forces_marines special_forces_paratroopers special_forces_mountaineers }
 
 		force_use_small_tech_layout = yes
-		category_special_forces = {
+		category_halo_special_forces = {
 			max_organisation = 5
 			soft_attack = 0.05
 		}
-		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-			BA_halo_special_forces_cap_edit_effect = yes
-		}
 		halo_special_forces = {
-			supply_consumption = -0.02
 			soft_attack = 0.1
 		}
 		
 		allow = { 
 			AND = {
-				has_tech = kivotos_halo_special_forces 
+				has_tech = kivotos_halo_special_urban_infantry_1 
 				can_unlock_new_special_forces_tree = yes
-				has_equipment = {
-   					kivotos_infantry_equipment > 49
-				}
 			}
 		}
 
@@ -53,10 +50,6 @@ technologies = {
 		}
 		on_research_complete = {
 			remove_potential_special_forces_tree = yes
-			add_equipment_to_stockpile = {
-				type = kivotos_infantry_equipment
-				amount = -50
-			}
 		}
 		
 		categories = {
@@ -100,9 +93,6 @@ technologies = {
 			}
 		}
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-			BA_halo_special_forces_cap_edit_effect = yes
 		}
 		
 		allow = { 
@@ -150,19 +140,14 @@ technologies = {
 		halo_recon = {
 			Marsh = {
 				attack = 0.05
-				defence = 0.10
-				movement = 0.25
+				movement = 0.15
 			}
 			river = {
-				attack = 0.10
-				defence = 0.05
-				movement = 0.25
+				attack = 0.05
+				movement = 0.15
 			}
 		}
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-			BA_halo_special_forces_cap_edit_effect = yes
 		}
 		
 		allow = { 
@@ -207,15 +192,13 @@ technologies = {
 		}
 		special_forces_cap = 0.06
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-			BA_halo_special_forces_cap_edit_effect = yes
 		}
 		
 		category_halo_special_forces = {		
 			initiative = 0.01
 		}
-		unit_halo_recon_design_cost_factor = -1
+		unit_halo_special_forces_design_cost_factor = -0.50
+		unit_halo_recon_design_cost_factor = -1.00
 		
 		allow = { 
 			AND = {
@@ -255,8 +238,15 @@ technologies = {
 		
 		force_use_small_tech_layout = yes
 		
-		paratrooper_weight_factor = -0.5
-		special_forces_no_supply_grace = 24
+		halo_paratrooper = {
+			combat_width = -0.2
+			max_organisation = 10
+			urban = {
+				attack = 0.20
+				defence = 0.10
+			}
+		}
+
 		path = {
 			leads_to_tech = artillery_support_cavalry
 			research_cost_coeff = 1
@@ -300,8 +290,21 @@ technologies = {
 		xp_research_bonus = 2.00
 		
 		force_use_small_tech_layout = yes
-		naval_invasion_planning_bonus_speed = 0.25
-		naval_invasion_capacity = 10
+		
+		halo_marine = {
+			max_organisation = 10
+			  
+			amphibious = {
+				attack = 0.20
+				defence = 0.10
+			}
+		}
+		halo_special_forces = {
+			amphibious = {
+				attack = 0.25
+				defence = 0.15
+			}
+		}
 		path = {
 			leads_to_tech = artillery_support_cavalry
 			research_cost_coeff = 1
@@ -351,9 +354,6 @@ technologies = {
 		}
 		special_forces_cap = 0.06
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-			BA_halo_special_forces_cap_edit_effect = yes
 		}
 		path = {
 			leads_to_tech = agressive_cavalry
@@ -403,13 +403,13 @@ technologies = {
 		xp_research_bonus = 2.00
 		
 		force_use_small_tech_layout = yes
+		category_halo_special_forces = {
+			supply_consumption = -0.06
+		}
 		halo_special_forces = {
-			soft_attack = 0.1
+			combat_width = -0.2
 		}
 		on_research_complete = {
-			custom_effect_tooltip = kivotos_halo_special_forces_add6_tt
-			set_variable = { BA_halo_special_forces_cap_edit_var = 6 }
-			BA_halo_special_forces_cap_edit_effect = yes
 		}
 		special_forces_cap = 0.06
 		special_forces_training_time_factor = -0.20
@@ -454,15 +454,9 @@ technologies = {
 		
 		force_use_small_tech_layout = yes
 		halo_special_forces = {
-			soft_attack = 0.2
-			breakthrough = 0.2
-			max_organisation = 10
+			soft_attack = 0.1
+			breakthrough = 0.1
 		}
-		#on_research_complete = {
-		#	custom_effect_tooltip = kivotos_halo_special_forces_add1_tt
-		#	set_variable = { BA_halo_special_forces_cap_edit_var = 1 }
-		#	BA_halo_special_forces_cap_edit_effect = yes
-		#}
 		special_forces_training_time_factor = 0.20
 		folder = {
 			name = mystic_engineering_folder
