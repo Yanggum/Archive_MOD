@@ -1221,37 +1221,6 @@ focus_tree = {
 		}
 	}
 	
-	focus = {
-		id = COU_establish_oss #전략사무국
-		icon = GFX_COU_focus_landing_force
-		x = 0
-		y = 1
-		cost = 5
-		relative_position_id = COU_shaking_royalty
-		search_filters = {
-			 FOCUS_FILTER_POLITICAL
-		}
-		prerequisite = { focus = COU_shaking_royalty }
-		#prerequisite = { focus = COU_reorganizing_the_defense_office }
-		completion_reward = {
-		    if = {
-				limit = {
-					has_dlc = "La Resistance"
-				}
-				if = {
-					limit = {
-						has_intelligence_agency = no
-					}
-					create_intelligence_agency = yes
-				}
-				add_ideas = COU_establish_oss_idea
-			}
-			else = {
-				add_ideas = COU_establish_oss_idea_vanilla
-			}
-		}
-	}
-	
     ##자유 장교단 무력화 
     focus = {
 		id = COU_reduction_of_administrative_committee_authority
@@ -1503,22 +1472,34 @@ focus_tree = {
 		}
 	}
 	
-	focus = { #룩셈부르크를 게헨나에서 분리 
-		id = COU_focus_liberate_luxembourg_from_gehenna
-		icon = GFX_focus_COU_dog_of_flanders
+	focus = {
+		id = COU_establish_oss #전략사무국
+		icon = GFX_COU_focus_landing_force
 		x = 6
 		y = 4
-		relative_position_id = COU_shaking_royalty
 		cost = 5
-		available = {
-		    has_country_flag = GAEBALJUNG 
-		}
+		relative_position_id = COU_shaking_royalty
 		search_filters = {
-			FOCUS_FILTER_POLITICAL
+			 FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = COU_focus_on_europe }
+		#prerequisite = { focus = COU_reorganizing_the_defense_office }
 		completion_reward = {
-			
+		    if = {
+				limit = {
+					has_dlc = "La Resistance"
+				}
+				if = {
+					limit = {
+						has_intelligence_agency = no
+					}
+					create_intelligence_agency = yes
+				}
+				add_ideas = COU_establish_oss_idea
+			}
+			else = {
+				add_ideas = COU_establish_oss_idea_vanilla
+			}
 		}
 	}
 	
@@ -1529,16 +1510,18 @@ focus_tree = {
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
-		available = {
-		    has_country_flag = GAEBALJUNG 
-		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
+		will_lead_to_war_with = GEI 
 		mutually_exclusive = { focus = COU_focus_the_decagramaton_emergency }
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
-			
+			create_wargoal = {
+				type = annex_everything
+				target = GEI
+				expire = 0
+			}
 		}
 	}
 	
@@ -1549,16 +1532,19 @@ focus_tree = {
 		y = 5
 		relative_position_id = COU_shaking_royalty
 		cost = 5
-		available = { 
-		    has_country_flag = GAEBALJUNG 
-		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
+		will_lead_to_war_with = GEI 
+		will_lead_to_war_with = DE1
 		mutually_exclusive = { focus = COU_focus_the_colour_emergency }
 		prerequisite = { focus = COU_focus_on_europe }
 		completion_reward = {
-			
+			create_wargoal = {
+				type = annex_everything
+				target = DE1
+				expire = 0
+			}
 		}
 	}
 
@@ -1661,9 +1647,6 @@ focus_tree = {
 		prerequisite = { focus = COU_focus_invite_collaboraters_to_high_command }
 		completion_reward = {
 		    add_manpower = 5000
-			set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-			BA_halo_infantry_cap_edit_effect = yes
-			custom_effect_tooltip = kivotos_halo_add3_tt
 			custom_effect_tooltip = enter_tt
 		    random_core_state = {
 			    limit = {
@@ -4445,7 +4428,7 @@ focus_tree = {
 		cost = 5
 		available = { 
 		    has_country_leader = { character = COU_KAYA } 
-			has_stability > 0.3
+			has_stability > 0.5
 		    fascism > 0.5
 		}
 		cancelable = no
@@ -4645,7 +4628,7 @@ focus_tree = {
 	}
 	
 	focus = { 
-    	id = COU_focus_corperate_with_catholic #유럽 가톨릭 보호 
+    	id = COU_focus_corperate_with_catholic #키보토스 교구 확대 
 		icon = GFX_focus_COU_control_arona
 		x = 1
 		y = 8
@@ -4669,7 +4652,7 @@ focus_tree = {
 				DYNMOD = COU_kaya_conservative_revolution
 		    }
 			add_to_variable = {
-			    COU_kaya_conservative_revolution_stability_factor = 0.15
+			    COU_kaya_conservative_revolution_stability_factor = 0.1
 			 	tooltip = stability_factor_tt
 		    }
 			add_to_variable = {
@@ -4746,7 +4729,7 @@ focus_tree = {
 	}
 	
 	focus = { 
-		id = COU_focus_conservative_revolution #보수혁명 
+		id = COU_focus_conservative_revolution #신세계질서
 		icon = GFX_COU_what_the_fuck_is_fascism
 		x = 0
 		y = 10
@@ -4812,6 +4795,7 @@ focus_tree = {
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_conservative_revolution }
 		completion_reward = {
+		    add_political_power = 50 
 		    add_country_leader_trait = COU_kaya_saint_michael
 			country_event = COU_event_kaya.34
 		}
@@ -4924,13 +4908,12 @@ focus_tree = {
 		icon = GFX_focus_COU_focus_kivotos_nationalism
 		x = 5
 		y = 1
-		cost = 10
+		cost = 8
 		available = { has_country_leader = { character = COU_KAYA } }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_conservative_revolution
 		prerequisite = { focus = COU_focus_conservative_revolution }
 		completion_reward = {
-	        set_rule = { can_declare_war_without_wargoal_when_in_war = yes }
 		    custom_effect_tooltip = {
 				 localization_key = tooltip_modify_dynmod
 				 DYNMOD = COU_Perfidus
@@ -5006,7 +4989,6 @@ focus_tree = {
 		cost = 5
 		available = { 
 		    has_country_leader = { character = COU_KAYA } 
-		    is_neighbor_of = ABY 
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		bypass = { 
