@@ -941,7 +941,7 @@ focus_tree = {
 			set_country_flag = ABY_descision_focus_abydos_10_completed_flag
 			#custom_effect_tooltip = ABY_tt_syemmata_allow
 			add_breakthrough_progress = {
-				specialization = specialization_land
+				specialization = specialization_mystic_engineering
 				value = 3
 			}
 			set_technology = {
@@ -950,7 +950,7 @@ focus_tree = {
 			}
 			69 = {
 				add_building_construction = {
-					type = land_facility
+					type = mystic_engineering_facility
 					level = 1
 					instant_build = yes    
 					province = 3418 # North of Rome
@@ -3799,7 +3799,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ABY_focus_halo_1    #중점명
-		icon = GFX_focus_ABY_halo_1
+		icon = GFX_focus_ABY_halo_2
  		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
@@ -3821,17 +3821,18 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
+			add_tech_bonus = {
+				name = mystic_engineering_bonus
+				bonus = 0.5
+				uses = 3
+				category = mystic_engineering
 			}
 			#중점 완료시 얻는 보상
 		}
 	}
 	focus = {
 		id = ABY_focus_halo_2    #중점명
-		icon = GFX_focus_ABY_halo_2
+		icon = GFX_focus_ABY_halo_5
  		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
@@ -3839,7 +3840,10 @@ focus_tree = {
 		prerequisite = {
 			focus = ABY_focus_halo_1    #이전 중점
 		}
-		x = -3      #좌표
+		mutually_exclusive = {
+			focus = ABY_focus_halo_3    #반대되는 중점
+		}
+		x = -2      #좌표
 		y = 1
 		relative_position_id = ABY_focus_halo_1
 		bypass = {
@@ -3854,16 +3858,9 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-			effect_tooltip = {
-				swap_ideas = {
-					remove_idea = ABY_idea_army_new_empty
-					add_idea = ABY_idea_halo_new_2
-				}
+			add_breakthrough_progress = {
+				specialization = specialization_mystic_engineering
+				value = 3
 			}
 			975 = {
 				add_building_construction = {
@@ -3873,17 +3870,12 @@ focus_tree = {
 					province = 3700
 				}
 			}
-			hidden_effect = {
-				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_category_halo_attack_factor = 0.25
-				}
-			}
 			#중점 완료시 얻는 보상
 		}
 	}
 	focus = {
 		id = ABY_focus_halo_3    #중점명
-		icon = GFX_focus_ABY_halo_3
+		icon = GFX_focus_ABY_halo_1
  		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
@@ -3891,52 +3883,8 @@ focus_tree = {
 		prerequisite = {
 			focus = ABY_focus_halo_1    #이전 중점
 		}
-		x = 0      #좌표
-		y = 1
-		relative_position_id = ABY_focus_halo_1
-		bypass = {
-			#중점 통과 조건
-		}
-		available = {
-
-			#중점 선행조건
-		}
-
-		select_effect = {
-			#중점 시작시 얻는 보상
-		}
-		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-			effect_tooltip = {
-				swap_ideas = {
-					remove_idea = ABY_idea_army_new_empty
-					add_idea = ABY_idea_halo_new_3
-				}
-			}
-			hidden_effect = {
-				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_category_halo_speed_factor = 0.25
-				}
-				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_category_halo_max_org_factor = 0.25
-				}
-			}
-			#중점 완료시 얻는 보상
-		}
-	}
-	focus = {
-		id = ABY_focus_halo_4    #중점명
-		icon = GFX_focus_ABY_halo_4
- 		cost = 7.00          #중점 일수(주)
-		search_filters = {
-			#중점의 타입
-		}
-		prerequisite = {
-			focus = ABY_focus_halo_1    #이전 중점
+		mutually_exclusive = {
+			focus = ABY_focus_halo_2    #반대되는 중점
 		}
 		x = 3      #좌표
 		y = 1
@@ -3953,11 +3901,39 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
+			set_division_template_lock = {
+			    division_template = "Abydos Regular Army"
+			    is_locked = no
+				force_allow_recruiting = yes
+		    }
+			#중점 완료시 얻는 보상
+		}
+	}
+	focus = {
+		id = ABY_focus_halo_4    #중점명
+		icon = GFX_focus_ABY_halo_4
+ 		cost = 7.00          #중점 일수(주)
+		search_filters = {
+			#중점의 타입
+		}
+		prerequisite = {
+			focus = ABY_focus_halo_2    #이전 중점
+		}
+		x = -3      #좌표
+		y = 2
+		relative_position_id = ABY_focus_halo_1
+		bypass = {
+			#중점 통과 조건
+		}
+		available = {
+
+			#중점 선행조건
+		}
+
+		select_effect = {
+			#중점 시작시 얻는 보상
+		}
+		completion_reward = {
 			effect_tooltip = {
 				swap_ideas = {
 					remove_idea = ABY_idea_army_new_empty
@@ -3966,10 +3942,19 @@ focus_tree = {
 			}
 			hidden_effect = {
 				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_category_halo_org_recovery_cap_factor = 0.25
+					ABY_var_modifier_army_sub_unit_category_halo_attack_factor = 0.05
 				}
 				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_category_halo_defence_factor = 0.25
+					ABY_var_modifier_army_sub_unit_category_halo_defence_factor = 0.05
+				}
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_speed_factor = 0.05
+				}
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_max_org_factor = 0.05
+				}
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_org_recovery_cap_factor = 0.05
 				}
 			}
 			#중점 완료시 얻는 보상
@@ -3977,22 +3962,13 @@ focus_tree = {
 	}
 	focus = {
 		id = ABY_focus_halo_5    #중점명
-		icon = GFX_focus_ABY_halo_5
+		icon = GFX_focus_ABY_halo_3
  		cost = 7.00          #중점 일수(주)
 		search_filters = {
 			#중점의 타입
 		}
 		prerequisite = {
 			focus = ABY_focus_halo_2    #이전 중점
-		}
-		prerequisite = {
-			focus = ABY_focus_halo_3    #이전 중점
-		}
-		prerequisite = {
-			focus = ABY_focus_halo_4    #이전 중점
-		}
-		mutually_exclusive = {
-			focus = ABY_focus_halo_6    #반대되는 중점
 		}
 		x = 1      #좌표
 		y = 1
@@ -4001,7 +3977,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-			has_country_flag = ABY_flag_juggernaut
+			has_tech = BA_otherworld_reinforced_body_armor
 			#중점 선행조건
 		}
 
@@ -4009,8 +3985,8 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			set_technology = {
-				juggernaut_equipment_tech = 1
+			complete_special_project = {
+				project = sp:BA_sp_mystic_juggernaut
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -4023,20 +3999,14 @@ focus_tree = {
 			#중점의 타입
 		}
 		prerequisite = {
-			focus = ABY_focus_halo_2    #이전 중점
-		}
-		prerequisite = {
 			focus = ABY_focus_halo_3    #이전 중점
 		}
-		prerequisite = {
-			focus = ABY_focus_halo_4    #이전 중점
-		}
 		mutually_exclusive = {
-			focus = ABY_focus_halo_5    #반대되는 중점
+			    #반대되는 중점
 		}
-		x = 0      #좌표
-		y = 1
-		relative_position_id = ABY_focus_halo_4
+		x = 3      #좌표
+		y = 2
+		relative_position_id = ABY_focus_halo_1
 		bypass = {
 			#중점 통과 조건
 		}
@@ -4049,11 +4019,6 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add12_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 12 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
 			effect_tooltip = {
 				swap_ideas = {
 					remove_idea = ABY_idea_army_new_empty
@@ -4065,7 +4030,7 @@ focus_tree = {
 					ABY_var_modifier_army_sub_unit_halo_infantry_defence_factor = 0.05
 				}
 				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_halo_infantry_attack_factor = 0.05
+					ABY_var_modifier_army_sub_unit_halo_infantry_attack_factor = 0.1
 				}
 			}
 			#중점 완료시 얻는 보상
@@ -4081,7 +4046,7 @@ focus_tree = {
 		prerequisite = {
 			focus = ABY_focus_halo_5    #이전 중점
 		}
-		x = -2      #좌표
+		x = -3      #좌표
 		y = 1
 		relative_position_id = ABY_focus_halo_5
 		bypass = {
@@ -4112,7 +4077,7 @@ focus_tree = {
 		prerequisite = {
 			focus = ABY_focus_halo_5    #이전 중점
 		}
-		x = 0      #좌표
+		x = -1      #좌표
 		y = 1
 		relative_position_id = ABY_focus_halo_5
 		bypass = {
@@ -4164,7 +4129,7 @@ focus_tree = {
 		prerequisite = {
 			focus = ABY_focus_halo_5    #이전 중점
 		}
-		x = 2      #좌표
+		x = 1      #좌표
 		y = 1
 		relative_position_id = ABY_focus_halo_5
 		bypass = {
@@ -4224,7 +4189,7 @@ focus_tree = {
 					ABY_var_modifier_army_sub_unit_halo_infantry_defence_factor = 0.1
 				}
 				add_to_variable = {
-					ABY_var_modifier_army_sub_unit_halo_infantry_attack_factor = 0.1
+					ABY_var_modifier_army_sub_unit_halo_infantry_attack_factor = 0.05
 				}
 			}
 			#중점 완료시 얻는 보상
@@ -4280,7 +4245,7 @@ focus_tree = {
 					logistics_company = { x = 0 y = 1 }
 					kivotos_dron = { x = 0 y = 2 }
 					land_cruiser = { x = 0 y = 3 }
-					engineer = { x = 0 y = 4 }
+					juggernaut_pioneer = { x = 0 y = 4 }
 				}
 			}
 			#중점 완료시 얻는 보상
@@ -4311,8 +4276,23 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = ABY_tt_kivotos_army_recruit
-			set_country_flag = ABY_flag_kivotos_army_recruit
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = ABY_idea_army_new_empty
+					add_idea = ABY_idea_halo_new_3
+				}
+			}
+			hidden_effect = {
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_speed_factor = 0.1
+				}
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_max_org_factor = 0.1
+				}
+				add_to_variable = {
+					ABY_var_modifier_army_sub_unit_category_halo_org_recovery_cap_factor = 0.1
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -4341,11 +4321,6 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add12_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 12 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
 			ABYDO_Ayane = {
 				add_trait = { trait = Skilled_Staffer }
 			}
@@ -6320,6 +6295,10 @@ focus_tree = {
 			}
 			add_breakthrough_progress = {
 				specialization = specialization_nuclear
+				value = 1
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_mystic_engineering
 				value = 1
 			}
 			#중점 완료시 얻는 보상
