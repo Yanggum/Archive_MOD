@@ -1554,11 +1554,67 @@ focus_tree = {
 		relative_position_id = KPD_all_power_to_the_party
 		cost = 10
 		available = {
+			is_subject = no
+			NOT = { has_war_with = SOV }
+			SOV = {
+				is_subject = no
+				has_government = communism
+			}
+		}
+
+		bypass = {
+			OR = {
+				SOV = { is_subject = yes }
+				AND = {
+					is_guaranteed_by = SOV
+					has_guaranteed = SOV
+				}
+				any_country = {
+					original_tag = SOV #in the event of cw weirdness
+					OR = {
+						exists = no
+						NOT = { has_government = communism }
+					}
+				}
+			}
 		}
 
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = {
+			add_ai_strategy = {
+				type = befriend 
+				id = SOV
+				value = 100
+			}
+
+			SOV = {
+				add_ai_strategy = {
+					type = befriend 
+					id = ROOT
+					value = 100
+				}
+			}
+
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+
+			SOV = {
+				country_event = {
+					id = wuw_GER_mutual_guarantees.1
+					hours = 12
+				}
+			}
+
+			custom_effect_tooltip = if_they_accept_tt
+			effect_tooltip = {
+				give_guarantee = SOV
+				SOV = {
+					give_guarantee = GER
+				}
+			}
 		}
 	}
 	focus = {
@@ -1633,12 +1689,154 @@ focus_tree = {
 		y = 2
 		relative_position_id = KPD_close_ties_with_soviet_union
 		cost = 5
+
 		available = {
+			is_subject = no
+			ANY_comintern_joinable = yes
+			is_in_faction = no
+			IF = {
+				limit = { SOV = { has_government = communism } }
+				NOT = {
+					any_other_country = {
+						is_in_faction_with = SOV
+						has_war_with = HUN
+					}
+				}
+			}
 		}
 
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
+		bypass = {
+			OR = {
+				is_subject_of = SOV
+				is_in_faction_with = SOV
+			}
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
+
+			add_ai_strategy = {
+				type = alliance 
+				id = SOV
+				value = 100
+			}
+
+			SOV = {
+				add_ai_strategy = {
+					type = alliance 
+					id = ROOT
+					value = 100
+				}
+			}
+
+			add_political_power = 75
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			IF = {
+				limit = {
+					SOV = {
+						has_government = communism
+						is_faction_leader = yes
+					}
+				}
+				SOV = {
+					country_event = generic.2
+				}
+			}
+			ELSE = {
+				get_best_alliance_match_communism_effect = yes
+				var:best_leader = {
+					country_event = generic.2
+				}
+			}
+		}
+	}
+	focus = {
+		id = KPD_soviet_german_industrial_connection
+		icon = GFX_focus_GER_SOV_treaty
+		prerequisite = { focus = KPD_joining_the_comintern }
+
+		x = -1
+		y = 1
+		relative_position_id = KPD_joining_the_comintern
+		cost = 5
+		available = {
+			OR = {
+				is_subject = no
+				is_subject_of = SOV
+			}
+			NOT = { has_war_with = SOV }
+			SOV = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			SOV = {
+				country_event = {
+					id = KPD_soviet_event.2
+					hours = 12
+				}
+			}
+
+			custom_effect_tooltip = if_they_accept_tt
+			event_option_tooltip = KPD_soviet_event.3.a
+		}
+	}
+	focus = {
+		id = KPD_electronic_technology_supply_to_federation
+		icon = GFX_focus_generic_socialist_science
+		prerequisite = { focus = KPD_soviet_german_industrial_connection }
+
+		x = -1
+		y = 3
+		relative_position_id = KPD_joining_the_comintern
+		cost = 5
+		available = {
+			OR = {
+				is_subject = no
+				is_subject_of = SOV
+			}
+			NOT = { has_war_with = SOV }
+			SOV = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			SOV = {
+				country_event = {
+					id = KPD_soviet_event.5
+					hours = 12
+				}
+			}
+
+			custom_effect_tooltip = if_they_accept_tt
+			event_option_tooltip = KPD_soviet_event.6.a
 		}
 	}
 	focus = {
@@ -1651,11 +1849,126 @@ focus_tree = {
 		relative_position_id = KPD_joining_the_comintern
 		cost = 5
 		available = {
+			OR = {
+				is_subject = no
+				is_subject_of = SOV
+			}
 		}
 
 		search_filters = {  }
 
 		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				name = KPD_shield_of_revolution_strategy
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			KPD_add_or_modify_politburo = yes
+			add_to_variable = {
+				GER_politburo_conscription = 0.01
+				tooltip = conscription_tt
+			}
+			add_to_variable = {
+				GER_politburo_mobilization_laws_cost_factor = -0.10
+				tooltip = mobilization_laws_cost_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = KPD_main_general_staff
+		icon = GFX_focus_GER_SOV_defence_treaty
+		prerequisite = { focus = KPD_shield_of_revolution_strategy }
+
+		x = 1
+		y = 1
+		relative_position_id = KPD_shield_of_revolution_strategy
+		cost = 5
+		available = {
+			OR = {
+				is_subject = no
+				is_subject_of = SOV
+			}
+			NOT = { has_war_with = SOV }
+			SOV = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				has_government = communism
+			}
+		}
+
+		search_filters = {  }
+
+		completion_reward = {
+			SOV = {
+				country_event = {
+					id = KPD_soviet_event.8
+					hours = 12
+				}
+			}
+
+			custom_effect_tooltip = if_they_accept_tt
+			event_option_tooltip = KPD_soviet_event.9.a
+		}
+	}
+	focus = {
+		id = KPD_industrial_resource_exchange_cooperation
+		icon = GFX_focus_GER_factories_for_resources
+		prerequisite = { focus = KPD_shield_of_revolution_strategy }
+		prerequisite = { focus = KPD_electronic_technology_supply_to_federation }
+
+		x = 0
+		y = 4
+		relative_position_id = KPD_joining_the_comintern
+		cost = 5
+		available = {
+			OR = {
+				is_subject = no
+				is_subject_of = SOV
+			}
+			NOT = { has_war_with = SOV }
+			SOV = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
+				OR = {
+					has_government = communism
+					has_government = democratic
+				}
+				OR = { #SOV must control one of these states or else the decision is worthless
+					229 = {
+						is_fully_controlled_by = PREV
+					}
+					234 = {
+						is_fully_controlled_by = PREV
+					}
+					564 = {
+						is_fully_controlled_by = PREV
+					}
+					401 = {
+						is_fully_controlled_by = PREV
+					}
+					402 = {
+						is_fully_controlled_by = PREV
+					}
+					573 = {
+						is_fully_controlled_by = PREV
+					}
+				}
+			}
+		}
+
+		search_filters = {  }
+
+		completion_reward = {
+			custom_effect_tooltip = GER_factories_for_resources_tt
 		}
 	}
 	focus = {
@@ -2106,7 +2419,7 @@ focus_tree = {
 		mutually_exclusive = {
 		}
 		x = 0
-		y = 1
+		y = 2
 		relative_position_id = KPD_expulsion_of_false_prophets
 		cost = 5
 		available = {
