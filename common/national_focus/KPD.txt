@@ -1023,6 +1023,41 @@ focus_tree = {
 		}
 	}
 
+	focus = { # 연방의 더 많은 지원
+		id = KPD_request_for_more_soviet_support
+		icon = GFX_focus_chi_mission_to_the_soviet_union
+		cost = 5
+		prerequisite = {
+			focus = KPD_repetition_of_resistance
+		}
+		available_if_capitulated = yes
+		x = 1
+		y = 1
+		relative_position_id = KPD_repetition_of_resistance
+		available = {
+			has_war_with = TRM
+		}
+		bypass = {
+			NOT = { has_war_with = TRM }
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 550
+				producer = SOV
+			}
+			add_to_variable = {
+				global.KPD_country_collapse_decisions_value = 5
+				tooltip = KPD_country_collapse_value_tt
+			}
+			custom_effect_tooltip = enter_tt
+			activate_advisor = KPD_richard_sorge_idea
+		}
+	}
+
 	focus = { #트리니티의 끝
 		id = KPD_end_of_trinity
 		icon = GFX_focus_GER_strike_at_the_rising_sun
@@ -1168,7 +1203,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		completion_reward = {
-			add_manpower = 280000
+			add_manpower = 28000
 		}
 	}
 	focus = { #추가적인 민병대 조직
@@ -1255,6 +1290,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = KPD_dissolution_of_joint_supreme_command
 		available = {
+			NOT = { has_idea = KPD_richard_sorge_idea }
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1269,6 +1305,11 @@ focus_tree = {
 				limit = { has_character = GEK_otto_ruhle }
 				custom_effect_tooltip = available_political_advisor
 				show_ideas_tooltip = GER_otto_ruhle
+			}
+			if = {
+				limit = { has_character = KPD_wilhelm_reich }
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = KPD_wilhelm_reich_idea
 			}
 
 			KPD_add_or_modify_politburo = yes
