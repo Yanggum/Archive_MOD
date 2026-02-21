@@ -26,6 +26,736 @@ country_event = {
 	}
 }
 
+country_event = { #Ger proposes industrial cooperation
+	id = KPD_soviet_event.2
+	title = KPD_soviet_event.2.t
+	desc = KPD_soviet_event.2.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	fire_only_once = yes 
+
+	option = { #sure
+		name = KPD_soviet_event.2.a
+		ai_chance = {
+			base = 10
+		}
+
+		add_ideas = KPD_SOV_industrial_cooperation
+
+		FROM = {
+			add_ideas = KPD_SOV_industrial_cooperation
+		}
+
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = KPD_soviet_event.3
+					hours = 12
+				}
+			}
+		}
+	}
+
+	option = { #no!
+		name = KPD_soviet_event.2.b
+		ai_chance = {
+			base = 1
+		}
+
+		FROM = {
+			country_event = {
+				id = KPD_soviet_event.4
+				hours = 12
+			}
+		}
+	}
+}
+
+country_event = { #SOV agrees
+	id = KPD_soviet_event.3
+	title = KPD_soviet_event.3.t
+	desc = KPD_soviet_event.3.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	fire_only_once = yes 
+
+	option = { #great
+		name = KPD_soviet_event.3.a
+		
+		effect_tooltip = {
+			add_ideas = KPD_SOV_industrial_cooperation
+
+			FROM = {
+				add_ideas = KPD_SOV_industrial_cooperation
+			}
+		}
+	}
+}
+
+country_event = { #SOV disagrees
+	id = KPD_soviet_event.4
+	title = KPD_soviet_event.4.t
+	desc = KPD_soviet_event.4.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	fire_only_once = yes 
+
+	option = { #then we do it ourselves!
+		name = KPD_soviet_event.4.a
+
+		add_timed_idea = {
+			idea = KPD_stricter_industrial_organization
+			days = 365
+		}
+	}	
+}
+
+# ===============================================
+# 1. 전자기기 공급 제안 체인 (5, 6, 7)
+# ===============================================
+
+country_event = { # 소련 측 이벤트 (독일의 전자기기 공급 제안 수신)
+    id = KPD_soviet_event.5
+    title = KPD_soviet_event.5.t
+    desc = KPD_soviet_event.5.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 훌륭한 제안이다. 기꺼이 받아들이지.
+        name = KPD_soviet_event.5.a
+        ai_chance = {
+            base = 10
+        }
+
+		ROOT = {
+			add_tech_bonus = {
+				name = KPD_SOV_electronics_cooperation
+				category = electronics
+				bonus = 2.0
+				uses = 2
+				ahead_reduction = 2
+			}
+		}
+
+        FROM = {
+			add_tech_bonus = {
+				name = KPD_SOV_electronics_cooperation
+				category = industry
+				bonus = 0.75
+				uses = 3
+			}
+
+			add_timed_idea = {
+				idea = KPD_SOV_electronics_cooperation
+				days = 180
+			}
+        }
+
+        hidden_effect = {
+            FROM = {
+                country_event = {
+                    id = KPD_soviet_event.6
+                    hours = 12
+                }
+            }
+        }
+    }
+
+    option = { # 우리의 자체 기술만으로도 충분하다.
+        name = KPD_soviet_event.5.b
+        ai_chance = {
+            base = 1
+        }
+
+        FROM = {
+            country_event = {
+                id = KPD_soviet_event.7
+                hours = 12
+            }
+        }
+    }
+}
+
+country_event = { # 독일 측 이벤트 (소련이 수락 시)
+    id = KPD_soviet_event.6
+    title = KPD_soviet_event.6.t
+    desc = KPD_soviet_event.6.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 사회주의 연대의 승리다!
+        name = KPD_soviet_event.6.a
+
+		effect_tooltip = {
+			add_tech_bonus = {
+				name = KPD_SOV_electronics_cooperation
+				category = industry
+				bonus = 0.75
+				uses = 3
+			}
+
+			add_timed_idea = {
+				idea = KPD_SOV_electronics_cooperation
+				days = 180
+			}
+		}
+    }
+}
+
+country_event = { # 독일 측 이벤트 (소련이 거절 시)
+    id = KPD_soviet_event.7
+    title = KPD_soviet_event.7.t
+    desc = KPD_soviet_event.7.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 그렇다면 우리 군을 위해 사용하겠다.
+        name = KPD_soviet_event.7.a
+		
+		army_experience = 15
+
+		add_tech_bonus = {
+			name = KPD_soviet_event.7
+			bonus = 1
+			uses = 2
+			category = motorized_equipment
+			category = infantry_weapons
+		}
+
+		random_core_state = {
+			limit = {
+				free_building_slots = {
+					building = arms_factory
+					size > 0
+					include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+    }   
+}
+
+# ===============================================
+# 3. 주력참모본부 통합 계획 체인 (8, 9, 10)
+# ===============================================
+
+country_event = { # 소련 측 이벤트 (독일의 참모본부 통합 제안 수신)
+    id = KPD_soviet_event.8
+    title = KPD_soviet_event.8.t
+    desc = KPD_soviet_event.8.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 붉은 군대의 깃발 아래 하나 되어 싸울 것이다!
+        name = KPD_soviet_event.8.a
+        ai_chance = {
+            base = 10
+        }
+
+		add_war_support = 0.05
+		army_experience = 15
+
+        FROM = {
+            add_ideas = KPD_SOV_unified_command
+        }
+
+        hidden_effect = {
+            FROM = {
+                country_event = {
+                    id = KPD_soviet_event.9
+                    hours = 12
+                }
+            }
+        }
+    }
+
+    option = { # 그들의 방어는 그들 스스로 책임져야 한다.
+        name = KPD_soviet_event.8.b
+        ai_chance = {
+            base = 1
+        }
+
+        FROM = {
+            country_event = {
+                id = KPD_soviet_event.10
+                hours = 12
+            }
+        }
+    }
+}
+
+country_event = { # 독일 측 이벤트 (소련이 수락 시)
+    id = KPD_soviet_event.9
+    title = KPD_soviet_event.9.t
+    desc = KPD_soviet_event.9.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 노동자 농민의 군대는 붉은 광장의 지시에 따른다.
+        name = KPD_soviet_event.9.a
+
+		effect_tooltip = {
+            add_ideas = KPD_SOV_unified_command
+		}
+    }
+}
+
+country_event = { # 독일 측 이벤트 (소련이 거절 시)
+    id = KPD_soviet_event.10
+    title = KPD_soviet_event.10.t
+    desc = KPD_soviet_event.10.desc
+    picture = GFX_report_event_generic_factory
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+
+    option = { # 우리의 조국은 우리의 손으로 지킨다.
+        name = KPD_soviet_event.10.a
+
+		add_command_power = 25
+		army_experience = 15
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		add_mastery = {
+			amount = 150
+			track = infantry
+		}
+
+		add_doctrine_cost_reduction = {
+			name = KPD_soviet_event.10
+			cost_reduction = 0.25
+			uses = 2
+			category = land_doctrine
+		}
+    }   
+}
+
+country_event = { #SOV asked about resources for industry
+	id = KPD_soviet_event.11
+	title = wuw_GER_diplomacy.107.t
+	desc = wuw_GER_diplomacy.107.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = { #sure
+		name = wuw_GER_diplomacy.107.a
+		ai_chance = {
+			base = 10
+		}
+
+		IF = {
+			limit = { FROM = { has_country_flag = GER_requests_oil_flag }}
+
+			FROM.FROM = {
+				add_resource = {
+					type = oil
+					amount = -5
+				}
+
+				set_state_flag = GER_trades_for_oil_here_flag
+
+				IF = {
+					limit = { 
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+
+				ELSE = {
+					ROOT = {
+						random_core_state = {
+							limit = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 0
+									include_locked = yes
+								}
+							}
+						}
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+							instant_build = yes
+						}
+					}
+				}
+			}
+
+			FROM = {
+				random_core_state = {
+					limit = {
+						industrial_complex > 0
+					}
+
+					remove_building = {
+						type = industrial_complex 
+						level = 1
+					}
+				}
+
+				IF = {
+					limit = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = GER_industrial_relocation_resources
+							}
+						}
+
+					}
+					add_dynamic_modifier = {
+						modifier = GER_industrial_relocation_resources
+					}
+				}
+
+				ELSE = {
+					custom_effect_tooltip = GER_industrial_relocation_resources_modify_tt
+				}
+
+				
+				add_to_variable = { GER_industrial_relocation_resources_country_resource_oil = 5 tooltip = country_resource_oil_tt }
+
+				clr_country_flag = GER_requests_oil_flag
+
+				hidden_effect = {
+					country_event = {
+						id = KPD_soviet_event.12
+						hours = 6
+					}
+				}
+			}
+			
+		}
+
+		ELSE_IF = {
+			limit = { FROM = { has_country_flag = GER_requests_tungsten_flag }}
+
+			FROM.FROM = {
+				add_resource = {
+					type = tungsten
+					amount = -5
+				}
+
+				set_state_flag = GER_trades_for_tungsten_here_flag
+
+				IF = {
+					limit = { 
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+
+				ELSE = {
+					ROOT = {
+						random_core_state = {
+							limit = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 0
+									include_locked = yes
+								}
+							}
+						}
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+							instant_build = yes
+						}
+					}
+				}
+			}
+
+			FROM = {
+				random_core_state = {
+					limit = {
+						industrial_complex > 0
+					}
+
+					remove_building = {
+						type = industrial_complex 
+						level = 1
+					}
+				}
+
+				IF = {
+					limit = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = GER_industrial_relocation_resources
+							}
+						}
+
+					}
+					add_dynamic_modifier = {
+						modifier = GER_industrial_relocation_resources
+					}
+				}
+
+				ELSE = {
+					custom_effect_tooltip = GER_industrial_relocation_resources_modify_tt
+				}
+				
+				add_to_variable = { GER_industrial_relocation_resources_country_resource_tungsten = 5 tooltip = country_resource_tungsten_tt }
+				
+
+				clr_country_flag = GER_requests_tungsten_flag
+
+				hidden_effect = {
+					country_event = {
+						id = KPD_soviet_event.12
+						hours = 6
+					}
+				}
+			}
+		}
+
+		ELSE_IF = {
+			limit = { FROM = { has_country_flag = GER_requests_chromium_flag }}
+
+			FROM.FROM = {
+				add_resource = {
+					type = chromium
+					amount = -5
+				}
+
+				set_state_flag = GER_trades_for_chromium_here_flag
+
+				IF = {
+					limit = { 
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+
+				ELSE = {
+					ROOT = {
+						random_core_state = {
+							limit = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 0
+									include_locked = yes
+								}
+							}
+						}
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+							instant_build = yes
+						}
+					}
+				}
+			}
+
+			FROM = {
+				random_core_state = {
+					limit = {
+						industrial_complex > 0
+					}
+
+					remove_building = {
+						type = industrial_complex 
+						level = 1
+					}
+				}
+
+				IF = {
+					limit = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = GER_industrial_relocation_resources
+							}
+						}
+
+					}
+					add_dynamic_modifier = {
+						modifier = GER_industrial_relocation_resources
+					}
+				}
+
+				ELSE = {
+					custom_effect_tooltip = GER_industrial_relocation_resources_modify_tt
+				}
+				
+				add_to_variable = { GER_industrial_relocation_resources_country_resource_chromium = 5 tooltip = country_resource_chromium_tt }
+
+				clr_country_flag = GER_requests_chromium_flag
+
+				hidden_effect = {
+					country_event = {
+						id = KPD_soviet_event.12
+						hours = 6
+					}
+				}
+			}
+		}
+	}
+
+	option = { #no, ask me later
+		name = wuw_GER_diplomacy.107.b
+		ai_chance = {
+			base = 2
+			modifier = {
+				factor = 10
+				has_opinion = {
+					target = FROM
+					value < 0
+				}
+			}
+		}
+
+		FROM = {
+			IF = {
+				limit = { has_country_flag = GER_requests_oil_flag }
+
+				clr_country_flag = GER_requests_oil_flag
+			}
+			ELSE_IF = {
+				limit = { has_country_flag = GER_requests_tungsten_flag }
+
+				clr_country_flag = GER_requests_tungsten_flag
+			}
+			ELSE_IF = {
+				limit = { has_country_flag = GER_requests_chromium_flag }
+
+				clr_country_flag = GER_requests_chromium_flag
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			country_event = {
+				id = KPD_soviet_event.13
+				hours = 6
+			}
+		}
+	}
+
+	option = { #no, don't ask again
+		name = wuw_GER_diplomacy.107.c
+		ai_chance = {
+			base = 0 #this is just for a player to opt out of events
+		}
+
+		FROM = {
+			IF = {
+				limit = { has_country_flag = GER_requests_oil_flag }
+
+				clr_country_flag = GER_requests_oil_flag
+			}
+			ELSE_IF = {
+				limit = { has_country_flag = GER_requests_tungsten_flag }
+
+				clr_country_flag = GER_requests_tungsten_flag
+			}
+			ELSE_IF = {
+				limit = { has_country_flag = GER_requests_chromium_flag }
+
+				clr_country_flag = GER_requests_chromium_flag
+			}
+			set_country_flag = GER_SOV_no_industrial_relocation_flag
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			country_event = {
+				id = KPD_soviet_event.14
+				hours = 6
+			}
+		}
+	}
+}
+
+country_event = { #SOV agrees to industrial relocation
+	id = KPD_soviet_event.12
+	title = wuw_GER_diplomacy.108.t
+	desc = wuw_GER_diplomacy.108.desc
+	picture = GFX_report_event_generic_handshake
+
+	is_triggered_only = yes
+
+	option = { #yay
+		name = wuw_GER_diplomacy.108.a
+
+		event_option_tooltip = wuw_GER_diplomacy.107.a
+	}
+}
+
+country_event = { #SOV rejects industrial relocation for now
+	id = KPD_soviet_event.13
+	title = wuw_GER_diplomacy.109.t
+	desc = wuw_GER_diplomacy.109.desc
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #angy
+		name = wuw_GER_diplomacy.109.a
+	}
+}
+
+country_event = { #SOV rejects industrial relocation altogether
+	id = KPD_soviet_event.14
+	title = wuw_GER_diplomacy.110.t
+	desc = wuw_GER_diplomacy.110.desc
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = { #angy
+		name = wuw_GER_diplomacy.110.a
+
+		custom_effect_tooltip = GER_SOV_have_had_enough_tt
+	}
+}
+
 #ask for Soviet volunteers - event for SOV
 country_event = {
 	id = TCA_shared.1
