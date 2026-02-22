@@ -1495,7 +1495,6 @@ shared_focus = {
 		text = GER_adopt_new_panzer_doctrine
 
 	icon = GFX_focus_generic_tank_assault
-	alternate_icon = GFX_focus_GER_adopt_new_panzer_doctrine_historical
 
 	prerequisite = { focus = GEAF_develop_modern_maneuver_warfare }
 	mutually_exclusive = { focus = GEAF_the_prussian_legacy }
@@ -1890,7 +1889,6 @@ shared_focus = {
 		text = GER_combined_arms
 
 	icon = GFX_focus_generic_tank_air_support
-	alternate_icon = GFX_focus_GER_combined_arms_historical
 
 	prerequisite = { focus = GEAF_advanced_panzer_research }
 	prerequisite = { focus = GEAF_dive_bombers }
@@ -2152,7 +2150,6 @@ shared_focus = {
 		text = GER_dive_bombers
 
 	icon = GFX_focus_generic_cas_aircraft
-	alternate_icon = GFX_focus_GER_sturzkampfbomber_historical
 
 	prerequisite = { focus = GEAF_aeronautical_research_institute }
 	mutually_exclusive = { focus = GEAF_tactical_bombers focus = GEAF_uralbomber_program }
@@ -4699,7 +4696,6 @@ shared_focus = {
 		text = GER_trade_interdiction
 
 	icon = GFX_focus_generic_trade_interdiction
-	alternate_icon = GFX_focus_GER_trade_interdiction_historical
 
 	prerequisite = { focus = GEAF_strengthen_the_kriegsmarine }
 
@@ -5336,7 +5332,10 @@ shared_focus = { #경제 성장 우선
 	cost = 5
 	#relative_position_id = GEAF_strengthen_the_kriegsmarine
 
-	mutually_exclusive = { focus = GEAF_the_four_year_plan }
+	mutually_exclusive = {
+		focus = GEAF_the_four_year_plan
+		focus = GEAF_economic_self_reliance_attempt
+	}
 	available = {
 		NOT = {
 			has_dynamic_modifier = { modifier = GER_economy_of_conquest_modifier }
@@ -6238,7 +6237,7 @@ shared_focus = {
 shared_focus = {
 	id = GEAF_construct_the_reichsautobahn
 	icon = GFX_focus_generic_road_investment
-	prerequisite = { focus = GEAF_prioritize_economic_growth focus = GEAF_the_four_year_plan }
+	prerequisite = { focus = GEAF_prioritize_economic_growth focus = GEAF_the_four_year_plan focus = GEAF_economic_self_reliance_attempt }
 
 	x = 3
 	y = 1
@@ -6805,12 +6804,11 @@ shared_focus = { #메포어음 재발행
 	id = GEAF_the_four_year_plan
 
 	icon = GFX_focus_GER_the_four_year_plan
-	alternate_icon = GFX_focus_GER_the_four_year_plan_historical
 	prerequisite = {
 		focus = GEAF_Mefo_return
 	}
-	mutually_exclusive = { focus = GEAF_prioritize_economic_growth }
-	x = 6
+	mutually_exclusive = { focus = GEAF_prioritize_economic_growth focus = GEAF_economic_self_reliance_attempt }
+	x = 5
 	y = 0
 	relative_position_id = GEAF_prioritize_economic_growth
 	cost = 5
@@ -6844,7 +6842,7 @@ shared_focus = { #메포어음 재발행
 			modifier = GER_mefo_bills_modifier
 		}
 		add_tech_bonus = {
-			name = GEK_the_four_year_plan
+			name = GEAF_the_four_year_plan
 			bonus = 1
 			uses = 1
 			category = industry
@@ -6852,12 +6850,62 @@ shared_focus = { #메포어음 재발행
 	}
 }
 
+shared_focus = { #안전한 경제 자립 (대체 메포루트)
+	id = GEAF_economic_self_reliance_attempt
+
+	icon = GFX_focus_generic_national_security
+	prerequisite = {
+		focus = GEAF_Mefo_return
+	}
+	mutually_exclusive = { focus = GEAF_prioritize_economic_growth focus = GEAF_the_four_year_plan }
+	x = 7
+	y = 0
+	relative_position_id = GEAF_prioritize_economic_growth
+	cost = 5
+	available = {
+	}
+	
+	search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
+
+	completion_reward = {
+		every_core_state = {
+			limit = {
+				is_fully_controlled_by = ROOT
+				free_building_slots = {
+					building = arms_factory
+					size > 0
+					include_locked = yes
+				}
+			}
+			random_select_amount = 2
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+		add_tech_bonus = {
+			name = GEAF_economic_self_reliance_attempt
+			bonus = 0.75
+			uses = 1
+			category = industry
+		}
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		GEK_stop_rearmament = yes
+	}
+}
+
 shared_focus = { #경제 자립 주력
 	id = GEAF_autarky_efforts
 	icon = GFX_focus_GER_autarky_ambitions
-	prerequisite = { focus = GEAF_the_four_year_plan  }
+	prerequisite = { focus = GEAF_the_four_year_plan focus = GEAF_economic_self_reliance_attempt }
 
-	x = 2
+	x = 3
 	y = 1
 	relative_position_id = GEAF_the_four_year_plan
 	cost = 5
@@ -6902,7 +6950,7 @@ shared_focus = { #경제 자립 주력
 		custom_effect_tooltip = generic_skip_one_line_tt
 
 		custom_effect_tooltip = GER_gain_autarkic_economy_lock_free_trade_tt
-		add_ideas = autarkic_economy
+		add_ideas = GEAF_autarkic_economy
 
 		custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -7027,7 +7075,7 @@ shared_focus = {
 
 		custom_effect_tooltip = generic_skip_one_line_tt
 
-		custom_effect_tooltip = GER_unlock_reichswerke_tt
+		custom_effect_tooltip = GEAF_unlock_reichswerke_tt
 
 		custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -7658,14 +7706,14 @@ shared_focus = { #경제 자립 달성
 		custom_effect_tooltip = generic_skip_one_line_tt
 		if = {
 			limit = { #Notify that you will get an improved version of the Trade Law
-				NOT = { has_idea = autarkic_economy }
+				NOT = { has_idea = GEAF_autarkic_economy }
 			}
 			custom_effect_tooltip = GER_improve_autarkic_economy_tt
 		}
 		else = { #Get the improved version of the Trade Law
 			swap_ideas = {
-				remove_idea = autarkic_economy
-				add_idea = autarkic_economy_improved
+				remove_idea = GEAF_autarkic_economy
+				add_idea = GEAF_autarkic_economy_improved
 			}
 		}			
 
@@ -7683,9 +7731,9 @@ shared_focus = { #경제 자립 달성
 shared_focus = {
 	id = GEAF_accelerate_the_rearmament_program
 	icon = GFX_focus_generic_combined_arms
-	prerequisite = { focus = GEAF_the_four_year_plan }
+	prerequisite = {  focus = GEAF_the_four_year_plan focus = GEAF_economic_self_reliance_attempt }
 
-	x = 6
+	x = 7
 	y = 1
 	relative_position_id = GEAF_the_four_year_plan
 	cost = 5

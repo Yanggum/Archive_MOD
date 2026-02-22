@@ -1121,6 +1121,16 @@ ideas = {
 						}
 						NOT = { has_completed_focus = FPP_trade_embargo_on_hostile_nations }
 					}
+					if = {
+						limit = {
+							OR = {
+								original_tag = GEK
+								original_tag = KPD
+								original_tag = NSD
+							}
+						}
+						NOT = { has_completed_focus = GEAF_autarky_efforts }
+					}
 				# BA_MOD_FIX/
 			}
 
@@ -1221,6 +1231,16 @@ ideas = {
 						}
 						NOT = { has_completed_focus = FPP_trade_embargo_on_hostile_nations }
 					}
+					if = {
+						limit = {
+							OR = {
+								original_tag = GEK
+								original_tag = KPD
+								original_tag = NSD
+							}
+						}
+						NOT = { has_completed_focus = GEAF_autarky_efforts }
+					}
 				# BA_MOD_FIX/
 			}
 
@@ -1307,6 +1327,16 @@ ideas = {
 						has_completed_focus = RAJ_raise_import_duties
 					}
 					# /BA_MOD_FIX
+						ELSE_IF = {
+							limit = {
+								OR = {
+									original_tag = GEK
+									original_tag = KPD
+									original_tag = NSD
+								}
+							}
+							has_completed_focus = GEAF_autarky_efforts
+						}
 						ELSE_IF = {
 							limit = {
 								original_tag = FRA
@@ -1487,6 +1517,102 @@ ideas = {
    			}
 		}
 
+		GEAF_autarkic_economy = {
+			picture = autarkic_economy
+			name = autarkic_economy
+
+			visible = {
+				OR = {
+					original_tag = GEK
+					original_tag = KPD
+					original_tag = NSD
+				}
+				has_completed_focus = GEAF_autarky_efforts
+				NOT = { has_completed_focus = GEAF_autarky_achieved }
+			}
+
+			available = {
+			}
+
+			cost = 150
+			removal_cost = -1
+
+			modifier = {
+				min_export = 0.15
+				#industrial_capacity_factory = 0.05
+				#industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.05
+				research_speed_factor = 0.05
+				lend_lease_tension = 0.20
+				faction_trade_opinion_factor = 0.25
+				#cic_construction_boost = -0.05
+			}
+
+			cancel_if_invalid = no
+
+			ai_will_do = { #Germany should always for AutarkicEconomy if its available
+   				factor = 100
+
+   				modifier = {
+   					add = 500
+   					has_idea = limited_exports
+   				}
+
+   				modifier = {
+   					add = 1500
+   					has_idea = closed_economy
+   					has_large_ally_not_pick_closed_economy = yes
+   				}
+   			}
+		}
+
+		GEAF_autarkic_economy_improved = {
+			picture = autarkic_economy
+			name = autarkic_economy
+			visible = {
+				OR = {
+					original_tag = GEK
+					original_tag = KPD
+					original_tag = NSD
+				}
+				has_completed_focus = GEAF_autarky_achieved
+			}
+
+			available = {
+			}
+
+			cost = 150
+			removal_cost = -1
+
+			modifier = {
+				min_export = 0.15
+				industrial_capacity_factory = 0.05
+				industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.1
+				research_speed_factor = 0.05
+				lend_lease_tension = 0.20
+				faction_trade_opinion_factor = 0.5
+				#cic_construction_boost = -0.05
+			}
+
+			cancel_if_invalid = no
+
+			ai_will_do = { #Germany should always for AutarkicEconomy if its available
+   				factor = 100
+
+   				modifier = {
+   					add = 500
+   					has_idea = limited_exports
+   				}
+
+   				modifier = {
+   					add = 1500
+   					has_idea = closed_economy
+   					has_large_ally_not_pick_closed_economy = yes
+   				}
+   			}
+		}
+
 		closed_economy = {
 
 
@@ -1500,6 +1626,9 @@ ideas = {
 							original_tag = JAP
 							# /BA_MOD_FIX
 								original_tag = FRA
+								original_tag = GEK
+								original_tag = KPD
+								original_tag = NSD
 							# BA_MOD_FIX/
 						}
 					}
@@ -1517,6 +1646,20 @@ ideas = {
 							has_government = fascism
 							has_government = communism
 							has_completed_focus = FPP_trade_embargo_on_hostile_nations
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							OR = {
+								original_tag = GEK
+								original_tag = KPD
+								original_tag = NSD
+							}
+						}
+						OR = {
+							has_government = fascism
+							has_government = communism
+							has_completed_focus = GEAF_autarky_efforts
 						}
 					}
 				# BA_MOD_FIX/
@@ -1556,6 +1699,16 @@ ideas = {
 								original_tag = FRA
 							}
 							has_completed_focus = FPP_trade_embargo_on_hostile_nations
+						}
+						ELSE_IF = {
+							limit = {
+								OR = {
+									original_tag = GEK
+									original_tag = KPD
+									original_tag = NSD
+								}
+							}
+							has_completed_focus = GEAF_autarky_efforts
 						}
 					# BA_MOD_FIX/
 					ELSE = {
