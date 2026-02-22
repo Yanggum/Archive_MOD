@@ -504,7 +504,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = -1
 		y = 2
-		cost = 10
+		cost = 5
 		search_filters = {}
 		available = {
 			NOT = {
@@ -836,7 +836,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = -1
 		y = 2
-		cost = 10
+		cost = 5
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_LP
@@ -906,7 +906,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 2
-		cost = 10
+		cost = 5
 		search_filters = {}
 		available = {
 			NOT = {
@@ -1057,17 +1057,19 @@ focus_tree = {
 			IRE_politics_allinone = yes
 		}
 	}
-	focus = { # 회복하는 경제
+	focus = { # 아일랜드 신경제
 		relative_position_id = IRE_focus_cooperation_with_LP
-		id = IRE_focus_recovering_economy
-		icon = GFX_focus_generic_economic_recovery
+		id = IRE_focus_recovering_economy_1
+		icon = GFX_focus_generic_communist
+		prerequisite = { focus = IRE_focus_food_rationing }
 		prerequisite = { focus = IRE_focus_ire_cooperativeism focus = IRE_focus_sov_economy }
 		#mutually_exclusive = { focus = IRE_focus_ }
-		x = 2
+		x = 0
 		y = 4
 		cost = 5
 		search_filters = {}
 		available = {
+			has_completed_focus = IRE_focus_land_reclamation_project
 		}  
 		bypass = {
 		}
@@ -1135,6 +1137,7 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
+			has_country_flag = IRE_FF_with_FG
 		}  
 		bypass = {
 		}
@@ -1156,6 +1159,56 @@ focus_tree = {
 			IRE_politics_allinone = yes
 		}
 	}
+	focus = { # 자영농 보호법
+		relative_position_id = IRE_focus_big_coalition
+		id = IRE_focus_farmers_protection_act
+		icon = GFX_focus_generic_monetary_union
+		prerequisite = { focus = IRE_focus_big_coalition }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_FG
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = IRE_DM_tt_7
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.05 }
+			add_to_variable = {
+				var = IRE_IFA_loyalty
+				value = 10
+				tooltip = IFA_add_l10
+			}
+			IRE_politics_allinone = yes
+		}
+	}
+	focus = { # 식량 자급률 확보
+		relative_position_id = IRE_focus_big_coalition
+		id = IRE_focus_food_selfsufficiency
+		icon = GFX_focus_SOV_breadbasket_of_the_union
+		prerequisite = { focus = IRE_focus_farmers_protection_act }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 2
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_FG
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_9
+			add_to_variable = { IRE_DM1_political_power_cost = 0.10 }
+			add_to_variable = { IRE_DM1_production_speed_buildings_factor = 0.05 }
+			add_to_variable = { IRE_DM1_monthly_population = 0.50 }
+		}
+	}
 	focus = { # 영국과의 국교 정상화
 		relative_position_id = IRE_focus_big_coalition
 		id = IRE_focus_diplomacy_with_eng
@@ -1167,6 +1220,8 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
+			has_country_flag = IRE_FF_with_FG
+			IRE_majority = yes
 		}  
 		bypass = {
 		}
@@ -1202,6 +1257,7 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
+			has_country_flag = IRE_FF_with_FG
 		}  
 		bypass = {
 		}
@@ -1223,12 +1279,79 @@ focus_tree = {
 			IRE_politics_allinone = yes
 		}
 	}
+	focus = { # 서방의 보루
+		relative_position_id = IRE_focus_big_coalition
+		id = IRE_focus_western_bastion
+		icon = GFX_goal_generic_construct_military
+		prerequisite = { focus = IRE_focus_diplomacy_with_eng }
+		prerequisite = { focus = IRE_focus_food_selfsufficiency }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 3
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_FF_with_FG
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_DM_tt_14
+			add_to_variable = { IRE_DM1_consumer_goods_factor = -0.10 }
+			add_to_variable = { IRE_DM1_political_power_cost = -0.20 }
+			every_controlled_state = {
+				limit = {
+					OR = {
+						state = 134
+						state = 135
+						state = 113
+						state = 119
+					}
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 2
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+				}
+			}
+			add_timed_idea = {
+				idea = IRE_fortress_construction_cost_idea
+				days = 360
+			}
+		}
+	}
+	focus = { # 회복하는 경제
+		relative_position_id = IRE_focus_big_coalition
+		id = IRE_focus_recovering_economy_2
+		icon = GFX_focus_generic_economic_recovery
+		prerequisite = { focus = IRE_focus_give_to_usa }
+		prerequisite = { focus = IRE_focus_western_bastion }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			has_completed_focus = IRE_focus_land_reclamation_project
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = IRE_recovering_economy_idea
+				days = 360
+			}
+		}
+	}
 	focus = { # 위기 극복 선언
 		relative_position_id = IRE_focus_FF
 		id = IRE_focus_declaration_of_overcoming_crisis
 		icon = GFX_focus_generic_the_giant_wakes
-		prerequisite = { focus = IRE_focus_recovering_economy }
-		prerequisite = { focus = IRE_focus_land_reclamation_project }
+		prerequisite = { focus = IRE_focus_recovering_economy_1 focus = IRE_focus_recovering_economy_2 }
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 0
 		y = 6
