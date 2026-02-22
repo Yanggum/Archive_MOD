@@ -4435,22 +4435,85 @@ ideas = {
 				}
 			}
 
+			visible = {
+				NOT = {
+					has_completed_focus = KPD_revolutionary_transformation_of_enterprises
+					has_completed_focus = GEAF_coal_liquefaction
+					has_completed_focus = GEAF_industrial_expansion
+				}
+			}
+
 			available = {
 				controls_province = 6469
-				OR = {
-					has_global_flag = GEM_corporate_headquarters_destroyed_flag
-					GEM = { has_completed_focus = GEH_IG_farben }
-					GEK = { has_completed_focus = GEK_RM_eco_focus_5 }
-				}
 				if = {
-					limit = { FROM = { original_tag = KPD } }
+					limit = { original_tag = GEM }
+					has_completed_focus = GEH_IG_farben
+				}
+				else_if = {
+					limit = { original_tag = GEK }
+					has_completed_focus = GEK_RM_eco_focus_5
+				}
+				else_if = {
+					limit = { original_tag = KPD }
 					NOT = { has_completed_focus = KPD_revolutionary_transformation_of_enterprises }
+				}
+				else = {
+					has_global_flag = GEM_corporate_headquarters_destroyed_flag
+				}
+				hidden_trigger = {
+					NOT = { 
+						has_completed_focus = KPD_revolutionary_transformation_of_enterprises
+						has_completed_focus = GEAF_coal_liquefaction
+						has_completed_focus = GEAF_industrial_expansion
+					}
 				}
 			}
 			
 			research_bonus = {
 				industry = 0.05
 				synth_resources = 0.15
+			}
+			
+			traits = { refinery_concern }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+		
+		GEM_ig_faben_improved = {
+			name = ig_faben
+			picture = ig_faben
+			allowed = {
+				OR = {
+					original_tag = GEM
+					original_tag = GEH
+					original_tag = TRM
+					original_tag = GEA
+					original_tag = GEK
+					original_tag = NSD
+					original_tag = KPD
+				}
+			}
+
+			visible = {
+				NOT = { has_completed_focus = KPD_revolutionary_transformation_of_enterprises }
+				OR = {
+					has_completed_focus = GEAF_coal_liquefaction
+					has_completed_focus = GEAF_industrial_expansion
+				}
+			}
+
+			cost = 150
+			
+			research_bonus = {
+				industry = 0.05
+				synth_resources = 0.15
+			}
+
+			modifier = {
+				production_speed_synthetic_refinery_factor = 0.1
+				production_speed_fuel_silo_factor = 0.1
 			}
 			
 			traits = { refinery_concern }

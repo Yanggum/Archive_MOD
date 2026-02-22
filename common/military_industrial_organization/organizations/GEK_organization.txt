@@ -400,7 +400,13 @@ GEK_man_organization = {
 	}
 	
 	available = {
-		has_global_flag = GEM_corporate_headquarters_destroyed_flag
+		if = {
+			limit = { FROM = { original_tag = KPD } }
+			FROM = { has_completed_focus = KPD_revolutionary_transformation_of_enterprises }
+		}
+		else = {
+			has_global_flag = GEM_corporate_headquarters_destroyed_flag
+		}
 	}
 
 	tree_header_text = {
@@ -3622,10 +3628,20 @@ GEK_rheinmetall_organization = {
 		FROM = {
 			controls_province = 6469
 		}
-		OR = {
-			has_global_flag = GEM_corporate_headquarters_destroyed_flag
+		if = {
+			limit = { FROM = { original_tag = GEM } }
 			GEM = { has_completed_focus = GEH_llinked_ruhr_industrial }
+		}
+		else_if = {
+			limit = { FROM = { original_tag = GEK } }
 			GEK = { has_completed_focus = GEK_RM_eco_focus_3 }
+		}
+		else_if = {
+			limit = { FROM = { original_tag = KPD } }
+			FROM = { has_completed_focus = KPD_revolutionary_transformation_of_enterprises }
+		}
+		else = {
+			has_global_flag = GEM_corporate_headquarters_destroyed_flag
 		}
 	}
 
@@ -4076,11 +4092,21 @@ GEK_carl_walther_organization = {
 		FROM = {
 			controls_state = 50
 		}
-		OR = {
-			has_global_flag = GEM_corporate_headquarters_destroyed_flag
+		if = {
+			limit = { FROM = { original_tag = GEM } }
 			GEM = {
 				has_completed_focus = GEH_llinked_ruhr_industrial
 			}
+		}
+		else_if = {
+			limit = { FROM = { original_tag = GEK } }
+		}
+		else_if = {
+			limit = { FROM = { original_tag = KPD } }
+			FROM = { has_completed_focus = KPD_revolutionary_transformation_of_enterprises }
+		}
+		else = {
+			has_global_flag = GEM_corporate_headquarters_destroyed_flag
 		}
 	}
 
