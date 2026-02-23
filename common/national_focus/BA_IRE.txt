@@ -339,7 +339,7 @@ focus_tree = {
 		icon = GFX_focus_SWE_neither_death_nor_dishonor
 		#prerequisite = { focus = IRE_focus_ }
 		#mutually_exclusive = { focus = IRE_focus_ }
-		x = 10
+		x = 15
 		y = 5
 		cost = 0
 		search_filters = {}
@@ -400,7 +400,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 0
 		y = 3
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 		} 
@@ -504,7 +504,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = -1
 		y = 2
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			NOT = {
@@ -563,7 +563,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 1
 		y = 4
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			IRE_majority = yes
@@ -906,7 +906,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 2
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			NOT = {
@@ -950,7 +950,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 1
 		y = 1
-		cost = 10
+		cost = 5
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_LP
@@ -1069,13 +1069,13 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			has_completed_focus = IRE_focus_land_reclamation_project
+
 		}  
 		bypass = {
 		}
 		completion_reward = {
 			add_timed_idea = {
-				idea = IRE_recovering_economy_idea
+				idea = IRE_new_economy_idea
 				days = 360
 			}
 		}
@@ -1195,7 +1195,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 2
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_FG
@@ -1320,7 +1320,7 @@ focus_tree = {
 			}
 			add_timed_idea = {
 				idea = IRE_fortress_construction_cost_idea
-				days = 360
+				days = 200
 			}
 		}
 	}
@@ -1336,7 +1336,6 @@ focus_tree = {
 		cost = 5
 		search_filters = {}
 		available = {
-			has_completed_focus = IRE_focus_land_reclamation_project
 		}  
 		bypass = {
 		}
@@ -1351,25 +1350,69 @@ focus_tree = {
 		relative_position_id = IRE_focus_FF
 		id = IRE_focus_declaration_of_overcoming_crisis
 		icon = GFX_focus_generic_the_giant_wakes
-		prerequisite = { focus = IRE_focus_recovering_economy_1 focus = IRE_focus_recovering_economy_2 }
+		prerequisite = { focus = IRE_focus_land_reclamation_project }
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 0
 		y = 6
 		cost = 5
 		search_filters = {}
 		available = {
-			NOT = {
-				has_idea = IRE_recovering_economy_idea
+			OR = {
+				has_completed_focus = IRE_focus_recovering_economy_1
+				has_completed_focus = IRE_focus_recovering_economy_2
 			}
 		}  
 		bypass = {
 		}
 		completion_reward = {
-			add_war_support = 0.10
 			remove_dynamic_modifier = {
 				modifier = IRE_engire_trade_war_idea2
 			}
 			remove_ideas = IRE_agricultural_society_1_idea ##일단 임시로
+		}
+	}
+	focus = { # 제한적인 동원령
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_mobilization_order
+		icon = GFX_goal_demand_sudetenland
+		prerequisite = { focus = IRE_focus_land_reclamation_project }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 3
+		y = 6
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.10
+			if = {
+				limit = {
+					has_idea = civilian_economy
+				}
+				add_ideas = low_economic_mobilisation
+			}
+		}
+	}
+	focus = { # 달 에런 해산
+		relative_position_id = IRE_focus_FF
+		id = IRE_focus_dissolution
+		icon = GFX_focus_LAT_suspend_constitution_of_latvia
+		prerequisite = { focus = IRE_focus_declaration_of_overcoming_crisis }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 7
+		cost = 2
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 100
+			add_stability = 0.05
+			activate_decision = IRE_dissolution
 		}
 	}
 }
