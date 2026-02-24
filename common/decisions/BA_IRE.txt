@@ -39,74 +39,49 @@ IRE_dail_eireann = {
 		fire_only_once = no
 		is_good = yes
 		timeout_effect = {
-			set_variable = {
-				var = LP_support
-				value = party_popularity@communism
-			}
-			set_variable = {
-				var = FF_support
-				value = party_popularity@democratic
-			}
-			set_variable = {
-				var = FG_support
-				value = party_popularity@neutrality
-			}
-			set_variable = {
-				var = N_support
-				value = party_popularity@fascism
+			set_variable = { IRE_LP_sup_ = IRE_LP_sup }
+			set_variable = { IRE_FF_sup_ = IRE_FF_sup }
+			set_variable = { IRE_FG_sup_ = IRE_FG_sup }
+			multiply_variable = {
+				var = IRE_LP_sup_
+				value = 2
 			}
 			multiply_variable = {
-				var = LP_support
-				value = 200
+				var = IRE_FF_sup_
+				value = 2
 			}
 			multiply_variable = {
-				var = FF_support
-				value = 200
+				var = IRE_FG_sup_
+				value = 2
 			}
-			multiply_variable = {
-				var = FG_support
-				value = 200
-			}
-			multiply_variable = {
-				var = N_support
-				value = 200
-			}
-			round_variable = LP_support
-			round_variable = FF_support
-			round_variable = FG_support
-			round_variable = N_support
+			round_variable = IRE_LP_sup_
+			round_variable = IRE_FF_sup_
+			round_variable = IRE_FG_sup_
 			set_variable = { var = plus_support value = 0 }
-			add_to_variable = { plus_support = var:LP_support }
-			add_to_variable = { plus_support = var:FF_support }
-			add_to_variable = { plus_support = var:FG_support }
-			add_to_variable = { plus_support = var:N_support }
+			add_to_variable = { plus_support = var:IRE_LP_sup_ }
+			add_to_variable = { plus_support = var:IRE_FF_sup_ }
+			add_to_variable = { plus_support = var:IRE_FG_sup_ }
 			if = {
 				limit = {
 					check_variable = { plus_support > 200 }
 				}
 				if = {
 					limit = {
-						check_variable = { FG_support > 0 }
+						check_variable = { IRE_FG_sup_ > 0 }
 					}
-					add_to_variable = { FG_support = -1 }
+					add_to_variable = { IRE_FG_sup_ = -1 }
 				}
 				else_if = {
 					limit = {
-						check_variable = { FF_support > 0 }
+						check_variable = { IRE_FF_sup_ > 0 }
 					}
-					add_to_variable = { FF_support = -1 }
+					add_to_variable = { IRE_FF_sup_ = -1 }
 				}
 				else_if = {
 					limit = {
-						check_variable = { LP_support > 0 }
+						check_variable = { IRE_LP_sup_ > 0 }
 					}
-					add_to_variable = { LP_support = -1 }
-				}
-				else_if = {
-					limit = {
-						check_variable = { N_support > 0 }
-					}
-					add_to_variable = { N_support = -1 }
+					add_to_variable = { IRE_LP_sup_ = -1 }
 				}
 			}
 			else_if = {
@@ -115,59 +90,53 @@ IRE_dail_eireann = {
 				}
 				if = {
 					limit = {
-						check_variable = { FG_support > 0 }
+						check_variable = { IRE_FG_sup_ > 0 }
 					}
-					add_to_variable = { FG_support = -1 }
+					add_to_variable = { IRE_FG_sup_ = -1 }
 				}
 				else_if = {
 					limit = {
-						check_variable = { FF_support > 0 }
+						check_variable = { IRE_FF_sup_ > 0 }
 					}
-					add_to_variable = { FF_support = -1 }
+					add_to_variable = { IRE_FF_sup_ = -1 }
 				}
 				else_if = {
 					limit = {
-						check_variable = { LP_support > 0 }
+						check_variable = { IRE_LP_sup_ > 0 }
 					}
-					add_to_variable = { LP_support = -1 }
-				}
-				else_if = {
-					limit = {
-						check_variable = { N_support > 0 }
-					}
-					add_to_variable = { N_support = -1 }
+					add_to_variable = { IRE_LP_sup_ = -1 }
 				}
 			}
 			if = {
 				limit = {
 					check_variable = { plus_support < 200 }
 				}
-				add_to_variable = { N_support = 1 }
+				add_to_variable = { IRE_N_support = 1 }
 			}
 			else_if = {
 				limit = {
 					check_variable = { plus_support < 200 }
 				}
-				add_to_variable = { N_support = 1 }
+				add_to_variable = { IRE_N_support = 1 }
 			}
 			set_variable = {
 				var = IRE_parliament_seat_array^0
-				value = LP_support
+				value = IRE_LP_sup_
 			}
 			set_variable = {
 				var = IRE_parliament_seat_array^1
-				value = FF_support
+				value = IRE_FF_sup_
 			}
 			set_variable = {
 				var = IRE_parliament_seat_array^2
-				value = FG_support
+				value = IRE_FG_sup_
 			}
 			set_variable = {
 				var = IRE_parliament_seat_array^3
-				value = N_support
+				value = IRE_N_support
 			}
 			reload_parliament_gui = yes
-			IRE_FF_with_LP_calculate = yes
+			IRE_politics_allinone = yes
 			country_event = {
 				id = IRE_event.3
 				hours = 6

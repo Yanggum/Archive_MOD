@@ -426,11 +426,98 @@ ideas = {
 			}
 		}
 		IRE_fortress_construction_cost_idea = {
-			picture = IRE_agricultural_products
+			picture = FRA_fortification_focus
 			allowed = { always = no }
             allowed_civil_war = { always = yes }
 			modifier = {
 				consumer_goods_factor = 0.15
+			}
+		}
+		IRE_military_industry_law_idea = {
+			picture = ARG_rapid_militarization
+			allowed = { always = no }
+            allowed_civil_war = { always = yes }
+			modifier = {
+				war_support_factor = 0.05
+				production_speed_arms_factory_factor = 0.10		
+				industrial_capacity_factory = 0.10
+				production_lack_of_resource_penalty_factor = -0.20
+			}
+		}
+		IRE_irish_dream_1_idea = {
+			picture = man_five_year_plan_air
+			allowed = { always = no }
+            allowed_civil_war = { has_government = democratic }
+			modifier = {
+				weekly_manpower = 700
+				production_speed_buildings_factor = 0.10
+				military_industrial_organization_funds_gain = 0.10
+				enemy_justify_war_goal_time = 1.50
+				monthly_population = 1.50
+			}
+			cancel = {
+				OR = {
+					has_war = yes
+					NOT = {
+						has_government = democratic
+					}
+				}
+			}
+		}
+		IRE_irish_dream_2_idea = {
+			picture = man_five_year_plan_air
+			allowed = { always = no }
+            allowed_civil_war = { has_government = democratic }
+			modifier = {
+				production_speed_buildings_factor = 0.10
+				production_speed_industrial_complex_factor = 0.05
+				production_speed_infrastructure_factor = 0.05
+				military_industrial_organization_funds_gain = 0.15
+				enemy_justify_war_goal_time = 2
+				monthly_population = 0.75
+				custom_modifier_tooltip = IRE_tt_10
+			}
+			cancel = {
+				OR = {
+					has_war = yes
+					NOT = {
+						has_government = democratic
+					}
+				}
+			}
+			on_remove = {
+				if = {
+					limit = {
+						has_government = democratic
+					}
+					add_ideas = IRE_irish_dream_3_idea
+				}
+			}
+		}
+		IRE_irish_dream_3_idea = {
+			picture = man_five_year_plan_air
+			allowed = { always = no }
+            allowed_civil_war = { has_government = democratic }
+			modifier = {
+				war_support_factor = 0.10
+				army_core_attack_factor = 0.15
+				army_armor_defence_factor = 0.15
+			}
+			cancel = {
+				OR = {
+					has_war = yes
+					NOT = {
+						has_government = democratic
+					}
+				}
+			}
+			on_remove = {
+				if = {
+					limit = {
+						has_government = democratic
+					}
+					add_ideas = IRE_irish_dream_2_idea
+				}
 			}
 		}
 	}

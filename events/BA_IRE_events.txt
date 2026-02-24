@@ -256,38 +256,37 @@ country_event = { # [GetYear]년 아일랜드 선거
 	option = { 
 		name = IRE_event.3.a
 		custom_effect_tooltip = IRE_Party_tt
-		IRE_FF_with_LP_calculate = yes
-		IRE_FF_with_FG_calculate = yes
+		IRE_politics_allinone = yes
 		if = {
 			limit = { 
 				if = {
 					limit = {
 						has_country_flag = IRE_FF_with_LP
-						has_government = democratic
+						has_country_flag = IRE_government_FF
 					}
-					check_variable = { var = IRE_FF_with_LP_calculate value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
+					check_variable = { var = IRE_FF_plus_LP value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
 				}
 				else_if ={
 					limit = {
 						has_country_flag = IRE_FF_with_FG
-						has_government = democratic
+						has_country_flag = IRE_government_FF
 					}
-					check_variable = { var = IRE_FF_with_FG_calculate value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
+					check_variable = { var = IRE_FF_plus_FG value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
 				}
 				else = {
 					OR = {
 						AND = {
-							has_government = communism 
+							has_country_flag = IRE_government_LP
 							check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^1 compare = greater_than_or_equals }
 							check_variable = { var = IRE_parliament_seat_array^0 value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
 						}
 						AND = {
-							has_government = democratic
+							has_country_flag = IRE_government_FF
 							check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
 							check_variable = { var = IRE_parliament_seat_array^1 value = var:IRE_parliament_seat_array^2 compare = greater_than_or_equals }
 						}
 						AND = {
-							has_government = neutrality
+							has_country_flag = IRE_government_FG
 							check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^0 compare = greater_than_or_equals }
 							check_variable = { var = IRE_parliament_seat_array^2 value = var:IRE_parliament_seat_array^1 compare = greater_than_or_equals }
 						}
@@ -301,13 +300,13 @@ country_event = { # [GetYear]년 아일랜드 선거
 		}
 		else_if = {
 			limit = {
-				has_government = democratic
+				has_country_flag = IRE_government_FF
 				NOT = {
 					has_completed_focus = IRE_focus_dissolution
 				}
 			}
 			country_event = {
-				id = IRE_event.10
+				id = IRE_event.11
 				hours = 6
 			}
 		}
@@ -357,18 +356,6 @@ country_event = { # 여당의 승리
 		add_stability = 0.05
 	}
 }
-country_event = { # 소수가 된 여당
-	id = IRE_event.10
-	title = IRE_event.10.t
-	desc = IRE_event.10.d
-	picture = GFX_report_event_election_vote
-
-	is_triggered_only = yes
-
-	option = { 
-		name = IRE_event.10.a
-	}
-}
 country_event = { # 노동당의 승리
 	id = IRE_event.5
 	title = IRE_event.5.t
@@ -379,9 +366,23 @@ country_event = { # 노동당의 승리
 
 	option = { 
 		name = IRE_event.5.a
-		set_politics = {
-			ruling_party = communism
-			elections_allowed = yes
+		clr_country_flag = IRE_government_LP
+		clr_country_flag = IRE_government_FF
+		clr_country_flag = IRE_government_FG
+		set_country_flag = IRE_government_LP
+		set_party_name = {
+			ideology = democratic
+			long_name = IRE_LP_name
+			name = IRE_LP_name
+		}
+		add_country_leader_role = {
+			character = IRE_william_norton
+			promote_leader = yes
+			country_leader = {
+				ideology = socialism
+				expire = "1965.1.1.1"
+				traits = {}
+			}
 		}
 	}
 }
@@ -395,11 +396,26 @@ country_event = { # 피어너 팔의 승리
 
 	option = { 
 		name = IRE_event.6.a
-		set_politics = {
-			ruling_party = democratic
-			elections_allowed = yes
+		clr_country_flag = IRE_government_LP
+		clr_country_flag = IRE_government_FF
+		clr_country_flag = IRE_government_FG
+		set_country_flag = IRE_government_FF
+		set_party_name = {
+			ideology = democratic
+			long_name = IRE_FF_name
+			name = IRE_FF_name
+		}
+		add_country_leader_role = {
+			character = IRE_Éamon_de_valera
+			promote_leader = yes
+			country_leader = {
+				ideology = liberalism
+				expire = "1965.1.1.1"
+				traits = {}
+			}
 		}
 	}
+	
 }
 country_event = { # 피너 게일의 승리
 	id = IRE_event.7
@@ -411,9 +427,23 @@ country_event = { # 피너 게일의 승리
 
 	option = { 
 		name = IRE_event.7.a
-		set_politics = {
-			ruling_party = neutrality
-			elections_allowed = yes
+		clr_country_flag = IRE_government_LP
+		clr_country_flag = IRE_government_FF
+		clr_country_flag = IRE_government_FG
+		set_country_flag = IRE_government_FG
+		set_party_name = {
+			ideology = democratic
+			long_name = IRE_FG_name
+			name = IRE_FG_name
+		}
+		add_country_leader_role = {
+			character = IRE_william_norton
+			promote_leader = yes
+			country_leader = {
+				ideology = conservatism
+				expire = "1965.1.1.1"
+				traits = {}
+			}
 		}
 	}
 }
@@ -577,6 +607,31 @@ country_event = { # 모스크바에 도착한 아일랜드 대표단
 		}
 	}
 }
+country_event = { # 아일랜드와의 교역 타결
+	id = IRE_event.10
+	title = IRE_event.10.t
+	desc = IRE_event.10.d
+	picture = GFX_report_event_generic_usa_treaty
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.10.a
+		add_ideas = IRE_agricultural_products_idea
+	}
+}
+country_event = { # 소수가 된 여당
+	id = IRE_event.11
+	title = IRE_event.11.t
+	desc = IRE_event.11.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.11.a
+	}
+}
 country_event = { # 소련의 대규모 원조
 	id = IRE_event.9001
 	title = IRE_event.9001.t
@@ -630,19 +685,6 @@ country_event = { # 소련의 원조 거부
 		}
 	}
 }
-country_event = { # 아일랜드와의 교역 타결
-	id = IRE_event.10
-	title = IRE_event.10.t
-	desc = IRE_event.10.d
-	picture = GFX_report_event_generic_usa_treaty
-
-	is_triggered_only = yes
-
-	option = { 
-		name = IRE_event.10.a
-		add_ideas = IRE_agricultural_products_idea
-	}
-}
 country_event = { # 여당 의원에 대한 추문
 	id = IRE_event.8001
 	title = IRE_event.8001.t
@@ -660,7 +702,7 @@ country_event = { # 여당 의원에 대한 추문
 		NOT = {
 			has_country_flag = IRE_NO_congress
 		}
-		has_government = democratic
+		has_country_flag = IRE_government_FF
 		check_variable = { IRE_parliament_seat_array^1 > 0 }
 	}
 	option = { 

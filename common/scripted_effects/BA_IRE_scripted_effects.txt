@@ -584,7 +584,7 @@ parliament_gui_positions = {
 	add_to_array = { IRE_parliament_y_array = 164 }
 }
 
-IRE_FF_with_LP_calculate = {
+IRE_politics_allinone = {
 	set_variable = { 
 		var = IRE_FF_plus_LP
 		value = var:IRE_parliament_seat_array^1 #FF
@@ -593,9 +593,6 @@ IRE_FF_with_LP_calculate = {
 		var = IRE_FF_plus_LP 
 		value = var:IRE_parliament_seat_array^0 #LP
 	}
-}
-
-IRE_FF_with_FG_calculate = {
 	set_variable = { 
 		var = IRE_FF_plus_FG
 		value = var:IRE_parliament_seat_array^1 #FF
@@ -604,9 +601,6 @@ IRE_FF_with_FG_calculate = {
 		var = IRE_FF_plus_FG 
 		value = var:IRE_parliament_seat_array^2 #FG
 	}
-}
-
-IRE_politics_allinone = {
 	clamp_variable = {
 		var = IRE_IFA_loyalty
 		min = -50
@@ -648,21 +642,14 @@ IRE_politics_allinone = {
 		max = 100
 	}
 	set_variable = { IRE_IFA_loyaly_1 = IRE_IFA_loyalty }
-	set_variable = { IRE_IFA_loyaly_2 = IRE_IFA_loyalty }
-	set_variable = { IRE_IFA_loyaly_3 = IRE_IFA_loyalty }
 	set_variable = { IRE_CAT_loyalty_1 = IRE_CAT_loyalty }
 	set_variable = { IRE_IRA_loyalty_1 = IRE_IRA_loyalty }
-	set_variable = { IRE_IRA_loyalty_2 = IRE_IRA_loyalty }
 	set_variable = { IRE_SOC_loyalty_1 = IRE_SOC_loyalty }
-	set_variable = { IRE_SOC_loyalty_2 = IRE_SOC_loyalty }
-	multiply_variable = { IRE_IFA_loyaly_1 = -0.004 }
-	multiply_variable = { IRE_IFA_loyaly_2 = 0.006 }
-	multiply_variable = { IRE_IFA_loyaly_3 = 0.00006 }
-	multiply_variable = { IRE_CAT_loyalty_1 = 0.006 }
-	multiply_variable = { IRE_IRA_loyalty_1 = 0.006 }
-	multiply_variable = { IRE_IRA_loyalty_2 = -0.006 }
-	multiply_variable = { IRE_SOC_loyalty_1 = 0.006 }
-	multiply_variable = { IRE_SOC_loyalty_2 = 0.003 }
+	add_to_variable = { IRE_IRA_loyalty_1 = -50 }
+	multiply_variable = { IRE_IFA_loyaly_1 = 0.004 }
+	multiply_variable = { IRE_CAT_loyalty_1 = 0.004 }
+	multiply_variable = { IRE_IRA_loyalty_1 = 0.003 }
+	multiply_variable = { IRE_SOC_loyalty_1 = 0.004 }
 	set_variable = { IRE_IFA_popularity_1 = IRE_IFA_popularity }
 	set_variable = { IRE_CAT_popularity_1 = IRE_CAT_popularity }
 	set_variable = { IRE_IRA_popularity_1 = IRE_IRA_popularity }
@@ -680,55 +667,255 @@ IRE_politics_allinone = {
 	add_to_variable = { IRE_IRA_popularity_2 = IRE_IRA_popularity_1 }
 	add_to_variable = { IRE_SOC_popularity_2 = IRE_SOC_popularity_1 }
 	multiply_variable = { IRE_IFA_loyaly_1 = IRE_IFA_popularity_2 }
-	multiply_variable = { IRE_IFA_loyaly_2 = IRE_IFA_popularity_2 }
-	multiply_variable = { IRE_IFA_loyaly_3 = IRE_IFA_popularity_2 }
 	multiply_variable = { IRE_CAT_loyalty_1 = IRE_CAT_popularity_2 }
 	multiply_variable = { IRE_IRA_loyalty_1 = IRE_IRA_popularity_2 }
-	multiply_variable = { IRE_IRA_loyalty_2 = IRE_IRA_popularity_2 }
 	multiply_variable = { IRE_SOC_loyalty_1 = IRE_SOC_popularity_2 }
-	multiply_variable = { IRE_SOC_loyalty_2 = IRE_SOC_popularity_2 }
-	set_variable = { IRE_DM0_consumer_goods_factor = IRE_IFA_loyaly_1 }
-	set_variable = { IRE_DM0_conscription_factor = IRE_IFA_loyaly_2 }
-	set_variable = { IRE_DM0_stability_weekly = IRE_IFA_loyaly_3 }
-	set_variable = { IRE_DM0_political_power_factor = IRE_CAT_loyalty_1 }
-	set_variable = { IRE_DM0_stability_factor = IRE_CAT_loyalty_1 }
-	set_variable = { IRE_DM0_war_support_factor = IRE_CAT_loyalty_1 }
-	set_variable = { IRE_DM0_army_attack_factor = IRE_IRA_loyalty_1 }
-	set_variable = { IRE_DM0_army_defence_factor = IRE_IRA_loyalty_1 }
-	set_variable = { IRE_DM0_training_time_army_factor = IRE_IRA_loyalty_2 }
-	set_variable = { IRE_DM0_industrial_capacity_factory = IRE_SOC_loyalty_1 }
-	set_variable = { IRE_DM0_industrial_capacity_dockyard = IRE_SOC_loyalty_1 }
-	set_variable = { IRE_DM0_production_speed_buildings_factor = IRE_SOC_loyalty_2 }
+	set_variable = { IRE_DM0_political_power_factor = 0 }
+	set_variable = { IRE_DM0_stability_factor = 0 }
+	set_variable = { IRE_DM0_conscription_factor = 0 }
 	if = {
 		limit = {
-			check_variable = { IRE_IFA_popularity_1 = 0 }
+			NOT = {
+				check_variable = { IRE_IFA_popularity_1 = 0 }
+			}
 		}
-		set_variable = { IRE_DM0_consumer_goods_factor = 0 }
-		set_variable = { IRE_DM0_conscription_factor = 0 }
-		set_variable = { IRE_DM0_stability_weekly = 0 }
+		add_to_variable = { IRE_DM0_political_power_factor = IRE_IFA_loyaly_1 }
+		add_to_variable = { IRE_DM0_stability_factor = IRE_IFA_loyaly_1 }
+		add_to_variable = { IRE_DM0_conscription_factor = IRE_IFA_loyaly_1 }
+	}
+	else = {
+		set_variable = { IRE_IFA_loyaly_1 = 0 }
 	}
 	if = {
 		limit = {
-			check_variable = { IRE_CAT_popularity_1 = 0 }
+			NOT = {
+				check_variable = { IRE_CAT_popularity_1 = 0 }
+			}
 		}
-		set_variable = { IRE_DM0_political_power_factor = 0 }
-		set_variable = { IRE_DM0_stability_factor = 0 }
-		set_variable = { IRE_DM0_war_support_factor = 0 }
+		add_to_variable = { IRE_DM0_political_power_factor = IRE_CAT_loyalty_1 }
+		add_to_variable = { IRE_DM0_stability_factor = IRE_CAT_loyalty_1 }
+		add_to_variable = { IRE_DM0_conscription_factor = IRE_CAT_loyalty_1 }
+	}
+	else = {
+		set_variable = { IRE_CAT_loyalty_1 = 0 }
 	}
 	if = {
 		limit = {
-			check_variable = { IRE_IRA_popularity_1 = 0 }
+			NOT = {
+				check_variable = { IRE_IRA_popularity_1 = 0 }
+			}
 		}
-		set_variable = { IRE_DM0_army_attack_factor = 0 }
-		set_variable = { IRE_DM0_army_defence_factor = 0 }
-		set_variable = { IRE_DM0_training_time_army_factor = 0 }
+		add_to_variable = { IRE_DM0_political_power_factor = IRE_IRA_loyalty_1 }
+		add_to_variable = { IRE_DM0_stability_factor = IRE_IRA_loyalty_1 }
+		add_to_variable = { IRE_DM0_conscription_factor = IRE_IRA_loyalty_1 }
+	}
+	else = {
+		set_variable = { IRE_IRA_loyalty_1 = 0 }
 	}
 	if = {
 		limit = {
-			check_variable = { IRE_SOC_popularity_1 = 0 }
+			NOT = {
+				check_variable = { IRE_SOC_popularity_1 = 0 }
+			}
 		}
-		set_variable = { IRE_DM0_industrial_capacity_factory = 0 }
-		set_variable = { IRE_DM0_industrial_capacity_dockyard = 0 }
-		set_variable = { IRE_DM0_production_speed_buildings_factor = 0 }
+		add_to_variable = { IRE_DM0_political_power_factor = IRE_SOC_loyalty_1 }
+		add_to_variable = { IRE_DM0_stability_factor = IRE_SOC_loyalty_1 }
+		add_to_variable = { IRE_DM0_conscription_factor = IRE_SOC_loyalty_1 }
+	}
+	else = {
+		set_variable = { IRE_SOC_loyalty_1 = 0 }
+	}
+}
+
+IRE_SE_LP = {
+	clamp_variable = {
+		var = IRE_LP_sup
+		min = 0
+	}
+	clamp_variable = {
+		var = IRE_FF_sup
+		min = 0
+	}
+	clamp_variable = {
+		var = IRE_FG_sup
+		min = 0
+	}
+	set_temp_variable = { IRE_LP_sup_1 = IRE_LP_sup }
+	set_temp_variable = { IRE_FF_sup_1 = IRE_FF_sup }
+	set_temp_variable = { IRE_FG_sup_1 = IRE_FG_sup }
+	set_temp_variable = { IRE_add = 0 }
+	add_to_temp_variable = { IRE_add = IRE_LP_sup }
+	add_to_temp_variable = { IRE_add = IRE_FF_sup }
+	add_to_temp_variable = { IRE_add = IRE_FG_sup }
+	set_temp_variable = { IRE_addadd = 0 }
+	add_to_temp_variable = { IRE_addadd = IRE_FF_sup }
+	add_to_temp_variable = { IRE_addadd = IRE_FG_sup }
+	if = {
+		limit = {
+			check_variable = { IRE_addadd > 0 }
+		}
+		divide_temp_variable = { IRE_FF_sup_1 = IRE_addadd }
+		divide_temp_variable = { IRE_FG_sup_1 = IRE_addadd }
+		if = {
+			limit = {
+				check_variable = { IRE_add > 100 }
+			}
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_FF_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FG_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_FF_sup = IRE_FF_sup_1 }
+			subtract_from_variable = { IRE_FG_sup = IRE_FG_sup_1 }
+		}
+		else_if = {
+			limit = {
+				check_variable = { IRE_add < 100 }
+			}
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_FF_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FG_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_FF_sup = IRE_FF_sup_1 }
+			subtract_from_variable = { IRE_FG_sup = IRE_FG_sup_1 }
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				check_variable = { IRE_add > 100 }
+			}
+			set_variable = { IRE_LP_sup = 100 }
+			set_variable = { IRE_FF_sup = 0 }
+			set_variable = { IRE_FG_sup = 0 }
+		}
+		else_if = {
+			limit = {
+				check_variable = { IRE_add < 100 }
+			}
+			subtract_from_temp_variable = { IRE_add = 100 }
+			set_temp_variable = { IRE_addd = IRE_add }
+			divide_temp_variable = { IRE_add = 2 }
+			subtract_from_temp_variable = { IRE_addd = IRE_add }
+			subtract_from_variable = { IRE_FF_sup = IRE_add }
+			subtract_from_variable = { IRE_FG_sup = IRE_addd }
+		}
+	}
+}
+
+IRE_SE_FF = {
+	clamp_variable = { var = IRE_LP_sup min = 0 }
+	clamp_variable = { var = IRE_FF_sup min = 0 }
+	clamp_variable = { var = IRE_FG_sup min = 0 }
+
+	set_temp_variable = { IRE_LP_sup_1 = IRE_LP_sup }
+	set_temp_variable = { IRE_FF_sup_1 = IRE_FF_sup }
+	set_temp_variable = { IRE_FG_sup_1 = IRE_FG_sup }
+
+	set_temp_variable = { IRE_add = 0 }
+	add_to_temp_variable = { IRE_add = IRE_LP_sup }
+	add_to_temp_variable = { IRE_add = IRE_FF_sup }
+	add_to_temp_variable = { IRE_add = IRE_FG_sup }
+
+	set_temp_variable = { IRE_addadd = 0 }
+	add_to_temp_variable = { IRE_addadd = IRE_LP_sup }
+	add_to_temp_variable = { IRE_addadd = IRE_FG_sup }
+
+	if = {
+		limit = { check_variable = { IRE_addadd > 0 } }
+
+		divide_temp_variable = { IRE_LP_sup_1 = IRE_addadd }
+		divide_temp_variable = { IRE_FG_sup_1 = IRE_addadd }
+
+		if = {
+			limit = { check_variable = { IRE_add > 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_LP_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FG_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_LP_sup_1 }
+			subtract_from_variable = { IRE_FG_sup = IRE_FG_sup_1 }
+		}
+		else_if = {
+			limit = { check_variable = { IRE_add < 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_LP_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FG_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_LP_sup_1 }
+			subtract_from_variable = { IRE_FG_sup = IRE_FG_sup_1 }
+		}
+	}
+	else = {
+		if = {
+			limit = { check_variable = { IRE_add > 100 } }
+			set_variable = { IRE_FF_sup = 100 }
+			set_variable = { IRE_LP_sup = 0 }
+			set_variable = { IRE_FG_sup = 0 }
+		}
+		else_if = {
+			limit = { check_variable = { IRE_add < 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			set_temp_variable = { IRE_addd = IRE_add }
+			divide_temp_variable = { IRE_add = 2 }
+			subtract_from_temp_variable = { IRE_addd = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_add }
+			subtract_from_variable = { IRE_FG_sup = IRE_addd }
+		}
+	}
+}
+
+IRE_SE_FG = {
+	clamp_variable = { var = IRE_LP_sup min = 0 }
+	clamp_variable = { var = IRE_FF_sup min = 0 }
+	clamp_variable = { var = IRE_FG_sup min = 0 }
+
+	set_temp_variable = { IRE_LP_sup_1 = IRE_LP_sup }
+	set_temp_variable = { IRE_FF_sup_1 = IRE_FF_sup }
+	set_temp_variable = { IRE_FG_sup_1 = IRE_FG_sup }
+
+	set_temp_variable = { IRE_add = 0 }
+	add_to_temp_variable = { IRE_add = IRE_LP_sup }
+	add_to_temp_variable = { IRE_add = IRE_FF_sup }
+	add_to_temp_variable = { IRE_add = IRE_FG_sup }
+
+	set_temp_variable = { IRE_addadd = 0 }
+	add_to_temp_variable = { IRE_addadd = IRE_LP_sup }
+	add_to_temp_variable = { IRE_addadd = IRE_FF_sup }
+
+	if = {
+		limit = { check_variable = { IRE_addadd > 0 } }
+
+		divide_temp_variable = { IRE_LP_sup_1 = IRE_addadd }
+		divide_temp_variable = { IRE_FF_sup_1 = IRE_addadd }
+
+		if = {
+			limit = { check_variable = { IRE_add > 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_LP_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FF_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_LP_sup_1 }
+			subtract_from_variable = { IRE_FF_sup = IRE_FF_sup_1 }
+		}
+		else_if = {
+			limit = { check_variable = { IRE_add < 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			multiply_temp_variable = { IRE_LP_sup_1 = IRE_add }
+			multiply_temp_variable = { IRE_FF_sup_1 = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_LP_sup_1 }
+			subtract_from_variable = { IRE_FF_sup = IRE_FF_sup_1 }
+		}
+	}
+	else = {
+		if = {
+			limit = { check_variable = { IRE_add > 100 } }
+			set_variable = { IRE_FG_sup = 100 }
+			set_variable = { IRE_LP_sup = 0 }
+			set_variable = { IRE_FF_sup = 0 }
+		}
+		else_if = {
+			limit = { check_variable = { IRE_add < 100 } }
+			subtract_from_temp_variable = { IRE_add = 100 }
+			set_temp_variable = { IRE_addd = IRE_add }
+			divide_temp_variable = { IRE_add = 2 }
+			subtract_from_temp_variable = { IRE_addd = IRE_add }
+			subtract_from_variable = { IRE_LP_sup = IRE_add }
+			subtract_from_variable = { IRE_FF_sup = IRE_addd }
+		}
 	}
 }
