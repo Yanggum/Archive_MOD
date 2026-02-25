@@ -375,15 +375,7 @@ country_event = { # 노동당의 승리
 			long_name = IRE_LP_name
 			name = IRE_LP_name
 		}
-		add_country_leader_role = {
-			character = IRE_william_norton
-			promote_leader = yes
-			country_leader = {
-				ideology = socialism
-				expire = "1965.1.1.1"
-				traits = {}
-			}
-		}
+		promote_character = IRE_william_norton
 	}
 }
 country_event = { # 피어너 팔의 승리
@@ -405,17 +397,9 @@ country_event = { # 피어너 팔의 승리
 			long_name = IRE_FF_name
 			name = IRE_FF_name
 		}
-		add_country_leader_role = {
-			character = IRE_Éamon_de_valera
-			promote_leader = yes
-			country_leader = {
-				ideology = liberalism
-				expire = "1965.1.1.1"
-				traits = {}
-			}
-		}
+		promote_character = IRE_Eamon_de_valera
 	}
-	
+
 }
 country_event = { # 피너 게일의 승리
 	id = IRE_event.7
@@ -436,15 +420,7 @@ country_event = { # 피너 게일의 승리
 			long_name = IRE_FG_name
 			name = IRE_FG_name
 		}
-		add_country_leader_role = {
-			character = IRE_william_norton
-			promote_leader = yes
-			country_leader = {
-				ideology = conservatism
-				expire = "1965.1.1.1"
-				traits = {}
-			}
-		}
+		promote_character = IRE_W_T_Cosgrave
 	}
 }
 country_event = { # 우익 세력의 항의
@@ -630,6 +606,171 @@ country_event = { # 소수가 된 여당
 
 	option = { 
 		name = IRE_event.11.a
+	}
+}
+country_event = { # 발각당한 선거 조작 시도!
+	id = IRE_event.12
+	title = IRE_event.12.t
+	desc = IRE_event.12.d
+	picture = GFX_report_event_election_vote
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.12.a
+		add_stability = -0.10
+		add_to_variable = {
+			var = IRE_FG_sup
+			value = -20
+			tooltip = FG_remove_20
+		}
+		IRE_SE_FG = yes
+		hidden_effect = {
+			country_event = {
+				id = IRE_event.13
+				days = 7
+			}
+		}
+	}
+}
+country_event = { # 전국적인 시위
+	id = IRE_event.13
+	title = IRE_event.13.t
+	desc = IRE_event.13.d
+	picture = GFX_report_event_worker_protests
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.13.a
+		add_stability = -0.10
+		add_ideas = strikes_3
+		every_state = {
+			limit = {
+				is_controlled_by = ROOT
+				is_owned_by = ROOT
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 3
+			}
+			damage_building = {
+				type = arms_factory
+				damage = 1
+			}
+			damage_building = {
+				type = industrial_complex
+				damage = 1
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = IRE_event.14
+				days = 7
+			}
+		}
+	}
+}
+country_event = { # 전국적인 시위
+	id = IRE_event.14
+	title = IRE_event.14.t
+	desc = IRE_event.14.d
+	picture = GFX_report_event_spain_civil_war_soldiers
+
+	is_triggered_only = yes
+
+	option = { 
+		name = IRE_event.14.a
+		add_stability = -0.10
+		remove_ideas = strikes_3
+		start_civil_war = {
+			ruling_party = neutrality
+			ideology = democratic
+			size = 0.5
+			navy_ratio = 0
+			air_ratio = 0
+			states = { 
+				134 135
+			} 
+			keep_all_characters = yes
+		}
+		set_party_name = {
+			ideology = democratic
+			long_name = IRE_DEM_name
+			name = IRE_DEM_name
+		}
+		complete_national_focus = IRE_focus_dissolution_congress
+		set_cosmetic_tag = IRE_duchy
+		hidden_effect = {
+			remove_ideas = IRE_change_constitution_idea
+			set_country_flag = IRE_NO_congress
+			promote_character = IRE_Eamon_de_valera
+			promote_character = {
+				character = IRE_James_Hamilton
+				ideology = oligarchism
+			}
+			division_template = {
+				name = "Irish National Militia"
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+					militia = { x = 0 y = 3 }
+				}
+			}
+			random_controlled_state = {
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+			}
+			random_controlled_state = {
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+			}
+			every_country = {
+				limit = {
+					original_tag = IRE
+					is_dynamic_country = yes
+				}
+				division_template = {
+					name = "Irish Militia"
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 0 y = 3 }
+					}
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+				}
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = IRE_NES_name
+				name = IRE_NES_name
+			}
+		}
 	}
 }
 country_event = { # 소련의 대규모 원조

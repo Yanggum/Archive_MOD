@@ -1128,7 +1128,7 @@ focus_tree = {
 				value = -10
 				tooltip = FF_remove_10
 			}
-			IRE_SE_LP = yes
+			IRE_SE_FF = yes
 			add_to_variable = {
 				var = IRE_IRA_loyalty
 				value = -20
@@ -1385,7 +1385,7 @@ focus_tree = {
 				value = 5
 				tooltip = FF_add_5
 			}
-			IRE_SE_LP = yes
+			IRE_SE_FF = yes
 			remove_ideas = IRE_agricultural_society_1_idea ##일단 임시로
 		}
 	}
@@ -1514,8 +1514,8 @@ focus_tree = {
 		id = IRE_focus_always_neutrality
 		icon = GFX_goal_generic_neutrality_focus
 		prerequisite = { focus = IRE_focus_FG }
-		#mutually_exclusive = { focus = IRE_focus_ }
-		x = -2
+		mutually_exclusive = { focus = IRE_focus_true_briton }
+		x = -3
 		y = 1
 		cost = 5
 		search_filters = {}
@@ -1581,7 +1581,7 @@ focus_tree = {
 		icon = GFX_focus_generic_limited_social_mobilization
 		prerequisite = { focus = IRE_focus_military_industry_add }
 		#mutually_exclusive = { focus = IRE_focus_ }
-		x = -3
+		x = -4
 		y = 3
 		cost = 10
 		search_filters = {}
@@ -1593,6 +1593,52 @@ focus_tree = {
 		}
 		completion_reward = {
 
+		}
+	}
+	focus = { #완전적인 경제 개방
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_all_economic_openness
+		icon = GFX_goal_generic_positive_trade_relations
+		prerequisite = { focus = IRE_focus_always_neutrality }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -2
+		y = 3
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			NOT = {
+				has_idea = closed_economy
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_ideas = free_trade
 		}
 	}
 	focus = { # 난민 수용
@@ -1631,10 +1677,11 @@ focus_tree = {
 		relative_position_id = IRE_focus_FG
 		id = IRE_focus_irish_dream
 		icon = GFX_focus_generic_aircraft_production
+		prerequisite = { focus = IRE_focus_all_economic_openness }
 		prerequisite = { focus = IRE_focus_refugee_ok }
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = -1
-		y = 3
+		y = 4
 		cost = 10
 		search_filters = {}
 		available = {
@@ -1650,6 +1697,514 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.15
 			add_ideas = IRE_irish_dream_2_idea
+		}
+	}
+	focus = { # 진정한 브리튼의 주인
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_true_briton
+		icon = GFX_focus_eng_the_sun_never_sets
+		prerequisite = { focus = IRE_focus_FG }
+		mutually_exclusive = { focus = IRE_focus_always_neutrality }
+		x = 3
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			NOT = {
+				has_war_with = ENG
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			add_country_leader_role = {
+				character = IRE_James_Hamilton
+				promote_leader = yes
+				country_leader = {
+					ideology = conservatism
+					expire = "1965.1.1.1"
+					traits = { IRE_order_of_the_garter_and_st_patrick }
+				}
+			}
+			add_to_variable = {
+				var = IRE_FG_sup
+				value = -20
+				tooltip = FG_remove_20
+			}
+			IRE_SE_FG = yes
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = -10
+				tooltip = SOC_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_IRA_loyalty
+				value = -20
+				tooltip = IRA_madd_l20
+			}
+			add_to_variable = {
+				var = IRE_IRA_popularity
+				value = 20
+				tooltip = IRA_add_p20
+			}
+			IRE_politics_allinone = yes
+		}
+	}
+	focus = { # 공작 작위 회복
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_recover_duke_title
+		icon = GFX_goal_tfv_strengthen_commonwealth_ties
+		prerequisite = { focus = IRE_focus_true_briton }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 2
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			add_trait = {
+				character = IRE_James_Hamilton
+				ideology = conservatism
+				trait = IRE_duke_of_abercorn
+			}
+		}
+	}
+	focus = { # 연합주의자와의 협력
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_with_unionist
+		icon = GFX_focus_generic_diplomatic_treaty
+		prerequisite = { focus = IRE_focus_recover_duke_title }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = { # 해밀턴 공의 연설
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_hm_speech
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = IRE_focus_recover_duke_title }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 3
+		y = 3
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_war_support = 0.10
+			add_to_variable = {
+				var = IRE_FG_sup
+				value = 10
+				tooltip = FG_add_10
+			}
+			IRE_SE_FG = yes
+		}
+	}
+	focus = { # 헌법 개정
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_change_constitution
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		prerequisite = { focus = IRE_focus_with_unionist }
+		prerequisite = { focus = IRE_focus_hm_speech }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 4
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			IRE_majority134 = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = IRE_change_constitution_idea
+				days = 100
+			}
+			unlock_decision_tooltip = IRE_election_fraud
+		}
+	}
+	focus = { # 국민투표 실시
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_hold_a_referendum
+		icon = GFX_focus_NOR_restore_public_trust_in_the_storting
+		prerequisite = { focus = IRE_focus_change_constitution }
+		mutually_exclusive = { focus = IRE_focus_dissolution_congress }
+		x = 2
+		y = 5
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes
+			}
+			has_stability > 0.05
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = IRE_LT_tt_4
+					check_variable = { IRE_FG_sup > 60 }
+				}
+				has_country_flag = IRE_complete_election_fraud
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			set_cosmetic_tag = IRE_duchy
+		}
+	}
+	focus = { # 벨파스트 천도
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_capital_to_belfast
+		icon = GFX_focus_generic_improve_the_administration
+		prerequisite = { focus = IRE_focus_hold_a_referendum focus = IRE_focus_dissolution_congress }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 6
+		cost = 5
+		search_filters = {}
+		available = {
+			controls_state = 119
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_victory_points = {
+				province = 3379
+				value = 5
+			}
+			set_capital = {
+				state = 119
+				remember_old_capital = no
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 134
+						state = 135
+						state = 113
+					}		
+					industrial_complex > 1
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 134
+						state = 135
+						state = 113
+					}		
+					industrial_complex > 1
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			119 = {
+				set_state_category = large_city
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = { # 교회와의 동맹
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_alliance_church
+		icon = GFX_goal_generic_military_deal
+		prerequisite = { focus = IRE_focus_true_briton }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 6
+		y = 2
+		cost = 3
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			NOT = {
+				has_completed_focus = IRE_focus_change_constitution
+				has_completed_focus = IRE_focus_dissolution_congress
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_tt_14
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = 10
+				tooltip = CAT_add_l10
+			}
+			IRE_politics_allinone = yes
+		}
+	}
+	focus = { # 비밀 민병대 조직
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_secret_militia
+		icon = GFX_focus_generic_monarchist_workers
+		prerequisite = { focus = IRE_focus_true_briton }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 5
+		y = 3
+		cost = 3
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			NOT = {
+				has_completed_focus = IRE_focus_change_constitution
+				has_completed_focus = IRE_focus_dissolution_congress
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_tt_12
+		}
+	}
+	focus = { # 코노트 유지 매수
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_connacht_corruption
+		icon = GFX_focus_GER_customs_union
+		prerequisite = { focus = IRE_focus_true_briton }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 4
+		cost = 3
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			NOT = {
+				has_completed_focus = IRE_focus_change_constitution
+				has_completed_focus = IRE_focus_dissolution_congress
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_tt_13
+		}
+	}
+	focus = { # 달 에런 해산
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_dissolution_congress
+		icon = GFX_focus_rom_parties_end
+		prerequisite = { focus = IRE_focus_connacht_corruption focus = IRE_focus_secret_militia focus = IRE_focus_alliance_church }
+		mutually_exclusive = { focus = IRE_focus_hold_a_referendum }
+		x = 6
+		y = 5
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FG
+			IRE_James_Hamilton = {
+				is_country_leader = yes	
+			}
+			has_completed_focus = IRE_focus_recover_duke_title
+			NOT = {
+				has_completed_focus = IRE_focus_change_constitution
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			set_party_name = {
+				ideology = democratic
+				long_name = IRE_DEM_name
+				name = IRE_DEM_name
+			}
+			if = {
+				limit = {
+					has_completed_focus = IRE_focus_connacht_corruption
+				}
+				start_civil_war = {
+					ruling_party = neutrality
+					ideology = democratic
+					size = 0.5
+					navy_ratio = 0
+					air_ratio = 0
+					states = { 
+						135
+					} 
+					keep_all_characters = yes
+				}
+				add_offsite_building = { type = industrial_complex level = 2 }
+			}
+			else = {
+				start_civil_war = {
+					ruling_party = neutrality
+					ideology = democratic
+					size = 0.5
+					navy_ratio = 0
+					air_ratio = 0
+					states = { 
+						134 135
+					} 
+					keep_all_characters = yes
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = IRE_focus_secret_militia
+				}
+				hidden_effect = {
+					division_template = {
+						name = "Irish Elite Militia"
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+							militia = { x = 0 y = 3 }
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+						}
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 2700
+					producer = ROOT
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish Elite Militia\" division_template = \"Irish Elite Militia\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"Irish Elite Militia\" division_template = \"Irish Elite Militia\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"Irish Elite Militia\" division_template = \"Irish Elite Militia\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = IRE_focus_alliance_church
+				}
+				add_stability = 0.10
+			}
+			set_cosmetic_tag = IRE_duchy
+			hidden_effect = {
+				set_country_flag = IRE_NO_congress
+				promote_character = IRE_Eamon_de_valera
+				add_country_leader_role = {
+					character = IRE_James_Hamilton
+					promote_leader = yes	
+					country_leader = {
+						ideology = oligarchism
+						expire = "1965.1.1.1"
+						traits = { IRE_order_of_the_garter_and_st_patrick IRE_duke_of_abercorn }
+					}
+				}
+				division_template = {
+					name = "Irish National Militia"
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 0 y = 3 }
+					}
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+					create_unit = { division = "name = \"Irish National Militia\" division_template = \"Irish National Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = ROOT }
+				}
+				every_country = {
+					limit = {
+						original_tag = IRE
+						is_dynamic_country = yes
+					}
+					division_template = {
+						name = "Irish Militia"
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+							militia = { x = 0 y = 3 }
+						}
+					}
+					random_controlled_state = {
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					}
+					random_controlled_state = {
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+						create_unit = { division = "name = \"Irish Militia\" division_template = \"Irish Militia\" start_experience_factor = 0 start_equipment_factor = 0.5" owner = PREV }
+					}
+				}
+			}
+			set_party_name = {
+				ideology = neutrality
+				long_name = IRE_NES_name
+				name = IRE_NES_name
+			}
 		}
 	}
 }
