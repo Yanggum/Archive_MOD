@@ -722,6 +722,8 @@ country_event = {
 	
 	option = {
 		name = ARI_reformist_event_chain.24.a
+		custom_effect_tooltip = flag_AASRU_progressbar_end2_tt
+		set_country_flag = flag_AASRU_progressbar_end
 		set_country_flag = flag_AASRU_progressbar_end2 # 엔딩 2, 관계 좋은 사임
 	}
 	option = {
@@ -735,6 +737,7 @@ country_event = {
 		add_to_variable = {
 			AASRU_main_value = 1
 		}
+		country_event = ARI_reformist_event_chain.25
 	}
 }
 
@@ -748,6 +751,16 @@ country_event = {
 	
 	option = {
 		name = ARI_reformist_event_chain.25.a
+		set_variable = {
+			ARI_duel_env_current_range = 0
+		}
+		set_variable = {
+			ARI_saori_hp = 120
+		}
+		set_variable = {
+			ARI_azusa_hp = 100
+		}
+		country_event = ARI_reformist_event_chain.26
 	}
 }
 
@@ -802,6 +815,18 @@ country_event = {
 					set_variable = { ARI_duel_env_obj = 1 }
 				}
 				1 = { # 나무파편
+					modifier = {
+						check_variable = {
+							ARI_duel_env_current_range = 3
+						}
+						factor = 0.25
+					}
+					modifier = {
+						check_variable = {
+							ARI_duel_env_current_range = 2
+						}
+						factor = 0.25
+					}
 					set_variable = { ARI_duel_env_obj = 2 }
 				}
 				1 = { # 테이블
@@ -811,12 +836,24 @@ country_event = {
 						}
 						factor = 0
 					}
+					modifier = {
+						check_variable = {
+							ARI_duel_env_current_range = 2
+						}
+						factor = 0
+					}
 					set_variable = { ARI_duel_env_obj = 3 }
 				}
 				1 = { # 캐비닛
 					modifier = {
 						check_variable = {
 							ARI_duel_env_current_range = 3
+						}
+						factor = 0
+					}
+					modifier = {
+						check_variable = {
+							ARI_duel_env_current_range = 2
 						}
 						factor = 0
 					}
@@ -868,6 +905,12 @@ country_event = {
 						}
 						factor = 0
 					}
+					modifier = {
+						check_variable = {
+							ARI_duel_env_current_range = 2
+						}
+						factor = 0
+					}
 					set_variable = { ARI_duel_env_saori_action = 3 }
 				}
 				1 = { # 거리 벌리기
@@ -916,54 +959,56 @@ country_event = {
 		trigger = {
 			check_variable = { ARI_duel_env_current_range = 0 }
 		}
-		random_list = {
-			# [상황: 사오리 근접전(0)] vs [대응: 칼]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)] vs [대응: 칼]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 50% 승리
 				}
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 50% 승리
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
 				}
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
-			}
-			# [상황: 사오리 거리 벌리기(4)] vs [대응: 칼]
-			25 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)] vs [대응: 칼]
+				25 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 추격하여 베기 성공
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 추격하여 베기 성공
-			}
-			75 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				75 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 75% 놓침 (패배 판정)
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 75% 놓침 (패배 판정)
 			}
 		}
 	}
@@ -972,52 +1017,54 @@ country_event = {
 		trigger = {
 			check_variable = { ARI_duel_env_current_range = 0 }
 		}
-		random_list = {
-			# [상황: 사오리 근접전(0)] vs [대응: 발차기]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)] vs [대응: 발차기]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_gaining_distance				# 50% 거리 벌리기 성공
 				}
-				set_country_flag = ARI_duel_flag_gaining_distance				# 50% 거리 벌리기 성공
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_gaining_distance_damage				# 50% 맞으면서 거리 벌림
 				}
-				set_country_flag = ARI_duel_flag_gaining_distance_damage				# 50% 맞으면서 거리 벌림
-			}
-			# [상황: 사오리 거리 벌리기(4)] vs [대응: 발차기]
-			75 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)] vs [대응: 발차기]
+				75 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_gaining_distance				# 75% 서로 거리 벌림
 				}
-				set_country_flag = ARI_duel_flag_gaining_distance				# 75% 서로 거리 벌림
-			}
-			25 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				25 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_cover				# 25% 사오리만 엄폐 성공
 				}
-				set_country_flag = ARI_duel_flag_saori_cover				# 25% 사오리만 엄폐 성공
 			}
 		}
 	}
@@ -1026,54 +1073,57 @@ country_event = {
 		trigger = {
 			check_variable = { ARI_duel_env_current_range = 0 }
 		}
-		random_list = {
-			# [상황: 사오리 근접전(0)] vs [대응: 휴식] -> 자살행위
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)] vs [대응: 휴식] -> 자살행위
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명적 패배
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명적 패배
-			}
-			# [상황: 사오리 거리 벌리기(4)] vs [대응: 휴식]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)] vs [대응: 휴식]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_catching_breath				# 50% 휴식 성공
+					set_variable = { ARI_duel_env_current_range = 1 }
 				}
-				set_country_flag = ARI_duel_flag_catching_breath				# 50% 휴식 성공
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_catching_breath_saori_cover				# 50% 사오리가 엄폐함
 				}
-				set_country_flag = ARI_duel_flag_catching_breath_saori_cover				# 50% 사오리가 엄폐함
 			}
 		}
 	}
@@ -1091,43 +1141,45 @@ country_event = {
 			check_variable = { ARI_duel_env_current_range = 0 }
 			check_variable = { ARI_duel_env_obj = 3 }
 		}
-		random_list = {
-			# [상황: 사오리 근접전(0)] -> 코앞에서 엄폐 시도
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)] -> 코앞에서 엄폐 시도
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 실패 및 피격
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 실패 및 피격
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명타
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명타
-			}
-			# [상황: 사오리 거리 벌리기(4)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover				# 100% 엄폐 성공
 				}
-				set_country_flag = ARI_duel_flag_cover				# 100% 엄폐 성공
 			}
 		}
 	}
@@ -1137,43 +1189,45 @@ country_event = {
 			check_variable = { ARI_duel_env_current_range = 0 }
 			check_variable = { ARI_duel_env_obj = 4 }
 		}
-		random_list = {
-			# [상황: 사오리 근접전(0)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 실패
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 실패
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명타
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 50% 치명타
-			}
-			# [상황: 사오리 거리 벌리기(4)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover				# 100% 성공
 				}
-				set_country_flag = ARI_duel_flag_cover				# 100% 성공
 			}
 		}
 	}
@@ -1186,30 +1240,32 @@ country_event = {
 			NOT = { has_country_flag = ARI_duel_used_chandelier_flag }
 		}
 		set_country_flag = ARI_duel_used_chandelier_flag
-		random_list = {
-			# [상황: 사오리 근접전(0)] -> 같이 휘말림
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 0
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 근접전(0)] -> 같이 휘말림
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 0
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier_self_destruction
 				}
-				set_country_flag = ARI_duel_flag_chandelier_self_destruction
-			}
-			# [상황: 사오리 거리 벌리기(4)] -> 사오리만 맞음
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 4
+				# [상황: 사오리 거리 벌리기(4)] -> 사오리만 맞음
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 4
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier
 				}
-				set_country_flag = ARI_duel_flag_chandelier
 			}
 		}
 	}
@@ -1218,196 +1274,200 @@ country_event = {
     option = {
         name = ARI_duel_env.medium_range.a		# [선택] 빠르게 사격한 후, 거리를 좁힌다.
         trigger = { check_variable = { ARI_duel_env_current_range = 1 } }
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire				# 50% 저지됨
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_suppressive_fire				# 50% 저지됨
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_close_distance				# 50% 접근 성공
 				}
-				set_country_flag = ARI_duel_flag_close_distance				# 50% 접근 성공
-			}
-			# [상황: 사오리 돌진(5)] -> 맞돌진
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] -> 맞돌진
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 50% 승리
 				}
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 50% 승리
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
 				}
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 50% 패배
-			}
-			# [상황: 사오리 저격(2)]
-			30 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 사오리 저격(2)]
+				30 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 저격 취소시키고 제압
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 저격 취소시키고 제압
-			}
-			70 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				70 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_sniped_saori				# 50% 저격당함
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_sniped_saori				# 50% 저격당함
-			}
-			# [상황: 사오리 투척(3)]
-			25 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)]
+				25 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 투척 전 제압
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 25% 투척 전 제압
-			}
-			75 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				75 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 75% 물건 맞음
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 75% 물건 맞음
 			}
 		}
     }
     option = {
         name = ARI_duel_env.medium_range.b		# [선택] 견제 사격을 한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 1 } }
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_suppressive_fire				# 서로 견제만 함
 				}
-				set_country_flag = ARI_duel_flag_suppressive_fire				# 서로 견제만 함
-			}
-			# [상황: 사오리 돌진(5)]
-			60 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)]
+				60 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire				# 60% 돌진 저지
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_suppressive_fire				# 60% 돌진 저지
-			}
-			10 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				10 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_success				# 10% 접근 허용 후 승리
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_success				# 10% 접근 허용 후 승리
-			}
-			30 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				30 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 30% 접근 허용 후 패배
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 30% 접근 허용 후 패배
-			}
-			# [상황: 사오리 저격(2)]
-			30 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 사오리 저격(2)]
+				30 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire				# 30% 저격 방해
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_suppressive_fire				# 30% 저격 방해
-			}
-			70 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				70 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_sniped_saori				# 70% 저격당함
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_sniped_saori				# 70% 저격당함
-			}
-			# [상황: 사오리 투척(3)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 100% 물건 맞음
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 100% 물건 맞음
 			}
 		}
     }
@@ -1421,45 +1481,47 @@ country_event = {
 			}
 			check_variable = { ARI_duel_env_obj = 0 }
 		}
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire				# 휴식 실패 및 피격
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_suppressive_fire				# 휴식 실패 및 피격
-			}
-			# [상황: 사오리 돌진(5)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 접근 허용 및 패배
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 접근 허용 및 패배
-			}
-			# [상황: 사오리 투척(3)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 물건 맞음
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 물건 맞음
 			}
 		}
     }
@@ -1477,93 +1539,95 @@ country_event = {
             check_variable = { ARI_duel_env_current_range = 1 }
             check_variable = { ARI_duel_env_obj = 3 }
         }
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover				# 엄폐 성공
 				}
-				set_country_flag = ARI_duel_flag_cover				# 엄폐 성공
-			}
-			# [상황: 사오리 돌진(5)]
-			70 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)]
+				70 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure				# 70% 접근 허용
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure				# 70% 접근 허용
-			}
-			30 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				30 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover				# 30% 엄폐 성공
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover				# 30% 엄폐 성공
-			}
-			# [상황: 사오리 저격(2)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 사오리 저격(2)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_sniped_saori				# 70% 관통상
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_sniped_saori				# 70% 관통상
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover				# 30% 방어
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover				# 30% 방어
-			}
-			# [상황: 사오리 투척(3)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover				# 50% 방어
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover				# 50% 방어
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure				# 50% 엄폐물 파괴 및 타격
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure				# 50% 엄폐물 파괴 및 타격
 			}
 		}
     }
@@ -1573,93 +1637,95 @@ country_event = {
             check_variable = { ARI_duel_env_current_range = 1 }
             check_variable = { ARI_duel_env_obj = 4 }
         }
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover
 				}
-				set_country_flag = ARI_duel_flag_cover
-			}
-			# [상황: 사오리 돌진(5)]
-			70 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)]
+				70 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure
-			}
-			30 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				30 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover
-			}
-			# [상황: 사오리 저격(2)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 사오리 저격(2)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_sniped_saori
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_sniped_saori
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover
-			}
-			# [상황: 사오리 투척(3)]
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)]
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_cover
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_cover
-			}
-			50 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				50 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure
 			}
 		}
     }
@@ -1672,54 +1738,56 @@ country_event = {
 			NOT = { has_country_flag = ARI_duel_used_chandelier_flag }
 		}
 		set_country_flag = ARI_duel_used_chandelier_flag
-		random_list = {
-			# [상황: 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier				# 사오리 타격
 				}
-				set_country_flag = ARI_duel_flag_chandelier				# 사오리 타격
-			}
-			# [상황: 돌진(5)] -> 아즈사도 말려듬
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 돌진(5)] -> 아즈사도 말려듬
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier_self_destruction				# 자폭
 				}
-				set_country_flag = ARI_duel_flag_chandelier_self_destruction				# 자폭
-			}
-			# [상황: 저격(2)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier				# 타격
 				}
-				set_country_flag = ARI_duel_flag_chandelier				# 타격
-			}
-			# [상황: 투척(3)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 투척(3)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier				# 타격
 				}
-				set_country_flag = ARI_duel_flag_chandelier				# 타격
 			}
 		}
 	}
@@ -1732,30 +1800,32 @@ country_event = {
                 check_variable = { ARI_duel_env_saori_action = 3 } # 투척
             }
         }
-		random_list = {
-			# [상황: 저격(2)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+		hidden_effect = {
+			random_list = {
+				# [상황: 저격(2)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_clumsy_evasion				# 엉성한 회피
 				}
-				set_country_flag = ARI_duel_flag_clumsy_evasion				# 엉성한 회피
-			}
-			# [상황: 투척(3)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 투척(3)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_clumsy_evasion				# 엉성한 회피
 				}
-				set_country_flag = ARI_duel_flag_clumsy_evasion				# 엉성한 회피
 			}
 		}
     }
@@ -1763,112 +1833,118 @@ country_event = {
     option = {
         name = ARI_duel_env.saori_cover.a		# [선택] 엄폐물 쪽으로 사격하여 견제한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 2 } }
-		random_list = {
-			# [상황: 견제사격(1)] -> 효과 없음
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 견제사격(1)] -> 효과 없음
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_suppressive_fire_no_effect
 				}
-				set_country_flag = ARI_duel_flag_suppressive_fire_no_effect
-			}
-			# [상황: 저격(2)] -> 아즈사 피격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)] -> 아즈사 피격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_sniped_saori
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_sniped_saori
-			}
-			# [상황: 기습(6)] -> 불리한 근접전
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 6
+				# [상황: 기습(6)] -> 불리한 근접전
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 6
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_disadvantageous_knife_fighting
 				}
-				set_country_flag = ARI_duel_flag_disadvantageous_knife_fighting
 			}
 		}
     }
     option = {
         name = ARI_duel_env.saori_cover.b		# [선택] 엄폐물 뒤로 우회해 돌진한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 2 } }
-		random_list = {
-			# [상황: 견제사격(1)] -> 돌진 중 피격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 견제사격(1)] -> 돌진 중 피격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire
 				}
-				set_country_flag = ARI_duel_flag_critical_failure
-			}
-			# [상황: 저격(2)] 20% 저격당함
-			20 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)] 20% 저격당함
+				20 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure
-			}
-			# [상황: 저격(2)] 40% 접근 성공 및 제압
-			40 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)] 40% 접근 성공 및 제압
+				40 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_success
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_success
-			}
-			# [상황: 저격(2)] 40% 접근 후 패배
-			40 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)] 40% 접근 후 패배
+				40 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure
-			}
-			# [상황: 기습(6)] -> 기습 허용
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 6
+				# [상황: 기습(6)] -> 기습 허용
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 6
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_disadvantageous_knife_fighting
 				}
-				set_country_flag = ARI_duel_flag_disadvantageous_knife_fighting
 			}
 		}
     }
@@ -1889,42 +1965,44 @@ country_event = {
 			NOT = { has_country_flag = ARI_duel_used_chandelier_flag }
 		}
 		set_country_flag = ARI_duel_used_chandelier_flag
-		random_list = {
-			# [상황: 견제사격(1)] -> 타격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 견제사격(1)] -> 타격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier
 				}
-				set_country_flag = ARI_duel_flag_chandelier
-			}
-			# [상황: 저격(2)] -> 타격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+				# [상황: 저격(2)] -> 타격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier
 				}
-				set_country_flag = ARI_duel_flag_chandelier
-			}
-			# [상황: 기습(6)] -> 아즈사 쪽으로 뛰어드는 중이라 자폭
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 6
+				# [상황: 기습(6)] -> 아즈사 쪽으로 뛰어드는 중이라 자폭
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 6
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier_self_destruction
 				}
-				set_country_flag = ARI_duel_flag_chandelier_self_destruction
 			}
 		}
 	}
@@ -1937,30 +2015,32 @@ country_event = {
                 check_variable = { ARI_duel_env_saori_action = 6 } # 기습
             }
         }
-		random_list = {
-			# [상황: 저격(2)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 2
+		hidden_effect = {
+			random_list = {
+				# [상황: 저격(2)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 2
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_clumsy_evasion
 				}
-				set_country_flag = ARI_duel_flag_clumsy_evasion
-			}
-			# [상황: 기습(6)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 6
+				# [상황: 기습(6)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 6
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_clumsy_evasion
 				}
-				set_country_flag = ARI_duel_flag_clumsy_evasion
 			}
 		}
     }
@@ -1968,146 +2048,152 @@ country_event = {
     option = {
         name = ARI_duel_env.azusa_cover.a		# [선택] 호흡을 멈추고 저격한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 3 } }
-		random_list = {
-			# [상황: 사오리 견제사격(1)] -> 아즈사 저격 성공
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)] -> 아즈사 저격 성공
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_azusa_sniping
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_azusa_sniping
-			}
-			# [상황: 사오리 돌진(5)] 100% 저격 실패 및 접근 허용
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] 100% 저격 실패 및 접근 허용
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure
-			}
-			# [상황: 사오리 투척(3)] -> 엄폐물 파괴 및 저격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)] -> 엄폐물 파괴 및 저격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover_destroyed
+					set_country_flag = ARI_duel_flag_azusa_sniping
 				}
-				set_country_flag = ARI_duel_flag_cover_destroyed
-				set_country_flag = ARI_duel_flag_azusa_sniping
 			}
 		}
     }
     option = {
         name = ARI_duel_env.azusa_cover.b		# [선택] 견제 사격을 행한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 3 } }
-		random_list = {
-			# [상황: 사오리 견제사격(1)]
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)]
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_suppressive_fire
 				}
-				set_country_flag = ARI_duel_flag_suppressive_fire
-			}
-			# [상황: 사오리 돌진(5)] 50% 돌진 저지
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] 50% 돌진 저지
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_saori_action_cancel
+					set_country_flag = ARI_duel_flag_suppressive_fire
 				}
-				set_country_flag = ARI_duel_flag_saori_action_cancel
-				set_country_flag = ARI_duel_flag_suppressive_fire
-			}
-			# [상황: 사오리 투척(3)] -> 엄폐물 파괴
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)] -> 엄폐물 파괴
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover_destroyed
+					set_country_flag = ARI_duel_flag_suppressive_fire
 				}
-				set_country_flag = ARI_duel_flag_cover_destroyed
-				set_country_flag = ARI_duel_flag_suppressive_fire
 			}
 		}
     }
     option = {
         name = ARI_duel_env.azusa_cover.c		# [선택] 숨을 고르며 태세를 정비한다.
         trigger = { check_variable = { ARI_duel_env_current_range = 3 } }
-		random_list = {
-			# [상황: 사오리 견제사격(1)] -> 휴식 성공
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)] -> 휴식 성공
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_catching_breath
 				}
-				set_country_flag = ARI_duel_flag_catching_breath
-			}
-			# [상황: 사오리 돌진(5)] 75% 접근 허용
-			75 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] 75% 접근 허용
+				75 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_knife_fighting_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_knife_fighting_failure
-			}
-			# [상황: 사오리 돌진(5)] 25% 치명타
-			25 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] 25% 치명타
+				25 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_azusa_action_cancel
+					set_country_flag = ARI_duel_flag_critical_failure
 				}
-				set_country_flag = ARI_duel_flag_azusa_action_cancel
-				set_country_flag = ARI_duel_flag_critical_failure
-			}
-			# [상황: 사오리 투척(3)] -> 엄폐물 파괴, 사오리 엄폐
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)] -> 엄폐물 파괴, 사오리 엄폐
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_cover_destroyed
+					set_country_flag = ARI_duel_flag_catching_breath_saori_cover
 				}
-				set_country_flag = ARI_duel_flag_cover_destroyed
-				set_country_flag = ARI_duel_flag_catching_breath_saori_cover
 			}
 		}
     }
@@ -2120,42 +2206,44 @@ country_event = {
 			NOT = { has_country_flag = ARI_duel_used_chandelier_flag }
 		}
 		set_country_flag = ARI_duel_used_chandelier_flag
-		random_list = {
-			# [상황: 사오리 견제사격(1)] -> 타격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 1
+		hidden_effect = {
+			random_list = {
+				# [상황: 사오리 견제사격(1)] -> 타격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 1
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier
 				}
-				set_country_flag = ARI_duel_flag_chandelier
-			}
-			# [상황: 사오리 돌진(5)] -> 아즈사 쪽으로 뛰어드는 중이라 자폭
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 5
+				# [상황: 사오리 돌진(5)] -> 아즈사 쪽으로 뛰어드는 중이라 자폭
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 5
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier_self_destruction
 				}
-				set_country_flag = ARI_duel_flag_chandelier_self_destruction
-			}
-			# [상황: 사오리 투척(3)] -> 타격
-			100 = {
-				modifier = {
-					NOT = {
-						check_variable = {
-							ARI_duel_env_saori_action = 3
+				# [상황: 사오리 투척(3)] -> 타격
+				100 = {
+					modifier = {
+						NOT = {
+							check_variable = {
+								ARI_duel_env_saori_action = 3
+							}
 						}
+						factor = 0
 					}
-					factor = 0
+					set_country_flag = ARI_duel_flag_chandelier
 				}
-				set_country_flag = ARI_duel_flag_chandelier
 			}
 		}
 	}
@@ -2188,6 +2276,173 @@ country_event = {
 	
 	option = {
 		name = ARI_reformist_event_chain.27.a
+		if = {
+			limit = { has_country_flag = ARI_duel_flag_knife_fighting_success }
+			add_to_variable = {
+				ARI_saori_hp = -8
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -4
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 0 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_knife_fighting_failure }
+			add_to_variable = {
+				ARI_saori_hp = -4
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -8
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 0 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_knife_fighting_stick }
+			add_to_variable = {
+				ARI_saori_hp = -12
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -3
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 0 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_disadvantageous_knife_fighting }
+			add_to_variable = {
+				ARI_azusa_hp = -18
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 0 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_gaining_distance }
+			add_to_variable = {
+				ARI_saori_hp = -3
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -3
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 1 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_gaining_distance_damage }
+			add_to_variable = {
+				ARI_azusa_hp = -4
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 1 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_close_distance }
+			set_variable = { ARI_duel_env_current_range = 0 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_suppressive_fire }
+			add_to_variable = {
+				ARI_saori_hp = -2
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -2
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_suppressive_fire_no_effect }
+			add_to_variable = {
+				ARI_azusa_hp = -4
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_critical_failure }
+			add_to_variable = {
+				ARI_azusa_hp = -25
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_sniped_saori }
+			add_to_variable = {
+				ARI_azusa_hp = -18
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_clumsy_evasion }
+			add_to_variable = {
+				ARI_azusa_hp = -6
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_chandelier }
+			add_to_variable = {
+				ARI_saori_hp = -25
+				tooltip = ARI_saori_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_chandelier_self_destruction }
+			add_to_variable = {
+				ARI_saori_hp = -18
+				tooltip = ARI_saori_hp_tt
+			}
+			add_to_variable = {
+				ARI_azusa_hp = -18
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_throwing_stick }
+			add_political_power = -1
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_cover }
+			set_variable = { ARI_duel_env_current_range = 3 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_catching_breath }
+			add_to_variable = {
+				ARI_azusa_hp = 15
+				tooltip = ARI_azusa_hp_tt
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_catching_breath_saori_cover }
+			add_to_variable = {
+				ARI_azusa_hp = 15
+				tooltip = ARI_azusa_hp_tt
+			}
+			set_variable = { ARI_duel_env_current_range = 2 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_saori_cover }
+			set_variable = { ARI_duel_env_current_range = 2 }
+		}
+		else_if = {
+			limit = { has_country_flag = ARI_duel_flag_azusa_sniping }
+			add_to_variable = {
+				ARI_saori_hp = -18
+				tooltip = ARI_saori_hp_tt
+			}
+		}
+
+		if = {
+			limit = {
+				has_country_flag = ARI_duel_flag_cover_destroyed
+				check_variable = { ARI_duel_env_current_range = 3 }
+			}
+			set_variable = { ARI_duel_env_current_range = 1 }
+		}
 	}
 
 	after = {
@@ -2210,11 +2465,66 @@ country_event = {
 		clr_country_flag = ARI_duel_flag_catching_breath
 		clr_country_flag = ARI_duel_flag_catching_breath_saori_cover
 		clr_country_flag = ARI_duel_flag_saori_cover
+		clr_country_flag = ARI_duel_flag_azusa_sniping
 		clr_country_flag = ARI_duel_flag_saori_action_cancel
 		clr_country_flag = ARI_duel_flag_azusa_action_cancel
 		clr_country_flag = ARI_duel_flag_cover_destroyed
-		hidden_effect = {
+		if = {
+			limit = {
+				check_variable = {
+					ARI_saori_hp < 1
+				}
+			}
+			country_event = ARI_reformist_event_chain.29
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					ARI_azusa_hp < 1
+				}
+			}
+			country_event = ARI_reformist_event_chain.28
+		}
+		else = {
 			country_event = ARI_reformist_event_chain.26
+		}
+	}
+}
+
+country_event = {
+	id = ARI_reformist_event_chain.28
+	title = ARI_reformist_event_chain.28.t
+	desc = ARI_reformist_event_chain.28.d
+	picture = GFX_report_event_ARI_reformist_event_chain_28
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ARI_reformist_event_chain.28.a
+		custom_effect_tooltip = flag_AASRU_progressbar_end2_tt
+		set_country_flag = flag_AASRU_progressbar_end
+		set_country_flag = flag_AASRU_progressbar_end2 # 엔딩 2, 관계 좋은 사임
+	}
+}
+
+country_event = {
+	id = ARI_reformist_event_chain.29
+	title = ARI_reformist_event_chain.29.t
+	desc = ARI_reformist_event_chain.29.d
+	picture = GFX_report_event_ARI_reformist_event_chain_29
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ARI_reformist_event_chain.29.a
+		custom_effect_tooltip = flag_AASRU_progressbar_end3_tt
+		set_country_flag = flag_AASRU_progressbar_end
+		set_country_flag = flag_AASRU_progressbar_end3 # 엔딩 2, 관계 좋은 사임
+
+		custom_effect_tooltip = enter_tt
+		custom_effect_tooltip = AASRU_main_value_up_tt
+		add_to_variable = {
+			AASRU_main_value = 1
 		}
 	}
 }
