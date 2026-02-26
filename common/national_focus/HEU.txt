@@ -1,7 +1,7 @@
 #!gfx:interface\BlueArchive\01 goals.gfx
 
 focus_tree = {
-	id = HEU
+	id = LUX_BENRIYA
 	continuous_focus_position = { x = 5200 y = 1300 } 
 	shared_focus = GEAC_unified_but_divided_gehenna_academy
 	shared_focus = Eden_formation_of_alliance_treaty_organization
@@ -740,20 +740,14 @@ focus_tree = {
 		search_filters = {  }
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-			
 			custom_effect_tooltip = HEU_modify_luxembourgism_intro
 			add_to_variable = {
-				HEU_aru_var_research_speed_factor = 0.02
+				HEU_aru_var_research_speed_factor = 0.03
 				tooltip = research_speed_factor_tt
 			}
 			
 			add_to_variable = {
-				HEU_aru_var_non_core_manpower = 0.01
+				HEU_aru_var_non_core_manpower = 0.02
 				tooltip = non_core_manpower_tt
 			}
 			
@@ -951,11 +945,23 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.1
 			HEU_bop_medium_increase_effect = yes
-
-			custom_effect_tooltip = kivotos_halo_add2_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 2 }
-				BA_halo_infantry_cap_edit_effect = yes
+			
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
+			add_to_variable = {
+				HEU_aru_var_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
 			}
 		}
 	}
@@ -1007,11 +1013,28 @@ focus_tree = {
             }
 		}
 
-		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add6_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
+		completion_reward = {	
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
+			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
+			add_to_variable = {
+				HEU_aru_var_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_out_of_supply_factor = -0.05
+				tooltip = out_of_supply_factor_tt
 			}
 
 			add_stability = -0.1
@@ -1125,15 +1148,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
 			
 			custom_effect_tooltip = HEU_modify_luxembourgism_intro
 			add_to_variable = {
-				HEU_aru_var_non_core_manpower = 0.02
+				HEU_aru_var_non_core_manpower = 0.03
 				tooltip = non_core_manpower_tt
 			}
 
@@ -1989,12 +2007,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add6_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-
 			custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
 			add_to_variable = {
 				HEU_aru_var_war_support_factor = 0.1
@@ -2522,16 +2534,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add6_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
-
 			custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
 			add_to_variable = {
 				HEU_aru_var_war_support_factor = 0.1
 				tooltip = war_support_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_out_of_supply_factor = -0.05
+				tooltip = out_of_supply_factor_tt
 			}
 
 			add_to_variable = {
@@ -4835,10 +4851,10 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add2_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 2 }
-				BA_halo_infantry_cap_edit_effect = yes
+			mio:HEU_grand_ducal_gendarmerie_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.25
+				add_mio_research_bonus = 0.05
 			}
 			
 			army_experience = 50
@@ -5055,11 +5071,10 @@ focus_tree = {
 				HEU_aru_var_war_support_factor = 0.05
 				tooltip = war_support_factor_tt
 			}
-
-			custom_effect_tooltip = kivotos_halo_add6_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
+			
+			add_to_variable = {
+				HEU_aru_var_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
 			}
 		}
 	}
@@ -5135,9 +5150,14 @@ focus_tree = {
 			8 = {
 				add_resource = {
 					type = steel
-					amount = 14
+					amount = 12
+				}
+				add_resource = {
+					type = coal
+					amount = 4
 				}
 			}
+
 			random_core_state = {
 				limit = {
 					is_controlled_by = ROOT
@@ -5327,12 +5347,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
+
 			add_manpower = 15000
+
+			8 = {
+				add_resource = {
+					type = coal
+					amount = 2
+				}
+			}
+
 			if = {
 				limit = {
 					NOT = {
@@ -5384,11 +5408,30 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add6_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 6 }
-				BA_halo_infantry_cap_edit_effect = yes
+			
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
 			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
+			add_to_variable = {
+				HEU_aru_var_production_lack_of_resource_penalty_factor = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+
+			add_to_variable = {
+				HEU_aru_var_out_of_supply_factor = -0.05
+				tooltip = out_of_supply_factor_tt
+			}
+
 		}
 	}
 	
@@ -6003,11 +6046,26 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
+
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
 			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
+
+			add_to_variable = {
+				HEU_aru_var_out_of_supply_factor = -0.05
+				tooltip = out_of_supply_factor_tt
+			}
+
 			country_event = { id = HEU.flavor_event.91 }
 		}
 	}
@@ -6265,11 +6323,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = HEU_luxembourg_administration_idea
+						}
+					}
+				}
+				custom_effect_tooltip = HEU_modify_rikuhachimaism_intro
 			}
+			else = {
+				custom_effect_tooltip = HEU_luxembourg_administration_idea_intro
+			}
+
+			add_to_variable = {
+				HEU_aru_var_resistance_damage_to_garrison_on_our_occupied_states = 0.25
+				tooltip = resistance_damage_to_garrison_on_our_occupied_states_tt
+			}
+
 			add_breakthrough_progress = {
 				specialization = specialization_land
 				value = 1.0
@@ -7357,7 +7429,12 @@ focus_tree = {
 					type = steel
 					amount = 21
 				}
+				add_resource = {
+					type = coal
+					amount = 4
+				}
 			}
+
 			# 고유 기업 ARBED 추가
 
 			random_owned_controlled_state = {
@@ -7850,6 +7927,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			8 = {
+				add_resource = {
+					type = coal
+					amount = 4
+				}
+			}
+
 			add_tech_bonus = {
 				name = HEU_iron_ore_mining
 				bonus = 0.50
@@ -9565,12 +9649,13 @@ focus_tree = {
 				category = mystic_engineering
 			}
 
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
-			}
+			custom_effect_tooltip = tooltip_white_line
 
+			custom_effect_tooltip = HEU_modify_luxembourg_army_intro
+			add_to_variable = {
+				HEU_luxembourg_army_breakthrough_factor = 0.05
+				tooltip = breakthrough_factor_tt
+			}
 		}
 	}
 
@@ -10833,6 +10918,1283 @@ focus_tree = {
 				custom_effect_tooltip = mutsuki_leader_stat_system_tt
 				add_political_power = -140
 			}
+		}
+	}
+}
+
+
+focus_tree = {
+	id = LUX_PUPPET
+	continuous_focus_position = { x = 5200 y = 1300 } 
+	shared_focus = GEAC_unified_but_divided_gehenna_academy
+	shared_focus = Eden_formation_of_alliance_treaty_organization
+	country = {
+		factor = 0
+	}
+
+	### 룩셈부르크 대공국 산업
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_1
+
+		icon = GFX_focus_generic_coal_mining
+
+		cost = 10.00
+
+		x = 18
+		y = 0
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_2
+		
+		relative_position_id = LUX_PUPPET_industry_focus_1
+
+		icon = GFX_focus_generic_smugglers
+
+		cost = 10.00
+
+		x = 2
+		y = 0
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_3
+		
+		relative_position_id = LUX_PUPPET_industry_focus_1
+
+		icon = GFX_focus_PHI_open_borders
+
+		cost = 10.00
+
+		x = 1
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_1
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_2
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_4
+		
+		relative_position_id = LUX_PUPPET_industry_focus_3
+
+		icon = GFX_focus_generic_modernize_agriculture_2
+
+		cost = 10.00
+
+		x = -2
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_3
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_5
+		
+		relative_position_id = LUX_PUPPET_industry_focus_3
+
+		icon = GFX_focus_generic_money_for_equipment
+
+		cost = 10.00
+
+		x = 0
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_3
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_6
+		
+		relative_position_id = LUX_PUPPET_industry_focus_3
+
+		icon = GFX_focus_generic_welfare
+
+		cost = 10.00
+
+		x = 2
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_3
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_7
+		
+		relative_position_id = LUX_PUPPET_industry_focus_3
+
+		icon = GFX_focus_generic_education
+
+		cost = 10.00
+
+		x = -1
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_3
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_8
+		
+		relative_position_id = LUX_PUPPET_industry_focus_3
+
+		icon = GFX_focus_generic_central_planning
+
+		cost = 10.00
+
+		x = 1
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_5
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_6
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_9
+		
+		relative_position_id = LUX_PUPPET_industry_focus_6
+
+		icon = GFX_focus_JAP_an_integrated_union
+
+		cost = 10.00
+
+		x = 0
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_6
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_industry_focus_10
+		
+		relative_position_id = LUX_PUPPET_industry_focus_6
+
+		icon = GFX_goal_HEU_nationalization_of_railways
+
+		cost = 10.00
+
+		x = 1
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_industry_focus_6
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	### 룩셈부르크 대공국 군대
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_1
+		
+		relative_position_id = LUX_PUPPET_industry_focus_1
+
+		icon = GFX_focus_generic_industrial_experts
+
+		cost = 10.00
+
+		x = 8
+		y = 0
+
+		prerequisite = { 
+			
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_2
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_generic_supply_line
+
+		cost = 10.00
+
+		x = -1
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_1
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_3
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_generic_cas_aircraft
+
+		cost = 10.00
+
+		x = -2
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_2
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_4
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_generic_pilot_training
+
+		cost = 10.00
+
+		x = 0
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_2
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_5
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_generic_tank_assembly
+
+		cost = 10.00
+
+		x = -1
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_3
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_4
+		}
+
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_6
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_goal_HEU_junsulnote_1
+
+		cost = 10.00
+
+		x = 1
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_1
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_7
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_JAP_army_weapons_administration_hq
+
+		cost = 10.00
+
+		x = 3
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_1
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_8
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_SMB_mountain_guns
+
+		cost = 10.00
+
+		x = 2
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_6
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_7
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_9
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_RAJ_headhunt_army_personell
+
+		cost = 10.00
+
+		x = 4
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_7
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_army_focus_10
+		
+		relative_position_id = LUX_PUPPET_army_focus_1
+
+		icon = GFX_focus_generic_freedom_council
+
+		cost = 10.00
+
+		x = 4
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_8
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_army_focus_9
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	### 룩셈부르크 대공국 정치
+	
+	focus = {
+		id = LUX_PUPPET_politic_focus_1
+		
+		relative_position_id = LUX_PUPPET_industry_focus_1
+
+		icon = GFX_focus_JAP_put_an_end_to_chinese_feudalism
+
+		cost = 10.00
+
+		x = 1
+		y = 6
+
+		prerequisite = { 
+			
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	#### 공화국 (공산)
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_1
+		
+		relative_position_id = LUX_PUPPET_politic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = -4
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_focus_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_monarchy_focus_1 }
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_2
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_PRC_join_comintern
+
+		cost = 10.00
+
+		x = 0
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_1
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_3
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_BRA_end_the_state_of_emergency
+
+		cost = 10.00
+
+		x = 3
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_2
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_shared_1
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = -1
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_2
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_shared_2
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_SOV_restore_cossack_units
+
+		cost = 10.00
+
+		x = 3
+		y = 4
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_3
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_6
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = -2
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_shared_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_republic_focus_8 }
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_7
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 1
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_2
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_8
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 0
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_shared_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_republic_focus_6 }
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_9
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 2
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_7
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_republic_focus_end
+		
+		relative_position_id = LUX_PUPPET_politic_republic_focus_1
+
+		icon = GFX_focus_JAP_raise_the_red_flag_high
+
+		cost = 10.00
+
+		x = 0
+		y = 4
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_6
+			focus = LUX_PUPPET_politic_republic_focus_8
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_republic_focus_9
+		}
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	#### 대공국
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_1
+		
+		relative_position_id = LUX_PUPPET_politic_focus_1
+
+		icon = GFX_goal_HEU_aru_rikuhachima_1
+
+		cost = 10.00
+
+		x = 2
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_focus_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_republic_focus_1 }
+
+		available = { 
+
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_1
+
+		icon = GFX_focus_ARG_keep_it_in_the_party
+
+		cost = 10.00
+
+		x = -2
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_monarchy_focus_democratic_1 }
+
+		available = { 
+			OR = {
+				has_government = communism
+				has_government = neutrality
+			}
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_2
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 1
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_end
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_goal_HEU_fnrtpa
+
+		cost = 10.00
+
+		x = 1
+		y = 3
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_2
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_4
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 3
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_5
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 2
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_4
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_6
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 4
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_4
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_authoritarian_7
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_authoritarian_1
+
+		icon = GFX_focus_generic_commission
+
+		cost = 10.00
+
+		x = 0
+		y = 2
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_4
+		}
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_2
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = LUX_PUPPET_politic_monarchy_focus_democratic_1
+		
+		relative_position_id = LUX_PUPPET_politic_monarchy_focus_1
+
+		icon = GFX_focus_generic_conference
+
+		cost = 10.00
+
+		x = 4
+		y = 1
+
+		prerequisite = { 
+			focus = LUX_PUPPET_politic_monarchy_focus_1
+		}
+		
+		mutually_exclusive = { focus = LUX_PUPPET_politic_monarchy_focus_authoritarian_1 }
+
+		available = { 
+			OR = {
+				has_government = democratic
+				has_government = neutrality
+			}
+		}
+
+		bypass = {
+
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+
 		}
 	}
 }
