@@ -28,12 +28,99 @@ IRE_dail_eireann = {
 			}
 		}
 	}
+	IRE_election_funding_LP = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+		ai_will_do = {
+			base = 0
+		}
+		available = {
+			NOT = {
+				has_country_flag = IRE_already_funding
+			}
+		}
+		days_remove = 60
+		modifier = {
+			political_power_cost = 0.15
+			consumer_goods_factor = 0.10
+		}
+		complete_effect = {
+			set_country_flag = IRE_already_funding
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = IRE_LP_sup
+				value = 5
+				tooltip = LP_add_5
+			}
+			IRE_SE_LP = yes
+			clr_country_flag = IRE_already_funding
+		}
+	}
+	IRE_election_funding_FF = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+		ai_will_do = {
+			base = 0
+		}
+		available = {
+			NOT = {
+				has_country_flag = IRE_already_funding
+			}
+		}
+		days_remove = 60
+		modifier = {
+			political_power_cost = 0.15
+			consumer_goods_factor = 0.10
+		}
+		complete_effect = {
+			set_country_flag = IRE_already_funding
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = IRE_FF_sup
+				value = 5
+				tooltip = FF_add_5
+			}
+			IRE_SE_FF = yes
+			clr_country_flag = IRE_already_funding
+		}
+	}
+	IRE_election_funding_FG = {
+		icon = GFX_decision_hol_exchange_intelligence_data
+		ai_will_do = {
+			base = 0
+		}
+		available = {
+			NOT = {
+				has_country_flag = IRE_already_funding
+			}
+		}
+		days_remove = 60
+		modifier = {
+			political_power_cost = 0.15
+			consumer_goods_factor = 0.10
+		}
+		complete_effect = {
+			set_country_flag = IRE_already_funding
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = IRE_FG_sup
+				value = 5
+				tooltip = FG_add_5
+			}
+			IRE_SE_FG = yes
+			clr_country_flag = IRE_already_funding
+		}
+	}
 	IRE_upcoming_elections = {
 		icon = GFX_decision_generic_political_discourse
 		available = {
 			has_country_flag = IRE_NO_congress
 		}
 		activation = {
+			NOT = {
+				has_country_flag = IRE_NO_congress
+			}
 		}
 		days_mission_timeout = 1800
 		fire_only_once = no
@@ -182,6 +269,546 @@ IRE_dail_eireann = {
 					}
 				}
 			}
+		}
+	}
+}
+IRE_GB_decision = {
+	IRE_GB_claim_s122 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_122 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_122 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_122 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			122 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_122 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 122 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_122 = 1 }
+			if = {
+				limit = {
+					check_variable = { global.IRE_GB_122 > 2 }
+				}
+				122 = {
+					set_demilitarized_zone = yes
+				}
+			}
+		}
+	}
+	IRE_GB_claim_s123 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_123 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_123 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_123 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			123 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_123 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 123 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_123 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_123 > 2 } }
+				123 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s338 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_338 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_338 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_338 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			338 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_338 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 338 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_338 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_338 > 2 } }
+				338 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s128 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_128 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_128 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_128 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			128 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_128 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 128 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_128 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_128 > 2 } }
+				128 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s931 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_931 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_931 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_931 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			931 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_931 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 931 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_931 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_931 > 2 } }
+				931 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s131 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_131 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_131 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_131 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			131 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_131 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 131 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_131 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_131 > 2 } }
+				131 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s130 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_130 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_130 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_130 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			130 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_130 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 130 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_130 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_130 > 2 } }
+				130 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+	IRE_GB_claim_s132 = {
+		icon = { key = GFX_decisions_generic_infiltration_3 trigger = { check_variable = { global.IRE_GB_132 > 2 } } }
+		icon = { key = GFX_decisions_generic_infiltration_2 trigger = { check_variable = { global.IRE_GB_132 > 1 } } }
+		icon = { key = GFX_decisions_generic_infiltration_1 trigger = { check_variable = { global.IRE_GB_132 > 0 } } }
+		icon = GFX_decisions_generic_infiltration_0
+		ai_will_do = { base = 1 }
+		available = { 
+			has_completed_focus = IRE_focus_infiltration_GB 
+			132 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_1
+				check_variable = { global.IRE_GB_132 < 3 }
+			}
+		}
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 149 }
+			has_political_power > 24
+		}
+		custom_cost_text = TRM_decision_cost_ie_150_pp_25
+		fire_only_once = no
+		days_remove = 15
+		highlight_states = { highlight_state_targets = { state = 132 } }
+		complete_effect = {
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -150
+				}
+				add_political_power = -25
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = IRE_GB_tt_2
+			add_to_variable = { global.IRE_GB_132 = 1 }
+			if = {
+				limit = { check_variable = { global.IRE_GB_132 > 2 } }
+				132 = { set_demilitarized_zone = yes }
+			}
+		}
+	}
+}
+IRE_KAI_GB_decision = {
+	IRE_KAI_GB_claim_s122 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_122 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_122 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_122 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			122 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_122 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 122 } }
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = { global.IRE_GB_122 > 2 }
+				}
+				122 = {
+					set_demilitarized_zone = no
+				}
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_122 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s123 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_123 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_123 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_123 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			123 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_123 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 123 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_123 > 2 } }
+				123 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_123 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s338 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_338 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_338 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_338 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			338 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_338 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 338 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_338 > 2 } }
+				338 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_338 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s128 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_128 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_128 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_128 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			128 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_128 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 128 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_128 > 2 } }
+				128 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_128 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s931 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_931 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_931 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_931 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			931 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_931 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 931 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_931 > 2 } }
+				931 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_931 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s131 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_131 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_131 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_131 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			131 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_131 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 131 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_131 > 2 } }
+				131 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_131 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s130 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_130 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_130 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_130 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			130 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_130 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 130 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_130 > 2 } }
+				130 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_130 = -1 }
+		}
+	}
+	IRE_KAI_GB_claim_s132 = {
+		icon = { key = GFX_decisions_generic_counter_infiltration_3 trigger = { check_variable = { global.IRE_GB_132 > 2 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_2 trigger = { check_variable = { global.IRE_GB_132 > 1 } } }
+		icon = { key = GFX_decisions_generic_counter_infiltration_1 trigger = { check_variable = { global.IRE_GB_132 > 0 } } }
+		icon = GFX_decisions_generic_counter_infiltration_0
+		ai_will_do = { base = 10 }
+		available = { 
+			132 = { is_controlled_by = KAI } 
+			custom_trigger_tooltip = {
+				tooltip = IRE_GB_tt_3
+				check_variable = { global.IRE_GB_132 > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 30
+		highlight_states = { highlight_state_targets = { state = 132 } }
+		remove_effect = {
+			if = {
+				limit = { check_variable = { global.IRE_GB_132 > 2 } }
+				132 = { set_demilitarized_zone = no }
+			}
+			custom_effect_tooltip = IRE_GB_tt_4
+			add_to_variable = { global.IRE_GB_132 = -1 }
 		}
 	}
 }
