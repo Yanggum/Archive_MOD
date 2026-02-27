@@ -71,22 +71,22 @@ focus_tree = {
 		completion_reward = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_0
-				amount = 300
+				amount = 900
 				producer = ENG
 			}
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_1
-				amount = 300
+				amount = 900
 				producer = ENG
 			}
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = 90
+				amount = 120
 				producer = ENG
 			}
 			add_equipment_to_stockpile = {
 				type = artillery_equipment_1
-				amount = 29
+				amount = 120
 				producer = ENG
 			}
 			134 = {
@@ -381,7 +381,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 0
 		y = 1
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 		}  
@@ -656,7 +656,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 1
 		y = 6
-		cost = 10
+		cost = 8
 		search_filters = {}
 		available = {
 			IRE_majority = yes
@@ -693,7 +693,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 1
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			custom_trigger_tooltip = {
@@ -726,7 +726,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = -5
 		y = 1
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			NOT = {
@@ -988,7 +988,7 @@ focus_tree = {
 		mutually_exclusive = { focus = IRE_focus_sov_economy }
 		x = 0
 		y = 3
-		cost = 10
+		cost = 8
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_LP
@@ -1028,7 +1028,7 @@ focus_tree = {
 		mutually_exclusive = { focus = IRE_focus_ire_cooperativeism }
 		x = 2
 		y = 3
-		cost = 10
+		cost = 8
 		search_filters = {}
 		available = {
 			NOT = {
@@ -1102,7 +1102,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 6
 		y = 1
-		cost = 10
+		cost = 4
 		search_filters = {}
 		available = {
 			NOT = {
@@ -1300,7 +1300,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 1
 		y = 3
-		cost = 10
+		cost = 8
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_FF_with_FG
@@ -1377,6 +1377,7 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
+			add_stability = 0.10
 			remove_dynamic_modifier = {
 				modifier = IRE_engire_trade_war_idea2
 			}
@@ -1387,6 +1388,12 @@ focus_tree = {
 			}
 			IRE_SE_FF = yes
 			remove_ideas = IRE_agricultural_society_1_idea ##일단 임시로
+			if = {
+				limit = {
+					has_idea = IRE_fiscal_austerity_idea
+				}
+				remove_ideas = IRE_fiscal_austerity_idea
+			}
 		}
 	}
 	focus = { # 제한적인 동원령
@@ -1437,6 +1444,9 @@ focus_tree = {
 			clr_country_flag = IRE_FF_with_FG
 			clr_country_flag = IRE_FF_with_LP
 			activate_decision = IRE_dissolution
+			hidden_effect = {
+				add_political_power = 300
+			}
 		}
 	}
 	focus = { # 민주사회주의
@@ -1707,7 +1717,7 @@ focus_tree = {
 		mutually_exclusive = { focus = IRE_focus_always_neutrality }
 		x = 3
 		y = 1
-		cost = 10
+		cost = 5
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_government_FG
@@ -1719,7 +1729,6 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
-			add_stability = -0.10
 			add_country_leader_role = {
 				character = IRE_James_Hamilton
 				promote_leader = yes
@@ -1761,7 +1770,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 2
 		y = 2
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_government_FG
@@ -1773,7 +1782,6 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
-			add_stability = -0.10
 			add_trait = {
 				character = IRE_James_Hamilton
 				ideology = conservatism
@@ -1789,7 +1797,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 1
 		y = 3
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_government_FG
@@ -1811,7 +1819,7 @@ focus_tree = {
 		#mutually_exclusive = { focus = IRE_focus_ }
 		x = 3
 		y = 3
-		cost = 5
+		cost = 4
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_government_FG
@@ -1887,67 +1895,37 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
+			clr_country_flag = IRE_government_FG
 			set_cosmetic_tag = IRE_duchy
-		}
-	}
-	focus = { # 벨파스트 천도
-		relative_position_id = IRE_focus_FG
-		id = IRE_focus_capital_to_belfast
-		icon = GFX_focus_generic_improve_the_administration
-		prerequisite = { focus = IRE_focus_hold_a_referendum focus = IRE_focus_dissolution_congress }
-		#mutually_exclusive = { focus = IRE_focus_ }
-		x = 4
-		y = 6
-		cost = 5
-		search_filters = {}
-		available = {
-			controls_state = 119
-		}  
-		bypass = {
-		}
-		completion_reward = {
-			add_victory_points = {
-				province = 3379
-				value = 5
+			set_party_name = {
+				ideology = democratic
+				long_name = IRE_DEM_name
+				name = IRE_DEM_name
 			}
-			set_capital = {
-				state = 119
-				remember_old_capital = no
+			set_party_name = {
+				ideology = neutrality
+				long_name = IRE_NES_name
+				name = IRE_NES_name
 			}
-			random_owned_controlled_state = {
-				limit = {
-					OR = {
-						state = 134
-						state = 135
-						state = 113
-					}		
-					industrial_complex > 1
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
 			}
-			random_owned_controlled_state = {
-				limit = {
-					OR = {
-						state = 134
-						state = 135
-						state = 113
-					}		
-					industrial_complex > 1
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 1
-				}
+			add_popularity = { 
+				ideology = neutrality 
+				popularity = 0.30
 			}
-			119 = {
-				set_state_category = large_city
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
+			hidden_effect = {
+				set_country_flag = IRE_NO_congress
+				promote_character = IRE_Eamon_de_valera
+				add_country_leader_role = {
+					character = IRE_James_Hamilton
+					promote_leader = yes	
+					country_leader = {
+						ideology = oligarchism
+						expire = "1965.1.1.1"
+						traits = { IRE_order_of_the_garter_and_st_patrick IRE_duke_of_abercorn }
+					}
 				}
 			}
 		}
@@ -2044,7 +2022,7 @@ focus_tree = {
 		mutually_exclusive = { focus = IRE_focus_hold_a_referendum }
 		x = 6
 		y = 5
-		cost = 5
+		cost = 2
 		search_filters = {}
 		available = {
 			has_country_flag = IRE_government_FG
@@ -2059,6 +2037,7 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
+			clr_country_flag = IRE_government_FG
 			set_party_name = {
 				ideology = democratic
 				long_name = IRE_DEM_name
@@ -2204,6 +2183,606 @@ focus_tree = {
 				ideology = neutrality
 				long_name = IRE_NES_name
 				name = IRE_NES_name
+			}
+			add_popularity = { 
+				ideology = neutrality 
+				popularity = 0.30
+			}
+		}
+	}
+	focus = { # 벨파스트 천도
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_capital_to_belfast
+		icon = GFX_focus_generic_improve_the_administration
+		prerequisite = { focus = IRE_focus_hold_a_referendum focus = IRE_focus_dissolution_congress }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 6
+		cost = 5
+		search_filters = {}
+		available = {
+			controls_state = 119
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_victory_points = {
+				province = 3379
+				value = 5
+			}
+			set_capital = {
+				state = 119
+				remember_old_capital = no
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 134
+						state = 135
+						state = 113
+					}		
+					industrial_complex > 1
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 134
+						state = 135
+						state = 113
+					}		
+					industrial_complex > 1
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			119 = {
+				set_state_category = large_city
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = { # 영국의 충실한 종
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_faithful_subject
+		icon = GFX_focus_CZE_german_puppet
+		prerequisite = { focus = IRE_focus_capital_to_belfast }
+		mutually_exclusive = { focus = IRE_focus_british_warrior }
+		x = 2
+		y = 7
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			ENG = {
+				country_event = {
+					id = IRE_event.9010
+					hours = 6
+				}
+			}
+			custom_effect_tooltip = if_they_accept_tt
+			effect_tooltip = {
+				ENG = {
+					give_guarantee = IRE
+					give_military_access = IRE
+					give_market_access = IRE
+					add_ai_strategy = { 
+						type = alliance 
+						id = IRE 
+						value = 200 
+					}
+				}
+				IRE = {
+					give_guarantee = ENG
+					give_military_access = ENG
+					give_market_access = ENG
+					add_ai_strategy = { 
+						type = alliance 
+						id = ENG 
+						value = 200 
+					}
+				}
+			}
+		}
+	}
+	focus = { # 브리튼 제도의 전사
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_british_warrior
+		icon = GFX_focus_GRE_reviving_the_spartan_warrior_spirit
+		prerequisite = { focus = IRE_focus_capital_to_belfast }
+		mutually_exclusive = { focus = IRE_focus_faithful_subject }
+		x = 6
+		y = 7
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.10
+			ENG = {
+				add_opinion_modifier = {
+					target = IRE
+					modifier = large_decrease
+				}
+			}
+		}
+	}
+	focus = { # 그레이트브리튼에 침투
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_infiltration_GB
+		icon = GFX_focus_attack_britain
+		prerequisite = { focus = IRE_focus_british_warrior }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 6
+		y = 8
+		cost = 5
+		search_filters = {}
+		available = {
+			KAI = {
+				exists = yes
+				NOT = {
+					is_in_faction_with = IRE
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 120
+		}
+	}
+	focus = { # 아일랜드 왕국
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_kingdom
+		icon = GFX_goal_anschluss
+		prerequisite = { focus = IRE_focus_infiltration_GB }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 8
+		y = 9
+		cost = 4
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_war_support = 0.10
+		}
+	}
+	focus = { # 해방 전쟁
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_liberation_war
+		icon = GFX_focus_generic_advanced_military_studies
+		prerequisite = { focus = IRE_focus_kingdom }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 8
+		y = 11
+		cost = 2
+		search_filters = {}
+		available = {
+			KAI = {
+				exists = yes
+				NOT = {
+					is_in_faction_with = IRE
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			declare_war_on = { target = KAI type = annex_everything }
+			add_ideas = IRE_liberation_war_idea
+			hidden_effect = {
+				division_template = {
+					name = "Liberation Militia"
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 0 y = 2 }
+						militia = { x = 0 y = 3 }
+					}
+				}
+				if={ limit={ check_variable={ global.IRE_GB_122 > 2 } KAI={ controls_state=122 } } IR4={ transfer_state=122 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR4 autonomous_state=autonomy_puppet end_wars=no } 122={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR4 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR4 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR4 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR4 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_123 > 2 } KAI={ controls_state=123 } } IR3={ transfer_state=123 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR3 autonomous_state=autonomy_puppet end_wars=no } 123={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_338 > 2 } KAI={ controls_state=338 } } IR3={ transfer_state=338 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR3 autonomous_state=autonomy_puppet end_wars=no } 338={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR3 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_128 > 2 } KAI={ controls_state=128 } } IR2={ transfer_state=128 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR2 autonomous_state=autonomy_puppet end_wars=no } 128={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_931 > 2 } KAI={ controls_state=931 } } IR1={ transfer_state=931 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR1 autonomous_state=autonomy_puppet end_wars=no } 931={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_131 > 2 } KAI={ controls_state=131 } } IR1={ transfer_state=131 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR1 autonomous_state=autonomy_puppet end_wars=no } 131={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR1 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_130 > 2 } KAI={ controls_state=130 } } IR2={ transfer_state=130 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR2 autonomous_state=autonomy_puppet end_wars=no } 130={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if={ limit={ check_variable={ global.IRE_GB_132 > 2 } KAI={ controls_state=132 } } IR2={ transfer_state=132 division_template={ name="Liberation Militia" regiments={ militia={ x=0 y=0 } militia={ x=0 y=1 } militia={ x=0 y=2 } militia={ x=0 y=3 } } } } set_autonomy={ target=IR2 autonomous_state=autonomy_puppet end_wars=no } 132={ create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IR2 } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } create_unit={ division="name = \"Liberation Militia\" division_template = \"Liberation Militia\" start_experience_factor = 0.3 start_equipment_factor = 1.0" owner=IRE allow_spawning_on_enemy_provs = yes } } }
+				if = {
+					limit = { country_exists = IR1 }
+					#set_autonomy = { target = IR1 autonomous_state = autonomy_puppet end_wars = no }
+					IR1 = {
+						add_ideas = IRE_liberation_war_idea
+						declare_war_on = { target = KAI type = civil_war }
+					}
+				}
+				if = {
+					limit = { country_exists = IR2 }
+					#set_autonomy = { target = IR2 autonomous_state = autonomy_puppet end_wars = no }
+					IR2 = {
+						add_ideas = IRE_liberation_war_idea
+						declare_war_on = { target = KAI type = civil_war }
+					}
+				}
+				if = {
+					limit = { country_exists = IR3 }
+					#set_autonomy = { target = IR3 autonomous_state = autonomy_puppet end_wars = no }
+					IR3 = {
+						add_ideas = IRE_liberation_war_idea
+						declare_war_on = { target = KAI type = civil_war }
+					}
+				}
+				if = {
+					limit = { country_exists = IR4 }
+					#set_autonomy = { target = IR4 autonomous_state = autonomy_puppet end_wars = no }
+					IR4 = {
+						add_ideas = IRE_liberation_war_idea
+						declare_war_on = { target = KAI type = civil_war }
+					}
+				}
+				IR1 = {
+					add_state_core = 121
+					add_state_core = 133
+					add_state_core = 931
+					add_state_core = 131
+				}
+				IR2 = {
+					add_state_core = 132
+					add_state_core = 130
+					add_state_core = 129
+					add_state_core = 128
+					add_state_core = 125
+				}
+				IR3 = {
+					add_state_core = 123
+					add_state_core = 338
+					add_state_core = 127
+					add_state_core = 126
+				}
+				IR4 = {
+					add_state_core = 122
+				}
+			}
+		}
+		will_lead_to_war_with = KAI
+	}
+	focus = { # 징병법 개정
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_revision_conscription_act
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		prerequisite = { focus = IRE_focus_british_warrior }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 5
+		y = 9
+		cost = 5
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.05
+			add_war_support = 0.05
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_idea = all_adults_serve
+							has_idea = scraping_the_barrel
+						}
+					}
+				}
+				add_ideas = service_by_requirement
+			}
+		}
+	}
+	focus = { # 긴급 동원
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_emergency_mobilization
+		icon = GFX_focus_generic_reorient_production
+		prerequisite = { focus = IRE_focus_revision_conscription_act }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 10
+		cost = 10
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.05
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_idea = tot_economic_mobilisation
+					}
+				}
+				add_ideas = war_economy
+			}
+		}
+	}
+	focus = { # 보급로 확보
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_securing_supply_routes
+		icon = GFX_focus_generic_reinforcing_the_supply_network
+		prerequisite = { focus = IRE_focus_revision_conscription_act }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 6
+		y = 10
+		cost = 10
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.05
+			add_equipment_to_stockpile = {
+				type = train_equipment
+				amount = 20
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = 100
+			}
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = 100
+			}
+			custom_effect_tooltip = IRE_tt_15
+			effect_tooltip = {
+				add_timed_idea = {
+					idea = GER_strengthened_supply_lines_ns
+					days = 730
+				}
+			}
+		}
+	}
+	focus = { # 신비 탐구
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_mystery_quest
+		icon = GFX_goal_HEU_junsulnote_1
+		prerequisite = { focus = IRE_focus_emergency_mobilization }
+		prerequisite = { focus = IRE_focus_securing_supply_routes }
+		mutually_exclusive = { focus = IRE_focus_crate_cavalry }
+		x = 4
+		y = 11
+		cost = 10
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = mystic_engineering
+			}
+			if = {
+				limit = {
+					has_tech = BA_otherworld_equipment_analysis
+				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					category = mystic_engineering
+				}
+			}
+			else = {
+				set_technology = {
+					BA_otherworld_equipment_analysis = 1
+				}
+			}
+			if = {
+				limit = {
+					has_tech = BA_mystic_engineering_tech
+				}
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 1
+					category = mystic_engineering
+				}
+			}
+			else = {
+				set_technology = {
+					BA_mystic_engineering_tech = 1
+				}
+			}
+		}
+	}
+	focus = { # 기병대 창설
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_crate_cavalry
+		icon = GFX_goal_generic_cavalry
+		prerequisite = { focus = IRE_focus_emergency_mobilization }
+		prerequisite = { focus = IRE_focus_securing_supply_routes }
+		mutually_exclusive = { focus = IRE_focus_mystery_quest }
+		x = 6
+		y = 11
+		cost = 10
+		search_filters = {}
+		available = {
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			army_experience = 25
+			custom_effect_tooltip = IRE_tt_16
+			hidden_effect = {
+				division_template = {
+					name = "Irish Elite Cavalry"
+					regiments = {
+						cavalry = { x = 0 y = 0 }
+						cavalry = { x = 0 y = 1 }
+						cavalry = { x = 0 y = 2 }
+						cavalry = { x = 0 y = 3 }
+						cavalry = { x = 1 y = 0 }
+						cavalry = { x = 1 y = 1 }
+						cavalry = { x = 1 y = 2 }
+						cavalry = { x = 1 y = 3 }
+						mot_artillery_brigade = { x = 2 y = 0 }
+						mot_artillery_brigade = { x = 2 y = 1 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+					}
+				}
+				random_controlled_state = {
+					create_unit = { division = "name = \"Irish Elite Cavalry\" division_template = \"Irish Elite Cavalry\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"Irish Elite Cavalry\" division_template = \"Irish Elite Cavalry\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"Irish Elite Cavalry\" division_template = \"Irish Elite Cavalry\" start_experience_factor = 0.3 start_equipment_factor = 1" owner = ROOT }
+				}
+			}
+		}
+	}
+	focus = { # 위대한 승리
+		relative_position_id = IRE_focus_FG
+		id = IRE_focus_great_win
+		icon = GFX_focus_eng_imperial_federation
+		prerequisite = { focus = IRE_focus_liberation_war }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 6
+		y = 12
+		cost = 5
+		search_filters = {}
+		available = {
+			has_war = no
+			any_country = {
+				OR = {
+					original_tag = IRE
+					is_puppet_of = IRE
+				}
+				AND = {
+					controls_state = 123
+					controls_state = 127
+					controls_state = 338
+					controls_state = 126
+					controls_state = 125
+					controls_state = 128
+					controls_state = 129
+					controls_state = 130
+					controls_state = 132
+					controls_state = 931
+					controls_state = 131
+					controls_state = 122
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_political_power = 200
+			set_cosmetic_tag = IRE_witheng
+			if = {
+				limit = {
+					IR1 = {
+						exists = yes
+						is_puppet_of = IRE
+					}
+				}
+				annex_country = { 
+					target = IR1 
+					transfer_troops = yes 
+				}
+			}
+			if = {
+				limit = {
+					IR2 = {
+						exists = yes
+						is_puppet_of = IRE
+					}
+				}
+				annex_country = { 
+					target = IR2
+					transfer_troops = yes 
+				}
+			}
+			if = {
+				limit = {
+					IR3 = {
+						exists = yes
+						is_puppet_of = IRE
+					}
+				}
+				annex_country = { 
+					target = IR3 
+					transfer_troops = yes 
+				}
+			}
+			if = {
+				limit = {
+					IR4 = {
+						exists = yes
+						is_puppet_of = IRE
+					}
+				}
+				annex_country = { 
+					target = IR4
+					transfer_troops = yes 
+				}
+			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 123
+						state = 127
+						state = 338
+						state = 126
+						state = 125
+						state = 128
+						state = 129
+						state = 130
+						state = 132
+						state = 931
+						state = 131
+						state = 932
+					 	state = 122
+					}
+				}
+				add_core_of = IRE
+			}
+			126 = {
+				set_state_name = IRE_name_London
+			}
+			set_province_name = {
+				id = 6103
+				name = IRE_name_London_state
 			}
 		}
 	}
