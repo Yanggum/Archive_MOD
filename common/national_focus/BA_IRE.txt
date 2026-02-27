@@ -1663,6 +1663,30 @@ focus_tree = {
 			add_ideas = free_trade
 		}
 	}
+	focus = { # 군수품 구매처 탐색
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_find_weaponshop
+		icon = GFX_focus_generic_limited_social_mobilization
+		prerequisite = { focus = IRE_focus_militia_add }
+		prerequisite = { focus = IRE_focus_all_economic_openness }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 3
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+
+		}
+	}
 	focus = { # 난민 수용
 		relative_position_id = IRE_focus_always_neutrality
 		id = IRE_focus_refugee_ok
@@ -2375,12 +2399,19 @@ focus_tree = {
 		cost = 4
 		search_filters = {}
 		available = {
+			has_government = neutrality
 		}  
 		bypass = {
 		}
 		completion_reward = {
-			add_stability = 0.10
-			add_war_support = 0.10
+			add_stability = 0.05
+			add_war_support = 0.05
+			set_cosmetic_tag = IRE_duchy2
+			add_trait = {
+				character = IRE_James_Hamilton
+				ideology = oligarchism
+				trait = IRE_regent
+			}
 		}
 	}
 	focus = { # 해방 전쟁
@@ -2406,6 +2437,15 @@ focus_tree = {
 		completion_reward = {
 			declare_war_on = { target = KAI type = annex_everything }
 			add_ideas = IRE_liberation_war_idea
+			if = {
+				limit = {
+					has_completed_focus = IRE_focus_securing_supply_routes
+				}
+				add_timed_idea = {
+					idea = GER_strengthened_supply_lines_ns
+					days = 730
+				}
+			}
 			hidden_effect = {
 				division_template = {
 					name = "Liberation Militia"
@@ -2430,6 +2470,13 @@ focus_tree = {
 					IR1 = {
 						add_ideas = IRE_liberation_war_idea
 						declare_war_on = { target = KAI type = civil_war }
+						if = {
+							limit = { IRE = { has_completed_focus = IRE_focus_securing_supply_routes } }
+							add_timed_idea = {
+								idea = GER_strengthened_supply_lines_ns
+								days = 730
+							}
+						}
 					}
 				}
 				if = {
@@ -2438,6 +2485,13 @@ focus_tree = {
 					IR2 = {
 						add_ideas = IRE_liberation_war_idea
 						declare_war_on = { target = KAI type = civil_war }
+						if = {
+							limit = { IRE = { has_completed_focus = IRE_focus_securing_supply_routes } }
+							add_timed_idea = {
+								idea = GER_strengthened_supply_lines_ns
+								days = 730
+							}
+						}
 					}
 				}
 				if = {
@@ -2446,6 +2500,13 @@ focus_tree = {
 					IR3 = {
 						add_ideas = IRE_liberation_war_idea
 						declare_war_on = { target = KAI type = civil_war }
+						if = {
+							limit = { IRE = { has_completed_focus = IRE_focus_securing_supply_routes } }
+							add_timed_idea = {
+								idea = GER_strengthened_supply_lines_ns
+								days = 730
+							}
+						}
 					}
 				}
 				if = {
@@ -2454,6 +2515,13 @@ focus_tree = {
 					IR4 = {
 						add_ideas = IRE_liberation_war_idea
 						declare_war_on = { target = KAI type = civil_war }
+						if = {
+							limit = { IRE = { has_completed_focus = IRE_focus_securing_supply_routes } }
+							add_timed_idea = {
+								idea = GER_strengthened_supply_lines_ns
+								days = 730
+							}
+						}
 					}
 				}
 				IR1 = {
@@ -2495,21 +2563,17 @@ focus_tree = {
 		available = {
 		}  
 		bypass = {
+			OR = {
+				has_idea = extensive_conscription
+				has_idea = service_by_requirement
+				has_idea = all_adults_serve
+				has_idea = scraping_the_barrel
+			}
 		}
 		completion_reward = {
 			add_stability = -0.05
 			add_war_support = 0.05
-			if = {
-				limit = {
-					NOT = {
-						OR = {
-							has_idea = all_adults_serve
-							has_idea = scraping_the_barrel
-						}
-					}
-				}
-				add_ideas = service_by_requirement
-			}
+			add_ideas = extensive_conscription
 		}
 	}
 	focus = { # 긴급 동원
@@ -2567,6 +2631,7 @@ focus_tree = {
 		available = {
 		}  
 		bypass = {
+			has_completed_focus = IRE_focus_liberation_war
 		}
 		completion_reward = {
 			add_war_support = 0.05
