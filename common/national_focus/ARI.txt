@@ -5510,6 +5510,34 @@ focus_tree = {
 			custom_effect_tooltip = enter_tt
 
 			remove_ideas = BA_ARI_bitter_revanchism_ns_1
+
+			if = {
+				limit = { has_country_leader_with_trait = ARI_saori_skepticism_about_reform }
+				remove_country_leader_trait = ARI_saori_skepticism_about_reform
+
+				custom_effect_tooltip = enter_tt
+			}
+			if = {
+				limit = { has_country_leader_with_trait = ARI_saori_trust_in_reform }
+				remove_country_leader_trait = ARI_saori_trust_in_reform
+
+				custom_effect_tooltip = enter_tt
+			}
+
+			if = {
+				limit = { has_country_flag = flag_AASRU_progressbar_end3 }
+				news_event = { id = ARI_news.12 hours = 8 }
+			}
+			else_if = {
+				limit = { has_country_flag = flag_AASRU_progressbar_end2 }
+				news_event = { id = ARI_news.11 hours = 8 }
+				country_event = { id = ARI_reformist_event_chain.31 days = 2 }
+			}
+			else_if = {
+				limit = { has_country_flag = flag_AASRU_progressbar_end1 }
+				news_event = { id = ARI_news.10 hours = 8 }
+				country_event = { id = ARI_reformist_event_chain.30 days = 2 }
+			}
 		}
 	}
 	focus = {
@@ -5522,6 +5550,12 @@ focus_tree = {
 			focus = ARI_universal_republic_parliament
 		}
 		available = {
+			NOT = {
+				has_country_leader = {
+					character = ARI_joumae_saori
+					ruling_only = yes
+				}
+			}
 		}
 		cost = 5
 		x = -1
@@ -5540,6 +5574,7 @@ focus_tree = {
 			focus = ARI_national_constituent_assembly
 		}
 		available = {
+			has_country_flag = flag_AASRU_progressbar_end3
 		}
 		cost = 5
 		x = 1
