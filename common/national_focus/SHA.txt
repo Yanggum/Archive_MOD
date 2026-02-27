@@ -2582,11 +2582,10 @@ focus_tree = {
 		dynamic = yes
 		icon = GFX_focus_SOV_international_union_of_soviet_republics
 		prerequisite= { 
-			focus = SHA_communism_focus_11
-			focus = SHA_communism_focus_14
+			focus = SHA_communism_focus_8
 		}
-		x = -1
-		y = 4
+		x = 5
+		y = 1
 		offset = {
 			x = 0
 			trigger = { 
@@ -2616,17 +2615,6 @@ focus_tree = {
 
 		available = {
 			date > 1937.1.1
-			custom_trigger_tooltip = {
-				tooltip = SHA_shanhaijing_fact_trigger_tt
-				OR = {
-					has_completed_focus = SHA_Kaguya_ousted
-					has_completed_focus = SHA_conservative_revolution
-					has_completed_focus = SHA_appointment_of_BTP
-					has_completed_focus = SHA_communism_focus_9
-					has_completed_focus = SHA_communism_focus_12
-					has_completed_focus = SHA_Strengthening_Genryumon
-				}
-			}
 		}
 		bypass = {
 			OR = {
@@ -2682,6 +2670,9 @@ focus_tree = {
 		offset = {
 			trigger = { has_country_flag = SHA_communist_focus_in_progress }
 			y = 1
+		}
+		allow_branch = {
+			NOT = { has_completed_focus = SHA_local_harmony }
 		}
 		cost = 10
 
@@ -2761,11 +2752,6 @@ focus_tree = {
 			}
 		}
 		bypass = { }
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
-		}
 
 		relative_position_id = SHA_invade_of_Hyakkiyako
 
@@ -2886,12 +2872,6 @@ focus_tree = {
 		}
 		bypass = {
 
-		}
-		
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_global_flag = TOTAL_WAR_BAKSANWAR }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 
 		relative_position_id = SHA_invade_of_Hyakkiyako
@@ -4173,7 +4153,7 @@ focus_tree = {
 		text = SHA_invade_of_Hyakkiyako
 		icon = GFX_focus_attack_HYA
 		x = 0
-		y = 1
+		y = 3
 		cost = 5
 
 		prerequisite = { focus = SHA_communism_diplo_0 }
@@ -5714,6 +5694,74 @@ focus_tree = {
 		}
 	}
 
+	# 장교 사면
+	focus = {
+		id = SHA_pardon_austrian_general
+		icon = GFX_focus_AUS_bring_generals_out_of_retirement
+		x = 5
+		y = 1
+		relative_position_id = SHA_address_the_army
+		search_filters = {  }
+		cost = 4
+
+		prerequisite = { focus = SHA_address_the_army }
+		mutually_exclusive = { }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			every_possible_country = {
+				limit = { 
+					OR = {
+						has_character = AUS_karl_eglseer 
+						has_character = AUS_lothar_rendulic 
+						has_character = AUS_franz_bohme 
+						has_character = AUS_alfred_ritter_von_hubicki 
+						has_character = AUS_valentin_feuerstein
+						has_character = AUS_friedrich_materna
+						has_character = AUS_eugen_beyer
+						has_character = AUS_ernst_hammer
+						has_character = AUS_curt_von_jesser
+						has_character = AUS_eduard_barger
+					}
+				}
+				hidden_effect = {
+					AUS_karl_eglseer = { set_nationality = ROOT }
+					AUS_lothar_rendulic = { set_nationality = ROOT }
+					AUS_franz_bohme = { set_nationality = ROOT }
+					AUS_alfred_ritter_von_hubicki = { set_nationality = ROOT }
+					AUS_valentin_feuerstein = { set_nationality = ROOT }
+					AUS_friedrich_materna = { set_nationality = ROOT }
+					AUS_eugen_beyer = { set_nationality = ROOT }
+					AUS_ernst_hammer = { set_nationality = ROOT }
+					AUS_curt_von_jesser = { set_nationality = ROOT }
+					AUS_eduard_barger = { set_nationality = ROOT }
+				}
+				AUS_karl_eglseer = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_lothar_rendulic = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_franz_bohme = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_alfred_ritter_von_hubicki = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_valentin_feuerstein = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_friedrich_materna = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_eugen_beyer = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_ernst_hammer = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_curt_von_jesser = { custom_effect_tooltip = character_becomes_a_general }
+				custom_effect_tooltip = tooltip_white_line
+				AUS_eduard_barger = { custom_effect_tooltip = character_becomes_a_general }
+			}
+		}
+	}
+
 	# 장비개발부
 	focus = {
 		id = SHA_Equipment_Development_Department
@@ -5732,7 +5780,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			unlock_military_industrial_organization_tooltip = mio:SHA_infantry_equipment_organization
+			#unlock_military_industrial_organization_tooltip = mio:SHA_infantry_equipment_organization
 			mio:SHA_infantry_equipment_organization = {
 				add_mio_size = 1
 			}
@@ -5769,7 +5817,6 @@ focus_tree = {
 					province = 11666 # 산해경 중앙특구
 				}
 			}
-			unlock_military_industrial_organization_tooltip = mio:SHA_tank_equipment_organization
 		}
 	}
 
@@ -5791,7 +5838,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			unlock_military_industrial_organization_tooltip = mio:SHA_artillery_equipment_organization
+			#unlock_military_industrial_organization_tooltip = mio:SHA_artillery_equipment_organization
 			# MIO 지정 안해주면 코드명으로 출력 시키는 거 같아서 날먹이 안되네 ;ㅅ;
 			mio:SHA_infantry_equipment_organization = {
 				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_soft_attack
@@ -6007,8 +6054,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_one_random_military_factory = yes
-			unlock_military_industrial_organization_tooltip = mio:SHA_SNAA_organization
+			add_one_random_military_factory = yesq
 			
 			custom_effect_tooltip = tooltip_white_line
 			
@@ -6233,6 +6279,10 @@ focus_tree = {
 
 		completion_reward = {
 			add_research_slot_until_five = yes
+			if = {
+				limit = { has_idea = BA_exiles_of_the_future }
+				remove_ideas = BA_exiles_of_the_future
+			}
 		}
 	}
 
@@ -6376,7 +6426,7 @@ focus_tree = {
 		icon = GFX_focus_generic_mining_industry
 		prerequisite = { focus = SHA_harness_austria_industrial_might }
 		mutually_exclusive = { }
-		x = -1
+		x = -3
 		y = 1
 		relative_position_id = SHA_harness_austria_industrial_might
 
@@ -6430,7 +6480,7 @@ focus_tree = {
 		icon = GFX_goal_generic_oil_refinery
 		prerequisite = { focus = SHA_invest_in_erzberg_steel_mines}
 		mutually_exclusive = { }
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = SHA_invest_in_erzberg_steel_mines
 
@@ -6500,15 +6550,69 @@ focus_tree = {
 		}
 	}
 
+	# 잘츠부르크 미터질 광산
+	focus = {
+		id = SHA_tungsten_minerals
+		icon = GFX_focus_generic_tungsten
+		prerequisite = { focus = SHA_invest_in_erzberg_steel_mines}
+		mutually_exclusive = { }
+		x = 0
+		y = 2
+		relative_position_id = SHA_invest_in_erzberg_steel_mines
+
+		search_filters = { }
+
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			152 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+		
+		bypass = {
+			
+			152 = {
+				NOT = {
+					is_owned_and_controlled_by = ROOT
+				}
+			}
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+
+			152 = {
+				add_resource = {
+					type = tungsten
+					amount = 12
+				}	
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}	
+			}
+
+		}
+	}
+
 	# 낙농업
 	focus = {
 		id = SHA_alps_livestock_industry
 		icon = GFX_focus_ARG_capitalize_the_beef_industry
-		prerequisite = { focus = SHA_invest_in_erzberg_steel_mines}
+		prerequisite = { focus = SHA_harness_austria_industrial_might}
 		mutually_exclusive = { }
-		x = 0
+		x = -1
 		y = 1
-		relative_position_id = SHA_invest_in_erzberg_steel_mines
+		relative_position_id = SHA_harness_austria_industrial_might
 
 		search_filters = { }
 
@@ -6530,7 +6634,24 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-
+			153 = {
+				BA_increase_state_category_by_one_level = yes
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			848 = {
+				BA_increase_state_category_by_one_level = yes
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -6624,6 +6745,56 @@ focus_tree = {
 				}
 			}
 
+		}
+	}
+
+	# 
+	focus = {
+		id = SHA_fertilizer_industry
+		icon = GFX_focus_CHI_import_fertilisers
+		prerequisite = { focus = SHA_alps_livestock_industry}
+		mutually_exclusive = { }
+		x = 1
+		y = 1
+		relative_position_id = SHA_alps_livestock_industry
+
+		search_filters = { }
+
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_core_state = {
+				limit = {
+					is_owned_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				random_select_amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -6896,7 +7067,7 @@ focus_tree = {
 	focus = {
 		id = SHA_industrialization_effort
 		icon = GFX_focus_generic_military_industry
-		prerequisite = { focus = SHA_courting_the_princess_of_industry}
+		prerequisite = { focus = SHA_urban_housing_projects focus = SHA_shanhaijing_infrastructure }
 		mutually_exclusive = { }
 		x = 0
 		y = 2
@@ -6922,6 +7093,10 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			swap_ideas = {
+				add_idea = SHA_austrian_unemployment_idea3
+				remove_idea = SHA_austrian_unemployment_idea2
+			}
 
 			random_owned_controlled_state = {
 				limit = {
@@ -7110,7 +7285,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = SHA_three_year_plan
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 8
+		cost = 5
 
 		prerequisite = { 
 			focus = SHA_three_year_plan 
@@ -7187,7 +7362,7 @@ focus_tree = {
 	focus = {
 		id = SHA_shanhaijing_trade_promotion
 		icon = GFX_focus_chi_mission_to_the_SHA
-		x = 2
+		x = 1
 		y = 1
 		relative_position_id = SHA_trade_controls
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -7230,7 +7405,7 @@ focus_tree = {
 	focus = {
 		id = SHA_protectionism
 		icon = GFX_focus_chi_mission_to_the_SHA
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = SHA_shanhaijing_trade_promotion
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -7239,7 +7414,7 @@ focus_tree = {
 		prerequisite = { 
 			focus = SHA_shanhaijing_trade_promotion 
 		}
-		mutually_exclusive = {  }
+		mutually_exclusive = { focus = SHA_trade_with_neighborhood }
 
 		available = {
 			
@@ -7248,21 +7423,24 @@ focus_tree = {
 
 
 		completion_reward = {
-
+			swap_ideas = {
+				add_idea = SHA_collapsed_economy_idea3b
+				remove_idea = SHA_collapsed_economy_idea2
+			}
 		}
 	}
 
 	focus = {
-		id = SHA_trade_with_neighborhood
-		icon = GFX_focus_chi_mission_to_the_SHA
-		x = -2
+		id = SHA_nationalization_school_assets
+		icon = GFX_focus_CHI_promote_national_currency
+		x = -1
 		y = 1
-		relative_position_id = SHA_shanhaijing_trade_promotion
+		relative_position_id = SHA_protectionism
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		cost = 5
 
 		prerequisite = { 
-			focus = SHA_shanhaijing_trade_promotion 
+			focus = SHA_protectionism 
 		}
 		mutually_exclusive = {  }
 
@@ -7273,7 +7451,106 @@ focus_tree = {
 
 
 		completion_reward = {
+			random_owned_state = {
+				prioritize = { 4 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_timed_idea = {
+				idea = SHA_foreign_assets
+				years = 1
+			}
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = GEM
+						tag = MIL
+						tag = TRM
+						tag = WHY
+						tag = HYA
+					}
+				}
+				add_opinion_modifier = { target = ROOT modifier = SHA_nationalize_our_assets }
+			}
 
+		}
+	}
+
+	#focus = {
+	#	id = SHA_national_industry_focus
+	#	icon = GFX_focus_CHI_promote_national_currency
+	#	x = 1
+	#	y = 1
+	#	relative_position_id = SHA_protectionism
+	#	search_filters = { FOCUS_FILTER_INDUSTRY }
+	#	cost = 5
+	#	prerequisite = { 
+	#		focus = SHA_protectionism 
+	#	}
+	#	mutually_exclusive = {  }
+	#	available = {
+	#		
+	#	}
+	#	bypass = { }
+	#	completion_reward = {
+	#		random_owned_state = {
+	#			prioritize = { 4 }
+	#			add_extra_state_shared_building_slots = 2
+	#			add_building_construction = {
+	#				type = industrial_complex
+	#				level = 2
+	#				instant_build = yes
+	#			}
+	#		}
+	#		add_timed_idea = {
+	#			idea = SHA_foreign_assets
+	#			years = 1
+	#		}
+	#		every_other_country = {
+	#			limit = {
+	#				OR = {
+	#					tag = GEM
+	#					tag = MIL
+	#					tag = TRM
+	#					tag = WHY
+	#					tag = HYA
+	#				}
+	#			}
+	#			add_opinion_modifier = { target = ROOT modifier = SHA_nationalize_our_assets }
+	#		}
+
+	#	}
+	#}
+
+	focus = {
+		id = SHA_trade_with_neighborhood
+		icon = GFX_focus_chi_mission_to_the_SHA
+		x = -1
+		y = 1
+		relative_position_id = SHA_shanhaijing_trade_promotion
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		cost = 5
+
+		prerequisite = { 
+			focus = SHA_shanhaijing_trade_promotion 
+		}
+		mutually_exclusive = { focus = SHA_protectionism }
+
+		available = {
+			
+		}
+		bypass = { }
+
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = SHA_collapsed_economy_idea3a
+				remove_idea = SHA_collapsed_economy_idea2
+			}
 		}
 	}
 
@@ -7310,343 +7587,42 @@ focus_tree = {
 		}
 	}
 
-
-	# OLD INDUSTRY FOCUS
-
-	# 건축 발전
 	focus = {
-		id = SHA_architechtual_advancements
-		icon = GFX_focus_GER_kdf_wagen
-		x = 20
+		id = SHA_expanding_alliances_with_merchants
+		icon = GFX_focus_generic_monetary_union
+		x = 1
 		y = 1
-		relative_position_id = SHA_economic_stabilization
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 5
-
-		#prerequisite = { 
-		#	focus = SHA_economic_stabilization 
-		#}
-		mutually_exclusive = {  }
-
-		available = {
-			NOT = { has_active_mission = SHA_industrial_stabilisation_mission_timer }
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			add_political_power = 100
-
-			add_tech_bonus = {
-				name = SHA_architechtual_advancements
-				bonus = 0.5
-				uses = 2
-				category = construction_tech
-			}
-
-			custom_effect_tooltip = tooltip_white_line
-			random_owned_state = {
-				limit = { is_core_of = ROOT }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-
-		}
-	}
-
-	# 고속도로 연결
-	focus = {
-		id = SHA_autobahn_connection
-		icon = GFX_focus_CHL_domestic_production_of_the_willys_mb
-		x = -2
-		y = 1
-		relative_position_id = SHA_architechtual_advancements
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 5
-
-		prerequisite = { focus = SHA_architechtual_advancements }
-		mutually_exclusive = {  }
-
-
-		available = {
-			AND = {
-				152 = {
-					is_owned_and_controlled_by = ROOT
-				}
-				4 = {
-					is_owned_and_controlled_by = ROOT
-				}
-			}
-			AND = {
-				152 = {
-					is_owned_and_controlled_by = ROOT
-				}
-				976 = {
-					is_owned_and_controlled_by = ROOT
-				}
-			}
-			975 = {
-				is_owned_and_controlled_by = ROOT
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-
-		}
-	}
-
-	# 철도망 개선
-	focus = {
-		id = SHA_improving_the_rail_network
-		icon = GFX_focus_BEL_engine_of_the_economy
-		x = 0
-		y = 1
-		relative_position_id = SHA_architechtual_advancements
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 5
-
-		prerequisite = { focus = SHA_architechtual_advancements }
-		mutually_exclusive = {  }
-
-
-		available = {
-			has_idea = BA_railway_gauge_issue
-		}
-		bypass = {
-			NOT = { has_idea = BA_railway_gauge_issue }
-		}
-
-		completion_reward = {
-			modify_timed_idea = {
-				idea = BA_railway_gauge_issue
-				days = -1440
-			}
-		}
-	}
-
-	# 오스트리아 연방 철도 인수
-	focus = {
-		id = SHA_Federal_Railroad_Absorption
-		icon = GFX_focus_AUS_bbo_focus
-		x = -1
-		y = 1
-		relative_position_id = SHA_improving_the_rail_network
+		relative_position_id = SHA_trade_with_neighborhood
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		cost = 5
 
 		prerequisite = { 
-			focus = SHA_improving_the_rail_network 
-			focus = SHA_autobahn_connection
+			focus = SHA_trade_with_neighborhood 
 		}
-		mutually_exclusive = {  }
-
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_political_power = 75
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = SHA_bbo_improved
-		}
-	}
-
-	# 경제특구 설립
-	focus = {
-		id = SHA_establish_the_SEZ
-		icon = GFX_goal_state_economy
-		x = -4
-		y = 1
-		relative_position_id = SHA_architechtual_advancements
-		cost = 5
-
-		prerequisite = { focus = SHA_architechtual_advancements }
 		mutually_exclusive = {  }
 
 		available = {
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
+			
 		}
 		bypass = { }
 
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-		}
-
 
 		completion_reward = {
-			every_owned_state = {
-				limit = { state = 4 }
-				add_dynamic_modifier = {
-					modifier = SHA_industrial_region_2
+			random_owned_state = {
+				prioritize = { 4 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
 				}
 			}
-			every_owned_state = {
-				limit = { 
-					OR = {
-						state = 152
-						state = 976
-					}
-				}
-				add_dynamic_modifier = {
-					modifier = SHA_industrial_region
-				}
-			}
-		}
-	}
-
-	# 중앙계획위원회 구성
-	focus = {
-		id = SHA_central_planning
-		icon = GFX_focus_generic_central_planning
-		x = 1
-		y = 1
-		relative_position_id = SHA_establish_the_SEZ
-		cost = 4
-
-		prerequisite = { focus = SHA_establish_the_SEZ }
-		mutually_exclusive = {  }
-
-		available = { 
-			NOT = { has_completed_focus = SHA_transplanting_capitalist_system} 
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			add_ideas = SHA_supreme_economic_council
-		}
-	}
-
-	# 노동조합 통제
-	focus = {
-		id = SHA_union_control
-		icon = GFX_focus_GER_total_control_over_domestic_affairs
-		x = -1
-		y = 1
-		relative_position_id = SHA_establish_the_SEZ
-		cost = 4
-
-		prerequisite = { focus = SHA_establish_the_SEZ }
-		mutually_exclusive = {  }
-
-		available = { 
-			NOT = { has_completed_focus = SHA_transplanting_capitalist_system} 
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			add_ideas = SHA_ASFTU
-			add_stability = -0.05
-		}
-	}
-
-	# 중앙계획위원회 재편
-	focus = {
-		id = SHA_establish_the_VES
-		icon = GFX_goal_agency
-		x = -1
-		y = 1
-		relative_position_id = SHA_central_planning
-		cost = 10
-
-		prerequisite = { focus = SHA_central_planning }
-		prerequisite = { focus = SHA_union_control }
-		mutually_exclusive = {  }
-
-		available = {
-			NOT = { has_completed_focus = SHA_transplanting_capitalist_system}
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			swap_ideas = {
-				add_idea = SHA_supreme_economic_council_2
-				remove_idea = SHA_supreme_economic_council
-			}
-			swap_ideas = {
-				add_idea = SHA_ASFTU_2
-				remove_idea = SHA_ASFTU
+			add_popularity = { ideology = ROOT popularity = 0.03 }
+			add_timed_idea = {
+				idea = SHA_merchant_alliance
+				years = 1
 			}
 
-		}
-	}
-
-	# 목적론적 산업 계획
-	focus = {
-		id = SHA_teleological_planning
-		icon = GFX_focus_GER_prioritize_the_four_year_plan
-		x = -1
-		y = 1
-		relative_position_id = SHA_establish_the_VES
-		cost = 6
-
-		prerequisite = { focus = SHA_establish_the_VES }
-		mutually_exclusive = { focus = SHA_solidarist_representation }
-
-		available = { 
-			NOT = { has_completed_focus = SHA_transplanting_capitalist_system} 
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			swap_ideas = {
-				add_idea = SHA_supreme_economic_council_3
-				remove_idea = SHA_supreme_economic_council_2
-			}
-		}
-	}
-
-	# 협동조합주의적 대표성
-	focus = {
-		id = SHA_solidarist_representation
-		icon = GFX_focus_ICE_state_corporatism
-		x = 1
-		y = 1
-		relative_position_id = SHA_establish_the_VES
-		cost = 6
-
-		prerequisite = { focus = SHA_establish_the_VES }
-		mutually_exclusive = { focus = SHA_teleological_planning }
-
-		available = { 
-			NOT = { has_completed_focus = SHA_transplanting_capitalist_system} 
-			hidden_trigger = {
-				NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			}
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			swap_ideas = {
-				add_idea = SHA_ASFTU_3
-				remove_idea = SHA_ASFTU_2
-			}
 		}
 	}
 
