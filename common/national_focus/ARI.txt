@@ -5594,6 +5594,106 @@ focus_tree = {
 		relative_position_id = ARI_establishment_of_republican_constitution
 		completion_reward = {
 			set_cosmetic_tag = ARI_arius_national_republic
+
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_government = democratic
+						}
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.15
+					}
+					set_politics = {
+						ruling_party = democratic
+						last_election = "1937.1.1"
+						election_frequency = 48
+						elections_allowed = yes
+					}
+
+					hidden_effect = {
+						if = {
+							limit = { democratic < 0.50 }
+							add_popularity = {
+								ideology = democratic
+								popularity = 0.30
+							}
+						}
+					}
+				}
+
+				if = {
+					limit = {
+						NOT = {
+							has_country_leader = {
+								character = ARI_Shirasu_Azusa
+								ruling_only = no
+							}
+						}
+					}
+					add_country_leader_role = {
+						character = ARI_Shirasu_Azusa
+						promote_leader = yes
+						country_leader = {
+							ideology = liberalism
+							traits = {
+								ARI_reformist_trait
+							}
+							expire = "2000.1.1.1"
+						}
+					}
+				}
+
+				if = {
+					limit = {
+						NOT = {
+							has_country_leader = {
+								character = ARI_Shirasu_Azusa
+								ruling_only = yes
+							}
+						}
+					}
+					promote_character = ARI_Shirasu_Azusa
+				}
+			}
+			add_country_leader_trait = ARI_reformist_low_trait
+
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = ARI_arian_faith_swap_ARI_soft_autonomy_ideology_tt
+			add_to_variable = {
+				ARI_arian_political_power_factor = -0.10
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_conscription_factor = -0.10
+				tooltip = conscription_factor_tt
+			}
+			add_to_variable = {
+				ARI_arian_monthly_population = 0.10
+				tooltip = monthly_population_tt
+			}
+			add_to_variable = {
+				ARI_arian_production_factory_max_efficiency_factor = 0.03
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+
+
+			hidden_effect = {
+				remove_dynamic_modifier = {
+					modifier = ARI_arian_faith
+				}
+				add_dynamic_modifier = {
+					modifier = ARI_soft_autonomy_ideology
+				}
+			}
+
+			custom_effect_tooltip = enter_tt
 			news_event = { id = ARI_news.13 hours = 12 }
 		}
 	}
@@ -5690,8 +5790,8 @@ focus_tree = {
 					modifier = ARI_lighthouse_of_democracy
 				}
 			}
-			news_event = { id = ARI_news.14 hours = 12 }
-			country_event = { id = ARI_reformist_event_chain.32 days = 5 }
+			news_event = { id = ARI_news.14 hours = 8 }
+			country_event = { id = ARI_reformist_event_chain.32 days = 1 }
 		}
 	}
 	focus = {
