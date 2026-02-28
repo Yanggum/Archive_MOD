@@ -2771,7 +2771,7 @@ country_event = {
 			ruling_party = democratic
 			last_election = "1937.1.1"
 			election_frequency = 48
-			elections_allowed = no
+			elections_allowed = yes
 		}
 
 		hidden_effect = {
@@ -2838,7 +2838,7 @@ country_event = {
 			ruling_party = democratic
 			last_election = "1937.1.1"
 			election_frequency = 48
-			elections_allowed = no
+			elections_allowed = yes
 		}
 
 		hidden_effect = {
@@ -2870,6 +2870,192 @@ country_event = {
 
 		custom_effect_tooltip = enter_tt
 		news_event = { id = ARI_news.9 hours = 8 }
+	}
+}
+
+country_event = {
+	id = ARI_reformist_event_chain.32
+	title = ARI_reformist_event_chain.32.t
+	desc = ARI_reformist_event_chain.32.d
+	picture = GFX_report_event_ARI_reformist_event_chain_32
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ARI_reformist_event_chain.32.a
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+				set_politics = {
+					ruling_party = democratic
+					last_election = "1937.1.1"
+					election_frequency = 48
+					elections_allowed = yes
+				}
+
+				hidden_effect = {
+					if = {
+						limit = { democratic < 0.50 }
+						add_popularity = {
+							ideology = democratic
+							popularity = 0.30
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_Shirasu_Azusa
+							ruling_only = no
+						}
+					}
+				}
+				add_country_leader_role = {
+					character = ARI_Shirasu_Azusa
+					promote_leader = yes
+					country_leader = {
+						ideology = liberalism
+						traits = {
+							ARI_reformist_trait
+						}
+						expire = "2000.1.1.1"
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_Shirasu_Azusa
+							ruling_only = yes
+						}
+					}
+				}
+				promote_character = ARI_Shirasu_Azusa
+			}
+		}
+		add_country_leader_trait = ARI_reformist_max_trait
+		hidden_effect = {
+			add_country_leader_role = {
+				character = ARI_joumae_saori
+				country_leader = {
+					ideology = conservatism
+					traits = {
+						ARI_arius_student_council_president
+						ARI_arius_squad_left_trait_2
+					}
+					expire = "3000.1.1.1"
+				}
+			}
+		}
+	}
+	option = {
+		name = ARI_reformist_event_chain.32.b
+		add_country_leader_role = {
+			character = ARI_joumae_saori
+			country_leader = {
+				ideology = conservatism
+				traits = {
+					ARI_arius_student_council_president
+					ARI_arius_squad_left_trait_2
+				}
+				expire = "3000.1.1.1"
+			}
+			promote_leader = yes
+		}
+
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+				set_politics = {
+					ruling_party = democratic
+					last_election = "1937.1.1"
+					election_frequency = 48
+					elections_allowed = yes
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_joumae_saori
+							ruling_only = no
+						}
+					}
+				}
+				add_country_leader_role = {
+					character = ARI_joumae_saori
+					promote_leader = yes
+					country_leader = {
+						ideology = liberalism
+						traits = {
+							ARI_arius_student_council_president
+							ARI_arius_squad_left_trait_2
+						}
+						expire = "2000.1.1.1"
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_joumae_saori
+							ruling_only = yes
+						}
+					}
+				}
+				promote_character = ARI_joumae_saori
+			}
+		}
+	}
+
+	after = {
+		remove_country_leader_role = {
+			character = ARI_joumae_saori
+			ideology = arius_nihilism
+		}
+
+		custom_effect_tooltip = enter_tt
+
+		set_party_name = {
+			ideology = fascism
+			long_name = ARI_conservative_party_long
+			name = ARI_conservative_party
+		}
+		add_country_leader_role = {
+			character = ARI_kakehashi_subaru
+			country_leader = {
+				ideology = arius_nihilism
+				traits = {
+					
+				}
+				expire = "3000.1.1.1"
+			}
+			promote_leader = yes
+		}
 	}
 }
 
@@ -3313,6 +3499,10 @@ country_event = {
 			promote_leader = yes
 			country_leader = {
 				ideology = liberalism
+				traits = {
+					ARI_reformist_trait
+				}
+				expire = "2000.1.1.1"
 			}
 		}
 		set_party_name = {

@@ -4809,7 +4809,14 @@ focus_tree = {
 
 
 			if = {
-				limit = { has_character = ARI_joumae_saori }
+				limit = {
+					has_character = ARI_joumae_saori
+					NOT = {
+						has_country_flag = flag_AASRU_progressbar_end1
+						has_country_flag = flag_AASRU_progressbar_end2
+						has_country_flag = flag_AASRU_progressbar_end3
+					}
+				}
 
 				custom_effect_tooltip = enter_tt
 
@@ -4961,7 +4968,14 @@ focus_tree = {
 			}
 
 			if = {
-				limit = { has_character = ARI_joumae_saori }
+				limit = {
+					NOT = {
+						has_country_flag = flag_AASRU_progressbar_end1
+						has_country_flag = flag_AASRU_progressbar_end2
+						has_country_flag = flag_AASRU_progressbar_end3
+					}
+					has_character = ARI_joumae_saori 
+				}
 
 				custom_effect_tooltip = enter_tt
 
@@ -5285,8 +5299,13 @@ focus_tree = {
 			}
 
 			if = {
-				limit = { has_character = ARI_joumae_saori }
-
+				limit = {
+					has_character = ARI_joumae_saori
+					NOT = {
+						has_country_flag = flag_AASRU_progressbar_end2
+						has_country_flag = flag_AASRU_progressbar_end1
+					}
+				}
 				custom_effect_tooltip = enter_tt
 
 				ARI_joumae_saori = {
@@ -5362,7 +5381,14 @@ focus_tree = {
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			country_event = ARI_reformist_event_chain.2
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = flag_AASRU_progressbar_end1
+					}
+				}
+				country_event = ARI_reformist_event_chain.2
+			}
 		}
 	}
 
@@ -5568,6 +5594,7 @@ focus_tree = {
 		relative_position_id = ARI_establishment_of_republican_constitution
 		completion_reward = {
 			set_cosmetic_tag = ARI_arius_national_republic
+			news_event = { id = ARI_news.13 hours = 12 }
 		}
 	}
 	focus = {
@@ -5588,6 +5615,42 @@ focus_tree = {
 		relative_position_id = ARI_establishment_of_republican_constitution
 		completion_reward = {
 			set_cosmetic_tag = ARI_arius_people_republic
+			custom_effect_tooltip = ARI_universal_republic_parliament_tt
+			hidden_effect = {
+				set_temp_variable = {
+					var = democratic_var
+					value = party_popularity@fascism
+				}
+				set_temp_variable = {
+					var = ban_ideology_var
+					value = party_popularity@fascism
+				}
+				multiply_temp_variable = {
+					var = ban_ideology_var
+					value = -0.5
+				}
+				multiply_temp_variable = {
+					var = democratic_var
+					value = 0.5
+				}
+				add_popularity = {
+					ideology = fascism
+					popularity = ban_ideology_var
+				}
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = democratic_var
+			}
+	
+			custom_effect_tooltip = enter_tt
+
+			set_politics = {
+				ruling_party = democratic
+				last_election = "1937.1.1"
+				election_frequency = 48
+				elections_allowed = yes
+			}
 
 			set_portraits = {
 				character = ARI_joumae_saori
@@ -5627,6 +5690,8 @@ focus_tree = {
 					modifier = ARI_lighthouse_of_democracy
 				}
 			}
+			news_event = { id = ARI_news.14 hours = 12 }
+			country_event = { id = ARI_reformist_event_chain.32 days = 5 }
 		}
 	}
 	focus = {
