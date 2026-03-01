@@ -1788,16 +1788,37 @@ focus_tree = {
 			focus = ARI_squad_priority
 		}
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = "헤일로 보병 리워크되면 열어줄께요."
-				always = no
-			}
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_squad_priority
 		completion_reward = {
+
+			army_experience = 25
+
+			add_tech_bonus = {
+				name = ARI_great_cause
+				bonus = 0.75
+				uses = 1
+				category = support_tech
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = ARI_arian_faith_tt
+			add_to_variable = {
+				ARI_arian_conscription_factor = 0.05
+				tooltip = conscription_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+			custom_effect_tooltip = ARI_arius_infiltration_unit_system_modifier_tt
+			add_to_variable = { 
+				ARI_army_mobilization_speed = 0.05
+				tooltip = mobilization_speed_tt
+			}
 		}
 	}
 	focus = {
@@ -1807,16 +1828,50 @@ focus_tree = {
 			focus = ARI_will_of_madame
 		}
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = "헤일로 보병 리워크되면 열어줄께요."
-				always = no
-			}
+			has_full_control_of_state = 85
 		}
 		cost = 5
 		x = 0
 		y = 1
 		relative_position_id = ARI_will_of_madame
 		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_mystic_engineering
+				value = 0.50
+			}
+
+			add_tech_bonus = {
+				name = ARI_establishment_of_gematria_laboratory
+				bonus = 1.0
+				uses = 2
+				category = mystic_engineering
+			}
+
+			custom_effect_tooltip = enter_tt
+			custom_effect_tooltip = ARI_establishment_of_gematria_laboratory_tt
+			hidden_effect = {
+				IF = {
+					limit = { 
+						85 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+							mystic_engineering_facility < 1
+						}
+					}
+
+					85 = {
+						add_building_construction = {
+							type = mystic_engineering_facility
+							level = 1
+							instant_build = yes
+							province = 362
+						}
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -2730,10 +2785,6 @@ focus_tree = {
 			focus = ARI_military_system_reorganization
 		}
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = "헤일로 보병 리워크되면 열어줄께요."
-				always = no
-			}
 		}
 		cost = 5
 		x = -1
@@ -2745,17 +2796,43 @@ focus_tree = {
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
 
+			if = {
+				limit = {
+					has_template = "Angeli Impetuum"
+				}
+				delete_unit_template_and_units = {
+					division_template = "Angeli Impetuum"
+					disband = yes
+				}
+			}
+			division_template = {
+				name = "Angeli Impetuum"
+				division_names_group = ARI_HAL_01
+				regiments = {
+					halo_militia = { x = 0 y = 0 }
+					halo_militia = { x = 0 y = 1 }
+					halo_militia = { x = 0 y = 2 }
+					halo_militia = { x = 1 y = 0 }
+					halo_militia = { x = 1 y = 1 }
+					halo_militia = { x = 1 y = 2 }
+				}
+				support = {
+					halo_recon = { x = 0 y = 0 }
+					artillery = { x = 0 y = 1 }
+				}
+			}
+
 			random_owned_controlled_state = {
 				prioritize = { 85 }
 				custom_effect_tooltip = {
 					localization_key = effect_division_creation_name
 					STATE = "[THIS.GetName]"
 					COUNT = 2
-					NAME = "Halo Infantry Division"
+					NAME = "Angeli Impetuum"
 				}
 				hidden_effect = {
 					create_unit = {
-						division = "division_template = \"Halo Infantry Division\" start_experience_factor = 0.30 start_equipment_factor = 0.70"
+						division = "division_template = \"Angeli Impetuum\" start_experience_factor = 0.30 start_equipment_factor = 0.95"
 						owner = ARI
 						count = 2
 					}
@@ -4676,6 +4753,8 @@ focus_tree = {
 			AASRU_scripted_effect_on_value_change = yes
 			
 			custom_effect_tooltip = generic_skip_one_line_tt
+
+			unlock_decision_tooltip = ARI_visit_remedial_knights
 		}
 	}
 	focus = {
@@ -4826,6 +4905,9 @@ focus_tree = {
 				ARI_arian_monthly_population = 0.05
 				tooltip = monthly_population_tt
 			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			country_event = ARI_reformist_event_chain.33
 		}
 	}
 	focus = {
