@@ -115,6 +115,70 @@ ARI_reformist_set_debug = {
 
 	set_country_flag = flag_AASRU_progressbar_end3
 	
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.15
+				}
+				set_politics = {
+					ruling_party = democratic
+					last_election = "1937.1.1"
+					election_frequency = 48
+					elections_allowed = yes
+				}
+
+				hidden_effect = {
+					if = {
+						limit = { democratic < 0.50 }
+						add_popularity = {
+							ideology = democratic
+							popularity = 0.30
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_Shirasu_Azusa
+							ruling_only = no
+						}
+					}
+				}
+				add_country_leader_role = {
+					character = ARI_Shirasu_Azusa
+					promote_leader = yes
+					country_leader = {
+						ideology = liberalism
+						traits = {
+							ARI_reformist_trait
+						}
+						expire = "2000.1.1.1"
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = ARI_Shirasu_Azusa
+							ruling_only = yes
+						}
+					}
+				}
+				promote_character = ARI_Shirasu_Azusa
+			}
+		}
+	
 	set_party_name = {
 		ideology = democratic
 		long_name = ARI_reformist_2_party_long
