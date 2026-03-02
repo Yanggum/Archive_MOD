@@ -1520,6 +1520,14 @@ focus_tree = {
 				expire = 0
 			}
 		}
+		
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 1000
+				date > 1943.1.1
+			}
+		}
 	}
 	
 	focus = { #기계군단에 대응 
@@ -1545,6 +1553,14 @@ focus_tree = {
 				type = annex_everything
 				target = DE1
 				expire = 0
+			}
+		}
+		
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 1000
+				date > 1943.1.1
 			}
 		}
 	}
@@ -5445,13 +5461,28 @@ focus_tree = {
 		x = 0
 		y = 2
 		cost = 5
-		available = { has_country_leader = { character = COU_RIN } }
+		available = { 
+		    has_country_leader = { character = COU_RIN } 
+		    has_completed_focus = COU_focus_remove_antihumans_order
+			has_completed_focus = COU_focus_gsc_prorin_block
+			has_completed_focus = COU_focus_collaborate_with_aoi
+			has_completed_focus = COU_focus_collaborate_with_kaya
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_confidence_and_supply
         prerequisite = { focus = COU_focus_emergency_rin }
+		
+		select_effect = {
+		    hidden_effect = { country_event = { id = COU_event_rin.8 days = 7 } }
+		} 
 		completion_reward = {
-			#나나가미 린이 카메라 앞에서 회의를 마친 후 집으로 돌아가는 장면에서 총학생회장과의 기억을 떠올립니다. 분명 눈은 흔들리지 않았지만 손은 주머니 품을 꽉 잡았습니다.
-			#어떤 효과를 줘야 할까요? 바로 반대파 기한을 30일 더 늘리고 신임을 올리는 것입니다 
+			if = {
+			    limit = { NOT = { has_country_flag = WE_WILL_STOP_RIN } }
+				custom_effect_tooltip = COU_tooltip_rin_dosomething
+			}
+			else = {
+			    custom_effect_tooltip = COU_tooltip_rin_wedonothing
+			}
 		}
 	}
 	
@@ -5461,12 +5492,19 @@ focus_tree = {
 		x = -3
 		y = 2
 		cost = 5
-		available = { has_country_leader = { character = COU_RIN } }
+		available = { 
+		    has_country_leader = { character = COU_RIN } 
+		    has_country_flag = RIN_FUCKED_OHNO
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_confidence_and_supply
         prerequisite = { focus = COU_focus_emergency_rin }
 		completion_reward = {
-			
+			add_days_mission_timeout = {
+				mission = COU_vote_noconfidence
+				days = 180
+			}
+			COU_rin_getout_percent_good_ten = yes 
 		}
 	}
 	
@@ -5506,12 +5544,19 @@ focus_tree = {
 		x = 3
 		y = 2
 		cost = 5
-		available = { has_country_leader = { character = COU_RIN } }
+		available = {
+   		    has_country_leader = { character = COU_RIN } 
+		    has_country_flag = RIN_FUCKED_OHNO
+		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		relative_position_id = COU_focus_confidence_and_supply
         prerequisite = { focus = COU_focus_emergency_rin }
 		completion_reward = {
-			
+			add_days_mission_timeout = {
+				mission = COU_vote_noconfidence
+				days = 180
+			}
+			COU_rin_getout_percent_good_ten = yes 
 		}
 	}
 	
