@@ -2969,6 +2969,63 @@ ARI_trinity_academy_dissolution = {
 			show_ideas_tooltip = ARI_endo_shimiko_political_advisor
 		}
 	}
+	ARI_visit_remedial_knights = {
+		icon = GFX_decision_generic_consumer_goods
+
+		available = {
+			has_completed_focus = ARI_embracing_knights_hospitaller
+			NOT = { has_country_flag = ARI_persuading_club }
+		}
+
+		visible = {
+			NOT = { has_country_flag = ARI_recruited_remedial_knights }
+			has_completed_focus = ARI_embracing_knights_hospitaller
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+
+		fire_only_once = yes
+
+		cost = 75
+		
+		days_remove = 50
+
+		modifier = {
+			political_power_cost = 0.50
+		}
+
+		complete_effect = {
+			set_country_flag = {
+				flag = ARI_persuading_club
+				value = 1
+				days = 51
+			}
+		}
+		
+		remove_effect = {
+			hidden_effect = {
+				set_country_flag = ARI_recruited_remedial_knights
+			}
+
+			country_event = ARI_reformist_event_chain.34
+			every_controlled_state = {
+				limit = {
+					NOT = { is_core_of = ROOT }
+					is_core_of = TRM
+				}
+				add_compliance = 10
+			}
+			add_stability = 0.05
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = ARI_aomori_mine_political_advisor
+		}
+	}
 }
 
 ARI_balance_of_power_category = {
