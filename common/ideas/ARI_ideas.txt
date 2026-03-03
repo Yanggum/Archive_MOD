@@ -1,5 +1,72 @@
 ideas = {	
 	hidden_ideas = {
+		idea_ARI_saxony_coal_industry = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				local_resources_factor = 0.05
+				country_resource_coal = 4
+			}
+		}
+		idea_ARI_east_prussian_land_reform = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				consumer_goods_factor = -0.05
+				global_building_slots_factor = 0.05
+			}
+		}
+		idea_ARI_danzig_prussia_military_industrial_complex = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				industrial_capacity_dockyard = 0.03
+				industrial_capacity_factory = 0.03
+				production_speed_arms_factory_factor = 0.05
+			}
+
+			equipment_bonus = {
+				infantry_equipment = {
+					build_cost_ic = -0.05
+					reliability = 0.10
+				}
+			}
+		}
+		idea_ARI_axis_of_resources = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				local_resources_factor = 0.05
+				production_lack_of_resource_penalty_factor = -0.05
+			}
+		}
+		idea_ARI_absorption_of_doctrine = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				experience_gain_army_factor = 0.10
+				org_loss_when_moving = -0.05
+			}
+		}
+		idea_ARI_utilization_of_gold_reserves = {
+			allowed = {
+				original_tag = ARI
+			}
+
+			modifier = {
+				consumer_goods_factor = -0.08
+			}
+		}
 		idea_ARI_end_of_pacifis = { # 트리니티 반전주의
 			name = ARI_end_of_pacifis
 			allowed = {
@@ -1189,12 +1256,35 @@ ideas = {
 			name = ARI_arius_petrochemical_company
 			picture = ig_faben
 			allowed = {
-				original_tag = GER
+				original_tag = ARI
 			}
 
+			available = {
+				OR = {
+					has_completed_focus = ARI_establishment_of_ig_farben_imitation
+					has_completed_focus = ARI_coal_liquefaction
+				}
+				hidden_trigger = {
+					OR = {
+						AND = {
+							has_completed_focus = ARI_establishment_of_ig_farben_imitation
+							NOT = { has_completed_focus = ARI_coal_liquefaction }
+						}
+						AND = {
+							has_completed_focus = ARI_coal_liquefaction
+							NOT = { has_completed_focus = ARI_establishment_of_ig_farben_imitation }
+						}
+					}
+				}
+			}
 
 			visible = {
-				has_completed_focus = ARI_coal_liquefaction
+				NOT = {
+					AND = {
+						has_completed_focus = ARI_establishment_of_ig_farben_imitation
+						has_completed_focus = ARI_coal_liquefaction
+					}
+				}
 			}
 
 			cost = 150
@@ -1205,6 +1295,53 @@ ideas = {
 			}
 
 			modifier = {
+				consumer_goods_factor = -0.05
+			}
+			
+			traits = { refinery_concern }
+			
+			ai_will_do = {
+				factor = 1
+			}
+		}
+
+		ARI_arius_petrochemical_company_expanded = {
+			name = ARI_arius_petrochemical_company
+			picture = ig_faben
+			allowed = {
+				original_tag = ARI
+			}
+
+			available = {
+				OR = {
+					has_completed_focus = ARI_establishment_of_ig_farben_imitation
+					has_completed_focus = ARI_coal_liquefaction
+				}
+				hidden_trigger = {
+					AND = {
+						has_completed_focus = ARI_establishment_of_ig_farben_imitation
+						has_completed_focus = ARI_coal_liquefaction
+					}
+				}
+			}
+
+			visible = {
+				AND = {
+					has_completed_focus = ARI_establishment_of_ig_farben_imitation
+					has_completed_focus = ARI_coal_liquefaction
+				}
+			}
+
+			cost = 150
+			
+			research_bonus = {
+				industry = 0.05
+				synth_resources = 0.15
+			}
+
+			modifier = {
+				consumer_goods_factor = -0.10
+
 				production_speed_synthetic_refinery_factor = 0.1
 				production_speed_fuel_silo_factor = 0.1
 			}

@@ -813,6 +813,8 @@ focus_tree = {
 		}
 	}
 
+	############## 단치히 산업 개발
+
 	focus = {
 		id = ARI_beatrice_influence
 		icon = GFX_focus_generic_army_doctrines_2
@@ -1706,6 +1708,1058 @@ focus_tree = {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	focus = {
+		id = ARI_new_era_arius_industry
+		icon = GFX_focus_generic_military_industry
+		prerequisite = {
+			focus = ARI_national_development
+		}
+		available = {
+			num_of_civilian_factories > 20
+		}
+		cost = 2
+		x = 0
+		y = 4
+		relative_position_id = ARI_national_development
+		completion_reward = {
+			add_stability = 0.05
+			random_owned_controlled_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	############## 적응형 산업 중점 1
+	
+	focus = {
+		id = ARI_confiscation_of_east_prussian_land
+		icon = GFX_focus_ARI_confiscation_of_east_prussian_land
+		prerequisite = {
+			focus = ARI_new_era_arius_industry
+		}
+		bypass = {
+		}
+		available = {
+			BA_prussian_territory_control = yes
+		}
+		cost = 5
+		x = -4
+		y = 1
+		relative_position_id = ARI_new_era_arius_industry
+		complete_tooltip = {
+			every_state = {
+				limit = {
+					has_state_flag = ARI_confiscation_of_east_prussian_land_CG
+				}
+				BA_increase_state_category_by_one_level = yes
+			}
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					OR = {
+						has_state_category = wasteland
+						has_state_category = pastoral
+						has_state_category = rural
+						has_state_category = town
+					}
+					NOT = { has_state_flag = ARI_confiscation_of_east_prussian_land_CG }
+				}
+				random_select_amount = 3
+				BA_increase_state_category_by_one_level = yes
+				set_state_flag = ARI_confiscation_of_east_prussian_land_CG
+			}
+			every_owned_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					OR = {
+						has_state_category = large_town
+						has_state_category = city
+					}
+					NOT = { has_state_flag = ARI_confiscation_of_east_prussian_land_CG }
+				}
+				random_select_amount = 2
+				BA_increase_state_category_by_one_level = yes
+				set_state_flag = ARI_confiscation_of_east_prussian_land_CG
+			}
+
+			custom_effect_tooltip = enter_tt
+
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 807 }
+				
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 763 }
+				
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_east_prussian_land_reform
+		}
+	}
+	focus = {
+		id = ARI_danzig_prussia_industrial_link
+		icon = GFX_focus_ARI_danzig_prussia_industrial_link
+		prerequisite = {
+			focus = ARI_confiscation_of_east_prussian_land
+		}
+		bypass = {
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_confiscation_of_east_prussian_land
+		completion_reward = {
+
+			add_stability = 0.05
+
+			custom_effect_tooltip = enter_tt
+
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 807 }
+				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 763 }
+				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_modernization_of_industrial_structure
+		icon = GFX_focus_generic_industry_1
+		prerequisite = {
+			focus = ARI_confiscation_of_east_prussian_land
+		}
+		bypass = {
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_confiscation_of_east_prussian_land
+		completion_reward = {
+
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 807 }
+				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 807 }
+				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 807 }
+				
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_modernization_of_industrial_structure
+				bonus = 1
+				uses = 2
+				category = industry
+			}
+		}
+	}
+	focus = {
+		id = ARI_establishment_of_danzig_prussia_military_industrial_complex
+		icon = GFX_focus_ARI_establishment_of_danzig_prussia_military_industrial_complex
+		prerequisite = {
+			focus = ARI_danzig_prussia_industrial_link
+		}
+		prerequisite = {
+			focus = ARI_modernization_of_industrial_structure
+		}
+		bypass = {
+		}
+		cost = 5
+		x = -1
+		y = 3
+		relative_position_id = ARI_confiscation_of_east_prussian_land
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					BA_prussian_territory_is = yes
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				random_select_amount = 2
+				
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_arius_military_complex
+				bonus = 0.75
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+				category = cat_anti_air
+				category = cat_anti_tank
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_danzig_prussia_military_industrial_complex
+		}
+	}
+
+	############## 적응형 산업 중점 2
+
+	focus = {
+		id = ARI_saxony_silesia_resource_development
+		icon = GFX_focus_GER_autarky_ambitions
+		prerequisite = {
+			focus = ARI_new_era_arius_industry
+		}
+		bypass = {
+		}
+		available = {
+			has_full_control_of_state = 65
+			has_full_control_of_state = 66
+			has_full_control_of_state = 67
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_new_era_arius_industry
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+				}
+				random_select_amount = 4
+				add_extra_state_shared_building_slots = 1
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_saxony_silesia_resource_development
+				bonus = 1
+				uses = 1
+				technology = excavation1
+				technology = excavation2
+				technology = excavation3
+				technology = excavation4
+				technology = excavation5
+			}
+		}
+	}
+	focus = {
+		id = ARI_merger_of_private_industries
+		icon = GFX_focus_DEN_heavy_regulations
+		prerequisite = {
+			focus = ARI_saxony_silesia_resource_development
+		}
+		bypass = {
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+			add_stability = -0.05
+			add_war_support = -0.05
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_expansion_of_saxony_coal_industry
+		icon = GFX_focus_generic_mining_industry
+		prerequisite = {
+			focus = ARI_saxony_silesia_resource_development
+		}
+		bypass = {
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+
+			add_tech_bonus = {
+				name = ARI_saxony_silesia_resource_development
+				bonus = 1
+				uses = 1
+				technology = excavation1
+				technology = excavation2
+				technology = excavation3
+				technology = excavation4
+				technology = excavation5
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_saxony_coal_industry
+		}
+	}
+	focus = {
+		id = ARI_linking_mining_and_heavy_industry
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = {
+			focus = ARI_expansion_of_saxony_coal_industry
+		}
+		bypass = {
+		}
+		cost = 5
+		x = -1
+		y = 3
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = THIS
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 65
+						state = 66
+						state = 67
+						state = 762
+						state = 60
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = THIS
+				}
+			}
+		}
+	}
+	focus = {
+		id = ARI_reconstruction_of_silesia_petrochemicals
+		icon = GFX_goal_generic_oil_refinery
+		prerequisite = {
+			focus = ARI_saxony_silesia_resource_development
+		}
+		available = {
+			has_tech = synth_oil_experiments
+		}
+		bypass = {
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 65 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			add_tech_bonus = {
+				name = ARI_reconstruction_of_silesia_petrochemicals
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_to_variable = { 
+				ARI_arius_industry_production_speed_synthetic_refinery_factor = 0.1
+				tooltip = production_speed_synthetic_refinery_factor_tt
+			}
+			add_to_variable = { 
+				ARI_arius_industry_production_speed_fuel_silo_factor = 0.1
+				tooltip = production_speed_fuel_silo_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = ARI_establishment_of_ig_farben_imitation
+		icon = GFX_focus_generic_military_industry
+		prerequisite = {
+			focus = ARI_reconstruction_of_silesia_petrochemicals
+		}
+		bypass = {
+		}
+		cost = 5
+		x = 1
+		y = 3
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 65 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			if = {
+				limit = {
+					has_completed_focus = ARI_coal_liquefaction
+				}
+			
+				custom_effect_tooltip = generic_skip_one_line_tt
+				
+				custom_effect_tooltip = available_industrial_concern
+				if = {
+					limit = { has_idea = ARI_arius_petrochemical_company }
+					swap_ideas = {
+						remove_idea = ARI_arius_petrochemical_company
+						add_idea = ARI_arius_petrochemical_company_expanded
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = ARI_arius_petrochemical_company
+							add_idea = ARI_arius_petrochemical_company_expanded
+						}
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = generic_skip_one_line_tt
+				
+				custom_effect_tooltip = available_industrial_concern
+				
+				show_ideas_tooltip = ARI_arius_petrochemical_company
+			}
+		}
+	}
+	focus = {
+		id = ARI_axis_of_resources
+		icon = GFX_focus_GER_factories_for_resources
+		prerequisite = {
+			focus = ARI_reconstruction_of_silesia_petrochemicals
+		}
+		available = {
+			has_tech = rubber_processing
+		}
+		bypass = {
+		}
+		cost = 5
+		x = 0
+		y = 4
+		relative_position_id = ARI_saxony_silesia_resource_development
+		completion_reward = {
+        	random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = synthetic_refinery
+						size > 0
+						include_locked = yes
+					}
+				}
+				prioritize = { 65 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			modify_building_resources = {
+        	   building = synthetic_refinery
+        	   resource = rubber
+        	   amount = 2
+        	}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_tech_bonus = {
+				name = ARI_axis_of_resources
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_axis_of_resources
+		}
+	}
+
+	############## 적응형 산업 중점 3
+
+	focus = {
+		id = ARI_occupation_of_eden_assets
+		icon = GFX_focus_TRK_trinity_capital_forced_dissolution
+		prerequisite = {
+			focus = ARI_new_era_arius_industry
+		}
+		bypass = {
+		}
+		available = {
+			has_full_control_of_state = 64
+			has_full_control_of_state = 1069
+		}
+		cost = 5
+		x = 2
+		y = 1
+		relative_position_id = ARI_new_era_arius_industry
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 64
+						state = 1069
+					}
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ARI_establishment_of_eden_academy
+		icon = GFX_focus_research2
+		prerequisite = {
+			focus = ARI_occupation_of_eden_assets
+		}
+		bypass = {
+		}
+		available = {
+			num_of_civilian_factories > 70
+		}
+		cost = 5
+		x = 0
+		y = 2
+		relative_position_id = ARI_occupation_of_eden_assets
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	############## 적응형 산업 중점 4
+
+	focus = {
+		id = ARI_occupation_of_gehenna_legacy
+		icon = GFX_goal_HEU_gehenna
+		prerequisite = {
+			focus = ARI_new_era_arius_industry
+		}
+		bypass = {
+		}
+		available = {
+			BA_gehennea_core_OR_control = yes
+		}
+		cost = 5
+		x = 4
+		y = 1
+		relative_position_id = ARI_new_era_arius_industry
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					BA_gehennea_core_is = yes
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ARI_occupation_of_prefect_team_legacy
+		icon = GFX_focus_GEH_sword_defending_gehenna
+		prerequisite = {
+			focus = ARI_occupation_of_gehenna_legacy
+		}
+		bypass = {
+		}
+		available = {
+			has_full_control_of_state = 52
+		}
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = ARI_occupation_of_gehenna_legacy
+		completion_reward = {
+			army_experience = 25
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 280
+				name = ARI_occupation_of_prefect_team_legacy
+
+				track = operations
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_absorption_of_doctrine
+		}
+	}
+
+	focus = {
+		id = ARI_occupation_of_pandemonium_society_legacy
+		icon = GFX_focus_GEM_group_leadership_system_with_hand
+		prerequisite = {
+			focus = ARI_occupation_of_gehenna_legacy
+		}
+		bypass = {
+		}
+		available = {
+			has_full_control_of_state = 55
+		}
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = ARI_occupation_of_gehenna_legacy
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					BA_gehennea_core_is = yes
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					BA_gehennea_core_is = yes
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_ideas = idea_ARI_utilization_of_gold_reserves
+		}
+	}
+
+	focus = {
+		id = ARI_complete_connection_of_german_industry
+		icon = GFX_goal_HEU_representative_of_the_germanic
+		prerequisite = {
+			focus = ARI_occupation_of_pandemonium_society_legacy
+		}
+		prerequisite = {
+			focus = ARI_occupation_of_prefect_team_legacy
+		}
+		bypass = {
+		}
+		available = {
+			BA_gehennea_core_control = yes
+		}
+		cost = 5
+		x = 0
+		y = 3
+		relative_position_id = ARI_occupation_of_gehenna_legacy
+		completion_reward = {
+			custom_effect_tooltip = ARI_complete_connection_of_german_industry_tt
+			hidden_effect = {
+				64 = {
+					if = {
+						limit = { is_controlled_by = ROOT }
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+							instant_build = yes
+						}
+					}
+				}
+				1069 = {
+					if = {
+						limit = { is_controlled_by = ROOT }
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+							instant_build = yes
+						}
+					}
+				}
+				59 = {
+					if = {
+						limit = { is_controlled_by = ROOT }
+
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+							instant_build = yes
+						}
+					}
+				}
+				60 = {
+					if = {
+						limit = { is_controlled_by = ROOT }
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+							instant_build = yes
+						}
+					}
+				}
+				54 = {
+					if = {
+						limit = { is_controlled_by = ROOT }
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+							instant_build = yes
+						}
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			ARI_arius_industry_mody_add = yes
+			add_to_variable = { 
+				ARI_arius_industry_global_building_slots_factor = 0.05
+				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = { 
+				ARI_arius_industry_production_factory_start_efficiency_factor = 0.05
+				tooltip = production_factory_start_efficiency_factor_tt
 			}
 		}
 	}
@@ -4522,12 +5576,38 @@ focus_tree = {
 				ARI_militarized_society_production_speed_fuel_silo_factor = 0.1
 				tooltip = production_speed_fuel_silo_factor_tt
 			}
+
+			if = {
+				limit = {
+					has_completed_focus = ARI_establishment_of_ig_farben_imitation
+				}
 			
-			custom_effect_tooltip = generic_skip_one_line_tt
-			
-			custom_effect_tooltip = available_industrial_concern
-			
-			show_ideas_tooltip = ARI_arius_petrochemical_company
+				custom_effect_tooltip = generic_skip_one_line_tt
+				
+				custom_effect_tooltip = available_industrial_concern
+				if = {
+					limit = { has_idea = ARI_arius_petrochemical_company }
+					swap_ideas = {
+						remove_idea = ARI_arius_petrochemical_company
+						add_idea = ARI_arius_petrochemical_company_expanded
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = ARI_arius_petrochemical_company
+							add_idea = ARI_arius_petrochemical_company_expanded
+						}
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = generic_skip_one_line_tt
+				
+				custom_effect_tooltip = available_industrial_concern
+				
+				show_ideas_tooltip = ARI_arius_petrochemical_company
+			}
 		}
 	}
 	focus = {
