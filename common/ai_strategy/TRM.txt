@@ -3,47 +3,56 @@ TRM_raids_store_some_equipment = {
 		original_tag = TRM
 	}
 	enable = {
-		OR = { has_war_with = KPD has_war_with = NSD }
 		OR = {
-			AND = { 
-				NOT = { has_country_flag = TRM_start_NSD_flag }
+			has_war_with = KPD
+			has_war_with = NSD
+		}
+		OR = {
+			AND = {
+				NOT = {
+					has_country_flag = TRM_start_NSD_flag
+				}
 				has_active_mission = TRM_operation_outcome_NSD
 			}
-			AND = { 
-				NOT = { has_country_flag = TRM_start_KPD_flag }
+			AND = {
+				NOT = {
+					has_country_flag = TRM_start_KPD_flag
+				}
 				has_active_mission = TRM_operation_outcome_KPD
 			}
 		}
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = save_equipment
 		id = infantry_equipment
 		value = 100000
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = infantry
 		value = 1000
 	}
 }
+
 TRM_nomal_equipment = {
 	allowed = {
 		original_tag = TRM
 	}
 	enable = {
-		OR = { has_war_with = KPD has_war_with = NSD }
+		OR = {
+			has_war_with = KPD
+			has_war_with = NSD
+		}
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = save_equipment
 		id = infantry_equipment
 		value = 500
 	}
 }
+
 KPDNSD_raids_store_some_equipment = {
 	allowed = {
 		OR = {
@@ -55,13 +64,11 @@ KPDNSD_raids_store_some_equipment = {
 		has_war_with = TRM
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = save_equipment
 		id = infantry_equipment
 		value = 1000
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = infantry
@@ -72,39 +79,42 @@ KPDNSD_raids_store_some_equipment = {
 # 아리우스와 전쟁 중이라면 아리우스를 먼저 분쇄 함
 TRN_crush_arius = {
 	allowed = {
-		original_tag = GER
+		original_tag = GEM
 	}
 	enable = {
 		has_war_with = ARI
-		ARI = { has_capitulated = no }
+		ARI = {
+			has_capitulated = no
+		}
 	}
 	abort_when_not_enabled = yes
-
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = ARI
-		value = 100
+		value = 50
 	}
 	ai_strategy = {
 		type = front_control
 		tag = ARI
-		priority = 100
+		priority = 25
 		ordertype = front
 		execution_type = rush_weak
 		execute_order = yes
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = POL
-		value = -20
+		value = -10
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = GEM
-		value = -20
+		value = -10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = GEH
+		value = -10
 	}
 }
 
@@ -122,35 +132,32 @@ TRM_less_focus_on_east_country = {
 			}
 		}
 		NOT = {
-			GEM = { surrender_progress > 0.59 }
+			GEM = {
+				surrender_progress > 0.59
+			}
 		}
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = POL
 		value = -100
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = SOV
 		value = -100
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = ABY
 		value = -100
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = HYA
 		value = -100
 	}
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = ARI
@@ -165,7 +172,10 @@ TRM_stop_attack_if_you_surrender_progress_over_25 = {
 	}
 	enable = {
 		surrender_progress > 0.24
-		stockpile_ratio = { archetype = infantry_equipment ratio < 0.1 }
+		stockpile_ratio = {
+			archetype = infantry_equipment
+			ratio < 0.1
+		}
 		GEM = {
 			has_war_with = ROOT
 			has_capitulated = no
@@ -173,7 +183,6 @@ TRM_stop_attack_if_you_surrender_progress_over_25 = {
 		}
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = front_control
 		tag = GEM
@@ -191,7 +200,7 @@ TRM_stop_attack_if_you_surrender_progress_over_25 = {
 }
 
 # 정보기관 개선에 공장 낭비 안함
-TRM_we_are_bad_at_espionage_because_it_is_expensive_and_not_tanks = { 
+TRM_we_are_bad_at_espionage_because_it_is_expensive_and_not_tanks = {
 	allowed = {
 		original_tag = TRM
 		has_dlc = "La Resistance"
@@ -204,7 +213,6 @@ TRM_we_are_bad_at_espionage_because_it_is_expensive_and_not_tanks = {
 	abort = {
 		num_of_civilian_factories > 70
 	}
-
 	ai_strategy = {
 		type = intelligence_agency_usable_factories
 		value = -20
@@ -212,7 +220,7 @@ TRM_we_are_bad_at_espionage_because_it_is_expensive_and_not_tanks = {
 }
 
 # 파시즘 정부일때 프랑스 마지노선이 살아 있다면
-if_TRM_has_wargoal_against_FRM ={ 
+if_TRM_has_wargoal_against_FRM = {
 	allowed = {
 		original_tag = TRM
 	}
@@ -220,17 +228,16 @@ if_TRM_has_wargoal_against_FRM ={
 		has_government = fascism
 		has_country_flag = TRN_destroy_FRM_flag
 	}
-
 	abort = {
-		NOT = { has_government = fascism }
+		NOT = {
+			has_government = fascism
+		}
 	}
-
 	ai_strategy = {
 		type = declare_war
 		id = "FRM"
 		value = 999
 	}
-
 	ai_strategy = {
 		type = conquer
 		id = "FRM"
@@ -242,17 +249,18 @@ if_TRM_has_wargoal_against_FRM ={
 TRM_infantry_equipment_3_is_bad = {
 	enable = {
 		tag = TRM
-		TRM = { has_equipment = { infantry_equipment < 80000 } }
+		TRM = {
+			has_equipment = {
+				infantry_equipment < 80000
+			}
+		}
 	}
-
 	abort_when_not_enabled = yes
-	
 	ai_strategy = {
 		type = production_upgrade_desire_offset
 		id = infantry_equipment_3
 		value = -100
 	}
-	
 	ai_strategy = {
 		type = production_upgrade_desire_offset
 		id = infantry_equipment_2
@@ -262,23 +270,28 @@ TRM_infantry_equipment_3_is_bad = {
 
 # 트리니티는 70만 병력이 모일때까지 병력을 배치 함
 TRM_you_should_be_prepared_for_war = {
-	allowed = { 
+	allowed = {
 		tag = TRM
 	}
 	enable = {
-		has_army_manpower = { size < 700000 }
+		has_army_manpower = {
+			size < 700000
+		}
 		has_country_flag = TRN_country_collapse_decisions_end_flag
 		has_government = fascism
 	}
 	abort = {
-		has_army_manpower = { size > 700000 }
-		NOT = { has_government = fascism }
+		has_army_manpower = {
+			size > 700000
+		}
+		NOT = {
+			has_government = fascism
+		}
 	}
-	
 	ai_strategy = {
-        	type = force_build_armies
-        	value = 100
-    	}
+		type = force_build_armies
+		value = 100
+	}
 }
 
 # 1938년 부터 1942년까지 군수 공장 건설 비율이 대폭 상승함
@@ -289,10 +302,9 @@ TRM_industry_we_are_the_baddies = {
 	enable = {
 		date > 1938.3.1
 	}
-	abort ={
+	abort = {
 		date > 1942.1.1
 	}
-
 	ai_strategy = {
 		type = added_military_to_civilian_factory_ratio
 		value = 50
@@ -305,13 +317,12 @@ TRM_industry_we_are_the_baddies = {
 	ai_strategy = {
 		type = equipment_production_min_factories
 		id = fighter
-		value = 2  # 최소한의 전투기 생산이 필요 함
+		value = 2		# 최소한의 전투기 생산이 필요 함
 	}
-
 	ai_strategy = {
 		type = equipment_production_min_factories
 		id = cas
-		value = 2  # Germany needs a minimum production of CAS planes
+		value = 2		# Germany needs a minimum production of CAS planes
 	}
 }
 
@@ -326,140 +337,119 @@ TRM_unit_production = {
 	abort = {
 		always = no
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = garrison
 		value = 10
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = paratroopers
 		value = 0
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = mountaineers
 		value = 0
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = marines
 		value = 0
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = cavalry
 		value = -100
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = motorized
-		value = 0 
+		value = 0
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = mechanized
-		value = 0 
+		value = 0
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = armor
 		value = 20
 	}
-
 	ai_strategy = {
 		type = role_ratio
 		id = infantry
-		value = 80 
+		value = 80
 	}
-
 	# Naval unit factors
 	ai_strategy = {
 		type = unit_ratio
 		id = capital_ship
 		value = 15
 	}
-
 	ai_strategy = {
 		type = unit_ratio
 		id = submarine
-		value = -50 #because doctrine this = 50
+		value = -50		#because doctrine this = 50
 	}
-
 	ai_strategy = {
 		type = unit_ratio
 		id = screen_ship
 		value = 20
 	}
-
 	ai_strategy = {
 		type = unit_ratio
 		id = convoy
 		value = 20
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = naval_bomber
 		value = -50
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = infantry
-		value = 35 #30 to 50
+		value = 35		#30 to 50
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
-		id = armor 
+		id = armor
 		value = 10
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = anti_tank
 		value = 10
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = anti_air
 		value = 20
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = artillery
-		value = 5 #20 to 40
+		value = 5		#20 to 40
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = motorized
 		value = 5
 	}
-
 	ai_strategy = {
 		type = equipment_production_factor
 		id = support
 		value = 25
 	}
 	ai_strategy = {
-		type = equipment_production_min_factories #Build these up over time, don't stall
+		type = equipment_production_min_factories		#Build these up over time, don't stall
 		id = infantry
 		value = 2
 	}
 	ai_strategy = {
-		type = equipment_production_min_factories #Build these up over time, don't stall
+		type = equipment_production_min_factories		#Build these up over time, don't stall
 		id = anti_air
 		value = 2
 	}
@@ -468,79 +458,74 @@ TRM_unit_production = {
 		id = artillery
 		value = 1
 	}
-
 	ai_strategy = {
 		type = equipment_variant_production_factor
 		id = support_equipment
 		value = 5
 	}
-
-	ai_strategy = { #added to railway gun define (set to 0 by default, increased in default strategies)
+	ai_strategy = {
+		#added to railway gun define (set to 0 by default, increased in default strategies)
 		type = railway_gun_divisions_ratio
 		value = 1
 	}
-
 }
 
 # 트리니티 편제 디자인
 TRM_template_design = {
-	allowed = { tag = TRM }
+	allowed = {
+		tag = TRM
+	}
 	enable = {
 		date < 1938.1.1
 		num_of_military_factories > 24
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = template_prio
 		id = motorized
 		value = 20
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = medium_armor
 		value = 10
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = infantry
 		value = 70
 	}
 }
+
 TRM_LATE_template_design_industrial_country = {
-	allowed = { tag = TRM }
+	allowed = {
+		tag = TRM
+	}
 	enable = {
 		date > 1940.1.1
 		num_of_military_factories > 24
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = template_prio
 		id = motorized
 		value = 10
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = mechanized
 		value = 20
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = medium_armor
 		value = 50
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = modern_armor
 		value = 50
 	}
-
 	ai_strategy = {
 		type = template_prio
 		id = infantry
@@ -549,12 +534,13 @@ TRM_LATE_template_design_industrial_country = {
 }
 
 TRM_division_upgrades_are_very_important = {
-	allowed = { tag = TRM }
+	allowed = {
+		tag = TRM
+	}
 	enable = {
 		has_war = yes
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = land_xp_spend_priority
 		id = division_template
@@ -574,15 +560,18 @@ TRM_dont_die_in_mountains = {
 	abort = {
 		OR = {
 			AND = {
-				NOT = { country_exists = MIL }
+				NOT = {
+					country_exists = MIL
+				}
 				date > 1942.5.1
 			}
-			SWI = {	
-				NOT = { has_idea = SWI_swiss_neutrality }
+			SWI = {
+				NOT = {
+					has_idea = SWI_swiss_neutrality
+				}
 			}
 		}
 	}
-
 	ai_strategy = {
 		type = ignore
 		id = "SWI"
@@ -591,23 +580,25 @@ TRM_dont_die_in_mountains = {
 }
 
 TRM_war_gehenna_clique = {
-    enable = {
-        	NOT = { original_tag = TRM }
+	enable = {
+		NOT = {
+			original_tag = TRM
+		}
 		original_tag = GEM
-    }
-    enable_reverse = {
-        TRM = {
+	}
+	enable_reverse = {
+		TRM = {
 			OR = {
 				has_completed_focus = TRM_war_with_gehenna
 				has_completed_focus = TRM_invasion_of_devils
 			}
 		}
-    }
-    	reversed = yes
-    	abort_when_not_enabled = yes
-    	ai_strategy = {
-        	type = conquer
-        	id = TRM
-        	value = 500
-    		}
+	}
+	reversed = yes
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = conquer
+		id = TRM
+		value = 500
+	}
 }
