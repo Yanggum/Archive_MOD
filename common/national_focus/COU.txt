@@ -5461,7 +5461,7 @@ focus_tree = {
 		icon = GFX_COU_road_ot_choin
 		x = 0
 		y = 4
-		cost = 5
+		cost = 10
 		available = { 
 		    has_country_leader = { character = COU_RIN } 
 		    has_completed_focus = COU_focus_remove_antihumans_order
@@ -5480,10 +5480,13 @@ focus_tree = {
 			if = {
 			    limit = { NOT = { has_country_flag = WE_WILL_STOP_RIN } }
 				custom_effect_tooltip = COU_tooltip_rin_dosomething
+				custom_effect_tooltip = COU_tooltip_end_rin_system
 			}
 			else = {
 			    custom_effect_tooltip = COU_tooltip_rin_wedonothing
+				custom_effect_tooltip = COU_tooltip_end_rin_system
 			}
+			clr_country_flag = COU_political_shock
 		}
 	}
 	
@@ -5505,7 +5508,7 @@ focus_tree = {
 		completion_reward = {
 			add_days_mission_timeout = {
 				mission = COU_vote_noconfidence
-				days = 180
+				days = 30
 			}
 			COU_rin_getout_percent_good_ten = yes 
 			country_event = COU_event_rin.12
@@ -5574,7 +5577,7 @@ focus_tree = {
 		completion_reward = {
 			add_days_mission_timeout = {
 				mission = COU_vote_noconfidence
-				days = 180
+				days = 30
 			}
 			COU_rin_getout_percent_good_ten = yes 
 			country_event = COU_event_rin.13
@@ -5592,7 +5595,16 @@ focus_tree = {
 		relative_position_id = COU_focus_confidence_and_supply
         prerequisite = { focus = COU_focus_collaborate_with_anti_rin_faction }
 		completion_reward = {
-			
+		    country_event = COU_event_rin.21
+			add_timed_idea = {
+			    idea = COU_rin_aoi_deal
+				days = 360
+			}
+			add_days_mission_timeout = {
+				mission = COU_vote_noconfidence
+				days = 180
+			}
+			COU_rin_getout_percent_good_five = yes 
 		}
 	}
 	
@@ -5607,11 +5619,17 @@ focus_tree = {
 		relative_position_id = COU_focus_confidence_and_supply
         prerequisite = { focus = COU_focus_collaborate_with_anti_rin_faction }
 		completion_reward = {
-			
+		    country_event = COU_event_rin.22
+		    add_political_power = -50
+			remove_ideas = COU_rin_scandal_kaya
+			add_days_mission_timeout = {
+				mission = COU_vote_noconfidence
+				days = 180
+			}
 		}
 	}
 	
-	#focus = { #저지대의 키보토스 편입: 결심 이전까진 준비되지 않았다고 명시하기 
+	#focus = { #저지대의 키보토스 편입: 결심 이전까진 준비되지 않았다고 명시하기 / 주석처리 
 	#	id = COU_focus_invite_here_kivotos_fake
 	#	icon = GFX_focus_COU_rin_not_ready_yet
 	#	x = 0
