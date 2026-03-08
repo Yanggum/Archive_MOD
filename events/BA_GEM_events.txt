@@ -1694,6 +1694,151 @@ country_event = { # 거절당함
 	}
 }
 
+# 에덴 관리기구 최후통첩
+country_event = {
+	id = GEAC_event.5
+	title = GEAC_event.5.t
+	desc = GEAC_event.5.desc
+	picture = GFX_event_Eden_event
+
+    is_triggered_only = yes
+
+	immediate = {
+        hidden_effect = {
+            set_variable = { temp_opinion = ROOT.opinion@FROM }
+            multiply_variable = { temp_opinion = 0.1 }
+        }
+    }
+
+	option = { # NO
+		name = GEAC_event.5.a
+		ai_chance = {
+			base = 5
+			modifier = {
+				is_subject_of = ROOT
+				factor = 0.001
+			}
+			modifier = {
+				is_subject = yes
+				NOT = { is_subject_of = ROOT }
+				add = 100
+			}
+		}
+
+		FROM = { country_event = { id = GEAC_event.7 hours = 3 } }
+		
+		FROM = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = ROOT
+            }
+		}
+	}
+	option = {
+		name = GEAC_event.5.b
+		ai_chance = {
+			base = 1
+			modifier = {
+				FROM = {
+					is_ai = yes
+				}
+				factor = 1.2
+			}
+			
+			modifier = {
+                always = yes 
+                add = ROOT.temp_opinion
+            }
+
+			modifier = {
+				NOT = {
+					has_government = fascism
+					has_completed_focus = GEM_deutsches_reich  # 독일국 중점
+					has_completed_focus = GEH_indefinite_extension_of_emergency_powers  # 비상대권의 무기한 연장
+					has_completed_focus = GEH_hina_route_focus  # 소라사키 히나의 영도
+				}
+				add = 4
+			}
+
+			modifier = {
+				has_government = FROM
+				factor = 2
+			}
+
+			modifier = {
+				OR = {
+					has_completed_focus = GEM_focus_ended_1_B_endfocus  # 신들의 연합
+					has_completed_focus = GEM_but_now_it_is_too_late_to_turn_back  # 코교쿠 사츠키 오른쪽
+					has_completed_focus = GEM_thule_radiance  # 툴레의 광림
+					has_completed_focus = GEM_nord_hinnom_civilization_4B  # 노르드-힌놈 문명
+					has_completed_focus = GEM_germania_grand_coalition  # 게르마니아 대연정
+					has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_c  # 혼란의 밤
+					has_completed_focus = GEH_basking_in_the_brilliance_of_their_serenade_rout_h_2  # 천상의 혁명
+				}
+				factor = 0
+			}
+
+			modifier = {
+				is_subject = yes
+				NOT = { is_subject_of = ROOT }
+				factor = 0
+			}
+		}
+
+		FROM = {
+			country_event = { id = GEAC_event.6 hours = 6 }
+
+			effect_tooltip = {
+				annex_country = {
+					target = ROOT
+					transfer_troops = yes
+				}
+			}
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+	}
+	after = {
+        clear_variable = ROOT.temp_opinion
+	}
+}
+
+# 병합 수락됨
+country_event = {
+	id = GEAC_event.6
+	title = GEAC_event.6.t
+	desc = GEAC_event.6.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = Eden_event.5.a
+
+		annex_country = {
+			target = FROM
+			transfer_troops = yes
+		}
+	}
+}
+
+# 병합 거부됨
+country_event = {
+	id = GEAC_event.7
+	title = GEAC_event.7.t
+	desc = GEAC_event.7.desc
+	picture = GFX_event_Eden_event
+	is_triggered_only = yes
+
+	option = {
+		name = GEAC_event.7.a
+
+		create_wargoal = {
+			target = FROM
+			type = annex_everything
+		}
+	}
+
+}
+
 country_event = { # 전범 재판
 	id = GEHENNA_event.1
 	title = GEHENNA_event.1.t
