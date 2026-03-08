@@ -2512,10 +2512,11 @@ shared_focus = {
 			limit = {
 				original_tag = CAM
 			}
-			remove_ideas = serious_level_of_illiteracy_idea
+			remove_dynamic_modifier = { modifier = CAM_serious_level_of_illiteracy_idea }
 			add_timed_idea = {
 				idea = CAM_socialist_education_idea
-				days = 365
+				years = 1
+				days = 120
 			}
 		}
 	}
@@ -2910,6 +2911,13 @@ shared_focus = {
 	available = {
 	}
 	completion_reward = {
+		add_political_power = 120
+		add_stability = 0.05
+		add_war_support = -0.02
+		add_popularity = {
+			ideology = communism
+			popularity = -0.05
+		}
 	}
 }
 shared_focus = {
@@ -2947,8 +2955,40 @@ shared_focus = {
 	bypass = {
 	}
 	available = {
+		NOT = { has_global_flag = flag_IDC_establishment_of_indochina_treaty_organization }
+		any_other_country = {
+			OR = {
+				original_tag = VIN
+				original_tag = LAO
+				original_tag = CAM
+			}
+			is_subject = no
+		}
 	}
 	completion_reward = {
+		if = {
+			limit = {
+				NOT = { has_global_flag = flag_IDC_establishment_of_indochina_treaty_organization }
+			}
+			set_global_flag = flag_IDC_establishment_of_indochina_treaty_organization
+
+			set_rule = {
+				can_create_factions = yes
+			}
+
+			create_faction_from_template = BA_faction_template_IDC_indochina_treaty_organization
+
+			every_other_country = {
+				limit = {
+					OR = {
+						original_tag = VIN
+						original_tag = LAO
+						original_tag = CAM
+					}
+					is_subject = no
+				}
+			}
+		}
 	}
 }
 shared_focus = {
