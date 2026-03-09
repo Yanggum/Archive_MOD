@@ -218,6 +218,23 @@ COU_kaya_mental_condition_decrease_effect = {
 	}
 }
 
+COU_focus_rin_end_political_stress = {
+    set_temp_variable = { temp_rin_focus_count = 0 }
+    
+    if = { limit = { has_completed_focus = COU_focus_collaborate_with_aoi } add_to_temp_variable = { temp_rin_focus_count = 1 } }
+    if = { limit = { has_completed_focus = COU_focus_collaborate_with_kaya } add_to_temp_variable = { temp_rin_focus_count = 1 } }
+    if = { limit = { has_completed_focus = COU_focus_gsc_prorin_block } add_to_temp_variable = { temp_rin_focus_count = 1 } }
+    if = { limit = { has_completed_focus = COU_focus_remove_antihumans_order } add_to_temp_variable = { temp_rin_focus_count = 1 } }
+
+    if = {
+        limit = {
+            check_variable = { temp_rin_focus_count > 3 }
+            NOT = { has_country_flag = rin_event_28_fired }
+        }
+        country_event = COU_event_rin.28
+        set_country_flag = rin_event_28_fired
+    }
+}
 
 COU_perfidus_random_nerf_list = {
     #줄바뀜 정리하기 귀찮아서 안할게요
