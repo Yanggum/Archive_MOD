@@ -448,14 +448,14 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			add_manpower = 5000
+			add_manpower = 2000
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 250
+				amount = 100
 			}
 			add_equipment_to_stockpile = {
 				type = kivotos_infantry_equipment
-				amount = 250
+				amount = 50
 			}
 			clr_country_flag = ABY_descision_focus_abydos_4_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
@@ -695,14 +695,14 @@ focus_tree = {
 			clr_country_flag = ABY_descision_focus_abydos_7_ongoing_flag
 			clr_country_flag = ABY_descision_focus_abydos_line_doing_flag
 			set_country_flag = ABY_descision_focus_abydos_7_completed_flag
-			add_manpower = 5000
+			add_manpower = 2000
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 250
+				amount = 100
 			}
 			add_equipment_to_stockpile = {
 				type = kivotos_infantry_equipment
-				amount = 250
+				amount = 50
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -1802,7 +1802,9 @@ focus_tree = {
 						state = 75
 					}
 				}
-				set_demilitarized_zone = yes
+				add_dynamic_modifier = {
+					modifier = ABY_modifier_czech_resistance
+				}
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -2339,16 +2341,6 @@ focus_tree = {
 			set_country_flag = ABY_descision_focus_german_1_completed_flag
 			#중점 완료시 얻는 보상
 			add_manpower = 3000
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = 150
-			}
-			69 = {
-				create_unit = {
-					division = "name = \"German milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 0.5"
-					owner = ABY
-				}
-			}
 		}
 	}
 	
@@ -2473,16 +2465,10 @@ focus_tree = {
 			clr_country_flag = ABY_descision_focus_german_line_doing_flag
 			set_country_flag = ABY_descision_focus_german_3_completed_flag
 			#중점 완료시 얻는 보상
-			add_manpower = 3000
+			add_manpower = 1000
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 150
-			}
-			69 = {
-				create_unit = {
-					division = "name = \"German milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 0.5"
-					owner = ABY
-				}
+				amount = 250
 			}
 			hidden_effect = {
 				country_event = {
@@ -2741,11 +2727,6 @@ focus_tree = {
 			clr_country_flag = ABY_descision_focus_german_line_doing_flag
 			set_country_flag = ABY_descision_focus_german_7_completed_flag
 			#중점 완료시 얻는 보상
-			add_manpower = 3000
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = 150
-			}
 			69 = {
 				create_unit = {
 					division = "name = \"German milita\" division_template = \"German milita\" start_experience_factor = 0 start_equipment_factor = 0.5"
@@ -2944,7 +2925,9 @@ focus_tree = {
 					}
 				}
 				1051 = {
-					set_demilitarized_zone = yes
+					add_dynamic_modifier = {
+						modifier = ABY_modifier_czech_resistance
+					}
 				}
 			}
 			else_if = {
@@ -3816,7 +3799,6 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-			has_country_flag = ABY_flag_recovered_land
 			#중점 선행조건
 		}
 
@@ -4528,7 +4510,15 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			any_state = {
+				OR = {
+					state = 64
+					state = 7
+					state = 55
+					state = 16
+				}
+				is_controlled_by_ROOT_or_subject = yes
+			}
 			#중점 선행조건
 		}
 
@@ -4536,8 +4526,11 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			custom_effect_tooltip = ABY_tt_kivotos_fighter_get
-			set_country_flag = ABY_flag_kivotos_fighter_get
+			add_research_slot = 1
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 1.5
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -4550,9 +4543,6 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = ABY_focus_air_2    #이전 중점
-		}
-		prerequisite = {
-			focus = ABY_focus_air_3    #이전 중점
 		}
 		mutually_exclusive = {
 			focus = ABY_focus_air_5    #반대되는 중점
@@ -4601,9 +4591,6 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = ABY_focus_air_2    #이전 중점
-		}
-		prerequisite = {
-			focus = ABY_focus_air_3    #이전 중점
 		}
 		mutually_exclusive = {
 			focus = ABY_focus_air_4    #반대되는 중점
@@ -5602,8 +5589,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = ABY_tt_lost_industry
-			set_country_flag = ABY_flag_lost_industry
+			69 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6074,8 +6067,9 @@ focus_tree = {
 			#중점 시작시 얻는 보상
 		}
 		completion_reward = {
-			set_technology = {
-				kivotos_dron_tech = 1
+			add_breakthrough_progress = {
+				specialization = specialization_mystic_engineering
+				value = 0.5
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -6312,7 +6306,9 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			ABY = {
+				is_major = yes
+			}
 			#중점 선행조건
 		}
 
@@ -6322,24 +6318,8 @@ focus_tree = {
 		completion_reward = {
 			add_research_slot = 1
 			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 1
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_land
-				value = 1
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_naval
-				value = 1
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_nuclear
-				value = 1
-			}
-			add_breakthrough_progress = {
 				specialization = specialization_mystic_engineering
-				value = 1
+				value = 1.5
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -6467,8 +6447,7 @@ focus_tree = {
 			custom_effect_tooltip = ABY_unlock_industrial_concern_tooltip 
 			show_ideas_tooltip = ABY_industrial_concern_idea_rothschild
 			set_country_flag = ABY_flag_nephthys_PMC_1
-			set_country_flag = ABY_flag_nephthys_PMC_2
-			custom_effect_tooltip = ABY_tt_nephthys_PMC_2
+			custom_effect_tooltip = ABY_tt_nephthys_PMC_1
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -6670,7 +6649,7 @@ focus_tree = {
 		completion_reward = {
 			add_offsite_building = {
 				type = industrial_complex
-				level = 3
+				level = 2
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -6708,7 +6687,7 @@ focus_tree = {
 			}
 			hidden_effect = {
 				add_to_variable = {
-					ABY_var_industry_production_factory_start_efficiency_factor = 0.1
+					ABY_var_industry_production_factory_start_efficiency_factor = 0.05
 				}
 				add_to_variable = {
 					ABY_var_industry_industrial_capacity_factory = -0.05
@@ -6915,7 +6894,7 @@ focus_tree = {
 		completion_reward = {
 			add_offsite_building = {
 				type = arms_factory
-				level = 3
+				level = 2
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -6956,7 +6935,7 @@ focus_tree = {
 			}
 			hidden_effect = {
 				add_to_variable = {
-					ABY_var_industry_production_factory_max_efficiency_factor = 0.1
+					ABY_var_industry_production_factory_max_efficiency_factor = 0.05
 				}
 				add_to_variable = {
 					ABY_var_industry_industrial_capacity_factory = -0.05
@@ -6982,7 +6961,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			num_of_factories > 50
 			#중점 선행조건
 		}
 
@@ -7176,7 +7155,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			num_of_factories > 25
 			#중점 선행조건
 		}
 
@@ -7546,7 +7525,7 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
-
+			num_of_factories > 50
 			#중점 선행조건
 		}
 
@@ -11413,6 +11392,13 @@ focus_tree = {
 					remove_idea = ABY_idea_suo_ethics
 					add_idea = ABY_idea_suo_ethics_2
 				}
+				remove_ideas = {
+					ABY_idea_suo_total_mobilization
+					ABY_idea_gear_of_nation
+					ABY_idea_suo_jugend
+					ABY_idea_gyemong_SS
+					ABY_idea_research_allow
+				}
 			}
 			custom_effect_tooltip = ABY_tt_suo_idea_unite
 			#중점 완료시 얻는 보상
@@ -12009,6 +11995,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = ABY_focus_shiroko_fas_1
 		bypass = {
+			HUN = {
+				OR = {
+					is_in_faction_with = ABY
+					is_puppet_of = ABY
+					exists = no
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -12103,6 +12096,7 @@ focus_tree = {
 			YUG = {
 				OR = {
 					exists = no
+					is_puppet_of = ABY
 					is_in_faction_with = ABY
 				}
 			}
@@ -12145,6 +12139,13 @@ focus_tree = {
 		y = 2
 		relative_position_id = ABY_focus_shiroko_fas_1
 		bypass = {
+			SLO = {
+				OR = {
+					is_in_faction_with = ABY
+					is_puppet_of = ABY
+					exists = no
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -12242,6 +12243,13 @@ focus_tree = {
 		y = 3
 		relative_position_id = ABY_focus_shiroko_fas_1
 		bypass = {
+			ITA = {
+				OR = {
+					is_in_faction_with = ABY
+					is_puppet_of = ABY
+					exists = no
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -12280,7 +12288,7 @@ focus_tree = {
 				is_puppet_of = ABY
 				has_cosmetic_tag = ABY_hungary_puppet_YUG
 			}
-			ROM = {
+			YUG = {
 				is_in_faction_with = ABY
 			}
 			#중점 선행조건
@@ -12334,6 +12342,7 @@ focus_tree = {
 			ROM = {
 				OR = {
 					exists = no
+					is_puppet_of = ABY
 					is_in_faction_with = ABY
 				}
 			}
@@ -12382,10 +12391,38 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			70 = {is_controlled_by_ROOT_or_subject = yes}
+			71 = {is_controlled_by_ROOT_or_subject = yes}
+			73 = {is_controlled_by_ROOT_or_subject = yes}
+			664 = {is_controlled_by_ROOT_or_subject = yes}
+			43 = {is_controlled_by_ROOT_or_subject = yes}
+			155 = {is_controlled_by_ROOT_or_subject = yes}
 			#중점 선행조건
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					SLO = {
+						is_puppet_of = ABY
+					}
+				}
+				annex_country = {
+					target = SLO
+					transfer_troops = yes 
+				}
+			}
+			if = {
+				limit = {
+					HUN = {
+						is_puppet_of = ABY
+					}
+				}
+				annex_country = {
+					target = HUN
+					transfer_troops = yes 
+				}
+			}
 			country_event = {
 				id = ABY_shiroko_fas_event.13
 			}
@@ -12572,6 +12609,9 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			YUG = {
+				is_in_faction_with = ABY
+			}
 			#중점 선행조건
 		}
 
@@ -13270,8 +13310,6 @@ focus_tree = {
 		completion_reward = {
 			remove_country_leader_trait = ABY_trait_school_leader_3
 			add_country_leader_trait = ABY_trait_school_leader_4
-			set_country_flag = ABY_flag_soviet_puppet
-			custom_effect_tooltip = ABY_tt_shiroko_dem_puppet
 			country_event = {
 				id = ABY_shiroko_dem_event.3
 			}
@@ -13295,6 +13333,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = ABY_focus_shiroko_dem_1
 		bypass = {
+			SLO = {
+				OR = {
+					exists = no
+					is_puppet_of = ABY
+					is_in_faction_with = ABY
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -13367,26 +13412,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = TRM
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = GEM
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = GEH
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = ARI
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = HEU
-            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -13407,6 +13432,13 @@ focus_tree = {
 		y = 2
 		relative_position_id = ABY_focus_shiroko_dem_1
 		bypass = {
+			ROM = {
+				OR = {
+					exists = no
+					is_puppet_of = ABY
+					is_in_faction_with = ABY
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -13522,14 +13554,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = RED
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = FIN
-            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -13557,18 +13581,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SHE
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = COU
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = KSP
-            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -13589,6 +13601,13 @@ focus_tree = {
 		y = 3
 		relative_position_id = ABY_focus_shiroko_dem_1
 		bypass = {
+			YUG = {
+				OR = {
+					exists = no
+					is_puppet_of = ABY
+					is_in_faction_with = ABY
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -13625,6 +13644,13 @@ focus_tree = {
 		y = 3
 		relative_position_id = ABY_focus_shiroko_dem_1
 		bypass = {
+			HUN = {
+				OR = {
+					exists = no
+					is_puppet_of = ABY
+					is_in_faction_with = ABY
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -13815,14 +13841,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = MIL
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = BLM
-            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -13914,6 +13932,13 @@ focus_tree = {
 		y = 4
 		relative_position_id = ABY_focus_shiroko_dem_1
 		bypass = {
+			GEH = {
+				OR = {
+					exists = no
+					is_puppet_of = ABY
+					is_in_faction_with = ABY
+				}
+			}
 			#중점 통과 조건
 		}
 		available = {
@@ -14056,14 +14081,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = KAI
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = GEI
-            }
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -14141,6 +14158,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_shiroko_dem_event.12
 			}
+			create_faction_from_template = BA_faction_template_ABY_shiroko_dem
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -14170,6 +14188,18 @@ focus_tree = {
 		completion_reward = {
 			country_event = {
 				id = ABY_shiroko_dem_event.13
+			}
+			every_other_country = {
+				limit = {
+					is_in_faction_with = ABY
+					NOT = {
+						is_puppet_of = ABY
+					}
+				}
+				country_event = {
+					id = ABY_core_event.21
+					hours = 8
+				}
 			}
 			#중점 완료시 얻는 보상
 		}
@@ -14313,14 +14343,24 @@ focus_tree = {
 			#중점 통과 조건
 		}
 		available = {
+			ABY = {
+				is_faction_leader = yes
+			}
+			POL = {
+				has_war = no
+				is_puppet = no
+				is_faction_leader = yes
+			}
 			#중점 선행조건
 		}
 
 		completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SOV
-            }
+            POL = {
+				country_event = {
+					id = ABY_shiroko_dem_event.16
+					hours = 8
+				}
+			}
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -14351,14 +14391,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_shiroko_dem_event.14
 			}
-			every_other_country = {
-				limit = {
-					is_puppet_of = ABY
-				}
-				add_ideas = {
-					ABY_idea_visegrad
-				}
-			}
+			add_stability = 0.25
 			#중점 완료시 얻는 보상
 		}
 	}
@@ -14392,17 +14425,7 @@ focus_tree = {
 			country_event = {
 				id = ABY_shiroko_dem_event.15
 			}
-			every_other_country = {
-				limit = {
-					is_puppet_of = ABY
-				}
-				ABY = {
-					set_autonomy = {
-						target = PREV
-						autonomy_state = autonomy_two_world_republic
-					}
-				}
-			}
+			add_country_leader_trait = ABY_trait_real_god
 			#중점 완료시 얻는 보상
 		}
 	}

@@ -4853,7 +4853,7 @@ country_event = {
 			amount = 500
 		}
 		9 = {
-			add_core_of = ABY
+			set_state_flag = ABY_flag_state_integrate
 		}
 	}
 }
@@ -4881,7 +4881,7 @@ country_event = {
 			amount = 250
 		}
 		72 = {
-			add_core_of = ABY
+			set_state_flag = ABY_flag_state_integrate
 		}
 	}
 }
@@ -4909,7 +4909,7 @@ country_event = {
 			amount = 250
 		}
 		75 = {
-			add_core_of = ABY
+			set_state_flag = ABY_flag_state_integrate
 		}
 	}
 }
@@ -4937,7 +4937,7 @@ country_event = {
 			amount = 250
 		}
 		74 = {
-			add_core_of = ABY
+			set_state_flag = ABY_flag_state_integrate
 		}
 	}
 }
@@ -4970,10 +4970,10 @@ country_event = {
 			limit = {
 				OR = {
 					is_core_of = AUS
-					state = 39
+					state = 39 
 				}
 			}
-			add_core_of = ABY
+			set_state_flag = ABY_flag_state_integrate
 		}
 		hidden_effect = {
 			news_event = {
@@ -10643,8 +10643,7 @@ country_event = {
 		ai_chance = { factor = 100 }
 		set_country_flag = ABY_flag_nephthys_PMC_1
 		set_country_flag = ABY_flag_nephthys_PMC_2
-		set_country_flag = ABY_flag_nephthys_PMC_3
-		custom_effect_tooltip = ABY_tt_nephthys_PMC_3
+		custom_effect_tooltip = ABY_tt_nephthys_PMC_2
 		set_country_flag = ABY_flag_nephthys_select
 		custom_effect_tooltip = ABY_militia_div_cap_3_tt
 		hidden_effect = {
@@ -20423,9 +20422,16 @@ country_event = {
 				add = -100
 				ROOT = {
 					OR = {
-						original_tag = GEH
 						is_puppet = yes
 						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				add = 1000
+				ROOT = {
+					OR = {
+						is_in_faction_with = ABY
 					}
 				}
 			}
@@ -20445,9 +20451,16 @@ country_event = {
 				add = 100
 				ROOT = {
 					OR = {
-						original_tag = GEH
 						is_puppet = yes
 						is_in_faction = yes
+					}
+				}
+			}
+			modifier = {
+				add = -1000
+				ROOT = {
+					OR = {
+						is_in_faction_with = ABY
 					}
 				}
 			}
@@ -21042,6 +21055,12 @@ country_event = {
 					is_ai = no
 				}
 			}
+			modifier = {
+				add = -100
+				ROOT = {
+					has_autonomy_state = autonomy_collaboration_government
+				}
+			}
 		}
 		ABY = {
 			annex_country = {
@@ -21057,6 +21076,12 @@ country_event = {
 				add = 100
 				SOV = {
 					is_ai = no
+				}
+			}
+			modifier = {
+				add = -100
+				ROOT = {
+					has_autonomy_state = autonomy_collaboration_government
 				}
 			}
 		}
@@ -22102,7 +22127,6 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.12.a
-		add_country_leader_trait = ABY_trait_real_god
 	}
 }
 country_event = {
@@ -22115,7 +22139,6 @@ country_event = {
 
 	option = { 
 		name = ABY_shiroko_dem_event.13.a
-		create_faction_from_template = BA_faction_template_ABY_shiroko_dem
 	}
 }
 country_event = {
@@ -22128,8 +22151,13 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.14.a
-		ABY = {
-			add_stability = 0.25
+		every_other_country = {
+			limit = {
+				is_puppet_of = ABY
+			}
+			add_ideas = {
+				ABY_idea_visegrad
+			}
 		}
 	}
 }
@@ -22143,6 +22171,17 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.15.a
+		every_other_country = {
+			limit = {
+				is_puppet_of = ABY
+			}
+			ABY = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_two_world_republic
+				}
+			}
+		}
 	}
 }
 country_event = {
@@ -22155,6 +22194,27 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.16.a
+		ai_chance = {
+			base = 100
+		}
+		ABY = {
+			country_event = {
+				id = ABY_shiroko_dem_event.17
+				hours = 8
+			}
+		}
+	}
+	option = {
+		name = ABY_shiroko_dem_event.16.b
+		ai_chance = {
+			base = 0
+		}
+		ABY = {
+			country_event = {
+				id = ABY_shiroko_dem_event.18
+				hours = 8
+			}
+		}
 	}
 }
 country_event = {
@@ -22167,6 +22227,12 @@ country_event = {
 
 	option = {
 		name = ABY_shiroko_dem_event.17.a
+		every_country = {
+			limit = {
+				is_in_faction_with = POL
+			}
+			add_to_faction = PREV
+		}
 	}
 }
 country_event = {
@@ -24209,8 +24275,7 @@ country_event = {
 		name = ABY_suo_event.12.a
 		set_country_flag = ABY_flag_nephthys_PMC_1
 		set_country_flag = ABY_flag_nephthys_PMC_2
-		set_country_flag = ABY_flag_nephthys_PMC_3
-		custom_effect_tooltip = ABY_tt_nephthys_PMC_3
+		custom_effect_tooltip = ABY_tt_nephthys_PMC_2
 		custom_effect_tooltip = ABY_militia_div_cap_12_tt
 		hidden_effect = {
 			add_to_variable = { ABY_halo_milita_cap = 12 }
