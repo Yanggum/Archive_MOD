@@ -14,7 +14,7 @@
 
 focus_tree = {
 	id = SHA_focus_tree
-	continuous_focus_position = { x = 5700 y = 1000 } 
+	continuous_focus_position = { x = 4500 y = 1500 } 
 	country = {
 		factor = 0
 		modifier = {
@@ -2584,24 +2584,12 @@ focus_tree = {
 		prerequisite= { 
 			focus = SHA_communism_focus_8
 		}
-		x = 5
+		x = 4
 		y = 1
-		offset = {
-			x = 0
-			trigger = { 
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = SHA_Austrian_appeasement_policy 
-			}
-		}
 		relative_position_id = SHA_communism_focus_8
 		search_filters = {  }
 		cost = 2
-		allow_branch = {
-			has_country_flag = SHA_communist_focus_in_progress
-		}
+
 		bypass_effect = {
 			set_rule = { can_create_factions = yes }
 			hidden_effect = {
@@ -2667,13 +2655,6 @@ focus_tree = {
 		icon = GFX_focus_attack_HYA
 		x = 0
 		y = 1
-		offset = {
-			trigger = { has_country_flag = SHA_communist_focus_in_progress }
-			y = 1
-		}
-		allow_branch = {
-			NOT = { has_completed_focus = SHA_local_harmony }
-		}
 		cost = 10
 
 		prerequisite = { focus = SHA_Shanhaijing_fact }
@@ -2693,10 +2674,6 @@ focus_tree = {
 				limit = { has_idea = SHA_shanhaijing_isolation }
 				remove_ideas = SHA_shanhaijing_isolation
 			}
-		}
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			NOT = { has_country_flag = SHA_communist_focus_in_progress }
 		}
 
 		relative_position_id = SHA_Shanhaijing_fact
@@ -3103,6 +3080,8 @@ focus_tree = {
 		prerequisite = { focus = SHA_Establishment_of_the_National_Council }
 		prerequisite = { focus = SHA_Resurrection_of_the_Soul_of_Shanhaijing }
 
+		mutually_exclusive = { focus = SHA_splendid_isolation}
+
 		available = {
 		}
 		bypass = {
@@ -3219,7 +3198,6 @@ focus_tree = {
 			}
 				
 			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			has_completed_focus = SHA_Kaguya_ousted
 		}
 		bypass = { }
 
@@ -3383,6 +3361,8 @@ focus_tree = {
 			focus = SHA_supremacy_of_technology
 		}
 
+		mutually_exclusive = { focus = SHA_splendid_isolation}
+
 		available = { }
 		bypass = { }
 
@@ -3443,6 +3423,34 @@ focus_tree = {
 			}
 		}
 	}
+
+	# 화려한 고립
+	focus = {
+		id = SHA_splendid_isolation
+		icon = GFX_focus_GER_our_place_in_the_sun
+		x = 0
+		y = 2
+		relative_position_id = SHA_Establishment_of_the_Governor_General
+		cost = 5
+
+		prerequisite = { 
+			focus = SHA_supremacy_of_will
+			focus = SHA_supremacy_of_technology
+			focus = SHA_Resurrection_of_the_Soul_of_Shanhaijing
+			focus = SHA_Establishment_of_the_National_Council
+		}
+
+		mutually_exclusive = { focus = SHA_Kivotos_conservative focus = SHA_Twilight_of_the_Gods }
+
+		available = { }
+		bypass = { }
+
+		completion_reward = {
+
+		}
+	}
+
+	
 	
 	#########################
 	#### 급진파 결집 - 산해경 승전 루트####
@@ -3914,8 +3922,8 @@ focus_tree = {
 		id = SHA_military_mobilization
 		text = STH_military_mobilization
 		icon = GFX_focus_generic_total_war
-		x = 0
-		y = 2
+		x = -7
+		y = 1
 		cost = 2
 
 		prerequisite = { focus = SHA_invade_of_Hyakkiyako }
@@ -4178,12 +4186,6 @@ focus_tree = {
 
 		will_lead_to_war_with = HYA
 
-
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			has_country_flag = SHA_communist_focus_in_progress 
-		}
-
 		relative_position_id = SHA_communism_diplo_0
 
 		completion_reward = {
@@ -4224,12 +4226,6 @@ focus_tree = {
 			has_completed_focus = SHA_communism_focus_16
 		}
 		bypass = { }
-
-
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			has_country_flag = SHA_communist_focus_in_progress 
-		}
 
 		mutually_exclusive = {
 			focus = SHA_soviet_diplo_0
@@ -4587,11 +4583,6 @@ focus_tree = {
 			has_completed_focus = SHA_communism_focus_9
 		}
 		bypass = { }
-
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			has_country_flag = SHA_communist_focus_in_progress 
-		}
 
 		relative_position_id = SHA_communism_branch_invade_of_hyakkiyako
 
@@ -4978,12 +4969,6 @@ focus_tree = {
 		}
 		bypass = { }
 
-
-		allow_branch = {
-			NOT = { has_global_flag = GFLAG_BAKSANWAR_END }
-			has_country_flag = SHA_communist_focus_in_progress 
-		}
-
 		relative_position_id = SHA_communism_branch_invade_of_hyakkiyako
 
 		completion_reward = {
@@ -5174,8 +5159,14 @@ focus_tree = {
 	# 육군 개편
 	focus = {
 		id = SHA_address_the_army
-		icon = GFX_goal_SHA_Army_Training
-		x = 25
+		icon = {
+			value = GFX_goal_SHA_Army_Training_RED
+			trigger = { has_government = communism }
+		}
+		icon = {
+			value = GFX_goal_SHA_Army_Training
+		}
+		x = 27
 		y = 0
 		offset = {
 			x = -8
@@ -5249,448 +5240,754 @@ focus_tree = {
 			}
 		}
 	}
-	
-	# 미나한테 역할 부여
-	focus = {
-		id = SHA_Giving_role_to_Mina
-		icon = GFX_goal_SHA_Giving_role_to_Mina
-		x = 1
-		y = 2
-		relative_position_id = SHA_address_the_army
-		search_filters = { }
-		cost = 5
-
-		prerequisite = {
-			focus = SHA_Central_Military_Commission 
-			focus = SHA_Following_doorkeeper_footsteps 
-		}
-		mutually_exclusive = { }
-
-		available = {
-			has_character = SHA_MINA
-		}
-		bypass = { }
-
-
-		completion_reward = {
-			add_advisor_role = {
-				character = SHA_MINA
-				advisor = {
-					slot = army_chief
-					idea_token = SHA_MINA_army_chief
-					cost = 75
-					traits = { army_chief_offensive_2 }
-				}
-				activate = yes
-			}
-		}
-	}
-	
-	# 사관학교 설립
-	focus = {
-		id = SHA_Establishment_of_military_academy
-		icon = GFX_focus_generic_military_mission
-		x = -1
-		y = 2
-		relative_position_id = SHA_address_the_army
-		search_filters = { }
-		cost = 5
-
-		prerequisite = { 
-			focus = SHA_Following_doorkeeper_footsteps 
-			focus = SHA_Central_Military_Commission
-		}
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_military_land_doctrine_cost_factor = -0.15
-				tooltip = land_doctrine_cost_factor_tt
-			}
-
-			custom_effect_tooltip = tooltip_white_line
-
-			swap_ideas = {
-				remove_idea = SHA_aoghkdnjs_idea
-				add_idea = SHA_Plum_Garden_Military_academy_idea
-			}
-		}
-	}
-	
-	# 전문적 위장
-	focus = {
-		id = SHA_professional_camouflage
-		icon = GFX_focus_SWE_beneath_sticks_and_stone
-		x = -1
-		y = 2
-		relative_position_id = SHA_Giving_role_to_Mina
-		search_filters = { }
-		cost = 8
-
-		prerequisite = { 
-			focus = SHA_Establishment_of_military_academy
-			focus = SHA_Giving_role_to_Mina
-		}
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_military_cas_damage_reduction = 0.10
-				tooltip = cas_damage_reduction_tt
-			}
-			add_to_variable = {
-				SHA_military_enemy_army_bonus_air_superiority_factor = -0.10
-				tooltip = enemy_army_bonus_air_superiority_factor_tt
-			}
-		}
-	}
 
 	# 전대 문주의 유산
 	focus = {
-		id = SHA_Following_doorkeeper_footsteps
-		icon = GFX_focus_BRA_anaue
+		id = SHA_legacy_of_former_leader
+		icon = GFX_focus_GER_prussian_legacy
 		x = -2
 		y = 1
+		offset = {
+			x = 2
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = SHA_legacy_of_former_leader
+			}
+		}
+
+		allow_branch = {
+			NOT = { 
+				has_completed_focus = SHA_building_elite_army
+				has_completed_focus = SHA_austrian_way
+			}
+		}
+
+		cost = 5
+
 		relative_position_id = SHA_address_the_army
-		search_filters = { }
-		cost = 5
-
 		prerequisite = { focus = SHA_address_the_army }
-		mutually_exclusive = { focus = SHA_Central_Military_Commission }
+		mutually_exclusive = { 
+			focus = SHA_building_elite_army
+			focus = SHA_austrian_way
+		}
 
 		available = { }
 		bypass = { }
 
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = SHA_National_Guard_Expansion
-				cost_reduction = 0.33
-				uses = 1
-				category = land_doctrine
+			mark_focus_tree_layout_dirty = yes
+			if = {
+				limit = {
+					OR = {
+						has_doctrine = new_mobile_warfare
+						has_doctrine = grand_battleplan
+						has_doctrine = superior_firepower
+						has_doctrine = mass_assault
+					}
+				}
+				add_doctrine_cost_reduction = {
+					name = SHA_legacy_of_former_leader
+					cost_reduction = 0.5
+					uses = 1
+					category = land_doctrine
+				}
 			}
+			else = {
+				set_grand_doctrine = new_mobile_warfare
+			}
+			add_war_support = 0.03
+			add_stability = -0.02
 			custom_effect_tooltip = tooltip_white_line
-			add_ideas = SHA_civic_militarism_0_ns
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_militray_army_attack_factor = 0.05
-				tooltip = army_attack_factor_tt
-			}
-		}
-	}
-	
-	# 방위군 확장
-	focus = {
-		id = SHA_National_Guard_Expansion
-		icon = GFX_goal_SHA_National_Guard_Expansion
-		x = -1
-		y = 1
-		relative_position_id = SHA_Following_doorkeeper_footsteps
-		search_filters = { }
-		cost = 4
-
-		prerequisite = { focus = SHA_Following_doorkeeper_footsteps }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
-			#add_to_variable = {
-			#	SHA_military_mobilization_speed = 0.05
-			#	tooltip = mobilization_speed_tt
-			#}
-			add_to_variable = {
-				SHA_military_training_time_factor = -0.25
-				tooltip = training_time_factor_tt
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = SHA_Shanhaijin_Army
 			}
 			add_to_variable = {
-				SHA_military_minimum_training_level = -0.05
-				tooltip = minimum_training_level_tt
-			}
-		}
-	}
-	
-	# 영웅주의 교육
-	focus = {
-		id = SHA_heroism_education
-		icon = GFX_SOV_positive_heroism_ccp_2d_sov_compatibility
-		x = 1
-		y = 1
-		relative_position_id = SHA_National_Guard_Expansion
-		search_filters = { }
-		cost = 5
-
-		prerequisite = { focus = SHA_National_Guard_Expansion }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_military_breakthrough_factor = 0.2
-				tooltip = breakthrough_factor_tt
-			}
-			#add_to_variable = {
-			#	SHA_military_army_morale_factor = 0.05
-			#	tooltip = army_morale_factor_tt
-			#}
-			add_to_variable = {
-				SHA_military_army_speed_factor = 0.05
+				SHA_military_army_speed_factor = 0.1
 				tooltip = army_speed_factor_tt
 			}
 		}
 	}
-	
-	# 육군 선전국
+
+	# 정예 육군 건설
 	focus = {
-		id = SHA_propaganda_bureau_of_army
-		icon = GFX_focus_hol_war_on_pacifism
-		x = -1
-		y = 1
-		relative_position_id = SHA_National_Guard_Expansion
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
-		cost = 5
-
-		prerequisite = { focus = SHA_National_Guard_Expansion }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_political_power = 75
-			add_war_support = 0.1
-			swap_ideas = {
-				add_idea = SHA_civic_militarism_1_ns
-				remove_idea = SHA_civic_militarism_0_ns
-			}
-			# 결정 해금
-		}
-	}
-	
-	# 시민 군국주의
-	focus = {
-		id = SHA_civic_militarism
-		icon = GFX_focus_generic_full_social_mobilization
-		x = 1
-		y = 1
-		relative_position_id = SHA_propaganda_bureau_of_army
-		search_filters = { FOCUS_FILTER_MANPOWER }
-		cost = 5
-
-		prerequisite = { focus = SHA_propaganda_bureau_of_army }
-		prerequisite = { focus = SHA_heroism_education }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = SHA_civic_militarism_1_ns
-				add_idea = SHA_civic_militarism_2_ns
-			}
-			#custom_effect_tooltip = SHA_military_change
-			#add_to_variable = {
-			#	SHA_military_training_time_factor = -0.15
-			#	tooltip = training_time_factor_tt
-			#}
-			#add_to_variable = {
-			#	SHA_military_conscription = 0.01
-			#	tooltip = conscription_tt
-			#}
-
-		}
-	}
-
-	# 중앙군사위원회
-	focus = {
-		id = SHA_Central_Military_Commission
-		icon = GFX_goal_SHA_Central_Military_Commission
+		id = SHA_building_elite_army
+		icon = GFX_goal_generic_axis_build_infantry
 		x = 2
 		y = 1
+		offset = {
+			x = -2
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = SHA_building_elite_army
+			}
+		}
+		cost = 5
+
+		allow_branch = {
+			NOT = { 
+				has_completed_focus = SHA_legacy_of_former_leader 
+				has_completed_focus = SHA_austrian_way
+			}
+		}
+
 		relative_position_id = SHA_address_the_army
-		search_filters = { FOCUS_FILTER_ARMY_XP }
-		cost = 5
-
 		prerequisite = { focus = SHA_address_the_army }
-		mutually_exclusive = { focus = SHA_Following_doorkeeper_footsteps }
+		mutually_exclusive = { 
+			focus = SHA_legacy_of_former_leader 
+			focus = SHA_austrian_way
+		}
 
 		available = { }
 		bypass = { }
 
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = SHA_Central_Military_Commission
-				cost_reduction = 0.33
-				uses = 1
-				category = land_doctrine
+			mark_focus_tree_layout_dirty = yes
+			if = {
+				limit = {
+					OR = {
+						has_doctrine = new_mobile_warfare
+						has_doctrine = grand_battleplan
+						has_doctrine = superior_firepower
+						has_doctrine = mass_assault
+					}
+				}
+				add_doctrine_cost_reduction = {
+					name = SHA_building_elite_army
+					cost_reduction = 0.5
+					uses = 1
+					category = land_doctrine
+				}
 			}
-
-			custom_effect_tooltip = tooltip_white_line
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_military_max_planning = 0.1
-				tooltip = max_planning_tt
+			else = {
+				set_grand_doctrine = superior_firepower
 			}
-			add_to_variable = {
-				SHA_military_land_doctrine_cost_factor= -0.1
-				tooltip = land_doctrine_cost_factor_tt
-			}
-			add_to_variable = {
-				SHA_militray_planning_speed = 0.33
-				tooltip = planning_speed_tt
-			}
+			add_war_support = 0.05
 		}
 	}
 
-	# 연합참모부 설립
+	# 오스트리아 방식 수용
 	focus = {
-		id = SHA_Joint_Chiefs_of_Staff
-		icon = GFX_focus_generic_manpower
-		x = 1
+		id = SHA_austrian_way
+		icon = GFX_focus_AUS_follow_the_jansa_plan
+		x = -6
 		y = 1
-		relative_position_id = SHA_Central_Military_Commission
-		search_filters = { FOCUS_FILTER_ARMY_XP }
+		offset = {
+			x = 6
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = SHA_austrian_way
+			}
+		}
 		cost = 5
 
-		prerequisite = { focus = SHA_Central_Military_Commission }
-		mutually_exclusive = { }
+		allow_branch = {
+			NOT = { 
+				has_completed_focus = SHA_legacy_of_former_leader
+				has_completed_focus = SHA_building_elite_army
+			}
+		}
 
-		available = { }
+		relative_position_id = SHA_address_the_army
+		prerequisite = { focus = SHA_address_the_army }
+		mutually_exclusive = { 
+			focus = SHA_legacy_of_former_leader
+			focus = SHA_building_elite_army
+		}
+
+		available = {
+			has_completed_focus = SHA_pardon_austrian_general
+		}
 		bypass = { }
 
 
 		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_militray_initiative_factor = 0.1
-				tooltip = initiative_factor_tt
+			mark_focus_tree_layout_dirty = yes
+			if = {
+				limit = {
+					OR = {
+						has_doctrine = new_mobile_warfare
+						has_doctrine = grand_battleplan
+						has_doctrine = superior_firepower
+						has_doctrine = mass_assault
+					}
+				}
+				add_doctrine_cost_reduction = {
+					name = SHA_austrian_way
+					cost_reduction = 0.5
+					uses = 1
+					category = land_doctrine
+				}
+			}
+			else = {
+				set_grand_doctrine = grand_battleplan
+			}
+			add_political_power = 50
+			add_command_power = 50
+			custom_effect_tooltip = tooltip_white_line 
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = SHA_Shanhaijin_Army
 			}
 			add_to_variable = {
-				SHA_militray_planning_speed = 0.1
-				tooltip = planning_speed_tt
+				SHA_army_army_core_defence_factor = 0.1
+				tooltip = army_core_defence_factor_tt
 			}
 		}
 	}
 
-	# 임무형지휘
+	# 트라운강 요새화
 	focus = {
-		id = SHA_Mission_Command
-		icon = GFX_focus_ETH_peacekeeping_forces
-		x = 1
+		id = SHA_fortifications_of_traun_river
+		icon = GFX_focus_AUS_fortify_the_traun_line
+		x = -3
 		y = 1
-		relative_position_id = SHA_Joint_Chiefs_of_Staff
-		search_filters = { }
 		cost = 5
 
-		prerequisite = { focus = SHA_Joint_Chiefs_of_Staff }
-		mutually_exclusive = { }
+		relative_position_id = SHA_austrian_way
+		prerequisite = { focus = SHA_austrian_way }
 
-		available = { }
+		available = {
+			OR = {
+				152 = {
+					is_fully_controlled_by = ROOT
+				}
+				1051 = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = SHA_fortify_the_traun_line_available_tt
+				OR = {
+					152 = {
+						free_building_slots = {
+							building = bunker
+							size > 2
+							province = 3703
+						}
+
+						free_building_slots = {
+							building = bunker
+							size > 2
+							province = 6708
+						}
+
+						free_building_slots = {
+							building = bunker
+							size > 2
+							province = 688
+						}
+					}
+
+					4 = {
+						free_building_slots = {
+							building = bunker
+							size > 2
+							province = 732
+						}
+					}
+				}
+			}
+		}
 		bypass = { }
 
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = SHA_Mission_Command
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
 
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_militray_army_attack_factor = 0.05
-				tooltip = army_attack_factor_tt
-			}
-			add_to_variable = {
-				SHA_militray_planning_speed = 0.15
-				tooltip = planning_speed_tt
-			}
+			custom_effect_tooltip = SHA_fortify_the_traun_line_tt
+			hidden_effect = {
+				IF = {
+					limit = {
+						152 = {
+							free_building_slots = {
+								building = bunker
+								size > 2
+								province = 3703
+							}
+						}
+					}
 
+					152 = {
+						add_building_construction = {
+							type = bunker
+							level = 3
+							instant_build = yes
+							province = {
+								id = 3703
+							}
+						}
+					}
+				}
+
+				IF = {
+					limit = {
+						152 = {
+							free_building_slots = {
+								building = bunker
+								size > 2
+								province = 6708
+							}
+						}
+					}
+
+					152 = {
+						add_building_construction = {
+							type = bunker
+							level = 3
+							instant_build = yes
+							province = {
+								id = 6708
+							}
+						}
+					}
+				}
+
+				IF = {
+					limit = {
+						152 = {
+							free_building_slots = {
+								building = bunker
+								size > 2
+								province = 688
+							}
+						}
+					}
+
+					152 = {
+						add_building_construction = {
+							type = bunker
+							level = 3
+							instant_build = yes
+							province = {
+								id = 688
+							}
+						}
+					}
+				}
+
+				IF = {
+					limit = {
+						4 = {
+							free_building_slots = {
+								building = bunker
+								size > 2
+								province = 732
+							}
+						}
+					}
+
+					4 = {
+						add_building_construction = {
+							type = bunker
+							level = 3
+							instant_build = yes
+							province = {
+								id = 732
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
-	# 결속 우선
+
+	# 방어 태세 육군
 	focus = {
-		id = SHA_cohesion_first
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		id = SHA_defense_posture_army
+		icon = GFX_focus_AUS_follow_the_jansa_plan
 		x = -1
 		y = 1
-		relative_position_id = SHA_Joint_Chiefs_of_Staff
-		search_filters = { }
-		cost = 5
+		cost = 6
 
-		prerequisite = { focus = SHA_Joint_Chiefs_of_Staff }
-		mutually_exclusive = { }
+		relative_position_id = SHA_austrian_way
+		prerequisite = { focus = SHA_austrian_way }
 
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-
-			custom_effect_tooltip = SHA_military_change
-			add_to_variable = {
-				SHA_militray_army_org_factor = 0.05
-				tooltip = army_org_factor_tt
-			}
-			add_to_variable = {
-				SHA_military_training_time_factor = 0.1
-				tooltip = training_time_factor_tt
-			}
+		available = {
 
 		}
-	}
-
-	# 비상 지휘 체계
-	focus = {
-		id = SHA_emergency_command_system
-		icon = GFX_goal_generic_military_sphere
-		x = -1
-		y = 1
-		relative_position_id = SHA_Mission_Command
-		search_filters = { }
-		cost = 5
-
-		prerequisite = { focus = SHA_Mission_Command }
-		prerequisite = { focus = SHA_cohesion_first }
-		mutually_exclusive = { }
-
-		available = { }
 		bypass = { }
 
 
 		completion_reward = {
-			custom_effect_tooltip = SHA_military_change
+			IF = {
+				limit = {
+					has_doctrine = defensive_postures
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 75
+					name =  SHA_defense_posture_army
+					track = infantry
+				}
+			}
+			ELSE_IF = {
+				limit ={
+					has_subdoctrine_in_track = infantry
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 50
+					name =  SHA_defense_posture_army
+					track = infantry
+				}
+			}
+			ELSE = {
+				set_sub_doctrine = defensive_postures
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = SHA_Shanhaijin_Army
+			}
 			add_to_variable = {
-				SHA_military_org_loss_when_moving = -0.1
-				tooltip = org_loss_when_moving_tt
+				SHA_army_army_core_defence_factor = -0.05
+				tooltip = army_core_defence_factor_tt
 			}
 			add_to_variable = {
 				SHA_militray_army_defence_factor = 0.05
 				tooltip = army_defence_factor_tt
 			}
+			add_to_variable = {
+				SHA_military_army_morale_factor = 0.05
+				tooltip = army_morale_factor_tt 
+			}
+
+		}
+	}
+
+	# 요충지 요새화
+	focus = {
+		id = SHA_fortification_of_strategic_points
+		icon = GFX_focus_generic_mountain_fortification_2
+		x = -1
+		y = 1
+		cost = 5
+
+		relative_position_id = SHA_defense_posture_army
+		prerequisite = { 
+			focus = SHA_defense_posture_army
+			focus = SHA_fortifications_of_traun_river
+		}
+
+		available = {
+			OR = {
+				976 = {
+					is_fully_controlled_by = ROOT
+				}
+				4 = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+			OR = {
+				4 = {
+					free_building_slots = {
+						building = bunker
+						size > 2
+						province = 11666
+					}
+				}
+				976 = {
+					free_building_slots = {
+						building = bunker
+						size > 2
+						province = 3673
+					}
+					free_building_slots = {
+						building = bunker
+						size > 2
+						province = 9648
+					}
+				}
+			}
+		}
+		bypass = { }
+
+
+		completion_reward = {
+			976 = {
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 3673
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 2
+						VP = 3673
+					}
+				}
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 9648
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 2
+						VP = 9648
+					}
+				}
+			}
+			4 = {
+				custom_override_tooltip = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 11666
+						instant_build = yes
+					}
+					tooltip = {
+						localization_key = tooltip_add_building_on_victory_point
+						BUILDING = bunker
+						NUMBER = 2
+						VP = 11666
+					}
+				}
+			}
+
+		}
+	}
+
+	# 
+	focus = {
+		id = SHA_intrusive_army
+		icon = GFX_focus_AUS_follow_the_jansa_plan
+		x = 0
+		y = 2
+		cost = 6
+
+		relative_position_id = SHA_defense_posture_army
+		prerequisite = { 
+			focus = SHA_defense_posture_army
+		}
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			IF = {
+				limit = {
+					has_doctrine = Infiltration_tactics
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 75
+					name =  SHA_defense_posture_army
+					track = infantry
+				}
+			}
+			ELSE_IF = {
+				limit ={
+					has_subdoctrine_in_track = operations
+				}
+				add_daily_mastery = {
+					amount = 1
+					days = 50
+					name =  SHA_intrusive_army
+					track = infantry
+				}
+			}
+			ELSE = {
+				set_sub_doctrine = infiltration_tactics
+			}
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = SHA_Shanhaijin_Army
+			}
+			add_to_variable = {
+				SHA_militray_army_attack_factor = 0.05
+				tooltip = army_attack_factor_tt
+			}
+			add_to_variable = {
+				SHA_military_army_speed_factor = 0.1
+				tooltip = army_speed_factor_tt
+			}
+
+		}
+	}
+
+	# 알프스가 준 교훈
+	focus = {
+		id = SHA_lessons_from_alps
+		icon = GFX_focus_AUS_follow_the_jansa_plan
+		x = 1
+		y = 1
+		cost = 6
+
+		relative_position_id = SHA_austrian_way
+		prerequisite = { focus = SHA_austrian_way }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+
+			custom_effect_tooltip = ROM_mountain_artillery_tech_tt
+			hidden_effect = { 
+				set_technology = { 
+					mountain_gun = 1 
+					popup = no
+				} 
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = AUS_osterreichische_gebirgsjager_tt
+			hidden_effect = { 
+				set_technology = { 
+					mountain_defensive_training = 1 
+					popup = no
+				} 
+			}
+
+		}
+	}
+
+	# 산악병 창설
+	focus = {
+		id = SHA_expert_mountain_soldier
+		icon = GFX_focus_AUS_osterreichische_gebirgsjager
+		x = 0
+		y = 2
+		cost = 6
+
+		relative_position_id = SHA_lessons_from_alps
+		prerequisite = { focus = SHA_lessons_from_alps }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			set_technology = { special_forces_mountaineers = 1 }
+			add_doctrine_cost_reduction = {
+				name = SHA_expert_mountain_soldier
+				cost_reduction = 0.25
+				uses = 2
+				category = cat_mountaineers_doctrine
+			}
+
+			IF = {
+				limit = { NOT = { has_tech = tech_mountaineers }}
+				set_technology = { tech_mountaineers = 1 }
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			ELSE_IF = {
+				limit = { NOT = { has_tech = tech_mountaineers2 }}
+				set_technology = { tech_mountaineers2 = 1 }
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			ELSE_IF = {
+				limit = { NOT = { has_tech = tech_mountaineers3 }}
+				set_technology = { tech_mountaineers3 = 1 }
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			custom_override_tooltip = {
+				tooltip = {
+					localization_key = tooltip_create_division_template
+					NAME = "Shanhaijing Mountain troops"
+					LINE_1 = { localization_key = line_battalion_tt NAME = mountaineers ICON = GFX_unit_mountaineers_icon_small COUNT = 9 }
+					LINE_2 = { localization_key = line_battalion_tt NAME = artillery_brigade ICON = GFX_unit_artillery_brigade_icon_small COUNT = 1 }
+					SUPPORT_1 = { localization_key = support_battalion_tt NAME = engineer ICON = GFX_unit_engineer_icon_small }
+					SUPPORT_2 = { localization_key = support_battalion_tt NAME = artillery ICON = GFX_unit_artillery_icon_small }
+					SUPPORT_3 = { localization_key = support_battalion_tt NAME = rangers_support ICON = GFX_unit_rangers_support_icon_small }
+				}
+				if = {
+					limit = { has_template = "Shanhaijing Mountain troops" }
+					delete_unit_template_and_units = { division_template = "Shanhaijing Mountain troops" disband = yes } # 치트 좀 쓰지마
+				}
+				division_template = {
+					name = "Shanhaijing Mountain troops"
+					#division_names_group = AUS_INF_03
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+						mountaineers = { x = 2 y = 0 }
+						mountaineers = { x = 2 y = 1 }
+						mountaineers = { x = 2 y = 2 }
+						artillery_brigade = { x = 3 y = 0 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						rangers_support = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+					}
+				}
+			}
+			capital_scope = {
+				custom_override_tooltip = {
+					tooltip = {
+						localization_key = tooltip_spawn_units
+						COUNT = 3
+						TYPE = "Shanhaijing Mountain troops"
+					}
+					create_unit = {
+						division = "division_template = \"Shanhaijing Mountain troops\" start_experience_factor = 2.0"
+						owner = ROOT
+						count = 3
+					}
+				}
+			}
+		}
+	}
+
+	# 
+	focus = {
+		id = SHA_how_we_resist
+		icon = GFX_focus_SWI_patriotic_shooting_clubs
+		x = 1
+		y = 1
+		cost = 10
+
+		relative_position_id = SHA_intrusive_army
+		prerequisite = { focus = SHA_expert_mountain_soldier }
+		prerequisite = { focus = SHA_intrusive_army }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			custom_effect_tooltip = {
+				localization_key = tooltip_modify_dynmod
+				DYNMOD = SHA_Shanhaijin_Army
+			}
+			add_to_variable = {
+				SHA_army_army_core_attack_factor = 0.05
+				tooltip = army_core_attack_factor_tt
+			}
+			add_to_variable = {
+				SHA_army_army_core_defence_factor = 0.05
+				tooltip = army_core_defence_factor_tt
+			}
+			add_to_variable = {
+				SHA_militray_army_org_factor = 0.05
+				tooltip = army_org_factor_tt
+			}
+
 		}
 	}
 
@@ -5727,77 +6024,53 @@ focus_tree = {
 						has_character = AUS_eduard_barger
 					}
 				}
-				hidden_effect = {
-					AUS_karl_eglseer = { set_nationality = ROOT }
-					AUS_lothar_rendulic = { set_nationality = ROOT }
-					AUS_franz_bohme = { set_nationality = ROOT }
-					AUS_alfred_ritter_von_hubicki = { set_nationality = ROOT }
-					AUS_valentin_feuerstein = { set_nationality = ROOT }
-					AUS_friedrich_materna = { set_nationality = ROOT }
-					AUS_eugen_beyer = { set_nationality = ROOT }
-					AUS_ernst_hammer = { set_nationality = ROOT }
-					AUS_curt_von_jesser = { set_nationality = ROOT }
-					AUS_eduard_barger = { set_nationality = ROOT }
-				}
-				AUS_karl_eglseer = { custom_effect_tooltip = character_becomes_a_general }
+				#hidden_effect = {
+				#	AUS_karl_eglseer = { set_nationality = ROOT }
+				#	AUS_lothar_rendulic = { set_nationality = ROOT }
+				#	AUS_franz_bohme = { set_nationality = ROOT }
+				#	AUS_alfred_ritter_von_hubicki = { set_nationality = ROOT }
+				#	AUS_valentin_feuerstein = { set_nationality = ROOT }
+				#	AUS_friedrich_materna = { set_nationality = ROOT }
+				#	AUS_eugen_beyer = { set_nationality = ROOT }
+				#	AUS_ernst_hammer = { set_nationality = ROOT }
+				#	AUS_curt_von_jesser = { set_nationality = ROOT }
+				#	AUS_eduard_barger = { set_nationality = ROOT }
+				#}
+				AUS_karl_eglseer = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_lothar_rendulic = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_lothar_rendulic = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_franz_bohme = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_franz_bohme = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_alfred_ritter_von_hubicki = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_alfred_ritter_von_hubicki = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_valentin_feuerstein = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_valentin_feuerstein = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_friedrich_materna = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_friedrich_materna = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_eugen_beyer = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_eugen_beyer = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_ernst_hammer = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_ernst_hammer = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_curt_von_jesser = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_curt_von_jesser = { unit_leader_set_nationality_tooltip = yes }
 				custom_effect_tooltip = tooltip_white_line
-				AUS_eduard_barger = { custom_effect_tooltip = character_becomes_a_general }
+				AUS_eduard_barger = { unit_leader_set_nationality_tooltip = yes }
 			}
 		}
 	}
-
-	# 장비개발부
-	focus = {
-		id = SHA_Equipment_Development_Department
-		icon = GFX_SOV_pc_of_mechanical_engineering_ccp_2d_sov_compatibility
-		x = 10
-		y = 1
-		relative_position_id = SHA_address_the_army
-		search_filters = {  }
-		cost = 4
-
-		prerequisite = { focus = SHA_address_the_army }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			#unlock_military_industrial_organization_tooltip = mio:SHA_infantry_equipment_organization
-			mio:SHA_infantry_equipment_organization = {
-				add_mio_size = 1
-			}
-		}
-	}
+#군 산업 중점
 
 	# 현대화 전쟁
 	focus = {
 		id = SHA_military_production
 		icon = GFX_focus_generic_reorient_production
-		x = 3
+		x = 10
 		y = 1
-		relative_position_id = SHA_Equipment_Development_Department
+		relative_position_id = SHA_address_the_army
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		cost = 5
 
-		prerequisite = { focus = SHA_Equipment_Development_Department }
+		prerequisite = { focus = SHA_address_the_army }
 		mutually_exclusive = { }
 
 		available = { }
@@ -5819,18 +6092,18 @@ focus_tree = {
 			}
 		}
 	}
-
-	# 박격포개발부
+	
+	# 오스트리아 군수산업체
 	focus = {
-		id = SHA_Mortar_Development_Department
-		icon = GFX_SOV_pc_of_mortar_armament_ccp_2d_sov_compatibility
-		x = -1
+		id = SHA_austrian_defense_contractor
+		icon = GFX_focus_AUS_steyr_arms_investment
+		x = 0
 		y = 1
-		relative_position_id = SHA_Equipment_Development_Department
-		search_filters = {  }
-		cost = 5
+		relative_position_id = SHA_military_production
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		cost = 6
 
-		prerequisite = { focus = SHA_Equipment_Development_Department }
+		prerequisite = { focus = SHA_military_production }
 		mutually_exclusive = { }
 
 		available = { }
@@ -5838,84 +6111,34 @@ focus_tree = {
 
 
 		completion_reward = {
-			#unlock_military_industrial_organization_tooltip = mio:SHA_artillery_equipment_organization
-			# MIO 지정 안해주면 코드명으로 출력 시키는 거 같아서 날먹이 안되네 ;ㅅ;
 			mio:SHA_infantry_equipment_organization = {
+				add_mio_size = 2
 				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_soft_attack
 			}
-			mio:SHA_artillery_equipment_organization = {
-				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_soft_hard_attack
-			}
 			mio:SHA_tank_equipment_organization = {
+				add_mio_size = 2
 				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_breakthrough
 			}
-		}
-	}
-
-	# 히르텐베르거 포 인수
-	focus = {
-		id = SHA_hirtenberger_artillery
-		icon = GFX_goal_generic_army_artillery
-		x = 1
-		y = 1
-		relative_position_id = SHA_Mortar_Development_Department
-		search_filters = {  }
-		cost = 5
-
-		prerequisite = { focus = SHA_Mortar_Development_Department }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
 			mio:SHA_artillery_equipment_organization = {
-				add_mio_size = 3
-				add_mio_funds = 500
-				add_mio_research_bonus = 0.1
+				add_mio_size = 2
+				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_soft_hard_attack
+			}
+			mio:SHA_SNAA_organization = {
+				add_mio_size = 2
 			}
 		}
 	}
-
-	# 부대 지원
+	
 	focus = {
-		id = SHA_supporting_the_troops
-		icon = GFX_goal_generic_production2
+		id = SHA_swell_military_production
+		icon = GFX_goal_generic_construct_mil_factory
 		x = -1
 		y = 1
-		relative_position_id = SHA_Mortar_Development_Department
-		search_filters = {  }
-		cost = 5
-
-		prerequisite = { focus = SHA_Mortar_Development_Department }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = SHA_supporting_the_troops
-				bonus = 0.25
-				uses = 2
-				category = support_tech
-			}
-		}
-	}
-
-	# 슈타이어 조병창 흡수
-	focus = {
-		id = SHA_steyr_arms_MnA
-		icon = GFX_focus_AUS_steyr_arms_investment
-		x = 1
-		y = 1
-		relative_position_id = SHA_Equipment_Development_Department
+		relative_position_id = SHA_austrian_defense_contractor
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 8
+		cost = 6
 
-		prerequisite = { focus = SHA_Equipment_Development_Department }
+		prerequisite = { focus = SHA_austrian_defense_contractor }
 		mutually_exclusive = { }
 
 		available = { }
@@ -5924,282 +6147,280 @@ focus_tree = {
 
 		completion_reward = {
 			mio:SHA_infantry_equipment_organization = {
-				add_mio_size = 3
-				add_mio_funds = 500
-				add_mio_research_bonus = 0.1
-			}
-		}
-	}
-
-	# 차량화 가속
-	focus = {
-		id = SHA_motorization_accelerate
-		icon = GFX_focus_generic_truck
-		x = -1
-		y = 1
-		relative_position_id = SHA_military_production
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		cost = 5
-
-		prerequisite = { focus = SHA_military_production }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			random_owned_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			add_tech_bonus = {
-				name = SHA_motorization_accelerate
-				bonus = 2
-				uses = 1
-				category = motorized_equipment
-			}
-		}
-	}
-
-	# 기계화 부대
-	focus = {
-		id = SHA_mechanization
-		icon = GFX_focus_generic_mechanized
-		x = -1
-		y = 1
-		relative_position_id = SHA_motorization_accelerate
-		search_filters = { }
-		cost = 5
-
-		prerequisite = { focus = SHA_motorization_accelerate }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = SHA_motorization_accelerate
-				bonus = 2
-				uses = 2
-				category = cat_mechanized_equipment
-			}
-		}
-	}
-
-	# 전쟁기계
-	focus = {
-		id = SHA_tank_develop
-		icon = GFX_goal_generic_army_tanks
-		x = 0
-		y = 2
-		relative_position_id = SHA_military_production
-		search_filters = { }
-		cost = 5
-
-		prerequisite = { focus = SHA_military_production }
-		mutually_exclusive = { }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = SHA_tank_develop
-				#ahead_reduction = 1
-				bonus = 2
-				uses = 3
-				category = cat_medium_armor
-			}
-			mio:SHA_tank_equipment_organization = {
-				unlock_mio_trait_tooltip = SHA_mio_trait_merge_plant_factory_output
-			}
-		}
-	}
-	###########
-	####공군####
-	###########
-
-	# 국가항공국 설립
-	focus = {
-		id = SHA_National_Aviation_Administration
-		icon = GFX_goal_generic_design_equipment_standards
-		prerequisite = { focus = SHA_Equipment_Development_Department }
-		x = -3
-		y = 1
-		relative_position_id = SHA_Equipment_Development_Department
-		search_filters = { FOCUS_FILTER_AIR_XP }
-		cost = 3
-
-		prerequisite = { }
-		mutually_exclusive = {  }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			add_one_random_military_factory = yes
-			
-			custom_effect_tooltip = tooltip_white_line
-			
-			add_dynamic_modifier = { modifier = SHA_airforce }
-		}
-	}
-
-	# 국가항공국 설립
-	focus = {
-		id = SHA_temporary_air_force
-		icon = GFX_goal_generic_design_equipment_standards
-		prerequisite = { focus = SHA_National_Aviation_Administration }
-		x = 0
-		y = 2
-		relative_position_id = SHA_National_Aviation_Administration
-		search_filters = { FOCUS_FILTER_AIR_XP }
-		cost = 20
-
-		prerequisite = { }
-		mutually_exclusive = {  }
-
-		available = { }
-		bypass = { }
-
-
-		completion_reward = {
-			mio:SHA_SNAA_organization = {
 				add_mio_size = 1
-				add_mio_funds = 500
+				add_mio_funds = 1000
 			}
-			if = {
-				limit = { NOT = { is_special_project_completed = sp:sp_air_radar } }
-				complete_special_project = sp:sp_air_radar
+			mio:SHA_artillery_equipment_organization = {
+				add_mio_size = 1
+				add_mio_funds = 1000
 			}
-			add_tech_bonus = {
-				name = SHA_radar_effort
-				bonus = 0.5
-				uses = 2
-				category = electronics
-			}
-			IF = {
-				limit = { has_tech = cavity_magnatron }
-
-				random_owned_controlled_state = {
-					limit = { is_core_of = ROOT }
-					prioritize = { 152 } #니더외스터라이히
-
-					add_building_construction = {
-						type = radar_station
-						level = 2
-						instant_build = yes
-					}	
+			random_owned_state = {
+				limit = { is_core_of = ROOT }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
 				}
+			}
 
-				random_owned_controlled_state = {
-					limit = { is_core_of = ROOT }
-					
-					prioritize = { 153 } # 니더외스터라이히
+			unlock_decision_tooltip = SHA_grazer_tractor_and_carriage_factory
 
-					add_building_construction = {
-						type = radar_station
-						level = 2
-						instant_build = yes
-					}	
-				}
+		}
+	}
+	
+	focus = {
+		id = SHA_shipyard_construction
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 1
+		y = 1
+		relative_position_id = SHA_austrian_defense_contractor
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		cost = 6
 
-				ELSE = {
-					add_tech_bonus = {
-						name = AUS_radar_effort
-						bonus = 0.5
-						uses = 1
-						category = radar_tech
+		prerequisite = { focus = SHA_austrian_defense_contractor }
+		mutually_exclusive = { }
+
+		available = {
+			any_controlled_state = {
+				is_coastal = yes
+			}
+		}
+		bypass = { }
+
+
+		completion_reward = {
+
+			custom_effect_tooltip = available_mio_tt
+			show_mio_tooltip = AUS_ELIN_organization
+			mio:AUS_ELIN_organization = { add_mio_size = 3 }
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = available_mio_tt
+			show_mio_tooltip = AUS_stabilimento_tecnico_triestino_organization
+			mio:AUS_stabilimento_tecnico_triestino_organization = { add_mio_size = 3 }
+			random_controlled_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 0
 					}
 				}
-			}
-
-			custom_effect_tooltip = AUS_airforce_intro_tt
-			add_to_variable = { AUS_production_speed_radar_station_factor = 0.1 tooltip = production_speed_radar_station_factor_tt }
-
-			random_owned_controlled_state = {
-				limit = { is_core_of = ROOT }
-				prioritize = { 4 } #니더외스터라이히
-
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = anti_air_building
-					level = 3
+					type = dockyard
+					level = 1
 					instant_build = yes
-				}	
+				}
 			}
-			air_experience = 50
-			custom_effect_tooltip = tooltip_white_line
-			add_tech_bonus = {
-				name = SHA_osterreichische_luftstreitkrafte
-				bonus = 0.75
-				uses = 2
-				category = air_equipment
+			random_controlled_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_coastal = yes
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 0
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
 			}
+		}
+	}
 
-			random_owned_controlled_state = {
-				limit = { is_core_of = ROOT }
-				
-				prioritize = { 153 } 
+#공군 중점, Air tree
+	
+	# 항공 프로그램
+	focus = {
+		id = SHA_aviation_program
+		icon = GFX_focus_SOV_flying_clubs
+		x = -2
+		y = 1
+		relative_position_id = SHA_military_production
+		search_filters = { }
+		cost = 5
 
+		prerequisite = { focus = SHA_military_production }
+		mutually_exclusive = { }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			air_experience = 25
+			152 = {
 				add_building_construction = {
 					type = air_base
 					level = 2
 					instant_build = yes
-				}	
+				}
 			}
-			add_ideas = SHA_domestic_air_production
-			custom_effect_tooltip = SHA_airforce_change
-			add_to_variable = { 
-				SHA_airforce_air_ace_generation_chance_factor = 0.2 
-				tooltip = air_ace_generation_chance_factor_tt 
+			add_tech_bonus = {
+				name = SHA_aviation_program
+				bonus = 0.5
+				uses = 2
+				category = light_air 
 			}
-			add_to_variable = { 
-				AUS_airforce_air_untrained_pilots_penalty_factor = -0.1 
-				tooltip = air_untrained_pilots_penalty_factor_tt 
-			}
-			add_to_variable = { 
-				SHA_airforce_production_speed_air_base_factor = 0.1 
-				tooltip = production_speed_air_base_factor_tt 
-			}	
-			add_to_variable = { 
-				SHA_airforce_industrial_capacity_factory = 0.05 
-				tooltip = industrial_capacity_factory_tt
-			}
-			add_to_variable = { SHA_airforce_ground_attack_factor = 0.1 tooltip = ground_attack_factor_tt }
-			add_to_variable = { SHA_airforce_air_superiority_efficiency = 0.1 tooltip = air_superiority_efficiency_tt }
-			add_to_variable = { 
-				SHA_airforce_production_speed_anti_air_building_factor = 0.1 
-				tooltip = production_speed_anti_air_building_factor_tt 
-			}
-			custom_effect_tooltip = tooltip_white_line
-			mio:SHA_SNAA_organization = {
-				add_mio_size = 2
-				add_mio_funds_gain_factor = 0.1
-				add_mio_research_bonus = 0.05
-			}
-			custom_effect_tooltip = tooltip_white_line
-			swap_ideas = {
-				add_idea = SHA_domestic_air_production_2
-				remove_idea = SHA_domestic_air_production
+			add_doctrine_cost_reduction = {
+				name = GXC_combine_the_aviation_programs
+				cost_reduction = 0.50
+				uses = 1
+				category = air_doctrine
 			}
 
+		}
+	}
+
+	focus = {
+		id = SHA_austrian_flight_instructor
+		icon = GFX_focus_AUS_osterreichische_luftstreitkrafte
+		x = -1
+		y = 1
+		relative_position_id = SHA_aviation_program
+		search_filters = { }
+		cost = 5
+
+		prerequisite = { focus = SHA_aviation_program }
+		mutually_exclusive = { }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			every_possible_country = {
+				limit = { 
+					OR = {
+						has_character = AUS_julius_yllam 
+						has_character = AUS_alexander_lohr
+						has_character = AUS_otto_schobel
+					}
+				}
+				AUS_julius_yllam = { 
+					set_nationality = ROOT
+					add_advisor_role = {
+						advisor = {
+							slot = theorist
+							idea_token = AUS_julius_yllam_the
+							traits = { air_warfare_theorist }
+							cost = 100
+						}
+					}
+				}
+				AUS_alexander_lohr = { 
+					set_nationality = ROOT
+					add_advisor_role = {
+						advisor = {
+							slot = air_chief
+							idea_token = AUS_alexander_lohr_air
+							traits = { air_chief_reform_2 }
+							cost = 100
+						}
+					}
+				}
+				AUS_otto_schobel = { 
+					set_nationality = ROOT
+					add_advisor_role = {
+						advisor = {
+							slot = air_chief
+							idea_token = AUS_otto_schobel_air
+							traits = { air_chief_ground_support_2 }
+							cost = 100
+						}
+					}
+				}
+			}
+
+		}
+	}
+	
+	# 공군 창설
+	focus = {
+		id = SHA_establish_shanhaijing_air_force
+		icon = GFX_focus_FIN_expand_air_force_academy
+		x = 0
+		y = 2
+		search_filters = { }
+		cost = 5
+
+		relative_position_id = SHA_aviation_program
+		prerequisite = { focus = SHA_aviation_program }
+
+		mutually_exclusive = { }
+
+		available = { }
+		bypass = { }
+
+
+		completion_reward = {
+			add_dynamic_modifier = { modifier = SHA_airforce }
+		}
+	}
+
+# 해군 중점, navy force
+	
+	# 오스트리아인 제독 초청
+	focus = {
+		id = SHA_austrian_admiral
+		icon = GFX_focus_AUS_promote_admirals
+		x = 2
+		y = 1
+		search_filters = { }
+		cost = 5
+
+		relative_position_id = SHA_military_production
+		prerequisite = { focus = SHA_military_production }
+
+		mutually_exclusive = { }
+
+		available = {
+			any_controlled_state = {
+				is_coastal = yes
+			}
+		}
+		bypass = { }
+
+
+		completion_reward = {
+			#custom_effect_tooltip = AUS_promote_admirals_tt
+			
+		}
+	}
+	
+	# 산해경 해군 창설
+	focus = {
+		id = SHA_establish_shanhaijing_navy_force
+		icon = GFX_focus_AUS_reestablish_austrian_navy
+		x = 0
+		y = 2
+		search_filters = { }
+		cost = 5
+
+		relative_position_id = SHA_austrian_admiral
+		prerequisite = { focus = SHA_austrian_admiral }
+		prerequisite = { focus = SHA_shipyard_construction }
+
+		mutually_exclusive = { }
+
+		available = {
+			any_controlled_state = {
+				is_coastal = yes
+			}
+		}
+		bypass = { }
+
+
+		completion_reward = {
+			
 		}
 	}
 
@@ -7120,7 +7341,7 @@ focus_tree = {
 		id = SHA_invest_in_kapsch
 		icon = GFX_focus_AUS_invest_in_kapsch
 		prerequisite = { focus = SHA_industrialization_effort }
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = SHA_industrialization_effort
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -7209,8 +7430,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SHA_trade_controls
-		icon = GFX_focus_generic_industrialists
+		id = SHA_promote_the_academy_currency
+		icon = GFX_focus_SHA_promote_the_academy_currency
 		x = 3
 		y = 1
 		relative_position_id = SHA_economic_stabilization
@@ -7225,40 +7446,29 @@ focus_tree = {
 		available = {
 			NOT = { has_active_mission = SHA_industrial_stabilisation_mission_timer }
 		}
-		bypass = {
-			NOT = { has_idea = BA_isolation }
-		}
 
 
 		completion_reward = {
-			if = {
-				limit = { has_idea = BA_isolation }
-				swap_ideas = {
-					remove_idea = BA_isolation
-					add_idea = limited_exports
-				}
-			}
-		}
-
-		complete_tooltip = {
-			swap_ideas = {
-				remove_idea = BA_isolation
-				add_idea = limited_exports
+			add_political_power = 25
+			add_timed_idea = {
+				idea = SHA_promote_the_academy_currency_idea
+				years = 1
 			}
 		}
 	}
+
 	
 	focus = {
 		id = SHA_three_year_plan
 		icon = GFX_goal_munitions_factories
 		x = -3
 		y = 1
-		relative_position_id = SHA_trade_controls
+		relative_position_id = SHA_promote_the_academy_currency
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		cost = 5
 
 		prerequisite = { 
-			focus = SHA_trade_controls 
+			focus = SHA_promote_the_academy_currency 
 		}
 		mutually_exclusive = {  }
 
@@ -7320,7 +7530,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = SHA_three_year_plan
-		search_filters = { FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL_CHARACTER }
 		cost = 8
 
 		prerequisite = { 
@@ -7361,15 +7571,15 @@ focus_tree = {
 
 	focus = {
 		id = SHA_shanhaijing_trade_promotion
-		icon = GFX_focus_chi_mission_to_the_SHA
+		icon = GFX_focus_generic_industrialists
 		x = 1
 		y = 1
-		relative_position_id = SHA_trade_controls
+		relative_position_id = SHA_promote_the_academy_currency
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		cost = 5
 
-		prerequisite = { 
-			focus = SHA_trade_controls 
+		prerequisite = {
+			focus = SHA_promote_the_academy_currency 
 		}
 		mutually_exclusive = {  }
 
@@ -7380,6 +7590,13 @@ focus_tree = {
 
 
 		completion_reward = {
+			if = {
+				limit = { has_idea = BA_isolation }
+				swap_ideas = {
+					remove_idea = BA_isolation
+					add_idea = limited_exports
+				}
+			}
 			random_owned_state = {
 				prioritize = { 4 }
 				add_extra_state_shared_building_slots = 2
@@ -7388,9 +7605,26 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
+				set_state_flag = SHA_industry_flag_01
 			}
 			random_owned_state = {
 				prioritize = { 976 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SHA_industry_flag_01
+			}
+
+		}
+
+		complete_tooltip = {
+			every_state = {
+				limit = { 
+					has_state_flag = SHA_industry_flag_01 
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -7608,7 +7842,6 @@ focus_tree = {
 				idea = SHA_exports
 				years = 1
 			}
-
 		}
 	}
 
