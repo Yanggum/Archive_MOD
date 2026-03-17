@@ -4475,6 +4475,15 @@ focus_tree = {
 		y = 1
 		relative_position_id = ARI_third_council
 		completion_reward = {
+			add_country_leader_role = {
+				character = ARI_arius_emergency_government
+				promote_leader = yes
+				country_leader = {
+					ideology=arius_crisisism
+					traits={ ARI_arius_emergency_government_trait }
+					expire="3000.1.1.1"
+				}
+			}
 		}
 	}
 	focus = {
@@ -8179,7 +8188,7 @@ focus_tree = {
 			focus = ARI_never_lose_hope
 		}
 		mutually_exclusive = {
-			focus = ARI_arius_axis_powers
+			focus = ARI_arius_AUDI_powers
 		}
 		available = {
 		}
@@ -8191,7 +8200,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = ARI_arius_axis_powers
+		id = ARI_arius_AUDI_powers
 		icon = GFX_focus_RAJ_kingmaker
 		prerequisite = {
 			focus = ARI_everything_is_vain
@@ -8214,7 +8223,7 @@ focus_tree = {
 		icon = GFX_focus_PHI_battalion_combat_teams
 		prerequisite = {
 			focus = ARI_return_to_isolationism
-			focus = ARI_arius_axis_powers
+			focus = ARI_arius_AUDI_powers
 		}
 		available = {
 		}
@@ -8265,12 +8274,90 @@ focus_tree = {
 			focus = ARI_expanding_military_industry
 		}
 		available = {
+			is_subject = no
+			Eden_country_defend_trigger = no
+			has_army_manpower = { size > 299999 }
+			has_war_support > 0.4
+			check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			custom_trigger_tooltip = {
+				tooltip = TRN_gehenna_eq_trigger_tt
+				check_variable = { num_equipment_in_armies_k@infantry_equipment > 16 }
+			}
+			any_other_country = {
+				is_neighbor_of = ROOT
+				NOT = { has_non_aggression_pact_with = ROOT }
+				BA_gehennea_core_OR_control = yes
+			}
 		}
 		cost = 5
 		x = 0
 		y = 3
 		relative_position_id = ARI_expanding_military_industry
+		will_lead_to_war_with = GEM
+		will_lead_to_war_with = GEH
+		will_lead_to_war_with = HEU
 		completion_reward = {
+			add_opinion_modifier = {
+				target = GEM
+				modifier = BUL_old_enemies
+			}
+			add_opinion_modifier = {
+				target = GEH
+				modifier = BUL_old_enemies
+			}
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = GEM
+						tag = GEH
+					}
+				}
+				display_individual_scopes = yes
+				add_opinion_modifier = { target = ROOT modifier = existential_threat }
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			hidden_effect = {
+				if = {
+					limit = { has_government = fascism }
+					scoped_play_song = "BA_from_the_new"
+				}
+			}
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						is_neighbor_of = ROOT
+						NOT = { has_non_aggression_pact_with = ROOT }
+						BA_gehennea_core_OR_control = yes
+					}
+					ROOT = {
+						declare_war_on = {
+							target = PREV
+							type = annex_everything
+						}
+					}
+				}
+			}
+			declare_war_on = {
+				target = GEM
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = GEH
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = HEU
+				type = annex_everything
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			add_timed_idea = {
+				idea = idea_ARI_evil_named_gehenna
+				days = 120
+			}
 		}
 	}
 	focus = {
