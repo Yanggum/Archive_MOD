@@ -4139,7 +4139,7 @@ ABY_add_influence_labor_union = {
 }
 
 ABY_add_influence_outer_money = {
-	custom_effect_tooltip = HEU_add_influence_outer_money_tt
+	custom_effect_tooltip = ABY_add_influence_outer_money_tt
 	set_temp_variable = {
 		target = 5
 	}
@@ -4148,6 +4148,235 @@ ABY_add_influence_outer_money = {
 		value = ABY_outer_money_influence_add
 	}
 	ABY_influence_setting_system = yes
+}
+
+ABY_remove_outer_money_effect = {
+	custom_effect_tooltip = ABY_remove_influence_outer_money_tt
+	divide_temp_variable = {
+		ABY_var_outer_money_percent = 3
+	}
+	add_to_variable = {
+		ABY_var_izayoi_nonomi_percent = ABY_var_outer_money_percent
+	}
+	add_to_variable = {
+		ABY_var_great_jew_percent = ABY_var_outer_money_percent
+	}
+	add_to_variable = {
+		ABY_var_nephthys_council_percent = ABY_var_outer_money_percent
+	}
+	set_variable = {
+		ABY_var_outer_money_percent = 0
+	}
+	set_temp_variable = {
+		total_popularity = 0
+	}
+	clamp_variable = {
+		var = ABY_var_izayoi_nonomi_percent
+		min = 0
+		max = 0.99
+	}
+	add_to_temp_variable = {
+		total_popularity = ABY_var_izayoi_nonomi_percent
+	}
+	clamp_variable = {
+		var = ABY_var_nephthys_council_percent
+		min = 0
+		max = 0.99
+	}
+	add_to_temp_variable = {
+		total_popularity = ABY_var_nephthys_council_percent
+	}
+	clamp_variable = {
+		var = ABY_var_great_jew_percent
+		min = 0
+		max = 0.99
+	}
+	add_to_temp_variable = {
+		total_popularity = ABY_var_great_jew_percent
+	}
+	clamp_variable = {
+		var = ABY_var_labor_union_percent
+		min = 0
+		max = 0.99
+	}
+	add_to_temp_variable = {
+		total_popularity = ABY_var_labor_union_percent
+	}
+	clamp_variable = {
+		var = ABY_var_outer_money_percent
+		min = 0
+		max = 0.99
+	}
+	add_to_temp_variable = {
+		total_popularity = ABY_var_outer_money_percent
+	}
+	if = {
+		limit = {
+			check_variable = {
+				total_popularity > 0.99
+			}
+		}
+		subtract_from_temp_variable = {
+			total_popularity = 0.99
+		}
+		hidden_effect = {
+			random_list = {
+				10 = {
+					modifier = {
+						factor = 0
+						OR = {
+							check_variable = {
+								target_var_temp = 1
+							}
+							check_variable = {
+								ABY_var_izayoi_nonomi_percent < total_popularity
+							}
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_izayoi_nonomi_percent > ABY_var_nephthys_council_percent
+						}
+						check_variable = {
+							ABY_var_izayoi_nonomi_percent > ABY_var_great_jew_percent
+						}
+					}
+					subtract_from_variable = {
+						ABY_var_izayoi_nonomi_percent = total_popularity
+					}
+				}
+				10 = {
+					modifier = {
+						factor = 0
+						OR = {
+							check_variable = {
+								target_var_temp = 2
+							}
+							check_variable = {
+								ABY_var_nephthys_council_percent < total_popularity
+							}
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_nephthys_council_percent > ABY_var_izayoi_nonomi_percent
+						}
+						check_variable = {
+							ABY_var_nephthys_council_percent > ABY_var_great_jew_percent
+						}
+					}
+					subtract_from_variable = {
+						ABY_var_nephthys_council_percent = total_popularity
+					}
+				}
+				10 = {
+					modifier = {
+						factor = 0
+						OR = {
+							check_variable = {
+								target_var_temp = 3
+							}
+							check_variable = {
+								ABY_var_great_jew_percent < total_popularity
+							}
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_great_jew_percent > ABY_var_izayoi_nonomi_percent
+						}
+						check_variable = {
+							ABY_var_great_jew_percent > ABY_var_nephthys_council_percent
+						}
+					}
+					subtract_from_variable = {
+						ABY_var_great_jew_percent = total_popularity
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = {
+				total_popularity < 0.99
+			}
+		}
+		subtract_from_temp_variable = {
+			total_popularity = 0.99
+		}
+		multiply_temp_variable = {
+			total_popularity = -1
+		}
+		hidden_effect = {
+			random_list = {
+				10 = {
+					modifier = {
+						factor = 0
+						check_variable = {
+							target_var_temp = 2
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_nephthys_council_percent < ABY_var_great_jew_percent
+						}
+						check_variable = {
+							ABY_var_nephthys_council_percent < ABY_var_izayoi_nonomi_percent
+						}
+					}
+					add_to_variable = {
+						ABY_var_nephthys_council_percent = total_popularity
+					}
+				}
+				10 = {
+					modifier = {
+						factor = 0
+						check_variable = {
+							target_var_temp = 3
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_great_jew_percent < ABY_var_nephthys_council_percent
+						}
+						check_variable = {
+							ABY_var_great_jew_percent < ABY_var_izayoi_nonomi_percent
+						}
+					}
+					add_to_variable = {
+						ABY_var_great_jew_percent = total_popularity
+					}
+				}
+				10 = {
+					modifier = {
+						factor = 0
+						check_variable = {
+							target_var_temp = 1
+						}
+					}
+					modifier = {
+						factor = 2
+						check_variable = {
+							ABY_var_izayoi_nonomi_percent < ABY_var_nephthys_council_percent
+						}
+						check_variable = {
+							ABY_var_izayoi_nonomi_percent < ABY_var_great_jew_percent
+						}
+					}
+					add_to_variable = {
+						ABY_var_izayoi_nonomi_percent = total_popularity
+					}
+				}
+			}
+		}
+	}
+	ABY_influence_modifier_effect = yes
 }
 
 ABY_influence_modifier_effect = {
