@@ -3804,14 +3804,19 @@ focus_tree = {
 			}
         }
 		completion_reward = {
-			add_political_power = -50
-            add_stability = 0.02
-			
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
+			# 헤일로 보병 상한 효과가 삭제(너프)되어 정치력 감소 효과 삭제
+			#add_political_power = -50
+            add_stability = 0.05
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.10
 			}
+			
+			#custom_effect_tooltip = kivotos_halo_add3_tt
+			#hidden_effect = {
+			#	set_variable = { BA_halo_infantry_cap_edit_var = 3 }
+			#	BA_halo_infantry_cap_edit_effect = yes
+			#}
 		}
 	}
     focus = {
@@ -4383,12 +4388,61 @@ focus_tree = {
 		}
 		completion_reward = {
             GEH_military_tradition_effect = yes
-			
-			custom_effect_tooltip = kivotos_halo_add3_tt
-			hidden_effect = {
-				set_variable = { BA_halo_infantry_cap_edit_var = 3 }
-				BA_halo_infantry_cap_edit_effect = yes
+
+			add_tech_bonus = {
+				name = GEH_Army_Reformation
+				bonus = 1
+				uses = 1
+				category = rangers_tech_cat
 			}
+			IF = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+				}
+				add_doctrine_cost_reduction = {
+					name = GEH_Army_Reformation
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_rangers_doctrine
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+
+			IF = {
+				limit = {
+					52 = {
+						is_fully_controlled_by = ROOT
+						can_construct_building = land_facility
+					}
+				}
+				52 = {
+					add_building_construction = {
+						type = land_facility
+						level = 1
+						instant_build = yes
+						province = 692
+					}
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			ELSE = {
+				random_core_state = {
+					limit = {
+						can_construct_building = land_facility
+						is_owned_and_controlled_by = ROOT
+					}
+					construct_building_in_random_province = {
+						land_facility = 1
+					}
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			}
+			
+			#custom_effect_tooltip = kivotos_halo_add3_tt
+			#hidden_effect = {
+			#	set_variable = { BA_halo_infantry_cap_edit_var = 3 }
+			#	BA_halo_infantry_cap_edit_effect = yes
+			#}
 			add_political_power = 120
 		}
 	}
@@ -11204,6 +11258,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = GEH_three_congress_focus
 		cost = 5
+		
+		offset = {
+			x = 1
+			trigger = {
+				has_country_flag = hina_assembly_h_next_flag
+			}
+		}
 		
 		offset = {
 			x = 42
