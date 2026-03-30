@@ -312,7 +312,15 @@ country_event = {
 		}
 		unlock_decision_category_tooltip = FRA_manage_strike_cat
 		activate_mission = FRA_PPNA_activation
-		news_event = FRA_prov_event.44
+		hidden_effect = {
+			news_event = FRA_prov_event.44
+		}
+		FRA_philippe_petain = {
+			unit_leader_event = {
+				id = FRA_strike_event.6
+				hours = 12
+			}
+		}
 	}
 }
 
@@ -337,12 +345,6 @@ country_event = {
 		add_ideas = FRA_general_strike_4
 		activate_mission = FRA_strike_going_bad_mission
 		name = FRA_strike_event.5.a
-		FRA_philippe_petain = {
-			unit_leader_event = {
-				id = FRA_strike_event.6
-				hours = 12
-			}
-		}
 	}
 }
 
@@ -356,6 +358,9 @@ unit_leader_event = {
 	option = {
 		name = FRA_strike_event.6.a
 		complete_national_focus = FRA_resolution_to_oust_philippe_petain
+		hidden_effect = {
+			country_event = FRA_inner_circle_petain.4 #중점 취소
+		}
 	}
 }
 
@@ -4830,15 +4835,15 @@ country_event = {
 			}
 			country_event = { #저항도 이벤트 - 오랑의 겨울
 				id = FRA_disruption_event.4
-				days = 350
+				days = 310
 			}
 			country_event = { #저항도 이벤트 - 실업
 				id = FRA_disruption_event.9
-				days = 410
+				days = 370
 			}
 			country_event = { #저항도 이벤트 - 땅
 				id = FRA_disruption_event.6
-				days = 560
+				days = 520
 			}
             if = {
                 limit = {
@@ -7243,46 +7248,53 @@ country_event = { #페탱 중점 자동시작
 	immediate = {
 		if = {
 			limit = {
-				NOT = { has_completed_focus = FRA_petain_focus_0 }
+				FRA_philippe_petain = {
+					is_country_leader = yes
+				}
 			}
-			activate_shine_on_focus = FRA_petain_focus_0
-			set_country_flag = { flag = progress_flag_FRA_petain_focus_0 days = 69 value = 1 }
-			country_event = { id = FRA_inner_circle_petain.2 days = 70 }
-		}
-		else_if = {
-			limit = {
-				NOT = { has_completed_focus = FRA_petain_focus_1 }
+			if = {
+				limit = {
+					NOT = { has_completed_focus = FRA_petain_focus_0 }
+				}
+				activate_shine_on_focus = FRA_petain_focus_0
+				set_country_flag = { flag = progress_flag_FRA_petain_focus_0 days = 69 value = 1 }
+				country_event = { id = FRA_inner_circle_petain.2 days = 70 }
 			}
-			activate_shine_on_focus = FRA_petain_focus_1
-			set_country_flag = { flag = progress_flag_FRA_petain_focus_1 days = 69 value = 1 }
-			country_event = { id = FRA_inner_circle_petain.2 days = 70 }
-		}
-		else_if = {
-			limit = {
-				NOT = { has_completed_focus = FRA_petain_focus_2 }
+			else_if = {
+				limit = {
+					NOT = { has_completed_focus = FRA_petain_focus_1 }
+				}
+				activate_shine_on_focus = FRA_petain_focus_1
+				set_country_flag = { flag = progress_flag_FRA_petain_focus_1 days = 69 value = 1 }
+				country_event = { id = FRA_inner_circle_petain.2 days = 70 }
 			}
-			activate_shine_on_focus = FRA_petain_focus_2
-			set_country_flag = { flag = progress_flag_FRA_petain_focus_2 days = 139 value = 1 }
-			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
-		}
-		else_if = {
-			limit = {
-				NOT = { has_completed_focus = FRA_petain_focus_3 }
+			else_if = {
+				limit = {
+					NOT = { has_completed_focus = FRA_petain_focus_2 }
+				}
+				activate_shine_on_focus = FRA_petain_focus_2
+				set_country_flag = { flag = progress_flag_FRA_petain_focus_2 days = 139 value = 1 }
+				country_event = { id = FRA_inner_circle_petain.2 days = 140 }
 			}
-			activate_shine_on_focus = FRA_petain_focus_3
-			set_country_flag = { flag = progress_flag_FRA_petain_focus_3 days = 139 value = 1 }
-			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
-		}
-		else_if = {
-			limit = {
-				NOT = { has_completed_focus = FRA_petain_focus_4 }
+			else_if = {
+				limit = {
+					NOT = { has_completed_focus = FRA_petain_focus_3 }
+				}
+				activate_shine_on_focus = FRA_petain_focus_3
+				set_country_flag = { flag = progress_flag_FRA_petain_focus_3 days = 139 value = 1 }
+				country_event = { id = FRA_inner_circle_petain.2 days = 140 }
 			}
-			activate_shine_on_focus = FRA_petain_focus_4
-			set_country_flag = { flag = progress_flag_FRA_petain_focus_4 days = 139 value = 1 }
-			country_event = { id = FRA_inner_circle_petain.2 days = 140 }
-		}
-		else = { #Debug logs
-			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot start new focus"
+			else_if = {
+				limit = {
+					NOT = { has_completed_focus = FRA_petain_focus_4 }
+				}
+				activate_shine_on_focus = FRA_petain_focus_4
+				set_country_flag = { flag = progress_flag_FRA_petain_focus_4 days = 139 value = 1 }
+				country_event = { id = FRA_inner_circle_petain.2 days = 140 }
+			}
+			else = { #Debug logs
+				#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot start new focus"
+			}
 		}
 	}
 }
@@ -7372,6 +7384,57 @@ country_event = {
 	option = {
 		name = FRA_inner_circle_petain.3.a
 		complete_national_focus = FRA_leading_of_fatherland
+	}
+}
+
+country_event = { #중점취소
+	id = FRA_inner_circle_petain.4
+	title = FRA_inner_circle_petain.3.t
+	desc = FRA_inner_circle_petain.3.d
+	hidden = yes
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_0
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_0
+			deactivate_shine_on_focus = FRA_petain_focus_0
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_1
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_1
+			deactivate_shine_on_focus = FRA_petain_focus_1
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_2
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_2
+			deactivate_shine_on_focus = FRA_petain_focus_2
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_3
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_3
+			deactivate_shine_on_focus = FRA_petain_focus_3
+		}
+		else_if = {
+			limit = {
+				has_shine_effect_on_focus = FRA_petain_focus_4
+			}
+			clr_country_flag = progress_flag_FRA_petain_focus_4
+			deactivate_shine_on_focus = FRA_petain_focus_4
+		}
+		else = { #Debug logs
+			#log = "SOMETHING WENT WRONG WITH GOEBBELS's FOCUS BRANCH - Cannot complete focus"
+		}
 	}
 }
 
