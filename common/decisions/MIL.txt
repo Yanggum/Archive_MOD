@@ -1,4 +1,4 @@
-MIL_robot_production = {
+﻿MIL_robot_production = {
 	MIL_mechanical_event_robot_production_dec = {
 		priority = 10
 		icon = GFX_decision_generic_merge_plant_materiel
@@ -4634,35 +4634,182 @@ MIL_upgrade_AL_1S_decision_categorie = {
 }
 
 MIL_ship_of_ATRAHASIS_decision_categorie = {
-	MIL_ship_of_ATRAHASIS_decision = {
+
+	# 방주 제1구역 건조 (시작 단계)
+	MIL_built_ship_of_ATRAHASIS_sector1_decision = {
 		icon = GFX_decision_generic_factory
+        cost = 50
+        fire_only_once = yes
+        
+        available = {
+            has_completed_focus = MIL_ship_of_ATRAHASIS
+        }
+        
+        visible = {
+            has_completed_focus = MIL_ship_of_ATRAHASIS
+        }
+        
+        allowed = {
+            original_tag = MIL
+        }
+        
+        custom_cost_trigger = {
+            num_of_civilian_factories > 4
+        }
+        
+        days_remove = 40
+        
+        modifier = {
+            civilian_factory_use = 5
+            military_factory_use = 5
+        }
+        
+        remove_effect = {
+            set_country_flag = MIL_ATRAHASIS_sector1_completed # 변수 대신 플래그 설정
+        }
+    }
 
-		ai_will_do = {
-			base = 300
-		}
+    # 방주 제2구역 건조 -> 1구역 완료 후 활성화
+    MIL_built_ship_of_ATRAHASIS_sector2_decision = {
+        icon = GFX_decision_generic_factory
+        cost = 50
+        fire_only_once = yes
+        
+        available = {
+            has_country_flag = MIL_ATRAHASIS_sector1_completed
+        }
+        
+        visible = {
+            has_country_flag = MIL_ATRAHASIS_sector1_completed # 1구역이 완료되어야만 보임
+        }
+        
+        allowed = {
+            original_tag = MIL
+        }
+        
+        custom_cost_trigger = {
+            num_of_civilian_factories > 4
+        }
+        
+        days_remove = 40
+        
+        modifier = {
+            civilian_factory_use = 5
+            military_factory_use = 5
+        }
+        
+        remove_effect = {
+            set_country_flag = MIL_ATRAHASIS_sector2_completed
+        }
+    }
 
-		allowed = {
-			original_tag = MIL
-		}
+    # 제3구역 건조 -> 2구역 완료 후 활성화
+    MIL_built_ship_of_ATRAHASIS_sector3_decision = {
+        icon = GFX_decision_generic_factory
+        cost = 50
+        fire_only_once = yes
+        
+        available = {
+            has_country_flag = MIL_ATRAHASIS_sector2_completed
+        }
+        
+        visible = {
+            has_country_flag = MIL_ATRAHASIS_sector2_completed
+        }
+        
+        allowed = {
+            original_tag = MIL
+        }
+        
+        custom_cost_trigger = {
+            num_of_civilian_factories > 4
+        }
+        
+        days_remove = 40
+        
+        modifier = {
+            civilian_factory_use = 5
+            military_factory_use = 5
+        }
+        
+        remove_effect = {
+            set_country_flag = MIL_ATRAHASIS_sector3_completed
+        }
+    }
 
-		available = {
-		}
+    # 제4구역 건조 -> 3구역 완료 후 활성화
+    MIL_built_ship_of_ATRAHASIS_sector4_decision = {
+        icon = GFX_decision_generic_factory
+        cost = 75
+        fire_only_once = yes
+        
+        available = {
+            has_country_flag = MIL_ATRAHASIS_sector3_completed
+        }
+        
+        visible = {
+            has_country_flag = MIL_ATRAHASIS_sector3_completed
+        }
+        
+        allowed = {
+            original_tag = MIL
+        }
+        
+        # 만약 군수공장 체크가 커스텀 트리거라면 그대로 두시면 됩니다.
+        custom_cost_trigger = {
+			num_of_military_factories > 9
+        }
+        
+        days_remove = 60
+        
+        modifier = {
+            military_factory_use = 10
+        }
+        
+        remove_effect = {
+            set_country_flag = MIL_ATRAHASIS_sector4_completed
+        }
+    }
 
-		visible = {
-		}
-
-		cost = 50
-
-		complete_effect = {
-			# FROM = {
-			# 	add_dynamic_modifier = {
-			# 		modifier = MIL_ship_of_ATRAHASIS
-			# 		days = 365
-			# 	}
-			# }
-		}
-	}
+	# 방주 가동(최종)
+    MIL_ship_of_ATRAHASIS_Online_decision = {
+        icon = GFX_decision_generic_factory
+        cost = 50
+        fire_only_once = yes
+        
+        available = {
+            has_country_flag = MIL_ATRAHASIS_sector4_completed
+        }
+        
+        visible = {
+            has_country_flag = MIL_ATRAHASIS_sector4_completed
+        }
+        
+        allowed = {
+            original_tag = MIL
+        }
+        
+        custom_cost_trigger = {
+            has_available_civilian_factory > 4
+        }
+        
+        days_remove = 20
+        
+        modifier = {
+            civilian_factory_use = 5
+        }
+        
+        remove_effect = {
+            add_ideas = MIL_ship_of_ATRAHASIS_idea 
+            set_country_flag = MIL_ATRAHASIS_ONLINE 
+            country_event = { # 중점에서 옮겨온 이벤트 (디시전 완료 후 6시간 뒤 발생)
+                id = MIL_event.16
+                hours = 6
+            }
+        }
+    }
 }
+
 MIL_science_victory = { #별을 쫓다
 	MIL_sv_man_rocket = { #유인 우주선 발사
 		icon = GFX_decision_eng_puppet_usa
