@@ -338,6 +338,174 @@
 		}
 	}
 	focus = {
+		id = VIC_concessions_to_the_germans
+		icon = GFX_focus_chi_mission_to_germany
+		x = 0
+		y = 2
+		offset = {
+			x = 0
+			y = 0
+		}
+		prerequisite = { 
+			focus = VIC_prosecute_the_losers
+		}
+		relative_position_id = VIC_prosecute_the_losers
+		
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			16 = {
+				is_controlled_by = GER
+			}
+		}
+		
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_FRA_OCCUPATION_COST }
+		completion_reward = {
+			unlock_decision_category_tooltip = VIC_concessions_to_the_germans
+		}
+	}
+	focus = {
+		id = VIC_mandatory_work_service
+		icon = GFX_goal_generic_construction2
+		x = 0
+		y = 2
+		offset = {
+			x = 0
+			y = 0
+		}
+		prerequisite = { 
+			focus = VIC_concessions_to_the_germans
+		}
+		relative_position_id = VIC_concessions_to_the_germans
+		
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			
+		}
+		
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_FRA_OCCUPATION_COST }
+		completion_reward = {
+			reduce_occupation_cost_effect = yes
+			add_ideas = { FRA_mandatory_work_service }
+		}
+	}
+	focus = {
+		id = VIC_a_nation_reborn
+		icon = GFX_goal_support_fascism
+		x = 0
+		y = 2
+		offset = {
+			x = 0
+			y = 0
+		}
+		prerequisite = { 
+			focus = VIC_celebrate_motherhood
+		}
+		prerequisite = { 
+			focus = VIC_venerate_the_craftsman
+		}
+		prerequisite = { 
+			focus = VIC_mandatory_work_service
+		}
+		relative_position_id = VIC_celebrate_motherhood
+		
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			
+		}
+		
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_STABILITY }
+		completion_reward = {
+			add_stability = 0.1
+		}
+	}
+	focus = {
+		id = VIC_end_the_occupation
+		icon = GFX_goal_generic_territory_or_war
+		x = 0
+		y = 2
+		offset = {
+			x = 0
+			y = 0
+		}
+		prerequisite = { 
+			focus = VIC_a_nation_reborn
+		}
+		relative_position_id = VIC_a_nation_reborn
+		
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				is_historical_focus_on = yes
+				NOT = {
+					GER = { owns_state = 219 } 
+				}
+				factor = 0
+			}
+		}
+		available = {
+			16 = {
+				NOT = {
+					is_controlled_by = ROOT
+				}
+			}
+		}
+		
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		completion_reward = {
+			set_rule = {
+				can_join_factions = yes
+				can_not_declare_war = no
+				can_create_factions = yes
+			}
+			remove_occupation_cost_effect = yes
+			if = {
+				limit = {
+					has_idea = VIC_produce_aircraft_parts
+				}
+				remove_ideas = VIC_produce_aircraft_parts
+			}
+			GER = { 
+				country_event = lar_end_the_occupation.1 
+				if = { limit = { has_idea = VIC_aircraft_parts }
+					remove_ideas = VIC_aircraft_parts
+				}
+			}
+		}
+	}
+	focus = {
 		id = VIC_the_national_bureau_of_statistics
 		icon = GFX_focus_generic_treaty
 		x = -2
