@@ -1,15 +1,15 @@
-name="Blue Archive MOD"
+name = "Blue Archive MOD"
+path = "mod/Archive_MOD"
+
 replace_path="gfx/loadingscreens"
 replace_path="common/bookmarks"
-replace_path="common/national_focus/belgium.txt"
-replace_path="common/national_focus/france.txt"
-replace_path="common/national_focus/hungary.txt"
+
 replace_path="common/military_industrial_organization/organizations/BEL_organization.txt"
 replace_path="common/ai_strategy_plans/FRA_historical_strategy_plan.txt"
 replace_path="common/ai_strategy_plans/FRA_alternate_strategy_plan.txt"
 replace_path="common/ai_strategy_plans/HUN_alternate.txt"
-replace_path="common/scripted_localisation/00_scripted_localisation_FR_loc.txt"
-tags={
+
+tags = {
 	"Gameplay"
 	"Graphics"
 	"Events"
@@ -17,9 +17,7 @@ tags={
 	"Ideologies"
 	"Military"
 }
-user_dir="BlueArchive"
-version="0.7.8"
-picture="thumbnail.png"
-supported_version="1.17.*"
-path="mod/Archive_MOD"
-remote_file_id="2927583473"
+picture = "thumbnail.png"
+version = "0.7.8"
+supported_version = "1.17.*"
+remote_file_id = "2927583473"
