@@ -4251,6 +4251,14 @@ ARI_MISAKI_progress = {
 
 		days_remove = 70
 
+		custom_cost_text = ARI_MISAKI_efficient_economic_policy_tt
+
+		custom_cost_trigger = {
+			check_variable = {
+				MISAKI_var > 5
+			}
+		}
+
 		complete_effect = {
 			set_temp_variable = {
 				MISAKI_var_mody_temp = -5
@@ -4280,7 +4288,190 @@ ARI_MISAKI_progress = {
 			}
 		}
 	}
-	ARI_MISAKI_total_change = {
+	ARI_MISAKI_public_speaking_attempt = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+		}
+
+		visible = {
+		}
+
+		available = {
+			has_completed_focus = ARI_public_speech
+		}
+
+		days_remove = 25
+
+		custom_cost_text = ARI_MISAKI_public_speaking_attempt_tt
+
+		custom_cost_trigger = {
+			check_variable = {
+				MISAKI_var > 3
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = {
+				MISAKI_var_mody_temp = -3
+				tooltip = MISAKI_var_tt
+			}
+			ARI_moderate_MISAKI_var_mody_add = yes
+		}
+
+		remove_effect = {
+			add_political_power = 60
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.05
+			}
+			add_stability = 0.05
+		}
+	}
+	ARI_MISAKI_coordination_between_factions = {
+		icon = GFX_decision_eng_trade_unions_demand
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+		}
+
+		visible = {
+		}
+
+		available = {
+			has_completed_focus = ARI_managing_trinity_discontent
+		}
+
+		days_remove = 95
+
+		modifier = {
+			consumer_goods_factor = -0.15
+			industrial_capacity_dockyard = 0.10
+			industrial_capacity_factory = 0.10
+		}
+
+		custom_cost_text = ARI_MISAKI_coordination_between_factions_tt
+
+		custom_cost_trigger = {
+			check_variable = {
+				MISAKI_var > 6
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = {
+				MISAKI_var_mody_temp = -6
+				tooltip = MISAKI_var_tt
+			}
+			ARI_moderate_MISAKI_var_mody_add = yes
+		}
+
+		remove_effect = {
+			add_stability = 0.05
+			add_war_support = 0.05
+		}
+	}
+	ARI_MISAKI_militia_conscription = {
+		icon = GFX_decision_SWE_set_army_budget
+		priority = 100
+
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 2.5
+				has_political_power > 199
+			}
+		}
+
+		visible = {
+		}
+
+		available = {
+			has_completed_focus = ARI_order_arius
+		}
+
+		days_remove = 60
+
+		modifier = {
+			army_core_attack_factor = 0.05
+			army_core_defence_factor = 0.10
+		}
+
+		custom_cost_text = ARI_MISAKI_militia_conscription_tt
+
+		custom_cost_trigger = {
+			check_variable = {
+				MISAKI_var > 10
+			}
+		}
+
+		complete_effect = {
+			set_temp_variable = {
+				MISAKI_var_mody_temp = -10
+				tooltip = MISAKI_var_tt
+			}
+			ARI_moderate_MISAKI_var_mody_add = yes
+
+			if = {
+				limit = {
+					has_template = "Patriotic Militia"
+					NOT = { has_country_flag = flag_ARI_MISAKI_militia_conscription }
+				}
+				delete_unit_template_and_units = {
+					division_template = "Patriotic Militia"
+					disband = yes
+				}
+				set_country_flag = flag_ARI_MISAKI_militia_conscription
+				division_template = {
+					name = "Patriotic Militia"
+					division_names_group = ARI_PEN_01
+					#template_counter = 67
+					is_locked = yes
+					force_allow_recruiting = no
+					regiments = {
+						halo_militia = { x = 0 y = 0 }
+						halo_militia = { x = 0 y = 1 }
+						halo_militia = { x = 0 y = 2 }
+						halo_militia = { x = 1 y = 0 }
+						halo_militia = { x = 1 y = 1 }
+					}
+				}
+			}
+
+			random_owned_controlled_state = {
+				prioritize = { 85 }
+				custom_effect_tooltip = {
+					localization_key = effect_division_creation_name
+					STATE = "[THIS.GetName]"
+					COUNT = 3
+					NAME = ARI_MISAKI_militia_conscription_unit_tt
+				}
+				hidden_effect = {
+					create_unit = {
+						division = "name = \"Patriotic Militia\" division_template = \"Patriotic Militia\" start_experience_factor = 0.05 start_equipment_factor = 0.7 start_manpower_factor = 1.0"
+						owner = ARI
+						count = 3
+					}
+				}
+			}
+		}
+
+		remove_effect = {
+			add_war_support = 0.05
+		}
+	}
+	ARI_MISAKI_resignation = {
 		icon = GFX_decision_SWI_no_elected_president
 		priority = 200
 
@@ -4288,17 +4479,9 @@ ARI_MISAKI_progress = {
 			base = 4000
 		}
 
-		visible = {
-			has_global_flag = ARI_MISAKI_stabilization_of_living_standards_complete
-			has_global_flag = ARI_MISAKI_end_of_political_violences_complete
-			has_global_flag = ARI_MISAKI_trinity_conquest_complete
-		}
-
 		available = {
 			is_puppet = no
-			has_global_flag = ARI_MISAKI_stabilization_of_living_standards_complete
-			has_global_flag = ARI_MISAKI_end_of_political_violences_complete
-			has_global_flag = ARI_MISAKI_trinity_conquest_complete
+			has_completed_focus = ARI_accidental_war
 			GEH = {
 				OR = {
 					exists = no
@@ -4329,12 +4512,14 @@ ARI_MISAKI_progress = {
 		complete_effect = {
 			set_global_flag = ARI_MISAKI_progress_stop
 
-			custom_effect_tooltip = ARI_MISAKI_total_change_tt
+			custom_effect_tooltip = ARI_MISAKI_resignation_tt
 		}
 
 		remove_effect = {
 			add_political_power = 20
 			complete_national_focus = ARI_nationwide_seminarian_movement
+
+			country_event = { id = ARI_moderate_event_chain.13 hours = 12 }
 		}
 	}
 }
