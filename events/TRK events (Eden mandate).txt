@@ -284,13 +284,93 @@ country_event = { # 8 - b에 대한 반응
 
 	option = { 
 		name = TRK_events.10.a
-		create_wargoal = {
+		add_threat = 5
+		transfer_state = 807
+		add_opinion_modifier = {
 			target = TRK
-			type = annex_everything
+			modifier = large_decrease
+		}
+		TRK = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = large_decrease
+			}
 		}
 	}
 	option = { 
 		name = unfortunate
+		add_opinion_modifier = {
+			target = TRK
+			modifier = large_decrease
+		}
+	}
+}
+
+country_event = { # 10 - a에 대한 반응
+	id = TRK_events.11
+	title = TRK_events.11.t
+	desc = TRK_events.11.desc
+	picture = GFX_report_event_TRK_events_8
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.11.a
+		ARI = {
+			country_event = TRK_events.13
+		}
+	}
+	option = { 
+		name = TRK_events.11.b
+		FROM = {
+			declare_war_on = {
+				target = ROOT
+				type = annex_everything
+			}
+		}
+	}
+}
+
+country_event = { # 긴장 고조 격발: 트리니티
+	id = TRK_events.12
+	title = TRK_events.12.t
+	desc = TRK_events.12.desc
+	picture = GFX_report_event_she_all_integration
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.12.a
+	}
+}
+
+country_event = { # 긴장 고조 격발: 아리우스
+	id = TRK_events.13
+	title = TRK_events.13.t
+	desc = TRK_events.13.desc
+	picture = GFX_report_event_she_all_integration
+
+	immediate = {
+		hidden_effect = {
+			TRK = {
+				country_event = TRK_events.12
+			}
+			ARI = {
+				activate_mission = ARI_gehenna_influence_struggle
+			}
+			TRK = {
+				activate_mission = TRK_gehenna_influence_struggle
+			}
+			var:global.TRK_owner?GEM = {
+				activate_mission = GEH_gehenna_influence_struggle
+			}
+		}
+	}
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.13.a
 	}
 }
 

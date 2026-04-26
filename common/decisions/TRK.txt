@@ -69,3 +69,373 @@ TRK_eden_collapse_decision_category = {
 	}
 
 }
+ARI_gehenna_influence_struggle_category = {
+
+	ARI_gehenna_influence_struggle = {
+		icon = GFX_decision_SWI_consolidate_council_power
+		name = TRK_gehenna_influence_struggle
+		days_mission_timeout = 280
+		priority = 1
+
+        allowed = {
+            tag = ARI
+        }
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			always = no
+    	}
+
+		cancel_trigger = {
+			OR = {
+				NOT = { country_exists = ARI }
+				NOT = { country_exists = TRK }
+			}
+			hidden_trigger = {
+				has_global_flag = ARI_gehenna_influence_struggle_stop_flag
+			}
+		}
+
+		cancel_effect = {
+			set_global_flag = ARI_gehenna_influence_struggle_stop_flag
+		}
+
+		timeout_effect = {
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							global.ARI_gehenna_influence_struggle < global.TRK_gehenna_influence_struggle
+						}
+					}
+					var:global.TRK_owner?GEM = {
+						diplomatic_relation = {
+							country = TRK
+							relation = military_access
+						}
+						declare_war_on = {
+							target = ARI
+							type = annex_everything
+						}
+
+						TRK = {
+							diplomatic_relation = {
+								country = PREV
+								relation = military_access
+							}
+							declare_war_on = {
+								target = ARI
+								type = annex_everything
+							}
+						}
+					}
+				}
+				else = {
+					ARI = {
+						create_wargoal = {
+							target = TRK
+							type = annex_everything
+						}
+					}
+				}
+			}
+			effect_tooltip = {
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_ARI
+				ARI = {
+					create_wargoal = {
+						target = TRK
+						type = annex_everything
+					}
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_TRK
+				var:global.TRK_owner?GEM = {
+					diplomatic_relation = {
+						country = TRK
+						relation = military_access
+					}
+					declare_war_on = {
+						target = ARI
+						type = annex_everything
+					}
+
+					TRK = {
+						diplomatic_relation = {
+							country = PREV
+							relation = military_access
+						}
+						declare_war_on = {
+							target = ARI
+							type = annex_everything
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	ARI_gehenna_influence_struggle_action = {
+		icon = GFX_decision_generic_prepare_civil_war
+		name = TRK_gehenna_influence_struggle_action
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		available = {
+			has_active_mission = ARI_gehenna_influence_struggle
+		}
+
+		visible = {
+			has_active_mission = ARI_gehenna_influence_struggle
+		}
+
+		cost = 35
+		
+		days_remove = 15
+
+		modifier = {
+			political_power_cost = 0.15
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				global.ARI_gehenna_influence_struggle = 5
+				tooltip = ARI_gehenna_influence_struggle_action_tt
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+}
+TRK_gehenna_influence_struggle_category = {
+
+	TRK_gehenna_influence_struggle = {
+		icon = GFX_decision_SWI_consolidate_council_power
+		name = TRK_gehenna_influence_struggle
+		days_mission_timeout = 280
+		priority = 1
+
+        allowed = {
+            tag = TRK
+        }
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			always = no
+    	}
+
+		cancel_trigger = {
+			OR = {
+				NOT = { country_exists = ARI }
+				NOT = { country_exists = TRK }
+			}
+			hidden_trigger = {
+				has_global_flag = ARI_gehenna_influence_struggle_stop_flag
+			}
+		}
+
+		cancel_effect = {
+			set_global_flag = ARI_gehenna_influence_struggle_stop_flag
+		}
+
+		timeout_effect = {
+			effect_tooltip = {
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_ARI
+				ARI = {
+					create_wargoal = {
+						target = TRK
+						type = annex_everything
+					}
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_TRK
+				var:global.TRK_owner?GEM = {
+					diplomatic_relation = {
+						country = TRK
+						relation = military_access
+					}
+					declare_war_on = {
+						target = ARI
+						type = annex_everything
+					}
+
+					TRK = {
+						diplomatic_relation = {
+							country = PREV
+							relation = military_access
+						}
+						declare_war_on = {
+							target = ARI
+							type = annex_everything
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	TRK_gehenna_influence_struggle_action = {
+		icon = GFX_decision_generic_prepare_civil_war
+		name = TRK_gehenna_influence_struggle_action
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		available = {
+			has_active_mission = TRK_gehenna_influence_struggle
+		}
+
+		visible = {
+			has_active_mission = TRK_gehenna_influence_struggle
+		}
+
+		cost = 50
+		
+		days_remove = 25
+
+		modifier = {
+			political_power_cost = 0.15
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				global.TRK_gehenna_influence_struggle = 3
+				tooltip = TRK_gehenna_influence_struggle_action_tt
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+
+}
+GEH_gehenna_influence_struggle_category = {
+
+	GEH_gehenna_influence_struggle = {
+		icon = GFX_decision_SWI_consolidate_council_power
+		name = TRK_gehenna_influence_struggle
+		days_mission_timeout = 280
+		priority = 1
+
+        allowed = {
+			OR = {
+				original_tag = GEH
+				original_tag = GEM
+				original_tag = HEU
+			}
+        }
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			always = no
+    	}
+
+		cancel_trigger = {
+			OR = {
+				NOT = { country_exists = ARI }
+				NOT = { country_exists = TRK }
+			}
+			hidden_trigger = {
+				has_global_flag = ARI_gehenna_influence_struggle_stop_flag
+			}
+		}
+
+		cancel_effect = {
+			set_global_flag = ARI_gehenna_influence_struggle_stop_flag
+		}
+
+		timeout_effect = {
+			effect_tooltip = {
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_ARI
+				ARI = {
+					create_wargoal = {
+						target = TRK
+						type = annex_everything
+					}
+				}
+				custom_effect_tooltip = enter_tt
+				custom_effect_tooltip = TRK_gehenna_influence_struggle_TRK
+				var:global.TRK_owner?GEM = {
+					diplomatic_relation = {
+						country = TRK
+						relation = military_access
+					}
+					declare_war_on = {
+						target = ARI
+						type = annex_everything
+					}
+
+					TRK = {
+						diplomatic_relation = {
+							country = PREV
+							relation = military_access
+						}
+						declare_war_on = {
+							target = ARI
+							type = annex_everything
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	GEH_gehenna_influence_struggle_action = {
+		icon = GFX_decision_generic_prepare_civil_war
+		name = TRK_gehenna_influence_struggle_action
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				add = 10
+				has_war = no
+			}
+		}
+
+		available = {
+			has_active_mission = GEH_gehenna_influence_struggle
+		}
+
+		visible = {
+			has_active_mission = GEH_gehenna_influence_struggle
+		}
+
+		cost = 50
+		
+		days_remove = 25
+
+		modifier = {
+			political_power_cost = 0.15
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				global.TRK_gehenna_influence_struggle = 5
+				tooltip = TRK_gehenna_influence_struggle_action_tt
+			}
+		}
+		
+		remove_effect = {
+		}
+	}
+}
