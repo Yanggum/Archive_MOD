@@ -271,6 +271,10 @@ country_event = { # 8 - a에 대한 반응
 			}
 			transfer_state_to = ROOT
 		}
+
+		hidden_effect = {
+			ARI = { country_event = { id = TRK_events.17 days = 15 random_days = 5 } }
+		}
 	}
 }
 
@@ -299,9 +303,11 @@ country_event = { # 8 - b에 대한 반응
 				target = ROOT
 				modifier = large_decrease
 			}
+
+			country_event = { id = TRK_events.11 hours = 2 }
 		}
 	}
-	option = { 
+	option = {
 		name = unfortunate
 		add_opinion_modifier = {
 			target = TRK
@@ -320,8 +326,11 @@ country_event = { # 10 - a에 대한 반응
 
 	option = { 
 		name = TRK_events.11.a
+		ai_chance = {
+			factor = 4000
+		}
 		ARI = {
-			country_event = TRK_events.13
+			country_event = { id = TRK_events.13 hours = 2 }
 		}
 	}
 	option = { 
@@ -443,6 +452,54 @@ country_event = { # 긴장 고조 격발 - 공통: 게헨나
 		name = TRK_events.16.a
 		effect_tooltip = {
 			activate_mission = GEH_gehenna_influence_struggle
+		}
+	}
+}
+
+country_event = { # 긴장 고조 격발 - 일반 분기: 아리우스
+	id = TRK_events.17
+	title = TRK_events.17.t
+	desc = TRK_events.17.desc
+	picture = GFX_report_event_she_all_integration
+
+	immediate = {
+		hidden_effect = {
+			TRK = {
+				country_event = TRK_events.18
+				activate_mission = TRK_gehenna_influence_struggle
+			}
+			ARI = {
+				activate_mission = ARI_gehenna_influence_struggle
+			}
+			var:global.TRK_owner?GEM = {
+				country_event = TRK_events.16
+				activate_mission = GEH_gehenna_influence_struggle
+			}
+		}
+	}
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.17.a
+		effect_tooltip = {
+			activate_mission = ARI_gehenna_influence_struggle
+		}
+	}
+}
+
+country_event = { # 긴장 고조 격발 - 일반 분기: 트리니티
+	id = TRK_events.18
+	title = TRK_events.18.t
+	desc = TRK_events.18.desc
+	picture = GFX_report_event_she_all_integration
+
+    is_triggered_only = yes
+
+	option = { 
+		name = TRK_events.18.a
+		effect_tooltip = {
+			activate_mission = TRK_gehenna_influence_struggle
 		}
 	}
 }
