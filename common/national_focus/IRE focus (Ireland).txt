@@ -2623,6 +2623,164 @@ focus_tree = {
 			remove_ideas = IRE_unstable_republic_idea
 		}
 	}
+	focus = { # 헌법 제41조 2항 폐지
+		relative_position_id = IRE_focus_continue_FF
+		id = IRE_focus_remove_constitution
+		icon = GFX_focus_ARG_women_in_industry
+		prerequisite = { focus = IRE_focus_continue_FF focus = IRE_focus_democratic_socialism }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -4
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_LP
+			}
+			IRE_majority134 = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			add_ideas = IRE_womens_rights_idea
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -10
+				tooltip = CAT_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			IRE_politics_allinone = yes
+		}
+	}
+	focus = { # 여군 편입
+		relative_position_id = IRE_focus_continue_FF
+		id = IRE_focus_female_soldiers
+		icon = GFX_focus_generic_women_in_military
+		prerequisite = { focus = IRE_focus_remove_constitution }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -4
+		y = 2
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_LP
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			swap_ideas = {
+				remove_idea = IRE_womens_rights_idea
+				add_idea = IRE_womens_rights2_idea
+			}
+			set_rule = {
+				can_generate_female_aces = yes
+			}
+			add_to_variable = {
+				var = IRE_CAT_loyalty
+				value = -10
+				tooltip = CAT_madd_l10
+			}
+			add_to_variable = {
+				var = IRE_SOC_loyalty
+				value = 5
+				tooltip = SOC_add_l5
+			}
+			IRE_politics_allinone = yes
+		}
+	}
+	focus = { # 대서양의 수호자
+		relative_position_id = IRE_focus_continue_FF
+		id = IRE_focus_guardian_atlantic
+		icon = GFX_focus_generic_atlantic_coast
+		prerequisite = { focus = IRE_focus_continue_FF }
+		mutually_exclusive = { focus = IRE_focus_always_neutrality }
+		x = -1
+		y = 1
+		cost = 5
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FF
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_war_support = 0.10
+		}
+	}
+	focus = { # 레이더 기술
+		relative_position_id = IRE_focus_guardian_atlantic
+		id = IRE_focus_radar_tech
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = IRE_focus_guardian_atlantic }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FF
+			has_tech = radio
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_tech = radar_tech
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_air
+					value = 0.50
+				}
+				add_tech_bonus = {
+					bonus = 1.0
+					uses = 1
+					category = radar_tech
+				}
+			}
+			else = {
+				complete_special_project = {
+					project = sp:sp_air_radar
+				}
+			}
+		}
+	}
+	focus = { # 개입법
+		relative_position_id = IRE_focus_guardian_atlantic
+		id = IRE_focus_intervention_method
+		icon = GFX_focus_GRE_reviving_the_spartan_warrior_spirit
+		prerequisite = { focus = IRE_focus_guardian_atlantic }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 2
+		cost = 10
+		search_filters = {}
+		available = {
+			has_country_flag = IRE_government_FF
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			set_rule = { can_only_justify_war_on_threat_country = no }
+			set_rule = { can_declare_war_on_same_ideology = yes }
+			set_rule = { can_puppet = yes }
+			set_rule = { can_send_volunteers = yes }
+		}
+	}
 	focus = { # 피너 게일의 승리
 		relative_position_id = IRE_focus_dissolution
 		id = IRE_focus_FG
@@ -3017,6 +3175,42 @@ focus_tree = {
 		}
 		completion_reward = {
 			custom_effect_tooltip = IRE_tt_17
+		}
+	}
+	focus = { # 열강에 접촉
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_contact_greatpowers
+		icon = GFX_focus_generic_concessions
+		prerequisite = { focus = IRE_focus_inviting_foreign_designers }
+		prerequisite = { focus = IRE_focus_scientist_sanctuary }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 1
+		y = 5
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+			IRE_majority = yes
+			has_war = no
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_major = yes
+					NOT = {
+						has_war_with = IRE
+					}
+				}
+				country_event = {
+					id = IRE_event.9020
+					hours = 12
+				}
+			}
 		}
 	}
 	focus = { # 진정한 브리튼의 주인
