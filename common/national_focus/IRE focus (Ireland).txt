@@ -2681,6 +2681,51 @@ focus_tree = {
 			add_ideas = neutrality_idea
 		}
 	}
+	focus = { # 방공망 강화
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_flak_add
+		icon = GFX_focus_generic_anti_tank_guns
+		prerequisite = { focus = IRE_focus_always_neutrality }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = -1
+		y = 1
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			every_state = {
+				limit = {
+					is_core_of = IRE
+					is_controlled_by = IRE
+					OR = {
+						state = 134
+						state = 119
+						state = 113
+						state = 135
+					}
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = cat_anti_air
+			}
+		}
+	}
+
 	focus = { # 군수산업 확충
 		relative_position_id = IRE_focus_always_neutrality
 		id = IRE_focus_military_industry_add
@@ -2740,7 +2785,7 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
-
+			add_ideas = IRE_militia_organization_act_idea
 		}
 	}
 	focus = { #완전적인 경제 개방
@@ -2758,6 +2803,7 @@ focus_tree = {
 				has_country_flag = IRE_government_FF
 				has_country_flag = IRE_government_FG
 			}
+			IRE_majority = yes
 			NOT = {
 				has_idea = closed_economy
 			}
@@ -2795,11 +2841,11 @@ focus_tree = {
 	focus = { # 군수품 구매처 탐색
 		relative_position_id = IRE_focus_always_neutrality
 		id = IRE_focus_find_weaponshop
-		icon = GFX_focus_generic_limited_social_mobilization
+		icon = GFX_focus_generic_arms_trade
 		prerequisite = { focus = IRE_focus_militia_add }
 		prerequisite = { focus = IRE_focus_all_economic_openness }
 		#mutually_exclusive = { focus = IRE_focus_ }
-		x = 1
+		x = 0
 		y = 3
 		cost = 10
 		search_filters = {}
@@ -2813,7 +2859,35 @@ focus_tree = {
 		bypass = {
 		}
 		completion_reward = {
-
+			add_ideas = IRE_searching_military_supply_suppliers_idea
+			custom_effect_tooltip = ETH_purchase_obsolete_ships_tt
+			set_country_flag = generic_purchase_old_ships_flag
+		}
+	}
+	focus = { # 외국 설계사 초청
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_inviting_foreign_designers
+		icon = GFX_focus_generic_combined_arms
+		prerequisite = { focus = IRE_focus_find_weaponshop }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 0
+		y = 4
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+			IRE_majority = yes
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			IF = {
+				limit = { has_dlc = "Arms Against Tyranny"}
+				unlock_decision_category_tooltip = foreign_mio_decisions_category
+			}
 		}
 	}
 	focus = { # 난민 수용
@@ -2831,6 +2905,7 @@ focus_tree = {
 				has_country_flag = IRE_government_FF
 				has_country_flag = IRE_government_FG
 			}
+			IRE_majority = yes
 			NOT = {
 				has_war = yes
 			}
@@ -2878,6 +2953,70 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.15
 			add_ideas = IRE_irish_dream_2_idea
+		}
+	}
+	focus = { # 과학자의 안식처
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_scientist_sanctuary
+		icon = GFX_focus_generic_university_2
+		prerequisite = { focus = IRE_focus_irish_dream }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 2
+		y = 4
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_nuclear
+				value = 0.75
+			}
+			add_tech_bonus = {
+				bonus = 1
+				uses = 3
+				ahead_reduction = 1
+				category = electronics
+				category = nuclear
+				category = rocketry
+			}
+		}
+	}
+	focus = { # 인구 유출의 역전
+		relative_position_id = IRE_focus_always_neutrality
+		id = IRE_focus_heyheyusa
+		icon = GFX_focus_generic_population_growth
+		prerequisite = { focus = IRE_focus_irish_dream }
+		#mutually_exclusive = { focus = IRE_focus_ }
+		x = 4
+		y = 4
+		cost = 10
+		search_filters = {}
+		available = {
+			OR = {
+				has_country_flag = IRE_government_FF
+				has_country_flag = IRE_government_FG
+			}
+			has_war = no
+			has_stability > 0.75
+			USA = {
+				exists = yes
+				OR = {
+					has_war = yes
+					has_stability < 0.05
+				}
+			}
+		}  
+		bypass = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = IRE_tt_17
 		}
 	}
 	focus = { # 진정한 브리튼의 주인

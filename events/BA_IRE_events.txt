@@ -893,7 +893,7 @@ country_event = { # 여당 의원에 대한 추문
 	fire_only_once = no
 
 	mean_time_to_happen = {
-		days = 360
+		days = 1000
 	}
 
 	trigger = {
@@ -922,5 +922,91 @@ country_event = { # 여당 의원에 대한 추문
 			value = 1
 		}
 		reload_parliament_gui = yes
+	}
+}
+country_event = { # 아일랜드로의 이민
+	id = IRE_event.8002
+	title = IRE_event.8002.t
+	desc = IRE_event.8002.d
+	picture = GFX_report_event_generic_handshake
+
+	fire_only_once = no
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	trigger = {
+		tag = IRE
+		has_completed_focus = IRE_focus_heyheyusa
+		has_government = democratic
+		has_war = no
+		has_stability > 0.50
+	}
+	option = { 
+		name = IRE_event.8002.a
+		add_political_power = -15
+		add_stability = -0.02
+		if = {
+			limit = {
+				USA = {
+					OR = {
+						exists = no
+						AND = {
+							has_war = yes
+							surrender_progress > 0.05
+						}
+					}
+				}
+			}
+			random_state = { limit = { is_core_of = USA } add_manpower = -10000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -10000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -10000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -10000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -10000 }
+			random_state = {
+				limit = {
+					is_core_of = IRE
+					is_controlled_by = IRE
+				}
+				add_manpower = 50000
+			}
+		}
+		else_if = {
+			limit = {
+				USA = {
+					OR = {
+						has_stability < 0.30
+						has_war = yes
+					}
+				}
+			}
+			random_state = { limit = { is_core_of = USA } add_manpower = -5000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -5000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -5000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -5000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -5000 }
+			random_state = {
+				limit = {
+					is_core_of = IRE
+					is_controlled_by = IRE
+				}
+				add_manpower = 25000
+			}
+		}
+		else = {
+			random_state = { limit = { is_core_of = USA } add_manpower = -2000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -2000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -2000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -2000 }
+			random_state = { limit = { is_core_of = USA } add_manpower = -2000 }
+			random_state = {
+				limit = {
+					is_core_of = IRE
+					is_controlled_by = IRE
+				}
+				add_manpower = 10000
+			}
+		}
 	}
 }
