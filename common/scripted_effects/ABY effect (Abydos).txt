@@ -3116,7 +3116,7 @@ ABY_scripted_effect_divide_SOV_2 = {
 		}
 		set_demilitarized_zone = yes
 	}
-}
+} 
 ABY_scripted_effect_remove_focus_flag = {
 	clr_country_flag = ABY_flag_open_focus
 	clr_country_flag = ABY_descision_focus_first_selected_flag
@@ -5017,5 +5017,482 @@ ABY_scripted_effect_getsokku_hyper_effect = {
 				value = -240
 			}
 		}
+	}
+}
+
+ABY_increase_skoda_max_optimization_tier = { #Moves Skida Optimization up one tier, should only be used four times in the focus tree. Max cap minus starting optimization tier number: 7 - 3 = 4. 
+	if = {
+		limit = {
+			any_core_state = {
+				is_controlled_by = ROOT
+			}
+			has_variable = skoda_max_optimization_tier #Can never be too safe these days
+			check_variable = {
+				skoda_max_optimization_tier < 10
+			}
+		}
+		add_to_variable = {
+			var = skoda_max_optimization_tier
+			value = 1
+			tooltip = ABY_increase_skoda_max_optimization_tier_var_tt
+		}
+	}
+}
+ABY_update_skoda_tier = {
+	hidden_effect = {
+		remove_ideas = {
+			ABY_skoda_no_focus_optimization_1_idea
+			ABY_skoda_no_focus_optimization_2_idea
+			ABY_skoda_no_focus_optimization_3_idea
+			ABY_skoda_no_focus_optimization_4_idea
+			ABY_skoda_no_focus_optimization_5_idea
+			ABY_skoda_no_focus_optimization_6_idea
+			ABY_skoda_no_focus_optimization_7_idea
+			ABY_skoda_no_focus_optimization_8_idea
+			ABY_skoda_no_focus_optimization_9_idea
+			ABY_skoda_no_focus_optimization_10_idea
+	
+			ABY_skoda_infantry_focus_optimization_1_idea
+			ABY_skoda_infantry_focus_optimization_2_idea
+			ABY_skoda_infantry_focus_optimization_3_idea
+			ABY_skoda_infantry_focus_optimization_4_idea
+			ABY_skoda_infantry_focus_optimization_5_idea
+			ABY_skoda_infantry_focus_optimization_6_idea
+			ABY_skoda_infantry_focus_optimization_7_idea
+			ABY_skoda_infantry_focus_optimization_8_idea
+			ABY_skoda_infantry_focus_optimization_9_idea
+			ABY_skoda_infantry_focus_optimization_10_idea
+	
+			ABY_skoda_tanks_focus_optimization_1_idea
+			ABY_skoda_tanks_focus_optimization_2_idea
+			ABY_skoda_tanks_focus_optimization_3_idea
+			ABY_skoda_tanks_focus_optimization_4_idea
+			ABY_skoda_tanks_focus_optimization_5_idea
+			ABY_skoda_tanks_focus_optimization_6_idea
+			ABY_skoda_tanks_focus_optimization_7_idea
+			ABY_skoda_tanks_focus_optimization_8_idea
+			ABY_skoda_tanks_focus_optimization_9_idea
+			ABY_skoda_tanks_focus_optimization_10_idea
+			
+			ABY_skoda_planes_focus_optimization_1_idea
+			ABY_skoda_planes_focus_optimization_2_idea
+			ABY_skoda_planes_focus_optimization_3_idea
+			ABY_skoda_planes_focus_optimization_4_idea
+			ABY_skoda_planes_focus_optimization_5_idea
+			ABY_skoda_planes_focus_optimization_6_idea
+			ABY_skoda_planes_focus_optimization_7_idea
+			ABY_skoda_planes_focus_optimization_8_idea
+			ABY_skoda_planes_focus_optimization_9_idea
+			ABY_skoda_planes_focus_optimization_10_idea
+	
+			ABY_skoda_naval_focus_optimization_1_idea
+			ABY_skoda_naval_focus_optimization_2_idea
+			ABY_skoda_naval_focus_optimization_3_idea
+			ABY_skoda_naval_focus_optimization_4_idea
+			ABY_skoda_naval_focus_optimization_5_idea
+			ABY_skoda_naval_focus_optimization_6_idea
+			ABY_skoda_naval_focus_optimization_7_idea
+			ABY_skoda_naval_focus_optimization_8_idea
+			ABY_skoda_naval_focus_optimization_9_idea
+			ABY_skoda_naval_focus_optimization_10_idea
+		}
+	}
+
+	if = {
+		limit = {
+			check_variable = { skoda_focus_var = 0 }
+		}
+		meta_effect = {
+			text = {
+				add_ideas = ABY_skoda_no_focus_optimization_[SKODA_OPT]_idea
+			}
+			SKODA_OPT = "[?skoda_optimization_tier]"
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { skoda_focus_var = 1 }
+		}
+		meta_effect = {
+			text = {
+				add_ideas = ABY_skoda_infantry_focus_optimization_[SKODA_OPT]_idea
+			}
+			SKODA_OPT = "[?skoda_optimization_tier]"
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { skoda_focus_var = 2 }
+		}
+		meta_effect = {
+			text = {
+				add_ideas = ABY_skoda_tanks_focus_optimization_[SKODA_OPT]_idea
+			}
+			SKODA_OPT = "[?skoda_optimization_tier]"
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { skoda_focus_var = 3 }
+		}
+		meta_effect = {
+			text = {
+				add_ideas = ABY_skoda_planes_focus_optimization_[SKODA_OPT]_idea
+			}
+			SKODA_OPT = "[?skoda_optimization_tier]"
+		}
+	}
+}
+
+#These 'effects' display the current idea level of Skoda on the GUI and are not real effects
+ABY_show_current_skoda_prioty_idea_stats_no_focus = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = ABY_skoda_no_focus_optimization_1_idea
+					has_idea = ABY_skoda_no_focus_optimization_2_idea
+					has_idea = ABY_skoda_no_focus_optimization_3_idea
+					has_idea = ABY_skoda_no_focus_optimization_4_idea
+					has_idea = ABY_skoda_no_focus_optimization_5_idea
+					has_idea = ABY_skoda_no_focus_optimization_6_idea
+					has_idea = ABY_skoda_no_focus_optimization_7_idea
+					has_idea = ABY_skoda_no_focus_optimization_8_idea
+					has_idea = ABY_skoda_no_focus_optimization_9_idea
+					has_idea = ABY_skoda_no_focus_optimization_10_idea
+				}
+			}
+		}
+		custom_effect_tooltip = CZE_skoda_set_sptimization_tier_to_one_tt
+		effect_tooltip = {
+			add_ideas = ABY_skoda_no_focus_optimization_1_idea
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_1_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_1_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_2_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_2_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_3_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_3_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_4_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_4_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_5_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_5_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_6_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_6_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_7_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_7_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_8_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_8_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_9_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_9_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_no_focus_optimization_10_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_10_idea
+	}
+	else = { #if something broke I guess we're on 1?
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_1_idea
+	}
+}
+
+ABY_show_current_skoda_prioty_idea_stats_infantry_focus = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = ABY_skoda_infantry_focus_optimization_1_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_2_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_3_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_4_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_5_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_6_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_7_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_8_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_9_idea
+					has_idea = ABY_skoda_infantry_focus_optimization_10_idea
+				}
+			}
+		}
+		custom_effect_tooltip = CZE_skoda_set_sptimization_tier_to_one_tt
+		effect_tooltip = {
+			add_ideas = ABY_skoda_infantry_focus_optimization_1_idea
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_1_idea
+		}
+		show_ideas_tooltip = ABY_skoda_no_focus_optimization_1_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_2_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_2_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_3_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_3_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_4_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_4_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_5_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_5_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_6_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_6_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_7_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_7_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_8_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_8_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_9_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_9_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_infantry_focus_optimization_10_idea
+		}
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_10_idea
+	}
+	else = { #if something broke I guess we're on 1?
+		show_ideas_tooltip = ABY_skoda_infantry_focus_optimization_1_idea
+	}
+}
+
+ABY_show_current_skoda_prioty_idea_stats_tank_focus = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = ABY_skoda_tanks_focus_optimization_1_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_2_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_3_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_4_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_5_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_6_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_7_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_8_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_9_idea
+					has_idea = ABY_skoda_tanks_focus_optimization_10_idea
+				}
+			}
+		}
+		custom_effect_tooltip = CZE_skoda_set_sptimization_tier_to_one_tt
+		effect_tooltip = {
+			add_ideas = ABY_skoda_tanks_focus_optimization_1_idea
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_1_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_1_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_2_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_2_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_3_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_3_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_4_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_4_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_5_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_5_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_6_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_6_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_7_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_7_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_8_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_8_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_9_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_9_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_tanks_focus_optimization_10_idea
+		}
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_10_idea
+	}
+	else = { #if something broke I guess we're on 1?
+		show_ideas_tooltip = ABY_skoda_tanks_focus_optimization_1_idea
+	}
+}
+
+ABY_show_current_skoda_prioty_idea_stats_plane_focus = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = ABY_skoda_planes_focus_optimization_1_idea
+					has_idea = ABY_skoda_planes_focus_optimization_2_idea
+					has_idea = ABY_skoda_planes_focus_optimization_3_idea
+					has_idea = ABY_skoda_planes_focus_optimization_4_idea
+					has_idea = ABY_skoda_planes_focus_optimization_5_idea
+					has_idea = ABY_skoda_planes_focus_optimization_6_idea
+					has_idea = ABY_skoda_planes_focus_optimization_7_idea
+					has_idea = ABY_skoda_planes_focus_optimization_8_idea
+					has_idea = ABY_skoda_planes_focus_optimization_9_idea
+					has_idea = ABY_skoda_planes_focus_optimization_10_idea
+				}
+			}
+		}
+		custom_effect_tooltip = CZE_skoda_set_sptimization_tier_to_one_tt
+		effect_tooltip = {
+			add_ideas = ABY_skoda_planes_focus_optimization_1_idea
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_1_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_1_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_2_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_2_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_3_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_3_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_4_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_4_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_5_idea
+		}
+		show_ideas_tooltip =  ABY_skoda_planes_focus_optimization_5_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_6_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_6_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_7_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_7_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_8_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_8_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_9_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_9_idea
+	}
+	else_if = {
+		limit = {
+			has_idea = ABY_skoda_planes_focus_optimization_10_idea
+		}
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_10_idea
+	}
+	else = { #if something broke I guess we're on 1?
+		show_ideas_tooltip = ABY_skoda_planes_focus_optimization_7_idea
 	}
 }

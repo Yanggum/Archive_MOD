@@ -181,6 +181,41 @@ on_actions = {
 			}
 		}
 	}
+ 
+	on_monthly_ABY = {
+		effect = {
+			if = {
+				limit = {
+					any_country_with_original_tag = { 
+						original_tag_to_check = ABY
+           				exists = yes
+        			}
+					has_global_flag = ABY_skoda_focus_activation
+					NOT = {
+						has_country_flag = ABY_recently_changed_skoda_focus
+					}
+					OR = {
+						NOT = {
+							has_country_flag = ABY_bimonthly_flag
+						}
+						has_country_flag = ABY_skoda_optimization_raise_fast
+					}
+					check_variable = {
+						skoda_optimization_tier < skoda_max_optimization_tier
+					}
+				}
+				add_to_variable = {
+					skoda_optimization_tier = 1
+				}
+				set_country_flag = { #This turns the on_monthly into a bi-monthly thing
+					flag = ABY_bimonthly_flag
+					days = 35
+					value = 1
+				}
+				ABY_update_skoda_tier = yes
+			}
+		}
+	}
 
 	on_new_term_election = { 
 		random_events = { 
