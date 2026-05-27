@@ -9,6 +9,11 @@ replace_path="common/ai_strategy_plans/FRA_historical_strategy_plan.txt"
 replace_path="common/ai_strategy_plans/FRA_alternate_strategy_plan.txt"
 replace_path="common/ai_strategy_plans/HUN_alternate.txt"
 
+replace_path="map"
+replace_path="map/strategicregions"
+replace_path="map/supplyareas"
+replace_path="map/terrain"
+
 tags = {
 	"Gameplay"
 	"Graphics"
