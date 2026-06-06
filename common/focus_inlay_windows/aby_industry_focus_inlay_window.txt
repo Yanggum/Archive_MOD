@@ -1,0 +1,195 @@
+ABY_industry_focus_inlay_window = {
+
+    window_name = ABY_industry_focus_ui_window
+
+    internal = yes
+    visible = {
+        any_country_with_original_tag = { #TODO_logan don't think this does anything on performance
+			original_tag_to_check = ABY
+            exists = yes
+        }
+        has_global_flag = ABY_skoda_focus_activation
+    }
+
+    scripted_images = {
+        ABY_skoda_no_focus_image = {
+            GFX_ABY_skoda_square_default = {
+                NOT = {
+                    check_variable = { skoda_focus_var = 0 }
+                }
+            }
+        }
+        ABY_skoda_infantry_focus_image = {
+            GFX_ABY_nephthys_square_default = {
+                NOT = {
+                    check_variable = { skoda_focus_var = 1 }
+                }
+            }
+        }
+        ABY_skoda_tank_focus_image = {
+            GFX_ABY_rothschild_square_default = {
+                NOT = {
+                    check_variable = { skoda_focus_var = 2 }
+                }
+            }
+        }
+        ABY_skoda_plane_focus_image = {
+            GFX_ABY_avia_square_default = {
+                NOT = {
+                    check_variable = { skoda_focus_var = 3 }
+                }
+            }
+        }
+        #ABY_skoda_naval_focus_image = {
+        #    GFX_CZE_skoda_square_naval = {
+        #        has_country_flag = ABY_unlock_skoda_naval_focus
+        #        NOT = {
+        #            check_variable = { skoda_focus_var = 4 }
+        #        }
+        #    }
+        #}
+
+        #selected
+        ABY_skoda_no_focus_image_selected = {
+            GFX_ABY_skoda_square_selected = {
+				check_variable = { skoda_focus_var = 0 }
+            }
+        }
+        ABY_skoda_infantry_focus_image_selected = {
+            GFX_ABY_nephthys_square_selected = {
+                check_variable = { skoda_focus_var = 1 }
+            }
+        }
+        ABY_skoda_tank_focus_image_selected = {
+            GFX_ABY_rothschild_square_selected = {
+                check_variable = { skoda_focus_var = 2 }
+            }
+        }
+        ABY_skoda_plane_focus_image_selected = {
+            GFX_ABY_avia_square_selected = {
+                check_variable = { skoda_focus_var = 3 }
+            }
+        }
+
+        #disabled
+        ABY_skoda_no_focus_image_disabled = {
+            GFX_ABY_skoda_square_disabled = {
+                has_country_flag = GAEBALJUNG
+            }
+        }
+        ABY_skoda_infantry_focus_image_disabled = {
+            GFX_ABY_nephthys_square_disabled = {
+                has_country_flag = GAEBALJUNG
+            }
+        }
+        ABY_skoda_tank_focus_image_disabled = {
+            GFX_ABY_rothschild_square_disabled = {
+                NOT = {
+                    has_country_flag = GAEBALJUNG
+                }
+            }
+        }
+        ABY_skoda_plane_focus_image_disabled = {
+            GFX_ABY_avia_square_disabled = {
+                NOT = {
+                    has_country_flag = GAEBALJUNG
+                }
+            }
+        }
+    }
+
+    scripted_buttons = {
+        ABY_skoda_no_focus_image = {
+            # available = {
+			# 	NOT = {
+			# 		check_variable = { skoda_focus_var = 0 }
+			# 	}
+            # }
+            click_effect = {
+				set_variable = { skoda_optimization_tier = 1 }
+				set_country_flag = {
+					flag = ABY_recently_changed_skoda_focus
+					days = 60
+					value = 1
+				}
+
+				ABY_show_current_skoda_prioty_idea_stats_no_focus = yes
+
+				set_variable = { skoda_focus_var = 0 }
+
+				hidden_effect = {
+					ABY_update_skoda_tier = yes
+				}
+            }
+        }
+        ABY_skoda_infantry_focus_image = {
+            # available = {
+			# 	NOT = {
+			# 		check_variable = { skoda_focus_var = 1 }
+			# 	}
+            # }
+            click_effect = {
+                set_variable = { skoda_focus_var = 1 }
+
+                set_variable = { skoda_optimization_tier = 1 }
+                set_country_flag = {
+					flag = ABY_recently_changed_skoda_focus
+					days = 60
+					value = 1
+				}
+
+                ABY_show_current_skoda_prioty_idea_stats_infantry_focus = yes
+
+                hidden_effect = {
+					ABY_update_skoda_tier = yes
+				}
+            }
+        }
+        ABY_skoda_tank_focus_image = {
+            # available = {
+            #     NOT = {
+            #         check_variable = { skoda_focus_var = 2 }
+            #     }
+            # }
+            click_effect = {
+                set_variable = { skoda_focus_var = 2 }
+
+                set_variable = { skoda_optimization_tier = 1 }
+                set_country_flag = {
+					flag = ABY_recently_changed_skoda_focus
+					days = 60
+					value = 1
+				}
+
+                ABY_show_current_skoda_prioty_idea_stats_tank_focus = yes
+
+                hidden_effect = {
+					ABY_update_skoda_tier = yes
+				}
+            }
+        }
+        ABY_skoda_plane_focus_image = {
+            # available = {
+			# 	NOT = {
+			# 		check_variable = { skoda_focus_var = 3 }
+			# 	}
+            # }
+            click_effect = {
+                set_variable = { skoda_focus_var = 3 }
+
+                set_variable = { skoda_optimization_tier = 1 }
+                set_country_flag = {
+					flag = ABY_recently_changed_skoda_focus
+					days = 60
+					value = 1
+				}
+
+                ABY_show_current_skoda_prioty_idea_stats_plane_focus = yes
+
+                hidden_effect = {
+					ABY_update_skoda_tier = yes
+				}
+            }
+        }
+    }
+}

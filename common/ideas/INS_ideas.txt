@@ -2,20 +2,82 @@ ideas = {
 	country = {
 		INS_revolutionary_war = { #독립 전쟁
 			picture = FRA_scw_intervention_republicans_focus
-			allowed = {
-				always = no
+			allowed = { always = no }
+		
+			modifier = {
+                		war_support_factor = 0.10
 			}
 
-			allowed_civil_war = {
-				always = yes
+			targeted_modifier = {
+				tag = HOL
+				attack_bonus_against = 0.1
+				defense_bonus_against = 0.1
+			}
+	       }
+
+		INS_japan_support_national_revolution = { # 일본의 전쟁 지원
+			picture = JAP_modern_ashigaru
+			allowed = { always = no }
+
+			on_add = {
+				give_resource_rights = { receiver = JAP state = 672 }
+			}
+
+			on_remove = {
+				JAP = { remove_resource_rights = 672 }
 			}
 		
 			modifier = {
-                war_support_factor = 0.10
 				military_factory_donations = 5
-                army_core_attack_factor = 0.10
-                army_core_defence_factor = 0.15
+				breakthrough_factor = 0.1
+				custom_modifier_tooltip = INS_japan_support_national_revolution_tt
+				custom_modifier_tooltip = INS_japan_support_national_revolution_2_tt
 			}
-        }
+	       }
+		
+		INS_economy_dependent_on_japan = { #
+			picture = tur_etatism
+			allowed = { always = no }
+		
+			modifier = {
+                		stability_factor = -0.1
+				production_speed_buildings_factor = 0.1
+				production_factory_efficiency_gain_factor = 0.05
+			}
+
+			research_bonus = {
+				industry = 0.1
+			}
+
+			targeted_modifier = {
+				tag = JAP
+				CIC_TO_TARGET_FACTOR = 0.25
+				MIC_TO_TARGET_FACTOR = 0.25
+			}
+	       }
+		
+		INS_guide_democracy = { #
+			picture = generic_democratic_drift_bonus
+			allowed = { always = no }
+		
+			modifier = {
+				political_power_factor = 0.1
+				party_popularity_stability_factor = 0.1
+				war_support_factor = -0.05
+				political_advisor_cost_factor = -0.10
+				economy_cost_factor = -0.1
+				trade_laws_cost_factor = -0.1
+			}
+	       }
+		
+		INS_building_a_new_nation-state = { #
+			picture = RAJ_tenancy_reforms
+			allowed = { always = no }
+		
+			modifier = {
+				stability_factor = -0.1
+				stability_weekly = 0.02
+			}
+	       }
 	}
 }

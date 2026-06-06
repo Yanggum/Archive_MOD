@@ -717,9 +717,53 @@ country_event = {
 	picture = GFX_report_event_ARI_moderate_event_chain_2
 
 	is_triggered_only = yes
-	
+
 	option = {
 		name = ARI_moderate_event_chain.9.a
+
+		if = {
+			limit = {
+				NOT = {
+					has_country_leader = {
+						character = ARI_joumae_saori
+						ruling_only = no
+					}
+				}
+			}
+			add_country_leader_role = {
+				character = ARI_joumae_saori
+				promote_leader = yes
+				country_leader = {
+					ideology = arius_nihilism
+					traits = {
+						ARI_arius_squad
+					}
+					expire = "3000.1.1.1"
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				NOT = {
+					has_country_leader = {
+						character = ARI_joumae_saori
+						ruling_only = yes
+					}
+				}
+			}
+			promote_character = ARI_joumae_saori
+		}
+
+		hidden_effect = {
+			if = {
+				limit = { NOT = { has_government = fascism } }
+				set_politics = {
+					ruling_party = fascism
+					elections_allowed = no
+				}
+			}
+		}
 	}
 }
 
