@@ -19,5 +19,5 @@ tags = {
 }
 picture = "thumbnail.png"
 version = "0.7.8"
-supported_version = "1.17.*"
+supported_version = "1.19.*"
 remote_file_id = "2927583473"
